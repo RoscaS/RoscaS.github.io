@@ -1,0 +1,142 @@
+---
+layout: post
+title:  "Réseau: TE3"
+date:   2017-05-20
+categories: Res
+---
+# Contrôle principal III
+
+## Matrière
+
+### couche 4 (transport)
+- rôles
+- arguments dans le choix de TCP ou UDP
+- notion de protocole sûr et de protocole sûr à fenêtre
+- le cas particulier du transport du DNS (usuellement UDP, parfois besoin de TCP)
+- TCP
+    * champ principaux des entêtes et leur rôle
+    * ouverture et fermeture de la connexion
+    * savoir utiliser le diagramme d'état
+    * rôle des ports
+    * principes de la fenêtre et des confirmations (acquittements)
+    * importance de la minuterie de retransmission
+    * congestion (définition)
+- UDP
+- les sockets
+    * rôle
+    * opérations (appels systèmes) de base et cycle de vie
+- sécurité
+- décodages des couches 4 à 2 (évt. protocole de couche 7 aussi)
+### couche 7
+- principes
+- DNS (fonctionnement général, protocoles couche 4, type d'enregistrements principaux, concept de délégation)
+- E-mail (architecture, protocoles SMTP, POP, IMAP, format d'un e-mail, format MIME, sécurité, SPAM)
+
+
+#
+
+### Résumé: rôles de la couche 4
+
+* assurer le **transport fiable** de bout en bout d'un réseau (TCP)
+* multiplexage (identifiction des **services** couche 7) via le concept de port
+* optimisation de la performance
+    * bonne utilisation du débit disponible
+    * gestion des **congestions**
+* en fonction des besoins de l'application
+    * mode connecté ou non connecté
+    * mode caractère (stream, flux) ou message
+    * tout ou partie des fonctions de la couche
+
+### Transport fiable
+* _protocol sûr_
+    * **détection** d'erreurs et **retransmission**
+    * assurer l'**ordre** de livrison et l'absence de **doublons**
+    * **constrôle de flux** (ne pas surcharger le destinataire)
+* complémentarité avec la couche 2 (portée différente!)
+
+### TCP et UDP
+* aspects communs:
+    * utilisent les services de **IP** (envoi à une machine)
+    * permettent l'adressage de services applicatifs (ports)
+    * transmission duplex (bidirectionnelle) possible
+    * les deux sont _best effort_ (IP sans QoS)
+        * TCP a une phase de connextion
+
+### Besoin des applications
+
+> * quel protocole de couche 4 pour la téléphonie sur IP et pourqoi?
+> * quel protocole de couche 4 pour des requêtes SQL sur une base de données et pouqoi
+
+### Les ports
+
+* un numéro de port identifie une application d'une machine
+* l'application appelante doit connaître le numéro de port de l'application appelée: _well known ports:_
+
+| port | protocole 
+| :-----------: | :-
+| 7 | Echo
+| 21 | FTP
+| 23 | Telnet
+| 80 | HTTP (www)
+| 161 | SNMP 
+| 9 | Discard
+| 22 | SSH
+| 25 | SMTP
+| 110 | POP3
+| 443 | HTTPS
+
+* tout échnge UDP ou connextion TCP nécessite deux numéros de port (comme tout datagramme IP a deux adresses IP)
+* le numéro de port de l'appelant est en général choisi dynamiquement dans la plage non privilégiée `1023` (ports fantômes ou dynamiques)
+
+### Identification d'une connexion
+
+* une machine doit pouvoir identifier ses connexions TCP ou un échange UDP de façon unique: la combinaison suivante est utilisée:
+    * adresse IP locale
+    * numéro de port local
+    * adresse IP distante
+    * noméro de port distant
+
+*plusieurs connexions ou échanges d'un client sur la même application d'un même serveur sont différenciès par les numéros de port locaux (côté client)
+
+## UDP (User Datagram Protocol)
+* un utilisteur d'UDP doit compter avec les événements suivants:
+    * les données peuvent être perdues
+    * les mêmes données peuvent arriver plusieurs fois
+    * l'ordre des données peut être modifié
+    * le distinataire peut être surchargé par les données de l'émetteur
+    * les données ne peuvent dépasser le MTU
+
+### format des messages
+
+![](http://flylib.com/books/3/223/1/html/2/files/11fig02.gif)
+
+* port source et destination: identification des applications émettrices et destinataires
+* message lenght: (longueur en bytes. y.c l'entête)
+* checksum: chiffre de contrôle pour tout le message
+
+### applications typiques
+
+* TFTP (Trivial file transfer protocol)
+    * téléchargement de configuration ou de firmwares en systèmes embarqués
+DNS (Domain name system, aussi en TCP)
+* NFS (Network file system - UNIX)
+* SMNP (Simple networ management protocol)
+*RTP (realtime transport protocol - données multimedia)
+
+## TCP (Transmission Control Protocol)
+* TCP est un protocol sûr, qui utilise les principes suivants par défaut:
+    * protocole a fenètre (de type `GO-BACK N`)
+    * implicit retransmission
+* les messages sont appelés _segments_
+* on utilise uniquement des confirmations positives (`ACK`, qui peuvent être groupés) et un timer (minuteir) est calculé pour chaque segment
+* TCP offre un transport sûr (fiable) des données
+    * les données sont transmises exactement une fois (pas de perte, pas de duplication)
+    * pas de modification de l'ordre
+    * constrôle de flux
+
+## Scénario typique TCP: HTTP
+
+<object type="text/html" data="https://ssl.horus.ch/~schaefer/pub/HEArc/ReseauxINF1/protocole-fenetre.html" height="300" width="850">
+</object>
+
+[](http://google.com/) <a href="https://ssl.horus.ch/~schaefer/pub/HEArc/ReseauxINF1/protocole-fenetre.html/">ssl.horus.ch</a>
