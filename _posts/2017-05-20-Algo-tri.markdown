@@ -1,9 +1,5 @@
----
-layout: post
-title:  "Algo: tri (fr)"
-date:   2017-05-21
-categories: Algo
----
+
+
 
 # Algorithmes:
 
@@ -362,8 +358,59 @@ Le tri par extraction est aussi lent que le tri bulle dans le cas d'un tableau �
 
 ### Stabilité
 
+[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtractStab.gif" align="" height="250" float="right"></a>]()
+
+Le tableau suivant comporte deux clés identiques:
+
 ```c++
 [15] [15] [37] [21] [13] [18] [45]  // Clé
 [ A] [ B] [ C] [ D] [ E] [ F] [ G]  // Information
   1    2    3    4    5    6    7   // Indice
 ```
+
+L'extraction du premier minimum donne:
+
+```c++
+[13] [15] [37] [21] [15] [18] [45]  // Clé
+[ E] [ B] [ C] [ D] [ A] [ F] [ G]  // Information
+  1    2    3    4    5    6    7   // Indice
+```
+
+Les deux éléments de même clé 15 ont été échangés l'un par rapport à l'autre. Après exécution de l'algorithme, le tableau ordonné devient:
+
+```c++
+[13] [15] [15] [18] [21] [37] [45]  // Clé
+[ E] [ B] [ A] [ F] [ D] [ C] [ G]  // Information
+  1    2    3    4    5    6    7   // Indice
+```
+
+Cet exemple montre que le tri par extraction n'est **pas stable**.
+
+
+## 4. Tri par insertion (Insert Sort)
+
+[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triInsert.gif" align="" height="600" float="right"></a>]()
+
+```c++
+void insertion(int *t, int g, int idx)
+{
+    int j = idx-1;
+    int temp = t[idx];
+    while ((t[j] > temp) && (j >= g))
+    {
+        t[j+1] = t[j];
+        j--;
+    }
+    t[j+1] = temp;
+}
+
+void triInsert(int *t, int g, int d)
+{
+    for (int i = g+1; i <= d; ++i)
+    {
+        insertion(t,g,i);   
+    }
+}
+```
+
+
