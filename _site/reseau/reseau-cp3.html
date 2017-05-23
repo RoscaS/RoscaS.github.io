@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-cp3.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- Google font -->
+
+  <!--<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Noto Sans">-->
+
+<!-- font awesome -->
+
+<!--<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">-->
+
+</head>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reseau: CP3 (fr)</title>
+  <meta name="description" content="Contrôle principal III">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Reseau: CP3 (fr)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="20 May 2017" itemprop="datePublished">May 20 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche4</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche7</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>théorie CP3</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="contrôle-principal-iii">Contrôle principal III</h1>
+
+<h2 id="1-matrière">1. Matrière</h2>
+
+<h3 id="couche-4-transport">couche 4 (transport)</h3>
+<ul>
+  <li>rôles</li>
+  <li>arguments dans le choix de TCP ou UDP</li>
+  <li>notion de protocole sûr et de protocole sûr à fenêtre</li>
+  <li>le cas particulier du transport du DNS (usuellement UDP, parfois besoin de TCP)</li>
+  <li>TCP
+    <ul>
+      <li>champ principaux des entêtes et leur rôle</li>
+      <li>ouverture et fermeture de la connexion</li>
+      <li>savoir utiliser le diagramme d’état</li>
+      <li>rôle des ports</li>
+      <li>principes de la fenêtre et des confirmations (acquittements)</li>
+      <li>importance de la minuterie de retransmission</li>
+      <li>congestion (définition)</li>
+    </ul>
+  </li>
+  <li>UDP</li>
+  <li>les sockets
+    <ul>
+      <li>rôle</li>
+      <li>opérations (appels systèmes) de base et cycle de vie</li>
+    </ul>
+  </li>
+  <li>sécurité</li>
+  <li>décodages des couches 4 à 2 (évt. protocole de couche 7 aussi)</li>
+</ul>
+
+<h3 id="couche-7">couche 7</h3>
+<ul>
+  <li>principes</li>
+  <li>DNS (fonctionnement général, protocoles couche 4, type d’enregistrements principaux, concept de délégation)</li>
+  <li>E-mail (architecture, protocoles SMTP, POP, IMAP, format d’un e-mail, format MIME, sécurité, SPAM)</li>
+</ul>
+
+<h2 id="2-résumé-rôles-de-la-couche-4">2. Résumé: rôles de la couche 4</h2>
+
+<ul>
+  <li>assurer le <strong>transport fiable</strong> de bout en bout d’un réseau (TCP)</li>
+  <li>multiplexage (identifiction des <strong>services</strong> couche 7) via le concept de port</li>
+  <li>optimisation de la performance
+    <ul>
+      <li>bonne utilisation du débit disponible</li>
+      <li>gestion des <strong>congestions</strong></li>
+    </ul>
+  </li>
+  <li>en fonction des besoins de l’application
+    <ul>
+      <li>mode connecté ou non connecté</li>
+      <li>mode caractère (stream, flux) ou message</li>
+      <li>tout ou partie des fonctions de la couche</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="transport-fiable">Transport fiable</h3>
+<ul>
+  <li><em>protocol sûr</em>
+    <ul>
+      <li><strong>détection</strong> d’erreurs et <strong>retransmission</strong></li>
+      <li>assurer l’<strong>ordre</strong> de livrison et l’absence de <strong>doublons</strong></li>
+      <li><strong>constrôle de flux</strong> (ne pas surcharger le destinataire)</li>
+    </ul>
+  </li>
+  <li>complémentarité avec la couche 2 (portée différente!)</li>
+</ul>
+
+<h3 id="tcp-et-udp">TCP et UDP</h3>
+<ul>
+  <li>aspects communs:
+    <ul>
+      <li>utilisent les services de <strong>IP</strong> (envoi à une machine)</li>
+      <li>permettent l’adressage de services applicatifs (ports)</li>
+      <li>transmission duplex (bidirectionnelle) possible</li>
+      <li>les deux sont <em>best effort</em> (IP sans QoS)
+        <ul>
+          <li>TCP a une phase de connextion</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="besoin-des-applications">Besoin des applications</h3>
+
+<blockquote>
+  <ul>
+    <li>quel protocole de couche 4 pour la téléphonie sur IP et pourqoi?</li>
+    <li>quel protocole de couche 4 pour des requêtes SQL sur une base de données et pouqoi</li>
+  </ul>
+</blockquote>
+
+<h3 id="les-ports">Les ports</h3>
+
+<ul>
+  <li>un numéro de port identifie une application d’une machine</li>
+  <li>l’application appelante doit connaître le numéro de port de l’application appelée: <em>well known ports:</em></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">port</th>
+      <th style="text-align: left">protocole</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">7</td>
+      <td style="text-align: left">Echo</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">21</td>
+      <td style="text-align: left">FTP</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">23</td>
+      <td style="text-align: left">Telnet</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">80</td>
+      <td style="text-align: left">HTTP (www)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">161</td>
+      <td style="text-align: left">SNMP</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">9</td>
+      <td style="text-align: left">Discard</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">22</td>
+      <td style="text-align: left">SSH</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">25</td>
+      <td style="text-align: left">SMTP</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">110</td>
+      <td style="text-align: left">POP3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">443</td>
+      <td style="text-align: left">HTTPS</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>tout échnge UDP ou connextion TCP nécessite deux numéros de port (comme tout datagramme IP a deux adresses IP)</li>
+  <li>le numéro de port de l’appelant est en général choisi dynamiquement dans la plage non privilégiée <code class="highlighter-rouge">1023</code> (ports fantômes ou dynamiques)</li>
+</ul>
+
+<h3 id="identification-dune-connexion">Identification d’une connexion</h3>
+
+<ul>
+  <li>une machine doit pouvoir identifier ses connexions TCP ou un échange UDP de façon unique: la combinaison suivante est utilisée:
+    <ul>
+      <li>adresse IP locale</li>
+      <li>numéro de port local</li>
+      <li>adresse IP distante</li>
+      <li>noméro de port distant</li>
+    </ul>
+  </li>
+</ul>
+
+<p>*plusieurs connexions ou échanges d’un client sur la même application d’un même serveur sont différenciès par les numéros de port locaux (côté client)</p>
+
+<h2 id="3-udp-user-datagram-protocol">3. UDP (User Datagram Protocol)</h2>
+<p>Le protocole UDP (User Datagram Protocol) est un protocole <strong>non orienté connexion</strong> de la couche transport du modèle TCP/IP. Ce protocole est très simple étant donné qu’il ne fournit pas de contrôle d’erreurs (il n’est pas orienté connexion…).</p>
+
+<ul>
+  <li>un utilisteur d’UDP doit compter avec les événements suivants:
+    <ul>
+      <li>les données peuvent être perdues</li>
+      <li>les mêmes données peuvent arriver plusieurs fois</li>
+      <li>l’ordre des données peut être modifié</li>
+      <li>le distinataire peut être surchargé par les données de l’émetteur</li>
+      <li>les données ne peuvent dépasser le MTU</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="format-des-messages">format des messages</h3>
+
+<p><img src="http://flylib.com/books/3/223/1/html/2/files/11fig02.gif" alt="" /></p>
+
+<ul>
+  <li>port source et destination: identification des applications émettrices et destinataires</li>
+  <li>message lenght: (longueur en bytes. y.c l’entête)</li>
+  <li>checksum: chiffre de contrôle pour tout le message</li>
+</ul>
+
+<h3 id="applications-typiques">applications typiques</h3>
+
+<ul>
+  <li>TFTP (Trivial file transfer protocol)
+    <ul>
+      <li>téléchargement de configuration ou de firmwares en systèmes embarqués
+DNS (Domain name system, aussi en TCP)</li>
+    </ul>
+  </li>
+  <li>NFS (Network file system - UNIX)</li>
+  <li>SMNP (Simple networ management protocol)
+*RTP (realtime transport protocol - données multimedia)</li>
+</ul>
+
+<h2 id="4-tcp-transmission-control-protocol">4. TCP (Transmission Control Protocol)</h2>
+
+<blockquote>
+  <ul>
+    <li>TCP est un protocol sûr, qui utilise les principes suivants par défaut:
+      <ul>
+        <li>protocole a fenètre (de type <code class="highlighter-rouge">GO-BACK N</code>)</li>
+        <li>implicit retransmission</li>
+      </ul>
+    </li>
+    <li>les messages sont appelés <em>segments</em></li>
+    <li>on utilise uniquement des confirmations positives (<code class="highlighter-rouge">ACK</code>, qui peuvent être &gt;groupés) et un timer (minuteir) est calculé pour chaque segment</li>
+    <li>TCP offre un transport sûr (fiable) des données
+      <ul>
+        <li>les données sont transmises exactement une fois (pas de perte, pas de &gt;duplication)</li>
+        <li>pas de modification de l’ordre</li>
+        <li>constrôle de flux</li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<p>TCP (qui signifie Transmission Control Protocol, soit en français: Protocole de Contrôle de Transmission) est un des principaux protocoles de la couche transport du modèle TCP/IP. Il permet, au niveau des applications, de gérer les données en provenance (ou à destination) de la couche inférieure du modèle (c’est-à-dire le protocole IP). Lorsque les données sont fournies au protocole IP, celui-ci les encapsule dans des datagrammes IP, en fixant le champ protocole à 6 (Pour savoir que le protocole en amont est TCP…). TCP est un protocole orienté connexion, c’est-à-dire qu’il permet à deux machines qui communiquent de contrôler l’état de la transmission. Les caractéristiques principales du protocole TCP sont les suivantes :</p>
+
+<ul>
+  <li>TCP permet de remettre en ordre les datagrammes en provenance du protocole IP</li>
+  <li>TCP permet de vérifier le flot de données afin d’éviter une saturation du réseau</li>
+  <li>TCP permet de formater les données en segments de longueur variable afin de les “remettre” au protocole IP</li>
+  <li>TCP permet de multiplexer les données, c’est-à-dire de faire circuler simultanément des informations provenant de sources (applications par exemple) distinctes sur une même ligne</li>
+  <li>TCP permet enfin l’initialisation et la fin d’une communication de manière courtoise</li>
+</ul>
+
+<h3 id="le-but-de-tcp">Le but de TCP</h3>
+
+<p>Grâce au protocole TCP, les applications peuvent communiquer de façon sûre (grâce au système d’accusés de réception du protocole TCP), indépendamment des couches inférieures. Cela signifie que les routeurs (qui travaillent dans la couche Internet) ont pour seul rôle l’acheminement des données sous forme de datagrammes, sans se préoccuper du contrôle des données, car celui-ci est réalisé par la couche transport (plus particulièrement par le protocole TCP).</p>
+
+<p>Lors d’une communication à travers le protocole TCP, les deux machines doivent établir une connexion. La machine émettrice (celle qui demande la connexion) est appelée client, tandis que la machine réceptrice est appelée serveur. On dit qu’on est alors dans un environnement Client-Serveur. Les machines dans un tel environnement communiquent en mode connecté, c’est-à-dire que la communication se fait dans les deux sens.</p>
+
+<p>Pour permettre le bon déroulement de la communication et de tous les contrôles qui l’accompagnent, les données sont encapsulées, c’est-à-dire qu’on ajoute aux paquets de données un en-tête qui va permettre de synchroniser les transmissions et d’assurer leur réception.</p>
+
+<p>Une autre particularité de TCP est de pouvoir réguler le débit des données grâce à sa capacité à émettre des messages de taille variable, ces messages sont appelés segments.</p>
+
+<p>La fonction de multiplexage</p>
+
+<p>TCP permet d’effectuer une tâche importante: le multiplexage/démultiplexage, c’est-à-dire faire transiter sur une même ligne des données provenant d’applications diverses ou en d’autres mots mettre en série des informations arrivant en parallèle.</p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-mux.gif" alt="" /></p>
+
+<p>Ces opérations sont réalisées grâce au concept de ports (ou sockets), c’est-à-dire un numéro associé à un type d’application, qui, combiné à une adresse IP, permet de déterminer de façon unique une application qui tourne sur une machine donnée.</p>
+
+<p>Ces opérations sont réalisées grâce au concept de ports (ou sockets), c’est-à-dire un numéro associé à un type d’application, qui, combiné à une adresse IP, permet de déterminer de façon unique une application qui tourne sur une machine donnée.</p>
+
+<p><img src="http://computing.dcu.ie/~humphrys/Notes/Networks/tanenbaum/6-29.jpg" alt="" /></p>
+
+<p>Les numéros de séquence et d’acquittement indiquent ou respectivement confirment des <em>séquences</em> d’octets et ne sont pas initialisés à zéro (cf ouverture de connexion et concept de fenêtrage vu plus loin)</p>
+
+<ul>
+  <li><strong>URG</strong>: pointeur de données urgentes actif</li>
+  <li><strong>ACK</strong>: le champ ACKNOWLEDGE NUMBER confirme un ou plusieurs segments</li>
+  <li><strong>PSH</strong>: les données doivent être envoyées sans attendre à la couche supérieure</li>
+  <li><strong>SYN</strong>: synchronisation des numéros de séquence (ouverture de connexion)</li>
+  <li><strong>FIN</strong>: cet émetteur a terminé son stream de données</li>
+  <li><strong>RST</strong>: ce datagramme n’a pas de lien avec un stream actif (ou pas d’application en écoute)</li>
+</ul>
+
+<h3 id="fiabilité-des-transferts">Fiabilité des transferts</h3>
+
+<p>Le protocole TCP permet d’assurer le transfert des données de façon fiable, bien qu’il utilise le protocole IP, qui n’intègre aucun contrôle de livraison de datagramme.</p>
+
+<p>En réalité, le protocole TCP possède un système d’accusé de réception permettant au client et au serveur de s’assurer de la bonne réception mutuelle des données. Lors de l’émission d’un segment, un numéro d’ordre (appelé aussi numéro de séquence) est associé. A réception d’un segment de donnée, la machine réceptrice va retourner un segment de donnée dont le drapeau ACK est à 1 (afin de signaler qu’il s’agit d’un accusé de réception) accompagné d’un numéro d’accusé de réception égal au numéro d’ordre précédent.</p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-ack1.gif" alt="" /></p>
+
+<p>De plus, grâce à une minuterie déclenchée dès réception d’un segment au niveau de la machine émettrice, le segment est réexpédié dès que le temps imparti est écoulé, car dans ce cas la machine émettrice considère que le segment est perdu…</p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-ack2.gif" alt="" /></p>
+
+<p>Toutefois, si le segment n’est pas perdu et qu’il arrive tout de même à destination, la machine réceptrice saura grâce au numéro d’ordre qu’il s’agit d’un doublon et ne conservera que le dernier segment arrivé à destination…</p>
+
+<h2 id="5-etablissement-dune-connexion">5. Etablissement d’une connexion</h2>
+
+<p>Etant donné que ce processus de communication, qui se fait grâce à une émission de données et d’un accusé de réception, est basé sur un numéro d’ordre (appelé généralement <strong>numéro de séquence</strong>), il faut que les machines émettrices et réceptrices (client et serveur) connaîssent le numéro d’ordre initial de l’autre machine.</p>
+
+<p>L’établissement de la connexion entre deux applications se fait souvent selon le schéma suivant :</p>
+
+<ul>
+  <li>Les ports TCP doivent être ouverts</li>
+  <li>L’application sur le serveur est passive, c’est-à-dire que l’application est à l’écoute, en attente d’une connexion</li>
+  <li>L’application sur le client fait une requête de connexion sur le serveur dont l’application est en ouverture passive. L’application du client est dite “en ouverture active”</li>
+</ul>
+
+<p>Les deux machines doivent donc synchroniser leurs séquences grâce à un mécanisme communément appelé <strong>three ways handshake</strong> (poignée de main en trois temps), que l’on retrouve aussi lors de la clôture de session.</p>
+
+<p>Ce dialogue permet d’<strong>initier la communication</strong>, il se déroule en trois temps, comme sa dénomination l’indique :</p>
+
+<ol>
+  <li>
+    <p>Dans un premier temps la machine émettrice (<strong>le client</strong>) transmet un segment dont le drapeau <code class="highlighter-rouge">SYN</code> est à 1 (pour signaler qu’il s’agit d’un <strong>segment de synchronisation</strong>), avec un numéro d’ordre N, que l’on appelle numéro d’ordre initial du client</p>
+  </li>
+  <li>
+    <p>Dans un second temps la machine réceptrice <strong>(le serveur</strong>) reçoit le segment initial provenant du client, puis lui envoie un <strong>accusé de réception</strong>, c’est-à-dire un segment dont le drapeau <code class="highlighter-rouge">ACK</code> est à 1 et le drapeau <code class="highlighter-rouge">SYN</code> est à 1 (car il s’agit là encore d’une synchronisation). Ce segment contient le numéro d’ordre de cette machine (du serveur) qui est le numéro d’ordre initial du client. Le champ le plus important de ce segment est le champ accusé de réception qui contient le numéro d’ordre initial du client, incrémenté de 1</p>
+  </li>
+  <li>
+    <p>Enfin, <strong>le client</strong> transmet au serveur un <code class="highlighter-rouge">accusé de réception</code> aussi, c’est-à-dire un segment dont le drapeau <code class="highlighter-rouge">ACK</code> est à 1, dont le drapeau <code class="highlighter-rouge">SYN</code> est à zéro (<strong>il ne s’agit plus d’un segment de synchronisation</strong>). Son numéro d’ordre est incrémenté et le numéro d’accusé de réception représente le numéro d’ordre initial du serveur incrémenté de 1</p>
+  </li>
+</ol>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-3way.gif" alt="" /></p>
+
+<p>Suite à cette séquence comportant trois échanges les deux machines sont synchronisées et la communication peut commencer!</p>
+
+<p>Il existe une technique de piratage, appelée spoofing IP, permettant de corrompre cette relation d’approbation à des fins malicieuses !</p>
+
+<p><img src="http://www.inetdaemon.com/img/internet/3-way-handshake.gif" alt="" /></p>
+
+<p><a href="https://www.youtube.com/watch?v=jLUW0SK13nA">Youtube</a></p>
+
+<h2 id="6-méthode-de-la-fenêtre-glissante">6. Méthode de la fenêtre glissante</h2>
+
+<p>Dans de nombreux cas, il est possible de limiter le nombre d’accusés de réception, afin de désengorger le réseau, en fixant un nombre de séquence au bout duquel un accusé de réception est nécessaire. Ce nombre est en fait stocké dans le champ fenêtre de l’en-tête TCP/IP.</p>
+
+<p>On appelle effectivement cette méthode “<em>méthode de la fenêtre glissante</em>” car on définit en quelque sorte une fourchette de séquences n’ayant pas besoin d’accusé de réception, et celle-ci se déplace au fur et à mesure que les accusés de réception sont reçus.</p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-gliss.gif" alt="" /></p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-fenetre.gif" alt="" /></p>
+
+<p>De plus, la taille de cette fenêtre n’est pas fixe. En effet, <strong>le serveur</strong> peut inclure dans ses accusés de réception en stockant dans le champ fenêtre la taille de la fenêtre qui lui semble la plus adaptée. Ainsi, lorsque l’accusé de réception indique une demande d’augmentation de la fenêtre, le client va déplacer le bord droit de la fenêtre.</p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-plus.gif" alt="" /></p>
+
+<p>Par contre, dans le cas d’une diminution, le client ne va pas déplacer le bord droit de la fenêtre vers la gauche mais attendre que le bord gauche avance (avec l’arrivée des accusés de réception).</p>
+
+<p><img src="http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-moins.gif" alt="" /></p>
+
+<object type="text/html" data="https://ssl.horus.ch/~schaefer/pub/HEArc/ReseauxINF1/protocole-fenetre.html" height="300" width="850">
+</object>
+
+<h4 id="stream-tcp">Stream tcp</h4>
+<ul>
+  <li>l’unité de gestion de la fenêtre n’est pas le message mais l’octet</li>
+  <li>l’application lit les données comme elles viennent</li>
+  <li>la grandeur de la fenêtre est variable!
+    <ul>
+      <li>le destinataire gère dynamiquement la taille de la fenêtre chez l’émetteur</li>
+      <li>chaque confirmation contient une indication de fenêtre</li>
+    </ul>
+  </li>
+  <li>la position dans le flux de données est indiquée par les numéros de séquence (pointeurs)</li>
+</ul>
+
+<h4 id="le-timer">Le timer</h4>
+
+<ul>
+  <li>TCP travaille en implicit retransmission (confirmation positives seulement)</li>
+  <li>les temps de transfert peuvent varier énormément (LAN, WAN)</li>
+  <li>timer trop petit: retransmissions inutiles</li>
+  <li>timer trop grand: retard dans la découverte des problèmes (attention: GO-BACK N)</li>
+  <li>TCP mesure en permanence les temps de réponse et adapte le timer</li>
+  <li>une moyenne glissante et une variance glissante sont calculées et utilisées pour le calcul du time</li>
+</ul>
+
+<h4 id="des-bouchons-dans-le-réseau-congestion">Des bouchons dans le réseau (congestion)</h4>
+
+<ul>
+  <li>grâce à la gestion de la fenêtre: pas de surcharge du destinataire</li>
+  <li>un élément du réseau peut tout de même être surchargé (routeur, ligne): congestion</li>
+  <li>c’est d’ailleurs la cause la plus fréquente de retransmission sur WAN</li>
+  <li>l’émetteur réduit sa fenêtre à un segment, chaque fois qu’un segment doit être répété.</li>
+  <li>des extensions TCP existent pour une meilleure gestion des congestions (ECN)</li>
+</ul>
+
+<h4 id="optimisation-du-débit-de-sortie">Optimisation du débit de sortie</h4>
+
+<ul>
+  <li>but : plus rapidement, au début d’une connexion, atteindre le débit maximum de sortie</li>
+  <li>on augmente exponentiellement à chaque ACK la taille de fenêtre effective (limitée par la taille annoncée par le destinataire!)</li>
+  <li>en cas de congestion, on note la zone problématique (niveau : moitié): slow start threshold et on repart à 1 segment.</li>
+  <li>l’agrandissement est prudent uniquement dès que la zone de congestion est atteinte (congestion avoidance</li>
+</ul>
+
+<p><a href="http://google.com/"></a> <a href="https://ssl.horus.ch/~schaefer/pub/HEArc/ReseauxINF1/protocole-fenetre.html/">ssl.horus.ch</a></p>
+
+<h2 id="7-fin-dune-connexion">7. Fin d’une connexion</h2>
+
+<p>Le client peut demander à mettre fin à une connexion au même titre que le serveur. La fin de la connexion se fait de la manière suivante :</p>
+
+<ul>
+  <li>Une des machines envoie un segment avec le drapeau <code class="highlighter-rouge">FIN</code> à 1, et l’application se met en état <strong>d’attente de fin</strong>, c’est-à-dire qu’elle finit de recevoir le segment en cours et ignore les suivants</li>
+</ul>
+
+<blockquote>
+  <p>Le procédé assure qu’aucune donnée n’est perdue (graceful close)</p>
+</blockquote>
+
+<ul>
+  <li>Après réception de ce segment, l’autre machine envoie un accusé de réception avec le drapeau <code class="highlighter-rouge">FIN</code> à 1 et continue d’expédier les segments en cours. Suite à cela la machine informe l’application qu’un segment <code class="highlighter-rouge">FIN</code> a été reçu, puis envoie un segment <code class="highlighter-rouge">FIN</code> à l’autre machine, ce qui clôture la connexion…</li>
+</ul>
+
+<blockquote>
+  <p>une connexion peut aussi être coupée brutalement (RST = reset). Dans ce cas des données peuvent être perdues</p>
+</blockquote>
+
+<h2 id="8-sécurité">8. Sécurité</h2>
+<ul>
+  <li>ni IP ni TCP n’ont de mécanismes de sécurité (droit d’accès, confidentialité…)</li>
+  <li>sans précaution tout est accessible, tout est en clair !</li>
+  <li>attaques potentielles (interception, man-inthe-middle, injection, half-open, …)</li>
+  <li>solutions
+    <ul>
+      <li>firewall stateful (contrôle d’accès, validation des entêtes, …)</li>
+      <li>chiffrement/signature : couche 2 : VPN ou 802.1x ; couche 3 : IPSec ; couche 7 : TLS/SSL</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="9-sockets">9. Sockets</h2>
+<p>Il s’agit d’un modèle permettant la communication inter processus (<strong>IPC</strong> - Inter Process Communication) 
+afin de permettre à divers processus de communiquer aussi bien sur une même machine qu’à travers 
+un réseau TCP/IP.</p>
+
+<p>La communication par socket est souvent comparée aux communications humaines. On distingue ainsi <strong>deux 
+modes</strong> de communication :</p>
+
+<ul>
+  <li>Le mode connecté (comparable à une communication téléphonique), utilisant le protocole TCP.
+    <blockquote>
+      <p>Dans ce mode de communication, une connexion durable est établie entre les deux processus, de telle façon que l’adresse de destination n’est pas nécessaire à chaque envoi de données.</p>
+    </blockquote>
+  </li>
+  <li>Le mode non connecté (analogue à une communication par courrier), utilisant le protocole UDP.
+    <blockquote>
+      <p>Ce mode nécessite l’adresse de destination à chaque envoi, et aucun accusé de réception n’est donné.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>Les sockets sont généralement implémentés en langage <strong>C</strong>, et utilisent des 
+fonctions et des structures disponibles dans la librairie <code class="highlighter-rouge">&lt;sys/socket.h&gt;</code>.</p>
+
+<h3 id="conecpt-de-socket-ou-prise-réseau">Conecpt de socket ou prise réseau</h3>
+<p>L’abstraction programmatique est basée sur le concept de sockets. Un socket est <strong>une prise</strong> qui permet à une application d’envoyer et de recevoir des données.</p>
+
+<ul>
+  <li>
+    <p>une connextion TCP est identidiée par <strong>4 valeurs</strong> (adresss IP source et destination, ports TCP source et destination).</p>
+  </li>
+  <li>
+    <p>un socket est identifié par une valeur spécifique à l’OS</p>
+  </li>
+</ul>
+
+<!--http://www.commentcamarche.net/contents/538-le-protocole-tcp-->
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Reseau: CP3 (fr)@&amp;url=http://localhost:4000/reseau/reseau-cp3.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-cp3.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-cp3.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+    <foot>
+        <footer class="site-footer">
+	<div class="wrapper">
+        <!--<center> -->
+
+            
+            
+
+            
+            
+            <!--<h2>
+            2017
+            </h2>-->
+            
+
+            
+            
+
+            <ul>
+                <li><a href="/cpp/Cpp-exceptions-Handling.html">Cpp: Exception handling (en)</a><span class="date"> - 23 May 2017</span>
+                </li>
+            </ul>
+                
+            
+
+            
+            
+
+            
+            
+
+            <ul>
+                <li><a href="/reseau/reseau-labo5.html">Reseau: labo 5 (fr)</a><span class="date"> - 21 May 2017</span>
+                </li>
+            </ul>
+                
+            
+
+            
+            
+
+            
+            
+
+            <ul>
+                <li><a href="/reseau/reseau-cp3.html">Reseau: CP3 (fr)</a><span class="date"> - 20 May 2017</span>
+                </li>
+            </ul>
+                
+            
+
+            
+            
+
+            
+            
+
+            <ul>
+                <li><a href="/algo/Algo-tri.html">Algo: Tri (fr)</a><span class="date"> - 20 May 2017</span>
+                </li>
+            </ul>
+                
+            
+        <!--</center>  -->
+  	</div>
+</footer>
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <!--<p>
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>-->
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a class="link" href="/%20/">RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+        <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+    </foot>
+
+</html>
+

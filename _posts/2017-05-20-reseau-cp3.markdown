@@ -1,12 +1,17 @@
 ---
 layout: post
-title:  "Reseau: CP3"
-date:   2017-05-21
-categories: Res
+title: "Reseau: CP3 (fr)"
+subtitle: "théorie CP3"
+date: 2017-05-20
+author: Sol
+category: Reseau
+tags: reseau couche4 couche7 tcp udp
+finished: false
 ---
+
 # Contrôle principal III
 
-## Matrière
+## 1. Matrière
 
 ### couche 4 (transport)
 - rôles
@@ -27,13 +32,14 @@ categories: Res
     * opérations (appels systèmes) de base et cycle de vie
 - sécurité
 - décodages des couches 4 à 2 (évt. protocole de couche 7 aussi)
+
 ### couche 7
 - principes
 - DNS (fonctionnement général, protocoles couche 4, type d'enregistrements principaux, concept de délégation)
 - E-mail (architecture, protocoles SMTP, POP, IMAP, format d'un e-mail, format MIME, sécurité, SPAM)
 
 
-### Résumé: rôles de la couche 4
+## 2. Résumé: rôles de la couche 4
 
 * assurer le **transport fiable** de bout en bout d'un réseau (TCP)
 * multiplexage (identifiction des **services** couche 7) via le concept de port
@@ -96,7 +102,7 @@ categories: Res
 
 *plusieurs connexions ou échanges d'un client sur la même application d'un même serveur sont différenciès par les numéros de port locaux (côté client)
 
-## UDP (User Datagram Protocol)
+## 3. UDP (User Datagram Protocol)
 Le protocole UDP (User Datagram Protocol) est un protocole **non orienté connexion** de la couche transport du modèle TCP/IP. Ce protocole est très simple étant donné qu'il ne fournit pas de contrôle d'erreurs (il n'est pas orienté connexion...). 
 
 * un utilisteur d'UDP doit compter avec les événements suivants:
@@ -123,7 +129,7 @@ DNS (Domain name system, aussi en TCP)
 * SMNP (Simple networ management protocol)
 *RTP (realtime transport protocol - données multimedia)
 
-## TCP (Transmission Control Protocol)
+## 4. TCP (Transmission Control Protocol)
 
 >* TCP est un protocol sûr, qui utilise les principes suivants par défaut:
 >    * protocole a fenètre (de type `GO-BACK N`)
@@ -198,7 +204,7 @@ De plus, grâce à une minuterie déclenchée dès réception d'un segment au ni
 Toutefois, si le segment n'est pas perdu et qu'il arrive tout de même à destination, la machine réceptrice saura grâce au numéro d'ordre qu'il s'agit d'un doublon et ne conservera que le dernier segment arrivé à destination... 
 
 
-## Etablissement d'une connexion
+## 5. Etablissement d'une connexion
 
 Etant donné que ce processus de communication, qui se fait grâce à une émission de données et d'un accusé de réception, est basé sur un numéro d'ordre (appelé généralement **numéro de séquence**), il faut que les machines émettrices et réceptrices (client et serveur) connaîssent le numéro d'ordre initial de l'autre machine. 
 
@@ -224,9 +230,6 @@ Ce dialogue permet d'**initier la communication**, il se déroule en trois temps
 ![](http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-3way.gif)
 
 
-###### _three ways handshake - poignée de mains en trois temps_
-
-
 Suite à cette séquence comportant trois échanges les deux machines sont synchronisées et la communication peut commencer! 
 
 
@@ -236,7 +239,7 @@ Il existe une technique de piratage, appelée spoofing IP, permettant de corromp
 
 [Youtube](https://www.youtube.com/watch?v=jLUW0SK13nA)
 
-## Méthode de la fenêtre glissante
+## 6. Méthode de la fenêtre glissante
 
 Dans de nombreux cas, il est possible de limiter le nombre d'accusés de réception, afin de désengorger le réseau, en fixant un nombre de séquence au bout duquel un accusé de réception est nécessaire. Ce nombre est en fait stocké dans le champ fenêtre de l'en-tête TCP/IP. 
 
@@ -302,7 +305,7 @@ Par contre, dans le cas d'une diminution, le client ne va pas déplacer le bord 
 
 
 
-## Fin d'une connexion
+## 7. Fin d'une connexion
 
 Le client peut demander à mettre fin à une connexion au même titre que le serveur. La fin de la connexion se fait de la manière suivante :
 
@@ -315,7 +318,7 @@ Le client peut demander à mettre fin à une connexion au même titre que le ser
 > une connexion peut aussi être coupée brutalement (RST = reset). Dans ce cas des données peuvent être perdues
 
 
-## Sécurité
+## 8. Sécurité
 * ni IP ni TCP n’ont de mécanismes de sécurité (droit d’accès, confidentialité…)
 * sans précaution tout est accessible, tout est en clair !
 * attaques potentielles (interception, man-inthe-middle, injection, half-open, ...)
@@ -325,7 +328,7 @@ Le client peut demander à mettre fin à une connexion au même titre que le ser
 
 
 
-## Sockets
+## 9. Sockets
 Il s'agit d'un modèle permettant la communication inter processus (**IPC** - Inter Process Communication) 
 afin de permettre à divers processus de communiquer aussi bien sur une même machine qu'à travers 
 un réseau TCP/IP. 

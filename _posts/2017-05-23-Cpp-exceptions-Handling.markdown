@@ -1,9 +1,14 @@
 ---
 layout: post
-title:  "Cpp: Exception handling (en)"
-date:   2017-05-21
-categories: Cpp
+title: "Cpp: Exception handling (en)"
+subtitle: "Theory and examples about exceptions handling"
+date: 2017-05-23
+author: Sol
+category: Cpp
+tags:  Cpp exceptions
+finished: false
 ---
+
 
 # Exception handling
 When an exception is raised (using `throw`), execution of the program immediately jumps to the nearest enclosing `try` block (propagating up the stack if necessary to find an enclosing `try` block. 
@@ -59,7 +64,7 @@ catch (const char* exception)
 That's why I use a `static_cast`.
 
 
-## What catch blocks typically do
+## 1. What catch blocks typically do
 
 If an exception is routed to a catch block, it is considered “handled” even if the catch block is empty. However, typically you’ll want your catch blocks to do something useful. There are three common things that catch blocks do when they catch an exception:
 
@@ -69,7 +74,7 @@ If an exception is routed to a catch block, it is considered “handled” even 
 
 3. a catch block may throw another exception. Because the catch block is outside of the try block, the newly thrown exception in this case is not handled by the preceding try block -- it’s handled by the next enclosing try block.
 
-## Exceptions and functions
+## 2. Exceptions and functions
 
 ```c++
 double mySqrt(double x)
@@ -118,7 +123,7 @@ The most interesting part of the above program is that the mySqrt() function can
 
 > Different applications may want to handle errors in different ways. A console application may want to print a text message. A windows application may want to pop up an error dialog. In one application, this may be a fatal error, and in another application it may not be. By passing the error back up the stack, each application can handle an error from mySqrt() in a way that is the most context appropriate for it! Ultimately, this keeps mySqrt() as modular as possible, and the error handling can be placed in the less-modular parts of the code.
 
-## catch-all
+## 3. Catch-all
 
 Using the catch-all handler to wrap main()
 
@@ -146,7 +151,7 @@ int main()
 In this case, if runGame() or any of the functions it calls throws an exception that is not caught, that exception will unwind up the stack and eventually get caught by this catch-all handler. This will prevent main() from terminating, and gives us a chance to print an error of our choosing and then save the user’s state before exiting. This can be useful to catch and handle problems that may be unanticipated.
 
 
-## Exception specifiers
+## 3. Exception specifiers
 
 **This subsection should be considered optional reading because exception specifiers are rarely used in practice, are not well supported by compilers, and Bjarne Stroustrup (the creator of C++) considers them a failed experiment.**
 
@@ -175,9 +180,9 @@ int doSomething() throw(...); // may throw anything
 
 Due to the incomplete compiler implementation, the fact that exception specifiers are more like statements of intent than guarantees, some incompatibility with template functions, and the fact that most C++ programmers are unaware of their existence, I recommend you do not bother using exception 
 
-## Exceptions and member functions
+## 4. Exceptions and member functions
 
-## Overloaded operators
+### Overloaded operators
 
 Overloaded operators have specific requirements as to the number and type of parameter(s) they can take and return, there is no flexibility for passing back error codes or boolean values to the caller. However, since exceptions do not change the signature of a function, they can be put to great use here. Here’s an example:
 
@@ -194,12 +199,12 @@ int& IntArray::operator[](const int index)
 ```
 Now, if the user passes in an invalid index, operator[] will throw an int exception.
 
-## Constructors
+### Constructors
 
 Constructors are another area of classes in which exceptions can be very useful. If a constructor fails, simply throw an exception to indicate the object failed to create. **The object’s construction is aborted** and its **destructor is never executed** (note: this means your exception handler should **handle any necessary cleanup**).
 
 
-## Exception class
+## 5. Exception class
 An exception class is just a normal class that is designed specifically to be thrown as an exception.
 
 ```c++
@@ -254,7 +259,7 @@ Using such a class, we can have the exception return a description of the proble
 
 Note that exception handlers should catch class exception objects by **reference** instead of by value. This prevents the compiler from making a copy of the exception, which can be **expensive** when the exception is a class object, and **prevents object slicing** when dealing with derived exception classes. Catching exceptions by **pointer should generally be avoided** unless you have a specific reason to do so.
 
-## Exceptions and inheritance
+## 6. Exceptions and inheritance
 
 ```c++
 class Base
@@ -334,7 +339,7 @@ This way, the Derived handler will get first shot at catching objects of type De
 
 >The ability to use a handler to catch exceptions of derived types using a handler for the base class turns out to be exceedingly useful.
 
-## std::exception
+## 7. std::exception
 
 Many of the classes and operators in the standard library throw exceptions classes on failure. For example, operator new and std::string can throw std::bad\_alloc if they are unable to allocate enough memory. A failed dynamic\_cast will throw std::bad_cast.
 
@@ -395,7 +400,7 @@ In this example, exceptions of type std::bad_alloc will be caught by the first h
 
 Such inheritance hierarchies allow us to use specific handlers to target specific derived exception classes, or to use base class handlers to catch the whole hierarchy of exceptions. This allows us a fine degree of control over what kind of exceptions we want to handle while ensuring we don’t have to do too much work to catch “everything else” in a hierarchy.
 
-## Using the standard exceptions directly
+## 8. Using the standard exceptions directly
 
 Nothing throws a std::exception directly, and neither should you. However, you should feel free to throw the other standard exception classes in the standard library if they adequately represent your needs. [cppreference](http://en.cppreference.com/w/cpp/error/exception)
 
@@ -454,7 +459,7 @@ This prints:
 Standard exception: Bad things happened
 ```
 
-## Deriving your own classes from std::exception
+## 9. Deriving your own classes from std::exception
 
 You can derive your own classes from `std::exception`, and override the virtual `what()` member function. Here’s the same program as above, with `ArrayException` derived from `std::exception`:
 
@@ -517,7 +522,7 @@ It’s up to you whether you want create your own standalone exception classes, 
 ## Rethrowing an exception
 http://www.learncpp.com/cpp-tutorial/14-6-rethrowing-exceptions/
 
-## Function try blocks
+## 10. Function try blocks
 
 Try and catch blocks work well enough in most cases, but there is one particular case in which they are not sufficient. Consider the following example:
 
@@ -628,7 +633,7 @@ In the program above, because we did not explicitly throw an exception from the 
 
 Although function level try blocks can be used with non-member functions as well, they typically aren’t because there’s rarely a case where this would be needed. **They are almost exclusive used with derived constructors**!
 
-## Exception dangers and downsides
+## 11. Exception dangers and downsides
 
 ### Cleaning up resources
 
@@ -737,7 +742,7 @@ As a note, some modern computer architectures support an exception model called 
 
 [learncpp.com](http://www.learncpp.com/cpp-tutorial/141-the-need-for-exceptions/)
 
-### Exercise:
+## 12. Exercise:
 
 1) Write a Fraction class that has a constructor that takes a numerator and a denominator. If the user passes in a denominator of 0, throw an exception of type std::runtime_error (included in the stdexcept header). In your main program, ask the user to enter two integers. If the Fraction is valid, print the fraction. If the Fraction is invalid, catch a std::exception, and tell the user that they entered an invalid fraction.
 

@@ -1,9 +1,15 @@
 ---
 layout: post
-title:  "Reseau: labo 5"
-date:   2017-05-21
-categories: Res
+title: "Reseau: labo 5 (fr)"
+subtitle: "labo 5: application réseaux et sockets"
+date: 2017-05-21
+author: Sol
+category: Reseau
+tags: reseau labo couche4 tcp udp
+finished: false
 ---
+
+
 # Labo 5: applications réseaux socket
 
 ## 1. Makefile
