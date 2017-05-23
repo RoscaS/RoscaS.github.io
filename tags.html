@@ -1,10 +1,9 @@
 ---
-layout: page
+layout: pageLong
 title: Tags
 subtitle: Keep Calm and Carry On.
 permalink: /tags/
 ---
-
 <section class="post-tags">
     {% assign tags_list = site.tags %}
     
@@ -21,18 +20,6 @@ permalink: /tags/
     {% assign tags_list = nil %}
 
 </section>
-<!--<div class="wrapper">-->
-    <center>      
-		<p>
-			<a class="link" href="{{ "/" | relative_url }}">Home</a> /
-			<a class="link" href="{{ site.baseurl }}/archive/">Archive</a> /
-			<a class="link" href="{{ site.baseurl }}/category/">Category</a> / 
-			<a class="link" href="{{ site.baseurl }}/tags/">Tags</a> / 
-			<a class="link" href="{{ site.baseurl }}/about/">About</a> /
-			<a class="link" href="{{ site.baseurl }}/contact/">Contact</a>
-    	</p>
-    </center>
-<!--</div>-->
 <hr>
     {% for tag in site.tags  %}
     <h2 id="{{ tag[0] | slugify }}">{{ tag[0] | capitalize }}</h2>

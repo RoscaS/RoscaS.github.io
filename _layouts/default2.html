@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {% include head.html %}
+
+        {% if site.google-analytics %}
+        {% include google-analytics.html %}
+        {% endif %}
+
+        {% if page.url == "/404.html" %}
+        <meta http-equiv="refresh" content="10; url={{ site.baseurl }}">
+        {% endif %}
+    </head>
+
+    <body>
+        {% include header.html %}
+
+        <div class="wrapper">
+            {{ content }}
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="{{ " / " | relative_url }}">Home</a> /
+                <a class="link" href="{{ site.baseurl }}/archive/">Archive</a> /
+                <a class="link" href="{{ site.baseurl }}/category/">Category</a> /
+                <a class="link" href="{{ site.baseurl }}/tags/">Tags</a> /
+                <a class="link" href="{{ site.baseurl }}/about/">About</a> /
+                <a class="link" href="{{ site.baseurl }}/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:{{ site.email }}?subject=Hello&nbsp;{{ site.name }}"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    {% include foot.html %}
+</foot>
+
+</html>
