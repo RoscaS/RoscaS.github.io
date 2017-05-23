@@ -727,3 +727,5 @@ Consequently, the best course of action is just to abstain from using exceptions
 Exceptions do come with a small performance price to pay. They increase the size of your executable, and they may also cause it to run slower due to the additional checking that has to be performed. However, the main performance penalty for exceptions happens when an exception is actually thrown. In this case, the stack must be unwound and an appropriate exception handler found, which is a relatively expensive operation. Consequently, exception handling is best used for truly exceptional cases and catastrophic errors, not for routine error handling.
 
 As a note, some modern computer architectures support an exception model called zero-cost exceptions. Zero-cost exceptions, if supported, have no additional runtime cost in the non-error case (which is the case we most care about performance). However, they incur an even larger penalty in the case where an exception is found.
+
+[learncpp.com](http://www.learncpp.com/cpp-tutorial/141-the-need-for-exceptions/)
