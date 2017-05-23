@@ -736,3 +736,59 @@ Exceptions do come with a small performance price to pay. They increase the size
 As a note, some modern computer architectures support an exception model called zero-cost exceptions. Zero-cost exceptions, if supported, have no additional runtime cost in the non-error case (which is the case we most care about performance). However, they incur an even larger penalty in the case where an exception is found.
 
 [learncpp.com](http://www.learncpp.com/cpp-tutorial/141-the-need-for-exceptions/)
+
+### Exercise:
+
+1) Write a Fraction class that has a constructor that takes a numerator and a denominator. If the user passes in a denominator of 0, throw an exception of type std::runtime_error (included in the stdexcept header). In your main program, ask the user to enter two integers. If the Fraction is valid, print the fraction. If the Fraction is invalid, catch a std::exception, and tell the user that they entered an invalid fraction.
+
+```c++
+#include<iostream>
+#include<stdexcept>
+
+class Fraction
+{
+protected:
+    int _num;
+    int _den;
+public:
+    Fraction() {}
+
+    Fraction(int num, int den): _num(num), _den(den)
+    {
+        if (den == 0)
+        {
+            throw std::runtime_error("Invalid denominator");
+        }
+    }
+
+    friend std::ostream& operator <<
+    (std::ostream& out, Fraction& src)
+    {
+        return out << src._num << "/" << src._den;
+    }
+};
+
+
+int main()
+{
+    std::cout << "Numerator: ";
+    int numerator;
+    std::cin >> numerator;
+
+    std::cout << "Denominator: ";
+    int denominator;
+    std::cin >> denominator;
+
+    try
+    {
+        Fraction f{numerator,denominator};
+        std::cout << "Your fraction is: " << f << '\n';
+    }
+    catch (std::exception &e)
+    {
+        std::cerr << "Standard exception: " << e.what() << '\n';
+    }
+        
+    return 0;
+}
+```
