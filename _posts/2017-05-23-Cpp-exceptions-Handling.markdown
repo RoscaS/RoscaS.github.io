@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Cpp: Exception handling (en)"
+date:   2017-05-21
+categories: Cpp
+---
+
 # Exception handling
 When an exception is raised (using `throw`), execution of the program immediately jumps to the nearest enclosing `try` block (propagating up the stack if necessary to find an enclosing `try` block. 
 If any of the `catch` handlers attached to the `try` block handle that type of exception, that handler is executed and the exception is considered handled.
