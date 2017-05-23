@@ -1,10 +1,3 @@
----
-layout: post
-title:  "Reseau: labo 5"
-date:   2017-05-21
-categories: Res
----
-
 # Exception handling
 When an exception is raised (using `throw`), execution of the program immediately jumps to the nearest enclosing `try` block (propagating up the stack if necessary to find an enclosing `try` block. 
 If any of the `catch` handlers attached to the `try` block handle that type of exception, that handler is executed and the exception is considered handled.
@@ -516,3 +509,221 @@ It’s up to you whether you want create your own standalone exception classes, 
 
 ## Rethrowing an exception
 http://www.learncpp.com/cpp-tutorial/14-6-rethrowing-exceptions/
+
+## Function try blocks
+
+Try and catch blocks work well enough in most cases, but there is one particular case in which they are not sufficient. Consider the following example:
+
+```c++
+#include<iostream>
+using namespace std;
+
+class A
+{
+protected:
+    int _x;    
+public:
+    A(int x): _x(x) { if (x <= 0) { throw 1;} }
+};
+
+class B:public A
+{
+public:
+    B(int x): A(x)
+    {
+        // what happens if creation of A fails and
+        // we want to handle it here?
+    }
+};
+
+int main()
+{
+    try
+    {
+        B b(0);
+    }
+    catch (int)
+    {
+        std::cout << "Oops\n";
+    }
+    return 0;
+}
+```
+In the above example, derived class B calls base class constructor A, which can throw an exception. Because the creation of object b has been placed inside a try block (in function main()), if A throws an exception, main’s try block will catch it. Consequently, this program prints:
+
+```
+Oops
+```
+
+But what if we want to catch the exception inside of B? The call to base constructor A happens via the member initialization list, before the B constructor’s body is called. There’s no way to wrap a standard try block around it.
+
+In this situation, we have to use a slightly modified try block called a **function try block**.
+
+Function try blocks are designed to allow you to establish an exception handler around the body of an entire function, rather than around a block of code:
+
+```c++
+#include<iostream>
+using namespace std;
+
+class A
+{
+protected:
+    int _x;    
+public:
+    A(int x): _x(x) { if (x <= 0) { throw 1;} }
+};
+
+class B:public A
+{
+public:
+    B(int x) try : A(x) // note addition of try keyword
+    {} 
+    catch (...) // note this is at same level of indendation 
+    {           // as the function itself
+
+     // exceptions from member initializer list or constructor
+     // body are cought here
+     std::cerr << "Construction of A failed\n";   
+     // if an exception isn't explicitly thrown here, the curent
+     // exception will be implicitly rethrown
+    }
+};
+
+int main()
+{
+    try
+    {
+        B b(0);
+    }
+    catch (int)
+    {
+        std::cout << "Oops\n";
+    }
+    return 0;
+}
+```
+
+When this program is run, it produces the output:
+
+```
+Construction of A failed
+Oops
+```
+Let’s examine this program in more detail.
+
+First, note the addition of the “try” keyword before the member initializer list. This indicates that everything after that point (until the end of the function) should be considered inside of the try block.
+
+Second, note that the associated catch block is at the same level of indentation as the entire function. Any exception thrown between the try keyword and the end of the function body will be eligible to be caught here.
+
+Finally, unlike normal catch blocks, which allow you to either resolve an exception, throw a new exception, or rethrow an existing exception, with function-level try blocks, you must throw or rethrow an exception. If you do not explicitly throw a new exception, or rethrow the current exception (using the throw keyword by itself), the exception will be implicitly rethrown up the stack.
+
+In the program above, because we did not explicitly throw an exception from the function-level catch block, the exception was implicitly rethrown, and was caught by the catch block in main(). This is the reason why the above program prints “Oops”!
+
+Although function level try blocks can be used with non-member functions as well, they typically aren’t because there’s rarely a case where this would be needed. **They are almost exclusive used with derived constructors**!
+
+## Exception dangers and downsides
+
+### Cleaning up resources
+
+One of the biggest problems that new programmers run into when using exceptions is the issue of cleaning up resources when an exception occurs. Consider the following example:
+
+```c++
+try
+{
+    openFile(filename);
+    writeFile(filename, data);
+    closeFile(filename);
+}
+catch (FileException &exception)
+{
+    cerr << "Failed to write to file: " << exception.what() << std::endl;
+}
+```
+
+What happens if WriteFile() fails and throws a FileException? At this point, we’ve already opened the file, and now control flow jumps to the FileException handler, which prints an error and exits. Note that the file was never closed! This example should be rewritten as follows:
+
+```c++
+try
+{
+    openFile(filename);
+    writeFile(filename, data);
+    closeFile(filename);
+}
+catch (FileException &exception)
+{
+    // Make sure file is closed
+    closeFile(filename);
+    // Then write error
+    cerr << "Failed to write to file: " << exception.what() << std::endl;
+}
+```
+
+This kind of error often crops up in another form when dealing with dynamically allocated memory:
+
+```c++
+try
+{
+    Person *john = new Person("John", 18, PERSON_MALE);
+    processPerson(john);
+    delete john;
+}
+catch (PersonException &exception)
+{
+    cerr << "Failed to process person: " << exception.what() << '\n';
+}
+```
+
+If `processPerson()` throws an exception, control flow jumps to the catch handler. As a result, john is never deallocated! This example is a little more tricky than the previous one -- because john is local to the try block, it goes out of scope when the try block exits. That means the exception handler can not access john at all (its been destroyed already), so there’s no way for it to deallocate the memory.
+
+However, there are two relatively easy ways to fix this. First, declare john outside of the try block so it does not go out of scope when the try block exits:
+
+```c++
+Person *john = NULL;
+try
+{
+    john = new Person("John", 18, PERSON_MALE);
+    processPerson(john);
+    delete john;
+}
+catch (PersonException &exception)
+{
+    delete john;
+    cerr << "Failed to process person: " << exception.what() << '\n';
+}
+```
+
+Because john is declared outside the try block, it is accessible both within the try block and the catch handlers. This means the catch handler can do cleanup properly.
+
+The second way is to use a local variable of a class that knows how to cleanup itself when it goes out of scope (often called a “smart pointer”. The standard library provides a class called **std::unique\_ptr** that can be used for this purpose. std::unique\_ptr is a template class that holds a pointer, and deallocates it when it goes out of scope.
+
+```c++
+#include <memory>; // for std::unique_ptr
+ 
+try
+{
+    Person *john = new Person("John", 18, PERSON_MALE);
+    unique_ptr<Person> upJohn(john); // upJohn now owns john
+ 
+    ProcessPerson(john);
+ 
+    // when upJohn goes out of scope, it will delete john
+}
+catch (PersonException &exception)
+{
+    cerr << "Failed to process person: " << exception.what() << '\n';
+}
+```
+
+### Exceptions and destructors
+
+Unlike constructors, where throwing exceptions can be a useful way to indicate that object creation did not succeed, exceptions should never be thrown in destructors.
+
+The problem occurs when an exception is thrown from a destructor during the stack unwinding process. If that happens, the compiler is put in a situation where it doesn’t know whether to continue the stack unwinding process or handle the new exception. The end result is that your program will be terminated immediately.
+
+Consequently, the best course of action is just to abstain from using exceptions in destructors altogether. Write a message to a log file instead.
+
+### Performance concerns
+
+Exceptions do come with a small performance price to pay. They increase the size of your executable, and they may also cause it to run slower due to the additional checking that has to be performed. However, the main performance penalty for exceptions happens when an exception is actually thrown. In this case, the stack must be unwound and an appropriate exception handler found, which is a relatively expensive operation. Consequently, exception handling is best used for truly exceptional cases and catastrophic errors, not for routine error handling.
+
+As a note, some modern computer architectures support an exception model called zero-cost exceptions. Zero-cost exceptions, if supported, have no additional runtime cost in the non-error case (which is the case we most care about performance). However, they incur an even larger penalty in the case where an exception is found.
