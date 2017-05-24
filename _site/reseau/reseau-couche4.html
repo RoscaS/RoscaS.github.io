@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-couche4.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- Google font -->
+
+  <!--<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Noto Sans">-->
+
+<!-- font awesome -->
+
+<!--<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">-->
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reseau: Couche 4, transport (fr)</title>
+  <meta name="description" content="Couche 4: Transport">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Reseau: Couche 4, transport (fr)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="02 May 2017" itemprop="datePublished">May 2 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche4</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>théorie couche 4</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="couche-4-transport">Couche 4: Transport</h1>
+
+<h2 id="1-introduction">1. Introduction</h2>
+
+<p>Le rôle de la couche transport est de rendre possible la <strong>communication logique</strong> entre applications. En anglais, on parle de logical end-to-end communication.</p>
+
+<blockquote>
+  <p>Communication logique: Communication distant dans laquelle les hôtes communicants ne sont pas forcément reliés physiquement.</p>
+  <ul>
+    <li>Couche réseau (3): communication logique entre les <strong>hôtes</strong></li>
+    <li>Couche transport (4): communication logique entre les <strong>processus d’applications</strong></li>
+  </ul>
+</blockquote>
+
+<p>La communication logique qu’établit la couche transport se fait entre les applications impliquées dans la communication. Lorsque deux hôtes A et B communiquent, c’est par le biais d’une application. Si l’application utilisée par l’hôte A est un client de messagerie, cela veut dire que l’hôte B utilisera également un client de messagerie pour lire le message. Donc il s’agit d’une même application dans la transmission et la réception. Voilà pourquoi on parle de end-to-end application communication: La communication entre les couches se fait de façon parallèle.</p>
+
+<p><img src="https://user.oc-static.com/files/287001_288000/287530.png" alt="" /></p>
+
+<p>Ce principe reste valable pour les autres couches du modèle OSI ou TCP-IP. Chaque couche communique parallèlement avec sa couche « homologue ». La couche application de l’hôte émetteur communique directement avec la couche application de l’hôte récepteur, de même que la couche transport de l’émetteur communique directement avec la couche transport de l’hôte récepteur. (Revoir modèle OSI, encapsulation, PDU, SDU…)</p>
+
+<h4 id="procédure-de-communication-entre-deux-applications">Procédure de communication entre deux applications</h4>
+
+<p>Quand l’<code class="highlighter-rouge">hôte A</code> envoie un message, il utilise une application comme un client de messagerie. Cette application lui donne accès aux services réseaux pour envoyer un mail, donc le protocole <code class="highlighter-rouge">SMTP</code> sera utilisé, par exemple. Une fois ce SDU reçu par la couche transport, il sera converti en un PDU, comme nous l’avons vu. La couche transport, qui est aussi responsable de la fragmentation des unités de données, va « couper » ce SDU en plusieurs chaînes (ou morceaux) qu’on appelle « chunks » en anglais. À chaque « morceau » sera ajouté un en-tête. Le SDU reçu par la couche transport sera donc « brisé » en 4 PDU distincts, par exemple.</p>
+
+<p><a href="/reseau/reseau-analogie-c4-5.html">Analogie enfantine qui envoie du lourd</a></p>
+
+<h2 id="2-rôles-de-la-couche-4">2. Rôles de la couche 4</h2>
+
+<ul>
+  <li>
+    <p>Communication orientée connexion (Connection-oriented communication): ce service est bénéfique pour plusieurs applications, notamment parce qu’il interprète la connexion établie entre processus comme étant un flux de données. Ce flux de données n’est en fait qu’une séquence d’octets. Ainsi, il faudrait donc gérer l’orientation des octets, qui est également un service de cette couche. <strong>Il est plus facile de gérer ce genre de communication que celles en mode orienté non connexion.</strong></p>
+  </li>
+  <li>
+    <p>L’ordre de livraison : nous savons que la couche transport fragmente les données en plusieurs séquences. <strong>La couche réseau ne peut pas garantir que les données envoyées arriveront exactement dans l’ordre même de leur envoi</strong> (contrôle de séquences). La couche de transport s’assure que l’ordre de livraison est le même que l’ordre d’envoi. Cette gestion de séquences se fait en utilisant <strong>un numéro de séquence</strong>.</p>
+  </li>
+  <li>
+    <p>Fiabilité : Le but de ce service est de vérifier l’intégralité des paquets car ces derniers peuvent se perdre en cours de transmission à cause de la <strong>congestion du réseau</strong>. Cette vérification d’intégralité se fait souvent en utilisant un code de détection d’erreurs tel que la somme de contrôle (<code class="highlighter-rouge">checksum</code>). La fiabilité consiste aussi à s’assurer que le récepteur reçoit chaque segment qui lui est envoyé. Cela est accompli par l’envoi des <code class="highlighter-rouge">ACK</code> et <code class="highlighter-rouge">NACK</code> (accusés de réception) à l’émetteur. Il faudrait donc également être en mesure de <strong>renvoyer les séquences qui se sont perdues</strong> : cela se fait par une requête automatique de renvoi.</p>
+  </li>
+  <li>
+    <p>Contrôle de congestion : Sert à contrôler le trafic dans un réseau (informatique ou de télécom) afin de réduire la congestion (saturation) d’un réseau en évitant que les autres clients utilisent les liens de connexion qui sont déjà extrêmement utilisés.</p>
+  </li>
+  <li>
+    <p>Multiplexing / demultiplexing : C’est ce que permettent les ports de communication des applications. Plus d’explications à suivre…</p>
+  </li>
+</ul>
+
+<h2 id="3-ports">3. Ports</h2>
+
+<ul>
+  <li>
+    <p>Adresse IP: Adresse unique assignée à un hôte pour permettre de distinguer chaque hôte dans des réseaux.</p>
+  </li>
+  <li>
+    <p>Adresse physique (MAC): Adresse associée à la carte réseau d’un hôte pour distinguer les hôtes dans un réseau local.</p>
+  </li>
+</ul>
+
+<p>Ces deux adrèsses servent toutes les deux à identifier un hôte.</p>
+
+<blockquote>
+  <p>Un numéro de port sert à adentifier une application.</p>
+</blockquote>
+
+<p>Le numéro de port nous permet de faire la distinction entre les applications. Nous savons déjà que la couche transport établit une communication bout-à-bout entre les processus d’applications. Le numéro de port va noue permetre de distinguer les nombreux processus d’une application qui sont en fait des services exécutés sur une machine C’est le numéro de port qui permettra de les différencier.</p>
+
+<p>Par exemple dans le cas de la transmission d’un mail, le premier service ou la première application utilisée est un <code class="highlighter-rouge">MUA</code>. Le <code class="highlighter-rouge">MUA</code> utilise le protocole <code class="highlighter-rouge">SMTP</code> pour envoyer le mail au serveur de messagerie souvent en passant par un <code class="highlighter-rouge">MSA</code>. Dans l’ordre de réception, on utilisait également un autre <code class="highlighter-rouge">MUA</code> pour retirer le mail du serveur de messagerie avec un protocole de réception comme <code class="highlighter-rouge">IMAP</code> ou <code class="highlighter-rouge">POP</code>. Il se peut donc que <strong>les deux services (<code class="highlighter-rouge">POP</code>/<code class="highlighter-rouge">IMAP</code> et <code class="highlighter-rouge">SMTP</code>) soient exécutés au même moment sur une même machine hôte</strong>. C’est là qu’intervient le numéro de port, parce qu’il nous permet de faire la distinction entre les services qui ont été demandés par l’application distante, qu’il s’agisse d’un serveur de messagerie ou d’un client de messagerie. Le protocole <code class="highlighter-rouge">SMTP</code> utilise le protocole <code class="highlighter-rouge">TCP</code> pour la transmission au numéro de port 25.</p>
+
+<p>L’organisme <a href="https://en.wikipedia.org/wiki/Internet_Assigned_Numbers_Authority">IANA (Internet Assigned Numbers Authority)</a> classe les numéros de port en trois catégories principales:</p>
+
+<p><strong>Well-known ports</strong> (0 - 1023):
+Réservés pour des services bien connus (web, envoi de mail, …)</p>
+
+<p><strong>Ports réservés</strong> (1024 - 49151): 
+Utilisés par les applications propriétaires.</p>
+
+<p><strong>Ports dynamiques</strong> (49152 - 65635):
+Ports libre qu’on peut utiliser pour nos applications.</p>
+
+<ul>
+  <li>Echo (7): ICMP requst ? <strong>à vérifier</strong></li>
+  <li>FTP (21): Protocole de transfert de fichier</li>
+  <li>Telnet (23): Utilisé pour l’établissement des sessions à distance</li>
+  <li>HTTP (80): (www)  Protocole de téléchargement (principalement de pages web)</li>
+  <li>SNMP (161):</li>
+  <li>Discard (9):</li>
+  <li>SSH (22): Protocole permettant l’échange de données par le biais d’un canal sécurisé</li>
+  <li>SMTP (25): Protocole d’envoi de courrier électronique</li>
+  <li>WHOIS (43): protocol  Protocole ou service utilisé pour l’identification d’une machine par son nom de domaine ou son adresse IP. La procédure d’identification se fait par une requête envoyée à un des registres Internet pour obtenir des informations.</li>
+  <li>POP3 (10): Protocole de retrait de mails d’un serveur de messagerie</li>
+  <li>HTTPS (443): HTTP sécurisé</li>
+  <li>DNS ( 53): Protocole de résolution des noms de domaine</li>
+</ul>
+
+<p><a href="https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">liste plus complète</a></p>
+
+<h2 id="4-les-notions-autour-du-numéro-de-port">4. Les notions autour du numéro de port</h2>
+
+<p>Les ports sont un concept très important en réseau. Nous allons voir quelques-unes des notions qui gravitent autour des ports.</p>
+
+<h3 id="la-redirection-de-port-port-forwarding">La redirection de port (port forwarding)</h3>
+
+<p>Intimement lié à la translation des adresses réseaux (<code class="highlighter-rouge">NAT</code>).Le port forwarding ou encore port mapping permet à un hôte d’un réseau distant (Internet par exemple) de communiquer avec un hôte d’un réseau local en faisant transiter les paquets TCP/IP par un serveur <code class="highlighter-rouge">NAT</code>. <code class="highlighter-rouge">NAT</code> peut être un service installé sur une machine, un serveur ou un routeur. Généralement une machine combine <code class="highlighter-rouge">NAT</code> et pare-feu.</p>
+
+<h3 id="le-scan-de-port-port-scanning">Le scan de port (port scanning)</h3>
+
+<p>Le scan ou balayage de port est une technique très populaire en réseau et surtout en sécurité. Cette technique consiste à « scanner » un hôte afin de découvrir les ports ouverts et d’avoir la liste des services exécutés sur cet hôte.</p>
+
+<p>Connaître les ports ouverts et les services exécutés permet à un hacker, par exemple, d’exploiter les vulnérabilités des services afin de planifier une attaque.</p>
+
+<p>Le port scanning peut viser plusieurs cibles. Les cibles les plus visées sont le</p>
+<ul>
+  <li><code class="highlighter-rouge">SYN</code> (on parle de SYN scanning),</li>
+  <li><code class="highlighter-rouge">TCP</code> (TCP scanning)</li>
+  <li><code class="highlighter-rouge">UDP</code> (UDP scanning)</li>
+  <li><code class="highlighter-rouge">ACK</code> (ACK scanning)</li>
+  <li><code class="highlighter-rouge">FIN</code> (FIN scanning) et Window (Window scanning).</li>
+</ul>
+
+<h3 id="déclenchement-de-port-port-triggering">Déclenchement de port (port triggering)</h3>
+
+<p>Le port triggering consiste, comme son nom l’indique, à déclencher quelque chose. Cette technique permet de déclencher l’ouverture d’un port précis. Or, qui dit déclencher dit élément déclencheur, aussi appelé <strong>événement</strong>.</p>
+
+<p>Le port triggering ne se produit donc que lorsqu’un événement particulier a lieu. 
+On le configure au niveau du matériel assurant le service <code class="highlighter-rouge">NAT</code>. Grâce à cette configuration, on peut ouvrir un port entrant lorsque l’hôte utilise un port sortant.</p>
+
+<p>Le port triggering est en quelque sorte une <strong>automatisation du port forwarding</strong>. Si le trafic sortant sur des ports précis (prédéterminés par une configuration) provoque du trafic entrant sur des ports d’entrée prédéterminés, on peut automatiquement les forwarder à l’hôte alors que les ports entrants sont utilisés.</p>
+
+<h3 id="pat--port-address-translation">PAT : Port Address Translation</h3>
+
+<p><code class="highlighter-rouge">PAT</code> joue presque le même rôle que <code class="highlighter-rouge">NAT</code>. Le concept reste le même : il permet à plusieurs hôtes dans un réseau local d’utiliser une même adresse IP d’un réseau public. On l’utilise dans le même but que le subnetting, c’est-à-dire pour mieux gérer les adresses disponibles.</p>
+
+<p><code class="highlighter-rouge">PAT</code> est une technique qui opère dans les couches 3 et 4 du modèle OSI, alors que <code class="highlighter-rouge">NAT</code> s’arrête à la couche 3.</p>
+
+<p>L’un des défauts de cette technique est la complexité que cela implique au niveau du pare-feu. Étant donné que les hôtes d’un réseau local partagent tous ou sont tous « déguisés » en une seule adresse publique, les hôtes externes au réseau local (les hôtes distants) ne peuvent pas établir une connexion avec un hôte interne au réseau sans utiliser une technique complexe consistant à traverser le service <code class="highlighter-rouge">NAT</code> ou forwarder les connexions via un port déterminé dans le pare-feu.</p>
+
+<blockquote>
+  <p>Tous ces services fonctionnent grace aux <strong>sockets</strong>.</p>
+</blockquote>
+
+<h2 id="5-sockets">5. Sockets</h2>
+
+<p>Nous savons maintenant que les protocoles se chevauchent:</p>
+
+<blockquote>
+  <p>Un <strong>protocole applicatif (couche 7)</strong> (<code class="highlighter-rouge">SMTP</code>, <code class="highlighter-rouge">POP</code>, <code class="highlighter-rouge">HTTP</code>, etc)</p>
+</blockquote>
+
+<p>peut être interfacé à un</p>
+
+<blockquote>
+  <p><strong>protocole de transport (couche 4)</strong> (<code class="highlighter-rouge">UDP</code>, <code class="highlighter-rouge">TCP</code>).</p>
+</blockquote>
+
+<p>Mais comment faire pour que les processus des applications communiquent avec les ports des protocoles de transport ?</p>
+
+<p>C’est à ça que servent les sockets. Un socket est une interface entre les processus: en réseau, un socket sert donc à faire communiquer un processus avec un service qui gère le réseau.</p>
+
+<p>Chaque socket a une adresse de socket. Cette adresse est constituée de deux choses:</p>
+
+<ul>
+  <li>une adresse IP</li>
+  <li>un numéro de port</li>
+</ul>
+
+<p>C’est grâce à la programmation de socket que l’on définit le modèle de communication:</p>
+
+<ul>
+  <li>
+    <p>Si le socket a été configuré de manière à envoyer ou recevoir, c’est un modèle <strong>Half-Duplex</strong></p>
+  </li>
+  <li>
+    <p>S’il a été configuré de manière à envoyer et recevoir simultanément, il s’agit d’un modèle <strong>Full-Duplex</strong></p>
+  </li>
+</ul>
+
+<p>Étant donné que les sockets sont en fait une <strong>interface de programmation d’applications</strong> (<strong>API</strong>), on peut donc s’en servir pour programmer des applications en réseaux (par exemple, créer une application pour faire communiquer un client et un serveur).</p>
+
+<p>Voici un schéma illustrant une communication entre un client et un serveur:</p>
+
+<p><img src="https://user.oc-static.com/files/287001_288000/287537.png" alt="" /></p>
+
+<p>Le client commence à se connecter au serveur grâce aux sockets.</p>
+
+<p>Une fois la connexion établie (étape 1), le client et le serveur peuvent communiquer (s’échanger des messages). C’est ce qui se passe dans les étapes 2 et 3. À la fin de la communication, le client envoie une demande de terminaison de session au serveur (étape 4) et le serveur met fin à la connexion.</p>
+
+<p>Le serveur n’effectue pas les mêmes actions initiales que le client.</p>
+
+<p>Le serveur utilise les sockets pour lier un port d’application à son processus correspondant. Ensuite, il <em>écoute</em> ce port.</p>
+
+<p><strong>Écouter</strong>, veut dire: « continuellement vérifier s’il y a un événement qui se passe sur ce port précis ». Ce faisant, il va découvrir qu’un client essaie de se connecter à lui par le numéro de port qu’il écoute. Il accepte donc la requête, établit la connexion (étape 1) et, finalement, les deux communiquent (étapes 2, 3 et 4)
+.</p>
+
+<p>Le modèle de communication est Half-Duplex parce que le client envoie et attend la réponse du serveur et vice-versa.</p>
+
+<h2 id="6-les-fonctions-des-api">6. Les fonctions des <strong>API</strong></h2>
+
+<p>Comme vous le savez dorénavant, la programmation des sockets se fait par le biais d’une <strong>API</strong> (Interface de Programmation d’Application). Il existe plusieurs <strong>API</strong> pour programmer les sockets ; l’une des plus populaires est Winsock. Cependant, chaque <strong>API</strong> propose les fonctions suivantes :</p>
+
+<p><code class="highlighter-rouge">socket()</code>: dans le schéma, vous voyez bien que la première case est « socket ». Cette fonction crée un objet de type Socket que l’on peut identifier par un nombre entier. La création de cet objet, bien entendu, nécessite l’allocation de ressources (mémoire) pour cet objet.</p>
+
+<p><code class="highlighter-rouge">bind()</code>: en français, ça veut dire « lier ». Au niveau du serveur, dans le schéma, nous avons mis « liaison » juste après socket. Ainsi, après avoir créé une nouvelle instance d’un objet de type Socket, au niveau du serveur, il faut utiliser la fonction <code class="highlighter-rouge">bind()</code> pour lier ou associer un socket à une adresse de socket (IP + port).</p>
+
+<p><code class="highlighter-rouge">listen()</code>: cette fonction est également utilisée au niveau du serveur. Dans le schéma, c’est le bloc « écoute ». Cette fonction change l’état du socket et le met dans un état d’écoute. Comme nous l’avons expliqué, le serveur va « écouter » l’adresse à laquelle est associé le socket en attendant un événement. Il y a également une fonction poll() qui agit aussi dans le même but que la fonction listen(), mais d’une manière différente.</p>
+
+<p><code class="highlighter-rouge">connect()</code>: cette fonction permet au client d’établir une connexion avec le serveur. En général, ça sera une connexion <code class="highlighter-rouge">TCP</code>, car la majorité des sockets utilisent <code class="highlighter-rouge">TCP</code> comme protocole de transmission. Cette fonction assigne également un numéro de port local au socket coté client.</p>
+
+<p><code class="highlighter-rouge">accept()</code>: en toute logique, cette fonction sera appelée du côté du serveur, car elle sert principalement à accepter une requête de connexion envoyée par le client.</p>
+
+<p><code class="highlighter-rouge">send()</code>: cette fonction, qui signifie « envoyer » et qui est également représentée dans le schéma (bloc « envoi »), sert à envoyer des données du client au serveur et vice-versa. On utilise également la fonction <code class="highlighter-rouge">write()</code> ou <code class="highlighter-rouge">sendto()</code>.</p>
+
+<p><code class="highlighter-rouge">recv()</code>: cette fonction, représentée par le bloc « réception » du schéma, sert à recevoir les données envoyées par la fonction send(). On utilise également la fonction read() (lire) ou recvfrom() (recevoir de).</p>
+
+<p><code class="highlighter-rouge">close()</code>: c’est la fonction qui permet au système d’exploitation de libérer les ressources allouées lors de la création de l’objet de type Socket avec la fonction socket(). C’est donc la terminaison de la connexion. Elle est représentée par le bloc « fin » dans notre schéma.</p>
+
+<h2 id="7-multiplexing-démultiplexing">7. Multiplexing démultiplexing</h2>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Reseau: Couche 4, transport (fr)@&amp;url=http://localhost:4000/reseau/reseau-couche4.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-couche4.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-couche4.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

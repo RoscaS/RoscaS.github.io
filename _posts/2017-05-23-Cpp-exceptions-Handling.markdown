@@ -5,7 +5,7 @@ subtitle: "Theory and examples about exceptions handling"
 date: 2017-05-23
 author: Sol
 category: Cpp
-tags:  Cpp exceptions
+tags:  Cpp exceptions en
 finished: false
 ---
 
