@@ -208,6 +208,10 @@ Ports libre qu’on peut utiliser pour nos applications.</p>
 
 <p><a href="https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">liste plus complète</a></p>
 
+<blockquote>
+  <p>Un numéro de port est un nombre entier codé sur 16 bits (2 octets) et peut donc avoir une valeur allant de 0 à 65 335</p>
+</blockquote>
+
 <h2 id="4-les-notions-autour-du-numéro-de-port">4. Les notions autour du numéro de port</h2>
 
 <p>Les ports sont un concept très important en réseau. Nous allons voir quelques-unes des notions qui gravitent autour des ports.</p>
@@ -327,8 +331,66 @@ On le configure au niveau du matériel assurant le service <code class="highligh
 
 <p><code class="highlighter-rouge">close()</code>: c’est la fonction qui permet au système d’exploitation de libérer les ressources allouées lors de la création de l’objet de type Socket avec la fonction socket(). C’est donc la terminaison de la connexion. Elle est représentée par le bloc « fin » dans notre schéma.</p>
 
-<h2 id="7-multiplexing-démultiplexing">7. Multiplexing démultiplexing</h2>
+<h2 id="7-multiplexingdemultiplexing">7. Multiplexing/demultiplexing</h2>
 
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Telephony_multiplexer_system.gif" alt="" /></p>
+
+<blockquote>
+  <p>Multiplexage: Le fait d’encapsuler les SDU en spécifiant le numéro de port des processus des applications qui font l’envoie (SDU devient PDU) et le transmettre à la couche réseau.</p>
+</blockquote>
+
+<blockquote>
+  <p>Démultiplexage: Le fait de transmettre un PDU donné au processus d’une application donnée.</p>
+</blockquote>
+
+<p><img src="https://user.oc-static.com/files/287001_288000/287620.png" alt="" /></p>
+
+<p>voir <a href="/reseau/reseau-analogie-c4-5.html">analogie enfantine</a></p>
+
+<p>Les <code class="highlighter-rouge">processus</code> (cousins) écrivent des lettres (<code class="highlighter-rouge">SDU</code>). Un <code class="highlighter-rouge">protocole de transport</code> (Pierre), qui peut ètre <code class="highlighter-rouge">TCP</code> ou <code class="highlighter-rouge">UDP</code>, açomplit une opération de <strong>multiplexage</strong> en rangeant chaque <code class="highlighter-rouge">SDU</code> dans son enveloppe (<strong>encapsulation</strong>). Nous nous retrouvons avec 12 <code class="highlighter-rouge">PDU</code> (12cousins ont écrit des lettre). Le protocole <code class="highlighter-rouge">TCP</code> ou <code class="highlighter-rouge">UDP</code> transmet ces <code class="highlighter-rouge">PDU</code> au protocole <code class="highlighter-rouge">IP</code> (le bureau de poste). Une fois que ces lettre ont emprunté un média de transmission (câble, wifi…), elles vont arriver au niveau de la couche réseau de l’hôte récepteur. Là, églement, le protocole réseau <code class="highlighter-rouge">IP</code> va faire son job. Une fois son travail terminé, IP va faire appel à un protocole de transport (Jean), lequel effectuera une opération de <strong>démultiplexage</strong> en transmettant chaque enveloppe à son destinataire.</p>
+
+<blockquote>
+  <p>TCP et UDP sont responsables de la modification des en-têtes des unités de données lors du multiplexage / démultiplexage</p>
+</blockquote>
+
+<h2 id="8-port-source-et-port-destination">8. Port source et port destination</h2>
+
+<p>Un hôte A a une instance d’une application HTTP en cours d’exécution (disons qu’il surfe sur le web) et qu’il envoie une requête (il demande une page) à un serveur web B qui a plusieurs instances du service HTTP en cours d’exécution. Chaque instance a le même numéro de port, soit 80.</p>
+
+<p><strong>Les serveurs web créent un nouveau processus pour chaque requête HTTP qu’ils reçoivent. Un serveur qui gère 10 requêtes gère donc 10 processus utilisant tous le même numéro de port.</strong>
+Alors, comment le protocole de transport au niveau du serveur web va réussir son démultiplexage (acheminer la requête au processus adéquat) ? Il y a plusieurs processus exécutés au même moment. En se basant uniquement sur un seul numéro de port dans le segment de transport, le démultiplexage va échouer. :o</p>
+
+<p>Nous avons donc besoin de deux numéros de port (source et destination) avec des valeurs différentes.</p>
+
+<p>En réseau, la communication entre deux hôtes se fait selon une <strong>architecture client-serveur</strong>.</p>
+
+<blockquote>
+  <p>Celui qui initialise la transmission est le client</p>
+</blockquote>
+
+<blockquote>
+  <p>Celui qui répond est le serveur.</p>
+</blockquote>
+
+<p>Ainsi, si nous avons un hôte junior0-PC qui essaie de communiquer avec un hôte claude-PC via une session à distance (<code class="highlighter-rouge">Telnet</code>), quelles seront les valeurs des champs « Source port » et « Destination port » ? Eh bien, le champ « Destination port » aura pour valeur 23, car c’est le numéro de port bien connu, conventionnellement attribué par l’IANA pour Telnet. Mais quid du champ « Source port » ? Quelle valeur allons-nous y mettre ? 23 ?</p>
+
+<p>En général, le protocole de cette couche (UDP ou TCP) va générer automatiquement un numéro de port qu’aucun processus n’utilise actuellement. Comme vous le savez, plusieurs processus (parfois plusieurs processus d’un même type d’application) peuvent être exécutés au même moment sur une même machine. <strong>Chaque processus a un numéro de port</strong>. On ne peut pas utiliser un numéro de port déjà utilisé par un autre processus pour le champ « Source port ».</p>
+
+<blockquote>
+  <p>Si, grâce à la programmation des sockets, vous avez créé une application qui doit utiliser un numéro de port de votre choix, alors, bien entendu, vous pouvez déterminer le numéro de port source à utiliser, et ce dernier sera marqué dans le champ « Source port » du segment. Pour ce faire, utilisez la fonction bind() de l’API que vous aurez utilisée pour la création de votre application.</p>
+</blockquote>
+
+<p>Disons que nous avons programmé une application de manière à utiliser le numéro de port <code class="highlighter-rouge">Y</code>. Nous voulons utiliser notre application et envoyer une requête HTTP à un serveur web. Nous savons que le serveur écoute (grâce à la fonction <code class="highlighter-rouge">listen()</code> ) le port 80. Le message que nous envoyons au serveur web sera par exemple l’URL d’un site web : www.siteduzero.com (c’est simplifié ; une requête HTTP est plus complexe, en réalité).</p>
+
+<p><img src="https://user.oc-static.com/files/287001_288000/287644.png" alt="" /></p>
+
+<p>Y sera la valeur du champ « Source port » et 80 la valeur du champ « Destination port ».</p>
+
+<p>Le serveur va recevoir ce PDU et examiner sa constitution. « Ah tiens, c’est une requête d’une page web (port 80) par l’application x (port Y) ». Il va traiter la requête et renvoyer une réponse. C’est là qu’on comprend l’importance des deux numéros de port.</p>
+
+<p>Dans la procédure d’envoi de la requête, le champ « Source port » avait pour valeur Y. Dans l’envoi de la réponse, le champ « Source port » prend la valeur du champ « Destination port » de la requête, et le champ « Destination port » prend la valeur du champ « Source port » de la requête. Ainsi, notre segment envoyé par le serveur web ressemblera à ceci :</p>
+
+<p><img src="https://user.oc-static.com/files/287001_288000/287645.png" alt="" /></p>
 
 </div>
 
