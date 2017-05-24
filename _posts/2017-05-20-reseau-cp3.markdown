@@ -154,21 +154,21 @@ TCP (qui signifie Transmission Control Protocol, soit en français: Protocole de
 Grâce au protocole TCP, les applications peuvent communiquer de façon sûre (grâce au système d'accusés de réception du protocole TCP), indépendamment des couches inférieures. Cela signifie que les routeurs (qui travaillent dans la couche Internet) ont pour seul rôle l'acheminement des données sous forme de datagrammes, sans se préoccuper du contrôle des données, car celui-ci est réalisé par la couche transport (plus particulièrement par le protocole TCP). 
 
 
-Lors d'une communication à travers le protocole TCP, les deux machines doivent établir une connexion. La machine émettrice (celle qui demande la connexion) est appelée client, tandis que la machine réceptrice est appelée serveur. On dit qu'on est alors dans un environnement Client-Serveur. Les machines dans un tel environnement communiquent en mode connecté, c'est-à-dire que la communication se fait dans les deux sens. 
-
+Lors d'une communication à travers le protocole TCP, **les deux machines doivent établir une connexion**. La machine émettrice (celle qui demande la connexion) est appelée client, tandis que la machine réceptrice est appelée serveur. On dit qu'on est alors dans un environnement Client-Serveur. Les machines dans un tel environnement communiquent en mode connecté, c'est-à-dire que la communication se fait dans les deux sens. 
 
 Pour permettre le bon déroulement de la communication et de tous les contrôles qui l'accompagnent, les données sont encapsulées, c'est-à-dire qu'on ajoute aux paquets de données un en-tête qui va permettre de synchroniser les transmissions et d'assurer leur réception. 
 
-
-Une autre particularité de TCP est de pouvoir réguler le débit des données grâce à sa capacité à émettre des messages de taille variable, ces messages sont appelés segments.
+Une autre particularité de TCP est de pouvoir **réguler le débit des données** grâce à sa capacité à émettre des messages de taille variable, ces messages sont appelés segments.
 
 
 La fonction de multiplexage
 
-TCP permet d'effectuer une tâche importante: le multiplexage/démultiplexage, c'est-à-dire faire transiter sur une même ligne des données provenant d'applications diverses ou en d'autres mots mettre en série des informations arrivant en parallèle. 
+TCP permet d'effectuer une tâche importante: le multiplexage/démultiplexage, c'est-à-dire faire transiter sur une même ligne des données provenant d'applications diverses ou en d'autres mots **mettre en série des informations arrivant en parallèle**. 
 
 
 ![](http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-mux.gif)
+
+![](https://upload.wikimedia.org/wikipedia/commons/e/e0/Telephony_multiplexer_system.gif)
 
 
 Ces opérations sont réalisées grâce au concept de ports (ou sockets), c'est-à-dire un numéro associé à un type d'application, qui, combiné à une adresse IP, permet de déterminer de façon unique une application qui tourne sur une machine donnée. 
@@ -191,11 +191,11 @@ Les numéros de séquence et d'acquittement indiquent ou respectivement confirme
 Le protocole TCP permet d'assurer le transfert des données de façon fiable, bien qu'il utilise le protocole IP, qui n'intègre aucun contrôle de livraison de datagramme. 
 
 
-En réalité, le protocole TCP possède un système d'accusé de réception permettant au client et au serveur de s'assurer de la bonne réception mutuelle des données. Lors de l'émission d'un segment, un numéro d'ordre (appelé aussi numéro de séquence) est associé. A réception d'un segment de donnée, la machine réceptrice va retourner un segment de donnée dont le drapeau ACK est à 1 (afin de signaler qu'il s'agit d'un accusé de réception) accompagné d'un numéro d'accusé de réception égal au numéro d'ordre précédent. 
+En réalité, le protocole `TCP` **possède un système d'accusé de réception** permettant au client et au serveur de s'assurer de la bonne réception mutuelle des données. Lors de l'émission d'un segment, un numéro d'ordre (appelé aussi `numéro de séquence`) est associé. A réception d'un segment de donnée, la machine réceptrice va retourner un segment de donnée dont le drapeau ACK est à 1 (afin de signaler qu'il s'agit d'un accusé de réception) accompagné d'un numéro d'accusé de réception égal au numéro d'ordre précédent. 
 
 ![](http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-ack1.gif)
 
-De plus, grâce à une minuterie déclenchée dès réception d'un segment au niveau de la machine émettrice, le segment est réexpédié dès que le temps imparti est écoulé, car dans ce cas la machine émettrice considère que le segment est perdu... 
+De plus, grâce à **une minuterie** déclenchée dès réception d'un segment au niveau de la machine émettrice, le segment est réexpédié dès que le temps imparti est écoulé, car dans ce cas la machine émettrice considère que le segment est perdu... 
 
 
 ![](http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-ack2.gif)
@@ -212,8 +212,8 @@ Etant donné que ce processus de communication, qui se fait grâce à une émiss
 L'établissement de la connexion entre deux applications se fait souvent selon le schéma suivant :
 
 - Les ports TCP doivent être ouverts
-- L'application sur le serveur est passive, c'est-à-dire que l'application est à l'écoute, en attente d'une connexion
-- L'application sur le client fait une requête de connexion sur le serveur dont l'application est en ouverture passive. L'application du client est dite "en ouverture active"
+- L'application sur le serveur est passive, c'est-à-dire que l'application est **à l'écoute**, **en attente d'une connexion**
+- L'application sur le client fait une requête de connexion sur le serveur dont l'application est en ouverture passive. L'application du client est dite "**en ouverture active**"
 
 
 Les deux machines doivent donc synchroniser leurs séquences grâce à un mécanisme communément appelé **three ways handshake** (poignée de main en trois temps), que l'on retrouve aussi lors de la clôture de session. 

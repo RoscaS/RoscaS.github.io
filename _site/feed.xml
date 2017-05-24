@@ -4,11 +4,136 @@
     <title>RoscaS</title>
     <description>Just some notes. # this means to ignore newlines until &quot;baseurl:&quot;
 </description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 24 May 2017 16:19:27 +0200</pubDate>
-    <lastBuildDate>Wed, 24 May 2017 16:19:27 +0200</lastBuildDate>
+    <link>https://roscas.github.io/</link>
+    <atom:link href="https://roscas.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 24 May 2017 18:29:27 +0200</pubDate>
+    <lastBuildDate>Wed, 24 May 2017 18:29:27 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Reseau: CP3 résumé (fr)</title>
+        <description>&lt;h2 id=&quot;udp-user-datagram-protocol&quot;&gt;UDP (User Datagram Protocol)&lt;/h2&gt;
+
+&lt;p&gt;Le protocole UDP (User Datagram Protocol) est un protocole &lt;strong&gt;non orienté connexion&lt;/strong&gt; de la couche transport du modèle TCP/IP. Ce protocole est très simple étant donné qu’il ne fournit pas de contrôle d’erreurs (il n’est pas orienté connexion…).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;un utilisteur d’UDP doit compter avec les événements suivants:
+    &lt;ul&gt;
+      &lt;li&gt;les données peuvent être perdues&lt;/li&gt;
+      &lt;li&gt;les mêmes données peuvent arriver plusieurs fois&lt;/li&gt;
+      &lt;li&gt;l’ordre des données peut être modifié&lt;/li&gt;
+      &lt;li&gt;le déstinataire peut être surchargé par les données de l’émetteur&lt;/li&gt;
+      &lt;li&gt;les données ne peuvent dépasser le MTU&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;tcp-transmission-transfer-protocol&quot;&gt;TCP (Transmission Transfer Protocol)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;protocol &lt;strong&gt;sûr&lt;/strong&gt;, qui utilise les principes suivants par défaut:
+    &lt;ul&gt;
+      &lt;li&gt;protocole a fenètre (de type &lt;code class=&quot;highlighter-rouge&quot;&gt;GO-BACK N&lt;/code&gt;)&lt;/li&gt;
+      &lt;li&gt;implicit retransmission&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;les messages sont appelés &lt;em&gt;segments&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;on utilise uniquement des confirmations positives (&lt;code class=&quot;highlighter-rouge&quot;&gt;ACK&lt;/code&gt;, qui peuvent être &amp;gt;groupés) t un timer (minuteir) est calculé pour chaque segment&lt;/li&gt;
+  &lt;li&gt;TCP offre un transport sûr (fiable) des données
+    &lt;ul&gt;
+      &lt;li&gt;les données sont transmises exactement une fois (pas de perte, pas de duplication)&lt;/li&gt;
+      &lt;li&gt;pas de modification de l’ordre&lt;/li&gt;
+      &lt;li&gt;contrôle de flux&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-way-handshake&quot;&gt;3 way handshake&lt;/h2&gt;
+
+&lt;p&gt;Établissement de la connexion entre un serveur et un client en 3 temps:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;client envoie un &lt;code class=&quot;highlighter-rouge&quot;&gt;syn&lt;/code&gt; (Wesh, je peux me co sur toi?)&lt;/li&gt;
+  &lt;li&gt;serveur renvoie un &lt;code class=&quot;highlighter-rouge&quot;&gt;syn&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;akc&lt;/code&gt; (Acknowledgment) (Ouais gros, fait ton kiff)&lt;/li&gt;
+  &lt;li&gt;client renvoie un &lt;code class=&quot;highlighter-rouge&quot;&gt;akc&lt;/code&gt; pour confirmer qu’il a bien reçu la réponse (t’es trop cool man thanks)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Une fois cet connexion établie l’envoie de données du serveur peut commancer.&lt;/p&gt;
+
+&lt;h2 id=&quot;fin-de-connexion&quot;&gt;fin de connexion&lt;/h2&gt;
+
+&lt;p&gt;Une fois les données transférées, TCP met fin courtoisement à la connexion par un autre échange du même genre que le 3 way handshake:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;une fois que le client à reçu tout ce qu’il voulait, il envoie un &lt;code class=&quot;highlighter-rouge&quot;&gt;fin&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;le serveur répond par un &lt;code class=&quot;highlighter-rouge&quot;&gt;fin&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ack&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;le client renvoie un &lt;code class=&quot;highlighter-rouge&quot;&gt;ack&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;protocole-à-fenêtre-tcp&quot;&gt;Protocole à fenêtre (TCP)&lt;/h2&gt;
+
+&lt;p&gt;Limitation du nombre d’&lt;code class=&quot;highlighter-rouge&quot;&gt;ack&lt;/code&gt; du serveur pour désengorger le réseau. On fixe un nombre de séquences au bout duquel un accusé de réception est nécessaire. Ce nombre est stocké dans le champ &lt;strong&gt;window&lt;/strong&gt; de l’en-tête &lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;La taille de cette fenêtre n’est pas fixe. &lt;strong&gt;Le serveur&lt;/strong&gt; peut inclure dans ses &lt;code class=&quot;highlighter-rouge&quot;&gt;akc&lt;/code&gt; dans le champ &lt;code class=&quot;highlighter-rouge&quot;&gt;window&lt;/code&gt; une taille de fenêtre plus adaptée pour x ou y raisons.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Lorsque l’&lt;code class=&quot;highlighter-rouge&quot;&gt;ack&lt;/code&gt; du serveur demnde un augmentation de la fenêtre, le client déplace le bord droit de la fenêtre&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-plus.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Dans le cas d’une diminution, le client attend que le bord gauche avance (avec l’arrivée des &lt;code class=&quot;highlighter-rouge&quot;&gt;ack&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-moins.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Cette notion est appelée &lt;strong&gt;stream tcp&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;stream-tcp&quot;&gt;Stream TCP&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;l’unité de gestion de la fenêtre n’est pas le message mais l’octet&lt;/li&gt;
+  &lt;li&gt;l’application lit les données comme elles viennent&lt;/li&gt;
+  &lt;li&gt;la grandeur de la fenêtre est variable!
+    &lt;ul&gt;
+      &lt;li&gt;le destinataire gère dynamiquement la taille de la fenêtre chez l’émetteur&lt;/li&gt;
+      &lt;li&gt;chaque confirmation contient une indication de fenêtre&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;la position dans le flux de données est indiquée par les numéros de séquence (pointeurs)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;le-timer&quot;&gt;Le timer&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;TCP travaille en implicit retransmission (confirmation positives seulement)&lt;/li&gt;
+  &lt;li&gt;les temps de transfert peuvent varier énormément (LAN, WAN)&lt;/li&gt;
+  &lt;li&gt;timer trop petit: retransmissions inutiles&lt;/li&gt;
+  &lt;li&gt;timer trop grand: retard dans la découverte des problèmes (attention: GO-BACK N)&lt;/li&gt;
+  &lt;li&gt;TCP mesure en permanence les temps de réponse et adapte le timer&lt;/li&gt;
+  &lt;li&gt;une moyenne glissante et une variance glissante sont calculées et utilisées pour le calcul du time&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 24 May 2017 00:00:00 +0200</pubDate>
+        <link>https://roscas.github.io/reseau/reseau-cp3-resume.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/reseau/reseau-cp3-resume.html</guid>
+        
+        <category>reseau</category>
+        
+        <category>couche4</category>
+        
+        <category>couche7</category>
+        
+        <category>tcp</category>
+        
+        <category>udp</category>
+        
+        <category>fr</category>
+        
+        
+        <category>Reseau</category>
+        
+      </item>
     
       <item>
         <title>Cpp: Exception handling (en)</title>
@@ -831,8 +956,8 @@ Oops
 &lt;/div&gt;
 </description>
         <pubDate>Tue, 23 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/cpp/Cpp-exceptions-Handling.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cpp/Cpp-exceptions-Handling.html</guid>
+        <link>https://roscas.github.io/cpp/Cpp-exceptions-Handling.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/cpp/Cpp-exceptions-Handling.html</guid>
         
         <category>Cpp</category>
         
@@ -857,8 +982,8 @@ Oops
 
 </description>
         <pubDate>Sun, 21 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/reseau/reseau-labo5.html</link>
-        <guid isPermaLink="true">http://localhost:4000/reseau/reseau-labo5.html</guid>
+        <link>https://roscas.github.io/reseau/reseau-labo5.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/reseau/reseau-labo5.html</guid>
         
         <category>reseau</category>
         
@@ -1127,17 +1252,19 @@ DNS (Domain name system, aussi en TCP)&lt;/li&gt;
 
 &lt;p&gt;Grâce au protocole TCP, les applications peuvent communiquer de façon sûre (grâce au système d’accusés de réception du protocole TCP), indépendamment des couches inférieures. Cela signifie que les routeurs (qui travaillent dans la couche Internet) ont pour seul rôle l’acheminement des données sous forme de datagrammes, sans se préoccuper du contrôle des données, car celui-ci est réalisé par la couche transport (plus particulièrement par le protocole TCP).&lt;/p&gt;
 
-&lt;p&gt;Lors d’une communication à travers le protocole TCP, les deux machines doivent établir une connexion. La machine émettrice (celle qui demande la connexion) est appelée client, tandis que la machine réceptrice est appelée serveur. On dit qu’on est alors dans un environnement Client-Serveur. Les machines dans un tel environnement communiquent en mode connecté, c’est-à-dire que la communication se fait dans les deux sens.&lt;/p&gt;
+&lt;p&gt;Lors d’une communication à travers le protocole TCP, &lt;strong&gt;les deux machines doivent établir une connexion&lt;/strong&gt;. La machine émettrice (celle qui demande la connexion) est appelée client, tandis que la machine réceptrice est appelée serveur. On dit qu’on est alors dans un environnement Client-Serveur. Les machines dans un tel environnement communiquent en mode connecté, c’est-à-dire que la communication se fait dans les deux sens.&lt;/p&gt;
 
 &lt;p&gt;Pour permettre le bon déroulement de la communication et de tous les contrôles qui l’accompagnent, les données sont encapsulées, c’est-à-dire qu’on ajoute aux paquets de données un en-tête qui va permettre de synchroniser les transmissions et d’assurer leur réception.&lt;/p&gt;
 
-&lt;p&gt;Une autre particularité de TCP est de pouvoir réguler le débit des données grâce à sa capacité à émettre des messages de taille variable, ces messages sont appelés segments.&lt;/p&gt;
+&lt;p&gt;Une autre particularité de TCP est de pouvoir &lt;strong&gt;réguler le débit des données&lt;/strong&gt; grâce à sa capacité à émettre des messages de taille variable, ces messages sont appelés segments.&lt;/p&gt;
 
 &lt;p&gt;La fonction de multiplexage&lt;/p&gt;
 
-&lt;p&gt;TCP permet d’effectuer une tâche importante: le multiplexage/démultiplexage, c’est-à-dire faire transiter sur une même ligne des données provenant d’applications diverses ou en d’autres mots mettre en série des informations arrivant en parallèle.&lt;/p&gt;
+&lt;p&gt;TCP permet d’effectuer une tâche importante: le multiplexage/démultiplexage, c’est-à-dire faire transiter sur une même ligne des données provenant d’applications diverses ou en d’autres mots &lt;strong&gt;mettre en série des informations arrivant en parallèle&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-mux.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/e/e0/Telephony_multiplexer_system.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Ces opérations sont réalisées grâce au concept de ports (ou sockets), c’est-à-dire un numéro associé à un type d’application, qui, combiné à une adresse IP, permet de déterminer de façon unique une application qui tourne sur une machine donnée.&lt;/p&gt;
 
@@ -1160,11 +1287,11 @@ DNS (Domain name system, aussi en TCP)&lt;/li&gt;
 
 &lt;p&gt;Le protocole TCP permet d’assurer le transfert des données de façon fiable, bien qu’il utilise le protocole IP, qui n’intègre aucun contrôle de livraison de datagramme.&lt;/p&gt;
 
-&lt;p&gt;En réalité, le protocole TCP possède un système d’accusé de réception permettant au client et au serveur de s’assurer de la bonne réception mutuelle des données. Lors de l’émission d’un segment, un numéro d’ordre (appelé aussi numéro de séquence) est associé. A réception d’un segment de donnée, la machine réceptrice va retourner un segment de donnée dont le drapeau ACK est à 1 (afin de signaler qu’il s’agit d’un accusé de réception) accompagné d’un numéro d’accusé de réception égal au numéro d’ordre précédent.&lt;/p&gt;
+&lt;p&gt;En réalité, le protocole &lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt; &lt;strong&gt;possède un système d’accusé de réception&lt;/strong&gt; permettant au client et au serveur de s’assurer de la bonne réception mutuelle des données. Lors de l’émission d’un segment, un numéro d’ordre (appelé aussi &lt;code class=&quot;highlighter-rouge&quot;&gt;numéro de séquence&lt;/code&gt;) est associé. A réception d’un segment de donnée, la machine réceptrice va retourner un segment de donnée dont le drapeau ACK est à 1 (afin de signaler qu’il s’agit d’un accusé de réception) accompagné d’un numéro d’accusé de réception égal au numéro d’ordre précédent.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-ack1.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;De plus, grâce à une minuterie déclenchée dès réception d’un segment au niveau de la machine émettrice, le segment est réexpédié dès que le temps imparti est écoulé, car dans ce cas la machine émettrice considère que le segment est perdu…&lt;/p&gt;
+&lt;p&gt;De plus, grâce à &lt;strong&gt;une minuterie&lt;/strong&gt; déclenchée dès réception d’un segment au niveau de la machine émettrice, le segment est réexpédié dès que le temps imparti est écoulé, car dans ce cas la machine émettrice considère que le segment est perdu…&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-ack2.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1178,8 +1305,8 @@ DNS (Domain name system, aussi en TCP)&lt;/li&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Les ports TCP doivent être ouverts&lt;/li&gt;
-  &lt;li&gt;L’application sur le serveur est passive, c’est-à-dire que l’application est à l’écoute, en attente d’une connexion&lt;/li&gt;
-  &lt;li&gt;L’application sur le client fait une requête de connexion sur le serveur dont l’application est en ouverture passive. L’application du client est dite “en ouverture active”&lt;/li&gt;
+  &lt;li&gt;L’application sur le serveur est passive, c’est-à-dire que l’application est &lt;strong&gt;à l’écoute&lt;/strong&gt;, &lt;strong&gt;en attente d’une connexion&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;L’application sur le client fait une requête de connexion sur le serveur dont l’application est en ouverture passive. L’application du client est dite “&lt;strong&gt;en ouverture active&lt;/strong&gt;”&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Les deux machines doivent donc synchroniser leurs séquences grâce à un mécanisme communément appelé &lt;strong&gt;three ways handshake&lt;/strong&gt; (poignée de main en trois temps), que l’on retrouve aussi lors de la clôture de session.&lt;/p&gt;
@@ -1346,8 +1473,8 @@ fonctions et des structures disponibles dans la librairie &lt;code class=&quot;h
 &lt;!--http://www.commentcamarche.net/contents/538-le-protocole-tcp--&gt;
 </description>
         <pubDate>Sat, 20 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/reseau/reseau-cp3.html</link>
-        <guid isPermaLink="true">http://localhost:4000/reseau/reseau-cp3.html</guid>
+        <link>https://roscas.github.io/reseau/reseau-cp3.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/reseau/reseau-cp3.html</guid>
         
         <category>reseau</category>
         
@@ -1769,8 +1896,8 @@ Gauche est incrémenté de 1 à chaque nouveau tour.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 20 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/algo/Algo-tri.html</link>
-        <guid isPermaLink="true">http://localhost:4000/algo/Algo-tri.html</guid>
+        <link>https://roscas.github.io/algo/Algo-tri.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/algo/Algo-tri.html</guid>
         
         <category>algo</category>
         
@@ -1863,8 +1990,8 @@ De même, dans un réseau informatique, la qualité de service du protocole de t
 &lt;p&gt;Retour au poste principale &lt;a href=&quot;/reseau/reseau-couche4.html&quot;&gt;poste principale&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 04 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/reseau/reseau-analogie-c4-5.html</link>
-        <guid isPermaLink="true">http://localhost:4000/reseau/reseau-analogie-c4-5.html</guid>
+        <link>https://roscas.github.io/reseau/reseau-analogie-c4-5.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/reseau/reseau-analogie-c4-5.html</guid>
         
         <category>reseau</category>
         
@@ -2165,10 +2292,12 @@ Alors, comment le protocole de transport au niveau du serveur web va réussir so
 &lt;p&gt;Dans la procédure d’envoi de la requête, le champ « Source port » avait pour valeur Y. Dans l’envoi de la réponse, le champ « Source port » prend la valeur du champ « Destination port » de la requête, et le champ « Destination port » prend la valeur du champ « Source port » de la requête. Ainsi, notre segment envoyé par le serveur web ressemblera à ceci :&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://user.oc-static.com/files/287001_288000/287645.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;&quot;&gt;suite&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 02 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/reseau/reseau-couche4.html</link>
-        <guid isPermaLink="true">http://localhost:4000/reseau/reseau-couche4.html</guid>
+        <link>https://roscas.github.io/reseau/reseau-couche4.html</link>
+        <guid isPermaLink="true">https://roscas.github.io/reseau/reseau-couche4.html</guid>
         
         <category>reseau</category>
         

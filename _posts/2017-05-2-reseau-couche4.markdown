@@ -242,3 +242,6 @@ Le serveur va recevoir ce PDU et examiner sa constitution. « Ah tiens, c'est un
 Dans la procédure d'envoi de la requête, le champ « Source port » avait pour valeur Y. Dans l'envoi de la réponse, le champ « Source port » prend la valeur du champ « Destination port » de la requête, et le champ « Destination port » prend la valeur du champ « Source port » de la requête. Ainsi, notre segment envoyé par le serveur web ressemblera à ceci :
 
 ![](https://user.oc-static.com/files/287001_288000/287645.png)
+
+
+[suite]()
