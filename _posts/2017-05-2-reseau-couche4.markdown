@@ -192,3 +192,6 @@ Comme vous le savez dorénavant, la programmation des sockets se fait par le bia
 
 ## 7. Multiplexing démultiplexing
 
+
+![](https://upload.wikimedia.org/wikipedia/commons/e/e0/Telephony_multiplexer_system.gif)
+
