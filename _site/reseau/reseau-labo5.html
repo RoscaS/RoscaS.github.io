@@ -10,8 +10,8 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://roscas.github.io/reseau/reseau-labo5.html">
-  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="https://roscas.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-labo5.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- Google font -->
 
@@ -70,17 +70,17 @@
         	
         <div class="post-tags">
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">reseau</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">labo</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">labo</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">couche4</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche4</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">tcp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">udp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">fr</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
         	
 			
 		</div>
@@ -119,9 +119,572 @@
 
 <h2 id="1-makefile">1. Makefile</h2>
 
+<h4 id="vérification-de-la-présence-de-make">vérification de la présence de <code class="highlighter-rouge">make</code></h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5$ </span>which make
+/usr/bin/make
+
+</code></pre>
+</div>
+
+<h4 id="sassurer-que-cest-gnu-make">s’assurer que c’est GNU make:</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5$ </span>dpkg -s make | grep GNU
+ GNU Make is a utility which controls the generation of executables
+</code></pre>
+</div>
+
+<h4 id="affichage-du-contenu-de-makefile">affichage du contenu de Makefile</h4>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">sol@debian</span><span class="o">:</span><span class="nf">~/LABOS/labo5/makefile$ cat --show-tabs Makefile </span>
+
+<span class="nv">DEST_IMAGES</span><span class="o">=</span>neuchatel.jpeg jura.jpeg
+
+<span class="nl">all</span><span class="o">:</span> <span class="nf">$(DEST_IMAGES)</span>
+<span class="err">^Ifile</span> <span class="err">*.jpeg</span>
+
+<span class="nl">clean</span><span class="o">:</span>
+<span class="err">^Irm</span> <span class="err">-f</span> <span class="err">$(DEST_IMAGES)</span>
+
+<span class="nl">neuchatel.jpeg</span><span class="o">:</span> <span class="nf">neuchatel.png</span>
+<span class="err">^Ipngtopnm</span> <span class="err">&lt;</span> <span class="err">$&lt;</span> <span class="err">|</span> <span class="err">pnmtojpeg</span> <span class="err">&gt;</span> <span class="err">$@</span>
+<span class="err">^I@</span><span class="c"># n'oubliez pas le TAB � gauche!
+</span><span class="err">^I@echo</span> <span class="err">converti</span> <span class="err">$&lt;</span> <span class="err">en</span> <span class="err">$@</span>
+
+<span class="nl">jura.jpeg</span><span class="o">:</span> <span class="nf">jura.png</span>
+<span class="err">^Ipngtopnm</span> <span class="err">&lt;</span> <span class="err">$&lt;</span> <span class="err">|</span> <span class="err">pnmtojpeg</span> <span class="err">&gt;</span> <span class="err">$@</span>
+<span class="err">^I@</span><span class="c"># n'oubliez pas le TAB � gauche!
+</span><span class="err">^I@echo</span> <span class="err">converti</span> <span class="err">$&lt;</span> <span class="err">en</span> <span class="err">$@</span>
+</code></pre>
+</div>
+
+<h4 id="jeu-de-char-de-makefille">jeu de char de Makefille</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/makefile$ </span>file -i Makefile
+Makefile: text/x-makefile; <span class="nv">charset</span><span class="o">=</span>iso-8859-1
+</code></pre>
+</div>
+
+<h4 id="rencodage-de-makefille">rencodage de Makefille</h4>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/makefile$ </span>recode iso-8859-1..UTF-8 Makefile 
+<span class="gp">sol@debian:~/LABOS/labo5/makefile$ </span>file -i Makefile
+Makefile: text/x-makefile; <span class="nv">charset</span><span class="o">=</span>utf-8
+</code></pre>
+</div>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">sol@debian</span><span class="o">:</span><span class="nf">~/LABOS/labo5/makefile$ cat --show-tabs Makefile </span>
+<span class="nv">DEST_IMAGES</span><span class="o">=</span>neuchatel.jpeg jura.jpeg
+
+<span class="nl">all</span><span class="o">:</span> <span class="nf">$(DEST_IMAGES)</span>
+<span class="err">^Ifile</span> <span class="err">*.jpeg</span>
+
+<span class="nl">clean</span><span class="o">:</span>
+<span class="err">^Irm</span> <span class="err">-f</span> <span class="err">$(DEST_IMAGES)</span>
+
+<span class="nl">neuchatel.jpeg</span><span class="o">:</span> <span class="nf">neuchatel.png</span>
+<span class="err">^Ipngtopnm</span> <span class="err">&lt;</span> <span class="err">$&lt;</span> <span class="err">|</span> <span class="err">pnmtojpeg</span> <span class="err">&gt;</span> <span class="err">$@</span>
+<span class="err">^I@</span><span class="c"># n'oubliez pas le TAB à gauche!
+</span><span class="err">^I@echo</span> <span class="err">converti</span> <span class="err">$&lt;</span> <span class="err">en</span> <span class="err">$@</span>
+
+<span class="nl">jura.jpeg</span><span class="o">:</span> <span class="nf">jura.png</span>
+<span class="err">^Ipngtopnm</span> <span class="err">&lt;</span> <span class="err">$&lt;</span> <span class="err">|</span> <span class="err">pnmtojpeg</span> <span class="err">&gt;</span> <span class="err">$@</span>
+<span class="err">^I@</span><span class="c"># n'oubliez pas le TAB à gauche!
+</span><span class="err">^I@echo</span> <span class="err">converti</span> <span class="err">$&lt;</span> <span class="err">en</span> <span class="err">$@</span>
+</code></pre>
+</div>
+
+<h3 id="question-6">question 6</h3>
+
+<p>tuto <a href="/Cpp/makefile.html">makefile</a></p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">cible</span><span class="o">:</span> <span class="nf">dependance</span>
+    <span class="err">commandes</span>
+
+<span class="err">$@</span>  <span class="c"># nom de la cible actuelle.
+</span></code></pre>
+</div>
+
+<p>Le Makefille va réencoder les fichier <code class="highlighter-rouge">neuchatel.png</code> et <code class="highlighter-rouge">jura.png</code> en <code class="highlighter-rouge">neuchatel.jpg</code> et <code class="highlighter-rouge">jura.jpg</code></p>
+
+<h3 id="question-7">question 7</h3>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">fichier1.txt</span><span class="o">:</span> <span class="nf">fichier0.txt</span>
+    <span class="err">cat</span> <span class="err">fichier0.txt</span> <span class="err">&gt;</span> <span class="err">fichier1.txt</span>
+</code></pre>
+</div>
+
+<p>Cette règle ne sera exécutée que si fichier0.txt est plus récent que fichier1.txt</p>
+
+<p>Dans notre cas:</p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">neuchatel.jpeg</span><span class="o">:</span> <span class="nf">neuchatel.png</span>
+	pngtopnm &lt; <span class="nv">$&lt;</span> | pnmtojpeg &gt; <span class="nv">$@</span>
+	<span class="p">@</span><span class="c"># n'oubliez pas le TAB à gauche!</span>
+	<span class="p">@</span><span class="nb">echo </span>converti <span class="nv">$&lt;</span> en <span class="nv">$@</span>
+</code></pre>
+</div>
+
+<p>La règle n’est pas exécutée car neuchatel.png n’est pas plus récent que neuchatel.jpg et pareil pour jura.png.</p>
+
+<h3 id="question-8">question 8</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/makefile$ </span>touch jura.png
+<span class="gp">sol@debian:~/LABOS/labo5/makefile$ </span>make 
+pngtopnm &lt; jura.png | pnmtojpeg &gt; jura.jpeg
+converti jura.png en jura.jpeg
+file <span class="k">*</span>.jpeg
+jura.jpeg:      JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 406x493, frames 3
+neuchatel.jpeg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 406x493, frames 3
+</code></pre>
+</div>
+
+<p>Comme <code class="highlighter-rouge">touch jura.png</code> modifie la date de modification de jura.png, il devient donc plus récent que jura.jpeg et la règle…</p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">jura.jpeg</span><span class="o">:</span> <span class="nf">jura.png</span>
+	pngtopnm &lt; <span class="nv">$&lt;</span> | pnmtojpeg &gt; <span class="nv">$@</span>
+</code></pre>
+</div>
+
+<p>… est denouveau valable.</p>
+
+<h3 id="question-9">question 9</h3>
+
+<p><code class="highlighter-rouge">@</code> empêche l’affichage de la sortie texte d’une commande.</p>
+
+<h3 id="question-10">question 10</h3>
+
+<p>En utilisant le <strong>Pattern matching</strong> on peut créer des règles génériques pour entre autres convertir les fichiers d’un certain format en un autre:</p>
+
 <blockquote>
-  <p>Aller se documenter…</p>
+  <p>Make exécute une règle même si le fichier correspondant est situé dans un sous dossier ! En cas de conflit, la règle avec la meilleure correspondance est choisie.</p>
 </blockquote>
+
+<p>La syntaxe générale d’une fonction:</p>
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="err">$(fonction</span> <span class="err">arg0,arg1,arg2...).</span>
+</code></pre>
+</div>
+
+<p>La fonction <code class="highlighter-rouge">patsubst</code> remplace par une paterne chaque mot dans une liste donnée.</p>
+
+<p>Normalement les remplacement de Wildcards se font automatiquement dans les règles mais comme dans notre cas on veut utiliser un wildcard en argument d’une fonction on doit utiliser la fonction <code class="highlighter-rouge">wildcard</code>.</p>
+
+<p>syntaxe:</p>
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="err">$(patsubst</span> <span class="err">%.c,%.o,$(wildcard</span> <span class="err">*.c))</span>
+</code></pre>
+</div>
+
+<p>Élimination de la redondance dans le Makefile original + optimisation via fonctions.</p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nv">DEST_IMAGES</span><span class="o">=</span><span class="err">$</span><span class="o">(</span>patsubst %.png, %.jpeg, <span class="err">$</span><span class="o">(</span>wildcard <span class="k">*</span>.png<span class="o">))</span>
+
+<span class="nl">all</span><span class="o">:</span> <span class="nf">$(DEST_IMAgES)</span>
+	file <span class="k">*</span>.jpeg
+
+<span class="nl">%.jpeg</span><span class="o">:</span> <span class="nf">%.png</span>
+	pngtopnm &lt; <span class="nv">$&lt;</span> | pnmtojpeg &gt; <span class="nv">$@</span>
+	<span class="p">@</span><span class="nb">echo </span>converti <span class="nv">$&lt;</span> en <span class="nv">$@</span>
+
+<span class="nl">clean</span><span class="o">:</span>
+	rm -f <span class="nv">$(DEST_IMAGES)</span>
+</code></pre>
+</div>
+
+<p>sources:<br />
+<a href="https://www.gnu.org/software/make/manual/html_node/Wildcard-Function.html">gnu.org</a><br />
+<a href="https://stackoverflow.com/questions/33740270/makefile-patsubst-multiple-expressions">stackoverflow.com</a><br />
+<a href="https://learnxinyminutes.com/docs/make/">learnxinyminutes.com</a></p>
+
+<h3 id="question-11">question 11</h3>
+<h4 id="a">a.</h4>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>make a.o
+cc    -c -o a.o a.c
+<span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>ls
+a.c  a.o
+</code></pre>
+</div>
+
+<p>Si on utilise le <code class="highlighter-rouge">-d</code> de make on a tout un paquet d’informations mais dans les premières lignes on peut voir que c’est bien GCC qui est utilisé pour le build.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>make -d a.o
+GNU Make 4.0
+Built <span class="k">for </span>x86_64-pc-linux-gnu
+<span class="c"># ...</span>
+Finished prerequisites of target file <span class="s1">'a.o'</span>.
+Must remake target <span class="s1">'a.o'</span>.
+cc    -c -o a.o a.c
+Putting child 0x10dfde0 <span class="o">(</span>a.o<span class="o">)</span> PID 6042 on the chain.
+Live child 0x10dfde0 <span class="o">(</span>a.o<span class="o">)</span> PID 6042 
+Reaping winning child 0x10dfde0 PID 6042 
+Removing child 0x10dfde0 PID 6042 from chain.
+Successfully remade target file <span class="s1">'a.o'</span>.
+<span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>ls
+a.c  a.o
+</code></pre>
+</div>
+
+<h4 id="b">b.</h4>
+
+<p><code class="highlighter-rouge">CFLAGS</code> et <code class="highlighter-rouge">CXXFLAGS</code> sont les noms de variables d’environnement ou de variables du Makefile qui peuvent être utilisées pour paramétrer la compilation d’un logiciel.</p>
+
+<p>Ces variables sont habituellement positionnées dans un Makefile et sont ajoutées quand le compilateur est appelé. Si elles ne sont pas spécifiées dans le Makefile, alors elles seront prises directement à partir de l’environnement, si elles sont présentes.</p>
+
+<p><code class="highlighter-rouge">CFLAGS</code> permet d’ajouter des paramètres sur la ligne de commande qui appelle le compilateur C, alors que <code class="highlighter-rouge">CXXFLAGS</code> est utilisé pour la compilation <strong>C++</strong>. De même, une variable similaire, <code class="highlighter-rouge">CPPFLAGS</code>, permet de passer des paramètres <strong>sur la ligne de commande du Préprocesseur C</strong>.</p>
+
+<ul>
+  <li>
+    <p><strong>-Wall : -W represents warnings. -Wall means it will show all possible warnings.</strong></p>
+  </li>
+  <li>
+    <p>-O2 : means optimize it. These are used in creating machine code from source code by compiler. There are many levels of optimizing. O2 is generally considered good enough, while O3 makes your file size bigger without optimizing significantly, and may make your program slower on some sort of algorithms.</p>
+  </li>
+  <li>
+    <p>-g means debug. This will add many debugging “notes” in your final binary, so that when you run a debugger on your final binary file, the debugger will know what part of this binary file is related to which part of the original source code.</p>
+  </li>
+  <li>
+    <p>-I/path/to/include/files : In C/C++, you can include files which compiler already knows where they are present with command: #include <filename.h>. If the compiler does not know where the include file you want to include is present, you can specify the path to that directory with -I/the/directory</filename.h></p>
+  </li>
+</ul>
+
+<p>Il nous faut donc créer un Makefile et y ajouter une ligne <code class="highlighter-rouge">CFLAGS=-Wall</code></p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>make -Wall a.o
+cc -Wall   -c -o a.o a.c
+<span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>rm a.0
+<span class="gp">sol@debian:~/LABOS/labo5/02tests$ </span>make a.o
+cc -Wall   -c -o a.o a.c
+</code></pre>
+</div>
+
+<p>sources:<br />
+<a href="https://linux.die.net/man/1/gcc">man gcc</a><br />
+<a href="https://fr.wikipedia.org/wiki/CFLAGS">wikipedia.fr</a><br />
+<a href="http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/">cs.colby.edu</a><br />
+<a href="https://wiki.gentoo.org/wiki/GCC_optimization">wiki.gentoo.org</a>  (très bon site) qui explique ce point en détails</p>
+
+<h3 id="question-12">question 12</h3>
+
+<p>Voir question 10</p>
+
+<h3 id="question-13">question 13</h3>
+
+<p>voir question 10</p>
+
+<h2 id="2-traçage-et-simulation">2. Traçage et simulation</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">netstat -an</code>         <em>voir tous les sockets</em></li>
+  <li><code class="highlighter-rouge">netstat -an --inet</code>  <em>sockets ipv4</em></li>
+  <li><code class="highlighter-rouge">netstat -an --inet6</code> <em>sockets ipv6</em></li>
+  <li><code class="highlighter-rouge">netstat --inet --listen -NNNN</code> <em>socket en écoute</em></li>
+  <li><code class="highlighter-rouge">netstat --inet6 --listen -NNNN</code> <em>socket en écoute</em></li>
+  <li><code class="highlighter-rouge">-p</code> (sudo) <em>identification du process lié</em></li>
+  <li><code class="highlighter-rouge">strace</code>    <em>traçage des appels system</em></li>
+  <li><code class="highlighter-rouge">ltrace</code>    <em>traçage des fonctions de la LIBC</em></li>
+  <li><em>penser à utiliser Wireshark !</em></li>
+</ul>
+
+<h3 id="question-1">question 1</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>-rwxr-xr-x 1 sol sol 10995 Mar 25  2015 a-tracer
+</code></pre>
+</div>
+
+<h3 id="question-2">question 2</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/03Trace$ </span>./a-tracer &amp;
+<span class="o">[</span>1] 6834
+</code></pre>
+</div>
+
+<h3 id="question-3">question 3</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~$ </span>sudo netstat -p -n --inet --listen 6834
+Active Internet connections <span class="o">(</span>only servers<span class="o">)</span>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:<span class="k">*</span>               LISTEN      453/sshd        
+tcp        0      0 0.0.0.0:12345           0.0.0.0:<span class="k">*</span>               LISTEN      6834/a-tracer   
+tcp        0      0 127.0.0.1:25            0.0.0.0:<span class="k">*</span>               LISTEN      844/exim4       
+udp        0      0 0.0.0.0:59362           0.0.0.0:<span class="k">*</span>                           828/dhclient    
+udp        0      0 0.0.0.0:68              0.0.0.0:<span class="k">*</span>                           828/dhclient    
+udp        0      0 10.0.2.15:123           0.0.0.0:<span class="k">*</span>                           498/ntpd        
+udp        0      0 127.0.0.1:123           0.0.0.0:<span class="k">*</span>                           498/ntpd        
+udp        0      0 0.0.0.0:123             0.0.0.0:<span class="k">*</span>                           498/ntpd        
+</code></pre>
+</div>
+
+<p>L’option <code class="highlighter-rouge">-n</code> permet de ne pas résoudre les noms.<br />
+Notre application utilise donc le port <strong>12345</strong>.</p>
+
+<h3 id="question-4">question 4</h3>
+
+<p>Après un kill du process…</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~$ </span>sudo netstat -p -n --inet --listen 6834
+Active Internet connections <span class="o">(</span>only servers<span class="o">)</span>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:<span class="k">*</span>               LISTEN      453/sshd        
+tcp        0      0 127.0.0.1:25            0.0.0.0:<span class="k">*</span>               LISTEN      844/exim4       
+udp        0      0 0.0.0.0:59362           0.0.0.0:<span class="k">*</span>                           828/dhclient    
+udp        0      0 0.0.0.0:68              0.0.0.0:<span class="k">*</span>                           828/dhclient    
+udp        0      0 10.0.2.15:123           0.0.0.0:<span class="k">*</span>                           498/ntpd        
+udp        0      0 127.0.0.1:123           0.0.0.0:<span class="k">*</span>                           498/ntpd        
+udp        0      0 0.0.0.0:123             0.0.0.0:<span class="k">*</span>                           498/ntpd  
+</code></pre>
+</div>
+
+<p>GONE !</p>
+
+<h3 id="question-5">question 5</h3>
+
+<h4 id="a-1">a.</h4>
+
+<p>Dans le cycle de vie des sockets d’un serveur TCP nous retrouvons les fonctions socket() bind() listen() et accept() qui sont utilisées avant l’établissement de la connexion.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">///...
+</span><span class="n">socket</span>      <span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="n">IPPROTO_IP</span><span class="p">)</span>      <span class="o">=</span> <span class="mi">3</span>
+<span class="n">setsockopt</span>  <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">4</span><span class="p">)</span>   <span class="o">=</span> <span class="mi">0</span>
+<span class="n">bind</span>        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">sin_port</span><span class="o">=</span><span class="n">htons</span><span class="p">(</span><span class="mi">12345</span><span class="p">),</span> <span class="n">sin_addr</span><span class="o">=</span><span class="n">inet_addr</span><span class="p">(</span><span class="s">"0.0.0.0"</span><span class="p">)},</span> <span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">listen</span>      <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>                                  <span class="o">=</span> <span class="mi">0</span>
+<span class="n">accept</span>      <span class="p">(</span><span class="mi">3</span><span class="p">,</span> 
+</code></pre>
+</div>
+
+<p>Sur cette première capture des appels system nous retrouvons les fonctions nos fonctions:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">socket</span><span class="p">(</span><span class="kt">int</span> <span class="n">domain</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocol</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cette fonction crée un socket. On remarque qu’un socket est donc de type <strong>int</strong>.
+Renvoie le descripteur du socket nouvellement créé.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">bind</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">my_addr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">addrlen</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Lie un socket avec une structure <code class="highlighter-rouge">sockaddr</code>.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">listen</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">backlog</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Définie la taille de la file de connexions en attente pour le socket <code class="highlighter-rouge">s</code>.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">accept</span><span class="p">(</span><span class="kt">int</span> <span class="n">sock</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">adresse</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="o">*</span><span class="n">longueur</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Accepte la connexion d’un socket sur le socket <code class="highlighter-rouge">sock</code>. Le socket aura été préalablement lié avec un port avec la fonction <code class="highlighter-rouge">bind</code>
+L’argument adresse sera remplie avec les informations du client qui s’est connecté.
+Cette fonction retourne un nouveau socket, qui devra être utilisé pour communiquer avec le client.</p>
+
+<p><strong>La dernière fonction est particulièrement révélatrice. C’est bien le cycle de vie d’un serveur TCP qui attend un qu’un client se connecte. D’où le fait que la capture de <code class="highlighter-rouge">strace</code> soie en stand by à cet endroit.</strong></p>
+
+<p>sources<br />
+<a href="http://broux.developpez.com/articles/c/sockets/">super tuto programmation sockets</a></p>
+
+<h4 id="b-1">b.</h4>
+
+<blockquote>
+  <h5 id="cycle-de-vie-sockets-tcp">Cycle de vie sockets TCP</h5>
+
+  <p>Il s’agit des appels système utilisés pour:</p>
+  <ul>
+    <li>créér des sockets</li>
+    <li>les lier à un port connu</li>
+    <li>accepter des connexions TCP</li>
+  </ul>
+</blockquote>
+
+<p>Les étapes passées dans notre cas sont donc: création et bind</p>
+
+<h4 id="c">c.</h4>
+
+<p>acceptation (c’est la phase la plus dure et la plus longue d’une rupture)</p>
+
+<h3 id="question-6-1">question 6</h3>
+
+<p>Après la commande <code class="highlighter-rouge">nc localhost 12345</code> nous avons:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">accept</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">Process</span> <span class="mi">7127</span> <span class="n">attached</span>
+ <span class="o">&lt;</span><span class="n">unfinished</span> <span class="p">...</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">close</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                    <span class="o">=</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">fstat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="n">st_mode</span><span class="o">=</span><span class="n">S_IFCHR</span><span class="o">|</span><span class="mo">0620</span><span class="p">,</span> <span class="n">st_rdev</span><span class="o">=</span><span class="n">makedev</span><span class="p">(</span><span class="mi">136</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">...})</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7fe86d900000</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"7127: new connection from client"</span><span class="p">...,</span> <span class="mi">547127</span><span class="o">:</span> <span class="n">new</span> <span class="n">connection</span> <span class="n">from</span> <span class="n">client</span> <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span> <span class="n">port</span> <span class="mi">47530</span>
+<span class="p">)</span> <span class="o">=</span> <span class="mi">54</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">fcntl</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">F_GETFL</span><span class="p">)</span>           <span class="o">=</span> <span class="mh">0x2</span> <span class="p">(</span><span class="n">flags</span> <span class="n">O_RDWR</span><span class="p">)</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">brk</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                      <span class="o">=</span> <span class="mh">0x245a000</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">brk</span><span class="p">(</span><span class="mh">0x247b000</span><span class="p">)</span>              <span class="o">=</span> <span class="mh">0x247b000</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">fstat</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="n">st_mode</span><span class="o">=</span><span class="n">S_IFSOCK</span><span class="o">|</span><span class="mo">0777</span><span class="p">,</span> <span class="n">st_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="p">...})</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7fe86d8ff000</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">lseek</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SEEK_CUR</span><span class="p">)</span>       <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ESPIPE</span> <span class="p">(</span><span class="n">Illegal</span> <span class="n">seek</span><span class="p">)</span>
+<span class="p">[</span><span class="n">pid</span>  <span class="mi">7127</span><span class="p">]</span> <span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> 
+</code></pre>
+</div>
+
+<h4 id="a-2">a.</h4>
+
+<p>si nous reprenons l’explication de la fonction accept():</p>
+
+<blockquote>
+  <p>Accepte la connexion d’un socket sur le socket <code class="highlighter-rouge">sock</code>. Le socket aura été préalablement lié avec un port avec la fonction <code class="highlighter-rouge">bind</code>
+L’argument adresse sera remplie avec les informations du client qui s’est connecté.
+Cette fonction retourne un nouveau socket, qui devra être utilisé pour communiquer avec le client.</p>
+</blockquote>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">accept</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">Process</span> <span class="mi">7127</span> <span class="n">attached</span>
+</code></pre>
+</div>
+<p>nous dit donc que le le process avec le PID 7127  s’est connecté sur le socket 3.</p>
+
+<p><code class="highlighter-rouge">ps -u</code> nous renvoie que le process 7127 est:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sol       7127  0.0  0.0   4220    80 pts/1    S+   18:01   0:00 ./a-tracer
+</code></pre>
+</div>
+
+<h4 id="b-2">b.</h4>
+
+<p>Ici nous voyons qu’une seconde instance de a-tracer est apparue ce qui colle avec l’explication de la fonction <code class="highlighter-rouge">accept()</code></p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/03Trace$ </span>sudo netstat -anp --inet
+Active Internet connections <span class="o">(</span>servers and established<span class="o">)</span>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:<span class="k">*</span>               LISTEN      453/sshd        
+tcp        0      0 0.0.0.0:12345           0.0.0.0:<span class="k">*</span>               LISTEN      7125/a-tracer   
+tcp        0      0 127.0.0.1:25            0.0.0.0:<span class="k">*</span>               LISTEN      844/exim4       
+tcp        0      0 127.0.0.1:12345         127.0.0.1:47534         ESTABLISHED 7127/a-tracer   
+tcp        0      0 127.0.0.1:12345         127.0.0.1:47533         TIME_WAIT   -               
+tcp        0      0 127.0.0.1:47534         127.0.0.1:12345         ESTABLISHED 7126/nc         
+udp        0      0 0.0.0.0:59362           0.0.0.0:<span class="k">*</span>                           828/dhclient    
+udp        0      0 0.0.0.0:68              0.0.0.0:<span class="k">*</span>                           828/dhclient    
+udp        0      0 10.0.2.15:123           0.0.0.0:<span class="k">*</span>                           498/ntpd        
+udp        0      0 127.0.0.1:123           0.0.0.0:<span class="k">*</span>                           498/ntpd        
+udp        0      0 0.0.0.0:123             0.0.0.0:<span class="k">*</span>                           498/ntpd    
+</code></pre>
+</div>
+
+<h4 id="c-1">c.</h4>
+
+<p>Encore une fois, grace à l’explication de la fonction <code class="highlighter-rouge">accept()</code> nous pouvons dire que le processus initial, est toujours en écoute alors que le process qu’elle a retourné s’est lié au socket 47534. Nous le voyons sur le <code class="highlighter-rouge">netstat -anp --inet</code> précédent.</p>
+
+<p>et voilà la dernière ligne qui désigne le process de <code class="highlighter-rouge">netcat</code> propriétaire du socket 47534</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>tcp        0      0 127.0.0.1:47534         127.0.0.1:12345         ESTABLISHED 7126/nc  
+</code></pre>
+</div>
+
+<h4 id="d">d.</h4>
+
+<p>Il y a <code class="highlighter-rouge">n + 1</code> = 3 sockets.</p>
+
+<p>a-tracer est donc un <strong>server</strong> <code class="highlighter-rouge">TCP</code> en mode <code class="highlighter-rouge">flux</code>.</p>
+
+<h4 id="e">e.</h4>
+
+<p><code class="highlighter-rouge">accept()</code></p>
+
+<h4 id="f">f.</h4>
+
+<p><code class="highlighter-rouge">-f -- follow forks</code></p>
+
+<h4 id="g">g.</h4>
+
+<p><code class="highlighter-rouge">-p pid -- trace process with process id PID, may be repeated</code></p>
+
+<h2 id="7">7.</h2>
+
+<p>si on reprend tout depuis le début en monitorant <code class="highlighter-rouge">Loopback</code> avec Wireshark, c’est la fête:</p>
+
+<ol>
+  <li>création du premier process de a-tracer.
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+cp        0      0 0.0.0.0:12345           0.0.0.0:<span class="k">*</span>               LISTEN      7303/a-tracer   
+</code></pre>
+    </div>
+  </li>
+  <li>première connexion sur le process de <code class="highlighter-rouge">a-tracer</code></li>
+</ol>
+
+<p><img src="/00illustrations/wireshark1.png" alt="" /></p>
+
+<p>Le joli 3 way hand shake ! Les adresses IP sont les mêmes comme c’est un une communication entre un client TCP et un client au sein de la même machine.</p>
+
+<p>nous avons tous les informations concernant les ports dans wireshark mais netstat nous donnes ces infos aussi:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>tcp        0      0 127.0.0.1:12345         127.0.0.1:47541         ESTABLISHED 7308/a-tracer   
+tcp        0      0 127.0.0.1:47541         127.0.0.1:12345         ESTABLISHED 7307/nc  
+</code></pre>
+</div>
+
+<p>7303 reste en écoute</p>
+
+<ol>
+  <li>seconde connexion sur le process de <code class="highlighter-rouge">a-tracer</code></li>
+</ol>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>tcp        0      0 127.0.0.1:12345         127.0.0.1:47545         ESTABLISHED 7343/a-tracer   
+tcp        0      0 127.0.0.1:47545         127.0.0.1:12345         ESTABLISHED 7342/nc   
+</code></pre>
+</div>
+
+<p>nouveau 3 hand shake, 7303 fidèle au poste toujours en écoute pendant que son fils fait sa fête au le port 47545</p>
+
+<ol>
+  <li>création d’un nouveau processus <code class="highlighter-rouge">netcat</code> que nous trackons avec <code class="highlighter-rouge">strace nc localhost 12345</code></li>
+</ol>
+
+<p>une foule d’informations dont la fin nous montre le début du cycle de vie coté client.
+Les appels système interessants sont:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="n">IPPROTO_TCP</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+</code></pre>
+</div>
+
+<p>et</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">connect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">sin_port</span><span class="o">=</span><span class="n">htons</span><span class="p">(</span><span class="mi">12345</span><span class="p">),</span> <span class="n">sin_addr</span><span class="o">=</span><span class="n">inet_addr</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">)},</span> <span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre>
+</div>
+
+<h2 id="8">8.</h2>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~$ </span>strace -e socket,bind,recvfrom nc -l -p 12345 -u localhost
+socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
+socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
+socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
+socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
+socket<span class="o">(</span>PF_INET, SOCK_DGRAM, IPPROTO_UDP<span class="o">)</span> <span class="o">=</span> 3
+<span class="nb">bind</span><span class="o">(</span>3, <span class="o">{</span><span class="nv">sa_family</span><span class="o">=</span>AF_INET, <span class="nv">sin_port</span><span class="o">=</span>htons<span class="o">(</span>12345<span class="o">)</span>, <span class="nv">sin_addr</span><span class="o">=</span>inet_addr<span class="o">(</span><span class="s2">"0.0.0.0"</span><span class="o">)}</span>, 16<span class="o">)</span> <span class="o">=</span> 0
+recvfrom<span class="o">(</span>3, <span class="s2">"Wed May 24 19:48:45 CDT 2017</span><span class="se">\n</span><span class="s2">"</span>, 8192, MSG_PEEK, <span class="o">{</span><span class="nv">sa_family</span><span class="o">=</span>AF_INET, <span class="nv">sin_port</span><span class="o">=</span>htons<span class="o">(</span>46262<span class="o">)</span>, <span class="nv">sin_addr</span><span class="o">=</span>inet_addr<span class="o">(</span><span class="s2">"127.0.0.1"</span><span class="o">)}</span>, <span class="o">[</span>16]<span class="o">)</span> <span class="o">=</span> 29
+invalid connection to <span class="o">[</span>127.0.0.1] from <span class="o">(</span>UNKNOWN<span class="o">)</span> <span class="o">[</span>127.0.0.1] 46262
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code> <span class="o">=</span> -1 ENOENT <span class="o">(</span>No such file or directory<span class="o">)</span>
+socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
+connect<span class="o">(</span>3, <span class="o">{</span><span class="nv">sa_family</span><span class="o">=</span>AF_LOCAL, <span class="nv">sun_path</span><span class="o">=</span><span class="s2">"/var/run/nscd/socket"</span><span class="o">}</span>, 110<span class="o">)</span> <span class="o">=</span> -1 ENOENT <span class="o">(</span>No such file or directory<span class="o">)</span>
+socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
+connect<span class="o">(</span>3, <span class="o">{</span><span class="nv">sa_family</span><span class="o">=</span>AF_LOCAL, <span class="nv">sun_path</span><span class="o">=</span><span class="s2">"/var/run/nscd/socket"</span><span class="o">}</span>, 110<span class="o">)</span> <span class="o">=</span> -1 ENOENT <span class="o">(</span>No such file or directory<span class="o">)</span>
+socket<span class="o">(</span>PF_INET, SOCK_DGRAM, IPPROTO_UDP<span class="o">)</span> <span class="o">=</span> 3
+connect<span class="o">(</span>3, <span class="o">{</span><span class="nv">sa_family</span><span class="o">=</span>AF_INET, <span class="nv">sin_port</span><span class="o">=</span>htons<span class="o">(</span>12345<span class="o">)</span>, <span class="nv">sin_addr</span><span class="o">=</span>inet_addr<span class="o">(</span><span class="s2">"127.0.0.1"</span><span class="o">)}</span>, 16<span class="o">)</span> <span class="o">=</span> 0
+write<span class="o">(</span>3, <span class="s2">"Wed May 24 19:48:45 CDT 2017</span><span class="se">\n</span><span class="s2">"</span>, 29<span class="o">)</span> <span class="o">=</span> 29
+</code></pre>
+</div>
+
+<p><img src="/00illustrations/wireshark2.png" alt="" /></p>
+
+<h2 id="9">9.</h2>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sol       7303  0.0  0.0   4080   660 pts/1    S+   18:56   0:00 ./a-tracer
+sol       7308  0.0  0.0      0     0 pts/1    Z+   18:56   0:00 <span class="o">[</span>a-tracer] &lt;defunct&gt;
+sol       7342  0.0  0.0   6328  1660 pts/3    S+   19:15   0:00 nc localhost 12345
+sol       7343  0.0  0.0   4220    80 pts/1    S+   19:15   0:00 ./a-tracer
+sol       7390  0.0  0.0      0     0 pts/1    Z+   19:36   0:00 <span class="o">[</span>a-tracer] &lt;defunct&gt;
+</code></pre>
+</div>
+
+<p>Concernant les processus fils terminés qui se transforment en “processus” zombie:</p>
+
+<p>Un soucis de reallocation mémoire après la destruction d’un objet?</p>
 
 
 </div>
@@ -134,21 +697,21 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Reseau: Labo 5 (fr)@&amp;url=https://roscas.github.io/reseau/reseau-labo5.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Reseau: Labo 5 (fr)@&amp;url=http://localhost:4000/reseau/reseau-labo5.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://www.facebook.com/sharer/sharer.php?u=https://roscas.github.io/reseau/reseau-labo5.html" class="facebook-share">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-labo5.html" class="facebook-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://plus.google.com/share?url=https://roscas.github.io/reseau/reseau-labo5.html" class="googleplus-share">
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-labo5.html" class="googleplus-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/Cpp-makefile.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- Google font -->
+
+  <!--<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Noto Sans">-->
+
+<!-- font awesome -->
+
+<!--<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">-->
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: makefile (fr)</title>
+  <meta name="description" content="developpez.com">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: makefile (fr)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="22 May 2017" itemprop="datePublished">May 22 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">Cpp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">res</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">make</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tuto</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Makefile tuto</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <p><a href="http://gl.developpez.com/tutoriel/outil/makefile/">developpez.com</a></p>
+
+<p><a href="https://learnxinyminutes.com/docs/fr-fr/make-fr/">learn X in Y</a></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Les Makefiles sont des fichiers, généralement appelés makefile ou Makefile, utilisés par le programme make pour exécuter un ensemble d’actions, comme la compilation d’un projet, l’archivage de document, la mise à jour de site, etc. Cet article présentera le fonctionnement de makefile au travers de la compilation d’un petit projet en C.</p>
+
+<p>Il existe une multitude d’utilitaires de Makefile fonctionnant sur différents systèmes (gmake, nmake, tmake, etc.). Les Makefiles n’étant malheureusement pas normalisés, certaines syntaxes ou fonctionnalités peuvent ne pas fonctionner sur certains utilitaires.
+Le présent article se base sur l’utilitaire GNU make. Toutefois les notions abordées devraient être utilisables avec la majorité des utilitaires.</p>
+
+<h2 id="1-projet-hello-world">1. Projet: Hello world</h2>
+
+<p>Le projet utilisé ici sera un classique “hello world” découpé en trois fichiers:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// hello.c
+</span><span class="cp">#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+</span>
+<span class="kt">void</span> <span class="nf">hello</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello World</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// hello.h
+</span><span class="cp">#ifndef H_GL_HELLO
+#define H_GL_HELLO
+</span>
+<span class="kt">void</span> <span class="n">hello</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="cp">#endif
+</span></code></pre>
+</div>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// main.c
+</span><span class="cp">#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include"hello.h"
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Hello</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">EXIT_SUCCES</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<h2 id="2-présentation-de-makefile">2. Présentation de Makefile</h2>
+
+<p>Un Makefile est un fichier constitué de plusieurs règles de la forme:</p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nl">cible</span><span class="o">:</span> <span class="nf">dependance</span>
+    <span class="err">commandes</span>
+</code></pre>
+</div>
+
+<p>Chaque commande est précédée d’une tabulation. Lors de l’utilisation d’un tel fichier via la commande make, la première règle rencontrée, ou la règle dont le nom est spécifié, est évaluée. L’évaluation d’une règle se fait en plusieurs étapes:</p>
+
+<ul>
+  <li>les dépendances sont analysées, si une dépendance est la cible d;une autre règle du Makefile, cette regle est à son tour évaluée.</li>
+  <li>Lorsque l’ensemble des dépendances sont analysées et si la cible ne correspond pas à un fichier existant ou si un fichier dépendance est plus récent que la regle, les différentes commandes sont exécutées.</li>
+</ul>
+
+<h4 id="21-makefile-minimal">2.1 Makefile minimal</h4>
+
+<p>Le Makefile minimal du projet est donc:</p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="c"># Makefile
+</span>
+<span class="nl">hello</span><span class="o">:</span> <span class="nf">hello.o main.o</span>
+    <span class="err">gcc</span> <span class="err">-o</span> <span class="err">hello</span> <span class="err">hello.o</span> <span class="err">main.o</span>
+
+<span class="nl">hello.o</span><span class="o">:</span> <span class="nf">hello.c</span>
+    <span class="err">gcc</span> <span class="err">-o</span> <span class="err">hello.o</span> <span class="err">-c</span> <span class="err">hello.c</span> <span class="err">-W</span> <span class="err">-Wall</span> <span class="err">-ansi</span> <span class="err">-pedantic</span>
+
+<span class="nl">main.o</span><span class="o">:</span> <span class="nf">main.c hello.h</span>
+    <span class="err">gcc</span> <span class="err">-o</span> <span class="err">main.o</span> <span class="err">-c</span> <span class="err">main.c</span> <span class="err">-W</span> <span class="err">-Wall</span> <span class="err">-ansi</span> <span class="err">-pedantic</span>
+</code></pre>
+</div>
+
+<p>Nous cherchons à créer le fichier executable <code class="highlighter-rouge">hello</code>, la première dépendance est la cible d’une des régles de notre Makefile, nous évaluons donc cette règle.</p>
+
+<p>Comme aucune dépendance de hello.o n’est une règl, aucune règle n’est à évaluer pour compléter celle-ci.</p>
+
+<p>Deux cas se présentent ici:</p>
+<ul>
+  <li>soit le fichier hello.c est plus récent que le fichier hello.o, la commande est alors exécutée et hello.o est construit</li>
+  <li>soit hello.o est plus récent que hello.c et la commande n’est pas executée.</li>
+</ul>
+
+<p>L’évaluation de la règle hello.o est terminée. Les autres dépendances de hello sont examinées de la même manière puis, si nécéssaire la commande de la règle hello est exécutée et hello est construit.</p>
+
+<h2 id="3-cflags">3. CFLAGS</h2>
+
+<p><code class="highlighter-rouge">CFLAGS</code> et <code class="highlighter-rouge">CXXFLAGS</code> sont les noms de variables d’environnement ou de variables du Makefile qui peuvent être utilisées pour paramétrer la compilation d’un logiciel.</p>
+
+<p>Ces variables sont habituellement positionnées dans un Makefile et sont ajoutées quand le compilateur est appelé. Si elles ne sont pas spécifiées dans le Makefile, alors elles seront prises directement à partir de l’environnement, si elles sont présentes.</p>
+
+<p><code class="highlighter-rouge">CFLAGS</code> permet d’ajouter des paramètres sur la ligne de commande qui appelle le compilateur C, alors que <code class="highlighter-rouge">CXXFLAGS</code> est utilisé pour la compilation <strong>C++</strong>. De même, une variable similaire, <code class="highlighter-rouge">CPPFLAGS</code>, permet de passer des paramètres <strong>sur la ligne de commande du Préprocesseur C</strong>.</p>
+
+<ul>
+  <li>
+    <p><strong>-Wall : -W represents warnings. -Wall means it will show all possible warnings.</strong></p>
+  </li>
+  <li>
+    <p>-O2 : means optimize it. These are used in creating machine code from source code by compiler. There are many levels of optimizing. O2 is generally considered good enough, while O3 makes your file size bigger without optimizing significantly, and may make your program slower on some sort of algorithms.</p>
+  </li>
+  <li>
+    <p>-g means debug. This will add many debugging “notes” in your final binary, so that when you run a debugger on your final binary file, the debugger will know what part of this binary file is related to which part of the original source code.</p>
+  </li>
+  <li>
+    <p>-I/path/to/include/files : In C/C++, you can include files which compiler already knows where they are present with command: #include <filename.h>. If the compiler does not know where the include file you want to include is present, you can specify the path to that directory with -I/the/directory</filename.h></p>
+  </li>
+</ul>
+
+<h2 id="4-learn-x-in-y-x--make">4. Learn X in Y. X = Make</h2>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="c"># Ceci est un commentaire.
+</span>
+<span class="c"># Un makefile devrait être nommé "Makefile" (avec ou sans la
+# majuscule). Il peut alors être exécuté par `make &lt;cible&gt;`.
+# Ce nommage n'est toutefois pas obligatoire : utiliser
+# `make -f "fichier" &lt;cible&gt;`.
+</span>
+<span class="c"># ATTENTION : l'indentation est quant à elle obligatoire, et se fait avec des
+# tabulations, pas avec des espaces !
+</span>
+<span class="c">#-----------------------------------------------------------------------
+# Les basiques
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># Une règle. Elle ne sera exécutée que si fichier0.txt n'existe pas.
+</span><span class="nl">fichier0.txt</span><span class="o">:</span>
+    <span class="err">echo</span> <span class="s2">"truc"</span> <span class="err">&gt;</span> <span class="err">fichier0.txt</span>
+    <span class="c"># Même les commentaires sont transférés dans le terminal.
+</span>
+<span class="c"># Cette règle ne sera exécutée que si fichier0.txt est plus récent que
+# fichier1.txt.
+</span><span class="nl">fichier1.txt</span><span class="o">:</span> <span class="nf">fichier0.txt</span>
+    <span class="err">cat</span> <span class="err">fichier0.txt</span> <span class="err">&gt;</span> <span class="err">fichier1.txt</span>
+    <span class="c"># Utiliser la même syntaxe que dans un terminal.
+</span>    <span class="err">@cat</span> <span class="err">fichier0.txt</span> <span class="err">&gt;&gt;</span> <span class="err">fichier1.txt</span>
+    <span class="c"># @ empêche l'affichage de la sortie texte d'une commande.
+</span>    <span class="err">-@echo</span> <span class="s1">'hello'</span>
+    <span class="c"># - signifie que la règle devrait continuer à s'exécuter si cette commande
+</span>    <span class="c"># échoue.
+</span>
+<span class="c"># Une règle peut avoir plusieurs cibles et plusieurs dépendances.
+</span><span class="nl">fichier2.txt fichier3.txt</span><span class="o">:</span> <span class="nf">fichier0.txt fichier1.txt</span>
+    <span class="err">touch</span> <span class="err">fichier2.txt</span>
+    <span class="err">touch</span> <span class="err">fichier3.txt</span>
+
+<span class="c"># Make affichera un avertissement si le makefile comporte plusieurs règles pour
+# une même cible. Cependant les règles vides ne comptent pas, et peuvent être
+# utilisées pour ajouter des dépendances plus facilement.
+</span>
+<span class="c">#-----------------------------------------------------------------------
+# Fausses règles
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># Une fausse règle est une règle qui ne correspond pas à un fichier.
+# Par définition, elle ne peut pas être à jour, et donc make l’exécutera à
+# chaque demande.
+</span><span class="nl">all</span><span class="o">:</span> <span class="nf">maker process</span>
+
+<span class="c"># La déclaration des règles peut être faite dans n'importe quel ordre.
+</span><span class="nl">maker</span><span class="o">:</span>
+    <span class="err">touch</span> <span class="err">ex0.txt</span> <span class="err">ex1.txt</span>
+
+<span class="c"># On peut transformer une règle en fausse règle grâce à la cible spéciale
+# suivante :
+</span><span class="nl">.PHONY</span><span class="o">:</span> <span class="nf">all maker process</span>
+
+<span class="c"># Une règle dépendante d'une fausse règle sera toujours exécutée.
+</span><span class="nl">ex0.txt ex1.txt</span><span class="o">:</span> <span class="nf">maker</span>
+
+<span class="c"># Voici quelques exemples fréquents de fausses règles : all, make, clean,
+# install...
+</span>
+<span class="c">#-----------------------------------------------------------------------
+# Variables automatiques et wildcards
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># Utilise un wildcard pour des noms de fichier
+</span><span class="nl">process</span><span class="o">:</span> <span class="nf">fichier*.txt</span>
+    <span class="err">@echo</span> <span class="err">$^</span>    <span class="c"># $^ est une variable contenant la liste des dépendances de la
+</span>                <span class="c"># cible actuelle.
+</span>    <span class="err">@echo</span> <span class="err">$@</span>    <span class="c"># $@ est le nom de la cible actuelle. En cas de cibles
+</span>                <span class="c"># multiples, $@ est le nom de la cible ayant causé l'exécution
+</span>                <span class="c"># de cette règle.
+</span>    <span class="err">@echo</span> <span class="err">$&lt;</span>    <span class="c"># $&lt; contient la première dépendance.
+</span>    <span class="err">@echo</span> <span class="err">$?</span>    <span class="c"># $? contient la liste des dépendances qui ne sont pas à jour.
+</span>    <span class="err">@echo</span> <span class="err">$+</span>    <span class="c"># $+ contient la liste des dépendances avec d'éventuels
+</span>                <span class="c"># duplicatas, contrairement à $^.
+</span>    <span class="err">@echo</span> <span class="err">$|</span>    <span class="c"># $| contient la liste des cibles ayant préséance sur la cible
+</span>                <span class="c"># actuelle.
+</span>
+<span class="c"># Même si la définition de la règle est scindée en plusieurs morceaux, $^
+# listera toutes les dépendances indiquées.
+</span><span class="nl">process</span><span class="o">:</span> <span class="nf">ex1.txt fichier0.txt</span>
+<span class="c"># Ici, fichier0.txt est un duplicata dans $+.
+</span>
+<span class="c">#-----------------------------------------------------------------------
+# Pattern matching
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># En utilisant le pattern matching, on peut par exemple créer des règles pour
+# convertir les fichiers d'un certain format dans un autre.
+</span><span class="nl">%.png</span><span class="o">:</span> <span class="nf">%.svg</span>
+    <span class="err">inkscape</span> <span class="err">--export-png</span> <span class="err">$^</span>
+
+<span class="c"># Make exécute une règle même si le fichier correspondant est situé dans un sous
+# dossier. En cas de conflit, la règle avec la meilleure correspondance est
+# choisie.
+</span><span class="nl">small/%.png</span><span class="o">:</span> <span class="nf">%.svg</span>
+    <span class="err">inkscape</span> <span class="err">--export-png</span> <span class="err">--export-dpi</span> <span class="err">30</span> <span class="err">$^</span>
+
+<span class="c"># Dans ce type de conflit (même cible, même dépendances), make exécutera la
+# dernière règle déclarée...
+</span><span class="nl">%.png</span><span class="o">:</span> <span class="nf">%.svg</span>
+    <span class="err">@echo</span> <span class="err">cette</span> <span class="err">règle</span> <span class="err">est</span> <span class="err">choisie</span>
+
+<span class="c"># Dans ce type de conflit (même cible mais pas les mêmes dépendances), make
+# exécutera la première règle pouvant être exécutée.
+</span><span class="nl">%.png</span><span class="o">:</span> <span class="nf">%.ps</span>
+    <span class="err">@echo</span> <span class="err">cette</span> <span class="err">règle</span> <span class="err">n\</span><span class="s1">'est pas choisie si *.svg et *.ps sont présents
+
+# Make a des règles pré établies. Par exemple, il sait comment créer la cible
+# *.o à partir de *.c.
+
+# Les makefiles plus vieux utilisent un matching par extension de fichier.
+.png.ps:
+    @echo cette règle est similaire à une règle par pattern matching
+
+# Utiliser cette règle spéciale pour déclarer une règle comme ayant un
+# matching par extension de fichier.
+.SUFFIXES: .png
+
+#-----------------------------------------------------------------------
+# Variables, ou macros
+#-----------------------------------------------------------------------
+
+# Les variables sont des chaînes de caractères.
+
+variable = Ted
+variable2="Sarah"
+
+echo:
+    @echo $(variable)
+    @echo ${variable2}
+    @echo $variable    # Cette syntaxe signifie $(n)ame et non pas $(variable) !
+    @echo $(variable3) # Les variables non déclarées valent "" (chaîne vide).
+
+# Les variables sont déclarées de 4 manières, de la plus grande priorité à la
+# plus faible :
+# 1 : dans la ligne de commande qui invoque make,
+# 2 : dans le makefile,
+# 3 : dans les variables d’environnement du terminal qui invoque make,
+# 4 : les variables prédéfinies.
+
+# Assigne la variable si une variable d’environnement du même nom n'</span><span class="err">existe</span> <span class="err">pas</span>
+<span class="c"># déjà.
+</span><span class="nv">variable4</span> <span class="o">?=</span> Jean
+
+<span class="c"># Empêche cette variable d'être modifiée par la ligne de commande.
+</span><span class="err">override</span> <span class="nv">variable5</span> <span class="o">=</span> David
+
+<span class="c"># Concatène à une variable (avec un espace avant).
+</span><span class="nv">variable4</span> <span class="o">+=</span>gris
+
+<span class="c"># Assignations de variable pour les règles correspondant à un pattern
+# (spécifique à GNU make).
+</span><span class="nl">*.png</span><span class="o">:</span> <span class="nf">variable2 = Sara </span><span class="c">#</span><span class="nf"> Pour toutes les règles correspondant à *.png</span><span class="p">,</span><span class="nf"> et tous</span>
+                        <span class="c"># leurs descendants, la variable variable2 vaudra
+</span>                        <span class="c"># "Sara".
+# Si le jeux des dépendances et descendances devient vraiment trop compliqué,
+# des incohérences peuvent survenir.
+</span>
+<span class="c"># Certaines variables sont prédéfinies par make :
+</span><span class="nl">affiche_predefinies</span><span class="o">:</span>
+    <span class="err">echo</span> <span class="err">$(CC)</span>
+    <span class="err">echo</span> <span class="err">${CXX}</span>
+    <span class="err">echo</span> <span class="err">$(FC)</span>
+    <span class="err">echo</span> <span class="err">${CFLAGS}</span>
+    <span class="err">echo</span> <span class="err">$(CPPFLAGS)</span>
+    <span class="err">echo</span> <span class="err">${CXXFLAGS}</span>
+    <span class="err">echo</span> <span class="err">$(LDFLAGS)</span>
+    <span class="err">echo</span> <span class="err">${LDLIBS}</span>
+
+<span class="c">#-----------------------------------------------------------------------
+# Variables : le retour
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># Les variables sont évaluées à chaque instance, ce qui peut être coûteux en
+# calculs. Pour parer à ce problème, il existe dans GNU make une seconde
+# manière d'assigner des variables pour qu'elles ne soient évaluées qu'une seule
+# fois seulement.
+</span>
+<span class="nv">var</span> <span class="o">:=</span> A B C
+<span class="nl">var2 </span><span class="o">::</span><span class="nf">=  $(var) D E F </span><span class="c">#</span><span class="nf"> := et ::= sont équivalents.</span>
+
+<span class="c"># Ces variables sont évaluées procéduralement (i.e. dans leur ordre
+# d'apparition), contrairement aux règles par exemple !
+</span>
+<span class="c"># Ceci ne fonctionne pas.
+</span><span class="nl">var3 </span><span class="o">::</span><span class="nf">= $(var4) et fais de beaux rêves</span>
+<span class="nl">var4 </span><span class="o">::</span><span class="nf">= bonne nuit</span>
+
+<span class="c">#-----------------------------------------------------------------------
+# Fonctions
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># Make a une multitude de fonctions. La syntaxe générale est
+# $(fonction arg0,arg1,arg2...).
+</span>
+<span class="c"># Quelques exemples :
+</span>
+<span class="nv">fichiers_source</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span>wildcard <span class="k">*</span>.c <span class="k">*</span>/<span class="k">*</span>.c<span class="o">)</span>
+<span class="nv">fichiers_objet</span>  <span class="o">=</span> <span class="err">$</span><span class="o">(</span>patsubst %.c,%.o,<span class="nv">$(fichiers_source)</span><span class="o">)</span>
+
+<span class="nl">ls</span><span class="o">:</span> <span class="nf">* src/*</span>
+    <span class="err">@echo</span> <span class="err">$(filter</span> <span class="err">%.txt,</span> <span class="err">$^)</span>
+    <span class="err">@echo</span> <span class="err">$(notdir</span> <span class="err">$^)</span>
+    <span class="err">@echo</span> <span class="err">$(join</span> <span class="err">$(dir</span> <span class="err">$^),$(notdir</span> <span class="err">$^))</span>
+
+<span class="c">#-----------------------------------------------------------------------
+# Directives
+#-----------------------------------------------------------------------
+</span>
+<span class="c"># Inclut d'autres makefiles.
+</span><span class="err">include</span> <span class="err">meuh.mk</span>
+
+<span class="c"># Branchements conditionnels.
+</span><span class="nv">sport</span> <span class="o">=</span> tennis
+<span class="nl">report</span><span class="o">:</span>
+<span class="err">ifeq</span> <span class="err">($(sport),tennis)</span>                  <span class="c"># Il y a aussi ifneq.
+</span>    <span class="err">@echo</span> <span class="s1">'jeu, set et match'</span>
+<span class="err">else</span>
+    <span class="err">@echo</span> <span class="s2">"C'est pas ici Wimbledon ?"</span>
+<span class="err">endif</span>
+
+<span class="nv">truc</span> <span class="o">=</span> <span class="nb">true</span>
+<span class="err">ifdef</span> <span class="err">$(truc)</span>                           <span class="c"># Il y a aussi ifndef.
+</span>    <span class="nv">machin</span> <span class="o">=</span> <span class="s1">'salut'</span>
+<span class="err">endif</span>
+</code></pre>
+</div>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: makefile (fr)@&amp;url=http://localhost:4000/cpp/Cpp-makefile.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/Cpp-makefile.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/Cpp-makefile.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
