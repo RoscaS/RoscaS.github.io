@@ -490,7 +490,7 @@ cp        0      0 0.0.0.0:12345           0.0.0.0:*               LISTEN      7
 
 2. première connexion sur le process de `a-tracer`
 
-![](/00illustrations/wireshark1.png)
+[<a href="/00illustrations/wireshark1.png"><img src="/00illustrations/wireshark1.png"></a>]()
 
 Le joli 3 way hand shake ! Les adresses IP sont les mêmes comme c'est un une communication entre un client TCP et un client au sein de la même machine.
 
@@ -553,7 +553,7 @@ connect(3, {sa_family=AF_INET, sin_port=htons(12345), sin_addr=inet_addr("127.0.
 write(3, "Wed May 24 19:48:45 CDT 2017\n", 29) = 29
 ```
 
-![](/00illustrations/wireshark2.png)
+[<a href="/00illustrations/wireshark2.png"><img src="/00illustrations/wireshark2.png"></a>]()
 
 ## 9.
 
