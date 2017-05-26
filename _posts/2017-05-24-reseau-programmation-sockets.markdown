@@ -20,3 +20,8 @@ Un socket est une prise qui permet à une application d'envoyer et de recevoir d
 Une connexion TCP est identifiée par 4 valeurs (adresse IP source et destination, ports source et destination). Un socket est identifié par une valeur spécifique au système d'exploitation.
 
 TCP est un client-serveur:
+
+
+test:
+
+<iframe src="https://www.desmos.com/calculator/czchnbsrr4?embed" width="500px" height="500px" style="border: 1px solid #ccc" frameborder="0"></iframe>

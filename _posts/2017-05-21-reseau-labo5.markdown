@@ -569,3 +569,5 @@ Concernant les processus fils terminés qui se transforment en "processus" zombi
 
 Un soucis de reallocation mémoire après la destruction d'un objet?
 
+
+
