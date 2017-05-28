@@ -41,3 +41,42 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 > Automatisation des processus cognitifs et en s’appuyant sur quatre étapes : l’observation des faits et données, leur interprétation, leur évaluation et la décision, avec une action ou une proposition d’actions, souvent basée sur des statistiques.
 
+## IT
+
+### endiannes
+
+> Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication** 
+
+#### Big endian
+**byte de poids fort** à gauche.  
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
+
+|adr:| 0 | 1 | 2 | 3 |  |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+|**val:**| A0 | B7 | 07 | 08 | ... |
+
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 2 byte:  
+
+| 0 | 1 | | 2 | 3 | |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+| A0 | B7 | | 07 | 08 | ... |
+
+
+<span style="color:#F92672">**Tous les protocoles TCP/IP communiquent en big-endian**</span>
+
+
+#### Little endian
+**byte de poid faible** à gauche.   
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
+
+|adr:|  0 | 1 | 2 | 3 |  |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+|**val:**| 08 | 07 | B7 | A0 | ... |
+
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 2 byte:  
+
+| 0 | 1 | | 2 | 3 | |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+| 07 | 08 | | A0 | B7 | ... |
+
+<span style="color:#F92672">**X86 fonctionne en Little endian**</span>

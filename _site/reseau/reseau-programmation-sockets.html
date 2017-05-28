@@ -10,8 +10,8 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://roscas.github.io/reseau/reseau-programmation-sockets.html">
-  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="https://roscas.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-programmation-sockets.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- Google font -->
 
@@ -70,19 +70,19 @@
         	
         <div class="post-tags">
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">reseau</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">sockets</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">sockets</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">couche4</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche4</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">tcp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">udp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">Cpp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">Cpp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">fr</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
         	
 			
 		</div>
@@ -119,7 +119,10 @@
 <div class="post-content" itemprop="articleBody">
     <h1 id="programmation-de-sockets">Programmation de sockets</h1>
 
-<p><a href="http://broux.developpez.com/articles/c/sockets/">Super tuto programmation sockets</a></p>
+<h2 id="ressources">ressources:</h2>
+<p><a href="http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip">simple-client.c (base)</a><br />
+<a href="http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4">video explicative</a><br />
+<a href="http://broux.developpez.com/articles/c/sockets/">tuto sockets</a></p>
 
 <h2 id="1-introduction">1. Introduction</h2>
 
@@ -127,11 +130,203 @@
 
 <p>Une connexion TCP est identifiée par 4 valeurs (adresse IP source et destination, ports source et destination). Un socket est identifié par une valeur spécifique au système d’exploitation.</p>
 
-<p>TCP est un client-serveur:</p>
+<h2 id="2-nouvelles-notions-et-rappels">2. Nouvelles notions et rappels</h2>
+<h3 id="int-main">int main</h3>
+<p>int main(int <em>argc</em>, char <em>argv)</em></p>
 
-<p>test:</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/test$ </span>./programme arg1 arg2
+</code></pre>
+</div>
 
-<iframe src="https://www.desmos.com/calculator/czchnbsrr4?embed" width="500px" height="500px" style="border: 1px solid #ccc" frameborder="0"></iframe>
+<p><code class="highlighter-rouge">argv[idx]</code> nous sert à récuperer les arguments dans le code.</p>
+<ul>
+  <li>argc: nombre d’arguments + 1 (nom programme)</li>
+  <li>argv[0]: nom du programme</li>
+  <li>argv[1]: argument 1</li>
+  <li>argv[2]: argument 2</li>
+</ul>
+
+<h3 id="fprintf">fprintf</h3>
+<p>Permet de choisir le flux de sortie.</p>
+
+<h3 id="perror">perror</h3>
+<p>perror(“message”)<br />
+renvoie <code class="highlighter-rouge">message + : dernière erreur</code></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</span>
+<span class="kt">void</span> <span class="nf">test</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"arg1: %s</span><span class="se">\n</span><span class="s">arg2: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">perror</span><span class="p">(</span><span class="s">"etat"</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">"test: %d</span><span class="se">\n</span><span class="s">nom de la fonction: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">test</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/04CliendTCP/test$ </span>./test poule cochon
+etat: Succes
+n: 3
+nom de la fonction: ./test
+arg1: poule
+arg2: cochon
+</code></pre>
+</div>
+
+<h2 id="socket">socket</h2>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">socket</span> <span class="p">(</span><span class="kt">int</span> <span class="n">domaine</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocole</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>Elle permet de créer une socket de type quelconque :</p>
+<ul>
+  <li>Le paramètre domaine précise la famille de protocoles è utiliser pour les communications. Il y a deux familles principales :
+    <ul>
+      <li><code class="highlighter-rouge">PF UNIX</code> pour les communications locales n’utilisant pas le réseau; Communication entre processus sur une même machine</li>
+      <li><code class="highlighter-rouge">AF INET</code> pour les communications réseaux utilisant le protocole IPv4.</li>
+      <li><code class="highlighter-rouge">AF INET6</code> pour les communications réseaux utilisant le protocole IPv6. Nous n’étudierons par la suite que la famille AF INET.</li>
+    </ul>
+  </li>
+  <li>Le paramètre mode précise le type de la socket è créer :
+    <ul>
+      <li><code class="highlighter-rouge">SOCK STREAM</code> pour une communication bidirectionnelle sûre. Dans ce cas, la socket utilisera le protocole TCP pour communiquer.</li>
+      <li><code class="highlighter-rouge">SOCK DGRAM</code> pour une communication sous forme de datagrammes. Dans ce cas, la socket utilise le protocole UDP pour communiquer.</li>
+      <li><code class="highlighter-rouge">SOCK RAW</code> pour pouvoir créer soi-même ses propres paquets IP ou les recevoir sans traitement de la part de la couche Transport.</li>
+    </ul>
+  </li>
+  <li>Le paramètre protocole précise le protocole 
+utilisé (dépend bien sûr du champ mode) :
+    <ul>
+      <li><code class="highlighter-rouge">IPPROTO UDP</code></li>
+      <li><code class="highlighter-rouge">IPPROTO TCP</code></li>
+      <li><code class="highlighter-rouge">IPPROTO ICMP</code></li>
+      <li><code class="highlighter-rouge">IPPROTO RAW</code> La valeur renvoyée par la fonction socket() est -1 en cas d’erreur, sinon c’est un descripteur de ﬁchier qu’on peut par la suite utiliser avec les autres fonctions de la librairie des Sockets</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="structure-sockaddr">structure sockaddr</h2>
+<p>Dans le cas des communications IP, le pointeur vers la structure de type <code class="highlighter-rouge">sockaddr</code> est en fait un pointeur vers une structure de <strong>type</strong> sockaddr_in pour IPV4 ou sockaddr_in6 pour IPV6. Ces structures sont déﬁnies dans le ﬁchier d’en-tˆete <strong>&lt;netinet/in.h&gt;</strong> (d’où la <strong>conversion de pointeur</strong>).</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr_in</span> 
+<span class="p">{</span> 
+    <span class="kt">short</span> <span class="n">sin_family</span><span class="p">;</span>
+    <span class="n">u_short</span> <span class="n">sin_port</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">in_addr</span> <span class="n">sin_addr</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">sin_zero</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+    <span class="p">};</span>
+<span class="k">struct</span> <span class="n">sockaddr_in6</span> 
+<span class="p">{</span> 
+    <span class="n">sa_family_t</span> <span class="n">sin6_family</span><span class="p">;</span> <span class="c1">// AF_INET6
+</span>    <span class="n">in_port_t</span> <span class="n">sin6_port</span><span class="p">;</span>     <span class="c1">// port number
+</span>    <span class="kt">uint32_t</span> <span class="n">sin6_flowinfo</span><span class="p">;</span>  <span class="c1">// IPv6 flow information
+</span>
+<span class="k">struct</span> <span class="n">in6_addr</span> <span class="n">sin6_addr</span><span class="p">;</span> <span class="c1">// IPv6 address  
+</span><span class="p">{</span>
+    <span class="kt">uint32_t</span> <span class="n">sin6_scope_id</span><span class="p">;</span> <span class="c1">// Scope ID (new in 2.4) 
+</span><span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">in6_addr</span> <span class="p">{</span> 
+    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">s6_addr</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span> <span class="c1">// IPv6 address 
+</span><span class="p">};</span>
+</code></pre>
+</div>
+
+<p>La structure sockaddr_in contient trois champ utiles :</p>
+<ul>
+  <li><code class="highlighter-rouge">short sin_family</code> est la famille de protocoles utilisée, AF_INET pour IPv4;</li>
+  <li><code class="highlighter-rouge">unsigned short sin_port</code> est le port à aﬀecter à la structure; (0 pour une allocation dynamique cˆoté client)</li>
+  <li><code class="highlighter-rouge">unsigned long sin addr.s_addr</code> est l’adresse IP à aﬀecter à la structure. 
+La fonction <strong>getaddrinfo()</strong> permet de remplir ces structures de façon simple que ce soit avec des adresses IPV4 ou IPV6.</li>
+</ul>
+
+<h2 id="getaddrinfo">getaddrinfo</h2>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span> 
+                <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">service</span><span class="p">,</span> 
+                <span class="k">const</span> <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">hints</span><span class="p">,</span> 
+                <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">**</span><span class="n">res</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p><strong>getaddrinfo</strong>(*hostname, *port,… <strong>a completer</strong>)
+permet de trouver l’adresse ou les adresses IP (IPV4  et  IPV6)  associées  à  un  nom  soit  <strong>DNS</strong>,  soit  donné dans le fichier */etc/hosts** de  la <strong>machine</strong>.</p>
+
+<p>Elle retourne une liste de structure <code class="highlighter-rouge">addrinfo</code> dans lesquelles on retrouve un pointeur sur la sructure <code class="highlighter-rouge">sockaddr</code> qui peut ensuite être utilisée pour les appels aux fonctions <strong>bind</strong>, <strong>connect</strong></p>
+
+<p>La structure <strong>sockaddr</strong> contient après l’appel une des adresses IP de node et le numéro de port donné par service (<strong>numéro de port ou nom associé dans /etc/services</strong>). La structure pointée par hints peut être remplie avant l’appel pour ﬁxer la valeur de certains champs (par exemple le type de la socket dans <code class="highlighter-rouge">hints-&gt;ai socktype</code>).</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">addrinfo</span> <span class="p">{</span> 
+    <span class="kt">int</span> <span class="n">ai_flags</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ai_family</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ai_socktype</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ai_protocol</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">ai_addrlen</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">ai_addr</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">ai_canonname</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">ai_next</span><span class="p">;</span>
+    <span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Les structures pointées par *res(ipv4 ou ipv6) sont allouées par la fonction. On peut les désalouer à l’aide de:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="n">freeaddrinfo</span><span class="p">(</span><span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">res</span><span class="p">);</span> 
+</code></pre>
+</div>
+
+<p><strong>completer:</strong> gai…</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">gai</span> <span class="n">strerror</span><span class="p">(</span><span class="kt">int</span> <span class="n">errcode</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h4 id="exemple-dutilisation">exemple d’utilisation:</h4>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">addr</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+<span class="kt">char</span> <span class="n">ipstr</span><span class="p">[</span><span class="n">INET6_ADDRSTRLEN</span><span class="p">],</span> <span class="n">ipver</span><span class="p">;</span>
+
+<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hints</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">hints</span><span class="p">);</span>
+<span class="n">hints</span><span class="p">.</span><span class="n">ai_family</span> <span class="o">=</span> <span class="n">AF_UNSPEC</span> <span class="c1">// ipv4 ou ipv6
+</span><span class="n">hints</span><span class="p">.</span><span class="n">ai_socktype</span> <span class="o">=</span> <span class="n">SOCK_STREAM</span> <span class="c1">// socket TCP
+</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="s">"5000"</span><span class="p">,</span> <span class="s">"domaine.com"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hints</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">);</span>
+
+<span class="k">while</span><span class="p">(</span><span class="n">res</span> <span class="o">!-</span> <span class="nb">NULL</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// identification de l'adresse courante
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_family</span> <span class="o">==</span> <span class="n">AF_iNET</span><span class="p">)</span> <span class="c1">// ipv4
+</span>    <span class="p">{</span>                                       <span class="c1">// cast
+</span>        <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="o">*</span><span class="n">ipv4</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="o">*</span> <span class="p">)</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">;</span>
+        <span class="n">addr</span> <span class="o">=&amp;</span><span class="p">(</span><span class="n">ipv4</span><span class="o">-&gt;</span><span class="n">sin_addr</span><span class="p">);</span>
+        <span class="n">ipver</span> <span class="o">=</span> <span class="sc">'4'</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="c1">// ipv6
+</span>    <span class="p">{</span>
+        <span class="k">struct</span> <span class="n">sockaddr_in6</span> <span class="o">*</span><span class="n">ipv6</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr_in6</span> <span class="o">*</span> <span class="p">)</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">;</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">ipv6</span><span class="o">-&gt;</span><span class="n">sin6_addr</span><span class="p">);</span>
+        <span class="n">ipver</span> <span class="o">=</span> <span class="sc">'6'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// conversion de l'adresse IP en str
+</span>    <span class="n">inet_ntop</span><span class="p">(</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_family</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">ipstr</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">ipstr</span><span class="p">)</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"IPv%c: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">ipver</span><span class="p">,</span> <span class="n">ipstr</span><span class="p">);</span>
+
+    <span class="c1">// Adresse suivante
+</span>    <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_next</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// liberation de la memoire occupee par les enregistrements
+</span><span class="n">freeaddrinfo</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+</code></pre>
+</div>
+
 
 </div>
 
@@ -143,21 +338,21 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Reseau: programmation de sockets (fr)@&amp;url=https://roscas.github.io/reseau/reseau-programmation-sockets.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Reseau: programmation de sockets (fr)@&amp;url=http://localhost:4000/reseau/reseau-programmation-sockets.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://www.facebook.com/sharer/sharer.php?u=https://roscas.github.io/reseau/reseau-programmation-sockets.html" class="facebook-share">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-programmation-sockets.html" class="facebook-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://plus.google.com/share?url=https://roscas.github.io/reseau/reseau-programmation-sockets.html" class="googleplus-share">
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-programmation-sockets.html" class="googleplus-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>

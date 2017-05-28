@@ -10,8 +10,8 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://roscas.github.io/reseau/reseau-labo5.html">
-  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="https://roscas.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-labo5.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- Google font -->
 
@@ -70,17 +70,17 @@
         	
         <div class="post-tags">
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">reseau</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">labo</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">labo</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">couche4</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche4</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">tcp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">udp</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">fr</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
         	
 			
 		</div>
@@ -378,11 +378,35 @@ cc -Wall   -c -o a.o a.c
   <li><code class="highlighter-rouge">netstat -an --inet6</code> <em>sockets ipv6</em></li>
   <li><code class="highlighter-rouge">netstat --inet --listen -NNNN</code> <em>socket en écoute</em></li>
   <li><code class="highlighter-rouge">netstat --inet6 --listen -NNNN</code> <em>socket en écoute</em></li>
-  <li><code class="highlighter-rouge">-p</code> (sudo) <em>identification du process lié</em></li>
-  <li><code class="highlighter-rouge">strace</code>    <em>traçage des appels system</em></li>
-  <li><code class="highlighter-rouge">ltrace</code>    <em>traçage des fonctions de la LIBC</em></li>
-  <li><em>penser à utiliser Wireshark !</em></li>
+  <li><strong>sudo</strong> <code class="highlighter-rouge">netstat</code> <code class="highlighter-rouge">-p</code> …  <em>identification du process lié (PID/prgrm name)</em>
+    <blockquote>
+      <p><code class="highlighter-rouge">a</code> <em>display all sockets</em><br />
+<code class="highlighter-rouge">n</code> <em>numeric: don’t resolve name</em></p>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">strace</code> <em>traçage des appels system</em>
+    <blockquote>
+      <p><code class="highlighter-rouge">-e</code> <strong>expr</strong> <em>a qualifying expression: option=[!]all or option=[!]val1[,val2]…</em></p>
+      <div class="language-sh highlighter-rouge"><pre class="highlight"><code>strace -e socket,connect ./simple-client localhost 7000
+</code></pre>
+      </div>
+    </blockquote>
+  </li>
+  <li><code class="highlighter-rouge">ltrace</code> <em>traçage des fonctions de la LIBC</em></li>
 </ul>
+
+<p><em>création d’un serveur TCP avec netcat:</em></p>
+<ul>
+  <li><code class="highlighter-rouge">nc -l -p</code> port
+    <blockquote>
+      <p><code class="highlighter-rouge">nc</code>   <em>netcat</em><br />
+<code class="highlighter-rouge">-l</code>   <em>listen mode, for inbound connects</em><br />
+<code class="highlighter-rouge">-p</code>   <em>local port number</em></p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><span style="color:#F92672"><strong>penser à utiliser Wireshark !</strong></span></p>
 
 <h3 id="question-1">question 1</h3>
 
@@ -590,7 +614,7 @@ udp        0      0 0.0.0.0:123             0.0.0.0:<span class="k">*</span>    
 
 <p><code class="highlighter-rouge">-p pid -- trace process with process id PID, may be repeated</code></p>
 
-<h2 id="7">7.</h2>
+<h3 id="question-7-1">question 7</h3>
 
 <p>si on reprend tout depuis le début en monitorant <code class="highlighter-rouge">Loopback</code> avec Wireshark, c’est la fête:</p>
 
@@ -645,7 +669,7 @@ Les appels système interessants sont:</p>
 </code></pre>
 </div>
 
-<h2 id="8">8.</h2>
+<h3 id="question-8-1">question 8</h3>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~$ </span>strace -e socket,bind,recvfrom nc -l -p 12345 -u localhost
 socket<span class="o">(</span>PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0<span class="o">)</span> <span class="o">=</span> 3
@@ -672,7 +696,7 @@ write<span class="o">(</span>3, <span class="s2">"Wed May 24 19:48:45 CDT 2017</
 
 <p><a href=""><a href="/00illustrations/wireshark2.png"><img src="/00illustrations/wireshark2.png" /></a></a></p>
 
-<h2 id="9">9.</h2>
+<h3 id="question-9-1">question 9</h3>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>sol       7303  0.0  0.0   4080   660 pts/1    S+   18:56   0:00 ./a-tracer
 sol       7308  0.0  0.0      0     0 pts/1    Z+   18:56   0:00 <span class="o">[</span>a-tracer] &lt;defunct&gt;
@@ -686,6 +710,309 @@ sol       7390  0.0  0.0      0     0 pts/1    Z+   19:36   0:00 <span class="o"
 
 <p>Un soucis de reallocation mémoire après la destruction d’un objet?</p>
 
+<h2 id="3-client-tcp-simple-linux-pas-pour-le-labo">3. Client TCP simple (Linux) *pas pour le labo</h2>
+<p>ressources:<br />
+<a href="http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip">simple-client.c (base)</a><br />
+<a href="http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4">video explicative</a><br />
+<a href="http://broux.developpez.com/articles/c/sockets/">tuto sockets</a><br />
+<a href="/reseau/reseau-programmation-sockets.html">mon poste sur les sockets</a></p>
+
+<h3 id="question-3-abcd">question 3 (a,b,c,d)</h3>
+<p>Implémentation de la fonction <code class="highlighter-rouge">tcp_connect()</code></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;netdb.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="k">static</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">tcp_connect</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hostname</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">port</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="n">f</span> <span class="o">=</span> <span class="n">tcp_connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="p">{</span>
+        <span class="p">}</span>
+        <span class="cm">/* else: failure */</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s remote-host port</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s: bad args.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">FILE</span> <span class="o">*</span><span class="nf">tcp_connect</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hostname</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">port</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">s</span><span class="p">;</span> 
+    <span class="k">struct</span> <span class="n">addrinfo</span> <span class="n">hints</span><span class="p">;</span> 
+    <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">result</span><span class="p">,</span> <span class="o">*</span><span class="n">rp</span><span class="p">;</span>
+
+    <span class="n">hints</span><span class="p">.</span><span class="n">ai_family</span> <span class="o">=</span> <span class="n">AF_UNSPEC</span><span class="p">;</span> <span class="cm">/* IPv4 or v6 */</span> 
+    <span class="n">hints</span><span class="p">.</span><span class="n">ai_socktype</span> <span class="o">=</span> <span class="n">SOCK_STREAM</span><span class="p">;</span> <span class="cm">/* TCP */</span> 
+    <span class="n">hints</span><span class="p">.</span><span class="n">ai_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+    <span class="n">hints</span><span class="p">.</span><span class="n">ai_protocol</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* any protocol */</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">s</span> <span class="o">=</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hints</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">)))</span> 
+    <span class="p">{</span> 
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"getaddrinfo(): failed: %s.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">gai_strerror</span><span class="p">(</span><span class="n">s</span><span class="p">));</span> 
+    <span class="p">}</span> 
+    <span class="k">else</span> 
+    <span class="p">{</span> 
+        <span class="k">for</span> <span class="p">(</span><span class="n">rp</span> <span class="o">=</span> <span class="n">result</span><span class="p">;</span> <span class="n">rp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">rp</span> <span class="o">=</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_next</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="c1">// AFFICHER UNE ADR 
+</span>            <span class="kt">char</span> <span class="n">ipname</span><span class="p">[</span><span class="n">INET_ADDRSTRLEN</span><span class="p">];</span> 
+            <span class="kt">char</span> <span class="n">servicename</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span> <span class="cm">/* "65535\0" */</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">getnameinfo</span><span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">,</span> 
+                             <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addrlen</span><span class="p">,</span> 
+                             <span class="n">ipname</span><span class="p">,</span> 
+                             <span class="k">sizeof</span><span class="p">(</span><span class="n">ipname</span><span class="p">),</span> 
+                             <span class="n">servicename</span><span class="p">,</span> 
+                             <span class="k">sizeof</span><span class="p">(</span><span class="n">servicename</span><span class="p">),</span> 
+                             <span class="n">NI_NUMERICHOST</span><span class="o">|</span><span class="n">NI_NUMERICSERV</span><span class="p">))</span> 
+            <span class="p">{</span> 
+                <span class="n">printf</span><span class="p">(</span><span class="s">"Trying connection to host %s:%s ...</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> 
+                        <span class="n">ipname</span><span class="p">,</span> 
+                        <span class="n">servicename</span><span class="p">);</span> 
+            
+                <span class="cm">/* CREATION DE SOCKET */</span> 
+                <span class="k">if</span> <span class="p">((</span><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_family</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_socktype</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_protocol</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+                <span class="p">{</span> 
+                    <span class="n">perror</span><span class="p">(</span><span class="s">"socket() failed: "</span><span class="p">);</span> 
+                <span class="p">}</span>
+                <span class="cm">/* connexion */</span> 
+                <span class="k">if</span> <span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addrlen</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+                <span class="p">{</span>
+                    <span class="c1">// ...
+</span>                <span class="p">}</span> 
+                <span class="k">else</span> 
+                <span class="p">{</span> 
+                    <span class="n">perror</span><span class="p">(</span><span class="s">"connect(): "</span><span class="p">);</span> 
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">freeaddrinfo</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><br />
+<br />
+<br />
+<br /></p>
+
+<h2 id="questions-4567">questions 4,5,6,7</h2>
+
+<p>Appels système: après <code class="highlighter-rouge">strace -e socket,connect ./simple-client localhost 7000</code></p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">socket</span><span class="p">(</span><span class="n">PF_LOCAL</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="o">|</span><span class="n">SOCK_CLOEXEC</span><span class="o">|</span><span class="n">SOCK_NONBLOCK</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">connect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_LOCAL</span><span class="p">,</span> <span class="n">sun_path</span><span class="o">=</span><span class="s">"/var/run/nscd/socket"</span><span class="p">},</span> <span class="mi">110</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>
+
+<span class="n">socket</span><span class="p">(</span><span class="n">PF_LOCAL</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="o">|</span><span class="n">SOCK_CLOEXEC</span><span class="o">|</span><span class="n">SOCK_NONBLOCK</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">connect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_LOCAL</span><span class="p">,</span> <span class="n">sun_path</span><span class="o">=</span><span class="s">"/var/run/nscd/socket"</span><span class="p">},</span> <span class="mi">110</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ENOENT</span> <span class="p">(</span><span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="n">or</span> <span class="n">directory</span><span class="p">)</span>
+
+<span class="n">socket</span><span class="p">(</span><span class="n">PF_NETLINK</span><span class="p">,</span> <span class="n">SOCK_RAW</span><span class="p">,</span> <span class="n">NETLINK_ROUTE</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_DGRAM</span><span class="p">,</span> <span class="n">IPPROTO_IP</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">connect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">sin_port</span><span class="o">=</span><span class="n">htons</span><span class="p">(</span><span class="mi">7000</span><span class="p">),</span> <span class="n">sin_addr</span><span class="o">=</span><span class="n">inet_addr</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">)},</span> <span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">socket</span><span class="p">(</span><span class="n">PF_INET6</span><span class="p">,</span> <span class="n">SOCK_DGRAM</span><span class="p">,</span> <span class="n">IPPROTO_IP</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">connect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span> <span class="n">sa_family</span><span class="o">=</span><span class="n">AF_INET6</span><span class="p">,</span>
+             <span class="n">sin6_port</span><span class="o">=</span><span class="n">htons</span><span class="p">(</span><span class="mi">7000</span><span class="p">),</span>
+             <span class="n">inet_pton</span><span class="p">(</span><span class="n">AF_INET6</span><span class="p">,</span> <span class="s">"::1"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sin6_addr</span><span class="p">),</span>
+             <span class="n">sin6_flowinfo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+             <span class="n">sin6_scope_id</span><span class="o">=</span><span class="mi">0</span> 
+          <span class="p">},</span> 
+          <span class="mi">28</span>
+        <span class="p">)</span> 
+<span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">Trying</span> <span class="n">connection</span> <span class="n">to</span> <span class="n">host</span> <span class="o">::</span><span class="mi">1</span><span class="o">:</span><span class="mi">7000</span> <span class="p">...</span>
+
+<span class="n">socket</span><span class="p">(</span><span class="n">PF_INET6</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="n">IPPROTO_TCP</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">connect</span><span class="p">(</span>
+        <span class="mi">3</span><span class="p">,</span> <span class="p">{</span> <span class="n">sa_family</span><span class="o">=</span><span class="n">AF_INET6</span><span class="p">,</span> 
+             <span class="n">sin6_port</span><span class="o">=</span><span class="n">htons</span><span class="p">(</span><span class="mi">7000</span><span class="p">),</span> 
+             <span class="n">inet_pton</span><span class="p">(</span><span class="n">AF_INET6</span><span class="p">,</span> <span class="s">"::1"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sin6_addr</span><span class="p">),</span>
+             <span class="n">sin6_flowinfo</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sin6_scope_id</span><span class="o">=</span><span class="mi">0</span>
+            <span class="p">},</span> <span class="mi">28</span>
+        <span class="p">)</span> 
+<span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ECONNREFUSED</span> <span class="p">(</span><span class="n">Connection</span> <span class="n">refused</span><span class="p">)</span>
+
+
+<span class="n">connect</span><span class="p">()</span><span class="o">:</span> <span class="o">:</span> <span class="n">Connection</span> <span class="n">refused</span>
+<span class="n">Trying</span> <span class="n">connection</span> <span class="n">to</span> <span class="n">host</span> <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="o">:</span><span class="mi">7000</span> <span class="p">...</span>
+<span class="n">socket</span><span class="p">(</span><span class="n">PF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="n">IPPROTO_TCP</span><span class="p">)</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">connect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="n">sa_family</span><span class="o">=</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">sin_port</span><span class="o">=</span><span class="n">htons</span><span class="p">(</span><span class="mi">7000</span><span class="p">),</span> <span class="n">sin_addr</span><span class="o">=</span><span class="n">inet_addr</span><span class="p">(</span><span class="s">"127.0.0.1"</span><span class="p">)},</span> <span class="mi">16</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">+++</span> <span class="n">exited</span> <span class="n">with</span> <span class="mi">1</span> <span class="o">+++</span>
+</code></pre>
+</div>
+
+<p><br /><br /><br /></p>
+
+<p><a href=""><a href="/00illustrations/res_labo5/wireshark3.png"><img src="/00illustrations/res_labo5/wireshark3.png" /></a></a></p>
+
+<p><br /></p>
+
+<p>fonctions de la <strong>libc</strong> utilisées après 
+<code class="highlighter-rouge">ltrace ./simple-client localhost 7000</code></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">__libc_start_main</span><span class="p">(</span><span class="mh">0x4007a6</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mh">0x7ffe79c13c18</span><span class="p">,</span> <span class="mh">0x4009b0</span> <span class="o">&lt;</span><span class="n">unfinished</span> <span class="p">...</span><span class="o">&gt;</span>
+
+<span class="n">getaddrinfo</span><span class="p">(</span><span class="s">"localhost"</span><span class="p">,</span> <span class="s">"7000"</span><span class="p">,</span> <span class="mh">0x7ffe79c13ab0</span><span class="p">,</span> <span class="mh">0x7ffe79c13aa8</span><span class="p">)</span>            <span class="o">=</span> <span class="mi">0</span>
+<span class="n">getnameinfo</span><span class="p">(</span><span class="mh">0x16271e0</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="s">"Xg</span><span class="se">\356</span><span class="s">w</span><span class="se">\355\177</span><span class="s">"</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                 <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s">"Trying connection to host %s:%s "</span><span class="p">...,</span> <span class="s">"::1"</span><span class="p">,</span> 
+       <span class="s">"7000"</span><span class="n">Trying</span> <span class="n">connection</span> <span class="n">to</span> <span class="n">host</span> <span class="o">::</span><span class="mi">1</span><span class="o">:</span><span class="mi">7000</span> <span class="p">...</span> <span class="p">)</span>                       <span class="o">=</span> <span class="mi">39</span> 
+<span class="n">socket</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>                                                            <span class="o">=</span> <span class="mi">3</span>
+<span class="n">connect</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mh">0x16271e0</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mh">0x16271e0</span><span class="p">)</span>                                        <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">perror</span><span class="p">(</span><span class="s">"connect(): "</span><span class="n">connect</span><span class="p">()</span><span class="o">:</span> <span class="o">:</span> <span class="n">Connection</span> <span class="n">refused</span><span class="p">)</span>
+                                                                            <span class="o">=</span> <span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span>
+<span class="n">getnameinfo</span><span class="p">(</span><span class="mh">0x1627190</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="s">"::1"</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="s">"7000"</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                         <span class="o">=</span> <span class="mi">0</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"Trying connection to host %s:%s "</span><span class="p">...,</span> <span class="s">"127.0.0.1"</span><span class="p">,</span> 
+       <span class="s">"7000"</span><span class="n">Trying</span> <span class="n">connection</span> <span class="n">to</span> <span class="n">host</span> <span class="mi">127</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="o">:</span><span class="mi">7000</span> <span class="p">...)</span>
+                                                                            <span class="o">=</span> <span class="mi">45</span>
+<span class="n">socket</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>                                                             <span class="o">=</span> <span class="mi">4</span>
+<span class="n">connect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mh">0x1627190</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mh">0x1627190</span><span class="p">)</span>                                        <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">perror</span><span class="p">(</span><span class="s">"connect(): "</span><span class="n">connect</span><span class="p">()</span><span class="o">:</span> <span class="o">:</span> <span class="n">Connection</span> <span class="n">refused</span><span class="p">)</span>
+                                                                            <span class="o">=</span> <span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span>
+<span class="n">freeaddrinfo</span><span class="p">(</span><span class="mh">0x16271b0</span><span class="p">)</span>                                                     <span class="o">=</span> <span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span>
+<span class="o">+++</span> <span class="n">exited</span> <span class="p">(</span><span class="n">status</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+++</span>
+</code></pre>
+</div>
+
+<h2 id="question-8-2">question 8</h2>
+
+<p>C’est dû à l’<strong>endianess</strong>.</p>
+<blockquote>
+  <p>L’ordre dans lequel les octets sont organisés dans une case mémoire <strong>ou dans une communication</strong></p>
+</blockquote>
+
+<h4 id="big-endian">Big endian</h4>
+<p><strong>byte de poids fort</strong> à gauche.<br />
+Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">adr:</th>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>val:</strong></td>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 2 byte:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span style="color:#F92672"><strong>Tous les protocoles TCP/IP communiquent en big-endian</strong></span></p>
+
+<h4 id="little-endian">Little endian</h4>
+<p><strong>byte de poid faible</strong> à gauche. <br />
+Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">adr:</th>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>val:</strong></td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 2 byte:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span style="color:#F92672"><strong>X86 fonctionne en Little endian</strong></span></p>
 
 </div>
 
@@ -697,21 +1024,21 @@ sol       7390  0.0  0.0      0     0 pts/1    Z+   19:36   0:00 <span class="o"
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Reseau: Labo 5 (fr)@&amp;url=https://roscas.github.io/reseau/reseau-labo5.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Reseau: Labo 5 (fr)@&amp;url=http://localhost:4000/reseau/reseau-labo5.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://www.facebook.com/sharer/sharer.php?u=https://roscas.github.io/reseau/reseau-labo5.html" class="facebook-share">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-labo5.html" class="facebook-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://plus.google.com/share?url=https://roscas.github.io/reseau/reseau-labo5.html" class="googleplus-share">
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-labo5.html" class="googleplus-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>

@@ -261,15 +261,30 @@ voir question 10
 
 ## 2. Traçage et simulation
 
-* `netstat -an`         *voir tous les sockets*  
+* `netstat -an`         *voir tous les sockets*
 * `netstat -an --inet`  *sockets ipv4*  
 * `netstat -an --inet6` *sockets ipv6*  
 * `netstat --inet --listen -NNNN` *socket en écoute*  
-* `netstat --inet6 --listen -NNNN` *socket en écoute*  
-* `-p` (sudo) *identification du process lié*  
-* `strace`    *traçage des appels system*  
-* `ltrace`    *traçage des fonctions de la LIBC*  
-* *penser à utiliser Wireshark !*
+* `netstat --inet6 --listen -NNNN` *socket en écoute*
+* **sudo** `netstat` `-p` ...  *identification du process lié (PID/prgrm name)*
+>`a` *display all sockets*  
+`n` *numeric: don't resolve name*
+
+* `strace` *traçage des appels system*  
+>`-e` **expr** *a qualifying expression: option=[!]all or option=[!]val1[,val2]...*  
+```sh
+strace -e socket,connect ./simple-client localhost 7000
+```
+
+* `ltrace` *traçage des fonctions de la LIBC*   
+
+_création d'un serveur TCP avec netcat:_  
+* `nc -l -p` port  
+>`nc`   *netcat*  
+`-l`   *listen mode, for inbound connects*  
+`-p`   *local port number*   
+
+ <span style="color:#F92672">**penser à utiliser Wireshark !**</span>  
 
 ### question 1
 
@@ -478,7 +493,7 @@ a-tracer est donc un **server** `TCP` en mode `flux`.
 
 
 
-## 7.
+### question 7
 
 si on reprend tout depuis le début en monitorant `Loopback` avec Wireshark, c'est la fête:
 
@@ -528,7 +543,7 @@ et
 connect(3, {sa_family=AF_INET, sin_port=htons(12345), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
 ```
 
-## 8.
+### question 8
 
 ```sh
 sol@debian:~$ strace -e socket,bind,recvfrom nc -l -p 12345 -u localhost
@@ -555,7 +570,7 @@ write(3, "Wed May 24 19:48:45 CDT 2017\n", 29) = 29
 
 [<a href="/00illustrations/wireshark2.png"><img src="/00illustrations/wireshark2.png"></a>]()
 
-## 9.
+### question 9
 
 ```sh
 sol       7303  0.0  0.0   4080   660 pts/1    S+   18:56   0:00 ./a-tracer
@@ -571,3 +586,232 @@ Un soucis de reallocation mémoire après la destruction d'un objet?
 
 
 
+## 3. Client TCP simple (Linux) *pas pour le labo
+ressources:  
+[simple-client.c (base)](http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip)  
+[video explicative](http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4)  
+[tuto sockets](http://broux.developpez.com/articles/c/sockets/)  
+[mon poste sur les sockets](/reseau/reseau-programmation-sockets.html)
+
+### question 3 (a,b,c,d)
+Implémentation de la fonction `tcp_connect()`
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
+static FILE *tcp_connect(const char *hostname, const char *port);
+
+int main(int argc, char **argv)
+{
+    int result = EXIT_FAILURE;
+
+    if (argc == 3)
+    {
+        FILE *f;
+
+        if ((f = tcp_connect(argv[1], argv[2])))
+        {
+        }
+        /* else: failure */
+    }
+    else
+    {
+        fprintf(stderr, "%s remote-host port\n", argv[0]);
+        fprintf(stderr, "%s: bad args.\n", argv[0]);
+    }
+    return result;
+}
+
+static FILE *tcp_connect(const char *hostname, const char *port)
+{
+    FILE *f = NULL;
+
+    int s; 
+    struct addrinfo hints; 
+    struct addrinfo *result, *rp;
+
+    hints.ai_family = AF_UNSPEC; /* IPv4 or v6 */ 
+    hints.ai_socktype = SOCK_STREAM; /* TCP */ 
+    hints.ai_flags = 0; 
+    hints.ai_protocol = 0; /* any protocol */
+
+    if ((s = getaddrinfo(hostname, port, &hints, &result))) 
+    { 
+        fprintf(stderr, "getaddrinfo(): failed: %s.\n", gai_strerror(s)); 
+    } 
+    else 
+    { 
+        for (rp = result; rp != NULL; rp = rp->ai_next) 
+        {
+            // AFFICHER UNE ADR 
+            char ipname[INET_ADDRSTRLEN]; 
+            char servicename[6]; /* "65535\0" */
+            if (!getnameinfo(rp->ai_addr, 
+                             rp->ai_addrlen, 
+                             ipname, 
+                             sizeof(ipname), 
+                             servicename, 
+                             sizeof(servicename), 
+                             NI_NUMERICHOST|NI_NUMERICSERV)) 
+            { 
+                printf("Trying connection to host %s:%s ...\n", 
+                        ipname, 
+                        servicename); 
+            
+                /* CREATION DE SOCKET */ 
+                if ((s = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol)) == -1) 
+                { 
+                    perror("socket() failed: "); 
+                }
+                /* connexion */ 
+                if (connect(s, rp->ai_addr, rp->ai_addrlen) != -1) 
+                {
+                    // ...
+                } 
+                else 
+                { 
+                    perror("connect(): "); 
+                }
+            }
+        }
+        freeaddrinfo(result);
+    }
+    return f;
+}
+```
+
+
+<br>
+<br>
+<br>
+<br>
+
+## questions 4,5,6,7
+
+Appels système: après `strace -e socket,connect ./simple-client localhost 7000`
+```c
+socket(PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3
+
+connect(3, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+
+socket(PF_LOCAL, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 3
+
+connect(3, {sa_family=AF_LOCAL, sun_path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
+
+socket(PF_NETLINK, SOCK_RAW, NETLINK_ROUTE) = 3
+
+socket(PF_INET, SOCK_DGRAM, IPPROTO_IP) = 3
+
+connect(3, {sa_family=AF_INET, sin_port=htons(7000), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+
+socket(PF_INET6, SOCK_DGRAM, IPPROTO_IP) = 3
+
+connect(3, { sa_family=AF_INET6,
+             sin6_port=htons(7000),
+             inet_pton(AF_INET6, "::1", &sin6_addr),
+             sin6_flowinfo=0,
+             sin6_scope_id=0 
+          }, 
+          28
+        ) 
+= 0
+
+Trying connection to host ::1:7000 ...
+
+socket(PF_INET6, SOCK_STREAM, IPPROTO_TCP) = 3
+
+connect(
+        3, { sa_family=AF_INET6, 
+             sin6_port=htons(7000), 
+             inet_pton(AF_INET6, "::1", &sin6_addr),
+             sin6_flowinfo=0, sin6_scope_id=0
+            }, 28
+        ) 
+= -1 ECONNREFUSED (Connection refused)
+
+
+connect(): : Connection refused
+Trying connection to host 127.0.0.1:7000 ...
+socket(PF_INET, SOCK_STREAM, IPPROTO_TCP) = 4
+connect(4, {sa_family=AF_INET, sin_port=htons(7000), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
++++ exited with 1 +++
+```
+
+<br><br><br>
+
+[<a href="/00illustrations/res_labo5/wireshark3.png"><img src="/00illustrations/res_labo5/wireshark3.png"></a>]()
+
+<br>
+
+
+fonctions de la **libc** utilisées après 
+`ltrace ./simple-client localhost 7000`
+
+```c
+__libc_start_main(0x4007a6, 3, 0x7ffe79c13c18, 0x4009b0 <unfinished ...>
+
+getaddrinfo("localhost", "7000", 0x7ffe79c13ab0, 0x7ffe79c13aa8)            = 0
+getnameinfo(0x16271e0, 28, "", 16, "Xg\356w\355\177", 6, 3)                 = 0
+
+printf("Trying connection to host %s:%s "..., "::1", 
+       "7000"Trying connection to host ::1:7000 ... )                       = 39 
+socket(10, 1, 6)                                                            = 3
+connect(3, 0x16271e0, 28, 0x16271e0)                                        = -1
+perror("connect(): "connect(): : Connection refused)
+                                                                            = <void>
+getnameinfo(0x1627190, 16, "::1", 16, "7000", 6, 3)                         = 0
+printf("Trying connection to host %s:%s "..., "127.0.0.1", 
+       "7000"Trying connection to host 127.0.0.1:7000 ...)
+                                                                            = 45
+socket(2, 1, 6)                                                             = 4
+connect(4, 0x1627190, 16, 0x1627190)                                        = -1
+perror("connect(): "connect(): : Connection refused)
+                                                                            = <void>
+freeaddrinfo(0x16271b0)                                                     = <void>
++++ exited (status 1) +++
+``` 
+
+## question 8
+
+C'est dû à l'**endianess**.
+> L'ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication** 
+
+#### Big endian
+**byte de poids fort** à gauche.  
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
+
+|adr:| 0 | 1 | 2 | 3 |  |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+|**val:**| A0 | B7 | 07 | 08 | ... |
+
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 2 byte:  
+
+| 0 | 1 | | 2 | 3 | |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+| A0 | B7 | | 07 | 08 | ... |
+
+
+<span style="color:#F92672">**Tous les protocoles TCP/IP communiquent en big-endian**</span>
+
+
+#### Little endian
+**byte de poid faible** à gauche.   
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
+
+|adr:|  0 | 1 | 2 | 3 |  |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+|**val:**| 08 | 07 | B7 | A0 | ... |
+
+Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 2 byte:  
+
+| 0 | 1 | | 2 | 3 | |
+| :--: | :--: | :--: | :--: | :--: | :--: |
+| 07 | 08 | | A0 | B7 | ... |
+
+<span style="color:#F92672">**X86 fonctionne en Little endian**</span>
