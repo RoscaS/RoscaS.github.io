@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-couche7.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- Google font -->
+
+  <!--<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Noto Sans">-->
+
+<!-- font awesome -->
+
+<!--<link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">-->
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reseau: Couche 7, application (fr)</title>
+  <meta name="description" content="1. Architecture appplicative d’Internet">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Reseau: Couche 7, application (fr)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="15 May 2017" itemprop="datePublished">May 15 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">couche7</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>théorie couche 7</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="1-architecture-appplicative-dinternet">1. Architecture appplicative d’Internet</h2>
+
+<p>Les protocoles applicatifs classiques d’Internet sont basé sur une <strong>architecture client/serveur</strong> (ils utilisent soit <code class="highlighter-rouge">TCP</code> soit <code class="highlighter-rouge">UDP</code> dans la couche trnasport). Certains protocoles plus modèrnes offrent des échanges distribués (<strong>P2P</strong>) mais gardent toujours les primitives client/serveur <code class="highlighter-rouge">TCP</code> et <code class="highlighter-rouge">UDP</code> pour les échanges proprement dit.</p>
+
+<p>Les protocoles applicatifs classiques d’Internet sont baseés sur une architecture <strong>client/serveur</strong> . Ils utilisent soit <code class="highlighter-rouge">TCP</code> soit <code class="highlighter-rouge">UDP</code> dans la couche transport. Le service doit être activé du côté serveur. Si c’est le cas un <strong>daemon</strong> est actif sur le port standard du service concerné (wellknown port).</p>
+
+<p><em><strong>Un daemon</strong> est un programme qui attend les demandes de connexion des clients et qui creée le service demandeé pour chaque nouveau client.</em></p>
+
+<blockquote>
+  <h3 id="daemon">Daemon</h3>
+
+  <p>Les programmes serveurs réseau, qui doivent fonctionner en permanence, sont des daemons. C’est par exemple le cas des serveurs de messagerie. Les emails envoyés sans destinataire provoquent en général un message d’erreur provenant du serveur, avec l’adresse « mailer-daemon@serveur.exemple ».</p>
+</blockquote>
+
+<p><a href=""><a href="/00illustrations/re_couche7/daemon.png"><img src="/00illustrations/re_couche7/daemon.png" /></a></a></p>
+
+<blockquote>
+  <p>D’un coté strictement technique, un daemon sous Linux peut être n’importe quel processus ayant le processus numéro 1 comme parent (<code class="highlighter-rouge">init</code>). Tout process dont le parent meurt sans attendre le statut de son process enfant est adopte par <code class="highlighter-rouge">init</code>.</p>
+
+  <p><em>Une façon commune de lancer un daemon est donc de « fourcher » (fork) une ou deux fois et de faire arrêter le parent quand l’enfant commence ses opérations normales. Cette façon de faire est parfois résumée par la phrase fork off and dieN 1 (« fourcher et mourir » en anglais). Dans l’usage commun, un daemon peut être n’importe quel processus fonctionnant en arrière-plan, qu’il soit ou non un enfant de init.</em></p>
+</blockquote>
+
+<p>Le client <code class="highlighter-rouge">TCP</code> choisit un numéro de port libre chez lui et qui est en dehors de la plage réservée (&gt; 1023) et établit ensuite une connexion <code class="highlighter-rouge">TCP</code> à l’aide de l’adresse <code class="highlighter-rouge">IP</code> et du numéro de port standard du serveur.</p>
+
+<p>Du côté serveur, la connexion est identifiée de façon unique par <strong>les 4</strong> !</p>
+
+<ol>
+  <li>adresse IP du client</li>
+  <li>port du client</li>
+  <li>adresse IP du serveur</li>
+  <li>port du serveur.</li>
+</ol>
+
+<blockquote>
+  <p>Il faut les 4 éléments car une même ordinateur client peut utiliser plusieurs fois le même service sur le même serveur. Chaque connexion (nexus?) doit être identifiable individuellement.</p>
+</blockquote>
+
+<p>Contrairement aux protocoles des couches supérieures <strong>ISO</strong> qui définissent des messages structurés en champs (p.ex. encodés avec <em>BER</em> (Basic Encoding Rules) en fonction d’une syntaxe abstraite comme p.ex. ASN.1, les protocoles de la couche supérieur d’Internet utilisent souvent des commandes en format <strong>ASCII</strong> (texte).</p>
+
+<p>Ceci permet de les simuler interactivement à partir d’un programme simple capable d’établir une session <code class="highlighter-rouge">TCP</code>, de lire des caractères du clavier et de les envoyer sur la connexion <code class="highlighter-rouge">TCP</code>. La commande <code class="highlighter-rouge">telnet</code> (ou nc, network cat) peut être abusée à cette fin.</p>
+
+<p>Dans de nombreux cas, les protocoles Internet de couches supérieures sont de <strong>type interrogatif</strong>, avec <strong>une commande envoyée par le client</strong>, suivie d’<strong>une réponse par le serveur</strong>. Cette réponse est souvent <strong>préfixée</strong> par un code de résultat (protocoles <code class="highlighter-rouge">FTP,</code> <code class="highlighter-rouge">SMTP,</code> <code class="highlighter-rouge">IMAP,</code> <code class="highlighter-rouge">POP,</code> <code class="highlighter-rouge">HTTP</code>) à 3 chiffres et dont le premier indique le type du résultat.</p>
+
+<p>SMTP et HTTP échangent sur la même connexion. Parfois une connexoin supplémentaire est initiée soit par le serveur (FTP mode actif), soit par le client (FTP mode passif).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">préfixe du code d’erreur</th>
+      <th style="text-align: center">signification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1xx</td>
+      <td style="text-align: center">information</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2xx</td>
+      <td style="text-align: center">tout va bien</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">3xx</td>
+      <td style="text-align: center">qqch manque (redirection, authentification)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">4xx</td>
+      <td style="text-align: center">erreur côté client (HTTP) ou erreur temporaire (SMTP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">5xx</td>
+      <td style="text-align: center">erreur côté serveur (HTTP) ou erreur permanente (SMTP)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="2-protocoles-applicatifs">2. Protocoles applicatifs</h2>
+
+<h3 id="telnet">TELNET</h3>
+
+<p>Permet à un utilisateur éloigné de s’annoncer (login) sur une machine et de l’utiliser comme s’il était connecté localement sur une console texte (démarrer des programmes, éditer, etc).</p>
+
+<p>Toutes les données entrées localement sont transmises à la machine éloignée. La transmission se fait avec le format <strong>NVT ASCII</strong> (network virtual terminal). Ce qui signifie que le format des caractères est <strong>ASCII</strong> (7 bits, voir man 7 ascii sur système UNIX). Le jeu complet est supporté et si ASCII n’est pas le format local, <strong>TELNET fait la conversion</strong>. Les commandes qui forment de la <strong>signalisation en-bande</strong> sont précédées du caractère <code class="highlighter-rouge">IAC</code> (Interpret As Command), de valeur ASCII 255. Si un caractère ayant la valeur 255 doit être transmis tel, il est précédé du caractère <code class="highlighter-rouge">IAC</code> (échappement).</p>
+
+<p><a href=""><a href="/00illustrations/re_couche7/telnet.png"><img src="/00illustrations/re_couche7/telnet.png" /></a></a></p>
+
+<p>Si une option n’est pas simplement activée ou désactivée mais nécessite un échange d’informations entre client et serveur, des sous-options sont utilisées (par exemple la transmission du type de terminal). <strong>TELNET ne s’occupe pas de la partie d’identification</strong> de l’utilisateur qui est à gérer par le daemon appelé via un dialogue interactif avec l’utilisateur. <strong>TELNET utilise le port 23.</strong></p>
+
+<h4 id="séquence-des-messages">Séquence des messages</h4>
+<p>L’échange se fait à l’aide d’une connexion TCP. Les caractères introduits par le client (<strong>provenant du clavier de l’utilisateur</strong>) sont souvent envoyés un à un ce qui est fort peu efficace (20 octets d’en-tête TCP, 20 octets d’en-tête IP et 14 octets d’entête Ethernet pour une charge utile de 1 octet (l’algorithme <strong>NAGLE</strong> est d’un précieux secours pour grouper les caractères!)</p>
+
+<h4 id="evolution">Evolution</h4>
+
+<p><code class="highlighter-rouge">rlogin</code> (Remote Login) constitue une version simplifiée de <code class="highlighter-rouge">TELNET</code> qui ne fonctionne que entre machines <code class="highlighter-rouge">**</code>UNIX<code class="highlighter-rouge">**</code> et qui est aujourd’hui avantageusement  (sécurité) remplacée par <code class="highlighter-rouge">SSH</code> pour la connexion distance ou le transfert de fichiers. <code class="highlighter-rouge">SSH</code> incorpore de l’identification d’utilisateur, éventuellement basé sur de la cryptographie à clé révélée (clés publiques et privées), voire même des connexions en mode graphique (X11) via un tunnel.</p>
+
+<h3 id="ftp-file-transfer-protocol">FTP (File Transfer Protocol)</h3>
+
+<h4 id="fonctions-et-propriétés">Fonctions et propriétés</h4>
+<p><code class="highlighter-rouge">FTP</code> est un protocole pour l’échange de fichiers entre ordinateurs éloignés. Il constitue un <strong>sous-ensemble autonome</strong> puisqu’il comporte sa propre phase d’identification des utilisateurs. Il permet les fonctions suivantes:</p>
+
+<ul>
+  <li>identification de l’utilisateur (en clair par défaut, SSL/TLS possible)</li>
+  <li>sélection et navigation dans les répertoires</li>
+  <li>création de répertoires et de fichiers</li>
+  <li>transfert de fichier dans les deux sens</li>
+  <li>reprise d’un téléchargement</li>
+  <li>effacement de fichiers</li>
+</ul>
+
+<p><strong>FTP connaît différents types de fichiers, différentes structures de fichier et différent mode de transmission.</strong></p>
+
+<p>En pratique, seuls les cas suivants sont importants :</p>
+
+<ul>
+  <li>fichiers binaires: transférés sans aucune conversion (compatibilité entre systèmes <strong>UNIX)</strong></li>
+  <li>fichiers ASCII: délimiteurs de fin de ligne des fichiers ASCII sont au besoin convertis (<code class="highlighter-rouge">LF</code> sous <strong>UNIX,</strong> <code class="highlighter-rouge">CR</code>/<code class="highlighter-rouge">LF</code> sout <code class="highlighter-rouge">Windows</code>)</li>
+</ul>
+
+<h4 id="ports">Ports</h4>
+<p><span style="color:#F92672">FTP a la particularité d’utiliser deux connexions TCP: </span></p>
+
+<ul>
+  <li>une pour les commandes (sur le <strong>port 21</strong> du serveur)</li>
+  <li>une pour les transferts (des ports dynamiques sont utilisés)</li>
+</ul>
+
+<h3 id="messages">Messages</h3>
+<p>FTP utilise un format de commandes codées en ASCII. Les principales commandes sont :</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ABOR -&gt; abandon de la dernière commande et des transfères en cours 
+LIST -&gt; liste de fichiers ou répertoires 
+PASS -&gt; mot de passe 
+PORT -&gt; adresse IP et port du client (mode actif) 
+QUIT -&gt; fin de session 
+RETR -&gt; transfert de fichier serveur → client (GET) 
+STOR -&gt; transfert de fichier client → serveur (GET) 
+SYST -&gt; type de système (serveur) 
+TYPE -&gt; typede fichier (ASCII ou binaire) 
+USER -&gt; nom de l'utilisateur
+</code></pre>
+</div>
+<p>Les <strong>réponses du serveur</strong> se composent d’un <strong>nombre à 3 chiffres</strong> et d’un texte. <strong>Ce genre de convention se retrouve p.ex. dans l’HTTP</strong>. En général les deux sont affichés. Les valeurs de nombres sont partiellement normalisées. Exemple :</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>125 -&gt; data connection already open; transfer starting
+200 -&gt; command OK
+245 -&gt; can't open data connection
+</code></pre>
+</div>
+
+<h3 id="séquence-des-messages-1">Séquence des messages</h3>
+
+<ul>
+  <li>La connexion est établie normalement (ouverture passive du serveur, ouverture active du client)</li>
+  <li>Elle dure toute la session.</li>
+  <li>
+    <p>Une connexion de transfert est établie au besoin pour chaque transfert de fichier ou pour chaque liste de fichiers (ou de répertoires)</p>
+  </li>
+  <li>Elle peut être initiée soit par le
+    <ul>
+      <li>serveur (qui contacte le client, mode actif, ouverture active par le serveur)</li>
+      <li>le client (qui contacte le serveur, mode passif, ouverture active par le client).</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Ces deux modes ne sont pas toujours supportés, notamment en raison des firewalls. En mode actif, le client fournit l’adresse IP et le port à utiliser (commande <strong>PORT</strong>) et le serveur s’y connecte en mode client. En mode passif (commande PASV), c’est le serveur qui fournit le tuple (adresse IP, port) et c’est le <strong>client</strong> qui s’y connecte, ce qui est en général compatible avec les firewalls du coêé du réseau du client</p>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Reseau: Couche 7, application (fr)@&amp;url=http://localhost:4000/reseau/reseau-couche7.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-couche7.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-couche7.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
