@@ -246,6 +246,14 @@ utilisé (dépend bien sûr du champ mode) :
 La fonction <strong>getaddrinfo()</strong> permet de remplir ces structures de façon simple que ce soit avec des adresses IPV4 ou IPV6.</li>
 </ul>
 
+<blockquote>
+  <p>Le type struct sockaddr n’est plus réellementutilisé: en fonction de la famille de socket utilisée(IPv4, IPv6, UNIX domainsocket,…), des structures spéciﬁques sont utilisées en interne. Par exemple la structure <code class="highlighter-rouge">struct sockaddr_in</code>.</p>
+
+  <p>Aujourd’hui, il ne faudrait plus yaccéder directement. C’est justement le but des fonctions <strong>getaddrinfo(3)</strong> et <strong>getnameinfo(3)</strong></p>
+</blockquote>
+
+<p><span style="color:#F92672"> <strong>Pourquoi (3) ?</strong> </span></p>
+
 <h2 id="getaddrinfo">getaddrinfo</h2>
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span> 
                 <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">service</span><span class="p">,</span> 

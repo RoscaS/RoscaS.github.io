@@ -124,7 +124,12 @@ La structure sockaddr_in contient trois champ utiles :
 * `unsigned long sin addr.s_addr` est l’adresse IP à aﬀecter à la structure. 
 La fonction **getaddrinfo()** permet de remplir ces structures de façon simple que ce soit avec des adresses IPV4 ou IPV6.
 
+> Le type struct sockaddr n’est plus réellementutilisé: en fonction de la famille de socket utilisée(IPv4, IPv6, UNIX domainsocket,...), des structures spéciﬁques sont utilisées en interne. Par exemple la structure `struct sockaddr_in`.
+>
+>Aujourd’hui, il ne faudrait plus yaccéder directement. C’est justement le but des fonctions **getaddrinfo(3)** et **getnameinfo(3)**
 
+
+<span style="color:#F92672"> **Pourquoi (3) ?** </span>
 
 ## getaddrinfo
 ```c

@@ -815,7 +815,7 @@ sol       7390  0.0  0.0      0     0 pts/1    Z+   19:36   0:00 <span class="o"
 <br />
 <br /></p>
 
-<h2 id="questions-4567">questions 4,5,6,7</h2>
+<h3 id="questions-4567">questions 4,5,6,7</h3>
 
 <p>Appels système: après <code class="highlighter-rouge">strace -e socket,connect ./simple-client localhost 7000</code></p>
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">socket</span><span class="p">(</span><span class="n">PF_LOCAL</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="o">|</span><span class="n">SOCK_CLOEXEC</span><span class="o">|</span><span class="n">SOCK_NONBLOCK</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
@@ -899,14 +899,52 @@ sol       7390  0.0  0.0      0     0 pts/1    Z+   19:36   0:00 <span class="o"
 </code></pre>
 </div>
 
-<h2 id="question-8-2">question 8</h2>
+<h3 id="question-8-2">question 8</h3>
 
-<p>C’est dû à l’<strong>endianess</strong>.</p>
+<p>Ajout d’un printf() dans notre code affin d’avoir un affichage brut de la valeur du champ sin_port:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// ...
+// printf("Trying connection to host %s:%s ...\n", 
+//         ipname, 
+//         servicename); 
+</span>
+    <span class="c1">// affichage brut de la valeur du champ sin_port
+</span>   <span class="k">if</span> <span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_family</span> <span class="o">==</span> <span class="n">AF_INET</span><span class="p">)</span>
+   <span class="p">{</span>
+       <span class="n">printf</span><span class="p">(</span><span class="s">"HACK: raw port number: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+               <span class="p">((</span><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="o">*</span> <span class="p">)</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">)</span>   <span class="o">-&gt;</span><span class="n">sin_port</span><span class="p">);</span>
+   <span class="p">}</span>                 <span class="c1">// cast
+</span>
+<span class="c1">// CREATION DE SOCKET 
+// ...
+</span></code></pre>
+</div>
+
+<p>Qui donne le résultat suivant:</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/04CliendTCP/01simple-client$ </span>./simple-client localhost 7000
+Trying connection to host ::1:7000 ...
+connect<span class="o">()</span>: : Connection refused
+Trying connection to host 127.0.0.1:7000 ...
+HACK: raw port number: 22555
+</code></pre>
+</div>
+
+<p>Nous avons effectivement une situation étrange. L’affichage de brut de notre port est différent de celui que nous avons introduit pourtant il se connecte bien sur le port 7000 et non le 22555.</p>
+
+<p>On dirait donc que c’est un problème d’affichage du dans le bout de code que nous venons d’introduire.</p>
+
 <blockquote>
-  <p>L’ordre dans lequel les octets sont organisés dans une case mémoire <strong>ou dans une communication</strong></p>
+  <p>La lecture du <strong>man</strong> de <strong>getaddrinfo</strong> était particulièrement interessante. Non seulement je crois avoir compris que c’est un problème d’<strong>endianess</strong> mais on y trouve un exemple d’un serveur et d’un client UDP.</p>
 </blockquote>
 
-<h4 id="big-endian">Big endian</h4>
+<p><a href="http://manpagesfr.free.fr/man/man3/getaddrinfo.3.html">man getaddrinfo</a></p>
+
+<h4 id="endianess"><strong>endianess</strong>:</h4>
+<blockquote>
+  <p>L’ordre dans lequel les octets sont organisés dans une case mémoire <strong>ou dans une communication</strong>. Big endian et Little endian sont deux architectures différentes.</p>
+</blockquote>
+
+<h5 id="big-endian">Big endian</h5>
 <p><strong>byte de poids fort</strong> à gauche.<br />
 Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
 
@@ -960,7 +998,7 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
 
 <p><span style="color:#F92672"><strong>Tous les protocoles TCP/IP communiquent en big-endian</strong></span></p>
 
-<h4 id="little-endian">Little endian</h4>
+<h5 id="little-endian">Little endian</h5>
 <p><strong>byte de poid faible</strong> à gauche. <br />
 Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
 
@@ -1012,7 +1050,142 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
   </tbody>
 </table>
 
-<p><span style="color:#F92672"><strong>X86 fonctionne en Little endian</strong></span></p>
+<p><span style="color:#F92672"><strong>X86</strong></span> ainsi que la majorité des pc actuels <span style="color:#F92672"><strong>fonctionne en Little endian</strong> </span></p>
+
+<h5 id="reponse">reponse</h5>
+
+<ul>
+  <li>7000  = 0x 1B 58</li>
+  <li>22555 = 0x 58 1B</li>
+</ul>
+
+<p>Bingo ! C’est donc bien un problème d’endianess.</p>
+
+<h3 id="question-9-2">question 9</h3>
+
+<h4 id="a-b-c">a, b, c:</h4>
+
+<ul>
+  <li>
+    <p>conversion d’un socket en fichier text dans la fonction tcp_connect()</p>
+  </li>
+  <li>
+    <p>ajout d’un buffer et d’un <strong>fgets()</strong> dans le main qui va capturer la première ligne de ce que le serveur a à nous dire et <strong>puts()</strong> l’ajouter dans <code class="highlighter-rouge">buff</code>.</p>
+  </li>
+</ul>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;netdb.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="k">static</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">tcp_connect</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hostname</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">port</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">((</span><span class="n">f</span> <span class="o">=</span> <span class="n">tcp_connect</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
+        <span class="p">{</span>
+            <span class="c1">// creation d'un buffer affin de stocker la premiere ligne
+</span>            <span class="kt">char</span> <span class="n">buff</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buff</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buff</span><span class="p">),</span> <span class="n">f</span><span class="p">))</span>
+            <span class="p">{</span> 
+                <span class="n">puts</span><span class="p">(</span><span class="n">buff</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// else: fail
+</span>    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s remote-host port</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s: bad args.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="kt">FILE</span> <span class="o">*</span><span class="nf">tcp_connect</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">hostname</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">port</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">s</span><span class="p">;</span> 
+    <span class="k">struct</span> <span class="n">addrinfo</span> <span class="n">hints</span><span class="p">;</span> 
+    <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">result</span><span class="p">,</span> <span class="o">*</span><span class="n">rp</span><span class="p">;</span>
+
+    <span class="n">hints</span><span class="p">.</span><span class="n">ai_family</span> <span class="o">=</span> <span class="n">AF_UNSPEC</span><span class="p">;</span> <span class="c1">// IPv4 or v6  
+</span>    <span class="n">hints</span><span class="p">.</span><span class="n">ai_socktype</span> <span class="o">=</span> <span class="n">SOCK_STREAM</span><span class="p">;</span> <span class="c1">// TCP  
+</span>    <span class="n">hints</span><span class="p">.</span><span class="n">ai_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+    <span class="n">hints</span><span class="p">.</span><span class="n">ai_protocol</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// any protocol 
+</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">s</span> <span class="o">=</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hints</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">result</span><span class="p">)))</span> 
+    <span class="p">{</span> 
+        <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"getaddrinfo(): failed: %s.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">gai_strerror</span><span class="p">(</span><span class="n">s</span><span class="p">));</span> 
+    <span class="p">}</span> 
+    <span class="k">else</span> 
+    <span class="p">{</span> 
+        <span class="k">for</span> <span class="p">(</span><span class="n">rp</span> <span class="o">=</span> <span class="n">result</span><span class="p">;</span> <span class="n">rp</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">rp</span> <span class="o">=</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_next</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="c1">// AFFICHER UNE ADR 
+</span>            <span class="kt">char</span> <span class="n">ipname</span><span class="p">[</span><span class="n">INET_ADDRSTRLEN</span><span class="p">];</span> 
+            <span class="kt">char</span> <span class="n">servicename</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span> <span class="c1">// "65535\0" 
+</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">getnameinfo</span><span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addrlen</span><span class="p">,</span> 
+                             <span class="n">ipname</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ipname</span><span class="p">),</span> 
+                             <span class="n">servicename</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servicename</span><span class="p">),</span> 
+                             <span class="n">NI_NUMERICHOST</span><span class="o">|</span><span class="n">NI_NUMERICSERV</span><span class="p">))</span> 
+            <span class="p">{</span> 
+                <span class="n">printf</span><span class="p">(</span><span class="s">"Trying connection to host %s:%s ...</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> 
+                        <span class="n">ipname</span><span class="p">,</span> 
+                        <span class="n">servicename</span><span class="p">);</span> 
+
+                <span class="c1">//     // affichage brut de la valeur du champ sin_port
+</span>                <span class="c1">// if (rp-&gt;ai_family == AF_INET)
+</span>                <span class="c1">// {
+</span>                <span class="c1">//     printf("HACK: raw port number: %d\n",
+</span>                <span class="c1">//           ((struct sockaddr_in * ) rp-&gt;ai_addr)-&gt;sin_port);
+</span>                <span class="c1">// }                 // cast
+</span>            
+                <span class="c1">// CREATION DE SOCKET  
+</span>                <span class="k">if</span> <span class="p">((</span><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_family</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_socktype</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_protocol</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+                <span class="p">{</span> 
+                    <span class="n">perror</span><span class="p">(</span><span class="s">"socket() failed: "</span><span class="p">);</span> 
+                <span class="p">}</span>
+
+                <span class="c1">// CONNEXION 
+</span>                <span class="k">else</span>
+                <span class="p">{</span> 
+                    <span class="k">if</span> <span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">,</span> <span class="n">rp</span><span class="o">-&gt;</span><span class="n">ai_addrlen</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+                    <span class="p">{</span>
+                        <span class="c1">// conversion de socket en un FILE *
+</span>                        <span class="c1">// fdopen() permet d'utiliser un socket comme un fichier
+</span>                        <span class="k">if</span> <span class="p">((</span><span class="n">f</span> <span class="o">=</span> <span class="n">fdopen</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">)))</span> 
+                        <span class="p">{</span> <span class="c1">// utilisation de fonctions classiques maintenant possible
+</span>                            <span class="k">break</span><span class="p">;</span> <span class="c1">// !! Si on return maintenant, la memoire n'est pas liberee!
+</span>                        <span class="p">}</span>
+                    <span class="p">}</span> 
+                    <span class="k">else</span> 
+                    <span class="p">{</span> 
+                        <span class="n">perror</span><span class="p">(</span><span class="s">"connect(): "</span><span class="p">);</span> 
+                    <span class="p">}</span>
+                    <span class="n">close</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> <span class="c1">// new -&gt; delete | open -&gt; close
+</span>                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">freeaddrinfo</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><a href=""><a href="/00illustrations/res_labo5/wireshark5.png"><img src="/00illustrations/res_labo5/wireshark5.png" /></a></a></p>
 
 </div>
 

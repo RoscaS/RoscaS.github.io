@@ -692,7 +692,7 @@ static FILE *tcp_connect(const char *hostname, const char *port)
 <br>
 <br>
 
-## questions 4,5,6,7
+### questions 4,5,6,7
 
 Appels système: après `strace -e socket,connect ./simple-client localhost 7000`
 ```c
@@ -777,12 +777,49 @@ freeaddrinfo(0x16271b0)                                                     = <v
 +++ exited (status 1) +++
 ``` 
 
-## question 8
+### question 8
 
-C'est dû à l'**endianess**.
-> L'ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication** 
+Ajout d'un printf() dans notre code affin d'avoir un affichage brut de la valeur du champ sin_port:
 
-#### Big endian
+```c
+// ...
+// printf("Trying connection to host %s:%s ...\n", 
+//         ipname, 
+//         servicename); 
+
+    // affichage brut de la valeur du champ sin_port
+   if (rp->ai_family == AF_INET)
+   {
+       printf("HACK: raw port number: %d\n",
+               ((struct sockaddr_in * ) rp->ai_addr)   ->sin_port);
+   }                 // cast
+
+// CREATION DE SOCKET 
+// ...
+```
+
+Qui donne le résultat suivant:
+```sh
+sol@debian:~/LABOS/labo5/04CliendTCP/01simple-client$ ./simple-client localhost 7000
+Trying connection to host ::1:7000 ...
+connect(): : Connection refused
+Trying connection to host 127.0.0.1:7000 ...
+HACK: raw port number: 22555
+```
+
+Nous avons effectivement une situation étrange. L'affichage de brut de notre port est différent de celui que nous avons introduit pourtant il se connecte bien sur le port 7000 et non le 22555.
+
+On dirait donc que c'est un problème d'affichage du dans le bout de code que nous venons d'introduire. 
+
+> La lecture du **man** de **getaddrinfo** était particulièrement interessante. Non seulement je crois avoir compris que c'est un problème d'**endianess** mais on y trouve un exemple d'un serveur et d'un client UDP.
+
+[man getaddrinfo](http://manpagesfr.free.fr/man/man3/getaddrinfo.3.html)
+
+#### **endianess**:
+> L'ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication**. Big endian et Little endian sont deux architectures différentes.  
+
+
+##### Big endian
 **byte de poids fort** à gauche.  
 Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
 
@@ -800,7 +837,7 @@ Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de c
 <span style="color:#F92672">**Tous les protocoles TCP/IP communiquent en big-endian**</span>
 
 
-#### Little endian
+##### Little endian
 **byte de poid faible** à gauche.   
 Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
 
@@ -814,4 +851,137 @@ Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de c
 | :--: | :--: | :--: | :--: | :--: | :--: |
 | 07 | 08 | | A0 | B7 | ... |
 
-<span style="color:#F92672">**X86 fonctionne en Little endian**</span>
+<span style="color:#F92672">**X86**</span> ainsi que la majorité des pc actuels <span style="color:#F92672">**fonctionne en Little endian** </span>
+
+
+##### reponse
+
+* 7000  = 0x 1B 58
+* 22555 = 0x 58 1B
+
+Bingo ! C'est donc bien un problème d'endianess.
+
+
+
+
+### question 9
+
+#### a, b, c:
+
+* conversion d'un socket en fichier text dans la fonction tcp_connect() 
+
+* ajout d'un buffer et d'un **fgets()** dans le main qui va capturer la première ligne de ce que le serveur a à nous dire et **puts()** l'ajouter dans `buff`.
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
+static FILE *tcp_connect(const char *hostname, const char *port);
+
+int main(int argc, char **argv)
+{
+    int result = EXIT_FAILURE;
+
+    if (argc == 3)
+    {
+        FILE *f;
+
+        if ((f = tcp_connect(argv[1], argv[2])))
+        {
+            // creation d'un buffer affin de stocker la premiere ligne
+            char buff[1024];
+            if (fgets(buff, sizeof(buff), f))
+            { 
+                puts(buff);
+            }
+        }
+        // else: fail
+    }
+    else
+    {
+        fprintf(stderr, "%s remote-host port\n", argv[0]);
+        fprintf(stderr, "%s: bad args.\n", argv[0]);
+    }
+    return result;
+}
+
+static FILE *tcp_connect(const char *hostname, const char *port)
+{
+    FILE *f = NULL;
+
+    int s; 
+    struct addrinfo hints; 
+    struct addrinfo *result, *rp;
+
+    hints.ai_family = AF_UNSPEC; // IPv4 or v6  
+    hints.ai_socktype = SOCK_STREAM; // TCP  
+    hints.ai_flags = 0; 
+    hints.ai_protocol = 0; // any protocol 
+
+    if ((s = getaddrinfo(hostname, port, &hints, &result))) 
+    { 
+        fprintf(stderr, "getaddrinfo(): failed: %s.\n", gai_strerror(s)); 
+    } 
+    else 
+    { 
+        for (rp = result; rp != NULL; rp = rp->ai_next) 
+        {
+            // AFFICHER UNE ADR 
+            char ipname[INET_ADDRSTRLEN]; 
+            char servicename[6]; // "65535\0" 
+
+            if (!getnameinfo(rp->ai_addr, rp->ai_addrlen, 
+                             ipname, sizeof(ipname), 
+                             servicename, sizeof(servicename), 
+                             NI_NUMERICHOST|NI_NUMERICSERV)) 
+            { 
+                printf("Trying connection to host %s:%s ...\n", 
+                        ipname, 
+                        servicename); 
+
+                //     // affichage brut de la valeur du champ sin_port
+                // if (rp->ai_family == AF_INET)
+                // {
+                //     printf("HACK: raw port number: %d\n",
+                //           ((struct sockaddr_in * ) rp->ai_addr)->sin_port);
+                // }                 // cast
+            
+                // CREATION DE SOCKET  
+                if ((s = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol)) == -1) 
+                { 
+                    perror("socket() failed: "); 
+                }
+
+                // CONNEXION 
+                else
+                { 
+                    if (connect(s, rp->ai_addr, rp->ai_addrlen) != -1) 
+                    {
+                        // conversion de socket en un FILE *
+                        // fdopen() permet d'utiliser un socket comme un fichier
+                        if ((f = fdopen(s, "r+"))) 
+                        { // utilisation de fonctions classiques maintenant possible
+                            break; // !! Si on return maintenant, la memoire n'est pas liberee!
+                        }
+                    } 
+                    else 
+                    { 
+                        perror("connect(): "); 
+                    }
+                    close(s); // new -> delete | open -> close
+                }
+            }
+        }
+        freeaddrinfo(result);
+    }
+    return f;
+}
+```
+
+ 
+[<a href="/00illustrations/res_labo5/wireshark5.png"><img src="/00illustrations/res_labo5/wireshark5.png"></a>]()

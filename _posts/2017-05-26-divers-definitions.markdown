@@ -45,7 +45,7 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 ### endiannes
 
-> Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication** 
+> Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication**. Big endian et Little endian sont deux architectures différentes.
 
 #### Big endian
 **byte de poids fort** à gauche.  
