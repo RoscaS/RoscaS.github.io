@@ -29,6 +29,7 @@ La première chose à faire est de créer un socket. C'est le rôle de la foncti
 
 int main(int argc, char **argv) 
 {
+    // variables
     int socket_desc;
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -100,6 +101,7 @@ La dernière chose dont on a besoin c'est de la fonction `connect` qui prend en 
 
 int main(int argc, char **argv) 
 {
+    // variables
     int socket_desc;
     // creation d'un objet de type sockaddr_in
     struct sockaddr_in server;
@@ -148,6 +150,7 @@ La fonction `send` nous permet d'envoyer des données. Elle a besoin en paramèt
 
 int main(int argc, char **argv) 
 {
+    // variables
     int socket_desc;
     char* message;
     // creation d'un objet de type sockaddr_in
@@ -200,10 +203,88 @@ int main(int argc, char **argv)
 La fonction `recv` est utilisée pour recevoir des données sur un socket. Dans le prochain exemple, nous allons envoyer le même message quand dans le précédent exemple et recevoir une réponse du serveur.
 
 
+```c
+#include<stdio.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<arpa/inet.h> // inet_addr
 
+int main(int argc, char **argv) 
+{
+    // variables
+    int socket_desc;
+    char* message;
+    char server_reply[2000];
+    // creation d'un objet de type sockaddr_in
+    struct sockaddr_in server;
 
+    // creation du socket -> socket_desc
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == -1) 
+    {
+        printf("Could not create socket");
+    }
 
+    // initialisation des membres de l'objet server
+    server.sin_addr.s_addr = inet_addr("172.217.22.78");
+    server.sin_family = AF_INET;
+    server.sin_port = htons(80);
 
+    // connexion a un serveur distant
+    if (connect(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
+    {
+        puts("connect error\n");
+        return 1;
+    }
+
+    puts("Connected\n");
+
+    // envoie de donnees 
+    message = "GET / HTTP/1.1\r\n\r\n";
+    if (send(socket_desc, message, strlen(message), 0) < 0)
+    {
+        puts("Send failed\n");
+        return 1;
+    }
+
+    // recevoir une reponse du serveur
+    if (recv(socket_desc, server_reply, 2000, 0) < 0)
+    {
+        puts("recv failed");
+    }
+
+    puts("Reply received\n");
+    puts(server_reply);
+
+    puts("Data Send\n");
+    return 0;
+}
+```
+output:
+```
+Connected
+
+Reply received
+
+HTTP/1.1 302 Found
+Cache-Control: private
+Content-Type: text/html; charset=UTF-8
+Referrer-Policy: no-referrer
+Location: http://www.google.ch/?gfe_rd=cr&ei=9oMsWbfPHJOT8QfFgK2IBg
+Content-Length: 258
+Date: Mon, 29 May 2017 20:26:30 GMT
+
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>302 Moved</TITLE></HEAD><BODY>
+<H1>302 Moved</H1>
+The document has moved
+<A HREF="http://www.google.ch/?gfe_rd=cr&amp;ei=9oMsWbfPHJOT8QfFgK2IBg">here</A>.
+</BODY></HTML>
+
+Data Send
+```
+
+Nous voyons ici la réponse du serveur. Google nous répond comme demandé le contenu de la page que nous lui avons demandé.
 
 
 
