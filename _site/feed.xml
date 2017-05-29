@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 28 May 2017 23:44:45 +0200</pubDate>
-    <lastBuildDate>Sun, 28 May 2017 23:44:45 +0200</lastBuildDate>
+    <pubDate>Mon, 29 May 2017 14:39:47 +0200</pubDate>
+    <lastBuildDate>Mon, 29 May 2017 14:39:47 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -3922,6 +3922,91 @@ USER -&amp;gt; nom de l'utilisateur
 &lt;/ul&gt;
 
 &lt;p&gt;Ces deux modes ne sont pas toujours supportés, notamment en raison des firewalls. En mode actif, le client fournit l’adresse IP et le port à utiliser (commande &lt;strong&gt;PORT&lt;/strong&gt;) et le serveur s’y connecte en mode client. En mode passif (commande PASV), c’est le serveur qui fournit le tuple (adresse IP, port) et c’est le &lt;strong&gt;client&lt;/strong&gt; qui s’y connecte, ce qui est en général compatible avec les firewalls du coêé du réseau du client&lt;/p&gt;
+
+&lt;h2 id=&quot;tftp-trivial-file-transfer&quot;&gt;TFTP (Trivial File Transfer)&lt;/h2&gt;
+
+&lt;p&gt;Les fonctions de FTP sont parfois trop complexes, en particulier quand le transfert se fait à l’intérieur d’un réseau local. Ces réseaux ont des délais très courts et des taux d’erreurs très bas.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TFTP&lt;/code&gt; n’est utilisé en principe que dans les LAN (démarrage de stations sans disque, téléchargement de configurations pour des équipements, …). &lt;code class=&quot;highlighter-rouge&quot;&gt;TFTP&lt;/code&gt; ne permet le transfert que d’un fichier dans une direction ou l’autre et n’implémente pas d’identification de l’utilisateur. De plus, si le serveur ou le client ne supporte pas les extensions des RFC-2348 ou RFC-2349, la taille maximum transférable ne dépassera pas 32 MB ce qui est en général largement suffisant.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TFTP utilise UDP, port 69&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;séquence-des-messages-2&quot;&gt;Séquence des messages&lt;/h3&gt;
+
+&lt;p&gt;Le protocole sûr implémenté est un IDLE REQUEST sur la base d’UDP. Cela signifie que des datagrammes individuels UDP sont envoyés, et que chaque datagramme individuel doit être confirmé par le récepteur avant de passer au suivant, ce qui explique l’&lt;strong&gt;inefficacité du protocole&lt;/strong&gt;, en particulier hors du réseau local (sensibilité aux délais).&lt;/p&gt;
+
+&lt;p&gt;Les messages individuels sont :&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;read request
+write request
+data block
+acknowlegment
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;email-smtp-pop-imap-mime&quot;&gt;Email: SMTP, POP, IMAP, MIME&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;a href=&quot;/00illustrations/re_couche7/email.png&quot;&gt;&lt;img src=&quot;/00illustrations/re_couche7/email.png&quot; /&gt;&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;smtp-simple-mail-transfer-protocol&quot;&gt;SMTP (Simple Mail Transfer Protocol)&lt;/h2&gt;
+&lt;h3 id=&quot;fonctions-et-propriétés-1&quot;&gt;Fonctions et propriétés&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt; permet le transfer de courrier électronique entre deux &lt;strong&gt;MTA&lt;/strong&gt; (Message Transfer Agent). La saisie des mails et leur routage ne sont pas des tâches de &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt;, mais celles respectivement de &lt;strong&gt;MUA&lt;/strong&gt; (Mail User Agent) et du &lt;strong&gt;MDA&lt;/strong&gt; (Mail Delivery Agent).&lt;/p&gt;
+
+&lt;p&gt;Le format de base des mail est très simple: l’entête se compose d’une ligne contenant un mot clé (To, From, Subject, Date,…) suivi par deux points(:), espace, puis une chaîne de caractères. Le corps est séparé de l’entête par une ligne vide.&lt;/p&gt;
+
+&lt;p&gt;Les &lt;strong&gt;MTA&lt;/strong&gt; ajoutent une &lt;em&gt;enveloppe&lt;/em&gt; autour du message. Elle ne contient que les adresses de l’expéditeur et du destinataire du message et sont transmises, dans le protocole &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt;, via les commandes &lt;code class=&quot;highlighter-rouge&quot;&gt;MAIL FROM:&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;RCPT TO:&lt;/code&gt;. Le transfer du message (comprenant d’abord l’entête, une ligne vide, puis le corps du message), initié par la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;DATA&lt;/code&gt; est terminé par une ligne ne comprenant qu’un point (une ligne de message commençant par un point doit être échappée en ajoutant un point).&lt;/p&gt;
+
+&lt;p&gt;On peut faire une analogie avec le courrier postal: La lettre est formée d’entêtes (expéditeur, destinataire) et d’un texte (le corps du message). C’est ce qui est transmis dans la session &lt;code class=&quot;highlighter-rouge&quot;&gt;DATA&lt;/code&gt; et ce qui ser généralement présenté (sous forme résumée pour les entêtes) par le client mail (&lt;strong&gt;MUA&lt;/strong&gt;). Mais une lettre est postée dans une enveloppe, qui contient un destinataire et souvent un expéditeur. C’est l’adresse de destinataire de l’enveloppe, qui sert à l’acheminement de la lettre ainsi postée (le routage est fait sur &lt;code class=&quot;highlighter-rouge&quot;&gt;RCPT TO:&lt;/code&gt;). L’adresse d’expéditeur de l’enveloppe sert à l’acheminement d’éventuelles erreurs (&lt;strong&gt;NDN&lt;/strong&gt;, Non Delivery Notification)&lt;/p&gt;
+
+&lt;h3 id=&quot;mime-multipurpose-internet-mail-extensions&quot;&gt;MIME (Multipurpose Internet Mail Extensions)&lt;/h3&gt;
+
+&lt;p&gt;Défini afin de rendre plus flexible les données transérables par &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt;. A l’origine, seul destextes &lt;strong&gt;ASCII&lt;/strong&gt; pouvaient être envoyés. Grâce à &lt;code class=&quot;highlighter-rouge&quot;&gt;MIME&lt;/code&gt; le corps d’un mail peut se composer de plusieurs parties ayant chacune un type différent. Chaque partie a son propre en-tête avec la description des types et sous-types de contenus.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;a href=&quot;/00illustrations/re_couche7/mime.png&quot;&gt;&lt;img src=&quot;/00illustrations/re_couche7/mime.png&quot; /&gt;&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Le protocole &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt; classique ne permet pas de passer tous les 8 bits de données (ni de supporter de longues lignes): seul un sous-ensemble de l’ASCII 7 bit est possible (p.ex. NUL ASCII 0 est interdit).&lt;/p&gt;
+
+&lt;p&gt;Il faudra donc procéder à un encodage lors du transfert.&lt;/p&gt;
+
+&lt;p&gt;Deux encodages sont très souvent utilisés dans les protocoles Internet (p.ex. email, HTTP): &lt;strong&gt;base64&lt;/strong&gt; et &lt;strong&gt;quoted-printable&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;a href=&quot;/00illustrations/re_couche7/encodage.png&quot;&gt;&lt;img src=&quot;/00illustrations/re_couche7/encodage.png&quot; /&gt;&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;envoi-smtp&quot;&gt;Envoi SMTP&lt;/h3&gt;
+
+&lt;p&gt;La résolution des adresses e-mail en adresse IP se fait en résolvant la partie domaine (après le AT @) via &lt;code class=&quot;highlighter-rouge&quot;&gt;DNS&lt;/code&gt; (Domain Name Server, champ MX, Mail Exchanger). Selon les entrées dans &lt;code class=&quot;highlighter-rouge&quot;&gt;DNS&lt;/code&gt; le routage peut être direct ou indirect. Si le routage est direct une liaison &lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt; est établie entre le premier &lt;strong&gt;MTA&lt;/strong&gt; ayant reçu le message et le &lt;strong&gt;MTA&lt;/strong&gt; du destinataire et le mail est transféré par cette liaison. Si une entreprise utilise plusieurs &lt;strong&gt;MTA&lt;/strong&gt; derrière un firewall, elle doit permettre un accès direct par &lt;strong&gt;SMTP&lt;/strong&gt; à chaque machine concernée et le contrôle devient difficile. C’est pourquoi on utilise de plus en plus souvent un routage indirect. Un &lt;strong&gt;MTA&lt;/strong&gt;, éventuellement redondant, centralise tout le courrier entrant et sortant de l’entreprise et le redistribue sur les &lt;strong&gt;MTA&lt;/strong&gt; internes.
+Le port standard utilisé est 25 (&lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt;). Les clients (&lt;code class=&quot;highlighter-rouge&quot;&gt;MUA&lt;/code&gt;) envoyaient au début aussi sur ce port. Entre temps, la possibilité existe d’utiliser plutôt le protocole &lt;strong&gt;Mail Submission&lt;/strong&gt;, qui lui utilise le &lt;strong&gt;port 587&lt;/strong&gt; et est très similaire à &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Les FAIs filtrent de plus en plus le port 25 pour éviter le SPAM.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;commandes&quot;&gt;Commandes&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;HELLO     -&amp;gt; Le client s'identifie auprès du serveur 
+MAIL FROM -&amp;gt; Annonce de l'expéditeur du message      
+RCPT TO   -&amp;gt; Annonce du destinateure du message      
+DATA      -&amp;gt; Données du message (entête et corps)
+QUIT      -&amp;gt; Fin de session 
+VRFY      -&amp;gt; Contrôle de l'adresse d'un destinataire
+EXPN      -&amp;gt; Expansion d'une liste de distribution
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Les réponses sont composées d’un numéro et d’un texte optionnel.
+A l’établissement de la connexion le serveur envoie spontanément un message d’accueil (220 xxxxxxxx xxx). Le client s’annonce ensuite avec &lt;code class=&quot;highlighter-rouge&quot;&gt;HELO&lt;/code&gt; (ou &lt;code class=&quot;highlighter-rouge&quot;&gt;EHLO&lt;/code&gt; pour des fonctions étendues). Des extensions (&lt;strong&gt;SASL&lt;/strong&gt;) permettent d’identifier le client et/ou de chiﬀrer l’échange de données.&lt;/p&gt;
+
+&lt;h2 id=&quot;pop-et-imap&quot;&gt;POP et IMAP&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;POP&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;IMAP&lt;/code&gt; sont deux protocoles d’accès aux boîtes-aux-lettres. Les nouveaux mails sont saisis à l’aide d’un logiciel local. Les mails sortants sont en général envoyés directement via &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP&lt;/code&gt; (&lt;strong&gt;MTA&lt;/strong&gt; du destinataire ou &lt;strong&gt;MTA&lt;/strong&gt; centralisé). Les mails entrants doivent être enregistrés dans une boîte-aux-lettres car le PC du destinataire final n’est pas toujours accessible et ne tourne en général pas de &lt;em&gt;daemon&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;SMTP.&lt;/code&gt; Lors que celui-ci le souhaite, il s’annonce auprès de sa boîte aux lettres et relève le courrier. &lt;code class=&quot;highlighter-rouge&quot;&gt;POP&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;IMAP&lt;/code&gt; sont prévu pour cette interface entre client mail et boîte-aux-lettres. &lt;code class=&quot;highlighter-rouge&quot;&gt;POP&lt;/code&gt; fonctionne selon un mode hors-ligne (oﬄine). A l’établissement d’une connexion avec la boîte-aux-lettres unique, tous les mails pendants sont envoyés au client et eﬀacés du serveur (en général). Avec &lt;code class=&quot;highlighter-rouge&quot;&gt;IMAP,&lt;/code&gt; on a le choix de la ou les boîtes-aux-lettres (une hiérarchie est présentée), et les mails sont toujours conservés sur le serveur : ils ne sont transférés au client mail qu’en cas de besoin (lecture totale ou partielle, cache). Ceci représente un grand avantage lorsqu’on lit ses mails de plusieurs endroits (ordinateur, téléphone portable). &lt;code class=&quot;highlighter-rouge&quot;&gt;IMAP&lt;/code&gt; prévoit de plus des fonctions nécessaires à la gestion de répertoires de mails sur le serveur et propose des fonctions avancées de notification pour informer le client de l’arrivée de nouveaux messages.&lt;/p&gt;
+
+&lt;h2 id=&quot;adresses-e-mail-à-vie&quot;&gt;Adresses e-mail à vie&lt;/h2&gt;
+
+&lt;p&gt;L’utilisation de noms de comptes dans les adresses e-mail est très répandue, bien que peu mnémonique – la forme longue comportant le prénom et le nom séparés par un point est souvent également utilisée. Un problème existe aussi lorsqu’on change d’employeur ou de fournisseur : il existe la possibilité de posséder une adresse à vie, parfois même gratuite, dont l’originalité est d’être indépendante de l’employeur étant donné que son rôle se limite à rediriger tout le courrier reçu sur le serveur de son choix (p.ex. sous writeme.com). Au contraire, il existe aussi des adresses dites jetables, utilisables pour s’abonner à des services sans risquer de recevoir encore plus de SPAM.&lt;/p&gt;
+
+&lt;h2 id=&quot;dns-domain-name-system&quot;&gt;DNS (Domain Name System)&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.commentcamarche.net/contents/518-dns-systeme-de-noms-de-domaine&quot;&gt;commentcamarche.net&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 May 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/reseau/reseau-couche7.html</link>
