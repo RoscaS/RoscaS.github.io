@@ -14,8 +14,209 @@ finished: false
 ## ressources:
 [simple-client.c (base)](http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip)  
 [video explicative](http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4)  
-[tuto sockets](http://broux.developpez.com/articles/c/sockets/) 
+[tuto sockets](http://broux.developpez.com/articles/c/sockets/)   
+[second tuto sockets](http://www.binarytides.com/socket-programming-c-linux-tutorial/)
 
+# Linux
+
+## 1. Création de socket
+
+La première chose à faire est de créer un socket. C'est le rôle de la fonction `socket`.
+
+```c
+#include<stdio.h>
+#include<sys/socket.h>
+
+int main(int argc, char **argv) 
+{
+    int socket_desc;
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+
+    if (socket_desc == -1) 
+    {
+        printf("Could not create socket");
+    }
+
+    return 0;
+}
+```
+La fonction `socket()` crée un socket et retourne un descripteur qui peut être utilisé dans d'autres fonctions. Le code précédent crée un socket avec les propriétés suivantes:
+
+```
+Address Family - AF_INET (ipv4)
+Type - SOCK_STREAM (protocol TCP)
+Protocol - 0 [ou IPPROTO_IP c'est le protocol IP]
+```
+
+> * type `SOCK_STREAM` désigne TCP  
+> * type `SOCK_DGRAM` désigne UDP
+
+## 2. Connecter un socket à un serveur
+
+Pour se connecter à un serveur nous avons donc besoins de deux choses:
+
+* adresse IP
+* numéro de port
+
+Pour se connecter à un serveur **distant** il nous faut également d'autres choses.
+La première est de créer une structure `sockaddr_in` avec les bonnes valeures:
+
+Voici à quoi ressemble cette structure:
+```c
+// IPv4 AF_INET sockets:
+struct sockaddr_in {
+    short            sin_family;   // AF_INET pour ipv4 et AF_INET6 pour ipv6
+    unsigned short   sin_port;     // port
+    struct in_addr   sin_addr;     // voir in_addr plus bas
+    char             sin_zero[8];  // optionnel
+};
+ 
+struct in_addr {
+    unsigned long s_addr;          // load with inet_pton()
+};
+ 
+struct sockaddr {
+    unsigned short    sa_family;    // address family, AF_xxx
+    char              sa_data[14];  // 14 bytes of protocol address
+};
+```
+`sockaddr_in` possède un membre appelé `sin_addr` de type `in_addr` qui a un membre `s_adr` qui n'est rien d'autre qu'un `long`.
+
+La fonction `inet_addr` est très pratique dans le sens où elle converti une adresse IP en un type long. Voici comment faire:
+
+```c
+server.sin_addr.s_addr = inet_addr("74.125.235.20"); // ip de google
+```
+
+Il est donc nécéssaire de connaitre l'adress IP du serveur distant qu'on veut connecter. 
+
+La dernière chose dont on a besoin c'est de la fonction `connect` qui prend en paramètre un socket et la structure `sockaddr`.
+
+
+```c
+#include<stdio.h>
+#include<sys/socket.h>
+#include<arpa/inet.h> // inet_addr
+
+int main(int argc, char **argv) 
+{
+    int socket_desc;
+    // creation d'un objet de type sockaddr_in
+    struct sockaddr_in server;
+
+    // creation du socket -> socket_desc
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == -1) 
+    {
+        printf("Could not create socket");
+    }
+
+    // initialisation des membres de l'objet server
+    server.sin_addr.s_addr = inet_addr("172.217.22.78");
+    server.sin_family = AF_INET;
+    server.sin_port = htons(80);
+
+    // connexion a un serveur distant
+    if (connect(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
+    {
+        puts("connect error");
+        return 1;
+    }
+
+    puts("Connected");
+    return 0;
+}
+```
+
+<span style="color:#F92672">**Les connexions ne sont nécéssaires uniquement dans le cas du l'utilisation de TCP**</span>
+
+Le concepte de connexion ne s'applique que dans le cas de l'utilisation de SOCK\_**STREAM** (socket `TCP`). Une connexion veut dire "reliable _stream_ of data" de telle façon qu'on puisse avoir plusieurs de ces "stream" qui effectue chacun une communication. 
+
+> think of this as a pipe which is not interfered by other data.
+
+D'autres sockets comme UDP, ICMP ou ARP par exemple n'ont pas besoin de se connecter. Se sont des protocoles non-orienté connexion.
+
+## 3. Envoyer des données
+
+La fonction `send` nous permet d'envoyer des données. Elle a besoin en paramètre du descripteur de socket, la donnée à envoyer et sa taille.
+
+```c
+#include<stdio.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<arpa/inet.h> // inet_addr
+
+int main(int argc, char **argv) 
+{
+    int socket_desc;
+    char* message;
+    // creation d'un objet de type sockaddr_in
+    struct sockaddr_in server;
+
+    // creation du socket -> socket_desc
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == -1) 
+    {
+        printf("Could not create socket");
+    }
+
+    // initialisation des membres de l'objet server
+    server.sin_addr.s_addr = inet_addr("172.217.22.78");
+    server.sin_family = AF_INET;
+    server.sin_port = htons(80);
+
+    // connexion a un serveur distant
+    if (connect(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
+    {
+        puts("connect error\n");
+        return 1;
+    }
+
+    puts("Connected\n");
+
+    // envoie de donnees 
+    message = "GET / HTTP/1.1\r\n\r\n";
+    if (send(socket_desc, message, strlen(message), 0) < 0)
+    {
+        puts("Send failed\n");
+        return 1;
+    }
+
+    puts("Data Send\n");
+    return 0;
+}
+```
+ Dans cette exemple, dans un premier temps nous nous connectons à l'adresse IP et ensuite envoyons notre chaîne de caractères. Ce message est une commande HTTP pour fetch la mainpage d'un site web.
+
+ [<a href="/00illustrations/sockets/wireshark1.png"><img src="/00illustrations/sockets/wireshark1.png"></a>]()
+
+
+ Maintenant que nous avons envoyé des données, il faut faire en sorte de recevoir une réponse du serveur.
+
+ > Quand on envoie des données à un socket, de façon similaire à écrire dans un fichier, nous écrivons dans le socket, par exemple nous pouvons utiliser la fonction `write` pour envoyer des données à un socket.
+
+## 4. Recevoir des données sur un socket.
+
+La fonction `recv` est utilisée pour recevoir des données sur un socket. Dans le prochain exemple, nous allons envoyer le même message quand dans le précédent exemple et recevoir une réponse du serveur.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 ## 1. Introduction
 
 Un socket est une prise qui permet à une application d'envoyer et de recevoir des données.
@@ -213,4 +414,4 @@ while(res !- NULL)
 // liberation de la memoire occupee par les enregistrements
 freeaddrinfo(res);
 ```
- 
+ -->

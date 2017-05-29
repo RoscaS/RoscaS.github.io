@@ -122,219 +122,398 @@
 <h2 id="ressources">ressources:</h2>
 <p><a href="http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip">simple-client.c (base)</a><br />
 <a href="http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4">video explicative</a><br />
-<a href="http://broux.developpez.com/articles/c/sockets/">tuto sockets</a></p>
+<a href="http://broux.developpez.com/articles/c/sockets/">tuto sockets</a> <br />
+<a href="http://www.binarytides.com/socket-programming-c-linux-tutorial/">second tuto sockets</a></p>
 
-<h2 id="1-introduction">1. Introduction</h2>
+<h1 id="linux">Linux</h1>
 
-<p>Un socket est une prise qui permet à une application d’envoyer et de recevoir des données.</p>
+<h2 id="1-création-de-socket">1. Création de socket</h2>
 
-<p>Une connexion TCP est identifiée par 4 valeurs (adresse IP source et destination, ports source et destination). Un socket est identifié par une valeur spécifique au système d’exploitation.</p>
+<p>La première chose à faire est de créer un socket. C’est le rôle de la fonction <code class="highlighter-rouge">socket</code>.</p>
 
-<h2 id="2-nouvelles-notions-et-rappels">2. Nouvelles notions et rappels</h2>
-<h3 id="int-main">int main</h3>
-<p>int main(int <em>argc</em>, char <em>argv)</em></p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;stdio.h&gt;
+#include&lt;sys/socket.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">socket_desc</span><span class="p">;</span>
+    <span class="n">socket_desc</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/test$ </span>./programme arg1 arg2
+    <span class="k">if</span> <span class="p">(</span><span class="n">socket_desc</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Could not create socket"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>La fonction <code class="highlighter-rouge">socket()</code> crée un socket et retourne un descripteur qui peut être utilisé dans d’autres fonctions. Le code précédent crée un socket avec les propriétés suivantes:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Address Family - AF_INET (ipv4)
+Type - SOCK_STREAM (protocol TCP)
+Protocol - 0 [ou IPPROTO_IP c'est le protocol IP]
 </code></pre>
 </div>
 
-<p><code class="highlighter-rouge">argv[idx]</code> nous sert à récuperer les arguments dans le code.</p>
+<blockquote>
+  <ul>
+    <li>type <code class="highlighter-rouge">SOCK_STREAM</code> désigne TCP</li>
+    <li>type <code class="highlighter-rouge">SOCK_DGRAM</code> désigne UDP</li>
+  </ul>
+</blockquote>
+
+<h2 id="2-connecter-un-socket-à-un-serveur">2. Connecter un socket à un serveur</h2>
+
+<p>Pour se connecter à un serveur nous avons donc besoins de deux choses:</p>
+
 <ul>
-  <li>argc: nombre d’arguments + 1 (nom programme)</li>
-  <li>argv[0]: nom du programme</li>
-  <li>argv[1]: argument 1</li>
-  <li>argv[2]: argument 2</li>
+  <li>adresse IP</li>
+  <li>numéro de port</li>
 </ul>
 
-<h3 id="fprintf">fprintf</h3>
-<p>Permet de choisir le flux de sortie.</p>
+<p>Pour se connecter à un serveur <strong>distant</strong> il nous faut également d’autres choses.
+La première est de créer une structure <code class="highlighter-rouge">sockaddr_in</code> avec les bonnes valeures:</p>
 
-<h3 id="perror">perror</h3>
-<p>perror(“message”)<br />
-renvoie <code class="highlighter-rouge">message + : dernière erreur</code></p>
+<p>Voici à quoi ressemble cette structure:</p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// IPv4 AF_INET sockets:
+</span><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="p">{</span>
+    <span class="kt">short</span>            <span class="n">sin_family</span><span class="p">;</span>   <span class="c1">// AF_INET pour ipv4 et AF_INET6 pour ipv6
+</span>    <span class="kt">unsigned</span> <span class="kt">short</span>   <span class="n">sin_port</span><span class="p">;</span>     <span class="c1">// port
+</span>    <span class="k">struct</span> <span class="n">in_addr</span>   <span class="n">sin_addr</span><span class="p">;</span>     <span class="c1">// voir in_addr plus bas
+</span>    <span class="kt">char</span>             <span class="n">sin_zero</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>  <span class="c1">// optionnel
+</span><span class="p">};</span>
+ 
+<span class="k">struct</span> <span class="n">in_addr</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">s_addr</span><span class="p">;</span>          <span class="c1">// load with inet_pton()
+</span><span class="p">};</span>
+ 
+<span class="k">struct</span> <span class="n">sockaddr</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">short</span>    <span class="n">sa_family</span><span class="p">;</span>    <span class="c1">// address family, AF_xxx
+</span>    <span class="kt">char</span>              <span class="n">sa_data</span><span class="p">[</span><span class="mi">14</span><span class="p">];</span>  <span class="c1">// 14 bytes of protocol address
+</span><span class="p">};</span>
+</code></pre>
+</div>
+<p><code class="highlighter-rouge">sockaddr_in</code> possède un membre appelé <code class="highlighter-rouge">sin_addr</code> de type <code class="highlighter-rouge">in_addr</code> qui a un membre <code class="highlighter-rouge">s_adr</code> qui n’est rien d’autre qu’un <code class="highlighter-rouge">long</code>.</p>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
+<p>La fonction <code class="highlighter-rouge">inet_addr</code> est très pratique dans le sens où elle converti une adresse IP en un type long. Voici comment faire:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">inet_addr</span><span class="p">(</span><span class="s">"74.125.235.20"</span><span class="p">);</span> <span class="c1">// ip de google
+</span></code></pre>
+</div>
+
+<p>Il est donc nécéssaire de connaitre l’adress IP du serveur distant qu’on veut connecter.</p>
+
+<p>La dernière chose dont on a besoin c’est de la fonction <code class="highlighter-rouge">connect</code> qui prend en paramètre un socket et la structure <code class="highlighter-rouge">sockaddr</code>.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;stdio.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;arpa/inet.h&gt; // inet_addr
 </span>
-<span class="kt">void</span> <span class="nf">test</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> 
 <span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">"arg1: %s</span><span class="se">\n</span><span class="s">arg2: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">);</span>
-<span class="p">}</span>
+    <span class="kt">int</span> <span class="n">socket_desc</span><span class="p">;</span>
+    <span class="c1">// creation d'un objet de type sockaddr_in
+</span>    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">server</span><span class="p">;</span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">perror</span><span class="p">(</span><span class="s">"etat"</span><span class="p">);</span>
-    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span><span class="s">"test: %d</span><span class="se">\n</span><span class="s">nom de la fonction: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-    <span class="n">test</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="c1">// creation du socket -&gt; socket_desc
+</span>    <span class="n">socket_desc</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">socket_desc</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Could not create socket"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// initialisation des membres de l'objet server
+</span>    <span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">inet_addr</span><span class="p">(</span><span class="s">"172.217.22.78"</span><span class="p">);</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
+
+    <span class="c1">// connexion a un serveur distant
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">socket_desc</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span> <span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"connect error"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Connected"</span><span class="p">);</span>
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre>
 </div>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">sol@debian:~/LABOS/labo5/04CliendTCP/test$ </span>./test poule cochon
+<p><span style="color:#F92672"><strong>Les connexions ne sont nécéssaires uniquement dans le cas du l’utilisation de TCP</strong></span></p>
+
+<p>Le concepte de connexion ne s’applique que dans le cas de l’utilisation de SOCK_<strong>STREAM</strong> (socket <code class="highlighter-rouge">TCP</code>). Une connexion veut dire “reliable <em>stream</em> of data” de telle façon qu’on puisse avoir plusieurs de ces “stream” qui effectue chacun une communication.</p>
+
+<blockquote>
+  <p>think of this as a pipe which is not interfered by other data.</p>
+</blockquote>
+
+<p>D’autres sockets comme UDP, ICMP ou ARP par exemple n’ont pas besoin de se connecter. Se sont des protocoles non-orienté connexion.</p>
+
+<h2 id="3-envoyer-des-données">3. Envoyer des données</h2>
+
+<p>La fonction <code class="highlighter-rouge">send</code> nous permet d’envoyer des données. Elle a besoin en paramètre du descripteur de socket, la donnée à envoyer et sa taille.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;stdio.h&gt;
+#include&lt;string.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;arpa/inet.h&gt; // inet_addr
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">socket_desc</span><span class="p">;</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">message</span><span class="p">;</span>
+    <span class="c1">// creation d'un objet de type sockaddr_in
+</span>    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">server</span><span class="p">;</span>
+
+    <span class="c1">// creation du socket -&gt; socket_desc
+</span>    <span class="n">socket_desc</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">socket_desc</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Could not create socket"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// initialisation des membres de l'objet server
+</span>    <span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">inet_addr</span><span class="p">(</span><span class="s">"172.217.22.78"</span><span class="p">);</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mi">80</span><span class="p">);</span>
+
+    <span class="c1">// connexion a un serveur distant
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">socket_desc</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span> <span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"connect error</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Connected</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="c1">// envoie de donnees 
+</span>    <span class="n">message</span> <span class="o">=</span> <span class="s">"GET / HTTP/1.1</span><span class="se">\r\n\r\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">send</span><span class="p">(</span><span class="n">socket_desc</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"Send failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Data Send</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Dans cette exemple, dans un premier temps nous nous connectons à l’adresse IP et ensuite envoyons notre chaîne de caractères. Ce message est une commande HTTP pour fetch la mainpage d’un site web.</p>
+
+<p><a href=""><a href="/00illustrations/sockets/wireshark1.png"><img src="/00illustrations/sockets/wireshark1.png" /></a></a></p>
+
+<p>Maintenant que nous avons envoyé des données, il faut faire en sorte de recevoir une réponse du serveur.</p>
+
+<blockquote>
+  <p>Quand on envoie des données à un socket, de façon similaire à écrire dans un fichier, nous écrivons dans le socket, par exemple nous pouvons utiliser la fonction <code class="highlighter-rouge">write</code> pour envoyer des données à un socket.</p>
+</blockquote>
+
+<h2 id="4-recevoir-des-données-sur-un-socket">4. Recevoir des données sur un socket.</h2>
+
+<p>La fonction <code class="highlighter-rouge">recv</code> est utilisée pour recevoir des données sur un socket. Dans le prochain exemple, nous allons envoyer le même message quand dans le précédent exemple et recevoir une réponse du serveur.</p>
+
+<!--
+## 1. Introduction
+
+Un socket est une prise qui permet à une application d'envoyer et de recevoir des données.
+
+Une connexion TCP est identifiée par 4 valeurs (adresse IP source et destination, ports source et destination). Un socket est identifié par une valeur spécifique au système d'exploitation.
+
+## 2. Nouvelles notions et rappels
+### int main
+int main(int _argc_, char _argv)_
+
+```sh
+sol@debian:~/test$ ./programme arg1 arg2
+```
+
+`argv[idx]` nous sert à récuperer les arguments dans le code.
+* argc: nombre d'arguments + 1 (nom programme)
+* argv[0]: nom du programme
+* argv[1]: argument 1
+* argv[2]: argument 2
+
+### fprintf
+Permet de choisir le flux de sortie.
+
+### perror
+perror("message")  
+renvoie `message + : dernière erreur`
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void test(char* a, char* b)
+{
+    printf("arg1: %s\narg2: %s\n", a,b);
+}
+
+int main(int argc, char **argv)
+{
+    perror("etat");
+    fprintf(stderr,"test: %d\nnom de la fonction: %s\n",argc, argv[0]);
+    test(argv[1], argv[2]);
+    return 0;
+}
+```
+
+```sh
+sol@debian:~/LABOS/labo5/04CliendTCP/test$ ./test poule cochon
 etat: Succes
 n: 3
 nom de la fonction: ./test
 arg1: poule
 arg2: cochon
-</code></pre>
-</div>
+```
 
-<h2 id="socket">socket</h2>
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">socket</span> <span class="p">(</span><span class="kt">int</span> <span class="n">domaine</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocole</span><span class="p">)</span> 
-</code></pre>
-</div>
-<p>Elle permet de créer une socket de type quelconque :</p>
-<ul>
-  <li>Le paramètre domaine précise la famille de protocoles è utiliser pour les communications. Il y a deux familles principales :
-    <ul>
-      <li><code class="highlighter-rouge">PF UNIX</code> pour les communications locales n’utilisant pas le réseau; Communication entre processus sur une même machine</li>
-      <li><code class="highlighter-rouge">AF INET</code> pour les communications réseaux utilisant le protocole IPv4.</li>
-      <li><code class="highlighter-rouge">AF INET6</code> pour les communications réseaux utilisant le protocole IPv6. Nous n’étudierons par la suite que la famille AF INET.</li>
-    </ul>
-  </li>
-  <li>Le paramètre mode précise le type de la socket è créer :
-    <ul>
-      <li><code class="highlighter-rouge">SOCK STREAM</code> pour une communication bidirectionnelle sûre. Dans ce cas, la socket utilisera le protocole TCP pour communiquer.</li>
-      <li><code class="highlighter-rouge">SOCK DGRAM</code> pour une communication sous forme de datagrammes. Dans ce cas, la socket utilise le protocole UDP pour communiquer.</li>
-      <li><code class="highlighter-rouge">SOCK RAW</code> pour pouvoir créer soi-même ses propres paquets IP ou les recevoir sans traitement de la part de la couche Transport.</li>
-    </ul>
-  </li>
-  <li>Le paramètre protocole précise le protocole 
-utilisé (dépend bien sûr du champ mode) :
-    <ul>
-      <li><code class="highlighter-rouge">IPPROTO UDP</code></li>
-      <li><code class="highlighter-rouge">IPPROTO TCP</code></li>
-      <li><code class="highlighter-rouge">IPPROTO ICMP</code></li>
-      <li><code class="highlighter-rouge">IPPROTO RAW</code> La valeur renvoyée par la fonction socket() est -1 en cas d’erreur, sinon c’est un descripteur de ﬁchier qu’on peut par la suite utiliser avec les autres fonctions de la librairie des Sockets</li>
-    </ul>
-  </li>
-</ul>
+## socket
+```c
+int socket (int domaine, int mode, int protocole) 
+```
+Elle permet de créer une socket de type quelconque : 
+* Le paramètre domaine précise la famille de protocoles è utiliser pour les communications. Il y a deux familles principales : 
+    * `PF UNIX` pour les communications locales n’utilisant pas le réseau; Communication entre processus sur une même machine 
+    * `AF INET` pour les communications réseaux utilisant le protocole IPv4. 
+    * `AF INET6` pour les communications réseaux utilisant le protocole IPv6. Nous n’étudierons par la suite que la famille AF INET. 
 
-<h2 id="structure-sockaddr">structure sockaddr</h2>
-<p>Dans le cas des communications IP, le pointeur vers la structure de type <code class="highlighter-rouge">sockaddr</code> est en fait un pointeur vers une structure de <strong>type</strong> sockaddr_in pour IPV4 ou sockaddr_in6 pour IPV6. Ces structures sont déﬁnies dans le ﬁchier d’en-tˆete <strong>&lt;netinet/in.h&gt;</strong> (d’où la <strong>conversion de pointeur</strong>).</p>
+* Le paramètre mode précise le type de la socket è créer : 
+    * `SOCK STREAM` pour une communication bidirectionnelle sûre. Dans ce cas, la socket utilisera le protocole TCP pour communiquer. 
+    * `SOCK DGRAM` pour une communication sous forme de datagrammes. Dans ce cas, la socket utilise le protocole UDP pour communiquer. 
+    * `SOCK RAW` pour pouvoir créer soi-même ses propres paquets IP ou les recevoir sans traitement de la part de la couche Transport. 
+* Le paramètre protocole précise le protocole 
+utilisé (dépend bien sûr du champ mode) : 
+    * `IPPROTO UDP` 
+    * `IPPROTO TCP` 
+    * `IPPROTO ICMP` 
+    * `IPPROTO RAW` La valeur renvoyée par la fonction socket() est -1 en cas d’erreur, sinon c’est un descripteur de ﬁchier qu’on peut par la suite utiliser avec les autres fonctions de la librairie des Sockets
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr_in</span> 
-<span class="p">{</span> 
-    <span class="kt">short</span> <span class="n">sin_family</span><span class="p">;</span>
-    <span class="n">u_short</span> <span class="n">sin_port</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="n">in_addr</span> <span class="n">sin_addr</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="n">sin_zero</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
-    <span class="p">};</span>
-<span class="k">struct</span> <span class="n">sockaddr_in6</span> 
-<span class="p">{</span> 
-    <span class="n">sa_family_t</span> <span class="n">sin6_family</span><span class="p">;</span> <span class="c1">// AF_INET6
-</span>    <span class="n">in_port_t</span> <span class="n">sin6_port</span><span class="p">;</span>     <span class="c1">// port number
-</span>    <span class="kt">uint32_t</span> <span class="n">sin6_flowinfo</span><span class="p">;</span>  <span class="c1">// IPv6 flow information
-</span>
-<span class="k">struct</span> <span class="n">in6_addr</span> <span class="n">sin6_addr</span><span class="p">;</span> <span class="c1">// IPv6 address  
-</span><span class="p">{</span>
-    <span class="kt">uint32_t</span> <span class="n">sin6_scope_id</span><span class="p">;</span> <span class="c1">// Scope ID (new in 2.4) 
-</span><span class="p">};</span>
+## structure sockaddr
+Dans le cas des communications IP, le pointeur vers la structure de type `sockaddr` est en fait un pointeur vers une structure de **type** sockaddr\_in pour IPV4 ou sockaddr\_in6 pour IPV6. Ces structures sont déﬁnies dans le ﬁchier d’en-tˆete **<netinet/in.h>** (d’où la **conversion de pointeur**).
 
-<span class="k">struct</span> <span class="n">in6_addr</span> <span class="p">{</span> 
-    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">s6_addr</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span> <span class="c1">// IPv6 address 
-</span><span class="p">};</span>
-</code></pre>
-</div>
+```c
+struct sockaddr_in 
+{ 
+    short sin_family;
+    u_short sin_port;
+    struct in_addr sin_addr;
+    char sin_zero[8];
+    };
+struct sockaddr_in6 
+{ 
+    sa_family_t sin6_family; // AF_INET6
+    in_port_t sin6_port;     // port number
+    uint32_t sin6_flowinfo;  // IPv6 flow information
 
-<p>La structure sockaddr_in contient trois champ utiles :</p>
-<ul>
-  <li><code class="highlighter-rouge">short sin_family</code> est la famille de protocoles utilisée, AF_INET pour IPv4;</li>
-  <li><code class="highlighter-rouge">unsigned short sin_port</code> est le port à aﬀecter à la structure; (0 pour une allocation dynamique cˆoté client)</li>
-  <li><code class="highlighter-rouge">unsigned long sin addr.s_addr</code> est l’adresse IP à aﬀecter à la structure. 
-La fonction <strong>getaddrinfo()</strong> permet de remplir ces structures de façon simple que ce soit avec des adresses IPV4 ou IPV6.</li>
-</ul>
+struct in6_addr sin6_addr; // IPv6 address  
+{
+    uint32_t sin6_scope_id; // Scope ID (new in 2.4) 
+};
 
-<blockquote>
-  <p>Le type struct sockaddr n’est plus réellementutilisé: en fonction de la famille de socket utilisée(IPv4, IPv6, UNIX domainsocket,…), des structures spéciﬁques sont utilisées en interne. Par exemple la structure <code class="highlighter-rouge">struct sockaddr_in</code>.</p>
+struct in6_addr { 
+    unsigned char s6_addr[16]; // IPv6 address 
+};
+```
 
-  <p>Aujourd’hui, il ne faudrait plus yaccéder directement. C’est justement le but des fonctions <strong>getaddrinfo(3)</strong> et <strong>getnameinfo(3)</strong></p>
-</blockquote>
+La structure sockaddr_in contient trois champ utiles : 
+* `short sin_family` est la famille de protocoles utilisée, AF_INET pour IPv4; 
+* `unsigned short sin_port` est le port à aﬀecter à la structure; (0 pour une allocation dynamique cˆoté client) 
+* `unsigned long sin addr.s_addr` est l’adresse IP à aﬀecter à la structure. 
+La fonction **getaddrinfo()** permet de remplir ces structures de façon simple que ce soit avec des adresses IPV4 ou IPV6.
 
-<p><span style="color:#F92672"> <strong>Pourquoi (3) ?</strong> </span></p>
+> Le type struct sockaddr n’est plus réellementutilisé: en fonction de la famille de socket utilisée(IPv4, IPv6, UNIX domainsocket,...), des structures spéciﬁques sont utilisées en interne. Par exemple la structure `struct sockaddr_in`.
+>
+>Aujourd’hui, il ne faudrait plus yaccéder directement. C’est justement le but des fonctions **getaddrinfo(3)** et **getnameinfo(3)**
 
-<h2 id="getaddrinfo">getaddrinfo</h2>
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">node</span><span class="p">,</span> 
-                <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">service</span><span class="p">,</span> 
-                <span class="k">const</span> <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">hints</span><span class="p">,</span> 
-                <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">**</span><span class="n">res</span><span class="p">);</span>
-</code></pre>
-</div>
 
-<p><strong>getaddrinfo</strong>(*hostname, *port,… <strong>a completer</strong>)
-permet de trouver l’adresse ou les adresses IP (IPV4  et  IPV6)  associées  à  un  nom  soit  <strong>DNS</strong>,  soit  donné dans le fichier */etc/hosts** de  la <strong>machine</strong>.</p>
+<span style="color:#F92672"> **Pourquoi (3) ?** </span>
 
-<p>Elle retourne une liste de structure <code class="highlighter-rouge">addrinfo</code> dans lesquelles on retrouve un pointeur sur la sructure <code class="highlighter-rouge">sockaddr</code> qui peut ensuite être utilisée pour les appels aux fonctions <strong>bind</strong>, <strong>connect</strong></p>
+## getaddrinfo
+```c
+int getaddrinfo(const char *node, 
+                const char *service, 
+                const struct addrinfo *hints, 
+                struct addrinfo **res);
+```
 
-<p>La structure <strong>sockaddr</strong> contient après l’appel une des adresses IP de node et le numéro de port donné par service (<strong>numéro de port ou nom associé dans /etc/services</strong>). La structure pointée par hints peut être remplie avant l’appel pour ﬁxer la valeur de certains champs (par exemple le type de la socket dans <code class="highlighter-rouge">hints-&gt;ai socktype</code>).</p>
+**getaddrinfo**(*hostname, *port,... **a completer**)
+permet de trouver l’adresse ou les adresses IP (IPV4  et  IPV6)  associées  à  un  nom  soit  **DNS**,  soit  donné dans le fichier */etc/hosts** de  la **machine**.
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">addrinfo</span> <span class="p">{</span> 
-    <span class="kt">int</span> <span class="n">ai_flags</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">ai_family</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">ai_socktype</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">ai_protocol</span><span class="p">;</span>
-    <span class="kt">size_t</span> <span class="n">ai_addrlen</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">ai_addr</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="o">*</span><span class="n">ai_canonname</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">ai_next</span><span class="p">;</span>
-    <span class="p">};</span>
-</code></pre>
-</div>
+Elle retourne une liste de structure `addrinfo` dans lesquelles on retrouve un pointeur sur la sructure `sockaddr` qui peut ensuite être utilisée pour les appels aux fonctions **bind**, **connect**
 
-<p>Les structures pointées par *res(ipv4 ou ipv6) sont allouées par la fonction. On peut les désalouer à l’aide de:</p>
+La structure **sockaddr** contient après l’appel une des adresses IP de node et le numéro de port donné par service (**numéro de port ou nom associé dans /etc/services**). La structure pointée par hints peut être remplie avant l’appel pour ﬁxer la valeur de certains champs (par exemple le type de la socket dans `hints->ai socktype`).
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="n">freeaddrinfo</span><span class="p">(</span><span class="k">struct</span> <span class="n">addrinfo</span> <span class="o">*</span><span class="n">res</span><span class="p">);</span> 
-</code></pre>
-</div>
+```c
+struct addrinfo { 
+    int ai_flags;
+    int ai_family;
+    int ai_socktype;
+    int ai_protocol;
+    size_t ai_addrlen;
+    struct sockaddr *ai_addr;
+    char *ai_canonname;
+    struct addrinfo *ai_next;
+    };
+```
 
-<p><strong>completer:</strong> gai…</p>
+Les structures pointées par *res(ipv4 ou ipv6) sont allouées par la fonction. On peut les désalouer à l’aide de:
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">gai</span> <span class="n">strerror</span><span class="p">(</span><span class="kt">int</span> <span class="n">errcode</span><span class="p">);</span>
-</code></pre>
-</div>
+```c
+void freeaddrinfo(struct addrinfo *res); 
+```
 
-<h4 id="exemple-dutilisation">exemple d’utilisation:</h4>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">addr</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
-<span class="kt">char</span> <span class="n">ipstr</span><span class="p">[</span><span class="n">INET6_ADDRSTRLEN</span><span class="p">],</span> <span class="n">ipver</span><span class="p">;</span>
 
-<span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hints</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">hints</span><span class="p">);</span>
-<span class="n">hints</span><span class="p">.</span><span class="n">ai_family</span> <span class="o">=</span> <span class="n">AF_UNSPEC</span> <span class="c1">// ipv4 ou ipv6
-</span><span class="n">hints</span><span class="p">.</span><span class="n">ai_socktype</span> <span class="o">=</span> <span class="n">SOCK_STREAM</span> <span class="c1">// socket TCP
-</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="s">"5000"</span><span class="p">,</span> <span class="s">"domaine.com"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hints</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">);</span>
+ **completer:** gai...
 
-<span class="k">while</span><span class="p">(</span><span class="n">res</span> <span class="o">!-</span> <span class="nb">NULL</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// identification de l'adresse courante
-</span>    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_family</span> <span class="o">==</span> <span class="n">AF_iNET</span><span class="p">)</span> <span class="c1">// ipv4
-</span>    <span class="p">{</span>                                       <span class="c1">// cast
-</span>        <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="o">*</span><span class="n">ipv4</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="o">*</span> <span class="p">)</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">;</span>
-        <span class="n">addr</span> <span class="o">=&amp;</span><span class="p">(</span><span class="n">ipv4</span><span class="o">-&gt;</span><span class="n">sin_addr</span><span class="p">);</span>
-        <span class="n">ipver</span> <span class="o">=</span> <span class="sc">'4'</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="c1">// ipv6
-</span>    <span class="p">{</span>
-        <span class="k">struct</span> <span class="n">sockaddr_in6</span> <span class="o">*</span><span class="n">ipv6</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr_in6</span> <span class="o">*</span> <span class="p">)</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_addr</span><span class="p">;</span>
-        <span class="n">addr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">ipv6</span><span class="o">-&gt;</span><span class="n">sin6_addr</span><span class="p">);</span>
-        <span class="n">ipver</span> <span class="o">=</span> <span class="sc">'6'</span><span class="p">;</span>
-    <span class="p">}</span>
+```c
+const char *gai strerror(int errcode);
+```
 
-    <span class="c1">// conversion de l'adresse IP en str
-</span>    <span class="n">inet_ntop</span><span class="p">(</span><span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_family</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="n">ipstr</span><span class="p">,</span> <span class="k">sizeof</span> <span class="n">ipstr</span><span class="p">)</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">"IPv%c: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">ipver</span><span class="p">,</span> <span class="n">ipstr</span><span class="p">);</span>
+#### exemple d'utilisation:
 
-    <span class="c1">// Adresse suivante
-</span>    <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">-&gt;</span><span class="n">ai_next</span><span class="p">;</span>
-<span class="p">}</span>
+```c
+void *addr;
+int status;
+char ipstr[INET6_ADDRSTRLEN], ipver;
 
-<span class="c1">// liberation de la memoire occupee par les enregistrements
-</span><span class="n">freeaddrinfo</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
-</code></pre>
-</div>
+memset(&hints, 0, sizeof hints);
+hints.ai_family = AF_UNSPEC // ipv4 ou ipv6
+hints.ai_socktype = SOCK_STREAM // socket TCP
 
+status = getaddrinfo("5000", "domaine.com", &hints, &res);
+
+while(res !- NULL)
+{
+    // identification de l'adresse courante
+    if (res->ai_family == AF_iNET) // ipv4
+    {                                       // cast
+        struct sockaddr_in *ipv4 = (struct sockaddr_in * )res->ai_addr;
+        addr =&(ipv4->sin_addr);
+        ipver = '4';
+    }
+    else // ipv6
+    {
+        struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 * )res->ai_addr;
+        addr = &(ipv6->sin6_addr);
+        ipver = '6';
+    }
+
+    // conversion de l'adresse IP en str
+    inet_ntop(res->ai_family, addr, ipstr, sizeof ipstr)
+    printf("IPv%c: %s\n", ipver, ipstr);
+
+    // Adresse suivante
+    res = res->ai_next;
+}
+
+// liberation de la memoire occupee par les enregistrements
+freeaddrinfo(res);
+```
+ -->
 
 </div>
 
