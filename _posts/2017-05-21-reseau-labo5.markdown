@@ -985,3 +985,6 @@ static FILE *tcp_connect(const char *hostname, const char *port)
 
  
 [<a href="/00illustrations/res_labo5/wireshark5.png"><img src="/00illustrations/res_labo5/wireshark5.png"></a>]()
+
+## 4. Client HTTP 
+

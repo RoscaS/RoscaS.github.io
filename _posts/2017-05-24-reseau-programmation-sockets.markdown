@@ -11,6 +11,11 @@ finished: false
 
 # Programmation de sockets
 
+## TODO:
+
+- getaddrinfo (conversion str -> bon type)
+
+
 ## ressources:
 [simple-client.c (base)](http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip)  
 [video explicative](http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4)  
