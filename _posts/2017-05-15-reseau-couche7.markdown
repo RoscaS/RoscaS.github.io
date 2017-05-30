@@ -11,9 +11,7 @@ finished: false
 
 ## 1. Architecture appplicative d'Internet
 
-Les protocoles applicatifs classiques d'Internet sont basé sur une **architecture client/serveur** (ils utilisent soit `TCP` soit `UDP` dans la couche trnasport). Certains protocoles plus modèrnes offrent des échanges distribués (**P2P**) mais gardent toujours les primitives client/serveur `TCP` et `UDP` pour les échanges proprement dit.
-
-Les protocoles applicatifs classiques d’Internet sont baseés sur une architecture **client/serveur** . Ils utilisent soit `TCP` soit `UDP` dans la couche transport. Le service doit être activé du côté serveur. Si c’est le cas un **daemon** est actif sur le port standard du service concerné (wellknown port). 
+Les protocoles applicatifs classiques d'Internet sont basé sur une **architecture client/serveur** (ils utilisent soit `TCP` soit `UDP` dans la couche transport). Certains protocoles plus modèrnes offrent des échanges distribués (**P2P**) mais gardent toujours les primitives client/serveur `TCP` et `UDP` pour les échanges proprement dit. Le service doit être activé du côté serveur. Si c’est le cas un **daemon** est actif sur le port standard du service concerné (wellknown port). 
 
 _**Un daemon** est un programme qui attend les demandes de connexion des clients et qui creée le service demandeé pour chaque nouveau client._
 
@@ -215,6 +213,363 @@ A l’établissement de la connexion le serveur envoie spontanément un message 
 
 L’utilisation de noms de comptes dans les adresses e-mail est très répandue, bien que peu mnémonique – la forme longue comportant le prénom et le nom séparés par un point est souvent également utilisée. Un problème existe aussi lorsqu’on change d’employeur ou de fournisseur : il existe la possibilité de posséder une adresse à vie, parfois même gratuite, dont l’originalité est d’être indépendante de l’employeur étant donné que son rôle se limite à rediriger tout le courrier reçu sur le serveur de son choix (p.ex. sous writeme.com). Au contraire, il existe aussi des adresses dites jetables, utilisables pour s’abonner à des services sans risquer de recevoir encore plus de SPAM.
 
-## DNS (Domain Name System)
 
-[commentcamarche.net](http://www.commentcamarche.net/contents/518-dns-systeme-de-noms-de-domaine)
+## DNS Domain name server
+sources   
+[culture informatique](http://www.culture-informatique.net/cest-quoi-un-serveur-dns/)  
+[siteduzero](https://openclassrooms.com/courses/apprenez-le-fonctionnement-des-reseaux-tcp-ip/le-service-dns)
+
+### Principes
+* système d'annuaire réparti
+    * conversion des noms en adresse IP
+    * conversion des adresses IP en noms
+    * détermine le serveur responsable du courrier électronique d'un domaine
+
+* un serveur DNS est responsable d'un ou plusieurs domaines sur lesquels il a autorité (authoritative envers ces domaines)
+* l'organisme qui gère un niveau supérieur connaît les adresses des serveurs des niveaux inférieurs (delegation)
+* chaque serveur connaît quelques points d'entrée situés tout en haut dans la hiérarchie
+
+
+### types des serveurs
+
+* primaire
+    * détient l'autorité pour ce domaine
+    * est la source des informations pour ce domaine
+
+* secondaire
+    * détient l'autorité pour ce domaine
+    * contient une copie des informations du primaire
+
+* récursif
+    * répond complètement aux questions
+
+* chache (performance)
+    * chaque serveur conserve une copie des dernières réponses d'autres serveurs jusqu'à atteindre le TTL associé aux informations (danger de cache poisoning)
+
+### déroulement des requêtes
+
+* chaque machine a l'adresse d'un ou plusieurs serveurs DNS _sympathiques_ (récursifs)
+    * en général fournit par le DHCP
+    * config manuelle possible (Linux: /etc/resolv.conf)
+
+* s'adresse à un de ces serveurs pour sa requête
+
+* le serveur cherche dans ses informations authoritative (donc les domaines sur lesquel il fait authorité) ou dans son cache. S'il n'a rien il pose la question à d'autres serveurs jusqu'à obtenir la réponse qu'il transmet au client et qu'il store dans son cache.
+
+    * si il est fainéant, il peut utiliser les services d'un autre serveur récursif nommé le forwarder (p.ex. DNS de l'FAI)
+    * sinon, il repart aussi haut que nécessaire (p.ex. directement aux root servers si son cache est vide)
+
+### détail des enregistrements
+
+* une entrée dans un serveur de nom contient 4+ parties
+    * le nom alphanum (hiérarchique)
+    * la valeur associée
+    * un type
+    * une durée de vie (TTL du cache DNS)
+    * un type MX: priorité du serveur mail à utiliser
+
+>gandalf.teleinf.labinfo.eiaj.ch, 157.26.77.13, A
+
+
+### priorités et round robin
+
+Les enregistrements MX (mail) sont flanqué d'une valeur qui détermine la priorité. **Plus elle est basse, plus le serveur est prioritaire.**
+
+```sh
+host -t NS google.fr
+```
+
+Les réponses qu'on reçoit de cette commande ne sont jamais dans le même ordre à cause du **Round-Robin**: mèthode qui permet d'équilibrer la charge entre plusieurs serveurs pour ne pas les surcharger.
+
+
+### types d'enregistrements
+
+* A : c'est le type le plus courant, il fait correspondre un nom d'hôte à une adresse IPv4 
+
+* AAAA : fait correspondre un nom d'hôte à une adresse IPv6 
+
+* CNAME : permet de créer un alias pointant sur un autre nom d'hôte 
+
+* NS : **définit le ou les serveurs DNS du domaine**
+
+* MX (Mail eXchanger) : **définit le ou les serveurs de mail du domaine**
+
+* PTR : fait correspond une IP à un nom d'hôte. Il n'est utilisé que dans le cas d'une zone inverse.
+
+* SOA : donne les infos de la zone, comme le serveur DNS principal, l'adresse mail de l'administrateur de la zone, le numéro de série de la zone et des durées.
+
+### Commandes Linux
+
+`host -t (type) (nom_a_chercher) (IPserveur)`   
+On peut ainsi indiquer le type de la requête (NS, A, MX, CNAME, etc.), le nom à interroger, ainsi que l'adresse IP du serveur que l'on peut préciser.
+
+`dig`  permet un diagnostique plus poussé
+
+
+
+### Exercices:
+
+* Quels sont les serveurs de mail du domaine sunrise.ch et lequel sera essayé en premier?
+
+```sh
+sol@debian:~$ host -t MX sunrise.ch
+sunrise.ch mail is handled by 10 mx1.smx.sunrise.ch.
+sunrise.ch mail is handled by 10 mx2.smx.sunrise.ch.
+```
+
+mx1.smx... sera essyé en premier
+
+ * quels sont les serveurs DNS du domaine he-arc.ch
+
+```sh
+sol@debian:~$ host -t NS he-arc.ch
+he-arc.ch name server ns2.he-arc.ch.
+he-arc.ch name server ns1.he-arc.ch.
+``` 
+
+* vous voulez configurer un serveur DNS pour effectuer l'opérations suivantes; qui contacter pour obtenir la délégation?
+    * convertir www.votre-entreprise.ch en 80.83.54.2
+
+> contacter l'autorité qui gère ch.
+
+* pourquoi est-ce intéressant d'avoir son propre serveur de nom de type « récursif » dans une entreprise ?
+
+> permet de bénéficier d'un cache local (performance); évite que les clients fassent des requêtes eux-mêmes, peut améliorer la sécurité si le serveur DNS est plus ou moins protégé contre les attaques (version à jour évitant le cache poisoning, sécurisation par firewall et numéros de séquences/numéros de ports aléatoires, vérification des signatures DNSSEC lorsqu'elles existent, etc); permet les réponses différentes en interne et externe par exemple.
+
+* la résolution de big-entry.alphanet.ch coince en présence d'un firewall (pare-feu), quel est probablement le problème ?
+
+> big-entry.alphanet.ch contient beaucoup de données, elles sont donc tronquées dans le datagramme de réponse UDP, et donc le client DNS réessaie en TCP: si le firewall de l'entreprise ne supporte pas TCP/53 mais seulement UDP/53, cela ne fonctionnera pas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+### intro
+![](http://www.culture-informatique.net/WordPress3/wp-content/uploads/2012/10/Requ%C3%AAte-Dns.png)
+
+Dans l’exemple ci-dessus, on voit que la requête « quelle est l’adresse de www.google.fr » a répondu 74.125.230.248. Cette requête s’appelle une résolution de nom de domaine.
+
+Si l’on poursuit, on peut constater que le serveur DNS n’est utilisé que sur la partie 1-Question et 2-Réponse. Une fois que l’ordinateur a récupéré l’adresse du serveur à joindre, il n’a plus besoin du serveur DNS.
+
+Cette adresse IP n’est pas une adresse au hasard. Elle correspond bien à un des serveurs de Google.
+
+les serveurs DNS fonctionnent en cascade. Pour expliquer cela on pourrait dire que lorsque qu’un serveur DNS ne connait pas la réponse, il va demander à son « parent ».
+
+Chez vous, le serveur DNS est votre box (sauf si vous avez renseigné autre chose), et si votre box ne sait pas répondre, elle va interroger son parent : le(s) serveur(s) DNS de votre fournisseur d’accès. Cela peut remonter comme ça jusqu’aux serveurs DNS racines. 
+
+### sécurité
+
+* Imaginez que vous ayez entre les mains un faux annuaire (piraté) ou les numéros de téléphone ne soient pas les bons, et vous renvoie vers des pirates.
+
+* Vous ayez besoin d’appeler votre banque : Vous appelez le numéro de téléphone et vous allez forcément tomber sur des pirates (mais vous ne le savez pas).
+
+* Au bout du fil, on peut vous demander des informations confidentielles, et vous les donnerez en tout confiance.
+
+Il faut bien comprendre que cela peut être pareil avec des serveurs DNS et qu’il existe des virus qui modifie vos paramètres réseaux ou votre fichier « hosts » pour faire pointer les requêtes DNS vers des serveurs pirates.
+
+>Une des blagues des administrateurs réseaux est de modifier, au sein de l’entreprise, une des entrées DNS d’un site vers un autre site. (Par exemple : faire pointer Facebook vers le site des Tortues Ninja ! : ainsi chaque fois que quelqu’un voudra aller sur Facebook, il se retrouvera sur le site des Tortues Ninja) 
+
+### C'est quoi un domaine?
+
+Evidemment, sur l’internet, il n’ y a pas qu’un seul serveur DNS. L’ensemble de ces serveurs DNS constitue une sorte d’annuaire global. Les rôles des serveurs sont répartis en fonction des noms de domaines. Reprenons notre exemple téléphonique : les annuaires téléphonique sont classés par pays et pour la France par département. et bien les domaines, c’est la même chose : il s’agit d’une hiérarchie au niveau mondial. Voici quelques noms de domaines que vous connaissez certainement : « .com, .fr, .net, … » Donc ces noms vont se retrouver sur des serveurs DNS. Certains groupes de serveurs ne vont gérer que les « .com », d’autres ne géreront que les « .fr », etc … Mais comme pour le téléphone, il ne s’agit pas de la même société qui gère les numéros de téléphone en France qu’en Espagne, et bien c’est pareil pour les noms de domaine. Il existe des organismes qui sont chargés de gérer les noms de domaine. Pour le .fr, c’est l’AFNIC. (Association Française pour le Nommage Internet en Coopération).
+
+### Comment acheter un nom de domaine ?
+
+* Vous avez fait un superbe site Internet et maintenant vous voulez le montrer au monde entier.
+
+* Vous voulez acheter, le nom de domaine : « je-suis-le-plus-beau.fr ». (c’est un nom de domaine de 1er niveau, nous verrons ce que cela veut dire plus loin).
+
+* Il faut faire appel à une entreprise appelée « registrar » ou registraire de nom de domaine. (Vous n’entrez pas en contact direct avec l’AFNIC, c’est le registrar l’intermédiaire.)
+
+* Vous allez tester que ce nom de domaine n’est pas déjà attribué à quelqu’un.
+
+* Ensuite, vous pourrez acheter ce nom de domaine pour 1 an. (renouvelable tous les ans).
+
+* Il faut payer
+
+* Il ne reste plus qu’à mettre en place une entrée DNS, c’est à dire que vous allez donner au serveur DNS, l’adresse IP correspondant au nom de domaine  « je-suis-le-plus-beau.fr ».
+
+* Lorsque les internautes taperont  » je-suis-le-plus-beau.fr », le serveur DNS les renverra vers le serveur hébergeant votre site. (Je vous ai expliqué, qu’il n’y a pas qu’un seul serveur DNS gérant le « .fr », il faudra 1 ou 2 jours pour que votre entrée DNS soit répliquée sur l’ensemble des serveurs gérant le « .fr » )
+
+"je-suis-le-plus-beau.fr" est un domaine de 1er niveau, car il est juste après le .fr.
+On lit toujours les noms de la gauche vers la droite, et la racine de tous les domaines est le « . »,
+Voici comment on représente l’arborescence des domaines:
+
+![http://www.culture-informatique.net/WordPress3/wp-content/uploads/2012/10/domaines.png](http://www.culture-informatique.net/WordPress3/wp-content/uploads/2012/10/domaines.png)
+
+
+### C'est quoi un sous-domaine?
+
+Maintenant, votre site est en ligne depuis plusieurs mois, et c’est un site incontournable. Vous enregistrez des milliers de visites par heure et votre serveur n’est plus assez costaud pour répondre à la demande. Vous décidez donc de découper votre site en plusieurs partie pour répartir celui-ci sur d’autres serveurs. (il y a d’autres solutions que le découpage du site, mais pour l’exemple, c’est celui que je vais utiliser). Vous découpez donc votre site en
+
+* fond-ecran. je-suis-le-plus-beau.fr
+* telechargement.je-suis-le-plus-beau.fr
+* forum. je-suis-le-plus-beau.fr
+
+Vous venez de créer 3 sous domaines ("fond-ecran", "telechargement" et "forum"), voila comment on va pouvoir représenter cela : 
+
+![http://www.culture-informatique.net/WordPress3/wp-content/uploads/2012/10/sous-domaines1.png](http://www.culture-informatique.net/WordPress3/wp-content/uploads/2012/10/sous-domaines1.png)
+
+Sur chacun des sous-domaines, vous allez pouvoir attribuer une adresse IP différente et donc pointer vers un serveur différent. Il n’est pas nécessaire de racheter un sous-domaine, cela fait partie de votre domaine. Vous gérer directement les sous-domaines auprès de votre registrar. Exemple de sous-domaines que vous connaissez (désolé de rappeler de mauvais souvenirs)  : www.impots.gouv.fr et www.economie.gouv.fr 
+
+### Arborescence ordonnée
+
+[partie pratique à faire!](https://openclassrooms.com/courses/apprenez-le-fonctionnement-des-reseaux-tcp-ip/le-service-dns)  
+
+Un nom de domaine se décompose en plusieurs parties. Prenons l'exemple suivant :
+
+> www.google.fr
+
+* Chaque partie est séparée par un point.
+
+* On trouve l'extension en premier (en premier, mais en partant de la droite) ; on parle de **Top Level Domain** (TLD)
+
+* Il existe des TLD nationaux (fr, it, de, es, etc.) et les TLD génériques (com, org, net, biz, etc.).
+
+
+Il existe une infinité de possibilités pour la deuxième partie. Cela correspond à tous les sites qui existent : google.fr, siteduzero.com, ovh.net, twitter.com, etc.
+Comme vous le voyez, **google.fr est un sous-domaine de fr**. Le domaine fr englobe tous les sous-domaines finissant par fr.
+
+La troisième partie est exactement comme la seconde. On y retrouve généralement le fameux **www**, ce qui nous donne des noms de domaine comme www.google.fr. www peut soit être un sous-domaine de google.fr, mais dans ce cas il pourrait y avoir encore des machines ou des sous-domaines à ce domaine, soit être directement le nom d'une machine.
+Ici, **www est le nom d'une machine dans le domaine google.fr.**
+
+On peut bien entendu ajouter autant de troisièmes parties que nécessaire, ce qui peut vous conduire à avoir un nom de domaine comme: 
+
+> www.fr.1.new.super.google.fr.
+
+Voici une toute petite partie de l'arborescence des noms Internet :
+![](https://user.oc-static.com/files/417001_418000/417424.png)
+
+Chaque "partie" est appelée **label** et l'ensemble des labels constitue un **FQDN** (Fully Qualified Domain Name). Ce FQDN est unique. Par convention, **un FQDN se finit par un point**, car au-dessus des TLD il y a la racine du DNS, tout en haut de l'arbre. Ce point disparaît lorsque vous utilisez les noms de domaine avec votre navigateur, mais il est très important lorsque nous configurons notre propre serveur DNS.
+
+>Au niveau DNS, www.google.frn'est pas un FQDN, car il manque le point à la fin.
+
+>Tout FQDN sur Internet doit obligatoirement se finir par un point, comme www.siteduzero.com. qui est alors bien un FQDN, car on est sûr qu'il n'y a pas de domaine au-dessus.
+
+Dans l'architecture du service DNS, **chaque label est responsable du niveau directement en dessous et uniquement de celui-ci**. La racine est responsable du domaine .com, le .com de google.com et google.com de www.google.com, etc. Bien entendu, Google veut gérer lui-même le domaine google.com. L'organisme qui gère le domaine .com délègue donc la gestion de ce nom de domaine à Google.
+
+### La résolution
+
+Vous êtes connectés à votre réseau, votre serveur DHCP vous a donné une adresse IP, un masque de sous-réseau et probablement une passerelle par défaut, ainsi qu'un serveur DNS.
+
+Imaginez que vous entrez www.siteduzero.com dans votre navigateur. Lorsque vous entrez ce nom, **votre machine doit commencer par le résoudre en une adresse IP.**
+Vous allez donc demander une résolution au serveur DNS que vous avez reçu par le DHCP. Celui-ci a deux moyens pour vous fournir la réponse :
+
+* il connaît lui-même la réponse ;
+
+* il doit la demander à un autre serveur, car il ne la connaît pas.
+
+**La plupart du temps, votre serveur DNS est bien peu savant et demande à un autre serveur de lui donner la réponse.** En effet,chaque serveur DNS étant responsable d'un domaine ou d'un petit nombre de domaines, **la résolution consiste à aller chercher la bonne information sur le bon serveur.**
+
+Nous voulons donc joindre le site www.siteduzero.com et voilà ce que va faire mon serveur DNS.
+Tout d'abord, il est évident que cette information ne se trouve pas sur notre serveur, car ce n'est pas lui qui est en charge du Site du Zéro.
+Pour obtenir cette résolution, notre serveur va procéder de façon rigoureuse et commencer par là où il a le plus de chance d'obtenir l'information, c'est-à-dire au point de départ de notre arborescence.
+
+* Il va demander aux serveurs racine l'adresse IP de www.siteduzero.com. Mais comme les serveurs racine ne sont pas responsables de ce domaine, ils vont le rediriger vers un autre serveur qui peut lui donner une information et qui dépend de la racine, le serveur DNS de com.
+
+* Il demande ensuite au serveur DNS de com l'adresse IP de www.siteduzero.com. Mais comme auparavant, le serveur com renvoie l'adresse IP du serveur DNS qui dépend de lui, le serveur DNS de siteduzero.com.
+
+* Enfin, il demande au serveur DNS de siteduzero.com l'adresse IP de www.siteduzero.com et là, ça marche : le serveur de siteduzero.com connaît l'adresse IP correspondante et peut la renvoyer.
+
+Maintenant, vous avez l'adresse IP de www.siteduzero.com !
+
+>On dit qu'**un serveur fournissant la résolution d'un nom de domaine sans avoir eu à demander l'information à quelqu'un d'autre fait autorité**. 
+
+>Les serveurs DNS utilisent un système de cache (TTL) pour ne pas avoir à redemander une information de façon répétitive, mais ils ne font pas autorité pour autant, car l'information stockée en cache peut ne plus être valide après un certain temps.
+
+> Il n'existe pas de protocol pour convertir une IP en nom de domaine, le DNS sait faire ça aussi. On parle dans ce cas de **reverse DNS et de résolution inverse**.
+
+### La gestion internationale des noms de domaine
+
+Même si le système DNS n'est pas indispensable au fonctionnement d'Internet, il en est un élément incontournable.
+Le système de noms de domaine est géré par un organisme américain appelé l'ICANN. Celui-ci dépend directement du Département du Commerce des États-Unis. L'ICANN est responsable de la gestion des 13 serveurs DNS qui gèrent la racine du DNS. Ces 13 serveurs connaissent les adresses IP des serveurs DNS gérant les TLD (les .fr, .com; org, etc.)
+
+C'est l'ICANN qui autorise la création d'une nouvelle extension, comme le .xxx.
+L'ICANN délègue ensuite les domaines de premier niveau à divers organismes. Pour l'Europe, c'est le RIPE qui délègue lui-même à L'AFNIC qui est responsable du domaine .fr (ainsi que des extensions correspondantes à la France d'outre-mer) ; pour le domaine .com, c'est VeriSign qui s'en occupe. Les labels inférieurs correspondent généralement à des sites ou à des entreprises, et la gestion du nom de domaine leur revient.
+-->
+
+
+
+
+
+
+<!--## DNS (Domain Name System)
+
+Ce système propose:
+
+* **un espace de noms** hiérarchique permettant de garantir l'unicité d'un nom dans unestructure arborescente.
+* un système de **serveurs distribués** permettant de rendre disponible l'espace de noms.
+* un système de **clients** permettant de _résoudre_ les noms de domaines (interroger lesserveurs afin de connaître l'adresse IP correspondant à un nom)
+
+
+### 1. Espace de noms
+
+La structure du système `DNS` s'appuie sur une structure arborescente dans laquelle sont définis des domaines de niveau supérieurs (appelés **TLD** Top Level Domains), rattachés à un noeud racine représenté par un point.
+
+![http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-dnsarb.png](http://static.commentcamarche.net/www.commentcamarche.net/pictures/internet-images-dnsarb.png)
+
+On appelle **nom de domaine** chaque noeud de l'arbre. Chaque noeud possède une étiquette (label) d'une longueur max de 63 char.
+
+L'ensemble des noms de domaine constitue ainsi un arbre inversé où **chaque noeud est séparé du suivant par un point.**
+
+L'extrémité d'une branche est appelée **hôte** et correspond à une machine ou une entité sur le réseau. Le nom d'hôte qui lui est attribué doit être unique dans le domaine considéré, ou le cas échéant dans le sous-domaine. À titre d'exemple le serveur web d'un domaine porte ainsi généralement le nom _www._
+
+
+
+Le mot **domaine** correspond formellement au suffixe d'un nom de domaine: l'ensemble des étiquettes de noeuds d'une arborescence à l'exception de l'hôte.
+
+Le nom absolu correspond à l'ensemble des étiquettes des noeuds d'une arborescence, séparées par des points et terminé par un point final et appelé **adresse FQDN** (Fully Qualified Domain Name). La profondeur max de l'arborescence est de 127 niveaux et la longueur maximale d'un nom FQSN est de 255 char. www.commentcamarche.net. représente une adresse FQDN
+
+### 2. Serveurs DNS
+
+Les machines appelès **DNS server** permettent d'établir la correspondance entre le nom de domaine et l'adresse IP des machines d'un réseau.
+
+Chaque domaine possède un serveur DNS appelee **primary DNS server** ainsi qu'un **secondary DNS server** permettant de prendre le relais du serveur de noms primaire en cas d'indisponibilité.
+
+chaque server DNS est déclaré à un serveur de nom de domaine de niveau immédiatement supérieur, ce qui permet implicitement une **délégation d'autorité sur les domaines**. Le système DNS est une **architecture distribuée**, où chaque entité est responsable de la gestion de son nom de domaine. Il n'existe donc pas d'organisme ayant à charge la gestion de l'ensemble des noms de domaines.
+
+Les serveurs correspondant aux domaines les plus haut niveau (TLDs) sont appelés **root servers**. Il en existe 13 réparti dans le monde entier possédant les noms de **a**.root-server.net à **m**.root-server.net.
+
+Un serveur DNS définit une zone, c'est à dire un ensemble de **domaines sur lequel le serveur a autorité**.
+
+
+
+-->
