@@ -397,7 +397,7 @@ Nous avons vu quelques structure importantes qui reviennent tout le temps dans l
 3. sockaddr : informations sur le socket
 4. `hostent` : l'IP de l'hôte utilisé par la fonction `gethostbyname`
 
-## 2. Serveur HTTP
+## c. Serveur HTTP
 
 ### a. cycle de vie
 
