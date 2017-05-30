@@ -155,12 +155,216 @@ data block
 acknowlegment
 ```
 
-## Email: SMTP, POP, IMAP, MIME
+## Email: SMTP, POP, IMAP
+[www-igm.univ-mlv.fr](http://www-igm.univ-mlv.fr/~dr/XPOSE2004/abouvet/smtpPres.htm)
+
+### SMTP (Simple Message Transfert Protocol) client / serveur
+
+ce protocole est utilisé pour transférer les messages électroniques sur les réseaux.
+Un serveur SMTP est un service qui écoute sur le **port 25**, son principal objectif est de router les mails à partir de l'adresse du destinataire.
+
+![http://www-igm.univ-mlv.fr/~dr/XPOSE2004/abouvet/files/schemaSMTP.JPG](http://www-igm.univ-mlv.fr/~dr/XPOSE2004/abouvet/files/schemaSMTP.JPG)
+
+il est important de connaitre les différentes phases qui se succèdent entre l'envoie d'un mail par l'émetteur et sa réception par le destinataire.
+Le schéma suivant présente la succesion de ces différentes phases : 
+
+Dans cet exemple, Fred, qui appartient au domaine truc.fr, veut envoyer un mail à Marc, qui, lui, appartient au domaine machin.com.
+
+Fred va composer son mail sur son ordinateur puis va exécuter la commande d'envoi de son logiciel de messagerie. Le logiciel va contacter le serveur smtp du domaine truc.fr (1), c'est ce serveur qui va se charger d'acheminer (router) le mail vers le destinataire.
+
+Le serveur smtp.truc.fr va lire l'adresse de destination du mail, le domaine du destinataire n'étant pas truc.fr, le serveur va alors contacter le serveur smtp du domaine machin.com.
+
+Si ce serveur existe, ce qui est le cas ici, smtp.truc.fr va lui transférer le mail (2).
+
+Le serveur smtp.machin.com va vérifier que l'utilisateur Marc existe bien dans sa liste d'utilisateurs. Il va ensuite placer le mail dans l'espace mémoire accordé aux mails de Marc sur le serveur (3).
+
+Le mail est ainsi arrivé à destination. L'objectif du protocole SMTP est atteint.
+
+Ensuite c'est le protocole POP qui est utilisé.
+Lorsque Marc utilisera son logiciel de messagerie pour vérifier s'il a de nouveaux mails, le logiciel va solliciter le serveur pop (4) afin que celui-ci vérifie si des mails sont dans l'espace mémoire accordé à Marc (5).
+
+S'il y a un message, le serveur pop va l'envoyer au logiciel de messagerie de Marc (6).
+
+
+>Le service SMTP est divisé en plusieurs parties, chacune assurant une fonction spécifique :
+
+* MUA : **Mail User Agent**, c’est le client de messagerie (Exemples : Outlook, ThunderBird)
+    
+* MTA : **Mail Transfert Agent**, c'est l'élément principal d'un serveur SMTP car c'est lui qui s'occupe d'envoyer les mails entre les serveurs. En effet, avant d'arriver dans la boite mail du destinataire, le mail va transiter de MTA en MTA. Il est possible de connaitre l'ensemble des MTA par lesquels le mail est passé, pour cela il suffit d'afficher la source du message
+
+* MDA : **Mail Delivery Agent**, c'est le service de remise des mails dans les boîtes aux lettres (les espaces mémoires réservés) des destinataires, il intervient donc en fin de la chaine d'envoie d'un mail.
+
+#### Commandes
+
+Les commandes sont présentées dans l'ordre chronologique d'utilisation.
+
+Il faut tout d'abord s'identifier auprès du serveur, on passe donc le nom de sa machine en paramètre de la commande :
+```
+ HELO <nom_de_machine>
+```
+
+On spécifie l'adresse de l'expéditeur du mail via la commande :
+```
+MAIL FROM:<adresse_email_expéditeur>
+```
+
+On indique l'adresse du destinataire du mail via la commande :
+```
+RCPT TO:<adresse_email_destinataire>
+```
+
+Il faut ensuite entrer le corps du mail grace a la commande suivante :
+```
+DATA<cr>
+```
+On entre alors le texte du message normalement, bien sûr aucune mise en forme n'est disponible.
+
+Plusieurs options sont disponibles, telle que la spécification de la date d'envoie du mail :
+```
+Date: <date_voulue>
+```
+
+Il est aussi possible de spécifier un objet au mail :
+```
+Subject: <objet>
+```
+
+On peut également ajouter des destinataires en copie conforme :
+```
+Cc: <adresse_mail>
+```
+
+Enfin, il faut terminer le corps du mail par la commande suivante :
+```
+.<cr>
+```
+
+Pour clore le dialogue avec le serveur SMTP, on utilise la commande :
+```
+QUIT
+```
+
+#### Sécurité
+
+> Les messages circulent en clair sur le réseau
+
+Un des principaux défauts du protocole SMTP est que les messages circulent en clair sur le réseau.
+
+Ainsi il est possible à l'aide d'un sniffer de capturer les trames. Celles-ci n'étant pas cryptées, on peut alors y lire les données.
+Pour contrer cela de plus en plus de gens ont recours à une méthode de chiffrage de leurs mails importants.
+
+> Les faux mails (fakemails)
+
+Comme vu lors de la partie précédente, de part les commandes disponibles via le telnet il est possible de se faire passer pour n'importe quelle personne lors de l'envoi d'un mail.
+
+> Le spam
+
+Si le serveur est mal configuré, il peut servir de serveur relais.
+Cette technique est très utilisée par les spammeurs qui sont toujours en quête de serveurs mal sécurisés.
+Par ce biais ils peuvent envoyer leurs messages de spam tout en étant difficilement repérables.
+
+Les sociétés qui développent les serveurs SMTP distribuent désormais leurs serveurs avec l'option de relayage désactivée.
+De plus il existe des modules à rajouter à un serveur et qui permettent de stopper la diffusion de spam par le serveur (Exemple : spamassassin). 
+
+### POP (Post Office Protocol) client / serveur
+
+Actuellement c'est la version 3 qui est utilisée.
+Le service POP écoute sur le **port 110** d'un serveur.
+
+Le protocole POP a un objectif précis : **permettre à l'utilisateur de relever son courrier depuis un hôte qui ne contient pas sa boîte aux lettres.**
+
+En d'autres termes, POP établie un dialogue entre le logiciel de messagerie (MUA) et la boîte aux lettres de l'utilisateur sur le serveur.
+
+POP est avant tout un protocole très simple, de ce fait il ne propose que des fonctionnalités basiques:
+
+* Délimiter chaque message de la boite aux lettres,
+* Compter les messages disponibles,
+* Calculer la taille des messages,
+* Supprimer un message,
+* Extraire chaque message de la boite aux lettres.
+
+Malgrès tout, ces fonctionnalités sont amplement suffisantes pour répondre aux besoins de la plupart des utilisateurs.
+
+POP3 présente tout de même quelque points faibles
+
+* Sécurité: **le mot de passe circule en clair sur le réseau lors de l'établissement de la connexion avec le serveur.**
+Ainsi, une personne malhonnête équipée d'un sniffer peut le récupérer et l'utiliser à mauvais escient.
+
+* Impossibilité de choisir les messages que l'on souhaite rapatrier.
+En effet, si, par exemple, on a une quarantaine de messages dans notre boite aux lettres sur le serveur, que les premiers soient du spam ou même des messages d'amis mais avec des pièces jointes assez conséquentes et que les messages qui nous intéressent soient en fin de boite aux lettres.
+Si, de plus, nous n'avons qu'une connexion bas débit et de mauvaise état, c'est-à-dire des coupures régulières et des pertes de paquets aléatoires (si si, ça arrive encore de nos jours !), il nous sera alors impossible de télécharger les premiers messages et donc par conséquent les messages urgents en fin de boite aux lettres non plus.
+
+### IMAP (Message Acces Protocol) client / serveur
+
+la version actuellement utilisée est la 4.
+Le service IMAP écoute sur le **port 143** d'un serveur.
+
+Tout comme POP, IMAP est un protocole de récupération de mails. IMAP4 se pose donc comme une alternative a POP3.
+Non seulement IMAP propose plus de services que POP, mais ceux-si sont aussi plus évolués.
+
+Une des principales nouveautés est la possibilité de pouvoir lire uniquement les objets des messages (sans le corps).
+Ainsi on peut par exemple effacer des messages sans les avoir lus.
+
+Contrairement au protocole POP où tous les mails sont rapatriés du serveur vers le logiciel de messagerie du client, avec IMAP, les mails restent stockés dans des dossiers sur le serveur.
+Ceci permet de proposer de nombreuses fonctionnalités très pratiques, telles que :
+
+* créer des dossiers sur le serveur
+* effacer déplacer des messages sans les lire éventuellement avec des règles de tri automatique
+* rapatrier en local certains messages et pas d'autres en faisant une copie ou un déplacement
+* lire des messages en les laissant sur le serveur
+* marquer des messages sur le serveur
+* recopier sur le serveur des messages qui sont en local
+
+
+## MIME (Multipurpose Internet Mail Extensions)
+
+Standard qui sert à d'étendre les possibilités limitées du courrier électronique (mail) et notamment de permettre d'insérer des documents (images, sons, texte, ...) dans un courrier.
+
+MIME propose de décrire, grâce à des en-têtes, le type de contenu du message et le codage utilisé. MIME apporte à la messagerie les fonctionnalités suivantes :
+
+* Possibilité d'avoir plusieurs objets (pièces jointes) dans un même message
+* Une longueur de message illimitée
+* L'utilisation de jeux de caractères autres que le codeASCII
+* L'utilisation de texte enrichi (mise en forme des messages,polices de caractères, couleurs, etc.)
+* Des pièces jointes binaires (exécutables, images, fichiers audio ou vidéo, etc.), comportant éventuellement plusieurs parties
+
+Le protocole `SMTP` classique ne permet pas de passer tous les 8 bits de données (ni de supporter de longues lignes): seul un sous-ensemble de l'ASCII 7 bit est possible (p.ex. NUL ASCII 0 est interdit).
+
+Il faudra donc procéder à un encodage lors du transfert.
+
+Deux encodages sont très souvent utilisés dans les protocoles Internet (p.ex. email, HTTP): **base64** et **quoted-printable**:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
+
+<!--
 
 [<a href="/00illustrations/re_couche7/email.png"><img src="/00illustrations/re_couche7/email.png"></a>]()
 
-## SMTP (Simple Mail Transfer Protocol)
-### Fonctions et propriétés
+### SMTP (Simple Mail Transfer Protocol)
 
 `SMTP` permet le transfer de courrier électronique entre deux **MTA** (Message Transfer Agent). La saisie des mails et leur routage ne sont pas des tâches de `SMTP`, mais celles respectivement de **MUA** (Mail User Agent) et du **MDA** (Mail Delivery Agent).
 
@@ -205,13 +409,23 @@ EXPN      -> Expansion d'une liste de distribution
 Les réponses sont composées d’un numéro et d’un texte optionnel.
 A l’établissement de la connexion le serveur envoie spontanément un message d’accueil (220 xxxxxxxx xxx). Le client s’annonce ensuite avec `HELO` (ou `EHLO` pour des fonctions étendues). Des extensions (**SASL**) permettent d’identifier le client et/ou de chiﬀrer l’échange de données.
 
-## POP et IMAP
+### POP et IMAP
 
-`POP` et `IMAP` sont deux protocoles d’accès aux boîtes-aux-lettres. Les nouveaux mails sont saisis à l’aide d’un logiciel local. Les mails sortants sont en général envoyés directement via `SMTP` (**MTA** du destinataire ou **MTA** centralisé). Les mails entrants doivent être enregistrés dans une boîte-aux-lettres car le PC du destinataire final n’est pas toujours accessible et ne tourne en général pas de _daemon_ `SMTP.` Lors que celui-ci le souhaite, il s’annonce auprès de sa boîte aux lettres et relève le courrier. `POP` et `IMAP` sont prévu pour cette interface entre client mail et boîte-aux-lettres. `POP` fonctionne selon un mode hors-ligne (oﬄine). A l’établissement d’une connexion avec la boîte-aux-lettres unique, tous les mails pendants sont envoyés au client et eﬀacés du serveur (en général). Avec `IMAP,` on a le choix de la ou les boîtes-aux-lettres (une hiérarchie est présentée), et les mails sont toujours conservés sur le serveur : ils ne sont transférés au client mail qu’en cas de besoin (lecture totale ou partielle, cache). Ceci représente un grand avantage lorsqu’on lit ses mails de plusieurs endroits (ordinateur, téléphone portable). `IMAP` prévoit de plus des fonctions nécessaires à la gestion de répertoires de mails sur le serveur et propose des fonctions avancées de notification pour informer le client de l’arrivée de nouveaux messages.
+`POP` et `IMAP` sont deux protocoles d’accès aux boîtes-aux-lettres. Les nouveaux mails sont saisis à l’aide d’un logiciel local. Les mails sortants sont en général envoyés directement via `SMTP` (**MTA** du destinataire ou **MTA** centralisé). Les mails entrants doivent être enregistrés dans une boîte-aux-lettres car le PC du destinataire final n’est pas toujours accessible et ne tourne en général pas de _daemon_ `SMTP.` Lors que celui-ci le souhaite, il s’annonce auprès de sa boîte aux lettres et relève le courrier. `POP` et `IMAP` sont prévu pour cette interface entre client mail et boîte-aux-lettres. `POP` fonctionne selon un mode hors-ligne (oﬄine). A l’établissement d’une connexion avec la boîte-aux-lettres unique, tous les mails pendants sont envoyés au client et eﬀacés du serveur (en général). Avec `IMAP,` on a le choix de la ou les boîtes-aux-lettres (une hiérarchie est présentée), et les mails sont toujours conservés sur le serveur : ils ne sont transférés au client mail qu’en cas de besoin (lecture totale ou partielle, cache). Ceci représente un grand avantage lorsqu’on lit ses mails de plusieurs endroits (ordinateur, téléphone portable). `IMAP` prévoit de plus des fonctions nécessaires à la gestion de répertoires de mails sur le serveur et propose des fonctions avancées de notification pour informer le client de l’arrivée de nouveaux messages.-->
 
-## Adresses e-mail à vie
 
-L’utilisation de noms de comptes dans les adresses e-mail est très répandue, bien que peu mnémonique – la forme longue comportant le prénom et le nom séparés par un point est souvent également utilisée. Un problème existe aussi lorsqu’on change d’employeur ou de fournisseur : il existe la possibilité de posséder une adresse à vie, parfois même gratuite, dont l’originalité est d’être indépendante de l’employeur étant donné que son rôle se limite à rediriger tout le courrier reçu sur le serveur de son choix (p.ex. sous writeme.com). Au contraire, il existe aussi des adresses dites jetables, utilisables pour s’abonner à des services sans risquer de recevoir encore plus de SPAM.
+#### Comparaison
+
+|fonctionnalités|POP|IMAP
+|:-:|:-:|:-:|
+|traitement|non connecté|les deux|
+|acces clients multiples|mal supporté|supporté(cache local)|
+|stockage|une mailBox|une ou plusieurs|
+|opérations|lecture, marquage, effacement|+ déplacement, notifications, recherche
+|chiffrement|optionnel, POP3S|optionnel, IMAPS
+
+
+
 
 
 ## DNS Domain name server
