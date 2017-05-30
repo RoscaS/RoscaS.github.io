@@ -19,7 +19,10 @@ finished: false
 
 # Linux
 
-## 1. Création de socket
+## a. Client HTTP
+
+
+### 1. Création de socket
 
 La première chose à faire est de créer un socket. C'est le rôle de la fonction `socket`.
 
@@ -52,7 +55,7 @@ Protocol - 0 [ou IPPROTO_IP c'est le protocol IP]
 > * type `SOCK_STREAM` désigne TCP  
 > * type `SOCK_DGRAM` désigne UDP
 
-## 2. Connecter un socket à un serveur
+### 2. Connecter un socket à un serveur
 
 Pour se connecter à un serveur nous avons donc besoins de deux choses:
 
@@ -138,7 +141,7 @@ Le concepte de connexion ne s'applique que dans le cas de l'utilisation de SOCK\
 
 D'autres sockets comme UDP, ICMP ou ARP par exemple n'ont pas besoin de se connecter. Se sont des protocoles non-orienté connexion.
 
-## 3. Envoyer des données
+### 3. Envoyer des données
 
 La fonction `send` nous permet d'envoyer des données. Elle a besoin en paramètre du descripteur de socket, la donnée à envoyer et sa taille.
 
@@ -198,7 +201,7 @@ int main(int argc, char **argv)
 
  > Quand on envoie des données à un socket, de façon similaire à écrire dans un fichier, nous écrivons dans le socket, par exemple nous pouvons utiliser la fonction `write` pour envoyer des données à un socket.
 
-## 4. Recevoir des données sur un socket.
+### 4. Recevoir des données sur un socket.
 
 La fonction `recv` est utilisée pour recevoir des données sur un socket. Dans le prochain exemple, nous allons envoyer le même message quand dans le précédent exemple et recevoir une réponse du serveur.
 
@@ -208,6 +211,7 @@ La fonction `recv` est utilisée pour recevoir des données sur un socket. Dans 
 #include<string.h>
 #include<sys/socket.h>
 #include<arpa/inet.h> // inet_addr
+#include<unistd.h> // close
 
 int main(int argc, char **argv) 
 {
@@ -257,6 +261,8 @@ int main(int argc, char **argv)
     puts(server_reply);
 
     puts("Data Send\n");
+
+    close(socket_desc)
     return 0;
 }
 ```
@@ -284,7 +290,492 @@ The document has moved
 Data Send
 ```
 
-Nous voyons ici la réponse du serveur. Google nous répond comme demandé le contenu de la page que nous lui avons demandé.
+Nous voyons ici la réponse de google qui nous envoie le contenu de la page demandé.
+
+> Quand nous recevons des données sur un socket, nous lisons les données dans le socket comme nous le ferions pour un simple fichier. Nous pourions utiliser la fonction `read` pour lire des données sur un socket.  
+`read(socket_desc, server_reply, 2000);`
+
+Maintenant que nous avons reçu notre réponse, nous pouvons fermer le socket (_fichier_).
+
+
+### 5. Fermeture de socket
+
+Je ne l'ai pas dit dans le précédent exemple mais j'ai également ajouter la fonction `close` qui vit dans le header `<unistd.h>` a la fin de notre main.
+
+```c
+close(socket_desc)
+```
+
+Voici une capture wireshark de l'échange:
+
+[<a href="/00illustrations/sockets/wireshark2.png"><img src="/00illustrations/sockets/wireshark2.png"></a>]()
+
+
+### 6. Récapitulatif
+
+1. Création d'un socket
+2. Connexion à un serveur distant
+3. Envoie de données
+4. Réception de données
+5. Fermeture du socket
+
+C'est exactement ce que fait notre navigateur quand nous ouvrons la page www.google.com
+Ce genre d'utilisation d'un socket est appelé **socket client**. 
+
+> Un client est une application qui se connecte sur un serveur pour y fetcher des données.
+
+L'autre genre d'application socket sont donc naturellement les **sockets serveurs**. Un serveur est un système qui utilise des sockets pour recevoir des connexions et fournir des données par ce biais.
+
+Dans notre exemple www.google.com est un serveur HTTP et notre navigateur est client HTTP.
+
+Avant de faire notre propre serveur, nous allons passer par quelques explications d'ordre général sur la programmation de sockets.
+
+
+## b. Trouver l'ip d'un domaine
+
+Quand on se connecte à un hôte distant, il est nécéssaire d'avoir son adresse IP. C'est là que la fonction `gethostbyname` nous est utile. Elle prend un nom de domaine comme paramètre et retourne une structure de type `hostent` et contient l'IP que l'on cherche. `gethostbynam` vit dans le header `<netdb.h>`.
+
+Voici cette structure:
+
+```c
+struct hostent
+{
+  char *h_name;         // Official name of host.
+  char **h_aliases;     // Alias list.  
+  int h_addrtype;       // Host address type.  
+  int h_length;         // Length of address.  
+  char **h_addr_list;   // List of addresses from name server.
+};
+```
+h\_addr\_list contient les adresses pour joindre notre hôte.
+
+```c
+#include<stdio.h> //printf
+#include<string.h> //strcpy
+#include<sys/socket.h>
+#include<netdb.h> //hostent
+#include<arpa/inet.h>
+
+int main(int argc, char **argv)
+{
+    char *hostname = "www.google.com";
+    char ip[16];
+    struct hostent *he;
+    struct in_addr **addr_list;
+
+    if ((he = gethostbyname(hostname)) == NULL)
+    {
+        herror("gethostbyname");
+        return 1;
+    }
+
+    addr_list = (struct in_addr ** )he->h_addr_list;
+
+    strcpy(ip, inet_ntoa(*addr_list[0]));
+    
+    printf("%s resolved to : %s\n", hostname, ip);
+
+    return 0;
+}
+```
+
+output:
+```
+www.google.com resolved to : 216.58.205.164
+```
+
+Cette fonction très pratique nous permet de résoudre un nom de domaine en adresse IP et ensuite nous pouvons utiliser l'adresse IP pour créér une connexion à l'aide d'un Socket.
+
+La fonction `inet_ntoa` converti une adresse IP stoquée dans un long (type) en notation à point.
+
+### Récapitulatif des structures
+
+Nous avons vu quelques structure importantes qui reviennent tout le temps dans le domaine de la progrmtion de sockets:
+
+1. `sockaddr_in` : information de connexion principalement utilisées par les fonctions `connect`, `send`, `recv`
+2. `in_addr` : adresse IP au format long (type)
+3. sockaddr : informations sur le socket
+4. `hostent` : l'IP de l'hôte utilisé par la fonction `gethostbyname`
+
+## 2. Serveur HTTP
+
+### a. cycle de vie
+
+Passons à un serveur. Les **sockets serveur** fonctionne de la façon suivante:
+
+1. création d'un socket
+2. bind (lie) du socket à une adresse(et un port)
+3. écoute du port en attente d'une connexion
+4. acceptation de la connexion
+5. lecture/envoi
+
+
+### b. implémentation
+
+Nous savons déja comment créer un socket donc nous allons directement passer à la seconde étape.
+
+La fonction `bind` sert à lier un socket à un couple adresse port spécifique. Tout comme la fonction `connect` elle a besoin d'une structure `sockaddr_in`.
+
+```c
+#include<stdio.h>
+#include<sys/socket.h>
+#include<arpa/inet.h> // inet_addr
+
+int main(int argc, char **argv)
+{
+    // variables
+    int socket_desc, new_socket, c;
+    struct sockaddr_in server, client;
+
+    // creation de socket
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == -1)
+    {
+        printf("\nCould not create socket\n");
+    }
+
+    // initialisation des membres de l'objet server
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons (8888);
+
+    // bind
+    if (bind(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
+    {
+        puts("\nbind failded\n");
+    }
+    puts("\nbind done\n");
+
+    // ecoute
+    listen(socket_desc, 3);
+
+    // Accept incoming connection
+    puts("Waiting for incoming connections...\n");
+    c = sizeof(struct sockaddr_in);
+    new_socket = accept(socket_desc, (struct sockaddr * )&client, (socklen_t*)&c);
+    if (new_socket < 0)
+    {
+        perror("accept failed\n");
+    }
+
+    puts("Connection accepted\n");
+
+    return 0;
+}
+```
+On lance le programme dans un premier terminal:
+```sh
+sol@debian:~/code/sockets/serveurHTTP$ ./serveur
+
+bind done
+
+Waiting for incoming connections...
+```
+
+dans un second terminal on lancer un `telnet localhost 888`:
+
+```sh
+sol@debian:~/LABOS/labo5/03Trace$ telnet localhost 8888
+Trying ::1...
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+Connection closed by foreign host.
+```
+
+Dans le premier terminal un nouveau message apparait avant de nous rendre le prompt:
+
+```sh
+sol@debian:~/code/sockets/serveurHTTP$ ./serveur
+
+bind done
+
+Waiting for incoming connections...
+
+Connection accepted
+sol@debian:~/code/sockets/serveurHTTP$
+```
+
+[<a href="/00illustrations/sockets/wireshark3.png"><img src="/00illustrations/sockets/wireshark3.png"></a>]()
+
+### c. IP et port du client qui se connecte
+
+Pour avoir l'IP du client et le port de connexion en utilisant les informations de la structure `sockaddr_in` qu'on a passé en argument de la fonction `accept`:
+
+```c
+char *client_ip = inet_ntoa(client.sin_addr);
+int client_port = ntohs(client.sin_port);
+```
+
+### d. rendre tout ça plus productif
+
+Dans cet exemple nous acceptons une connexion mais la refermons directement. Ce n'est pas très interessant.
+
+Répondons donc quelque chose au client qui se connecte à nous dire faire genre on est pas totalement innutile.
+
+On peut utiliser la fonction `write` pour écire qqch dans le socket qui se connecte à nous et le client devrait le voir.
+
+Il suffit d'ajouter ce bout de code à la fin de notre main en prenant soins d'ajouter les header `<string.h>` et `<unistd.h>`
+
+
+```c
+    // repond au client
+    char *message = "Salut client, je te sens bien en moi mais k thx bye!\n.";
+    write(new_socket, message, strlen(message));
+```
+
+Sur son terminal, le client verra:
+
+```sh
+sol@debian:~/LABOS/labo5/03Trace$ telnet localhost 8888
+Trying ::1...
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+Salut client, je te sens bien en moi mais k thx bye!
+.Connection closed by foreign host.
+```
+
+## Serveur live (multiprocessus)
+
+Notre serveur coupe la connexion directement après avoir envoyé sa réponse. Un serveur comme google.com est toujours à l'écoute de nouvelles connexions entrantes.
+
+Celà veut dire que ce serveur est sensé tourner et accepter des connexions non-stop. Pour y arriver, la façon la plus facile est de mettre la fonction `accept` dans une boucle.
+
+```c
+#include<stdio.h>
+#include<string.h>    //strlen
+#include<sys/socket.h>
+#include<arpa/inet.h> //inet_addr
+#include<unistd.h>    //write
+
+int main(int argc, char **argv)
+{
+    // variables
+    int socket_desc, new_socket, c;
+    struct sockaddr_in server, client;
+    char* message;
+
+    // creation de socket
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == -1)
+    {
+        printf("\nCould not create socket\n");
+    }
+
+    // initialisation des membres de l'objet server
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons (8888);
+
+    // bind
+    if (bind(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
+    {
+        puts("\nbind failded\n");
+    }
+    puts("\nbind done\n");
+
+    // ecoute
+    listen(socket_desc, 3);
+
+    // Accepte les connexions
+    puts("Waiting for incoming connections...\n");
+    c = sizeof(struct sockaddr_in);
+
+    while ( (new_socket = accept(socket_desc, (struct sockaddr * )&client, (socklen_t * )&c)) )
+    {
+        // affiche les infos du client
+        printf("Connection from %s:%d accepted\n",inet_ntoa(client.sin_addr), ntohs(client.sin_port));
+
+        // repond au client
+        message = "Salut client, je te sens bien en moi mais k thx bye!\n.";
+        write(new_socket, message, strlen(message));
+    }
+
+    if (new_socket < 0)
+    {
+        perror("accept failed\n");
+    }
+
+    return 0;
+}
+```
+
+[<a href="/00illustrations/sockets/wireshark4.png"><img src="/00illustrations/sockets/wireshark4.png"></a>]()
+
+En décortiquant le screenshot, nous pouvons voir que le Serveur tourne en permanance et accepte toutes les connexions telnet qu'on lui propose. Une fois qu'on coupe le serveur, les 3 connexions cessent automatiquement (logique).
+
+
+## Gérer plusieurs connexions avec des threads
+
+Pour gérer toutes les connexions proprement, nous avons besoin d'une fonction qui va gérer des **threads**.
+
+Le programme dans le main accepte une connexion, crée un nouveau thread pour cette connexion et retourne accepter des nouvelles connexions.
+
+Sur Linux la gestion des threads (threading) peut se faire avec la librairie **pthread** (posix threads). Personnelement je n'ai pas encore eu le temps de me documenter à son sujet et je pense que c'est quand même important. En attendant, il n'est pas compliqué de l'utiliser pour arriver à nos fins.
+
+Nous devons dans un premier temps faire un fichier Makefile pour y ajouter le lien de la librairie dont est dependent pthread.
+
+```makefile
+TARGET=serveurHTTP-multiThreads
+CFLAGS=-Wall -lpthread
+
+all: $(TARGET)
+
+clean:
+	rm -f $(TARGET)
+```
+
+Et voila le code avec la gestion des threads:
+
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>    // strlen
+#include<sys/socket.h>
+#include<arpa/inet.h> // inet_addr
+#include<unistd.h>    // write
+#include<pthread.h>   // threading
+
+void *connection_handler(void *);
+
+int main(int argc, char **argv)
+{
+    // variables
+    int socket_desc, new_socket, c; 
+    int *new_sock;
+    struct sockaddr_in server, client;
+    char* message;
+
+    // creation de socket
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == -1)
+    {
+        printf("\nCould not create socket\n");
+    }
+
+    // initialisation des membres de l'objet server
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons (8888);
+
+    // bind
+    if (bind(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
+    {
+        puts("\nbind failded\n");
+        return 1;
+    }
+    puts("\nbind done\n");
+
+    // ecoute
+    listen(socket_desc, 3);
+
+    // Accepte les connexions
+    puts("Waiting for incoming connections...\n");
+    c = sizeof(struct sockaddr_in);
+
+    while ( (new_socket = accept(socket_desc, (struct sockaddr * )&client, (socklen_t * )&c)) )
+    {
+        // affiche les infos du client
+        printf("Connection from %s:%d accepted\n",inet_ntoa(client.sin_addr), ntohs(client.sin_port));
+
+        // repond au client
+        message = "Hello client, I heave received your connexion. You will be assigned a handler...\n.";
+        write(new_socket, message, strlen(message));
+
+        // creation du thread
+        pthread_t sniffer_thread;
+        new_sock = malloc(1); 
+        *new_sock = new_socket;
+
+        if (pthread_create( &sniffer_thread, NULL, connection_handler, (void * ) new_sock) < 0)
+        {
+            perror("could not create thread\n");
+            return 1;
+        }
+
+        puts("Handler assigned\n");
+    }
+
+    if (new_socket < 0)
+    {
+        perror("accept failed\n");
+        return 1;
+    }
+
+    return 0;
+}
+
+void *connection_handler(void *socket_desc)
+{
+    // prend la description du socket
+    int sock = *(int * )socket_desc;
+
+    char *message;
+
+    // envoie quelques messages au client
+    message = "Greetings! I'm your connection handler\n";
+    write(sock, message, strlen(message));
+
+    message = "My job is to communicate with you";
+    write(sock, message, strlen(message));
+
+    // libere la memoire
+    free(socket_desc);
+
+    return 0;
+}
+```
+
+
+## Rendons tout ça interessant...
+
+Notre fonction `connection_handler` n'est pas terrible. Elle s'introduit et se termine directement après.
+
+Cette fonction ne devrait pas se terminer avant que le client ne se deconnecte et pourquoi ne pas rajouter un peu de fun au passage:
+
+```c
+void *connection_handler(void *socket_desc)
+{
+    // prend la description du socket
+    int sock = *(int * )socket_desc;
+    int read_size;
+    char *message, client_message[2000];
+
+    // envoie quelques messages au client
+    message = "Greetings! I'm your connection handler\n";
+    write(sock, message, strlen(message));
+
+    message = "Now type somthing and I will repeat it.";
+    write(sock, message, strlen(message));
+
+    // reception de message
+    while ((read_size = recv(sock, client_message, 2000, 0)) > 0)
+    {
+        // renvoie le message au client
+        write(sock, client_message, strlen(client_message));
+    }
+
+    if (read_size == 0)
+    {
+        puts("Client disconnected");
+        fflush(stdout);
+    }
+    else if (read_size == -1)
+    {
+        perror("recv failed");
+    }
+
+    // libere la memoire
+    free(socket_desc);
+
+    return 0;
+}
+```
+Nous avons maintenant un **serveur multi-thread et communicatif**. Ça devient interessant !
+A partir de là on peut facilement imaginer comment faire un petit chat...
+
 
 
 
