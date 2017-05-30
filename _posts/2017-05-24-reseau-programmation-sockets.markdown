@@ -13,21 +13,35 @@ finished: false
 
 ## TODO:
 
-- getaddrinfo (conversion str -> bon type)
+* getaddrinfo
+* conversions
+    * htons()--"Host to Network Short"
+    * htonl()--"Host to Network Long"
+    * ntohs()--"Network to Host Short"
+    * ntohl()--"Network to Host Long"
+    * atoi() -> int
+
+    * inet\_ntoa()
+    * ...
 
 
 ## ressources:
 [simple-client.c (base)](http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip)  
 [video explicative](http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4)  
 [tuto sockets](http://broux.developpez.com/articles/c/sockets/)   
-[second tuto sockets](http://www.binarytides.com/socket-programming-c-linux-tutorial/)
+[second tuto sockets](http://www.binarytides.com/socket-programming-c-linux-tutorial/)  
+[addrinfo](https://www.inetdoc.net/dev/socket-c-4and6/socket-c-4and6.getaddrinfo.html)  
+[manPage addrinfo](http://manpagesfr.free.fr/man/man3/getaddrinfo.3.html)  
+[fameux Beej's guide to network programming](http://beej.us/guide/bgnet/)  
+[Le même mais traduit en français](http://vidalc.chez.com/lf/socket.html)  
+
 
 # Linux
 
-## a. Client HTTP
+## 1. Client HTTP
 
 
-### 1. Création de socket
+### a. Création de socket
 
 La première chose à faire est de créer un socket. C'est le rôle de la fonction `socket`.
 
@@ -60,7 +74,7 @@ Protocol - 0 [ou IPPROTO_IP c'est le protocol IP]
 > * type `SOCK_STREAM` désigne TCP  
 > * type `SOCK_DGRAM` désigne UDP
 
-### 2. Connecter un socket à un serveur
+### b. Connecter un socket à un serveur
 
 Pour se connecter à un serveur nous avons donc besoins de deux choses:
 
@@ -146,7 +160,7 @@ Le concepte de connexion ne s'applique que dans le cas de l'utilisation de SOCK\
 
 D'autres sockets comme UDP, ICMP ou ARP par exemple n'ont pas besoin de se connecter. Se sont des protocoles non-orienté connexion.
 
-### 3. Envoyer des données
+### c. Envoyer des données
 
 La fonction `send` nous permet d'envoyer des données. Elle a besoin en paramètre du descripteur de socket, la donnée à envoyer et sa taille.
 
@@ -206,7 +220,7 @@ int main(int argc, char **argv)
 
  > Quand on envoie des données à un socket, de façon similaire à écrire dans un fichier, nous écrivons dans le socket, par exemple nous pouvons utiliser la fonction `write` pour envoyer des données à un socket.
 
-### 4. Recevoir des données sur un socket.
+### d. Recevoir des données sur un socket.
 
 La fonction `recv` est utilisée pour recevoir des données sur un socket. Dans le prochain exemple, nous allons envoyer le même message quand dans le précédent exemple et recevoir une réponse du serveur.
 
@@ -303,7 +317,7 @@ Nous voyons ici la réponse de google qui nous envoie le contenu de la page dema
 Maintenant que nous avons reçu notre réponse, nous pouvons fermer le socket (_fichier_).
 
 
-### 5. Fermeture de socket
+### e. Fermeture de socket
 
 Je ne l'ai pas dit dans le précédent exemple mais j'ai également ajouter la fonction `close` qui vit dans le header `<unistd.h>` a la fin de notre main.
 
@@ -316,7 +330,7 @@ Voici une capture wireshark de l'échange:
 [<a href="/00illustrations/sockets/wireshark2.png"><img src="/00illustrations/sockets/wireshark2.png"></a>]()
 
 
-### 6. Récapitulatif
+### f. Récapitulatif
 
 1. Création d'un socket
 2. Connexion à un serveur distant
@@ -734,7 +748,7 @@ void *connection_handler(void *socket_desc)
 ```
 
 
-## Rendons tout ça interessant...
+### Rendons tout ça interessant...
 
 Notre fonction `connection_handler` n'est pas terrible. Elle s'introduit et se termine directement après.
 
@@ -781,5 +795,4 @@ void *connection_handler(void *socket_desc)
 
 Nous avons maintenant un **serveur multi-thread et communicatif**. Ça devient interessant !
 A partir de là on peut facilement imaginer comment faire un petit chat...
-
 

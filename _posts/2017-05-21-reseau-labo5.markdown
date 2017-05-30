@@ -983,8 +983,360 @@ static FILE *tcp_connect(const char *hostname, const char *port)
 }
 ```
 
- 
+<br><br><br>
 [<a href="/00illustrations/res_labo5/wireshark5.png"><img src="/00illustrations/res_labo5/wireshark5.png"></a>]()
+<br><br><br>
 
 ## 4. Client HTTP 
 
+Pour pas abuser sur la longueur de la page, Le détail de comment en arriver à ce code se trouve sur une autre [page](\reseau\reseau-programmation-sockets.html)
+
+
+```c
+#include<stdio.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<netdb.h> // hostent
+#include<arpa/inet.h> // inet_addr
+#include<unistd.h>
+
+bool resolveDomain(char *ip);
+
+int main(int argc, char **argv)
+{
+    // test arguments
+    if (argc != 3)
+    {
+        fprintf(stderr, "\n%s bad args\n", argv[0]);
+        return 1;
+    }
+
+    // variables
+    int   _socket;
+    char* _message;
+    char  _buffer[4096];
+
+    struct sockaddr_in _server;
+
+    // s'assure qu'argv[1] est une IP notation point.
+    resolveDomain(argv[1]);
+
+    // creation du socket
+    _socket = socket(AF_INET, SOCK_STREAM, 0); // ipv4, TCP, 0 (=IPPROTO_IP)
+    if (_socket == -1)
+    {
+        puts("Could not create socket");
+    }   
+
+    // initialisation des membres de l'objet _server
+    _server.sin_addr.s_addr = inet_addr(argv[1]); // ip
+    _server.sin_family = AF_INET;                 // ipv4
+    _server.sin_port = htons(80);                 // port (client HTTP = port 80)
+    
+    // connexion au serveur
+    if (connect(_socket, (struct sockaddr *)&_server, sizeof(_server)) < 0)
+    {
+        puts("connection error\n");
+        return 1;
+    }
+
+    puts("\nconnected\n");
+
+    // envoie requete HTTP
+    _message = "GET / HTTP/1.1\r\n\r\n";
+    if (send(_socket, _message, strlen(_message), 0) < 0)
+    {
+        puts("Send failed\n");
+        return 1;
+    }
+
+    // reponse du serveur
+    if (recv(_socket, _buffer, 4096, 0) < 0)
+    {
+        puts("recv failed");
+    }
+
+    puts("Reply received\n");
+    puts(_buffer);
+
+    close(_socket);
+
+    return 0;
+}
+
+bool resolveDomain(char *ip)
+{
+    char *_hostname = ip;
+    struct hostent *_he;
+    struct in_addr **_addr_list;
+
+    if ((_he = gethostbyname(_hostname)) == NULL)
+    {
+        puts("gethostbyname error");
+        return 1;
+    }
+
+    _addr_list = (struct in_addr ** )_he->h_addr_list;
+
+    strcpy(ip, inet_ntoa(*_addr_list[0]));
+    return 0;
+}
+```
+
+
+```sh
+sol@debian:~/code/sockets/clientHTTP-Lab5$ ./clientHTTPv1 gandalf.teleinf.labinfo.eiaj.ch 80
+
+connected
+
+Reply received
+
+HTTP/1.1 400 Bad Request
+Date: Tue, 30 May 2017 12:33:58 GMT
+Server: Apache/2.2.22 (Debian)
+Vary: Accept-Encoding
+Content-Length: 301
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>400 Bad Request</title>
+</head><body>
+<h1>Bad Request</h1>
+<p>Your browser sent a request that this server could not understand.<br />
+</p>
+<hr>
+<address>Apache/2.2.22 (Debian) Server at _default_ Port 80</address>
+</body></html>
+
+sol@debian:~/code/sockets/clientHTTP-Lab5$ ./clientHTTPv1 www.google.com 80
+
+connected
+
+Reply received
+
+HTTP/1.1 302 Found
+Cache-Control: private
+Content-Type: text/html; charset=UTF-8
+Referrer-Policy: no-referrer
+Location: http://www.google.ch/?gfe_rd=cr&ei=1GYtWbrcHqTC8gfh2q6ABA
+Content-Length: 258
+Date: Tue, 30 May 2017 12:34:28 GMT
+
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>302 Moved</TITLE></HEAD><BODY>
+<H1>302 Moved</H1>
+The document has moved
+<A HREF="http://www.google.ch/?gfe_rd=cr&amp;ei=1GYtWbrcHqTC8gfh2q6ABA">here</A>.
+</BODY></HTML>
+
+```
+<br><br><br>
+[<a href="/00illustrations/res_labo5/wireshark6.png"><img src="/00illustrations/res_labo5/wireshark6.png"></a>]()
+<br><br><br>
+[<a href="/00illustrations/res_labo5/wireshark7.png"><img src="/00illustrations/res_labo5/wireshark7.png"></a>]()
+<br><br><br>
+
+## 5. serveur TCP multiprocessus
+
+Pour pas abuser sur la longueur de la page, Le détail de comment en arriver à ce code se trouvent sur une autre [page](\reseau\reseau-programmation-sockets.html)
+
+
+ ```c
+#include<stdio.h>
+#include <stdlib.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<netdb.h>    
+#include<arpa/inet.h>
+#include<unistd.h>
+
+int main(int argc, char **argv)
+{
+   // variables
+    int    _socket, _newSock, c;
+    struct sockaddr_in _server, _client;
+    char*  _message;
+
+    // creation de socket
+    _socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (_socket == -1)
+    {
+        printf("\nCould not create socket\n");
+    }
+
+    // initialisation des membres de l'objet _server
+    _server.sin_family      = AF_INET;
+    _server.sin_addr.s_addr = INADDR_ANY;
+    _server.sin_port        = htons(atoi(argv[1])); // conversion (char->int)->NetworkShort
+
+    // bind
+    if (bind(_socket, (struct sockaddr * )&_server, sizeof(_server)) < 0)
+    {
+        puts("\nbind failded\n");
+    }
+    puts("\nbind done\n");
+
+    // ecoute
+    listen(_socket, 3);
+
+    // Accepte les connexions
+    puts("Waiting for incoming connections...\n");
+    c = sizeof(struct sockaddr_in);
+
+    while ( (_newSock = accept(_socket, (struct sockaddr * )&_client, (socklen_t * )&c)) )
+    {
+        // affiche les infos du _client
+        printf("Connection from %s:%d accepted\n",inet_ntoa(_client.sin_addr), ntohs(_client.sin_port));
+
+        // repond au client
+        _message = "Hey client! \n.";
+        write(_newSock, _message, strlen(_message));
+    }
+
+    if (_newSock < 0)
+    {
+        puts("accept failed\n");
+    }
+    return 0;
+}
+```
+
+<br><br><br>
+[<a href="/00illustrations/res_labo5/wireshark8.png"><img src="/00illustrations/res_labo5/wireshark8.png"></a>]()
+<br><br><br>
+
+## 6. serveur TCP multi-thread
+
+Pour pas abuser sur la longueur de la page, Le détail de comment en arriver à ce code se trouvent sur une autre [page](\reseau\reseau-programmation-sockets.html)
+
+makefile:
+```makefile
+TARGET=serveurTCPmulti-Threads
+CFLAGS=-Wall -lpthread
+
+all: $(TARGET)
+
+clean:
+	rm -f $(TARGET)
+```
+
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>    // strlen
+#include<sys/socket.h>
+#include<arpa/inet.h> // inet_addr
+#include<unistd.h>    // write
+#include<pthread.h>   // threading
+
+void* connection_handler(void *);
+
+int main(int argc, char **argv)
+{
+   // variables
+    int    _socket, _newSock, c;
+    int *  _newSockPtr;
+    struct sockaddr_in _server, _client;
+    char*  _message;
+
+    // creation de socket
+    _socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (_socket == -1)
+    {
+        printf("\nCould not create socket\n");
+    }
+
+    // initialisation des membres de l'objet _server
+    _server.sin_family      = AF_INET;
+    _server.sin_addr.s_addr = INADDR_ANY;
+    _server.sin_port        = htons(atoi(argv[1])); // conversion (char->int)->NetworkShort
+
+    // bind
+    if (bind(_socket, (struct sockaddr * )&_server, sizeof(_server)) < 0)
+    {
+        puts("\nbind failded\n");
+    }
+    puts("\nbind done\n");
+
+    // ecoute
+    listen(_socket, 3);
+
+    // Accepte les connexions
+    puts("Waiting for incoming connections...\n");
+    c = sizeof(struct sockaddr_in);
+
+    while ( (_newSock = accept(_socket, (struct sockaddr * )&_client, (socklen_t * )&c)) )
+    {
+        // affiche les infos du _client
+        printf("Connection from %s:%d accepted\n",inet_ntoa(_client.sin_addr), ntohs(_client.sin_port));
+
+        // repond au client
+        _message = "Hey client! You will be assigned to a handler... \n.";
+        write(_newSock, _message, strlen(_message));
+
+        // creation d'un nouveau thread
+        pthread_t sniffer_thread;
+        _newSockPtr = (int *)malloc(sizeof(int));
+        *_newSockPtr = _newSock;
+
+        if (pthread_create( &sniffer_thread, NULL, connection_handler, (void * ) _newSockPtr) < 0)
+        {
+            puts("could not create thread\n");
+            return 1;
+        }
+
+        perror("Handler assigned\n");
+    }
+
+    if (_newSock < 0)
+    {
+        puts("accept failed\n");
+    }
+
+    return 0;
+}
+
+void* connection_handler(void *socket_desc)
+{
+    // prend la description du socket
+    int sock = *(int *)socket_desc;
+    int read_size;
+    char *message, client_message[2000];
+
+    // envoie quelques messages au client
+    message = "Greetings! I'm your connection handler\n";
+    write(sock, message, strlen(message));
+
+    message = "Now type somthing and I will repeat it.";
+    write(sock, message, strlen(message));
+
+    // reception de message
+    while ((read_size = recv(sock, client_message, 2000, 0)) > 0)
+    {
+        // renvoie le message au client
+        write(sock, client_message, strlen(client_message));
+    }
+
+    if (read_size == 0)
+    {
+        puts("Client disconnected");
+        fflush(stdout);
+    }
+    else if (read_size == -1)
+    {
+        perror("recv failed");
+    }
+
+    // libere la memoire
+    free(socket_desc);
+
+    return 0;
+}
+```
+
+<br><br><br>
+[<a href="/00illustrations/res_labo5/wireshark9.png"><img src="/00illustrations/res_labo5/wireshark9.png"></a>]()
+<br><br><br>

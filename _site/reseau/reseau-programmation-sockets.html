@@ -119,17 +119,40 @@
 <div class="post-content" itemprop="articleBody">
     <h1 id="programmation-de-sockets">Programmation de sockets</h1>
 
+<h2 id="todo">TODO:</h2>
+
+<ul>
+  <li>getaddrinfo</li>
+  <li>conversions
+    <ul>
+      <li>htons()–“Host to Network Short”</li>
+      <li>htonl()–“Host to Network Long”</li>
+      <li>ntohs()–“Network to Host Short”</li>
+      <li>ntohl()–“Network to Host Long”</li>
+      <li>
+        <p>atoi() -&gt; int</p>
+      </li>
+      <li>inet_ntoa()</li>
+      <li>…</li>
+    </ul>
+  </li>
+</ul>
+
 <h2 id="ressources">ressources:</h2>
 <p><a href="http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip">simple-client.c (base)</a><br />
 <a href="http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4">video explicative</a><br />
 <a href="http://broux.developpez.com/articles/c/sockets/">tuto sockets</a> <br />
-<a href="http://www.binarytides.com/socket-programming-c-linux-tutorial/">second tuto sockets</a></p>
+<a href="http://www.binarytides.com/socket-programming-c-linux-tutorial/">second tuto sockets</a><br />
+<a href="https://www.inetdoc.net/dev/socket-c-4and6/socket-c-4and6.getaddrinfo.html">addrinfo</a><br />
+<a href="http://manpagesfr.free.fr/man/man3/getaddrinfo.3.html">manPage addrinfo</a><br />
+<a href="http://beej.us/guide/bgnet/">fameux Beej’s guide to network programming</a><br />
+<a href="http://vidalc.chez.com/lf/socket.html">Le même mais traduit en français</a></p>
 
 <h1 id="linux">Linux</h1>
 
-<h2 id="a-client-http">a. Client HTTP</h2>
+<h2 id="1-client-http">1. Client HTTP</h2>
 
-<h3 id="1-création-de-socket">1. Création de socket</h3>
+<h3 id="a-création-de-socket">a. Création de socket</h3>
 
 <p>La première chose à faire est de créer un socket. C’est le rôle de la fonction <code class="highlighter-rouge">socket</code>.</p>
 
@@ -166,7 +189,7 @@ Protocol - 0 [ou IPPROTO_IP c'est le protocol IP]
   </ul>
 </blockquote>
 
-<h3 id="2-connecter-un-socket-à-un-serveur">2. Connecter un socket à un serveur</h3>
+<h3 id="b-connecter-un-socket-à-un-serveur">b. Connecter un socket à un serveur</h3>
 
 <p>Pour se connecter à un serveur nous avons donc besoins de deux choses:</p>
 
@@ -255,7 +278,7 @@ La première est de créer une structure <code class="highlighter-rouge">sockadd
 
 <p>D’autres sockets comme UDP, ICMP ou ARP par exemple n’ont pas besoin de se connecter. Se sont des protocoles non-orienté connexion.</p>
 
-<h3 id="3-envoyer-des-données">3. Envoyer des données</h3>
+<h3 id="c-envoyer-des-données">c. Envoyer des données</h3>
 
 <p>La fonction <code class="highlighter-rouge">send</code> nous permet d’envoyer des données. Elle a besoin en paramètre du descripteur de socket, la donnée à envoyer et sa taille.</p>
 
@@ -316,7 +339,7 @@ La première est de créer une structure <code class="highlighter-rouge">sockadd
   <p>Quand on envoie des données à un socket, de façon similaire à écrire dans un fichier, nous écrivons dans le socket, par exemple nous pouvons utiliser la fonction <code class="highlighter-rouge">write</code> pour envoyer des données à un socket.</p>
 </blockquote>
 
-<h3 id="4-recevoir-des-données-sur-un-socket">4. Recevoir des données sur un socket.</h3>
+<h3 id="d-recevoir-des-données-sur-un-socket">d. Recevoir des données sur un socket.</h3>
 
 <p>La fonction <code class="highlighter-rouge">recv</code> est utilisée pour recevoir des données sur un socket. Dans le prochain exemple, nous allons envoyer le même message quand dans le précédent exemple et recevoir une réponse du serveur.</p>
 
@@ -413,7 +436,7 @@ Data Send
 
 <p>Maintenant que nous avons reçu notre réponse, nous pouvons fermer le socket (<em>fichier</em>).</p>
 
-<h3 id="5-fermeture-de-socket">5. Fermeture de socket</h3>
+<h3 id="e-fermeture-de-socket">e. Fermeture de socket</h3>
 
 <p>Je ne l’ai pas dit dans le précédent exemple mais j’ai également ajouter la fonction <code class="highlighter-rouge">close</code> qui vit dans le header <code class="highlighter-rouge">&lt;unistd.h&gt;</code> a la fin de notre main.</p>
 
@@ -425,7 +448,7 @@ Data Send
 
 <p><a href=""><a href="/00illustrations/sockets/wireshark2.png"><img src="/00illustrations/sockets/wireshark2.png" /></a></a></p>
 
-<h3 id="6-récapitulatif">6. Récapitulatif</h3>
+<h3 id="f-récapitulatif">f. Récapitulatif</h3>
 
 <ol>
   <li>Création d’un socket</li>
@@ -448,7 +471,7 @@ Ce genre d’utilisation d’un socket est appelé <strong>socket client</strong
 
 <p>Avant de faire notre propre serveur, nous allons passer par quelques explications d’ordre général sur la programmation de sockets.</p>
 
-<h2 id="b-trouver-lip-dun-domaine">b. Trouver l’ip d’un domaine</h2>
+<h2 id="2-trouver-lip-dun-domaine">2. Trouver l’ip d’un domaine</h2>
 
 <p>Quand on se connecte à un hôte distant, il est nécéssaire d’avoir son adresse IP. C’est là que la fonction <code class="highlighter-rouge">gethostbyname</code> nous est utile. Elle prend un nom de domaine comme paramètre et retourne une structure de type <code class="highlighter-rouge">hostent</code> et contient l’IP que l’on cherche. <code class="highlighter-rouge">gethostbynam</code> vit dans le header <code class="highlighter-rouge">&lt;netdb.h&gt;</code>.</p>
 
@@ -516,7 +539,7 @@ Ce genre d’utilisation d’un socket est appelé <strong>socket client</strong
   <li><code class="highlighter-rouge">hostent</code> : l’IP de l’hôte utilisé par la fonction <code class="highlighter-rouge">gethostbyname</code></li>
 </ol>
 
-<h2 id="2-serveur-http">2. Serveur HTTP</h2>
+<h2 id="3-serveur-http">3. Serveur HTTP</h2>
 
 <h3 id="a-cycle-de-vie">a. cycle de vie</h3>
 
@@ -655,7 +678,7 @@ Salut client, je te sens bien en moi mais k thx bye!
 </code></pre>
 </div>
 
-<h2 id="serveur-live-multiprocessus">Serveur live (multiprocessus)</h2>
+<h2 id="4-serveur-live-multiprocessus">4. Serveur live (multiprocessus)</h2>
 
 <p>Notre serveur coupe la connexion directement après avoir envoyé sa réponse. Un serveur comme google.com est toujours à l’écoute de nouvelles connexions entrantes.</p>
 
@@ -724,7 +747,7 @@ Salut client, je te sens bien en moi mais k thx bye!
 
 <p>En décortiquant le screenshot, nous pouvons voir que le Serveur tourne en permanance et accepte toutes les connexions telnet qu’on lui propose. Une fois qu’on coupe le serveur, les 3 connexions cessent automatiquement (logique).</p>
 
-<h2 id="gérer-plusieurs-connexions-avec-des-threads">Gérer plusieurs connexions avec des threads</h2>
+<h2 id="5-gérer-plusieurs-connexions-avec-des-threads">5. Gérer plusieurs connexions avec des threads</h2>
 
 <p>Pour gérer toutes les connexions proprement, nous avons besoin d’une fonction qui va gérer des <strong>threads</strong>.</p>
 
@@ -845,7 +868,7 @@ Salut client, je te sens bien en moi mais k thx bye!
 </code></pre>
 </div>
 
-<h2 id="rendons-tout-ça-interessant">Rendons tout ça interessant…</h2>
+<h3 id="rendons-tout-ça-interessant">Rendons tout ça interessant…</h3>
 
 <p>Notre fonction <code class="highlighter-rouge">connection_handler</code> n’est pas terrible. Elle s’introduit et se termine directement après.</p>
 
@@ -889,208 +912,10 @@ Salut client, je te sens bien en moi mais k thx bye!
 <span class="p">}</span>
 </code></pre>
 </div>
+
 <p>Nous avons maintenant un <strong>serveur multi-thread et communicatif</strong>. Ça devient interessant !
 A partir de là on peut facilement imaginer comment faire un petit chat…</p>
 
-<!--
-## 1. Introduction
-
-Un socket est une prise qui permet à une application d'envoyer et de recevoir des données.
-
-Une connexion TCP est identifiée par 4 valeurs (adresse IP source et destination, ports source et destination). Un socket est identifié par une valeur spécifique au système d'exploitation.
-
-## 2. Nouvelles notions et rappels
-### int main
-int main(int _argc_, char _argv)_
-
-```sh
-sol@debian:~/test$ ./programme arg1 arg2
-```
-
-`argv[idx]` nous sert à récuperer les arguments dans le code.
-* argc: nombre d'arguments + 1 (nom programme)
-* argv[0]: nom du programme
-* argv[1]: argument 1
-* argv[2]: argument 2
-
-### fprintf
-Permet de choisir le flux de sortie.
-
-### perror
-perror("message")  
-renvoie `message + : dernière erreur`
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-void test(char* a, char* b)
-{
-    printf("arg1: %s\narg2: %s\n", a,b);
-}
-
-int main(int argc, char **argv)
-{
-    perror("etat");
-    fprintf(stderr,"test: %d\nnom de la fonction: %s\n",argc, argv[0]);
-    test(argv[1], argv[2]);
-    return 0;
-}
-```
-
-```sh
-sol@debian:~/LABOS/labo5/04CliendTCP/test$ ./test poule cochon
-etat: Succes
-n: 3
-nom de la fonction: ./test
-arg1: poule
-arg2: cochon
-```
-
-## socket
-```c
-int socket (int domaine, int mode, int protocole) 
-```
-Elle permet de créer une socket de type quelconque : 
-* Le paramètre domaine précise la famille de protocoles è utiliser pour les communications. Il y a deux familles principales : 
-    * `PF UNIX` pour les communications locales n’utilisant pas le réseau; Communication entre processus sur une même machine 
-    * `AF INET` pour les communications réseaux utilisant le protocole IPv4. 
-    * `AF INET6` pour les communications réseaux utilisant le protocole IPv6. Nous n’étudierons par la suite que la famille AF INET. 
-
-* Le paramètre mode précise le type de la socket è créer : 
-    * `SOCK STREAM` pour une communication bidirectionnelle sûre. Dans ce cas, la socket utilisera le protocole TCP pour communiquer. 
-    * `SOCK DGRAM` pour une communication sous forme de datagrammes. Dans ce cas, la socket utilise le protocole UDP pour communiquer. 
-    * `SOCK RAW` pour pouvoir créer soi-même ses propres paquets IP ou les recevoir sans traitement de la part de la couche Transport. 
-* Le paramètre protocole précise le protocole 
-utilisé (dépend bien sûr du champ mode) : 
-    * `IPPROTO UDP` 
-    * `IPPROTO TCP` 
-    * `IPPROTO ICMP` 
-    * `IPPROTO RAW` La valeur renvoyée par la fonction socket() est -1 en cas d’erreur, sinon c’est un descripteur de ﬁchier qu’on peut par la suite utiliser avec les autres fonctions de la librairie des Sockets
-
-## structure sockaddr
-Dans le cas des communications IP, le pointeur vers la structure de type `sockaddr` est en fait un pointeur vers une structure de **type** sockaddr\_in pour IPV4 ou sockaddr\_in6 pour IPV6. Ces structures sont déﬁnies dans le ﬁchier d’en-tˆete **<netinet/in.h>** (d’où la **conversion de pointeur**).
-
-```c
-struct sockaddr_in 
-{ 
-    short sin_family;
-    u_short sin_port;
-    struct in_addr sin_addr;
-    char sin_zero[8];
-    };
-struct sockaddr_in6 
-{ 
-    sa_family_t sin6_family; // AF_INET6
-    in_port_t sin6_port;     // port number
-    uint32_t sin6_flowinfo;  // IPv6 flow information
-
-struct in6_addr sin6_addr; // IPv6 address  
-{
-    uint32_t sin6_scope_id; // Scope ID (new in 2.4) 
-};
-
-struct in6_addr { 
-    unsigned char s6_addr[16]; // IPv6 address 
-};
-```
-
-La structure sockaddr_in contient trois champ utiles : 
-* `short sin_family` est la famille de protocoles utilisée, AF_INET pour IPv4; 
-* `unsigned short sin_port` est le port à aﬀecter à la structure; (0 pour une allocation dynamique cˆoté client) 
-* `unsigned long sin addr.s_addr` est l’adresse IP à aﬀecter à la structure. 
-La fonction **getaddrinfo()** permet de remplir ces structures de façon simple que ce soit avec des adresses IPV4 ou IPV6.
-
-> Le type struct sockaddr n’est plus réellementutilisé: en fonction de la famille de socket utilisée(IPv4, IPv6, UNIX domainsocket,...), des structures spéciﬁques sont utilisées en interne. Par exemple la structure `struct sockaddr_in`.
->
->Aujourd’hui, il ne faudrait plus yaccéder directement. C’est justement le but des fonctions **getaddrinfo(3)** et **getnameinfo(3)**
-
-
-<span style="color:#F92672"> **Pourquoi (3) ?** </span>
-
-## getaddrinfo
-```c
-int getaddrinfo(const char *node, 
-                const char *service, 
-                const struct addrinfo *hints, 
-                struct addrinfo **res);
-```
-
-**getaddrinfo**(*hostname, *port,... **a completer**)
-permet de trouver l’adresse ou les adresses IP (IPV4  et  IPV6)  associées  à  un  nom  soit  **DNS**,  soit  donné dans le fichier */etc/hosts** de  la **machine**.
-
-Elle retourne une liste de structure `addrinfo` dans lesquelles on retrouve un pointeur sur la sructure `sockaddr` qui peut ensuite être utilisée pour les appels aux fonctions **bind**, **connect**
-
-La structure **sockaddr** contient après l’appel une des adresses IP de node et le numéro de port donné par service (**numéro de port ou nom associé dans /etc/services**). La structure pointée par hints peut être remplie avant l’appel pour ﬁxer la valeur de certains champs (par exemple le type de la socket dans `hints->ai socktype`).
-
-```c
-struct addrinfo { 
-    int ai_flags;
-    int ai_family;
-    int ai_socktype;
-    int ai_protocol;
-    size_t ai_addrlen;
-    struct sockaddr *ai_addr;
-    char *ai_canonname;
-    struct addrinfo *ai_next;
-    };
-```
-
-Les structures pointées par *res(ipv4 ou ipv6) sont allouées par la fonction. On peut les désalouer à l’aide de:
-
-```c
-void freeaddrinfo(struct addrinfo *res); 
-```
-
-
-
- **completer:** gai...
-
-```c
-const char *gai strerror(int errcode);
-```
-
-#### exemple d'utilisation:
-
-```c
-void *addr;
-int status;
-char ipstr[INET6_ADDRSTRLEN], ipver;
-
-memset(&hints, 0, sizeof hints);
-hints.ai_family = AF_UNSPEC // ipv4 ou ipv6
-hints.ai_socktype = SOCK_STREAM // socket TCP
-
-status = getaddrinfo("5000", "domaine.com", &hints, &res);
-
-while(res !- NULL)
-{
-    // identification de l'adresse courante
-    if (res->ai_family == AF_iNET) // ipv4
-    {                                       // cast
-        struct sockaddr_in *ipv4 = (struct sockaddr_in * )res->ai_addr;
-        addr =&(ipv4->sin_addr);
-        ipver = '4';
-    }
-    else // ipv6
-    {
-        struct sockaddr_in6 *ipv6 = (struct sockaddr_in6 * )res->ai_addr;
-        addr = &(ipv6->sin6_addr);
-        ipver = '6';
-    }
-
-    // conversion de l'adresse IP en str
-    inet_ntop(res->ai_family, addr, ipstr, sizeof ipstr)
-    printf("IPv%c: %s\n", ipver, ipstr);
-
-    // Adresse suivante
-    res = res->ai_next;
-}
-
-// liberation de la memoire occupee par les enregistrements
-freeaddrinfo(res);
-```
- -->
 
 </div>
 
