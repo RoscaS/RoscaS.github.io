@@ -290,11 +290,16 @@ _création d'un serveur TCP avec netcat:_
 
 ### question 1
 
+Afficher les permissions:
+
 ```sh
 -rwxr-xr-x 1 sol sol 10995 Mar 25  2015 a-tracer
 ```
 
+
 ### question 2
+
+Lancer et déterminer le PID
 
 ```sh
 sol@debian:~/LABOS/labo5/03Trace$ ./a-tracer &
@@ -303,6 +308,7 @@ sol@debian:~/LABOS/labo5/03Trace$ ./a-tracer &
 
 ### question 3
 
+Déterminer les ports en écoute
 
 ```sh
 sol@debian:~$ sudo netstat -p -n --inet --listen 6834
@@ -400,7 +406,7 @@ Les étapes passées dans notre cas sont donc: création et bind
 
 #### c.
 
-acceptation (c'est la phase la plus dure et la plus longue d'une rupture)
+acceptation (c'est la phase la plus hard et la plus longue d'une rupture)
 
 ### question 6
 
