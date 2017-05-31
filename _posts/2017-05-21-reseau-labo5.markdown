@@ -441,6 +441,7 @@ Cette fonction retourne un nouveau socket, qui devra être utilisé pour communi
 accept(3, Process 7127 attached
 ```
 
+
 `ps -u` nous renvoie que le process 7127 est:
 
 ```sh
