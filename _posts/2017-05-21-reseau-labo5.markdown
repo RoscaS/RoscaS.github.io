@@ -89,6 +89,8 @@ jura.jpeg: jura.png
 ^I@echo converti $< en $@
 ```
 
+L'option `--show-tabs` remplace les tabulations par des `^`
+
 ### question 6
 
 tuto [makefile](/Cpp/makefile.html)
