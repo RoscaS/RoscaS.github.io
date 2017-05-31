@@ -440,6 +440,7 @@ Cette fonction retourne un nouveau socket, qui devra être utilisé pour communi
 ```c
 accept(3, Process 7127 attached
 ```
+nous dit donc que le le process avec le PID 7127  s'est <span style="color:#F92672"> connecté sur le socket 3. pas sur, (poser la question)  </span>
 
 
 `ps -u` nous renvoie que le process 7127 est:
