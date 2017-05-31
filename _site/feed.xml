@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 31 May 2017 00:41:55 +0200</pubDate>
-    <lastBuildDate>Wed, 31 May 2017 00:41:55 +0200</lastBuildDate>
+    <pubDate>Wed, 31 May 2017 03:45:11 +0200</pubDate>
+    <lastBuildDate>Wed, 31 May 2017 03:45:11 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -5059,6 +5059,45 @@ Ceci permet de proposer de nombreuses fonctionnalités très pratiques, telles q
   &lt;li&gt;recopier sur le serveur des messages qui sont en local&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;h3 id=&quot;comparaison&quot;&gt;Comparaison&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;fonctionnalités&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;POP&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;IMAP&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;traitement&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non connecté&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;les deux&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;acces clients multiples&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;mal supporté&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;supporté(cache local)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;stockage&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;une mailBox&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;une ou plusieurs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;opérations&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;lecture, marquage, effacement&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;+ déplacement, notifications, recherche&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;chiffrement&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;optionnel, POP3S&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;optionnel, IMAPS&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 &lt;h2 id=&quot;mime-multipurpose-internet-mail-extensions&quot;&gt;MIME (Multipurpose Internet Mail Extensions)&lt;/h2&gt;
 
 &lt;p&gt;Standard qui sert à d’étendre les possibilités limitées du courrier électronique (mail) et notamment de permettre d’insérer des documents (images, sons, texte, …) dans un courrier.&lt;/p&gt;
@@ -5133,45 +5172,6 @@ A l’établissement de la connexion le serveur envoie spontanément un message 
 ### POP et IMAP
 
 `POP` et `IMAP` sont deux protocoles d’accès aux boîtes-aux-lettres. Les nouveaux mails sont saisis à l’aide d’un logiciel local. Les mails sortants sont en général envoyés directement via `SMTP` (**MTA** du destinataire ou **MTA** centralisé). Les mails entrants doivent être enregistrés dans une boîte-aux-lettres car le PC du destinataire final n’est pas toujours accessible et ne tourne en général pas de _daemon_ `SMTP.` Lors que celui-ci le souhaite, il s’annonce auprès de sa boîte aux lettres et relève le courrier. `POP` et `IMAP` sont prévu pour cette interface entre client mail et boîte-aux-lettres. `POP` fonctionne selon un mode hors-ligne (oﬄine). A l’établissement d’une connexion avec la boîte-aux-lettres unique, tous les mails pendants sont envoyés au client et eﬀacés du serveur (en général). Avec `IMAP,` on a le choix de la ou les boîtes-aux-lettres (une hiérarchie est présentée), et les mails sont toujours conservés sur le serveur : ils ne sont transférés au client mail qu’en cas de besoin (lecture totale ou partielle, cache). Ceci représente un grand avantage lorsqu’on lit ses mails de plusieurs endroits (ordinateur, téléphone portable). `IMAP` prévoit de plus des fonctions nécessaires à la gestion de répertoires de mails sur le serveur et propose des fonctions avancées de notification pour informer le client de l’arrivée de nouveaux messages.--&gt;
-
-&lt;h4 id=&quot;comparaison&quot;&gt;Comparaison&lt;/h4&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;fonctionnalités&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;POP&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;IMAP&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;traitement&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non connecté&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;les deux&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;acces clients multiples&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;mal supporté&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;supporté(cache local)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;stockage&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;une mailBox&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;une ou plusieurs&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;opérations&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;lecture, marquage, effacement&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;+ déplacement, notifications, recherche&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;chiffrement&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;optionnel, POP3S&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;optionnel, IMAPS&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
 
 &lt;h2 id=&quot;dns-domain-name-server&quot;&gt;DNS Domain name server&lt;/h2&gt;
 &lt;p&gt;sources &lt;br /&gt;
@@ -5449,8 +5449,11 @@ On peut bien entendu ajouter autant de troisièmes parties que nécessaire, ce q
 &gt; www.fr.1.new.super.google.fr.
 
 Voici une toute petite partie de l'arborescence des noms Internet :
-![](https://user.oc-static.com/files/417001_418000/417424.png)
+--&gt;
 
+&lt;p&gt;&lt;a href=&quot;https://user.oc-static.com/files/417001_418000/417424.png&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;!--
 Chaque &quot;partie&quot; est appelée **label** et l'ensemble des labels constitue un **FQDN** (Fully Qualified Domain Name). Ce FQDN est unique. Par convention, **un FQDN se finit par un point**, car au-dessus des TLD il y a la racine du DNS, tout en haut de l'arbre. Ce point disparaît lorsque vous utilisez les noms de domaine avec votre navigateur, mais il est très important lorsque nous configurons notre propre serveur DNS.
 
 &gt;Au niveau DNS, www.google.frn'est pas un FQDN, car il manque le point à la fin.

@@ -477,6 +477,45 @@ Ceci permet de proposer de nombreuses fonctionnalités très pratiques, telles q
   <li>recopier sur le serveur des messages qui sont en local</li>
 </ul>
 
+<h3 id="comparaison">Comparaison</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">fonctionnalités</th>
+      <th style="text-align: center">POP</th>
+      <th style="text-align: center">IMAP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">traitement</td>
+      <td style="text-align: center">non connecté</td>
+      <td style="text-align: center">les deux</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">acces clients multiples</td>
+      <td style="text-align: center">mal supporté</td>
+      <td style="text-align: center">supporté(cache local)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">stockage</td>
+      <td style="text-align: center">une mailBox</td>
+      <td style="text-align: center">une ou plusieurs</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">opérations</td>
+      <td style="text-align: center">lecture, marquage, effacement</td>
+      <td style="text-align: center">+ déplacement, notifications, recherche</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">chiffrement</td>
+      <td style="text-align: center">optionnel, POP3S</td>
+      <td style="text-align: center">optionnel, IMAPS</td>
+    </tr>
+  </tbody>
+</table>
+
 <h2 id="mime-multipurpose-internet-mail-extensions">MIME (Multipurpose Internet Mail Extensions)</h2>
 
 <p>Standard qui sert à d’étendre les possibilités limitées du courrier électronique (mail) et notamment de permettre d’insérer des documents (images, sons, texte, …) dans un courrier.</p>
@@ -551,45 +590,6 @@ A l’établissement de la connexion le serveur envoie spontanément un message 
 ### POP et IMAP
 
 `POP` et `IMAP` sont deux protocoles d’accès aux boîtes-aux-lettres. Les nouveaux mails sont saisis à l’aide d’un logiciel local. Les mails sortants sont en général envoyés directement via `SMTP` (**MTA** du destinataire ou **MTA** centralisé). Les mails entrants doivent être enregistrés dans une boîte-aux-lettres car le PC du destinataire final n’est pas toujours accessible et ne tourne en général pas de _daemon_ `SMTP.` Lors que celui-ci le souhaite, il s’annonce auprès de sa boîte aux lettres et relève le courrier. `POP` et `IMAP` sont prévu pour cette interface entre client mail et boîte-aux-lettres. `POP` fonctionne selon un mode hors-ligne (oﬄine). A l’établissement d’une connexion avec la boîte-aux-lettres unique, tous les mails pendants sont envoyés au client et eﬀacés du serveur (en général). Avec `IMAP,` on a le choix de la ou les boîtes-aux-lettres (une hiérarchie est présentée), et les mails sont toujours conservés sur le serveur : ils ne sont transférés au client mail qu’en cas de besoin (lecture totale ou partielle, cache). Ceci représente un grand avantage lorsqu’on lit ses mails de plusieurs endroits (ordinateur, téléphone portable). `IMAP` prévoit de plus des fonctions nécessaires à la gestion de répertoires de mails sur le serveur et propose des fonctions avancées de notification pour informer le client de l’arrivée de nouveaux messages.-->
-
-<h4 id="comparaison">Comparaison</h4>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">fonctionnalités</th>
-      <th style="text-align: center">POP</th>
-      <th style="text-align: center">IMAP</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">traitement</td>
-      <td style="text-align: center">non connecté</td>
-      <td style="text-align: center">les deux</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">acces clients multiples</td>
-      <td style="text-align: center">mal supporté</td>
-      <td style="text-align: center">supporté(cache local)</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">stockage</td>
-      <td style="text-align: center">une mailBox</td>
-      <td style="text-align: center">une ou plusieurs</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">opérations</td>
-      <td style="text-align: center">lecture, marquage, effacement</td>
-      <td style="text-align: center">+ déplacement, notifications, recherche</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">chiffrement</td>
-      <td style="text-align: center">optionnel, POP3S</td>
-      <td style="text-align: center">optionnel, IMAPS</td>
-    </tr>
-  </tbody>
-</table>
 
 <h2 id="dns-domain-name-server">DNS Domain name server</h2>
 <p>sources <br />
@@ -867,8 +867,11 @@ On peut bien entendu ajouter autant de troisièmes parties que nécessaire, ce q
 > www.fr.1.new.super.google.fr.
 
 Voici une toute petite partie de l'arborescence des noms Internet :
-![](https://user.oc-static.com/files/417001_418000/417424.png)
+-->
 
+<p><a href="https://user.oc-static.com/files/417001_418000/417424.png"></a></p>
+
+<!--
 Chaque "partie" est appelée **label** et l'ensemble des labels constitue un **FQDN** (Fully Qualified Domain Name). Ce FQDN est unique. Par convention, **un FQDN se finit par un point**, car au-dessus des TLD il y a la racine du DNS, tout en haut de l'arbre. Ce point disparaît lorsque vous utilisez les noms de domaine avec votre navigateur, mais il est très important lorsque nous configurons notre propre serveur DNS.
 
 >Au niveau DNS, www.google.frn'est pas un FQDN, car il manque le point à la fin.

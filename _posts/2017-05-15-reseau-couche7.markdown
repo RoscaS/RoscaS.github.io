@@ -315,6 +315,16 @@ Ceci permet de proposer de nombreuses fonctionnalités très pratiques, telles q
 * marquer des messages sur le serveur
 * recopier sur le serveur des messages qui sont en local
 
+### Comparaison
+
+|fonctionnalités|POP|IMAP
+|:-:|:-:|:-:|
+|traitement|non connecté|les deux|
+|acces clients multiples|mal supporté|supporté(cache local)|
+|stockage|une mailBox|une ou plusieurs|
+|opérations|lecture, marquage, effacement|+ déplacement, notifications, recherche
+|chiffrement|optionnel, POP3S|optionnel, IMAPS
+
 
 ## MIME (Multipurpose Internet Mail Extensions)
 
@@ -414,15 +424,7 @@ A l’établissement de la connexion le serveur envoie spontanément un message 
 `POP` et `IMAP` sont deux protocoles d’accès aux boîtes-aux-lettres. Les nouveaux mails sont saisis à l’aide d’un logiciel local. Les mails sortants sont en général envoyés directement via `SMTP` (**MTA** du destinataire ou **MTA** centralisé). Les mails entrants doivent être enregistrés dans une boîte-aux-lettres car le PC du destinataire final n’est pas toujours accessible et ne tourne en général pas de _daemon_ `SMTP.` Lors que celui-ci le souhaite, il s’annonce auprès de sa boîte aux lettres et relève le courrier. `POP` et `IMAP` sont prévu pour cette interface entre client mail et boîte-aux-lettres. `POP` fonctionne selon un mode hors-ligne (oﬄine). A l’établissement d’une connexion avec la boîte-aux-lettres unique, tous les mails pendants sont envoyés au client et eﬀacés du serveur (en général). Avec `IMAP,` on a le choix de la ou les boîtes-aux-lettres (une hiérarchie est présentée), et les mails sont toujours conservés sur le serveur : ils ne sont transférés au client mail qu’en cas de besoin (lecture totale ou partielle, cache). Ceci représente un grand avantage lorsqu’on lit ses mails de plusieurs endroits (ordinateur, téléphone portable). `IMAP` prévoit de plus des fonctions nécessaires à la gestion de répertoires de mails sur le serveur et propose des fonctions avancées de notification pour informer le client de l’arrivée de nouveaux messages.-->
 
 
-#### Comparaison
 
-|fonctionnalités|POP|IMAP
-|:-:|:-:|:-:|
-|traitement|non connecté|les deux|
-|acces clients multiples|mal supporté|supporté(cache local)|
-|stockage|une mailBox|une ou plusieurs|
-|opérations|lecture, marquage, effacement|+ déplacement, notifications, recherche
-|chiffrement|optionnel, POP3S|optionnel, IMAPS
 
 
 
@@ -690,8 +692,11 @@ On peut bien entendu ajouter autant de troisièmes parties que nécessaire, ce q
 > www.fr.1.new.super.google.fr.
 
 Voici une toute petite partie de l'arborescence des noms Internet :
-![](https://user.oc-static.com/files/417001_418000/417424.png)
+-->
 
+[](https://user.oc-static.com/files/417001_418000/417424.png)
+
+<!--
 Chaque "partie" est appelée **label** et l'ensemble des labels constitue un **FQDN** (Fully Qualified Domain Name). Ce FQDN est unique. Par convention, **un FQDN se finit par un point**, car au-dessus des TLD il y a la racine du DNS, tout en haut de l'arbre. Ce point disparaît lorsque vous utilisez les noms de domaine avec votre navigateur, mais il est très important lorsque nous configurons notre propre serveur DNS.
 
 >Au niveau DNS, www.google.frn'est pas un FQDN, car il manque le point à la fin.
