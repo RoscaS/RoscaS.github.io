@@ -440,7 +440,6 @@ Cette fonction retourne un nouveau socket, qui devra être utilisé pour communi
 ```c
 accept(3, Process 7127 attached
 ```
-nous dit donc que le le process avec le PID 7127  s'est connecté sur le socket 3.
 
 `ps -u` nous renvoie que le process 7127 est:
 
@@ -600,6 +599,8 @@ ressources:
 [video explicative](http://fs.teleinf.labinfo.eiaj.ch/samba/scratch/RVO/compilation-c-socket.mp4)  
 [tuto sockets](http://broux.developpez.com/articles/c/sockets/)  
 [mon poste sur les sockets](/reseau/reseau-programmation-sockets.html)
+
+
 
 ### question 3 (a,b,c,d)
 Implémentation de la fonction `tcp_connect()`
