@@ -1351,3 +1351,6 @@ void* connection_handler(void *socket_desc)
 <br><br><br>
 [<a href="/00illustrations/res_labo5/wireshark9.png"><img src="/00illustrations/res_labo5/wireshark9.png"></a>]()
 <br><br><br>
+
+
+[tuto utilistion select()](https://support.sas.com/documentation/onlinedoc/sasc/doc750/html/lr2/select.htm)
