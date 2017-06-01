@@ -1,16 +1,21 @@
 <footer class="site-footer">
 	<div class="wrapper">
-        <!--<center> -->
+        <!--<AFFICHAGE DES NEWS INDEX> -->
+        {% for category in site.categories %}
+        {% capture cat %}{{ category | first }}{% endcapture %}
 
-
-
+        <h4>{{ cat | capitalize }}</h4>
             <ul>
-                <li><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span class="date"> - {{ post.date | date_to_long_string }}</span>
-                </li>
-            </ul>
-                
+            {% for post in site.categories[cat] %}
+            <li>
+            <p><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                <span class="date"> - {{ post.date | date_to_long_string }}</span></p>
+            </li>
             {% endfor %}
-        <!--</center>  -->
+            </ul>
+
+        {% endfor %}
+        <!--</AFFICHAGE DES NEWS INDEX>  -->
   	</div>
 </footer>
 <footer class="site-footer">
