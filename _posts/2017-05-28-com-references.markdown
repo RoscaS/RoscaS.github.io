@@ -4,7 +4,7 @@ title: "Présentation sur l'IA"
 subtitle: "références"
 date: 2017-05-28
 author: Sol
-category: Communication
+category: Com
 tags: 
 finished: false
 ---
