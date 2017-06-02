@@ -18,9 +18,13 @@ finished: false
 `ring theory`
 
 
+
 ## Links
 [Reddit post 1](https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/)
 
+
+## Latex
+[wikibooks](https://fr.wikibooks.org/wiki/LaTeX/%C3%89crire_des_math%C3%A9matiques)
 
  $$ \frac{n!}{k!(n - k)!} $$
 
@@ -31,11 +35,33 @@ finished: false
     \label{eq:pythagoras}
 \end{equation}
 
-\begin{figure}[H] % H here denoted the placement option. 
-    \centering % centers the figure on the page
-    % Inserts a figure scaled to 0.8 the width of the page.
-    %\includegraphics[width=0.8\linewidth]{right-triangle.png} 
-    % Commented out for compilation purposes. Please use your imagination.
-    \caption{Right triangle with sides $a$, $b$, $c$}
-    \label{fig:right-triangle}
-\end{figure}
+$$ x_{1,2} = \frac{- b \pm \sqrt{\Delta}}{2a} $$
+
+$$ \sqrt[4]{x^4} = |x| $$
+
+$$  \acute{a} 	 $$
+
+$$  a', a^\prime  $$
+
+$$  \grave{a}  $$
+
+$$  \hat{a}  $$
+
+$$  \widehat{ABC} $$
+
+$$  \tilde{a} $$
+
+
+* matrix : matrice sans délimiteur ;
+* pmatrix : matrice entre parenthèses (…) ;
+* vmatrix : matrice entre barres |…| ;
+* Vmatrix : matrice entre doubles barres ||…|| ;
+* bmatrix : matrice entre crochets […] ;
+* Bmatrix : matrice entre accolades {…}.
+
+
+
+\begin{pmatrix}
+   a_1 & b_1 \\
+   a_2 & b_2 
+\end{pmatrix}

@@ -18,7 +18,7 @@ finished: false
 
 ```sh
 sol@debian:~/LABOS/labo5$ which make
-/usr/bin/make
+/usr/bin/make+
 
 ```
 
