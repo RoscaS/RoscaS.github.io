@@ -62,11 +62,10 @@ $$ \bbox[5px,border:2px solid red] {24.641 Km/jour} $$
 |:---|---:|
 |débutant peu entraîné|1,5 à 2,5 km/h|
 |intermédiaire condition physique moyenne|2,5 à 4,0 km/h|
-|expérimenté bonne condition physique|> 4,0 km/h|
-<br> <br>
+|expérimenté bonne condition physique|> 4,0 km/h|  
 
-En me **surestimant** disons que je suis en condition physique moyenne et débutant. Disons donc $$3km/h$$  
-$$24,641/3 = $$8.21$$h par jour.
+En me **surestimant** disons que je suis en condition physique moyenne et débutant. Disons donc $$3km/h$$    
+$$ 24,641/3 = \bbox[5px,border:2px solid red] {8.21 h/j} $$ 
 
 
 
@@ -112,7 +111,9 @@ découvrir le vallon suspendu de Pratopiazza et son refuge (1991 m). Un authenti
 * Jour 7 - Gardenaccia - Vallon de Langental/lieu-dit Saint-Silvestre - Bressanone Ultime étape de ce périple dans les Dolomites sauvages. Vous partez plein ouest en direction de paso de Ghardenacia (2543 m). Belle traversée jusqu’au refuge Puez. Descente par le vallon de Langental jusqu’au parking de Saint-Silvestre, ﬁn de la randonnée. Transfert jusqu’à Bressanone en milieu de journée. Temps de marche : 5h30 / M : 500 m - D : 985 m.
 
 
-Les horaires sont donnés à titre indicatif et calculés pour des **marcheurs d'un niveau moyen hors pauses et temps pris pour le pique-nique**. M : montée ; D : descente.
+Les horaires sont donnés à titre indicatif et calculés pour des **marcheurs d'un niveau moyen hors pauses et temps pris pour le pique-nique**.   
+M : montée   
+D : descente.  
 
 
 
