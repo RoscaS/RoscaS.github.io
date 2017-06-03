@@ -36,21 +36,21 @@ $$KmE = Longueur(Km) + \Delta montee(km) \cdot 10 + \Delta Descente (km) \cdot 3
 #### Données
 
 $$ Longueur = 85 Km $$  
-$$  \Delta montee = 4500m = 4.8Km $$  
-$$  \Delta descente = 4800m = 4.5Km $$  
+$$  \Delta montee = 4500m = 4.5Km $$  
+$$  \Delta descente = 4800m = 4.8Km $$  
 
 ### KmE de la randonnée
 
-$$ KmE = 85 + 4.8 \cdot 10 + 4.5 \cdot 3,3 =  \bbox[5px,border:2px solid red] { 147.85 Km} $$
+$$ KmE = 85 + 4.5 \cdot 10 + 4.8 \cdot 3,3 =  \bbox[5px,border:2px solid red] { 145.84 Km} $$
 
 ## 3. moyenne KmE/jour
 
-$$ KmE_{tot} = 147.85 Km $$  
+$$ KmE_{tot} = 145.84 Km $$  
 $$ \Delta temps = 6 j  $$
 
-$$ \frac{147.85}{6} = 24.641 $$  
+$$ \frac{145.84}{6} = 24.306 $$  
 
-$$ \bbox[5px,border:2px solid red] {24.641 Km/jour} $$
+$$ \bbox[5px,border:2px solid red] {24.306 Km/jour} $$
 
 <img src="/00illustrations/rando/radius.png" float="right" class="image" style="width: 75%">
 
@@ -65,7 +65,7 @@ $$ \bbox[5px,border:2px solid red] {24.641 Km/jour} $$
 |expérimenté bonne condition physique|> 4,0 km/h|  
 
 En me **surestimant** disons que je suis en condition physique moyenne et débutant. Disons donc $$3km/h$$    
-$$ 24,641/3 = \bbox[5px,border:2px solid red] {8.21 h/j} $$ 
+$$ 24.306/3 = \bbox[5px,border:2px solid red] {8.10 h/j} $$ 
 
 
 
@@ -111,9 +111,17 @@ découvrir le vallon suspendu de Pratopiazza et son refuge (1991 m). Un authenti
 * Jour 7 - Gardenaccia - Vallon de Langental/lieu-dit Saint-Silvestre - Bressanone Ultime étape de ce périple dans les Dolomites sauvages. Vous partez plein ouest en direction de paso de Ghardenacia (2543 m). Belle traversée jusqu’au refuge Puez. Descente par le vallon de Langental jusqu’au parking de Saint-Silvestre, ﬁn de la randonnée. Transfert jusqu’à Bressanone en milieu de journée. Temps de marche : 5h30 / M : 500 m - D : 985 m.
 
 
-Les horaires sont donnés à titre indicatif et calculés pour des **marcheurs d'un niveau moyen hors pauses et temps pris pour le pique-nique**.   
+Les horaires sont donnés à titre indicatif et calculés pour des <span style="color:red">**marcheurs d'un niveau moyen hors pauses et temps pris pour le pique-nique**</span>.   
 M : montée   
 D : descente.  
+
+
+Étapes de <span style="color:red">**6h00 en moyenne**</span> Étapes pouvant présenter des dénivelées positives de 700 à 1000 m environ et/ou avec des distances de <span style="color:red">**15 à 18 km**</span>(note perso: hors KmE). Vous portez vos aﬀaires de la journée. Possibilité de passage en altitude. <span style="color:red">**Vous êtes sportif endurant et marchez très régulièrement sur sentiers ou hors sentiers.**</span> Possibilité de passage en altitude. 
+
+> C'est le pdf d'une rando organisée. les consignes mise en rouge sont données sachant que l'organisation déplace leur gros sac et eux se contentent de transporter sur leur dos leur reserve d'eau pour la journée:
+
+_Vos bagages sont transportés par véhicule, vous les retrouvez le soir à chaque hébergement, sauf aux étapes des J2, J4, et J6, où vous devrez ajouter dans votre sac à dos un drap-sac et une trousse de toilette pour passer la nuit. Vos bagages sont transportés les autres soirs à l’hébergement par véhicule._
+
 
 
 
