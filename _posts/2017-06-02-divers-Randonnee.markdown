@@ -93,6 +93,8 @@ Compliqué de trouver des informations utilisable.
 
 ## 6. La haute route des Dolomites
 
+### première source (fr)
+
 [pdf fr](http://www.visages-trekking.com/printpdf/379)  
 
 * Jour 1 - Bressanone - val Campo di Denro - refuge Tre Scarperi Rendez-vous à 14 heures à la gare ferroviaire de Bressanone. Transfert en minibus pour rejoindre le point de départ du circuit situé dans la vallée de Sesten. Une courte remontée du vallon nous amène à l’accueillant refuge Tre Scarperi (1626 m). Au loin se dressent les premiers sommets, prémices d’un voyage au cœur de la verticalité. Temps de marche : 1h00 / M : 200 m. 
@@ -122,7 +124,7 @@ D : descente.
 
 _Vos bagages sont transportés par véhicule, vous les retrouvez le soir à chaque hébergement, sauf aux étapes des J2, J4, et J6, où vous devrez ajouter dans votre sac à dos un drap-sac et une trousse de toilette pour passer la nuit. Vos bagages sont transportés les autres soirs à l’hébergement par véhicule._
 
-### Autre source
+### Autre source (en)
 [dolomitemountains.com](http://www.dolomitemountains.com/en/summer_fall_trips/haute_routes617.htm)  
 [pdf en](http://www.dolomitemountains.com/res/pdf/final.pdf)
 
