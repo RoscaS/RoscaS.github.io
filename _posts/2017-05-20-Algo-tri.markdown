@@ -9,7 +9,7 @@ tags: algo tri fr
 finished: false
 ---
 
-## 1 Tri-Bulle
+## 1 Tri-Bulle (Buble-sort)
 
 
 [<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triBulle-flag.gif" align="" height="600" float="right"></a>](http://google.com.au/)
@@ -44,13 +44,9 @@ void echange(int *t, int idx)
 
 - Au second parcours, le second élément le plus petit se retrouvera trié à droite de l'élément le plus petit et ainsi de suite jusqu'au tri complet du tableau.
 
-[<a href=""><img src="/00illustrations/Tri_Bulle.png" align="" height="250" float="right"></a>]()
+[<a href=""><img src="/00illustrations/Tri_Bulle.png" align="" height="200" float="right"></a>]()
 
 ```c++
-
-
-// tri bulle simple
-
 void triBulle(int *t, int g, int d)
 {
     for (int i = 1; i <= d-g; i++)
@@ -86,13 +82,15 @@ Nous pouvons dire qu'après i parcours du tableau, les i plus petits éléments 
 
 
 ```c++
-// tri Bulle itératif:
-
-void triBulle(int tab[], int debut, int fin){
-    for (int i = 1; i <= fin; i++){
-        for (int j = fin; j >= debut+i; j--){
+void triBulle(int tab[], int debut, int fin)
+{
+    for (int i = 1; i <= fin; i++)
+    {
+        for (int j = fin; j >= debut+i; j--)
+        {
             display(tab, i, j, 8);
-            if (tab[j] < tab[j-1]){
+            if (tab[j] < tab[j-1])
+            {
                 swap(tab, j, j-1);
             }
         }
@@ -107,12 +105,10 @@ Plusieurs éléments peuvent remonter lors d'un même parcours. Avant que l'él�
 
 Le tableau est donc suceptible d'être trié avant les (N-1) parcours. Il serait donc profitable de cesser les parcours dés que le tableau est trié surtout dans le cas d'un tableau qui est totalement trié dés le début. C'est ce que nous permet la prochaine amélioration qui stop la fonction si un parcours entier a été fait sans aucun échange:
 
-[<a href=""><img src="/00illustrations/triBulle_Flag.png" align="" height="400" float="right"></a>](00illustrations/triBulle_Flag.png)
+[<a href=""><img src="/00illustrations/triBulle_Flag.png" align="" height="300" float="right"></a>](00illustrations/triBulle_Flag.png)
 
 
 ```c++
-// triBulle-flag.cpp
-
 void triBulle(int *t, int g, int d)
 {
     int j = 1;
@@ -216,9 +212,6 @@ consécutifs du tableau est alterné.
 
 
 ```c++
-
-// triShaker.cpp
-
 void swap(int tab[], int a, int b)
 {
     int temp = tab[a];
@@ -274,7 +267,7 @@ Ce tri prend fin quand les deux variables `ptrDebut` et `ptrFin` sont égales.
 
 Toutes les améliorations n'ont pas modifié le nombre d'échanges à faire (_logique_) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération **plus couteuse** qu'une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du $$\color{red}{O(n^2)}$$.
 
-## 3. Tri par extraction (Selection Sort)
+## 3. Tri par extraction (Selection-sort)
 
 [<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtract.gif" align="" height="600" float="right"></a>]()
 
