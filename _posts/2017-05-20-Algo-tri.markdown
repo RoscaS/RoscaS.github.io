@@ -69,11 +69,14 @@ de parcours du tableau a sa variable d'itération qui est égale au nombre de ca
 La boucle intérieur qui est responsable du nombre de comparaisons par parcours a sa variable d'itération
 que est également égale au nombre de cases du tableau `-1`.
 
-$$ (n-1) \cdot (n-1)^2 = (N-1)^2 $$
+$$ (n-1) \cdot (n-1)^2 $$  comparaisons La complexité de cet version de l'algorithme 
+est de:
 
-(N-1)*(N-1) = (N-1)^2 comparaisons La complexité de cet version de l'algorithme est de: **O(N^2)**
-
-$$ O(n^2) $$
+$$ \bbox[20px,border:2px solid red]
+{
+    O(n^2) 
+}
+$$
 
 
 ### Itératif
@@ -131,15 +134,21 @@ void triBulle(int *t, int g, int d)
 
 ### Complexité 
 
-Le nombre maximum d'échanges reste le même (N(N-1))/2
-mais la complexité de l'algorithme a augmenté, ainsi
+Le nombre maximum d'échanges reste le même:   
+
+$$\frac{n(n-1)}{2}$$  
+
+Mais la complexité de l'algorithme a augmenté, ainsi
 que sa durée d'execution.
 Cette version n'est donc interessante que pour des
 tableaux très proche d'un tableau ordonné
 dés le début.
 
-**O(N^2)**
-
+$$ \bbox[20px,border:2px solid red]
+{
+    O(n^2) 
+}
+$$
 
 ### Étude de la stabilité
 Si deux éléments d'indice `i` et `j` avec `i < j`.
@@ -206,28 +215,32 @@ consécutifs du tableau est alterné.
 
 // triShaker.cpp
 
-void swap(int tab[], int a, int b){
+void swap(int tab[], int a, int b)
+{
     int temp = tab[a];
     tab[a]   = tab[b];
     tab[b]   = temp;
 }
 
-void triShaker(int tab[], int g, int d){
+void triShaker(int tab[], int g, int d)
+{
     int ptrG = g+1;
     int ptrD   = d;
     int derEch   = d;
 
     cout << "derEch start: " << derEch << endl;
 
-    while (ptrG <= ptrD){
-
+    while (ptrG <= ptrD)
+    {
         cout << "ptrG: " << ptrG
              << "\tptrD: " << ptrD
              << "\tderEch: " << derEch
              << endl;
 
-        for (int i = ptrD; i >= ptrG; i--){
-            if (tab[i] < tab[i-1]){
+        for (int i = ptrD; i >= ptrG; i--)
+        {
+            if (tab[i] < tab[i-1])
+            {
                 swap(tab, i, i-1);
                 derEch = i;
             }
@@ -235,8 +248,10 @@ void triShaker(int tab[], int g, int d){
         cout << "derEch aller: " << derEch << endl;
 
         ptrG = derEch + 1;
-        for (int i = ptrG; i <= ptrD; i++){
-            if (tab[i] < tab[i-1]){
+        for (int i = ptrG; i <= ptrD; i++)
+        {
+            if (tab[i] < tab[i-1])
+            {
                 swap(tab, i, i-1);
                 derEch = i;
             }
@@ -253,7 +268,7 @@ Ce tri prend fin quand les deux variables `ptrDebut` et `ptrFin` sont égales.
 
 ### Conclusion sur les améliorations
 
-Toutes les améliorations n'ont pas modifié le nombre d'échanges à faire (_logique_) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération **plus couteuse** qu'une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du **O(n^2)**.
+Toutes les améliorations n'ont pas modifié le nombre d'échanges à faire (_logique_) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération **plus couteuse** qu'une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du $$\color{red}{O(n^2)}$$.
 
 ## 3. Tri par extraction (Selection Sort)
 
@@ -350,7 +365,8 @@ void triExtract(int *t, int g, int d)
 ### Complexité:
 L'algorithme `placerMinimumAGauche()` est exécuté `n-1` fois pour un tableau de `n` éléments et ceci indépendamment de l'ordre initial des clés. A chaque exécution, cet algorithme effectue Droite - Gauche [- (nombre de parcours déja effectués ?)] comparaisons.  
 
-**C** = `n-1 + n-2 + ... + 3 + 2 + 1` = `(n(n-1))/2`  
+$$ n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}$$  
+
 
 Le tri par extraction est aussi lent que le tri bulle dans le cas d'un tableau à clés aléatoirement dispersées. Des différences en plus ou en moins peuvent apparaître dans des cas particuliers. Le tri par extraction est innefficace sur un tableau déjà ordonné puisqu'il n'est ps capable de s'en appercevoir.
 
@@ -454,8 +470,8 @@ void f(int, p)
 
 ### TODO
 
-ex 3 
-tri select
+ex 3   
+tri select  
 
 tri insert  (optionnel)
 

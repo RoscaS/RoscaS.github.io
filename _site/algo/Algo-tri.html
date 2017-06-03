@@ -177,11 +177,13 @@ de parcours du tableau a sa variable d’itération qui est égale au nombre de 
 <p>La boucle intérieur qui est responsable du nombre de comparaisons par parcours a sa variable d’itération
 que est également égale au nombre de cases du tableau <code class="highlighter-rouge">-1</code>.</p>
 
-<script type="math/tex; mode=display">(n-1) \cdot (n-1)^2 = (N-1)^2</script>
+<p><script type="math/tex">(n-1) \cdot (n-1)^2</script>  comparaisons La complexité de cet version de l’algorithme 
+est de:</p>
 
-<p>(N-1)*(N-1) = (N-1)^2 comparaisons La complexité de cet version de l’algorithme est de: <strong>O(N^2)</strong></p>
-
-<script type="math/tex; mode=display">O(n^2)</script>
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    O(n^2) 
+}</script>
 
 <h3 id="itératif">Itératif</h3>
 
@@ -235,14 +237,20 @@ que est également égale au nombre de cases du tableau <code class="highlighter
 
 <h3 id="complexité-1">Complexité</h3>
 
-<p>Le nombre maximum d’échanges reste le même (N(N-1))/2
-mais la complexité de l’algorithme a augmenté, ainsi
+<p>Le nombre maximum d’échanges reste le même:</p>
+
+<script type="math/tex; mode=display">\frac{n(n-1)}{2}</script>
+
+<p>Mais la complexité de l’algorithme a augmenté, ainsi
 que sa durée d’execution.
 Cette version n’est donc interessante que pour des
 tableaux très proche d’un tableau ordonné
 dés le début.</p>
 
-<p><strong>O(N^2)</strong></p>
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    O(n^2) 
+}</script>
 
 <h3 id="Étude-de-la-stabilité">Étude de la stabilité</h3>
 <p>Si deux éléments d’indice <code class="highlighter-rouge">i</code> et <code class="highlighter-rouge">j</code> avec <code class="highlighter-rouge">i &lt; j</code>.
@@ -303,28 +311,32 @@ consécutifs du tableau est alterné.</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
 <span class="c1">// triShaker.cpp
 </span>
-<span class="kt">void</span> <span class="n">swap</span><span class="p">(</span><span class="kt">int</span> <span class="n">tab</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+<span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="n">tab</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
     <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="n">a</span><span class="p">];</span>
     <span class="n">tab</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>   <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="n">b</span><span class="p">];</span>
     <span class="n">tab</span><span class="p">[</span><span class="n">b</span><span class="p">]</span>   <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">triShaker</span><span class="p">(</span><span class="kt">int</span> <span class="n">tab</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">){</span>
+<span class="kt">void</span> <span class="nf">triShaker</span><span class="p">(</span><span class="kt">int</span> <span class="n">tab</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
     <span class="kt">int</span> <span class="n">ptrG</span> <span class="o">=</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">ptrD</span>   <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">derEch</span>   <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
 
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"derEch start: "</span> <span class="o">&lt;&lt;</span> <span class="n">derEch</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 
-    <span class="k">while</span> <span class="p">(</span><span class="n">ptrG</span> <span class="o">&lt;=</span> <span class="n">ptrD</span><span class="p">){</span>
-
+    <span class="k">while</span> <span class="p">(</span><span class="n">ptrG</span> <span class="o">&lt;=</span> <span class="n">ptrD</span><span class="p">)</span>
+    <span class="p">{</span>
         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ptrG: "</span> <span class="o">&lt;&lt;</span> <span class="n">ptrG</span>
              <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">ptrD: "</span> <span class="o">&lt;&lt;</span> <span class="n">ptrD</span>
              <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">derEch: "</span> <span class="o">&lt;&lt;</span> <span class="n">derEch</span>
              <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ptrD</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">ptrG</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">){</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ptrD</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">ptrG</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">{</span>
                 <span class="n">swap</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
                 <span class="n">derEch</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
             <span class="p">}</span>
@@ -332,8 +344,10 @@ consécutifs du tableau est alterné.</p>
         <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"derEch aller: "</span> <span class="o">&lt;&lt;</span> <span class="n">derEch</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 
         <span class="n">ptrG</span> <span class="o">=</span> <span class="n">derEch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ptrG</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">ptrD</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ptrG</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">ptrD</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tab</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">{</span>
                 <span class="n">swap</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
                 <span class="n">derEch</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
             <span class="p">}</span>
@@ -351,7 +365,7 @@ Ce tri prend fin quand les deux variables <code class="highlighter-rouge">ptrDeb
 
 <h3 id="conclusion-sur-les-améliorations">Conclusion sur les améliorations</h3>
 
-<p>Toutes les améliorations n’ont pas modifié le nombre d’échanges à faire (<em>logique</em>) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération <strong>plus couteuse</strong> qu’une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du <strong>O(n^2)</strong>.</p>
+<p>Toutes les améliorations n’ont pas modifié le nombre d’échanges à faire (<em>logique</em>) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération <strong>plus couteuse</strong> qu’une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du <script type="math/tex">\color{red}{O(n^2)}</script>.</p>
 
 <h2 id="3-tri-par-extraction-selection-sort">3. Tri par extraction (Selection Sort)</h2>
 
@@ -454,7 +468,7 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 <h3 id="complexité-2">Complexité:</h3>
 <p>L’algorithme <code class="highlighter-rouge">placerMinimumAGauche()</code> est exécuté <code class="highlighter-rouge">n-1</code> fois pour un tableau de <code class="highlighter-rouge">n</code> éléments et ceci indépendamment de l’ordre initial des clés. A chaque exécution, cet algorithme effectue Droite - Gauche [- (nombre de parcours déja effectués ?)] comparaisons.</p>
 
-<p><strong>C</strong> = <code class="highlighter-rouge">n-1 + n-2 + ... + 3 + 2 + 1</code> = <code class="highlighter-rouge">(n(n-1))/2</code></p>
+<script type="math/tex; mode=display">n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}</script>
 
 <p>Le tri par extraction est aussi lent que le tri bulle dans le cas d’un tableau à clés aléatoirement dispersées. Des différences en plus ou en moins peuvent apparaître dans des cas particuliers. Le tri par extraction est innefficace sur un tableau déjà ordonné puisqu’il n’est ps capable de s’en appercevoir.</p>
 
@@ -546,7 +560,7 @@ Récursivité et itérativité = deux façons de répéter des actions.</p>
 
 <h3 id="todo">TODO</h3>
 
-<p>ex 3 
+<p>ex 3 <br />
 tri select</p>
 
 <p>tri insert  (optionnel)</p>
