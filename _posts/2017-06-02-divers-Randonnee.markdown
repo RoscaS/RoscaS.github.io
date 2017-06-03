@@ -185,7 +185,7 @@ Day 8 ~ Depart
 Enjoy one last hearty mountain breakfast and prepare for departure, leaving with incredible memories to last a lifetime.
 B…
 
-## 7. Mon avis (Sol)
+<!--## 7. Mon avis (Sol)
 
 Je pensais à un trip tranquil avec de la rando et des viaFerata. Je suis totalement inexpérimenté et à tendance sédentaire, tellement qu'initialement les 15km par jour ne m'ont absolument pas fait tilter. En me renseignant un peu, je réalise à quel point je ne suis peu expérimenté pour penser que 15km c'est easy.
 
@@ -193,7 +193,7 @@ J'ai passé une année complète à muscler mon poignet, mes doitgs, mes yeux et
 
 Je pensais qu'on allait avoir une **petite** aventure mais que principalement cette expérience allait être ressourçante **ET** reposante. J'ai besoin de me reposer et je ne me sens pas prêt à tackler cette aventure au vue des informations que j'ai trouvé.
 
-J'ai passé une année à me lever fatigué tous les matins, à faire ce que j'ai à faire. Je ne veux pas passer 6 jours à me lever en ayant mal au jambes et devoir repartir pour une journée complète. C'est de vacances que j'ai besoin pas d'un challenge supplémentaire.
+J'ai passé une année à me lever fatigué tous les matins. Je ne veux pas passer 6 jours à me lever en ayant mal au jambes et devoir repartir pour une journée complète. **C'est de vacances dont j'ai besoin pas d'un challenge supplémentaire**.
 
 C'est les seul 2 semaines que je peux passer avec Stephanie de toute l'année. Elle a été formidable avec moi cette année et depuis un bon moment on s'est reservé ces deux semaines pour un truc **cool**. Je suis dsl mais malgré que ça semble splendide, je ne pense pas que ça va être un truc cool.
 
@@ -201,7 +201,7 @@ Cette aventure va me couter de l'argent que je n'ai pas et me faire dépenser to
 
 il faut qu'on se skype pour discuter de tout ça mais je t'invite à lire toutes les informations que j'ai centralisé ici avant. Je ne veux pas que tu tente de me convaincre. Pour toutes les raisons énnoncé ici, je ne suis pas tenté par cette aventure et je te propose de soit faire une version beacoup plus light, soit changer totalement de plan, soit... tanpis, et on se verra à Nivelles.
 
-Désolé d'avoir accepté trop vite, j'étais super occupé (je le suis toujours mais cette histoire de chaussures et de rocaille m'a mis la puce à l'oreille), et je me suis prononcé trop rapidement. 
+Désolé d'avoir accepté trop vite, j'étais super occupé (je le suis toujours mais cette histoire de chaussures et de rocaille m'a mis la puce à l'oreille), et je me suis prononcé trop rapidement. -->
 
 
 
