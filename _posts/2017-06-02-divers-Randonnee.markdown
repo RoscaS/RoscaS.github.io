@@ -66,7 +66,7 @@ $$ \bbox[5px,border:2px solid red] {24.641 Km/jour} $$
 <br> <br>
 
 En me **surestimant** disons que je suis en condition physique moyenne et débutant. Disons donc $$3km/h$$  
-$$24,641/3 =
+$$24,641/3 = $$8.21$$h par jour.
 
 
 
@@ -92,6 +92,27 @@ Compliqué de trouver des informations utilisable.
 
 >En randonnée en altitude, vous serez vite confronté à une diminution de la pression en oxygène dans l’air. Elle entraîne alors une difficulté respiratoire, qui s’accroît en cas d’effort physique. Hypoxie, **augmentation du rythme cardiaque**, Mal Aigu des Montagnes (MAM) en sont les conséquences. La CAT sera alors de prendre le temps de s’acclimater à l’altitude et d'**être en bonne condition physique**.
 
+## 6. La haute route des Dolomites
+
+[pdf fr](http://www.visages-trekking.com/printpdf/379)  
+
+* Jour 1 - Bressanone - val Campo di Denro - refuge Tre Scarperi Rendez-vous à 14 heures à la gare ferroviaire de Bressanone. Transfert en minibus pour rejoindre le point de départ du circuit situé dans la vallée de Sesten. Une courte remontée du vallon nous amène à l’accueillant refuge Tre Scarperi (1626 m). Au loin se dressent les premiers sommets, prémices d’un voyage au cœur de la verticalité. Temps de marche : 1h00 / M : 200 m. 
+
+* Jour 2 - Innerfedtal  - Tre Cime - option via ferrata - refuge Locatelli Matinée consacrée à la montée au refuge Locatelli (2405 m) dans un univers minéral, sous les célèbres et imposantes montagnes de calcaire des Tre Cime. Nous consacrons l’après-midi à l’exploration et à la découverte, sac léger, de ce site exceptionnel. Au choix, une magniﬁque randonnée autour des Tre Cime ou du Paterno. Au programme, visite des tunnels creusés par les militaires qui contrôlaient la frontière lors de la Seconde Guerre mondiale, très beaux panoramas sur la face nord des Tre Cime... Temps de marche : 3h00 / M : 850 m - D : 100 m / Après-midi : 3h00 de marche. Dénivelée fonction de la randonnée choisie. NB : L'après-midi, depuis le refuge Locatelli possibilité de faire une via-ferrata accompagné par un guide de haute montagne Italien. A souscrire au moment de votre inscription. 
+
+* Jour 3 - Val Rinbon - vallées sauvages de Rientztal et de Landro - Pratopiazza (1991 m) En direction de l’ouest, descente par le val Rinbon, à l’aspect très sauvage, pour rejoindre le val Rientztal et le val de Ladro. Au carrefour des vallées, au cœur de splendides forêts de résineux, une remontée sur les versants est permet de rejoindre le col de Strudelkopfsattell (2200 m), pour
+découvrir le vallon suspendu de Pratopiazza et son refuge (1991 m). Un authentique site d’alpage des hautes vallées dolomitiques. Temps de marche : 7h00 / M : 800 m - D : 1200 m. 
+
+* Jour 4 - Refuge de Pratopiazza - Pas de Gaiselleite - refuge de Biella (2327 m) Vous quittez le refuge, traversant une zone agréable d’alpages et de parties boisées. Progressivement, l’ambiance change, le terrain devient plus alpin, vous cheminez sous l’aiguille Croda Rossa (3146 m). Sur la gauche, les imposantes tours de calcaire façonnent un paysage contrasté et puissant. Vous basculez dans un nouveau vallon par le pas de Gaiselleite, passage aérien, mais sans diﬃculté technique (2260 m). Passage à la Casa Cavallo, en direction du dernier col à franchir ce jour, le col de Sora Forno, au pied duquel se trouve le refuge de Biella (2327 m) où vous passez la nuit, au pied de la Croda del Becco (2810 m). Temps de marche : 7h00 / M : 850 m - D : 500 m. 
+
+* Jour 5 - Lac de Fosses - vallon du lac Piccolo au cœur du parc naturel de Fanes Direction le sud pour rejoindre le lac de Fosses et le très beau vallon du lac Piccolo au coeur du parc naturel de Fanes. Splendides pelouses alpines, colorées par une multitude de ﬂeurs. Descente vers le vallon de Scuro, puis remontée au lac de Fodara et au refuge éponyme. Dans un paysage plus ouvert, montée dans le vallon de Fanes du río San Vigilio, jusqu’au refuge de Fanes (ou refuge de Lavarella), pour passer la nuit. Temps de marche : 7h00 /  M : 750 m - D : 1035 m. 
+
+* Jour 6 - Refuge Fanes (2060 m) ou Lavarella - La Villa Stern (1500 m) - refuge Ghardenacia En direction de l’est, vous remontez un petit vallon puis un ressaut pour accéder au pied de l’aiguille de Pizza de Lavarella (3055 m), par le col de la Forcella Medesc. Ambiance alpine au rendez-vous, paysage minéral, au pied de grandes parois. Descente facile jusqu’au bourg de la Villa Stern, caractéristique de la région, remarquable par sa beauté (1468 m). Du village, vous rejoignez le refuge de Ghardenacia (2050 m), en remontant les pentes est, riches en mélèzes. Repas et nuit au refuge. Temps de marche : 7h00 / M et D : 1100 m. 
+
+* Jour 7 - Gardenaccia - Vallon de Langental/lieu-dit Saint-Silvestre - Bressanone Ultime étape de ce périple dans les Dolomites sauvages. Vous partez plein ouest en direction de paso de Ghardenacia (2543 m). Belle traversée jusqu’au refuge Puez. Descente par le vallon de Langental jusqu’au parking de Saint-Silvestre, ﬁn de la randonnée. Transfert jusqu’à Bressanone en milieu de journée. Temps de marche : 5h30 / M : 500 m - D : 985 m.
+
+
+Les horaires sont donnés à titre indicatif et calculés pour des **marcheurs d'un niveau moyen hors pauses et temps pris pour le pique-nique**. M : montée ; D : descente.
 
 
 
