@@ -122,6 +122,25 @@ D : descente.
 
 _Vos bagages sont transportés par véhicule, vous les retrouvez le soir à chaque hébergement, sauf aux étapes des J2, J4, et J6, où vous devrez ajouter dans votre sac à dos un drap-sac et une trousse de toilette pour passer la nuit. Vos bagages sont transportés les autres soirs à l’hébergement par véhicule._
 
+### Autre source
+[dolomitemountains.com](http://www.dolomitemountains.com/en/summer_fall_trips/haute_routes617.htm)  
+[pdf en](http://www.dolomitemountains.com/res/pdf/final.pdf)
+
+The Alta Via 4 is a fantastic high altitude trail, traversing the Italian Alps from north to south. Alta Via (Italian), Haute Route (French), Höhenweg (German), or **High Route is the name given to multi-day, hut-to-hut alpine tours**. And in the **Dolomite Mountains**, **the Alta Via** are some of the most breathtaking, <span style="color:red">**challenging**</span>, multi-day trails available in this mountainous wonderland!
+
+On this combined hiking and via ferrata climbing trip, you’ll travel across the Tre Scarpèri, Croda dei Barànci, Cima Grande di Lavaredo, Cristallo, Sorapìss, and Antelao mountains. You’ll traverse this section of the Dolomites from top to bottom, north to south, maintaining medium-high altitude and exploring spectacular angles of these different mountainous groups of the range. And, you can expect to see vistas of up to 80 percent of all the Dolomites!
+
+Truly a hiker's paradise, thousands of trails wind their way between the fantastic pinnacles of the jagged Dolomites, which magically turn from pale gray to gold and pink at dusk. And via ferrata, **literally translated as the iron way or iron path, run throughout the Dolomites, incorporate a system of iron ladders to assist hikers on steep mountainous terrain**. These trails, originally built and used by soldiers during WWI, are an exhilarating way to access spectacular mountain terrain! And the combination of hiking, via ferrata, and cozy mountain huts, are only surpassed by your discovery of incredible vistas that lie around every corner! 
+
+_Highlights_
+
+* Hike and climb through the Dolomites on the famous** Alta Via 4** high route
+* Feel the adrenaline rush of climbing via ferrata
+* Tackle **some of the most challenging** and rewarding **hiking terrain on earth**
+* Enjoy the cozy atmosphere of a different mountain rifugio each night – **the real mountaineer experience**
+
+
+
 
 
 
