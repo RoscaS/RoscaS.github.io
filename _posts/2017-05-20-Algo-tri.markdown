@@ -9,10 +9,12 @@ tags: algo tri fr
 finished: false
 ---
 
-## 1 Tri-Bulle (Buble-sort)
+## 1 Tri-Bulle (Bubble-sort)
 
+<div class="image">
+    <a  href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/bubble.gif"></a>
+</div>
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triBulle-flag.gif" align="" height="600" float="right"></a>](http://google.com.au/)
 
 
 ### Simple
@@ -269,7 +271,10 @@ Toutes les améliorations n'ont pas modifié le nombre d'échanges à faire (_lo
 
 ## 3. Tri par extraction (Selection-sort)
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtract.gif" align="" height="600" float="right"></a>]()
+<div class="image">
+    <a  href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/extract.gif"></a>
+</div>
+
 
 A chaque tour, l'algorithme trouve la valeur la plus petite et la place à sa position définitive.
 
@@ -360,7 +365,7 @@ void triExtract(int *t, int g, int d)
 > Lorsque les N-1 éléments ayant les clés les plus petites sont à leur place, le dernier élément qui a la plus grande clé l'est aussi.
 
 ### Complexité:
-L'algorithme `placerMinimumAGauche()` est exécuté `n-1` fois pour un tableau de `n` éléments et ceci indépendamment de l'ordre initial des clés. A chaque exécution, cet algorithme effectue Droite - Gauche [- (nombre de parcours déja effectués ?)] comparaisons.  
+L'algorithme `placerMinimumAGauche()` est exécuté $$n-1$$ fois pour un tableau de $$n$$ éléments et ceci indépendamment de l'ordre initial des clés. A chaque exécution, cet algorithme effectue $$Droite - Gauche$$ comparaisons.  
 
 $$ n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}$$  
 
@@ -369,7 +374,10 @@ Le tri par extraction est aussi lent que le tri bulle dans le cas d'un tableau �
 
 ### Stabilité
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtractStab.gif" align="" height="250" float="right"></a>]()
+<div class="image">
+    <a  href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/triExtractStab.gif"></a>
+</div>
+
 
 Le tableau suivant comporte deux clés identiques:
 
@@ -400,7 +408,26 @@ Cet exemple montre que le tri par extraction n'est **pas stable**.
 
 ## 4. Tri par insertion (Insert Sort)
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triInsert.gif" align="" height="600" float="right"></a>]()
+<div class="image">
+    <a  href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/insert.gif"></a>
+</div>
+
+Cette méthode de tri consiste à insérer un élément du tableau qui n'est pas encore à sa place dans une partie déjà ordonnée, puis à recommencer avec les éléments suivant. La première étape montre comment insérer un élément dans la partie déjà triée. 
+
+Dans le tableau _T_ suivant, les éléments d'indices $$Gauche$$ $$à$$ $$i-1$$ sont déjà dans l'ordre croissant. L'élément d'indice _i_ doit être inséré. 
+
+[<img src="/00illustrations/algo-tri/insert1.png" align="" height="150" float="right">]()
+
+Pour insérer l'élément d'indice _i_ dans la partie du tableau déjà trié, il faut le sauvegarder puis décaler vers la droite tous les éléments dont la clef est supérieure à l'élément à insérer. Ainsi, l'emplacement de l'élément à insérer est trouvé et une case libre est préparée au bon emplacement.
+
+[<img src="/00illustrations/algo-tri/insert2.png" align="" height="150" float="right">]()
+
+#### insertion:
+
+[<img src="/00illustrations/algo-tri/insertion-struct1.png" align="" height="250" float="right">]()
+
+A la sortie de la boucle _tant que_ qui permet de reculer en créant une case libre, l'indice _j_ correspond à la case contenant la plus grande clef inférieure ou égale à la clef de l'élément à insérer qui se trouve dans la Sauvegarde (temp).
+
 
 ```c++
 void insertion(int *t, int g, int idx)
@@ -414,7 +441,13 @@ void insertion(int *t, int g, int idx)
     }
     t[j+1] = temp;
 }
+```
+Pour trier complètement le tableau il suffit d'insérer successivement ses éléments en commençant par le deuxième élément (indice $$Gauche+1$$) et en terminant par le dernier élément du tableau (indice $$Droite$$). 
 
+[<img src="/00illustrations/algo-tri/insert3.png" align="" height="150" float="right">]()
+
+
+```c++
 void triInsert(int *t, int g, int d)
 {
     for (int i = g+1; i <= d; ++i)
@@ -424,8 +457,28 @@ void triInsert(int *t, int g, int d)
 }
 ```
 
+### Complexité
+La boucle `for` s'exécute au moins $$n-1$$ fois et le nombre d'executions de la boucle `while` dépend du tableau à trier:
 
-## 4. Radix Sort (Insert Sort)
+1. Dans le meilleur cas, le tableau est déja trié `t[j] > temp` est toujours _faux_ et aucun échange de données n'est nécéssaire ce qui fait que la boucle `for` s'executera $$n-1$$ fois. La complexité sera donc de $$O(n)$$
+
+2. Dans le pire cas, le tableau est trié à l'envers et `t[j] > temp` est toujours _vrai_, dans ce cas la boucle `while` s'executera à chaque fois. La complexité sera donc de $$ O(n \cdot n) = O(n^2) $$
+
+$$ \bbox[20px,border:2px solid red]
+{
+    O(n^2) 
+}
+$$
+
+<iframe src="https://www.desmos.com/calculator/8ppukux7qz?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
+
+### Stabilité
+
+Considérons deux éléments du tableau, ayant la même clef, et d'indices _i_ et _j_ avec $$ i < j $$.  Le parcours de la partie non triée du tableau s'effectuant de $$Gauche+1$$ vers $$Droite$$, l'élément d'indice _i_ sera inséré le premier dans la partie déjà triée du tableau, à l'indice _i'_. Lorsque l'élément d'indice _j_ devra être inséré, il le sera juste après le premier élément qui ne lui est pas strictement supérieur (car l'algorithme décrit ici effectue une comparaison stricte), c'est-à-dire à l'indice $$i'+1$$. Après le tri, l'élément qui avait pour indice _i_ se retrouve bien avant celui qui avait pour indice _j_ : **le tri par insertion est donc stable.**
+
+
+
+## 4. Tri par base (radix-sort)
 
 ### Complexité
 
@@ -439,36 +492,4 @@ Oui, Ils rentrent dans les filles dans un certain ordre et en ressort du même t
 
 
 
-
-
-
-
-## RECURSIVITE
-
-### definition
-
-Un terme est récursif si il apparait dans sa définition
-
-###
-
-Fonction où dans sa définition, on va retrouver un appel à la fonction elle même.
-Récursivité et itérativité = deux façons de répéter des actions.
-
-```c
-void f(int, p)
-{
-    //...
-    //...
-    f(val)
-}
-```
-
-
-
-### TODO
-
-ex 3   
-tri select  
-
-tri insert  (optionnel)
 

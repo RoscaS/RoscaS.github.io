@@ -49,7 +49,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Algo: Tri (fr)</title>
-  <meta name="description" content="1 Tri-Bulle (Buble-sort)">
+  <meta name="description" content="1 Tri-Bulle (Bubble-sort)">
 </head>
 
 
@@ -111,9 +111,11 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="1-tri-bulle-buble-sort">1 Tri-Bulle (Buble-sort)</h2>
+    <h2 id="1-tri-bulle-bubble-sort">1 Tri-Bulle (Bubble-sort)</h2>
 
-<p><a href="http://google.com.au/"><a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triBulle-flag.gif" align="" height="600" float="right" /></a></a></p>
+<div class="image">
+    <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/bubble.gif" /></a>
+</div>
 
 <h3 id="simple">Simple</h3>
 
@@ -366,7 +368,9 @@ Ce tri prend fin quand les deux variables <code class="highlighter-rouge">ptrDeb
 
 <h2 id="3-tri-par-extraction-selection-sort">3. Tri par extraction (Selection-sort)</h2>
 
-<p><a href=""><a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtract.gif" align="" height="600" float="right" /></a></a></p>
+<div class="image">
+    <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/extract.gif" /></a>
+</div>
 
 <p>A chaque tour, l’algorithme trouve la valeur la plus petite et la place à sa position définitive.</p>
 
@@ -463,7 +467,7 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 </blockquote>
 
 <h3 id="complexité-2">Complexité:</h3>
-<p>L’algorithme <code class="highlighter-rouge">placerMinimumAGauche()</code> est exécuté <code class="highlighter-rouge">n-1</code> fois pour un tableau de <code class="highlighter-rouge">n</code> éléments et ceci indépendamment de l’ordre initial des clés. A chaque exécution, cet algorithme effectue Droite - Gauche [- (nombre de parcours déja effectués ?)] comparaisons.</p>
+<p>L’algorithme <code class="highlighter-rouge">placerMinimumAGauche()</code> est exécuté <script type="math/tex">n-1</script> fois pour un tableau de <script type="math/tex">n</script> éléments et ceci indépendamment de l’ordre initial des clés. A chaque exécution, cet algorithme effectue <script type="math/tex">Droite - Gauche</script> comparaisons.</p>
 
 <script type="math/tex; mode=display">n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}</script>
 
@@ -471,7 +475,9 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 
 <h3 id="stabilité">Stabilité</h3>
 
-<p><a href=""><a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtractStab.gif" align="" height="250" float="right" /></a></a></p>
+<div class="image">
+    <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/triExtractStab.gif" /></a>
+</div>
 
 <p>Le tableau suivant comporte deux clés identiques:</p>
 
@@ -501,7 +507,25 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 
 <h2 id="4-tri-par-insertion-insert-sort">4. Tri par insertion (Insert Sort)</h2>
 
-<p><a href=""><a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triInsert.gif" align="" height="600" float="right" /></a></a></p>
+<div class="image">
+    <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/insert.gif" /></a>
+</div>
+
+<p>Cette méthode de tri consiste à insérer un élément du tableau qui n’est pas encore à sa place dans une partie déjà ordonnée, puis à recommencer avec les éléments suivant. La première étape montre comment insérer un élément dans la partie déjà triée.</p>
+
+<p>Dans le tableau <em>T</em> suivant, les éléments d’indices <script type="math/tex">Gauche</script> <script type="math/tex">à</script> <script type="math/tex">i-1</script> sont déjà dans l’ordre croissant. L’élément d’indice <em>i</em> doit être inséré.</p>
+
+<p><a href=""><img src="/00illustrations/algo-tri/insert1.png" align="" height="150" float="right" /></a></p>
+
+<p>Pour insérer l’élément d’indice <em>i</em> dans la partie du tableau déjà trié, il faut le sauvegarder puis décaler vers la droite tous les éléments dont la clef est supérieure à l’élément à insérer. Ainsi, l’emplacement de l’élément à insérer est trouvé et une case libre est préparée au bon emplacement.</p>
+
+<p><a href=""><img src="/00illustrations/algo-tri/insert2.png" align="" height="150" float="right" /></a></p>
+
+<h4 id="insertion">insertion:</h4>
+
+<p><a href=""><img src="/00illustrations/algo-tri/insertion-struct1.png" align="" height="250" float="right" /></a></p>
+
+<p>A la sortie de la boucle <em>tant que</em> qui permet de reculer en créant une case libre, l’indice <em>j</em> correspond à la case contenant la plus grande clef inférieure ou égale à la clef de l’élément à insérer qui se trouve dans la Sauvegarde (temp).</p>
 
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">insertion</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="p">)</span>
 <span class="p">{</span>
@@ -514,8 +538,13 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
     <span class="p">}</span>
     <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre>
+</div>
+<p>Pour trier complètement le tableau il suffit d’insérer successivement ses éléments en commençant par le deuxième élément (indice <script type="math/tex">Gauche+1</script>) et en terminant par le dernier élément du tableau (indice <script type="math/tex">Droite</script>).</p>
 
-<span class="kt">void</span> <span class="nf">triInsert</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<p><a href=""><img src="/00illustrations/algo-tri/insert3.png" align="" height="150" float="right" /></a></p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">triInsert</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
     <span class="p">{</span>
@@ -525,42 +554,39 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 </code></pre>
 </div>
 
-<h2 id="4-radix-sort-insert-sort">4. Radix Sort (Insert Sort)</h2>
-
 <h3 id="complexité-3">Complexité</h3>
+<p>La boucle <code class="highlighter-rouge">for</code> s’exécute au moins <script type="math/tex">n-1</script> fois et le nombre d’executions de la boucle <code class="highlighter-rouge">while</code> dépend du tableau à trier:</p>
 
-<p>O(n)</p>
+<ol>
+  <li>
+    <p>Dans le meilleur cas, le tableau est déja trié <code class="highlighter-rouge">t[j] &gt; temp</code> est toujours <em>faux</em> et aucun échange de données n’est nécéssaire ce qui fait que la boucle <code class="highlighter-rouge">for</code> s’executera <script type="math/tex">n-1</script> fois. La complexité sera donc de <script type="math/tex">O(n)</script></p>
+  </li>
+  <li>
+    <p>Dans le pire cas, le tableau est trié à l’envers et <code class="highlighter-rouge">t[j] &gt; temp</code> est toujours <em>vrai</em>, dans ce cas la boucle <code class="highlighter-rouge">while</code> s’executera à chaque fois. La complexité sera donc de <script type="math/tex">O(n \cdot n) = O(n^2)</script></p>
+  </li>
+</ol>
+
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    O(n^2) 
+}</script>
+
+<iframe src="https://www.desmos.com/calculator/8ppukux7qz?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
 
 <h3 id="stabilité-1">Stabilité</h3>
 
+<p>Considérons deux éléments du tableau, ayant la même clef, et d’indices <em>i</em> et <em>j</em> avec <script type="math/tex">% <![CDATA[
+i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectuant de <script type="math/tex">Gauche+1</script> vers <script type="math/tex">Droite</script>, l’élément d’indice <em>i</em> sera inséré le premier dans la partie déjà triée du tableau, à l’indice <em>i’</em>. Lorsque l’élément d’indice <em>j</em> devra être inséré, il le sera juste après le premier élément qui ne lui est pas strictement supérieur (car l’algorithme décrit ici effectue une comparaison stricte), c’est-à-dire à l’indice <script type="math/tex">i'+1</script>. Après le tri, l’élément qui avait pour indice <em>i</em> se retrouve bien avant celui qui avait pour indice <em>j</em> : <strong>le tri par insertion est donc stable.</strong></p>
+
+<h2 id="4-tri-par-base-radix-sort">4. Tri par base (radix-sort)</h2>
+
+<h3 id="complexité-4">Complexité</h3>
+
+<p>O(n)</p>
+
+<h3 id="stabilité-2">Stabilité</h3>
+
 <p>Oui, Ils rentrent dans les filles dans un certain ordre et en ressort du même tableau dans le même ordre.</p>
-
-<h2 id="recursivite">RECURSIVITE</h2>
-
-<h3 id="definition">definition</h3>
-
-<p>Un terme est récursif si il apparait dans sa définition</p>
-
-<h2>#</h2>
-
-<p>Fonction où dans sa définition, on va retrouver un appel à la fonction elle même.
-Récursivité et itérativité = deux façons de répéter des actions.</p>
-
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">//...
-</span>    <span class="c1">//...
-</span>    <span class="n">f</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<h3 id="todo">TODO</h3>
-
-<p>ex 3 <br />
-tri select</p>
-
-<p>tri insert  (optionnel)</p>
 
 
 </div>
