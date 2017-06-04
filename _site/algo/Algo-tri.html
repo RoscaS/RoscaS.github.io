@@ -580,13 +580,53 @@ i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectu
 
 <h2 id="4-tri-par-base-radix-sort">4. Tri par base (radix-sort)</h2>
 
-<h3 id="complexité-4">Complexité</h3>
+<div class="image" style="width: 75%">
+    <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/radix.gif" /></a>
+</div>
 
-<p>O(n)</p>
+<p>Le tableau d’éléments à ordonner dans l’ordre croissant contient <script type="math/tex">n</script> éléments et ses indices vont de <script type="math/tex">Gauche</script> à <script type="math/tex">Droite</script> (<script type="math/tex">0</script> à <script type="math/tex">1 n-1</script> en langage C). Cette méthode de tri consiste à trier les clés selon la valeur des unités, puis selon celle des dizaines, puis centaines, … jusqu’au chiffre significatif le plus à gauche.</p>
+
+<p>Après autant de passes que le nombre de chiffres de la plus grande des clé (ici 3), le tableau est trié. Cette méthode peut s’appliquer à des clés non numériques (ex : chaines de caractères), pourvu qu’on ait une relation d’ordre entre les symboles utilisés (ex : ordre alphabétique pour une chaîne de caractères).</p>
+
+<p><a href=""><img src="/00illustrations/algo-tri/passeRadix.png" align="" height="350" float="right" /></a></p>
+
+<p>Dans ce structogramme, casier est un tableau de files permettant d’ordonner tab suivant son nième chiffre : casier[x] contiendra les nombres dont le nième chiffre est x . L’idée est de commencer par distribuer dans ces files les valeurs de tab , puis dans un second temps, de mettre à jour le tableau en vidant les files par ordre croissant.</p>
+
+<p>Il y a plusieurs façons de déterminer le nième chiffre d’un nombre. Parmi les plus répandues :</p>
+
+<ul>
+  <li>Convertir le nombre en chaine de caractère, puis extraire le caractère désiré</li>
+  <li>Arithmétique : <script type="math/tex">1984 = 1 \cdot 103 + 9 \cdot 102 + 8 \cdot 101 + 4 \cdot 100</script> on peut donc aisément retrouver la valeur de chaque chiffre grâce à des divisions par des puissances de 10 et l’opérateur modulo.</li>
+</ul>
+
+<p>Ces 2 idées peuvent également aider à déterminer la longueur de la valeur maximale (k). <span style="color:red">Une fonction mathématique classique donnera directement la valeur de k : laquelle ? </span></p>
+
+<p>Pour compléter le tri il suffit de faire autant de passes que de nombre de chiffres dans la valeur maximale :</p>
+
+<p><a href=""><img src="/00illustrations/algo-tri/triRadix.png" align="" height="150" float="right" /></a></p>
+
+<h3 id="complexité-4">Complexité</h3>
+<p>Contrairement aux autres algorithmes de tri simples, le tri par base n’utilise pas de comparaisons : il fait partie des tris par distribution.</p>
+
+<p>C’est la copie des valeurs dans des files qui va permettre le tri, on peut donc décider de choisir la copie d’une valeur (affectation) comme opération élémentaire de cet algorithme.</p>
+
+<p>Pour trier un tableau de taille <em>n</em> on doit effectuer <em>k</em> passes, avec  <em>k</em> le nombre de chiffres de la plus grande clé.</p>
+
+<p>Lors de chaque passe, on va recopier les <em>n</em> valeurs dans les files temporaires casier[x] (<strong><em>n</em> affectations</strong>), puis les recopier dans le tableau initial. On aura donc 2 x <em>n</em> opérations élémentaires.</p>
+
+<p>Pour <em>k</em> passes, la fonction de complexité sera donc: <script type="math/tex">f(n)=2kn</script>
+Si <em>k</em> est constant, notre algorithne est donc linéaire:</p>
+
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    O(n) 
+}</script>
+
+<iframe src="https://www.desmos.com/calculator/ttma1w0trt?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
 
 <h3 id="stabilité-2">Stabilité</h3>
 
-<p>Oui, Ils rentrent dans les filles dans un certain ordre et en ressort du même tableau dans le même ordre.</p>
+<p>Cette méthode de tri est stable, les valeurs rentrent dans les filles dans un certain ordre et en ressortent dans le même ordre.</p>
 
 
 </div>
