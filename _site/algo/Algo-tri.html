@@ -580,7 +580,7 @@ i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectu
 
 <h2 id="4-tri-par-base-radix-sort">4. Tri par base (radix-sort)</h2>
 
-<div class="image" style="width: 75%">
+<div class="image" style="width: 100%">
     <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/radix.gif" /></a>
 </div>
 
@@ -589,6 +589,21 @@ i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectu
 <p>Après autant de passes que le nombre de chiffres de la plus grande des clé (ici 3), le tableau est trié. Cette méthode peut s’appliquer à des clés non numériques (ex : chaines de caractères), pourvu qu’on ait une relation d’ordre entre les symboles utilisés (ex : ordre alphabétique pour une chaîne de caractères).</p>
 
 <p><a href=""><img src="/00illustrations/algo-tri/passeRadix.png" align="" height="350" float="right" /></a></p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">nbPasses</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">g</span><span class="p">];</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">d</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="n">max</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">max</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="n">log10</span><span class="p">(</span><span class="n">max</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
 
 <p>Dans ce structogramme, casier est un tableau de files permettant d’ordonner tab suivant son nième chiffre : casier[x] contiendra les nombres dont le nième chiffre est x . L’idée est de commencer par distribuer dans ces files les valeurs de tab , puis dans un second temps, de mettre à jour le tableau en vidant les files par ordre croissant.</p>
 
@@ -602,6 +617,36 @@ i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectu
 <p>Ces 2 idées peuvent également aider à déterminer la longueur de la valeur maximale (k). <span style="color:red">Une fonction mathématique classique donnera directement la valeur de k : laquelle ? </span></p>
 
 <p>Pour compléter le tri il suffit de faire autant de passes que de nombre de chiffres dans la valeur maximale :</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">extraireDigit</span><span class="p">(</span><span class="kt">int</span> <span class="n">nb</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pos</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">return</span> <span class="kt">int</span><span class="p">(</span><span class="n">nb</span><span class="o">/</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">pos</span><span class="p">))</span><span class="o">%</span><span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="o">*</span> <span class="nf">triParBase</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">nbPass</span> <span class="o">=</span> <span class="n">nbPasses</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+	<span class="n">file</span> <span class="n">f</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="p">{};</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">nbPass</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">g</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">d</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="n">f</span><span class="p">[</span><span class="n">extraireDigit</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">j</span><span class="p">)].</span><span class="n">ajouter</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+		<span class="p">}</span>
+		<span class="kt">int</span> <span class="n">cpt</span> <span class="o">=</span> <span class="n">g</span><span class="p">;</span>
+		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+		<span class="p">{</span>
+			<span class="k">while</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">estVide</span><span class="p">()</span><span class="o">==</span><span class="nb">false</span><span class="p">)</span>
+			<span class="p">{</span>
+				<span class="n">t</span><span class="p">[</span><span class="n">cpt</span><span class="p">]</span><span class="o">=</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">retirer</span><span class="p">();</span>
+				<span class="n">cpt</span><span class="o">++</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
 
 <p><a href=""><img src="/00illustrations/algo-tri/triRadix.png" align="" height="150" float="right" /></a></p>
 
