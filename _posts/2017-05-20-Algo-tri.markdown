@@ -490,6 +490,21 @@ Après autant de passes que le nombre de chiffres de la plus grande des clé (ic
 
 [<img src="/00illustrations/algo-tri/passeRadix.png" align="" height="350" float="right">]()
 
+```c++
+int nbPasses(int* t, int g, int d)
+{
+	int max = t[g];
+	for(int i = g+1;i<=d;i++)
+	{
+		if(t[i]>max)
+		{
+			max = t[i];
+		}
+	}
+	return log10(max)+1;
+}
+```
+
 Dans ce structogramme, casier est un tableau de files permettant d’ordonner tab suivant son nième chiffre : casier[x] contiendra les nombres dont le nième chiffre est x . L’idée est de commencer par distribuer dans ces files les valeurs de tab , puis dans un second temps, de mettre à jour le tableau en vidant les files par ordre croissant. 
  
 Il y a plusieurs façons de déterminer le nième chiffre d’un nombre. Parmi les plus répandues :  
@@ -500,6 +515,36 @@ Il y a plusieurs façons de déterminer le nième chiffre d’un nombre. Parmi l
 Ces 2 idées peuvent également aider à déterminer la longueur de la valeur maximale (k). <span style="color:red">Une fonction mathématique classique donnera directement la valeur de k : laquelle ? </span> 
  
 Pour compléter le tri il suffit de faire autant de passes que de nombre de chiffres dans la valeur maximale :
+
+```c++
+int extraireDigit(int nb, int pos)
+{
+	return int(nb/pow(10,pos))%10;
+}
+
+int* triParBase(int* t, int g, int d)
+{
+	int nbPass = nbPasses(t,g,d);
+	file f[10] {};
+	for(int j = 0; j<nbPass;j++)
+	{
+		for(int i = g; i<=d;i++)
+		{
+			f[extraireDigit(t[i],j)].ajouter(t[i]);
+		}
+		int cpt = g;
+		for(int i =0;i<10;i++)
+		{
+			while(f[i].estVide()==false)
+			{
+				t[cpt]=f[i].retirer();
+				cpt++;
+			}
+		}
+	}
+	return t;
+}
+```
 
 [<img src="/00illustrations/algo-tri/triRadix.png" align="" height="150" float="right">]()
 
