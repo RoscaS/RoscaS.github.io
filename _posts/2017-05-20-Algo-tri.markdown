@@ -576,7 +576,112 @@ $$
 Cette méthode de tri est stable, les valeurs rentrent dans les filles dans un certain ordre et en ressortent dans le même ordre.
 
 
+```c++
+#include<iostream>
+#include<cmath>
+#include"..//..//00Libs//queue.hpp"
+using namespace std;
 
+void debug(Queue<int> **queue, int unite);
+int findMax(int *t, int g, int d);
+int nbPasses(int *t, int g, int d);
+int extraireUnite(int n, int pos);
+void triBase(int *t, int g, int d);
+
+int main()
+{   
+    int liste[] = {3221,1,10,9680,577,9420,7,5622,4793,2030,3138,82,2599,743,4127};
+    int gauche  = 0;
+    int droite  = 14;
+
+    cout << "\ntableau initial: ";
+    for (auto &x: liste) { cout << x << " "; }
+
+    triBase(liste,gauche,droite);
+
+    cout << "\ntableau trié: ";
+    for (auto &x: liste) { cout << x << " "; }
+    return 0;
+}
+
+void debug(Queue<int> **queue, int unite)
+{
+    cout << "\n\nUNITE " << unite << "\n";
+    for (int casier = 0; casier <= 9; casier++)
+    {
+        cout << "\tcasier " << casier << "\n\t\t";
+        queue[casier]->display();
+    }
+}
+
+
+int findMax(int *t, int g, int d)
+{
+    int max = t[g];
+    for (int i = g+1; i <= d; ++i)
+    {
+        if (t[i] > max)
+        {
+            max = t[i];
+        }
+    }
+    return max;
+}
+
+
+int nbPasses(int *t, int g, int d)
+{
+    return log10(findMax(t,g,d))+1;
+}
+
+
+int extraireUnite(int n, int pos)
+{
+    return (static_cast<int>(n/pow(10,pos))%10);
+}
+
+
+void triBase(int *t, int g, int d)
+{
+    // initialisation
+    int digits = nbPasses(t,g,d);
+    Queue<int> **qTab = new Queue<int>*[10];
+
+    for (int casier = 0; casier <= 9; ++casier)
+    {
+        qTab[casier] = new Queue<int>;
+    }    
+
+    // tri
+    for (int unite = 0; unite < digits; ++unite)
+    {
+
+        for (int index = g; index <= d; ++index)
+        {
+            qTab[extraireUnite(t[index], unite)]->enqueue(t[index]);
+        }
+
+        debug(qTab, unite);
+
+        int indexe = g;
+        for (int casier = 0; casier <= 9; casier++)
+        {
+            while (qTab[casier]->isEmpty() == false)
+            {
+                t[indexe] = qTab[casier]->dequeue();
+                ++indexe;
+            }
+        }    
+    }
+
+    for (int casier = 0; casier <= 9; ++casier)
+    {
+        delete qTab[casier];
+    }
+
+    delete [] qTab;
+}
+```
 
 
 

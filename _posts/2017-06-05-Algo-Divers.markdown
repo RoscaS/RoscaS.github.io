@@ -10,7 +10,7 @@ finished: false
 ---
 
 
-## How many digits in a number
+## How many digits in a number (py)
 
 ```py
 from math import log10
@@ -26,7 +26,7 @@ for i in tab:
 # output : 1 2 3 4 5 6
 ```
 
-## Digit extraction
+## Digit extraction (py)
 
 ```py
 def digitExtract(n, pos):
