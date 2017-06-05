@@ -18,6 +18,8 @@ from math import log10
 def digitsNb(n):
     return log10(n)+1
 
+tab = [1,12,123,1234,12345,123456]
+
 for i in tab:
     print(int(digitsNb(i)), end=' ')
 
