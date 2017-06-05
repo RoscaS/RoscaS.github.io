@@ -584,7 +584,7 @@ i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectu
     <a href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/radix.gif" /></a>
 </div>
 
-<p>Le tableau d’éléments à ordonner dans l’ordre croissant contient <script type="math/tex">n</script> éléments et ses indices vont de <script type="math/tex">Gauche</script> à <script type="math/tex">Droite</script> (<script type="math/tex">0</script> à <script type="math/tex">1 n-1</script> en langage C). Cette méthode de tri consiste à trier les clés selon la valeur des unités, puis selon celle des dizaines, puis centaines, … jusqu’au chiffre significatif le plus à gauche.</p>
+<p>Le tableau d’éléments à ordonner dans l’ordre croissant contient <script type="math/tex">n</script> éléments et ses indices vont de <script type="math/tex">Gauche</script> à <script type="math/tex">Droite</script> (<script type="math/tex">0</script> à <script type="math/tex">n-1</script> en  C). Cette méthode de tri consiste à trier les clés selon la valeur des unités, puis selon celle des dizaines, puis centaines, … jusqu’au chiffre significatif le plus à gauche.</p>
 
 <p>Après autant de passes que le nombre de chiffres de la plus grande des clé (ici 3), le tableau est trié. Cette méthode peut s’appliquer à des clés non numériques (ex : chaines de caractères), pourvu qu’on ait une relation d’ordre entre les symboles utilisés (ex : ordre alphabétique pour une chaîne de caractères).</p>
 
@@ -672,6 +672,113 @@ Si <em>k</em> est constant, notre algorithne est donc linéaire:</p>
 <h3 id="stabilité-2">Stabilité</h3>
 
 <p>Cette méthode de tri est stable, les valeurs rentrent dans les filles dans un certain ordre et en ressortent dans le même ordre.</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+#include"..//..//00Libs//queue.hpp"
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">debug</span><span class="p">(</span><span class="n">Queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">**</span><span class="n">queue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unite</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">findMax</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">nbPasses</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">extraireUnite</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pos</span><span class="p">);</span>
+<span class="kt">void</span> <span class="n">triBase</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>   
+    <span class="kt">int</span> <span class="n">liste</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3221</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">9680</span><span class="p">,</span><span class="mi">577</span><span class="p">,</span><span class="mi">9420</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5622</span><span class="p">,</span><span class="mi">4793</span><span class="p">,</span><span class="mi">2030</span><span class="p">,</span><span class="mi">3138</span><span class="p">,</span><span class="mi">82</span><span class="p">,</span><span class="mi">2599</span><span class="p">,</span><span class="mi">743</span><span class="p">,</span><span class="mi">4127</span><span class="p">};</span>
+    <span class="kt">int</span> <span class="n">gauche</span>  <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">droite</span>  <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">tableau initial: "</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">liste</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">triBase</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span><span class="n">gauche</span><span class="p">,</span><span class="n">droite</span><span class="p">);</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">tableau trié: "</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">liste</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">debug</span><span class="p">(</span><span class="n">Queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">**</span><span class="n">queue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">unite</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n\n</span><span class="s">UNITE "</span> <span class="o">&lt;&lt;</span> <span class="n">unite</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">casier</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">casier</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">;</span> <span class="n">casier</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">casier "</span> <span class="o">&lt;&lt;</span> <span class="n">casier</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n\t\t</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">queue</span><span class="p">[</span><span class="n">casier</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">display</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">findMax</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">g</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">max</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">max</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">nbPasses</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">log10</span><span class="p">(</span><span class="n">findMax</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">extraireUnite</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pos</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">pos</span><span class="p">))</span><span class="o">%</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="nf">triBase</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// initialisation
+</span>    <span class="kt">int</span> <span class="n">digits</span> <span class="o">=</span> <span class="n">nbPasses</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+    <span class="n">Queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">**</span><span class="n">qTab</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;*</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">casier</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">casier</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">;</span> <span class="o">++</span><span class="n">casier</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">qTab</span><span class="p">[</span><span class="n">casier</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="p">}</span>    
+
+    <span class="c1">// tri
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">unite</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">unite</span> <span class="o">&lt;</span> <span class="n">digits</span><span class="p">;</span> <span class="o">++</span><span class="n">unite</span><span class="p">)</span>
+    <span class="p">{</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">g</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span> <span class="o">++</span><span class="n">index</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">qTab</span><span class="p">[</span><span class="n">extraireUnite</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">unite</span><span class="p">)]</span><span class="o">-&gt;</span><span class="n">enqueue</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">]);</span>
+        <span class="p">}</span>
+
+        <span class="n">debug</span><span class="p">(</span><span class="n">qTab</span><span class="p">,</span> <span class="n">unite</span><span class="p">);</span>
+
+        <span class="kt">int</span> <span class="n">indexe</span> <span class="o">=</span> <span class="n">g</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">casier</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">casier</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">;</span> <span class="n">casier</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">qTab</span><span class="p">[</span><span class="n">casier</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">isEmpty</span><span class="p">()</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">t</span><span class="p">[</span><span class="n">indexe</span><span class="p">]</span> <span class="o">=</span> <span class="n">qTab</span><span class="p">[</span><span class="n">casier</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">dequeue</span><span class="p">();</span>
+                <span class="o">++</span><span class="n">indexe</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>    
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">casier</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">casier</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">;</span> <span class="o">++</span><span class="n">casier</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">delete</span> <span class="n">qTab</span><span class="p">[</span><span class="n">casier</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="k">delete</span> <span class="p">[]</span> <span class="n">qTab</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
 
 
 </div>
