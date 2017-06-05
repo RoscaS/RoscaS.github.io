@@ -9,6 +9,21 @@ tags: algo
 finished: false
 ---
 
+
+## How many digits in a number
+
+```py
+from math import log10
+
+def digitsNb(n):
+    return log10(n)+1
+
+for i in tab:
+    print(int(digitsNb(i)), end=' ')
+
+# output : 1 2 3 4 5 6
+```
+
 ## Digit extraction
 
 ```py
