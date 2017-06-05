@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Randonnée dans les Dolomites "
+title: "Divers: Randonnée dans les Dolomites "
 subtitle: "Détail de la randonnée"
 date: 2017-06-02
 author: Sol
