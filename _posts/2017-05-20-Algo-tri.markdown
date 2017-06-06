@@ -26,7 +26,7 @@ finished: false
 
 
 
-[<a href=""><img src="/00illustrations/Echanger.png" align="" height="150" float="right"></a>]()
+[<img src="/00illustrations/Echanger.png" align="" height="150" float="right">]()
 
 
 ```c++
@@ -46,7 +46,7 @@ void echange(int *t, int idx)
 
 - Au second parcours, le second élément le plus petit se retrouvera trié à droite de l'élément le plus petit et ainsi de suite jusqu'au tri complet du tableau.
 
-[<a href=""><img src="/00illustrations/Tri_Bulle.png" align="" height="200" float="right"></a>]()
+[<img src="/00illustrations/Tri_Bulle.png" align="" height="200" float="right">]()
 
 ```c++
 void triBulle(int *t, int g, int d)
@@ -107,7 +107,7 @@ Plusieurs éléments peuvent remonter lors d'un même parcours. Avant que l'él�
 
 Le tableau est donc suceptible d'être trié avant les (N-1) parcours. Il serait donc profitable de cesser les parcours dés que le tableau est trié surtout dans le cas d'un tableau qui est totalement trié dés le début. C'est ce que nous permet la prochaine amélioration qui stop la fonction si un parcours entier a été fait sans aucun échange:
 
-[<a href=""><img src="/00illustrations/triBulle_Flag.png" align="" height="300" float="right"></a>](00illustrations/triBulle_Flag.png)
+[<img src="/00illustrations/triBulle_Flag.png" align="" height="300" float="right">](00illustrations/triBulle_Flag.png)
 
 
 ```c++
@@ -209,7 +209,7 @@ Pour compenser
 l'asymétrie décrite, le sens de deux parcours
 consécutifs du tableau est alterné.
 
-[<a href=""><img src="/00illustrations/triShaker.png" align="" height="600" float="right"></a>]()
+[<img src="/00illustrations/triShaker.png" align="" height="500" float="right">]()
 
 
 
@@ -323,7 +323,7 @@ On peut donc diviser ce problème en 3 parties distinctes:
 2. une fonction placerMinimumAGauche()
 3. triExtraction()
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/Echanger.png" align="" height="150" float="right"></a>]()
+[<img src="/00illustrations/Echanger.png" align="" height="150" float="right">]()
 
 ```c++
 void echanger(int *t, int a, int b)
@@ -334,7 +334,7 @@ void echanger(int *t, int a, int b)
 }
 ```
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/placerMinimumAGauche.png" align="" height="250" float="right"></a>]()
+[<img src="/00illustrations/placerMinimumAGauche.png" align="" height="250" float="right">]()
 
 ```c++
 void placerMinGauche(int *t, int g, int d)
@@ -351,7 +351,7 @@ void placerMinGauche(int *t, int g, int d)
 }
 ```
 
-[<a href="https://visualgo.net/en/sorting"><img src="/00illustrations/triExtraction.png" align="" height="150" float="right"></a>]()
+[<img src="/00illustrations/triExtraction.png" align="" height="150" float="right">]()
 
 ```c++
 void triExtract(int *t, int g, int d)
@@ -484,70 +484,169 @@ Considérons deux éléments du tableau, ayant la même clef, et d'indices _i_ e
     <a  href="https://visualgo.net/en/sorting"><img src="/00illustrations/algo-tri/radix.gif"></a>
 </div>
 
-Le tableau d'éléments à ordonner dans l'ordre croissant contient $$n$$ éléments et ses indices vont de $$Gauche$$ à $$Droite$$ ($$0$$ à $$n-1$$ en  C). Cette méthode de tri consiste à trier les clés selon la valeur des unités, puis selon celle des dizaines, puis centaines, … jusqu’au chiffre significatif le plus à gauche.
+Le principe de ce tri est totalement différent des précédents. Il ne se base pas sur des comparaisons entre les différentes valeurs mais sur un classement successif des valeurs en fonction des chiffres qui la compose en commençant par la valeur des unités, ensuite celle de l'unité des dizaines, puis de l'unité des centaines, ... jusqu'au chiffre le plus à gauche.
 
-Après autant de passes que le nombre de chiffres de la plus grande des clé (ici 3), le tableau est trié. Cette méthode peut s’appliquer à des clés non numériques (ex : chaines de caractères), pourvu qu’on ait une relation d’ordre entre les symboles utilisés (ex : ordre alphabétique pour une chaîne de caractères). 
+Pour faire le classement nous avons donc besoin de 10 tableau: un pour chaque chiffre (0 à 9) une fois nos valeurs classées, nous les remettons dans le tableau initial en commançant par les valeurs dans le tableau des 0 en respectant le principe du **fifo**. Ensuite le tableau des 1, puis des 2 ...
+Comme le principe du **fifo** est requis, nous pouvons utiliser des _files_ (_queue_) à la place de simple tableaux. Cela rend le tout plus simple à gérer, il suffit d'utiliser l'équivalent de la fonction `push` pour insérer et de `pull` pour extraire la bonne valeur. 
 
-[<img src="/00illustrations/algo-tri/passeRadix.png" align="" height="350" float="right">]()
+>Le nom de ces deux fonctions dépendent de l'implémentation de la _file_. 
+
+Le second parcours fera la même chose mais en classant les nombres par la valeur du chiffre qui représente l'unité des dizaines. Le 3e parcours l'unité des centaines...
+
+Dans les exemples qui suivent, je vais utiliser une classe `Queue` dont l'imlémentation est spécifiées [ici](/algo/Algo-Structures-de-donnees.html)
+
+Le tableau d'éléments à ordonner dans l'ordre croissant de cet exemple contient $$n$$ éléments et ses indices vont de $$Gauche$$ à $$Droite$$ ($$0$$ à $$n-1$$)
+
+L'algorithme de **tri par base** peut facilement être divisé en deux fonctions. Dans un soucis de clarté je vais le diviser en 4 parties qui correspondes aux grandes étapes de l'algorithme.
+
+#### 1. fonction maximum
+
+Simple fonction pour itérer sur un tableau et retourner la clé ayant la plus grande valeur. 
+
+Nous avons besoin de cette valeur car **c'est le nombre de chiffres qui compose le plus grand nombre** (ou un autre nombre ayant le même nombre de chiffres) **qui va déterminer le nombre de parcours** nécéssaire pour trier le tableau.
+
+[<img src="/00illustrations/algo-tri/radixMax.png" align="" height="250" float="right">]()
 
 ```c++
-int nbPasses(int* t, int g, int d)
+int maximum(int *t, int g, int d)
 {
-	int max = t[g];
-	for(int i = g+1;i<=d;i++)
-	{
-		if(t[i]>max)
-		{
-			max = t[i];
-		}
-	}
-	return log10(max)+1;
+    int max = t[g];
+    for (int i = g+1; i <= d; ++i)
+    {
+        if (t[i] > max)
+        {
+            max = t[i];
+        }
+    }
+    return max;
 }
 ```
 
+#### 2. fonction nombreDeParcours
 
-Dans ce structogramme, casier est un tableau de files permettant d’ordonner tab suivant son nième chiffre : casier[x] contiendra les nombres dont le nième chiffre est x . L’idée est de commencer par distribuer dans ces files les valeurs de tab , puis dans un second temps, de mettre à jour le tableau en vidant les files par ordre croissant. 
+Nous avons besoin d'une fonction capable de nous retourner le **nombre de chiffres qui compose un nombre**.
+l'entier renvoyé par un cast `entier` du log en base 10 d'un nombre sera égal au nombre de chiffre qui le compose -1. Nous ajoutons donc +1.
+
+[<img src="/00illustrations/algo-tri/radixNombreDeParcours.png" align="" height="100" float="right">]()
+
+
+```c++
+int nbParcours(int *t, int g, int d)
+{
+    return log10(maximum(t,g,d))+1;
+}
+```
+_Le cast est fait automatiquement par le type de la valeur de retour_
+
+#### 3. fonction extraireUnite
+
+Il nous faut également une fonction capable de **retourner une unité spécifique d'un nombre** afin de pouvoir faire le classement en fonction de cette dernière.
+
+[<img src="/00illustrations/algo-tri/radixExtraireUnite.png" align="" height="100" float="right">]()
+
+```c++
+int extraireUnite(int nb, int pos)
+{
+    return (static_cast<int>(nb/pow(10,pos))%10);
+}
+```
+Ici, le cast est nécessaire pour éviter l'erreur:
+
+```bash
+invalid operands of types '__gnu_cxx::__promote_2<int, int, double,
+double>::__type {aka double}' and 'int' to binary 'operator%'
+     return ((nb/pow(10,pos))%10);
+                              ^
+```
+
+#### 4 triBase
+
+Après autant de parcours que le nombre de chiffres de la plus grande des clé, le tableau est trié. Cette méthode peut s’appliquer à des clés non numériques (ex : chaines de caractères), pourvu qu’on ait une relation d’ordre entre les symboles utilisés (ex : ordre alphabétique pour une chaîne de caractères). 
+
+[<img src="/00illustrations/algo-tri/radixTriBase.png" align="" height="350" float="right">]()
+
+
+
+Dans ce structogramme, `fileS` est un tableau de files permettant d’ordonner `t` suivant son nième chiffre : fileS[x] contiendra les nombres dont le nième chiffre est x . L’idée est de commencer par distribuer dans ces files les valeurs de `t` , puis dans un second temps, de mettre à jour le tableau en vidant les files par ordre croissant. 
  
 Il y a plusieurs façons de déterminer le nième chiffre d’un nombre. Parmi les plus répandues :  
 
 * Convertir le nombre en chaine de caractère, puis extraire le caractère désiré 
+
 * Arithmétique : $$1984 = 1 \cdot 103 + 9 \cdot 102 + 8 \cdot 101 + 4 \cdot 100$$ on peut donc aisément retrouver la valeur de chaque chiffre grâce à des divisions par des puissances de 10 et l’opérateur modulo. 
  
-Ces 2 idées peuvent également aider à déterminer la longueur de la valeur maximale (k). <span style="color:red">Une fonction mathématique classique donnera directement la valeur de k : laquelle ? </span> 
- 
-Pour compléter le tri il suffit de faire autant de passes que de nombre de chiffres dans la valeur maximale :
+Pour compléter le tri il suffit de faire autant de passes que de nombre de chiffres dans la valeur maximale.
+
+
+La `file` que j'utilise est issu la classe générique `Queue` qui hérite de la classe `List` (liste chainée) toutes deux détaillées [ici](/algo/Algo-Structures-de-donnees.html).
+
+##### a. sans gestion de la mémoire
 
 ```c++
-int extraireDigit(int nb, int pos)
+void triBase(int *t, int g, int d)
 {
-	return int(nb/pow(10,pos))%10;
-}
+    Queue<int> fileS[10];  
 
-int* triParBase(int* t, int g, int d)
-{
-	int nbPass = nbPasses(t,g,d);
-	file f[10] {};
-	for(int j = 0; j<nbPass;j++)
-	{
-		for(int i = g; i<=d;i++)
-		{
-			f[extraireDigit(t[i],j)].ajouter(t[i]);
-		}
-		int cpt = g;
-		for(int i =0;i<10;i++)
-		{
-			while(f[i].estVide()==false)
-			{
-				t[cpt]=f[i].retirer();
-				cpt++;
-			}
-		}
-	}
-	return t;
+    // tri
+    for (int unite = 0; unite < nbParcours(t,g,d); ++unite)
+    {
+        for (int index = g; index <= d; ++index)
+        {
+            fileS[extraireUnite(t[index], unite)].enqueue(t[index]);
+        }
+
+        int index = g;
+        for (int file = 0; file <= 9; ++file)
+        {
+            while (fileS[file].isEmpty() == false)
+            {
+                t[index++] = fileS[file].dequeue();
+            }
+        }    
+    }
 }
 ```
 
-[<img src="/00illustrations/algo-tri/triRadix.png" align="" height="150" float="right">]()
+##### b. avec gestion de la mémoire
+
+```c++
+void triBase(int *t, int g, int d)
+{
+    // initialisation
+    Queue<int> **fileS = new Queue<int>*[10];
+    for (int file = 0; file <= 9; ++file)
+    {
+        fileS[file] = new Queue<int>;
+    }    
+    // tri
+    for (int unite = 0; unite < nbParcours(t,g,d); ++unite)
+    {
+
+        for (int index = g; index <= d; ++index)
+        {
+            fileS[extraireUnite(t[index], unite)]->enqueue(t[index]);
+        }
+
+        debug(fileS, unite); // visualisation
+
+        int index = g;
+        for (int file = 0; file <= 9; file++)
+        {
+            while (fileS[file]->isEmpty() == false)
+            {
+                t[index++] = fileS[file]->dequeue();
+            }
+        }    
+    }
+    // nettoyage
+    for (int file = 0; file <= 9; ++file)
+    {
+        delete fileS[file];
+    }
+
+    delete [] fileS;
+}
+```
 
 ### Complexité
 Contrairement aux autres algorithmes de tri simples, le tri par base n’utilise pas de comparaisons : il fait partie des tris par distribution. 
@@ -556,7 +655,7 @@ C’est la copie des valeurs dans des files qui va permettre le tri, on peut don
 
 Pour trier un tableau de taille _n_ on doit effectuer _k_ passes, avec  _k_ le nombre de chiffres de la plus grande clé. 
 
-Lors de chaque passe, on va recopier les _n_ valeurs dans les files temporaires casier[x] \(**_n_ affectations**), puis les recopier dans le tableau initial. On aura donc 2 x _n_ opérations élémentaires.
+Lors de chaque parcours, on va recopier les _n_ valeurs dans les files temporaires fileS[x] \(**_n_ affectations**), puis les recopier dans le tableau initial. On aura donc 2 x _n_ opérations élémentaires.
 
 Pour _k_ passes, la fonction de complexité sera donc: $$ f(n)=2kn$$
 Si _k_ est constant, notre algorithne est donc linéaire: 
@@ -574,114 +673,3 @@ $$
 ### Stabilité
 
 Cette méthode de tri est stable, les valeurs rentrent dans les filles dans un certain ordre et en ressortent dans le même ordre.
-
-
-```c++
-#include<iostream>
-#include<cmath>
-#include"..//..//00Libs//queue.hpp"
-using namespace std;
-
-void debug(Queue<int> **queue, int unite);
-int findMax(int *t, int g, int d);
-int nbPasses(int *t, int g, int d);
-int extraireUnite(int n, int pos);
-void triBase(int *t, int g, int d);
-
-int main()
-{   
-    int liste[] = {3221,1,10,9680,577,9420,7,5622,4793,2030,3138,82,2599,743,4127};
-    int gauche  = 0;
-    int droite  = 14;
-
-    cout << "\ntableau initial: ";
-    for (auto &x: liste) { cout << x << " "; }
-
-    triBase(liste,gauche,droite);
-
-    cout << "\ntableau trié: ";
-    for (auto &x: liste) { cout << x << " "; }
-    return 0;
-}
-
-void debug(Queue<int> **queue, int unite)
-{
-    cout << "\n\nUNITE " << unite << "\n";
-    for (int casier = 0; casier <= 9; casier++)
-    {
-        cout << "\tcasier " << casier << "\n\t\t";
-        queue[casier]->display();
-    }
-}
-
-
-int findMax(int *t, int g, int d)
-{
-    int max = t[g];
-    for (int i = g+1; i <= d; ++i)
-    {
-        if (t[i] > max)
-        {
-            max = t[i];
-        }
-    }
-    return max;
-}
-
-
-int nbPasses(int *t, int g, int d)
-{
-    return log10(findMax(t,g,d))+1;
-}
-
-
-int extraireUnite(int n, int pos)
-{
-    return (static_cast<int>(n/pow(10,pos))%10);
-}
-
-
-void triBase(int *t, int g, int d)
-{
-    // initialisation
-    int digits = nbPasses(t,g,d);
-    Queue<int> **qTab = new Queue<int>*[10];
-
-    for (int casier = 0; casier <= 9; ++casier)
-    {
-        qTab[casier] = new Queue<int>;
-    }    
-
-    // tri
-    for (int unite = 0; unite < digits; ++unite)
-    {
-
-        for (int index = g; index <= d; ++index)
-        {
-            qTab[extraireUnite(t[index], unite)]->enqueue(t[index]);
-        }
-
-        debug(qTab, unite);
-
-        int indexe = g;
-        for (int casier = 0; casier <= 9; casier++)
-        {
-            while (qTab[casier]->isEmpty() == false)
-            {
-                t[indexe] = qTab[casier]->dequeue();
-                ++indexe;
-            }
-        }    
-    }
-
-    for (int casier = 0; casier <= 9; ++casier)
-    {
-        delete qTab[casier];
-    }
-
-    delete [] qTab;
-}
-```
-
-
-
