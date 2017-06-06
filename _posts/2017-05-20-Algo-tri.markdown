@@ -30,7 +30,7 @@ finished: false
 
 
 
-[<img src="/00illustrations/Echanger.png" align="" height="150" float="right">]()
+<img src="/00illustrations/Echanger.png" align="" height="150" float="right">
 
 
 ```c++
@@ -50,7 +50,7 @@ void echange(int *t, int idx)
 
 - Au second parcours, le second élément le plus petit se retrouvera trié à droite de l'élément le plus petit et ainsi de suite jusqu'au tri complet du tableau.
 
-[<img src="/00illustrations/Tri_Bulle.png" align="" height="200" float="right">]()
+<img src="/00illustrations/Tri_Bulle.png" align="" height="200" float="right">
 
 ```c++
 void triBulle(int *t, int g, int d)
@@ -213,7 +213,7 @@ Pour compenser
 l'asymétrie décrite, le sens de deux parcours
 consécutifs du tableau est alterné.
 
-[<img src="/00illustrations/triShaker.png" align="" height="500" float="right">]()
+<img src="/00illustrations/triShaker.png" align="" height="500" float="right">
 
 
 
@@ -327,7 +327,7 @@ On peut donc diviser ce problème en 3 parties distinctes:
 2. une fonction placerMinimumAGauche()
 3. triExtraction()
 
-[<img src="/00illustrations/Echanger.png" align="" height="150" float="right">]()
+<img src="/00illustrations/Echanger.png" align="" height="150" float="right">
 
 ```c++
 void echanger(int *t, int a, int b)
@@ -338,7 +338,7 @@ void echanger(int *t, int a, int b)
 }
 ```
 
-[<img src="/00illustrations/placerMinimumAGauche.png" align="" height="250" float="right">]()
+<img src="/00illustrations/placerMinimumAGauche.png" align="" height="250" float="right">
 
 ```c++
 void placerMinGauche(int *t, int g, int d)
@@ -355,7 +355,7 @@ void placerMinGauche(int *t, int g, int d)
 }
 ```
 
-[<img src="/00illustrations/triExtraction.png" align="" height="150" float="right">]()
+<img src="/00illustrations/triExtraction.png" align="" height="150" float="right">
 
 ```c++
 void triExtract(int *t, int g, int d)
@@ -420,15 +420,15 @@ Cette méthode de tri consiste à insérer un élément du tableau qui n'est pas
 
 Dans le tableau _T_ suivant, les éléments d'indices $$Gauche$$ $$à$$ $$i-1$$ sont déjà dans l'ordre croissant. L'élément d'indice _i_ doit être inséré. 
 
-[<img src="/00illustrations/algo-tri/insert1.png" align="" height="150" float="right">]()
+<img src="/00illustrations/algo-tri/insert1.png" align="" height="150" float="right">
 
 Pour insérer l'élément d'indice _i_ dans la partie du tableau déjà trié, il faut le sauvegarder puis décaler vers la droite tous les éléments dont la clef est supérieure à l'élément à insérer. Ainsi, l'emplacement de l'élément à insérer est trouvé et une case libre est préparée au bon emplacement.
 
-[<img src="/00illustrations/algo-tri/insert2.png" align="" height="150" float="right">]()
+<img src="/00illustrations/algo-tri/insert2.png" align="" height="150" float="right">
 
 #### insertion:
 
-[<img src="/00illustrations/algo-tri/insertion-struct1.png" align="" height="250" float="right">]()
+<img src="/00illustrations/algo-tri/insertion-struct1.png" align="" height="250" float="right">
 
 A la sortie de la boucle _tant que_ qui permet de reculer en créant une case libre, l'indice _j_ correspond à la case contenant la plus grande clef inférieure ou égale à la clef de l'élément à insérer qui se trouve dans la Sauvegarde (temp).
 
@@ -448,7 +448,7 @@ void insertion(int *t, int g, int idx)
 ```
 Pour trier complètement le tableau il suffit d'insérer successivement ses éléments en commençant par le deuxième élément (indice $$Gauche+1$$) et en terminant par le dernier élément du tableau (indice $$Droite$$). 
 
-[<img src="/00illustrations/algo-tri/insert3.png" align="" height="150" float="right">]()
+<img src="/00illustrations/algo-tri/insert3.png" align="" height="150" float="right">
 
 
 ```c++
@@ -509,7 +509,7 @@ Simple fonction pour itérer sur un tableau et retourner la clé ayant la plus g
 
 Nous avons besoin de cette valeur car **c'est le nombre de chiffres qui compose le plus grand nombre** (ou un autre nombre ayant le même nombre de chiffres) **qui va déterminer le nombre de parcours** nécéssaire pour trier le tableau.
 
-[<img src="/00illustrations/algo-tri/radixMax.png" align="" height="250" float="right">]()
+<img src="/00illustrations/algo-tri/radixMax.png" align="" height="250" float="right">
 
 ```c++
 int maximum(int *t, int g, int d)
@@ -531,7 +531,7 @@ int maximum(int *t, int g, int d)
 Nous avons besoin d'une fonction capable de nous retourner le **nombre de chiffres qui compose un nombre**.
 l'entier renvoyé par un cast `entier` du log en base 10 d'un nombre sera égal au nombre de chiffre qui le compose -1. Nous ajoutons donc +1.
 
-[<img src="/00illustrations/algo-tri/radixNombreDeParcours.png" align="" height="100" float="right">]()
+<img src="/00illustrations/algo-tri/radixNombreDeParcours.png" align="" height="100" float="right">
 
 
 ```c++
@@ -546,7 +546,7 @@ _Le cast est fait automatiquement par le type de la valeur de retour_
 
 Il nous faut également une fonction capable de **retourner une unité spécifique d'un nombre** afin de pouvoir faire le classement en fonction de cette dernière.
 
-[<img src="/00illustrations/algo-tri/radixExtraireUnite.png" align="" height="100" float="right">]()
+<img src="/00illustrations/algo-tri/radixExtraireUnite.png" align="" height="100" float="right">
 
 ```c++
 int extraireUnite(int nb, int pos)
@@ -567,7 +567,7 @@ double>::__type {aka double}' and 'int' to binary 'operator%'
 
 Après autant de parcours que le nombre de chiffres de la plus grande des clé, le tableau est trié. Cette méthode peut s’appliquer à des clés non numériques (ex : chaines de caractères), pourvu qu’on ait une relation d’ordre entre les symboles utilisés (ex : ordre alphabétique pour une chaîne de caractères). 
 
-[<img src="/00illustrations/algo-tri/radixTriBase.png" align="" height="350" float="right">]()
+<img src="/00illustrations/algo-tri/radixTriBase.png" align="" height="350" float="right">
 
 
 
