@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "Py: NumPy"
-subtitle: "introduction à NumPy et MatPlotLib"
+title: "Py: MatPlotLib"
+subtitle: "introduction MatPlotLib"
 date: 2017-06-06
 author: Sol
 category: Py
-tags: Py numpy matplotlib
+tags: Py matplotlib
 finished: false
 ---
 
