@@ -22,7 +22,7 @@ finished: false
 1. Un objet est dit récursif si il se définit à partir de lui-même, _si il apparait dans sa définition_.
 2. Une construction est **récursive** si elle se définit à partir d'elle-même.
 
- <img src="/00illustrations/algo-recur/Sierpinski.png" height="100">
+ <img src="/00illustrations/algo-recur/sier.png" height="auto">
  _triangle de Sierpinski_
 
 Quelques acronymes récursifs courants:  
@@ -67,7 +67,8 @@ L'appel d'une fonction se fait dans un  <span style="color:red"> contexte d'exec
 * les valeurs des paramètres et des variables définies par la fonction  
 
 <br>
-<iframe width="800" height="550" frameborder="0" src="http://pythontutor.com/iframe-embed.html#code=def%20factorielle%28n%29%3A%0A%20%20%20%20if%20%28n%20%3D%3D%201%29%3A%0A%20%20%20%20%20%20%20%20return%201%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20n%20*%20factorielle%28n%20-%201%29%0A%0A%0Aprint%28factorielle%284%29%29&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=12&heapPrimitives=false&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>
+<iframe width="800" height="550" frameborder="0" src="http://pythontutor.com/iframe-embed.html#code=def%20factorielle%28n%29%3A%0A%20%20%20%20if%20%28n%20%3D%3D%201%29%3A%0A%20%20%20%20%20%20%20%20return%201%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20n%20*%20factorielle%28n%20-%201%29%0A%0A%0Aprint%28factorielle%284%29%29&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=12&heapPrimitives=false&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false"> 
+</iframe>
 
 Prévoir à l'avance le nombre d'appels d'une fonction récursive pouvant être en cours simultanément en mémoire est **impossible**. La récursivité suppose donc une <span style="color:red"> allocation dynamique </span> de la mémoire (à l'execution).
 
