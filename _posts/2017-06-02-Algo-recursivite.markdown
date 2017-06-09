@@ -98,9 +98,9 @@ L'exécution d'une version récursive d'un algorithme est généralement un peu 
 
 Un algorithme récursif peut conduire à exécuter bien plus d'instructions que la version itérative.
 
-_Exemple:_ la suite de Fibonacci ($$ \large n = 45 $$)
+_Exemple:_ la suite de Fibonacci 
 
-### Suite de Fibbonacci
+### Suite de Fibbonacci ($$ \large n = 45 $$)
 
 > Par définition, les deux premiers nombres de la suite de Fibonacci sont 1 et 1 [ou](https://fr.wikipedia.org/wiki/Suite_de_Fibonacci) 0 et 1. Nous devons en tenir compte pour l'implémentation. 
 
@@ -381,5 +381,10 @@ tri insert  (optionnel)-->
 
 
 <!--Bien checker la fonction compte pour être sur de quand c'est terminal et non-terminal-->
+
+
+
+
+
 
 
