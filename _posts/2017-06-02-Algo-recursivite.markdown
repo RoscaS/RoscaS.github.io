@@ -11,6 +11,8 @@ finished: false
 
 # Récursivité
 
+
+
 ## Sources
 [visualgo.net](https://visualgo.net/en/recursion)  
 [u-picardie](https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf)  _aller fouiller un peu, ça semble bien !_  
@@ -184,7 +186,50 @@ Les différences de temps d'éxecution parlent pour elles mêmes et cette animat
     <a  href="https://visualgo.net/en/recursion"><img src="/00illustrations/algo-recur/fibo8.gif" ></a>
 </div>
 
-## Récurivité terminale et non terminale
+## Récursivité terminale et non terminale
+
+En programmation, on distingue, pour des raisons d'efficacité, 2 types d'algorithmes récursifs.
+
+### 1. récursivité Terminale
+
+Un algorithme est terminal si aucune opération ne sui l'appel récursif.
+C'est l'appel récursif qui "termine" l'algorithme.
+Toutes les opération sont faites avant l'appel récursif: La phase de remontée devient alors inutile (elle ne fait aucun traitement, hormis le réajustement de la pile).
+La récursivité terminale revient à appliquer l'adage *Diviser pour régner* de la façon suivante:
+
+* On traite la données courante
+* Le même traitement est appliqué au reste des données
+
+### 2. Récursivité non- terminale
+
+Un algorithme récursif est **non-terminal** lorsque des opérations suivent l'appel récursif. C'est notament le cas lorsque l'appel récursif est utilisé dans une expression pour calculer un résultat. Toutes les opérations ne sont pas faites avant l'appel récursif: la phase de remontée fait une partie du traitement, elle contient souvent la majorité des opérations. La récursivité no-terminale revient à appliquer l'adage *diviser pour régner* de la façon suivante:
+
+* On réduit le problème à son cas trivial
+* On traite le cas et on élargit l'ensemble des données traitées.
+
+## Points cruciaux pour la programmation récursive
+
+* Avoir une condition terminale
+* Avoir un appel récursif dont un des paramètres converge vers la condition terminale
+* S'assurer que la condition est **TOUJOURS** atteinte après un nombre fini d'appels
+
+## Quand éviter d'utiliser un algorithme récursif ?
+
+* Lorsque la récurence est d'ordre plus grande que 1 (c'est à dire que l valeur au rang $$ \large n $$ ne dépend pas seulement du rang $$ \large n-1 $$, mais aussi de $$ \large n-2 $$, voir $$ \large n-3 $$,... ) 
+
+* Une utilisation "aveugle" de la récursivité impliquera une redondance de calculs. Dans ce cas, il peut être utile de dérouler l'algorithme avant de l'implémenter pour s'assurer qu'il ne génère pas d'opeerations inutiles.
+
+## Récursivité et itérations 
+
+Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l'un à l'autre n'est pas toujours aisé. La procédure de derécursivation consiste à gérer dans le programme le comportement de la pile lors des appels récursifs. 
+
+En règle générale, un algorithme récursif est moins performant qu'un algorithme itératif : Chaque appel récursif nécessite d'empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d'exécuter les instructions qui suivent l'appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l'équivalent itératif. Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs. 
+ 
+Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n'y pas d'instruction à exécuter après l'appel récursif terminal, la phase de remontée pourra être supprimée. Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.
+
+
+
+## Précisions sur les deux types de récursivité (terminal/non terminal)
  
 * Une fonction récursive est dite <span style="color:red">terminale</span> si aucun traitement n'est effectué à la remontée d' un appel récursif (sauf le retour d'une valeur).
 
@@ -203,7 +248,7 @@ debut
 fin
  ```
 
- Exemple de terminalité : 
+### Exemple de terminalité : 
 
  On peut facilement rendre notre fonction factorielle terminale:
 
@@ -220,7 +265,7 @@ fin
 fin
 ```
 
- ### Intérêt de la récursivité terminale
+### Intérêt de la récursivité terminale
 
 Une fonction récursive <span style="color:red">terminale</span> est en théorie plus efficace (mais souvent moins facile à écrire) que son équivalent non terminale: il n'y a qu'une phase de descente et pas de phase de remontée.
 
@@ -231,7 +276,7 @@ Certains langages utilisent cette propriété pour exécuter les récursions ter
 Il est possible de transformer de façon simple une fonction récursive terminale en une fonction itérative : c'est la <span style="color:green">dérécursivation</span>.
 
 
-Une fonction récursive terminale a pour forme générale:
+#### Une fonction récursive terminale a pour forme générale:
 
 ```c
 fonction avec retour T recursive(P)
@@ -253,7 +298,7 @@ fin
 * **I2** est le bloc d'instructions exécuté si **C** est fausse
 * **f** la fonction de transformation des paramètres
 
-La fonction itérative correspondante est:
+#### La fonction itérative correspondante est:
 
 ```c
 fonction avec retour T iterative(P)
@@ -267,7 +312,7 @@ debut
     I1
 ```
 
-Dérécursivation de la factorielle terminale:
+### Dérécursivation de la factorielle terminale:
 
 ```c
 // cette fonction doit être appelée avec a=1
@@ -292,7 +337,7 @@ debut
 fin
 ```
 
-Une fonction récursive non terminale a pour forme générale :
+#### Une fonction récursive non terminale a pour forme générale :
 
 ```c
 fonction avec retour T recursive(P)
@@ -332,4 +377,9 @@ ex 3
 tri select  
 
 tri insert  (optionnel)-->
+
+<!-- Demander ce que veut dire "dérouler l'algorithme"-->
+
+
+
 

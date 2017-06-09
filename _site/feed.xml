@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 09 Jun 2017 03:07:21 +0200</pubDate>
-    <lastBuildDate>Fri, 09 Jun 2017 03:07:21 +0200</lastBuildDate>
+    <pubDate>Fri, 09 Jun 2017 07:26:28 +0200</pubDate>
+    <lastBuildDate>Fri, 09 Jun 2017 07:26:28 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -619,7 +619,59 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
     &lt;a href=&quot;https://visualgo.net/en/recursion&quot;&gt;&lt;img src=&quot;/00illustrations/algo-recur/fibo8.gif&quot; /&gt;&lt;/a&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;récurivité-terminale-et-non-terminale&quot;&gt;Récurivité terminale et non terminale&lt;/h2&gt;
+&lt;h2 id=&quot;récursivité-terminale-et-non-terminale&quot;&gt;Récursivité terminale et non terminale&lt;/h2&gt;
+
+&lt;p&gt;En programmation, on distingue, pour des raisons d’efficacité, 2 types d’algorithmes récursifs.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-récursivité-terminale&quot;&gt;1. récursivité Terminale&lt;/h3&gt;
+
+&lt;p&gt;Un algorithme est terminal si aucune opération ne sui l’appel récursif.
+C’est l’appel récursif qui “termine” l’algorithme.
+Toutes les opération sont faites avant l’appel récursif: La phase de remontée devient alors inutile (elle ne fait aucun traitement, hormis le réajustement de la pile).
+La récursivité terminale revient à appliquer l’adage &lt;em&gt;Diviser pour régner&lt;/em&gt; de la façon suivante:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;On traite la données courante&lt;/li&gt;
+  &lt;li&gt;Le même traitement est appliqué au reste des données&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-récursivité-non--terminale&quot;&gt;2. Récursivité non- terminale&lt;/h3&gt;
+
+&lt;p&gt;Un algorithme récursif est &lt;strong&gt;non-terminal&lt;/strong&gt; lorsque des opérations suivent l’appel récursif. C’est notament le cas lorsque l’appel récursif est utilisé dans une expression pour calculer un résultat. Toutes les opérations ne sont pas faites avant l’appel récursif: la phase de remontée fait une partie du traitement, elle contient souvent la majorité des opérations. La récursivité no-terminale revient à appliquer l’adage &lt;em&gt;diviser pour régner&lt;/em&gt; de la façon suivante:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;On réduit le problème à son cas trivial&lt;/li&gt;
+  &lt;li&gt;On traite le cas et on élargit l’ensemble des données traitées.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;points-cruciaux-pour-la-programmation-récursive&quot;&gt;Points cruciaux pour la programmation récursive&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Avoir une condition terminale&lt;/li&gt;
+  &lt;li&gt;Avoir un appel récursif dont un des paramètres converge vers la condition terminale&lt;/li&gt;
+  &lt;li&gt;S’assurer que la condition est &lt;strong&gt;TOUJOURS&lt;/strong&gt; atteinte après un nombre fini d’appels&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;quand-éviter-dutiliser-un-algorithme-récursif-&quot;&gt;Quand éviter d’utiliser un algorithme récursif ?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Lorsque la récurence est d’ordre plus grande que 1 (c’est à dire que l valeur au rang &lt;script type=&quot;math/tex&quot;&gt;\large n&lt;/script&gt; ne dépend pas seulement du rang &lt;script type=&quot;math/tex&quot;&gt;\large n-1&lt;/script&gt;, mais aussi de &lt;script type=&quot;math/tex&quot;&gt;\large n-2&lt;/script&gt;, voir &lt;script type=&quot;math/tex&quot;&gt;\large n-3&lt;/script&gt;,… )&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Une utilisation “aveugle” de la récursivité impliquera une redondance de calculs. Dans ce cas, il peut être utile de dérouler l’algorithme avant de l’implémenter pour s’assurer qu’il ne génère pas d’opeerations inutiles.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;récursivité-et-itérations&quot;&gt;Récursivité et itérations&lt;/h2&gt;
+
+&lt;p&gt;Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l’un à l’autre n’est pas toujours aisé. La procédure de derécursivation consiste à gérer dans le programme le comportement de la pile lors des appels récursifs.&lt;/p&gt;
+
+&lt;p&gt;En règle générale, un algorithme récursif est moins performant qu’un algorithme itératif : Chaque appel récursif nécessite d’empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d’exécuter les instructions qui suivent l’appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l’équivalent itératif. Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs.&lt;/p&gt;
+
+&lt;p&gt;Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n’y pas d’instruction à exécuter après l’appel récursif terminal, la phase de remontée pourra être supprimée. Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.&lt;/p&gt;
+
+&lt;h2 id=&quot;précisions-sur-les-deux-types-de-récursivité-terminalnon-terminal&quot;&gt;Précisions sur les deux types de récursivité (terminal/non terminal)&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -643,7 +695,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Exemple de terminalité :&lt;/p&gt;
+&lt;h3 id=&quot;exemple-de-terminalité-&quot;&gt;Exemple de terminalité :&lt;/h3&gt;
 
 &lt;p&gt;On peut facilement rendre notre fonction factorielle terminale:&lt;/p&gt;
 
@@ -660,7 +712,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;### Intérêt de la récursivité terminale&lt;/p&gt;
+&lt;h3 id=&quot;intérêt-de-la-récursivité-terminale&quot;&gt;Intérêt de la récursivité terminale&lt;/h3&gt;
 
 &lt;p&gt;Une fonction récursive &lt;span style=&quot;color:red&quot;&gt;terminale&lt;/span&gt; est en théorie plus efficace (mais souvent moins facile à écrire) que son équivalent non terminale: il n’y a qu’une phase de descente et pas de phase de remontée.&lt;/p&gt;
 
@@ -670,7 +722,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
 
 &lt;p&gt;Il est possible de transformer de façon simple une fonction récursive terminale en une fonction itérative : c’est la &lt;span style=&quot;color:green&quot;&gt;dérécursivation&lt;/span&gt;.&lt;/p&gt;
 
-&lt;p&gt;Une fonction récursive terminale a pour forme générale:&lt;/p&gt;
+&lt;h4 id=&quot;une-fonction-récursive-terminale-a-pour-forme-générale&quot;&gt;Une fonction récursive terminale a pour forme générale:&lt;/h4&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
@@ -694,7 +746,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
   &lt;li&gt;&lt;strong&gt;f&lt;/strong&gt; la fonction de transformation des paramètres&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;La fonction itérative correspondante est:&lt;/p&gt;
+&lt;h4 id=&quot;la-fonction-itérative-correspondante-est&quot;&gt;La fonction itérative correspondante est:&lt;/h4&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iterative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
@@ -708,7 +760,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Dérécursivation de la factorielle terminale:&lt;/p&gt;
+&lt;h3 id=&quot;dérécursivation-de-la-factorielle-terminale&quot;&gt;Dérécursivation de la factorielle terminale:&lt;/h3&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// cette fonction doit être appelée avec a=1
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielleRecurTerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -733,7 +785,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Une fonction récursive non terminale a pour forme générale :&lt;/p&gt;
+&lt;h4 id=&quot;une-fonction-récursive-non-terminale-a-pour-forme-générale-&quot;&gt;Une fonction récursive non terminale a pour forme générale :&lt;/h4&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
@@ -769,6 +821,8 @@ ex 3
 tri select  
 
 tri insert  (optionnel)--&gt;
+
+&lt;!-- Demander ce que veut dire &quot;dérouler l'algorithme&quot;--&gt;
 
 </description>
         <pubDate>Fri, 02 Jun 2017 00:00:00 +0200</pubDate>

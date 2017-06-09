@@ -294,7 +294,59 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
     <a href="https://visualgo.net/en/recursion"><img src="/00illustrations/algo-recur/fibo8.gif" /></a>
 </div>
 
-<h2 id="récurivité-terminale-et-non-terminale">Récurivité terminale et non terminale</h2>
+<h2 id="récursivité-terminale-et-non-terminale">Récursivité terminale et non terminale</h2>
+
+<p>En programmation, on distingue, pour des raisons d’efficacité, 2 types d’algorithmes récursifs.</p>
+
+<h3 id="1-récursivité-terminale">1. récursivité Terminale</h3>
+
+<p>Un algorithme est terminal si aucune opération ne sui l’appel récursif.
+C’est l’appel récursif qui “termine” l’algorithme.
+Toutes les opération sont faites avant l’appel récursif: La phase de remontée devient alors inutile (elle ne fait aucun traitement, hormis le réajustement de la pile).
+La récursivité terminale revient à appliquer l’adage <em>Diviser pour régner</em> de la façon suivante:</p>
+
+<ul>
+  <li>On traite la données courante</li>
+  <li>Le même traitement est appliqué au reste des données</li>
+</ul>
+
+<h3 id="2-récursivité-non--terminale">2. Récursivité non- terminale</h3>
+
+<p>Un algorithme récursif est <strong>non-terminal</strong> lorsque des opérations suivent l’appel récursif. C’est notament le cas lorsque l’appel récursif est utilisé dans une expression pour calculer un résultat. Toutes les opérations ne sont pas faites avant l’appel récursif: la phase de remontée fait une partie du traitement, elle contient souvent la majorité des opérations. La récursivité no-terminale revient à appliquer l’adage <em>diviser pour régner</em> de la façon suivante:</p>
+
+<ul>
+  <li>On réduit le problème à son cas trivial</li>
+  <li>On traite le cas et on élargit l’ensemble des données traitées.</li>
+</ul>
+
+<h2 id="points-cruciaux-pour-la-programmation-récursive">Points cruciaux pour la programmation récursive</h2>
+
+<ul>
+  <li>Avoir une condition terminale</li>
+  <li>Avoir un appel récursif dont un des paramètres converge vers la condition terminale</li>
+  <li>S’assurer que la condition est <strong>TOUJOURS</strong> atteinte après un nombre fini d’appels</li>
+</ul>
+
+<h2 id="quand-éviter-dutiliser-un-algorithme-récursif-">Quand éviter d’utiliser un algorithme récursif ?</h2>
+
+<ul>
+  <li>
+    <p>Lorsque la récurence est d’ordre plus grande que 1 (c’est à dire que l valeur au rang <script type="math/tex">\large n</script> ne dépend pas seulement du rang <script type="math/tex">\large n-1</script>, mais aussi de <script type="math/tex">\large n-2</script>, voir <script type="math/tex">\large n-3</script>,… )</p>
+  </li>
+  <li>
+    <p>Une utilisation “aveugle” de la récursivité impliquera une redondance de calculs. Dans ce cas, il peut être utile de dérouler l’algorithme avant de l’implémenter pour s’assurer qu’il ne génère pas d’opeerations inutiles.</p>
+  </li>
+</ul>
+
+<h2 id="récursivité-et-itérations">Récursivité et itérations</h2>
+
+<p>Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l’un à l’autre n’est pas toujours aisé. La procédure de derécursivation consiste à gérer dans le programme le comportement de la pile lors des appels récursifs.</p>
+
+<p>En règle générale, un algorithme récursif est moins performant qu’un algorithme itératif : Chaque appel récursif nécessite d’empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d’exécuter les instructions qui suivent l’appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l’équivalent itératif. Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs.</p>
+
+<p>Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n’y pas d’instruction à exécuter après l’appel récursif terminal, la phase de remontée pourra être supprimée. Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.</p>
+
+<h2 id="précisions-sur-les-deux-types-de-récursivité-terminalnon-terminal">Précisions sur les deux types de récursivité (terminal/non terminal)</h2>
 
 <ul>
   <li>
@@ -318,7 +370,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </code></pre>
 </div>
 
-<p>Exemple de terminalité :</p>
+<h3 id="exemple-de-terminalité-">Exemple de terminalité :</h3>
 
 <p>On peut facilement rendre notre fonction factorielle terminale:</p>
 
@@ -335,7 +387,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </code></pre>
 </div>
 
-<p>### Intérêt de la récursivité terminale</p>
+<h3 id="intérêt-de-la-récursivité-terminale">Intérêt de la récursivité terminale</h3>
 
 <p>Une fonction récursive <span style="color:red">terminale</span> est en théorie plus efficace (mais souvent moins facile à écrire) que son équivalent non terminale: il n’y a qu’une phase de descente et pas de phase de remontée.</p>
 
@@ -345,7 +397,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 
 <p>Il est possible de transformer de façon simple une fonction récursive terminale en une fonction itérative : c’est la <span style="color:green">dérécursivation</span>.</p>
 
-<p>Une fonction récursive terminale a pour forme générale:</p>
+<h4 id="une-fonction-récursive-terminale-a-pour-forme-générale">Une fonction récursive terminale a pour forme générale:</h4>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">recursive</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
 <span class="n">debut</span>
@@ -369,7 +421,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
   <li><strong>f</strong> la fonction de transformation des paramètres</li>
 </ul>
 
-<p>La fonction itérative correspondante est:</p>
+<h4 id="la-fonction-itérative-correspondante-est">La fonction itérative correspondante est:</h4>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">iterative</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
 <span class="n">debut</span>
@@ -383,7 +435,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </code></pre>
 </div>
 
-<p>Dérécursivation de la factorielle terminale:</p>
+<h3 id="dérécursivation-de-la-factorielle-terminale">Dérécursivation de la factorielle terminale:</h3>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// cette fonction doit être appelée avec a=1
 </span><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">entier</span> <span class="n">factorielleRecurTerm</span><span class="p">(</span><span class="n">entier</span> <span class="n">n</span><span class="p">,</span> <span class="n">entier</span> <span class="n">a</span><span class="p">)</span>
@@ -408,7 +460,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </code></pre>
 </div>
 
-<p>Une fonction récursive non terminale a pour forme générale :</p>
+<h4 id="une-fonction-récursive-non-terminale-a-pour-forme-générale-">Une fonction récursive non terminale a pour forme générale :</h4>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">recursive</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
 <span class="n">debut</span>
@@ -444,6 +496,8 @@ ex 3
 tri select  
 
 tri insert  (optionnel)-->
+
+<!-- Demander ce que veut dire "dérouler l'algorithme"-->
 
 
 </div>
