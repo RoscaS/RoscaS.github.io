@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Algo: Recursivité (fr)</title>
-  <meta name="description" content="RECURSIVITE">
+  <meta name="description" content="Récursivité">
 </head>
 
 
@@ -103,32 +103,334 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="recursivite">RECURSIVITE</h2>
+    <h1 id="récursivité">Récursivité</h1>
 
-<h3 id="definition">definition</h3>
+<h2 id="definition">Definition</h2>
 
-<p>Un terme est récursif si il apparait dans sa définition</p>
+<ol>
+  <li>Un objet est dit récursif si il se définit à partir de lui-même, <em>si il apparait dans sa définition</em>.</li>
+  <li>Une construction est <strong>récursive</strong> si elle se définit à partir d’elle-même.</li>
+</ol>
 
-<h2>#</h2>
+<blockquote>
+  <p><img src="/00illustrations/algo-recur/Sierpinski.png" height="100" />
+<br />
+<em>triangle de Sierpinski</em></p>
+</blockquote>
 
-<p>Fonction où dans sa définition, on va retrouver un appel à la fonction elle même.
-Récursivité et itérativité = deux façons de répéter des actions.</p>
+<p>Quelques acronymes récursifs courants:</p>
 
-<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">//...
-</span>    <span class="c1">//...
-</span>    <span class="n">f</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-<span class="p">}</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>PHP, GNU, LAME, WINE, YAML
 </code></pre>
 </div>
 
-<h3 id="todo">TODO</h3>
+<h2 id="en-informatique">En informatique</h2>
 
-<p>ex 3 <br />
-tri select</p>
+<p>En informatique, un programme est dit <strong>récursif</strong> s’il s’appelle lui même. Il s’agit donc <strong>forcément d’une fonction</strong>.</p>
 
-<p>tri insert  (optionnel)</p>
+<p><em>Exemple:</em> <script type="math/tex">\large factorielle</script> <script type="math/tex">\large n! = 1 \cdot 2 \cdot \ldots \cdot n \Rightarrow n! = n \cdot (n-1)!</script></p>
+
+<p><img src="/00illustrations/algo-recur/facto1-def.png" height="250" /></p>
+
+<ul>
+  <li>L’appel récursif est traité comme n’importe quel appel de fonction.</li>
+</ul>
+
+<p><img src="/00illustrations/algo-recur/facto1.png" height="700" /></p>
+
+<h2 id="condition-darrêt">Condition d’arrêt</h2>
+
+<ul>
+  <li>
+    <p>Pusqu’une fonction récursive s’appelle elle-même, il est impératif qu’on prévoit une <span style="color:red"> condition d’arrêt </span> à la récursion, sinon le programme ne s’arrête jamais !</p>
+  </li>
+  <li>
+    <p><strong>On doit toujours tester en premier la condition d’arrêt</strong>, et ensuite, si la condition n’est pas vérifiée, lancer un appel récursif.</p>
+  </li>
+</ul>
+
+<p><em>Exemple de la factorielle:</em> <span style="color:red"> <script type="math/tex">\large si</script> </span> <script type="math/tex">\large n \neq 1, \quad n \cdot (n-1)!</script> <span style="color:red"> <script type="math/tex">\large sinon</script></span><script type="math/tex">\large, \quad n! =1</script></p>
+
+<p><img src="/00illustrations/algo-recur/facto2-def.png" height="250" /></p>
+
+<blockquote>
+  <p><strong>main()</strong></p>
+</blockquote>
+
+<p><img src="/00illustrations/algo-recur/facto2.png" height="600" /></p>
+
+<p><br /><a href="https://visualgo.net/en/recursion">animation</a></p>
+
+<h2 id="pile-dexecution-stack">Pile d’execution (stack)</h2>
+
+<p>La récursivité fonctionne car chaque appel de fonction est différent.
+L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d’execution </span> propre, qui contient:</p>
+
+<ul>
+  <li>l’adresse mémoire de l’instruction qui a appelé la fonction</li>
+  <li>les valeurs des paramètres et des variables définies par la fonction</li>
+</ul>
+
+<p><br /></p>
+<iframe width="800" height="550" frameborder="0" src="http://pythontutor.com/iframe-embed.html#code=def%20factorielle%28n%29%3A%0A%20%20%20%20if%20%28n%20%3D%3D%201%29%3A%0A%20%20%20%20%20%20%20%20return%201%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20n%20*%20factorielle%28n%20-%201%29%0A%0A%0Aprint%28factorielle%284%29%29&amp;codeDivHeight=400&amp;codeDivWidth=350&amp;cumulative=false&amp;curInstr=12&amp;heapPrimitives=false&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false"> </iframe>
+
+<p>Prévoir à l’avance le nombre d’appels d’une fonction récursive pouvant être en cours simultanément en mémoire est <strong>impossible</strong>. La récursivité suppose donc une <span style="color:red"> allocation dynamique </span> de la mémoire (à l’execution).</p>
+
+<p><strong>Attention:</strong> éxecuter trop d’appels de fonction fera déborder le stack !</p>
+
+<h2 id="récursif-vs-itératif">Récursif VS itératif</h2>
+
+<p>Il est souvent possible d’écrire un même algorithme en itératif et en récursif.</p>
+
+<p>L’exécution d’une version récursive d’un algorithme est généralement un peu moins rapide que celle de la version itérative, même si le nombre d’instructions est le même (à cause de la gestion des appels de fonction).</p>
+
+<!--![/00illustrations/algo-recur/recVSit.png](/00illustrations/algo-recur/recVSit.png)-->
+
+<div class="image" style="width: 100%">
+    <a href="/00illustrations/algo-recur/recVSit.png"><img src="/00illustrations/algo-recur/recVSit.png" /></a>
+</div>
+
+<p>Un algorithme récursif peut conduire à exécuter bien plus d’instructions que la version itérative.</p>
+
+<p><em>Exemple:</em> la suite de Fibonacci</p>
+
+<h3 id="suite-de-fibbonacci">Suite de Fibbonacci</h3>
+
+<blockquote>
+  <p>Par définition, les deux premiers nombres de la suite de Fibonacci sont 1 et 1 <a href="https://fr.wikipedia.org/wiki/Suite_de_Fibonacci">ou</a> 0 et 1. Nous devons en tenir compte pour l’implémentation.</p>
+</blockquote>
+
+<h4 id="récursif">récursif:</h4>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">fib1</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">fib1</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib1</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// output:
+// 1134903170
+// 10.859 seconds
+</span></code></pre>
+</div>
+
+<p>Temps d’execution: <script type="math/tex">\large \color{red}{10.859} \; secondes</script></p>
+
+<p><em>version plus compacte:</em></p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">fib2</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> 
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">{</span>
+     <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+    <span class="p">}</span>     
+    <span class="k">return</span> <span class="p">(</span><span class="n">fib2</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib2</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// output:
+// 1134903170
+// 10.738 seconds
+</span></code></pre>
+</div>
+
+<p>Temps d’execution: <script type="math/tex">\large \color{red}{10.738} \; secondes</script></p>
+
+<p><em>version très compacte:</em></p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code> <span class="kt">int</span> <span class="nf">fib3</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">?</span> <span class="n">n</span><span class="o">:</span> <span class="n">fib3</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">fib3</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="c1">// output:
+// 1134903170
+// 9.752 seconds
+</span></code></pre>
+</div>
+
+<p>Temps d’execution: <script type="math/tex">\large \color{red}{9.752} \; secondes</script></p>
+
+<h4 id="itératif">itératif:</h4>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">fib_it</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
+    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+    <span class="p">}</span>           
+    <span class="k">return</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// output:
+// 1134903170
+// 0.389 seconds
+</span></code></pre>
+</div>
+
+<p>Temps d’execution: <script type="math/tex">\large \color{green}{0.389} \; secondes</script></p>
+
+<p>Les différences de temps d’éxecution parlent pour elles mêmes et cette animation nous aide à en comprendre la raison:</p>
+
+<div class="image" style="width: 100%">
+    <a href="https://visualgo.net/en/recursion"><img src="/00illustrations/algo-recur/fibo8.gif" /></a>
+</div>
+
+<h2 id="récurivité-terminale-et-non-terminale">Récurivité terminale et non terminale</h2>
+
+<ul>
+  <li>
+    <p>Une fonction récursive est dite <span style="color:red">terminale</span> si aucun traitement n’est effectué à la remontée d’ un appel récursif (sauf le retour d’une valeur).</p>
+  </li>
+  <li>
+    <p>Une fonction récursive est dite <span style="color:green">non terminale</span> si le résultat de l’appel récursif est utilisé pour réaliser un traitement (en plus du retour d’une valeur).</p>
+  </li>
+</ul>
+
+<p>Exemple de non terminalité : forme récursive non terminale  de la factorielle, les calculs se font à la remontée. C’est l’exemple au détbut de cette page !</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">entier</span> <span class="n">factorielleNT</span><span class="p">(</span><span class="n">entier</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">debut</span>
+    <span class="n">si</span> <span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">alors</span>
+        <span class="n">retourne</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">sinon</span> 
+        <span class="n">retourne</span> <span class="n">n</span><span class="o">*</span><span class="n">factorielleNT</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">finsi</span>
+<span class="n">fin</span>
+</code></pre>
+</div>
+
+<p>Exemple de terminalité :</p>
+
+<p>On peut facilement rendre notre fonction factorielle terminale:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// la fonction doit être appelée en mettant resultat à 1
+</span>
+ <span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">entier</span> <span class="n">factorielleT</span><span class="p">(</span><span class="n">entier</span> <span class="n">n</span><span class="p">,</span> <span class="n">entier</span> <span class="n">resultat</span><span class="p">)</span>
+ <span class="n">debut</span>
+    <span class="n">si</span> <span class="p">(</span><span class="n">n</span> <span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="n">alors</span>
+        <span class="n">retourne</span> <span class="n">resultat</span><span class="p">;</span>
+    <span class="n">sinon</span>
+        <span class="n">retourne</span> <span class="n">factorielleT</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">resultat</span><span class="p">);</span>
+    <span class="n">finsi</span>
+<span class="n">fin</span>
+</code></pre>
+</div>
+
+<p>### Intérêt de la récursivité terminale</p>
+
+<p>Une fonction récursive <span style="color:red">terminale</span> est en théorie plus efficace (mais souvent moins facile à écrire) que son équivalent non terminale: il n’y a qu’une phase de descente et pas de phase de remontée.</p>
+
+<p>En récursivité <span style="color:green">terminale</span> , les appels récursifs n’ont pas besoin d’êtres empilés dans la pile d’exécution car l’appel suivant remplace simplement l’appel précédent dans le contexte d’exécution.</p>
+
+<p>Certains langages utilisent cette propriété pour exécuter les récursions terminales aussi efficacement que les itérations.</p>
+
+<p>Il est possible de transformer de façon simple une fonction récursive terminale en une fonction itérative : c’est la <span style="color:green">dérécursivation</span>.</p>
+
+<p>Une fonction récursive terminale a pour forme générale:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">recursive</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="n">debut</span>
+    <span class="n">I0</span>
+    <span class="n">si</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="n">alors</span>
+        <span class="n">I1</span>
+    <span class="n">sinon</span>
+        <span class="n">I2</span>
+        <span class="n">recursive</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">P</span><span class="p">));</span>
+    <span class="n">finsi</span>
+<span class="n">fin</span>    
+</code></pre>
+</div>
+<ul>
+  <li><strong>T</strong> est le type de retour</li>
+  <li><strong>P</strong> est la liste des paramètres</li>
+  <li><strong>C</strong> est la condition d’arrêt</li>
+  <li><strong>I0</strong> le bloc d’instructions exécuté dans tous les cas</li>
+  <li><strong>I1</strong> le bloc d’instructions exécuté si <strong>C</strong> est vraie</li>
+  <li><strong>I2</strong> est le bloc d’instructions exécuté si <strong>C</strong> est fausse</li>
+  <li><strong>f</strong> la fonction de transformation des paramètres</li>
+</ul>
+
+<p>La fonction itérative correspondante est:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">iterative</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="n">debut</span>
+    <span class="n">IO</span>
+    <span class="n">tantque</span> <span class="p">(</span><span class="n">non</span> <span class="n">C</span><span class="p">)</span> <span class="n">faire</span>
+        <span class="n">I2</span>
+        <span class="n">P</span> <span class="o">&lt;-</span> <span class="n">f</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+        <span class="n">I0</span><span class="p">;</span>
+    <span class="n">fintantque</span>
+    <span class="n">I1</span>
+</code></pre>
+</div>
+
+<p>Dérécursivation de la factorielle terminale:</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="c1">// cette fonction doit être appelée avec a=1
+</span><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">entier</span> <span class="n">factorielleRecurTerm</span><span class="p">(</span><span class="n">entier</span> <span class="n">n</span><span class="p">,</span> <span class="n">entier</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">debut</span>
+    <span class="n">si</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="n">alors</span>
+        <span class="n">retourne</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">sinon</span>
+        <span class="n">retourne</span> <span class="n">factorielle</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">*</span><span class="n">a</span><span class="p">);</span>
+    <span class="n">finsi</span>
+<span class="n">fin</span>
+</code></pre>
+</div>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">entier</span> <span class="n">factorielleIter</span><span class="p">(</span><span class="n">entier</span> <span class="n">n</span><span class="p">,</span> <span class="n">entier</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">debut</span>
+    <span class="n">tantque</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">faire</span>
+        <span class="n">a</span> <span class="o">&lt;</span><span class="err">–</span> <span class="n">n</span><span class="o">*</span><span class="n">a</span><span class="p">;</span>
+        <span class="n">n</span> <span class="o">&lt;</span><span class="err">–</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">fintantque</span>
+    <span class="n">retourne</span> <span class="n">a</span><span class="p">;</span>
+<span class="n">fin</span>
+</code></pre>
+</div>
+
+<p>Une fonction récursive non terminale a pour forme générale :</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">recursive</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="n">debut</span>
+    <span class="n">I0</span>
+        <span class="n">si</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="n">alors</span>
+            <span class="n">I1</span>
+        <span class="n">sinon</span>
+            <span class="n">I2</span> 
+            <span class="n">recursive</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">P</span><span class="p">));</span>
+            <span class="n">I3</span>
+    <span class="n">finsi</span>
+<span class="n">fin</span>
+</code></pre>
+</div>
+
+<p><strong>T</strong> est le type de retour
+<strong>P</strong> est la liste des paramètres
+<strong>C</strong> est la condition d’arrêt
+<strong>I0</strong> le bloc d’instructions exécuté dans tous les cas
+<strong>I1</strong> le bloc d’instructions exécuté si <strong>C</strong> est vraie 
+<strong>I2</strong> et I3 les blocs d’instructions exécutés si <strong>C</strong> est fausse
+<strong>f</strong> la fonction de tranformation des paramètres</p>
+
+<p>La fonction  itérative correspondante  doit  gérer  la  sauvegarde  des  contextes d’exécution (valeurs des paramètres de la fonction).</p>
+
+<p><strong>La  fonction  itérative  correspondante  est  donc  moins  efficace  qu’une  fonction écrite directement en itératif.</strong></p>
+
+<h2 id="algorithmes-de-tri-en-mode-récursif">Algorithmes de tri en mode récursif</h2>
+
+<!--### TODO
+
+ex 3   
+tri select  
+
+tri insert  (optionnel)-->
 
 
 </div>
