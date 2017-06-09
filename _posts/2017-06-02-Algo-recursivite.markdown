@@ -22,8 +22,9 @@ finished: false
 1. Un objet est dit récursif si il se définit à partir de lui-même, _si il apparait dans sa définition_.
 2. Une construction est **récursive** si elle se définit à partir d'elle-même.
 
- <img src="/00illustrations/algo-recur/sier.png" height="auto">
- _triangle de Sierpinski_
+ ><img src="/00illustrations/algo-recur/sier.png" height="auto">
+ >
+ >_triangle de Sierpinski_
 
 Quelques acronymes récursifs courants:  
 
