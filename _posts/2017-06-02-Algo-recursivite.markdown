@@ -11,14 +11,19 @@ finished: false
 
 # Récursivité
 
+## Sources
+[visualgo.net](https://visualgo.net/en/recursion)  
+[u-picardie](https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf)  _aller fouiller un peu, ça semble bien !_  
+[wikipedia.org](https://fr.wikipedia.org)  
+[stackoverflow](https://stackoverflow.com)  
+
 ## Definition
 
 1. Un objet est dit récursif si il se définit à partir de lui-même, _si il apparait dans sa définition_.
 2. Une construction est **récursive** si elle se définit à partir d'elle-même.
 
-> <img src="/00illustrations/algo-recur/Sierpinski.png" height="100">
-> <br>
-> _triangle de Sierpinski_
+ <img src="/00illustrations/algo-recur/Sierpinski.png" height="100">
+ _triangle de Sierpinski_
 
 Quelques acronymes récursifs courants:  
 
