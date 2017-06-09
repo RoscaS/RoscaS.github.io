@@ -98,7 +98,7 @@ L'exécution d'une version récursive d'un algorithme est généralement un peu 
 
 Un algorithme récursif peut conduire à exécuter bien plus d'instructions que la version itérative.
 
-_Exemple:_ la suite de Fibonacci 
+_Exemple:_ la suite de Fibonacci ($$ \large n = 45 $$)
 
 ### Suite de Fibbonacci
 
@@ -380,5 +380,6 @@ tri insert  (optionnel)-->
 <!-- Demander ce que veut dire "dérouler l'algorithme"-->
 
 
+<!--Bien checker la fonction compte pour être sur de quand c'est terminal et non-terminal-->
 
 
