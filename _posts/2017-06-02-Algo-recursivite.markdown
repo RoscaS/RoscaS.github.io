@@ -221,12 +221,11 @@ Un algorithme récursif est **non-terminal** lorsque des opérations suivent l'a
 
 ## Récursivité et itérations 
 
-Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l'un à l'autre n'est pas toujours aisé. La procédure de derécursivation consiste à gérer dans le programme le comportement de la pile lors des appels récursifs. 
+Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l'un à l'autre n'est pas toujours aisé. La procédure de **derécursivation** consiste à gérer dans le programme le comportement de la pile lors des appels récursifs. 
 
-En règle générale, un algorithme récursif est moins performant qu'un algorithme itératif : Chaque appel récursif nécessite d'empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d'exécuter les instructions qui suivent l'appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l'équivalent itératif. Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs. 
+En règle générale, un algorithme récursif est moins performant qu'un algorithme itératif : Chaque appel récursif nécessite d'empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d'exécuter les instructions qui suivent l'appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l'équivalent itératif. **Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs**. 
  
-Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n'y pas d'instruction à exécuter après l'appel récursif terminal, la phase de remontée pourra être supprimée. Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.
-
+Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n'y pas d'instruction à exécuter après l'appel récursif terminal, la phase de remontée pourra être supprimée. **Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative**. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.
 
 
 ## Précisions sur les deux types de récursivité (terminal/non terminal)
