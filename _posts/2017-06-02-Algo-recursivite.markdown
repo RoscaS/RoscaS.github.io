@@ -17,7 +17,9 @@ finished: false
 [visualgo.net](https://visualgo.net/en/recursion)  
 [u-picardie](https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf)  _aller fouiller un peu, ça semble bien !_  
 [wikipedia.org](https://fr.wikipedia.org)  
-[stackoverflow](https://stackoverflow.com)  
+[stackoverflow](https://stackoverflow.com)
+
+## [Repo github]()
 
 ## Definition
 
@@ -297,7 +299,7 @@ fin
 * **I2** est le bloc d'instructions exécuté si **C** est fausse
 * **f** la fonction de transformation des paramètres
 
-#### La fonction itérative correspondante est:
+#### Fonction itérative correspondante:
 
 ```c
 fonction avec retour T iterative(P)
@@ -336,7 +338,7 @@ debut
 fin
 ```
 
-#### Une fonction récursive non terminale a pour forme générale :
+#### Forme générale d'une fonction récursive non terminale:
 
 ```c
 fonction avec retour T recursive(P)
