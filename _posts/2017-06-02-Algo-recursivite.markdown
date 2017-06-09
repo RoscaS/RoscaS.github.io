@@ -74,7 +74,7 @@ L'appel d'une fonction se fait dans un  <span style="color:red"> contexte d'exec
     <a  href="https://visualgo.net/en/recursion"><img src="/00illustrations/algo-recur/fibo8.gif" ></a>
 </div>-->
 
-[](00illustrations/algo-recur/facto-py.gif)   
+![](00illustrations/algo-recur/facto-py.gif)   
 [version interactive](https://goo.gl/QGxNHe)
 
 
