@@ -74,8 +74,8 @@ L'appel d'une fonction se fait dans un  <span style="color:red"> contexte d'exec
     <a  href="https://visualgo.net/en/recursion"><img src="/00illustrations/algo-recur/fibo8.gif" ></a>
 </div>-->
 
-![](00illustrations/algo-recur/facto-py.gif)   
 [version interactive](https://goo.gl/QGxNHe)
+<img src="/00illustrations/algo-recur/facto-py.gif" height="auto">
 
 
 Prévoir à l'avance le nombre d'appels d'une fonction récursive pouvant être en cours simultanément en mémoire est **impossible**. La récursivité suppose donc une <span style="color:red"> allocation dynamique </span> de la mémoire (à l'execution).
