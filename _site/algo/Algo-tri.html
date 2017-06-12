@@ -180,7 +180,7 @@ est de:</p>
     O(n^2) 
 }</script>
 
-<iframe src="https://www.desmos.com/calculator/8ppukux7qz?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
+<p><img src="/00illustrations/algo-tri/OnC.png" height="300" /></p>
 
 <h3 id="itératif">Itératif</h3>
 
@@ -249,7 +249,7 @@ dés le début.</p>
     O(n^2) 
 }</script>
 
-<iframe src="https://www.desmos.com/calculator/8ppukux7qz?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
+<p><img src="/00illustrations/algo-tri/OnC.png" height="300" /></p>
 
 <h3 id="Étude-de-la-stabilité">Étude de la stabilité</h3>
 <p>Si deux éléments d’indice <code class="highlighter-rouge">i</code> et <code class="highlighter-rouge">j</code> avec <code class="highlighter-rouge">i &lt; j</code>.
@@ -568,7 +568,7 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
     O(n^2) 
 }</script>
 
-<iframe src="https://www.desmos.com/calculator/8ppukux7qz?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
+<p><img src="/00illustrations/algo-tri/OnC.png" height="300" /></p>
 
 <h3 id="stabilité-1">Stabilité</h3>
 
@@ -765,11 +765,63 @@ Si <em>k</em> est constant, notre algorithne est donc linéaire:</p>
     O(n) 
 }</script>
 
-<iframe src="https://www.desmos.com/calculator/ttma1w0trt?embed" width="300px" height="300px" style="border: 0px solid #ccc" frameborder="0"></iframe>
+<p><img src="/00illustrations/algo-tri/On.png" height="300" /></p>
 
 <h3 id="stabilité-2">Stabilité</h3>
 
 <p>Cette méthode de tri est stable, les valeurs rentrent dans les filles dans un certain ordre et en ressortent dans le même ordre.</p>
+
+<h2 id="comparaison-des-algorithmes-de-tri-simples">Comparaison des algorithmes de tri simples</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Algorithme</th>
+      <th>Complexité au pire</th>
+      <th>Stabilité</th>
+      <th>Famille*</th>
+      <th>Remarques</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bulles et améliorations</td>
+      <td><script type="math/tex">O(n^2)</script></td>
+      <td>oui</td>
+      <td>Echange</td>
+      <td>Sait détecter un tableau trié</td>
+    </tr>
+    <tr>
+      <td>Extraction</td>
+      <td><script type="math/tex">O(n^2)</script></td>
+      <td>non</td>
+      <td>Sélection</td>
+      <td>Inefficace sur un tableau déja trié (le pire)</td>
+    </tr>
+    <tr>
+      <td>Insertion</td>
+      <td><script type="math/tex">O(n^2)</script></td>
+      <td>oui</td>
+      <td>Insertion</td>
+      <td>Intéressant pour insérer des vleurs dans un tableau déjà trié*</td>
+    </tr>
+    <tr>
+      <td>Base</td>
+      <td><script type="math/tex">O(n)</script></td>
+      <td>oui</td>
+      <td>Distribution</td>
+      <td>Intéressant pour les petites valeurs (“petit” nombre de chiffres)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<blockquote>
+  <ul>
+    <li>on peut trier les valeurs au fur et à mesure. Pour les autres, il est nécéssaire de les avoir toutes avant de commencer. En $ O(n) $ dans le meilleur cas.</li>
+  </ul>
+</blockquote>
 
 </div>
 

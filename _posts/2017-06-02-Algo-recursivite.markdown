@@ -11,8 +11,6 @@ finished: false
 
 # Récursivité
 
-
-
 ## Sources
 [visualgo.net](https://visualgo.net/en/recursion)  
 [u-picardie](https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf)  _aller fouiller un peu, ça semble bien !_  
@@ -370,23 +368,7 @@ La fonction  itérative correspondante  doit  gérer  la  sauvegarde  des  conte
 
 ## Algorithmes de tri en mode récursif
 
-
-
-
-<!--### TODO
-
-ex 3   
-tri select  
-
-tri insert  (optionnel)-->
-
-<!-- Demander ce que veut dire "dérouler l'algorithme"-->
-
-
-<!--Bien checker la fonction compte pour être sur de quand c'est terminal et non-terminal-->
-
-
-
+_à compléter_
 
 
 
