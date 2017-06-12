@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Présentation sur l'IA"
-subtitle: "références"
+subtitle: "Slides & références"
 date: 2017-05-28
 author: Sol
 category: Presentations
@@ -12,9 +12,10 @@ finished: true
 # Cours de communication: Présentation IA 01/06/2017
 
 ## Slides:
+
 <iframe width='770' height='515' src='https://gitpitch.com/RoscaS/com_presentation_IA/master?grs=github&t=white' frameborder='0' allowfullscreen></iframe>
 
-### Références
+## Références
 
 [waitbutwhy](http://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html)
 

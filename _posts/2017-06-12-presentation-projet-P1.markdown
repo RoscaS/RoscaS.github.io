@@ -13,4 +13,9 @@ finished: true
 
 ## Slides:
 
-[gitpitch](https://gitpitch.com/RoscaS/pro_P1_drawingRobot)
+<iframe width='770' height='515' src='https://gitpitch.com/RoscaS/pro_P1_drawingRobot/master?grs=github&t=white' frameborder='0' allowfullscreen></iframe>
+
+## Repo:
+
+
+[Repo](https://github.com/RoscaS/pro_P1_drawingRobot)
