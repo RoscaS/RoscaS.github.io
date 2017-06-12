@@ -11,11 +11,11 @@ finished: true
 
 # Projet p1: Présentation état de l'avancement 12/06/2017
 
-## Slides:
+## Slides
 
 <iframe width='770' height='515' src='https://gitpitch.com/RoscaS/pro_P1_drawingRobot/master?grs=github&t=white' frameborder='0' allowfullscreen></iframe>
 
-## Repo:
+## Repo
 
 
 [Repo](https://github.com/RoscaS/pro_P1_drawingRobot)
