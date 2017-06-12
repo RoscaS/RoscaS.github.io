@@ -12,7 +12,7 @@ finished: true
 # Cours de communication: Présentation IA 01/06/2017
 
 ## Slides:
-[https://gitpitch.com/RoscaS/presentation/dev](https://gitpitch.com/RoscaS/presentation/dev)
+[gitpitch](https://gitpitch.com/RoscaS/com_presentation_IA)
 
 ### Références
 
