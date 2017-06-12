@@ -11,7 +11,7 @@ finished: true
 
 # Cours de communication: Présentation IA 01/06/2017
 
-## Slides:
+## Slides
 
 <iframe width='770' height='515' src='https://gitpitch.com/RoscaS/com_presentation_IA/master?grs=github&t=white' frameborder='0' allowfullscreen></iframe>
 
