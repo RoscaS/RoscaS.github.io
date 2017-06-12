@@ -8,5 +8,3 @@ category: Algo
 tags: Algo
 finished: false
 ---
-
-# 1 Pile (stack)

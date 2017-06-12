@@ -111,6 +111,9 @@
 <a href="https://fr.wikipedia.org">wikipedia.org</a><br />
 <a href="https://stackoverflow.com">stackoverflow</a></p>
 
+<h2 id="codes">Codes</h2>
+<p><a href="https://github.com/RoscaS/algo_sort">Repo</a></p>
+
 <h2 id="definition">Definition</h2>
 
 <ol>
@@ -207,7 +210,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 
 <p><em>Exemple:</em> la suite de Fibonacci</p>
 
-<h3 id="suite-de-fibbonacci">Suite de Fibbonacci</h3>
+<h3 id="suite-de-fibbonacci-large-n--45">Suite de Fibbonacci (<script type="math/tex">\large n = 45</script>)</h3>
 
 <blockquote>
   <p>Par définition, les deux premiers nombres de la suite de Fibonacci sont 1 et 1 <a href="https://fr.wikipedia.org/wiki/Suite_de_Fibonacci">ou</a> 0 et 1. Nous devons en tenir compte pour l’implémentation.</p>
@@ -340,11 +343,11 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 
 <h2 id="récursivité-et-itérations">Récursivité et itérations</h2>
 
-<p>Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l’un à l’autre n’est pas toujours aisé. La procédure de derécursivation consiste à gérer dans le programme le comportement de la pile lors des appels récursifs.</p>
+<p>Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l’un à l’autre n’est pas toujours aisé. La procédure de <strong>derécursivation</strong> consiste à gérer dans le programme le comportement de la pile lors des appels récursifs.</p>
 
-<p>En règle générale, un algorithme récursif est moins performant qu’un algorithme itératif : Chaque appel récursif nécessite d’empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d’exécuter les instructions qui suivent l’appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l’équivalent itératif. Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs.</p>
+<p>En règle générale, un algorithme récursif est moins performant qu’un algorithme itératif : Chaque appel récursif nécessite d’empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d’exécuter les instructions qui suivent l’appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l’équivalent itératif. <strong>Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs</strong>.</p>
 
-<p>Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n’y pas d’instruction à exécuter après l’appel récursif terminal, la phase de remontée pourra être supprimée. Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.</p>
+<p>Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n’y pas d’instruction à exécuter après l’appel récursif terminal, la phase de remontée pourra être supprimée. <strong>Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative</strong>. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.</p>
 
 <h2 id="précisions-sur-les-deux-types-de-récursivité-terminalnon-terminal">Précisions sur les deux types de récursivité (terminal/non terminal)</h2>
 
@@ -421,7 +424,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
   <li><strong>f</strong> la fonction de transformation des paramètres</li>
 </ul>
 
-<h4 id="la-fonction-itérative-correspondante-est">La fonction itérative correspondante est:</h4>
+<h4 id="fonction-itérative-correspondante">Fonction itérative correspondante:</h4>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">iterative</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
 <span class="n">debut</span>
@@ -460,7 +463,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 </code></pre>
 </div>
 
-<h4 id="une-fonction-récursive-non-terminale-a-pour-forme-générale-">Une fonction récursive non terminale a pour forme générale :</h4>
+<h4 id="forme-générale-dune-fonction-récursive-non-terminale">Forme générale d’une fonction récursive non terminale:</h4>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">fonction</span> <span class="n">avec</span> <span class="n">retour</span> <span class="n">T</span> <span class="n">recursive</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
 <span class="n">debut</span>
@@ -498,6 +501,8 @@ tri select
 tri insert  (optionnel)-->
 
 <!-- Demander ce que veut dire "dérouler l'algorithme"-->
+
+<!--Bien checker la fonction compte pour être sur de quand c'est terminal et non-terminal-->
 
 
 </div>
