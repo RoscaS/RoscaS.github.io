@@ -29,7 +29,7 @@ $$ O(n^2) $$
 
 ### Tri Extract
 $$ O(n^2) $$
-* pas stable
+* <span style="color:red">pas stable</span>
 * **Innéfficace pour les tableau déjà trié**
 * Parcours le tableau et **sélectionne** l'élément avec la clé la plus faible
 * Echange à la fin du parcours avec l'élément à l'indice "gauche"
@@ -45,7 +45,7 @@ $$ O(n^2) $$
     * on insère la valeur une fois que la clé de l'élément  à sa gauche est plus grande
 
 ### Tri par Base
-$$ O(n) $$
+<span style="color:green">$$ O(n) $$</span>
 * stable
 * **Efficace en temps mais pas en mémoire**
 * Tri basé sur la **distribution**
@@ -55,6 +55,15 @@ $$ O(n) $$
 * Placement de cet élément dans la file correspondant à ce caractère et ainsi de suite pour tous les éléments
 * Celon le principe du **FIFO** on sort les éléments des files dans l'**ordre croissant** des files (pour un tri croissant) et on les replace dans le tableau initial.
 * On répète pour le caractère à l'indice -1,-2,...
+
+```
+nombre: 2 5 3 4 8
+idx:        0 1 2 3 4
+mot:       p o u l e
+
+première passe : dernier caractère (8 et e)
+ensuite, caractère à l'indice -1 (4 et l), ...
+```
 
 #### fonction nombreDeParcours
 
@@ -85,9 +94,9 @@ Ici, le cast est nécessaire pour éviter une erreur de compilation
 | Algorithme | Complexité au pire | Stabilité | Famille* | Remarques
 | --- | --- | --- | --- | --- |
 | Bulles et améliorations | $$ O(n^2) $$  | oui | Echange | Sait détecter un tableau trié | 
-| Extraction | $$ O(n^2) $$ | non | Sélection | Inefficace sur un tableau déja trié (le pire) | 
+| Extraction | $$ O(n^2) $$ | <span style="color:red">non</span | Sélection | Inefficace sur un tableau déja trié (le pire) | 
 | Insertion | $$ O(n^2) $$ | oui | Insertion | Intéressant pour insérer des vlaeurs dans un tableau déjà trié*  | 
-| Base | $$ O(n) $$ | oui | Distribution | Intéressant pour les petites valeurs ("petit" nombre de chiffres) | 
+| Base | <span style="color:green">$$ O(n) $$</span> | oui | Distribution | Intéressant pour les petites valeurs ("petit" nombre de chiffres) | 
 
 <br>
 
@@ -148,10 +157,3 @@ $$\Rightarrow $$ De part sa lisibilité accrue, la **récursivité terminale** e
 
 
 
-nombre: 2 5 3 4 8
-idx:        0 1 2 3 4
-mot:       p o u l e
-
-première passe : dernier caractère (8 et e)
-ensuite, caractère à l'indice -1 (4 et l)
-...
