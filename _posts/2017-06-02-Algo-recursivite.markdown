@@ -421,3 +421,5 @@ La question à se poser et qui ne nécéssite pas de comprendre l'algorithme c'e
 * la récurence est d'ordre plus grand que 1 (c'est à dire que la valeur au rang $ n $ ne dépend pas seulement du rang $n-1$ mais aussi de $n-2$, voir $n-3$, ...)
 
 
+
+s
