@@ -120,6 +120,11 @@ Chaque appel de la fonction récursive est une nouvelle **instance de la fonctio
 
 Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span> (à moitié faux mais faux quand même).
 
+#### Explication du pauvre:
+
+Une fonction qui appelle la même fonction avec des paramètres différents.  
+ _La fonction appellée s'execute dans un contexte différent de la première fonction_ $$ \Rightarrow $$ mieux !
+
 ### Phases d'un algorithme récursif
 
 L'éxécution proprement dite peut se décomposer en deux temp:
