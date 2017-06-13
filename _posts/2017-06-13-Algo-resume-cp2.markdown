@@ -96,7 +96,7 @@ _cast nécessaire pour éviter une [erreur de compilation](/algo/Algo-tri.html)_
 | Algorithme | Complexité au pire | Stabilité | Famille* | Remarques
 | --- | --- | --- | --- | --- |
 | Bulles et améliorations | $$ O(n^2) $$  | oui | Echange | Sait détecter un tableau trié | 
-| Extraction | $$ O(n^2) $$ | <span style="color:red">non</span | Sélection | Inefficace sur un tableau déja trié (le pire) | 
+| Extraction | $$ O(n^2) $$ | <span style="color:red">non</span> | Sélection | Inefficace sur un tableau déja trié (le pire) | 
 | Insertion | $$ O(n^2) $$ | oui | Insertion | Intéressant pour insérer des vlaeurs dans un tableau déjà trié*  | 
 | Base | <span style="color:green">$$ O(n) $$</span> | oui | Distribution | Intéressant pour les petites valeurs ("petit" nombre de chiffres) | 
 
@@ -120,10 +120,6 @@ Chaque appel de la fonction récursive est une nouvelle **instance de la fonctio
 
 Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span> (à moitié faux mais faux quand même).
 
-#### Explication du pauvre:
-
-Une fonction qui appelle la même fonction avec des paramètres différents.  
- _La fonction appellée s'execute dans un contexte différent de la première fonction_ $$ \Rightarrow $$ mieux !
 
 ### Phases d'un algorithme récursif
 
@@ -163,4 +159,22 @@ La récursivité est toujours plus lente que l'itération sauf pour la récursiv
 $$\Rightarrow $$ De part sa lisibilité accrue, la **récursivité terminale** est à privilégier sur l'itération.
 
 
+#### A retenir
 
+Qu'est-ce que la récursivité?  
+
+> Une fonction qui appelle la même fonction avec des paramètres différents.   _La fonction appellée s'execute dans un contexte différent de la première fonction_ $$ \Rightarrow $$ mieux !
+
+Dans quels cas l'utiliser?
+
+> Pour des problèmes récurrents.  _Si le sous problème est de même nature que le problème initial mais de rang inférieur_ $$ \Rightarrow $$ mieux !
+
+Points primordiaux d'une fonction récursive?
+
+> 1. Condition terminale. _Atteinte après un nombre fini d'appels_ $$ \Rightarrow $$ mieux !
+> 2. Un appel récursif. _Dont les paramètres convergent vers la condition terminale._ $$ \Rightarrow $$ mieux !
+
+Types de récursivité?
+
+> * Terminale: La phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.
+> * Non-terminale: On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l'instance courante et renvoyer le résultat
