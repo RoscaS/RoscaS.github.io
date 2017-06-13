@@ -49,25 +49,7 @@ finished: false
 * Celon le principe du **FIFO** on sort les éléments des files dans l'**ordre croissant** des files (pour un tri croissant) et on les replace dans le tableau initial.
 * On répète pour le caractère à l'indice -1,-2,...
 
-#### 1. fonction maximum
-
-Simple fonction pour itérer sur un tableau et retourner la clé ayant la plus grande valeur. 
-
-<img src="/00illustrations/algo-tri/radixMax.png" align="" height="250" float="right">
-
-```c++
-int maximum(int *t, int g, int d) {
-    int max = t[g];
-    for (int i = g+1; i <= d; ++i) {
-        if (t[i] > max) {
-            max = t[i];
-        }
-    }
-    return max;
-}
-```
-
-#### 2. fonction nombreDeParcours
+#### fonction nombreDeParcours
 
 Nombre de parcours =  **nombre de chiffres qui compose un nombre**.
 l'entier renvoyé par un cast `entier` du log en base 10 d'un nombre sera égal au nombre de chiffre qui le compose -1. Nous ajoutons donc +1.
@@ -79,7 +61,7 @@ int nbParcours(int *t, int g, int d) {
 ```
 _Le cast est fait automatiquement par le type de la valeur de retour_
 
-#### 3. fonction extraireUnite
+#### fonction extraireUnite
 
 **retourner une unité spécifique d'un nombre** 
 
