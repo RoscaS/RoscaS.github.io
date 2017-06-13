@@ -64,6 +64,7 @@ mot: p o u l e
 première passe : dernier caractère (8 et e)
 ensuite, caractère à l'indice -1 (4 et l), ...
 ```
+* fonctions utiles:
 
 #### fonction nombreDeParcours
 note: <span style="color:red"> _refaire ces algo de façon générique_ </span>  
