@@ -10,8 +10,8 @@ finished: false
 ---
 ## Liens:
 * Internes:  
-[algorithmes de tri simples](algo/Algo-tri.html)  
-[récursivité](algo/recursivite.html)  
+[algorithmes de tri simples](/algo/Algo-tri.html)  
+[récursivité](/algo/recursivite.html)  
 [repo(privé)](https://github.com/RoscaS/algo_sort)  
 
 * Externes:  
@@ -19,11 +19,84 @@ finished: false
 
 ## 1. Tri
 
+### Tri Bulle
+
+* **Sait détecter si un tableau est trié** (amélioration flag)
+* Fait remonter les petites valeurs en **échangeant** 2 valeurs contigues.
+* À chaque parcours l'élément avec la clé la plus petite pas encore trié se retrouve en position définitive.
+* À chaque parcours les autres éléments se déplacent vers leurs position définitive d'une case.
+
+### Tri Extract
+* **Innéfficace pour les tableau déjà trié**
+* Parcours le tableau et **sélectionne** l'élément avec la clé la plus faible
+* Echange à la fin du parcours avec l'élément à l'indice "gauche"
+* Incrémentation de "gauche"
+
+
+### Tri Insert
+* **Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié**
+* Pour une valeur à **insérer** dans un tableau déjà trié:
+    * on décale chaque élément du tableau vers la droite tant que les clés sont plus grandes que la valeur à insérer
+    * on insère la valeur une fois que la clé de l'élément  à sa gauche est plus grande
+
+### Tri par Base
+* **Efficace en temps mais pas en mémoire**
+* tri basé sur la **distribution**
+* Le nombre de files nécéssaire dépend de la base. (10 en base 10, 26 pour des char, 16 en hexa,...) 
+* Autant de distributions que de caractères qui composent l'élément avec la clé la plus **longue** du tableau à trier.
+* Les distributions commencent par le caractère le plus à droite, du premier élément du tableau
+* Placement de cet élément dans la file correspondant à ce caractère et ainsi de suite pour tous les éléments
+* Celon le principe du **FIFO** on sort les éléments des files dans l'**ordre croissant** des files (pour un tri croissant) et on les replace dans le tableau initial.
+* On répète pour le caractère à l'indice -1,-2,...
+
+#### 1. fonction maximum
+
+Simple fonction pour itérer sur un tableau et retourner la clé ayant la plus grande valeur. 
+
+<img src="/00illustrations/algo-tri/radixMax.png" align="" height="250" float="right">
+
+```c++
+int maximum(int *t, int g, int d) {
+    int max = t[g];
+    for (int i = g+1; i <= d; ++i) {
+        if (t[i] > max) {
+            max = t[i];
+        }
+    }
+    return max;
+}
+```
+
+#### 2. fonction nombreDeParcours
+
+Nombre de parcours =  **nombre de chiffres qui compose un nombre**.
+l'entier renvoyé par un cast `entier` du log en base 10 d'un nombre sera égal au nombre de chiffre qui le compose -1. Nous ajoutons donc +1.
+
+```c++
+int nbParcours(int *t, int g, int d) {
+    return log10(maximum(t,g,d))+1;
+}
+```
+_Le cast est fait automatiquement par le type de la valeur de retour_
+
+#### 3. fonction extraireUnite
+
+**retourner une unité spécifique d'un nombre** 
+
+```c++
+int extraireUnite(int nb, int pos) {
+    return (static_cast<int>(nb/pow(10,pos))%10);
+}
+```
+Ici, le cast est nécessaire pour éviter une erreur de compilation
+
+
+
 | Algorithme | Complexité au pire | Stabilité | Famille* | Remarques
 | --- | --- | --- | --- | --- |
 | Bulles et améliorations | $$ O(n^2) $$  | oui | Echange | Sait détecter un tableau trié | 
 | Extraction | $$ O(n^2) $$ | non | Sélection | Inefficace sur un tableau déja trié (le pire) | 
-| Insertion | $$ O(n^2) $$ | oui | Insertion | Intéressant pour insérer des vleurs dans un tableau déjà trié*  | 
+| Insertion | $$ O(n^2) $$ | oui | Insertion | Intéressant pour insérer des vlaeurs dans un tableau déjà trié*  | 
 | Base | $$ O(n) $$ | oui | Distribution | Intéressant pour les petites valeurs ("petit" nombre de chiffres) | 
 
 <br>
