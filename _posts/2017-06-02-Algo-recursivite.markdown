@@ -380,11 +380,11 @@ Un objet est dit récursif s'il apparait dans sa définition.
 
 > la récursivité c'est quand le sous-problème est de la **même nature** que le problème initial mais à un rang inférieur 
 
-Chaque appel de la fonction récursive est une nouvelle **instance de la fonction** ($$ /neq $$ même fonction car les paramètres sont différents).
+Chaque appel de la fonction récursive est une nouvelle **instance de la fonction** ($$ \neq $$ même fonction car les paramètres sont différents).
 
 * nouvelle instance à chaque appel
 * chaque appel est différent du précédent, il n'y a pas _duplication_ du contexte, c'est un contexte différent à chaque appel.
-* parmètres différents $$ /Rightarrow $$ fonction différente
+* parmètres différents $$ \Rightarrow $$ fonction différente
 
 Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span>
 
@@ -399,15 +399,15 @@ L'éxécution proprement dite peut se décomposer en deux temp:
 ### Terminal & non-terminal
 
 * **Terminal**: aucune opération ne suit l'appel récursif  
-$$ /quad /Rightarrow $$ la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.
+$$ \quad \Rightarrow $$ la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.
 
 * **Non-terminal**: des opérations suivent l'appel récursif. (On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l'instance courante et renvoyer le résultat).  
-$$ /quad /Rightarrow $$ la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.
+$$ \quad \Rightarrow $$ la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.
 
 La question à se poser et qui ne nécéssite pas de comprendre l'algorithme c'est:
 
 >**Est-ce qu'un return précède un appel de la fonction-elle même ?**
->* oui $$ /Rightarrow $$ récursivité ** non-terminale**
->* non $$ /Rightarrow $$ récursivité ** terminale**
+>* oui $$ \Rightarrow $$ récursivité ** non-terminale**
+>* non $$ \Rightarrow $$ récursivité ** terminale**
 
 
