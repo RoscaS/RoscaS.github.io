@@ -66,9 +66,10 @@ ensuite, caractère à l'indice -1 (4 et l), ...
 ```
 
 #### fonction nombreDeParcours
+note: <span style="color:red"> _refaire ces algo de façon générique_ </span>  
 
-Nombre de parcours =  **nombre de chiffres qui compose un nombre**.
-l'entier renvoyé par un cast `entier` du log en base 10 d'un nombre sera égal au nombre de chiffre qui le compose -1. Nous ajoutons donc +1.
+Nombre de distributions =  **nombre de chiffres qui compose le plus grand nombre**.
+l'entier renvoyé par $$\large \log_{10} n$$ d'un nombre ($$\large n$$) sera égal au nombre de chiffre qui le composent $$\large -1$$ (d'où le $$\large+1$$).
 
 ```c++
 int nbParcours(int *t, int g, int d) {
