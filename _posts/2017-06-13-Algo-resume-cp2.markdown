@@ -88,7 +88,7 @@ int extraireUnite(int nb, int pos) {
     return (static_cast<int>(nb/pow(10,pos))%10);
 }
 ```
-Ici, le cast est nécessaire pour éviter une erreur de compilation
+_cast nécessaire pour éviter une [erreur de compilation](/algo/Algo-tri.html)_
 
 
 ### Comparaison
@@ -115,10 +115,10 @@ Un objet est dit récursif s'il apparait dans sa définition.
 Chaque appel de la fonction récursive est une nouvelle **instance de la fonction** ($$ \neq $$ même fonction car les paramètres sont différents).
 
 * nouvelle instance à chaque appel
-* chaque appel est différent du précédent, il n'y a pas _duplication_ du contexte, c'est un contexte différent à chaque appel.
+* chaque appel est différent du précédent, il n'y a pas _duplication_ du contexte, c'est un **contexte différent** à chaque appel.
 * paramètres différents $$ \Rightarrow $$ fonction différente
 
-Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span>
+Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span> (à moitié faux mais faux quand même).
 
 ### Phases d'un algorithme récursif
 
