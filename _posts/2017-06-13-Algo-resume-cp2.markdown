@@ -57,9 +57,9 @@ $$ O(n^2) $$
 * On répète pour le caractère à l'indice -1,-2,...
 
 ```
-nombre:  2 5 3 4 8
-idx:         0 1 2 3 4
-mot:        p o u l e
+nbr: 2 5 3 4 8
+idx: 0 1 2 3 4
+mot: p o u l e
 
 première passe : dernier caractère (8 et e)
 ensuite, caractère à l'indice -1 (4 et l), ...
