@@ -176,5 +176,5 @@ Points primordiaux d'une fonction récursive?
 
 Types de récursivité?
 
-> * Terminale: La phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.
-> * Non-terminale: On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l'instance courante et renvoyer le résultat
+> * Terminale: (aucune opération ne suit l'appel récursif) La phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.
+> * Non-terminale: (des opérations suivent l'appel récursif) On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l'instance courante et renvoyer le résultat.
