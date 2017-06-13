@@ -20,7 +20,7 @@ finished: false
 ## 1. Tri
 
 ### Tri Bulle
-* $$ O(n^2) $$
+$$ O(n^2) $$
 * stable
 * **Sait détecter si un tableau est trié** (amélioration flag)
 * Fait remonter les petites valeurs en **échangeant** 2 valeurs contigues.
@@ -28,7 +28,7 @@ finished: false
 * À chaque parcours les autres éléments se déplacent vers leurs position définitive d'une case.
 
 ### Tri Extract
-* $$ O(n^2) $$
+$$ O(n^2) $$
 * pas stable
 * **Innéfficace pour les tableau déjà trié**
 * Parcours le tableau et **sélectionne** l'élément avec la clé la plus faible
@@ -37,7 +37,7 @@ finished: false
 
 
 ### Tri Insert
-* $$ O(n^2) $$
+$$ O(n^2) $$
 * stable
 * **Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié**
 * Pour une valeur à **insérer** dans un tableau déjà trié:
@@ -45,7 +45,7 @@ finished: false
     * on insère la valeur une fois que la clé de l'élément  à sa gauche est plus grande
 
 ### Tri par Base
-* $$ O(n) $$
+$$ O(n) $$
 * stable
 * **Efficace en temps mais pas en mémoire**
 * Tri basé sur la **distribution**
