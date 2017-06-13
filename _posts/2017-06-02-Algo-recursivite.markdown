@@ -11,6 +11,8 @@ finished: false
 
 # Récursivité
 
+<span style="color:red"> test: mercredi 14 juin 2017 à 9h40 </span>
+
 ## Sources
 [visualgo.net](https://visualgo.net/en/recursion)  
 [u-picardie](https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf)  _aller fouiller un peu, ça semble bien !_  
@@ -384,7 +386,7 @@ Chaque appel de la fonction récursive est une nouvelle **instance de la fonctio
 
 * nouvelle instance à chaque appel
 * chaque appel est différent du précédent, il n'y a pas _duplication_ du contexte, c'est un contexte différent à chaque appel.
-* parmètres différents $$ \Rightarrow $$ fonction différente
+* paramètres différents $$ \Rightarrow $$ fonction différente
 
 Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span>
 
@@ -406,8 +408,16 @@ $$ \quad \Rightarrow $$ la phase de remontée fait une partie du traitement, ell
 
 La question à se poser et qui ne nécéssite pas de comprendre l'algorithme c'est:
 
->**Est-ce qu'un return précède un appel de la fonction-elle même ?**
+> <span style="color:green"> **Est-ce qu'un return précède un appel de la fonction-elle même ?** </span>
 >* oui $$ \Rightarrow $$ récursivité ** non-terminale**
 >* non $$ \Rightarrow $$ récursivité ** terminale**
+
+### Pour la programmation récursive il faut...
+* avoir une condition terminale
+* avoir un appel récursif dont un des paramètres converge vers la condition terminale
+* s'assurer que la condition est toujours atteinte après un nombre fini d'appels
+
+### Eviter la récursivité quand...
+* la récurence est d'ordre plus grand que 1 (c'est à dire que la valeur au rang $ n $ ne dépend pas seulement du rang $n-1$ mais aussi de $n-2$, voir $n-3$, ...)
 
 
