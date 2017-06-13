@@ -406,10 +406,8 @@ $ /quad /Rightarrow $ la phase de remontée fait une partie du traitement, elle 
 
 La question à se poser et qui ne nécéssite pas de comprendre l'algorithme c'est:
 
-<div style="border: 1px solid #eee; color: red">
+>**Est-ce qu'un return précède un appel de la fonction-elle même ?**
+>* oui $ /Rightarrow $ récursivité ** non-terminale**
+>* non $ /Rightarrow $ récursivité ** terminale**
 
-**Est-ce qu'un return précède un appel de la fonction-elle même ?**
-* oui $ /Rightarrow $ récursivité ** non-terminale**
-* non $ /Rightarrow $ récursivité ** terminale**
 
-</div>
