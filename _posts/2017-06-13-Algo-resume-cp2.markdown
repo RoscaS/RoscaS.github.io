@@ -42,7 +42,7 @@ $$ O(n^2) $$
 * **Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié**
 * Pour une valeur à **insérer** dans un tableau déjà trié:
     * on décale chaque élément du tableau vers la droite tant que les clés sont plus grandes que la valeur à insérer
-    * on insère la valeur une fois que la clé de l'élément  à sa gauche est plus grande
+    * on insère la valeur une fois que la clé de l'élément  à sa gauche est plus petit
 
 ### Tri par Base
 <span style="color:green">$$ O(n) $$</span>
