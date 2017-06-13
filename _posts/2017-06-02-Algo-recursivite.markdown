@@ -370,6 +370,46 @@ La fonction  itérative correspondante  doit  gérer  la  sauvegarde  des  conte
 
 _à compléter_
 
+## Résumé
 
+### Récursivité
 
+Un objet est dit récursif s'il apparait dans sa définition.
+* structure de données récursives: _listes_, _arbres_ et _graphes_
+* algorithmes récursif: si une des opérations est un appel à l'algorithme en **lui même** mais à un rang inférieur
 
+> la récursivité c'est quand le sous-problème est de la **même nature** que le problème initial mais à un rang inférieur 
+
+Chaque appel de la fonction récursive est une nouvelle **instance de la fonction** ($ /neq $ même fonction car les paramètres sont différents).
+
+* nouvelle instance à chaque appel
+* chaque appel est différent du précédent, il n'y a pas _duplication_ du contexte, c'est un contexte différent à chaque appel.
+* parmètres différents $ /Rightarrow $ fonction différente
+
+Dire  _"une fonction récursive est une fonction qui se rappelle elle-même"_ est donc <span style="color:red"> **FAUX**</span>
+
+### Phases d'un algorithme récursif
+
+L'éxécution proprement dite peut se décomposer en deux temp:
+
+1. **Phase de descente**: appels récursifs (et création d'un contexte pour chacun d'entre eux) jusqu'à la condition terminale
+
+2. **Phase de remontée**: retour des résultats et libération des contextes devenus inutiles
+
+### Terminal & non-terminal
+
+* **Terminal**: aucune opération ne suit l'appel récursif  
+$ /quad /Rightarrow $ la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.
+
+* **Non-terminal**: des opérations suivent l'appel récursif. (On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l'instance courante et renvoyer le résultat).  
+$ /quad /Rightarrow $ la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.
+
+La question à se poser et qui ne nécéssite pas de comprendre l'algorithme c'est:
+
+<div style="border: 1px solid #eee; color: red">
+
+**Est-ce qu'un return précède un appel de la fonction-elle même ?**
+* oui $ /Rightarrow $ récursivité ** non-terminale**
+* non $ /Rightarrow $ récursivité ** terminale**
+
+</div>
