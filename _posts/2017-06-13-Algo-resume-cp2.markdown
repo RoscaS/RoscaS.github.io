@@ -20,13 +20,16 @@ finished: false
 ## 1. Tri
 
 ### Tri Bulle
-
+* $$ O(n^2) $$
+* stable
 * **Sait détecter si un tableau est trié** (amélioration flag)
 * Fait remonter les petites valeurs en **échangeant** 2 valeurs contigues.
 * À chaque parcours l'élément avec la clé la plus petite pas encore trié se retrouve en position définitive.
 * À chaque parcours les autres éléments se déplacent vers leurs position définitive d'une case.
 
 ### Tri Extract
+* $$ O(n^2) $$
+* pas stable
 * **Innéfficace pour les tableau déjà trié**
 * Parcours le tableau et **sélectionne** l'élément avec la clé la plus faible
 * Echange à la fin du parcours avec l'élément à l'indice "gauche"
@@ -34,14 +37,18 @@ finished: false
 
 
 ### Tri Insert
+* $$ O(n^2) $$
+* stable
 * **Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié**
 * Pour une valeur à **insérer** dans un tableau déjà trié:
     * on décale chaque élément du tableau vers la droite tant que les clés sont plus grandes que la valeur à insérer
     * on insère la valeur une fois que la clé de l'élément  à sa gauche est plus grande
 
 ### Tri par Base
+* $$ O(n) $$
+* stable
 * **Efficace en temps mais pas en mémoire**
-* tri basé sur la **distribution**
+* Tri basé sur la **distribution**
 * Le nombre de files nécéssaire dépend de la base. (10 en base 10, 26 pour des char, 16 en hexa,...) 
 * Autant de distributions que de caractères qui composent l'élément avec la clé la plus **longue** du tableau à trier.
 * Les distributions commencent par le caractère le plus à droite, du premier élément du tableau
@@ -73,6 +80,7 @@ int extraireUnite(int nb, int pos) {
 Ici, le cast est nécessaire pour éviter une erreur de compilation
 
 
+### Comparaison
 
 | Algorithme | Complexité au pire | Stabilité | Famille* | Remarques
 | --- | --- | --- | --- | --- |
@@ -137,3 +145,13 @@ La question à se poser et qui ne nécéssite pas de comprendre l'algorithme c'e
 La récursivité est toujours plus lente que l'itération sauf pour la récursivité terminale. Cependant, la majorité des compilateurs détectent et supprime la phase de remonté. Une fonction récursive terminale est donc aussi rapide qu'une fonction itérative.  
 
 $$\Rightarrow $$ De part sa lisibilité accrue, la **récursivité terminale** est à privilégier sur l'itération.
+
+
+
+nombre: 2 5 3 4 8
+idx:        0 1 2 3 4
+mot:       p o u l e
+
+première passe : dernier caractère (8 et e)
+ensuite, caractère à l'indice -1 (4 et l)
+...
