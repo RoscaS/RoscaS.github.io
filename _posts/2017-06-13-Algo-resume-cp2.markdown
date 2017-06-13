@@ -10,12 +10,12 @@ finished: false
 ---
 ## Liens:
 * Internes:  
-[algorithmes de tri simples](algo/Algo-tri.html)
-[récursivité](algo/recursivite.html)
-[repo(privé)](https://github.com/RoscaS/algo_sort)
+[algorithmes de tri simples](algo/Algo-tri.html)  
+[récursivité](algo/recursivite.html)  
+[repo(privé)](https://github.com/RoscaS/algo_sort)  
 
 * Externes:  
-[VisuAlgo](https://visualgo.net/en)
+[VisuAlgo](https://visualgo.net/en)  
 
 ## 1. Tri
 
