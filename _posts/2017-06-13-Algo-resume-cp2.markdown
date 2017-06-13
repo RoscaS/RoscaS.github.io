@@ -8,6 +8,9 @@ category: Algo
 tags: algo tri recursivite
 finished: false
 ---
+
+<span style="color:red"> test: mercredi 14 juin 2017 à 10h00 (320) </span>
+
 ## Liens:
 * Internes:  
 [algorithmes de tri simples](/algo/Algo-tri.html)  

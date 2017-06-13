@@ -11,8 +11,6 @@ finished: false
 
 # Récursivité
 
-<span style="color:red"> test: mercredi 14 juin 2017 à 9h40 </span>
-
 ## Sources
 [visualgo.net](https://visualgo.net/en/recursion)  
 [u-picardie](https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf)  _aller fouiller un peu, ça semble bien !_  
