@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/algo/Algo-resume-cp2.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Algo: Résumé CP2</title>
+  <meta name="description" content=" test: mercredi 14 juin 2017 à 10h00 (320) ">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Algo: Résumé CP2</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="13 Jun 2017" itemprop="datePublished">Jun 13 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">algo</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tri</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">recursivite</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Algorithmes de tri et récursivitee</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <p><span style="color:red"> test: mercredi 14 juin 2017 à 10h00 (320) </span></p>
+
+<h2 id="liens">Liens:</h2>
+<ul>
+  <li>
+    <p>Internes:<br />
+<a href="/algo/Algo-tri.html">algorithmes de tri simples</a><br />
+<a href="/algo/recursivite.html">récursivité</a><br />
+<a href="https://github.com/RoscaS/algo_sort">repo(privé)</a></p>
+  </li>
+  <li>
+    <p>Externes:<br />
+<a href="https://visualgo.net/en">VisuAlgo</a></p>
+  </li>
+</ul>
+
+<h2 id="1-tri">1. Tri</h2>
+
+<h3 id="tri-bulle">Tri Bulle</h3>
+<p><script type="math/tex">O(n^2)</script></p>
+<ul>
+  <li><strong>stable</strong></li>
+  <li><strong>Sait détecter si un tableau est trié</strong> (amélioration flag)</li>
+  <li>Fait remonter les petites valeurs en <strong>échangeant</strong> 2 valeurs contigues.</li>
+  <li>À chaque parcours l’élément avec la clé la plus petite pas encore trié se retrouve en position définitive.</li>
+  <li>À chaque parcours les autres éléments se déplacent vers leurs position définitive d’une case.</li>
+</ul>
+
+<h3 id="tri-extract">Tri Extract</h3>
+<p><script type="math/tex">O(n^2)</script></p>
+<ul>
+  <li><span style="color:red"><strong>pas stable</strong></span></li>
+  <li><strong>Innéfficace pour les tableau déjà trié</strong></li>
+  <li>Parcours le tableau et <strong>sélectionne</strong> l’élément avec la clé la plus faible</li>
+  <li>Echange à la fin du parcours avec l’élément à l’indice “gauche”</li>
+  <li>Incrémentation de “gauche”</li>
+</ul>
+
+<h3 id="tri-insert">Tri Insert</h3>
+<p><script type="math/tex">O(n^2)</script></p>
+<ul>
+  <li><strong>stable</strong></li>
+  <li><strong>Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié</strong></li>
+  <li>Pour une valeur à <strong>insérer</strong> dans un tableau déjà trié:
+    <ul>
+      <li>on décale chaque élément du tableau vers la droite tant que les clés sont plus grandes que la valeur à insérer</li>
+      <li>on insère la valeur une fois que la clé de l’élément  à sa gauche est plus petit</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="tri-par-base">Tri par Base</h3>
+<p><span style="color:green"><script type="math/tex">O(n)</script></span></p>
+<ul>
+  <li><strong>stable</strong></li>
+  <li><strong>Efficace en temps mais pas en mémoire</strong></li>
+  <li>Tri basé sur la <strong>distribution</strong></li>
+  <li>Le nombre de files nécéssaire dépend de la base. (10 en base 10, 26 pour des char, 16 en hexa,…)</li>
+  <li>Autant de distributions que de caractères qui composent l’élément avec la clé la plus <strong>longue</strong> du tableau à trier.</li>
+  <li>Les distributions commencent par le caractère le plus à droite, du premier élément du tableau</li>
+  <li>Placement de cet élément dans la file correspondant à ce caractère et ainsi de suite pour tous les éléments</li>
+  <li>Selon le principe du <strong>FIFO</strong> on sort les éléments des files dans l’<strong>ordre croissant</strong> des files (pour un tri croissant) et on les replace dans le tableau initial.</li>
+  <li>On répète pour le caractère à l’indice -1,-2,…</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>nbr: 2 5 3 4 8
+idx: 0 1 2 3 4
+mot: p o u l e
+
+première passe : dernier caractère (8 et e)
+ensuite, caractère à l'indice -1 (4 et l), ...
+</code></pre>
+</div>
+<ul>
+  <li>fonctions utiles:</li>
+</ul>
+
+<h4 id="fonction-nombredeparcours">fonction nombreDeParcours</h4>
+<p>note: <span style="color:red"> <em>refaire ces algo de façon générique</em> </span></p>
+
+<p>Nombre de distributions =  <strong>nombre de chiffres qui compose le plus grand nombre</strong>.
+l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’un nombre (<script type="math/tex">\large n</script>) sera égal au nombre de chiffre qui le composent <script type="math/tex">\large -1</script> (d’où le <script type="math/tex">\large+1</script>).</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">nbParcours</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">log10</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p><em>Le cast est fait automatiquement par le type de la valeur de retour</em></p>
+
+<h4 id="fonction-extraireunite">fonction extraireUnite</h4>
+
+<p><strong>retourner une unité spécifique d’un nombre</strong></p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">extraireUnite</span><span class="p">(</span><span class="kt">int</span> <span class="n">nb</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pos</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">nb</span><span class="o">/</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">pos</span><span class="p">))</span><span class="o">%</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p><em>cast nécessaire pour éviter une <a href="/algo/Algo-tri.html">erreur de compilation</a></em></p>
+
+<h3 id="comparaison">Comparaison</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Algorithme</th>
+      <th>Complexité au pire</th>
+      <th>Stabilité</th>
+      <th>Famille*</th>
+      <th>Remarques</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bulles et améliorations</td>
+      <td><script type="math/tex">O(n^2)</script></td>
+      <td>oui</td>
+      <td>Echange</td>
+      <td>Sait détecter un tableau trié</td>
+    </tr>
+    <tr>
+      <td>Extraction</td>
+      <td><script type="math/tex">O(n^2)</script></td>
+      <td><span style="color:red">non</span></td>
+      <td>Sélection</td>
+      <td>Inefficace sur un tableau déja trié (le pire)</td>
+    </tr>
+    <tr>
+      <td>Insertion</td>
+      <td><script type="math/tex">O(n^2)</script></td>
+      <td>oui</td>
+      <td>Insertion</td>
+      <td>Intéressant pour insérer des vlaeurs dans un tableau déjà trié*</td>
+    </tr>
+    <tr>
+      <td>Base</td>
+      <td><span style="color:green"><script type="math/tex">O(n)</script></span></td>
+      <td>oui</td>
+      <td>Distribution</td>
+      <td>Intéressant pour les petites valeurs (“petit” nombre de chiffres)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<blockquote>
+  <ul>
+    <li>On peut trier les valeurs au fur et à mesure. Pour les autres, il est nécéssaire de les avoir toutes avant de commencer. En  <em>O(n)</em>  dans le meilleur cas.</li>
+  </ul>
+</blockquote>
+
+<h2 id="2-récursivité">2. Récursivité</h2>
+
+<p>Un objet est dit récursif s’il apparait dans sa définition.</p>
+<ul>
+  <li>structure de données récursives: <em>listes</em>, <em>arbres</em> et <em>graphes</em></li>
+  <li>algorithmes récursif: si une des opérations est un appel à l’algorithme en <strong>lui même</strong> mais à un rang inférieur</li>
+</ul>
+
+<blockquote>
+  <p>la récursivité c’est quand le sous-problème est de la <strong>même nature</strong> que le problème initial mais à un rang inférieur</p>
+</blockquote>
+
+<p>Chaque appel de la fonction récursive est une nouvelle <strong>instance de la fonction</strong> (<script type="math/tex">\neq</script> même fonction car les paramètres sont différents).</p>
+
+<ul>
+  <li>nouvelle instance à chaque appel</li>
+  <li>chaque appel est différent du précédent, il n’y a pas <em>duplication</em> du contexte, c’est un <strong>contexte différent</strong> à chaque appel.</li>
+  <li>paramètres différents <script type="math/tex">\Rightarrow</script> fonction différente</li>
+</ul>
+
+<p>Dire  <em>“une fonction récursive est une fonction qui se rappelle elle-même”</em> est donc <span style="color:red"> <strong>FAUX</strong></span> (à moitié faux mais faux quand même).</p>
+
+<h3 id="phases-dun-algorithme-récursif">Phases d’un algorithme récursif</h3>
+
+<p>L’éxécution proprement dite peut se décomposer en deux temp:</p>
+
+<ol>
+  <li>
+    <p><strong>Phase de descente</strong>: appels récursifs (et création d’un contexte pour chacun d’entre eux) jusqu’à la condition terminale</p>
+  </li>
+  <li>
+    <p><strong>Phase de remontée</strong>: retour des résultats et libération des contextes devenus inutiles</p>
+  </li>
+</ol>
+
+<h3 id="terminal--non-terminal">Terminal &amp; non-terminal</h3>
+
+<ul>
+  <li>
+    <p><strong>Terminal</strong>: aucune opération ne suit l’appel récursif<br />
+<script type="math/tex">\quad \Rightarrow</script> la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.</p>
+  </li>
+  <li>
+    <p><strong>Non-terminal</strong>: des opérations suivent l’appel récursif. (On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat).<br />
+<script type="math/tex">\quad \Rightarrow</script> la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.</p>
+  </li>
+</ul>
+
+<p>La question à se poser et qui ne nécéssite pas de comprendre l’algorithme c’est:</p>
+
+<blockquote>
+  <p><span style="color:green"> <strong>Est-ce qu’un return précède un appel de la fonction-elle même ?</strong> </span></p>
+  <ul>
+    <li>oui <script type="math/tex">\Rightarrow</script> récursivité ** non-terminale**</li>
+    <li>non <script type="math/tex">\Rightarrow</script> récursivité ** terminale**</li>
+  </ul>
+</blockquote>
+
+<h3 id="pour-la-programmation-récursive-il-faut">Pour la programmation récursive il faut…</h3>
+<ul>
+  <li>avoir une condition terminale</li>
+  <li>avoir un appel récursif dont un des paramètres converge vers la condition terminale</li>
+  <li>s’assurer que la condition est toujours atteinte après un nombre fini d’appels</li>
+</ul>
+
+<h3 id="eviter-la-récursivité-quand">Eviter la récursivité quand…</h3>
+<ul>
+  <li>la récurence est d’ordre plus grand que 1 (c’est à dire que la valeur au rang <script type="math/tex">n</script> ne dépend pas seulement du rang <script type="math/tex">n-1</script> mais aussi de <script type="math/tex">n-2</script>, voir <script type="math/tex">n-3</script>, …)</li>
+</ul>
+
+<h3 id="récursivité-vs-itération">Récursivité vs itération</h3>
+
+<p>La récursivité est toujours plus lente que l’itération sauf pour la récursivité terminale. Cependant, la majorité des compilateurs détectent et supprime la phase de remonté. Une fonction récursive terminale est donc aussi rapide qu’une fonction itérative.</p>
+
+<p><script type="math/tex">\Rightarrow</script> De part sa lisibilité accrue, la <strong>récursivité terminale</strong> est à privilégier sur l’itération.</p>
+
+<h4 id="a-retenir">A retenir</h4>
+
+<p>Qu’est-ce que la récursivité?</p>
+
+<blockquote>
+  <p>Une fonction qui appelle la même fonction avec des paramètres différents.   <em>La fonction appellée s’execute dans un contexte différent de la première fonction</em></p>
+</blockquote>
+
+<p>Dans quels cas l’utiliser?</p>
+
+<blockquote>
+  <ol>
+    <li>Pour des problèmes récurrents.  <em>Si le sous problème est de même nature que le problème initial mais de rang inférieur</em></li>
+    <li>Sur des structures de données récursives</li>
+  </ol>
+</blockquote>
+
+<p>Points primordiaux d’une fonction récursive?</p>
+
+<blockquote>
+  <ol>
+    <li>Condition terminale. <em>Atteinte après un nombre fini d’appels</em></li>
+    <li>Un appel récursif. <em>Dont les paramètres convergent vers la condition terminale.</em></li>
+  </ol>
+</blockquote>
+
+<p>Types de récursivité?</p>
+
+<blockquote>
+  <ul>
+    <li>Terminale: (aucune opération ne suit l’appel récursif) La phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.</li>
+    <li>Non-terminale: (des opérations suivent l’appel récursif) On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat.</li>
+  </ul>
+</blockquote>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Algo: Résumé CP2@&amp;url=http://localhost:4000/algo/Algo-resume-cp2.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/algo/Algo-resume-cp2.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/algo/Algo-resume-cp2.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

@@ -6,9 +6,290 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 13 Jun 2017 00:59:04 +0200</pubDate>
-    <lastBuildDate>Tue, 13 Jun 2017 00:59:04 +0200</lastBuildDate>
+    <pubDate>Wed, 14 Jun 2017 16:44:53 +0200</pubDate>
+    <lastBuildDate>Wed, 14 Jun 2017 16:44:53 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Algo: Résumé CP2</title>
+        <description>&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; test: mercredi 14 juin 2017 à 10h00 (320) &lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;liens&quot;&gt;Liens:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Internes:&lt;br /&gt;
+&lt;a href=&quot;/algo/Algo-tri.html&quot;&gt;algorithmes de tri simples&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;/algo/recursivite.html&quot;&gt;récursivité&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://github.com/RoscaS/algo_sort&quot;&gt;repo(privé)&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Externes:&lt;br /&gt;
+&lt;a href=&quot;https://visualgo.net/en&quot;&gt;VisuAlgo&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-tri&quot;&gt;1. Tri&lt;/h2&gt;
+
+&lt;h3 id=&quot;tri-bulle&quot;&gt;Tri Bulle&lt;/h3&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;stable&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Sait détecter si un tableau est trié&lt;/strong&gt; (amélioration flag)&lt;/li&gt;
+  &lt;li&gt;Fait remonter les petites valeurs en &lt;strong&gt;échangeant&lt;/strong&gt; 2 valeurs contigues.&lt;/li&gt;
+  &lt;li&gt;À chaque parcours l’élément avec la clé la plus petite pas encore trié se retrouve en position définitive.&lt;/li&gt;
+  &lt;li&gt;À chaque parcours les autres éléments se déplacent vers leurs position définitive d’une case.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tri-extract&quot;&gt;Tri Extract&lt;/h3&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;pas stable&lt;/strong&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Innéfficace pour les tableau déjà trié&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Parcours le tableau et &lt;strong&gt;sélectionne&lt;/strong&gt; l’élément avec la clé la plus faible&lt;/li&gt;
+  &lt;li&gt;Echange à la fin du parcours avec l’élément à l’indice “gauche”&lt;/li&gt;
+  &lt;li&gt;Incrémentation de “gauche”&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tri-insert&quot;&gt;Tri Insert&lt;/h3&gt;
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;stable&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Pour une valeur à &lt;strong&gt;insérer&lt;/strong&gt; dans un tableau déjà trié:
+    &lt;ul&gt;
+      &lt;li&gt;on décale chaque élément du tableau vers la droite tant que les clés sont plus grandes que la valeur à insérer&lt;/li&gt;
+      &lt;li&gt;on insère la valeur une fois que la clé de l’élément  à sa gauche est plus petit&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tri-par-base&quot;&gt;Tri par Base&lt;/h3&gt;
+&lt;p&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n)&lt;/script&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;stable&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Efficace en temps mais pas en mémoire&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Tri basé sur la &lt;strong&gt;distribution&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Le nombre de files nécéssaire dépend de la base. (10 en base 10, 26 pour des char, 16 en hexa,…)&lt;/li&gt;
+  &lt;li&gt;Autant de distributions que de caractères qui composent l’élément avec la clé la plus &lt;strong&gt;longue&lt;/strong&gt; du tableau à trier.&lt;/li&gt;
+  &lt;li&gt;Les distributions commencent par le caractère le plus à droite, du premier élément du tableau&lt;/li&gt;
+  &lt;li&gt;Placement de cet élément dans la file correspondant à ce caractère et ainsi de suite pour tous les éléments&lt;/li&gt;
+  &lt;li&gt;Selon le principe du &lt;strong&gt;FIFO&lt;/strong&gt; on sort les éléments des files dans l’&lt;strong&gt;ordre croissant&lt;/strong&gt; des files (pour un tri croissant) et on les replace dans le tableau initial.&lt;/li&gt;
+  &lt;li&gt;On répète pour le caractère à l’indice -1,-2,…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nbr: 2 5 3 4 8
+idx: 0 1 2 3 4
+mot: p o u l e
+
+première passe : dernier caractère (8 et e)
+ensuite, caractère à l'indice -1 (4 et l), ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;fonctions utiles:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;fonction-nombredeparcours&quot;&gt;fonction nombreDeParcours&lt;/h4&gt;
+&lt;p&gt;note: &lt;span style=&quot;color:red&quot;&gt; &lt;em&gt;refaire ces algo de façon générique&lt;/em&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Nombre de distributions =  &lt;strong&gt;nombre de chiffres qui compose le plus grand nombre&lt;/strong&gt;.
+l’entier renvoyé par &lt;script type=&quot;math/tex&quot;&gt;\large \log_{10} n&lt;/script&gt; d’un nombre (&lt;script type=&quot;math/tex&quot;&gt;\large n&lt;/script&gt;) sera égal au nombre de chiffre qui le composent &lt;script type=&quot;math/tex&quot;&gt;\large -1&lt;/script&gt; (d’où le &lt;script type=&quot;math/tex&quot;&gt;\large+1&lt;/script&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;nbParcours&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;log10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maximum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Le cast est fait automatiquement par le type de la valeur de retour&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;fonction-extraireunite&quot;&gt;fonction extraireUnite&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;retourner une unité spécifique d’un nombre&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;extraireUnite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;static_cast&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;cast nécessaire pour éviter une &lt;a href=&quot;/algo/Algo-tri.html&quot;&gt;erreur de compilation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;comparaison&quot;&gt;Comparaison&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Algorithme&lt;/th&gt;
+      &lt;th&gt;Complexité au pire&lt;/th&gt;
+      &lt;th&gt;Stabilité&lt;/th&gt;
+      &lt;th&gt;Famille*&lt;/th&gt;
+      &lt;th&gt;Remarques&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Bulles et améliorations&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;oui&lt;/td&gt;
+      &lt;td&gt;Echange&lt;/td&gt;
+      &lt;td&gt;Sait détecter un tableau trié&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Extraction&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;span style=&quot;color:red&quot;&gt;non&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;Sélection&lt;/td&gt;
+      &lt;td&gt;Inefficace sur un tableau déja trié (le pire)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Insertion&lt;/td&gt;
+      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/td&gt;
+      &lt;td&gt;oui&lt;/td&gt;
+      &lt;td&gt;Insertion&lt;/td&gt;
+      &lt;td&gt;Intéressant pour insérer des vlaeurs dans un tableau déjà trié*&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Base&lt;/td&gt;
+      &lt;td&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n)&lt;/script&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;oui&lt;/td&gt;
+      &lt;td&gt;Distribution&lt;/td&gt;
+      &lt;td&gt;Intéressant pour les petites valeurs (“petit” nombre de chiffres)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;On peut trier les valeurs au fur et à mesure. Pour les autres, il est nécéssaire de les avoir toutes avant de commencer. En  &lt;em&gt;O(n)&lt;/em&gt;  dans le meilleur cas.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;2-récursivité&quot;&gt;2. Récursivité&lt;/h2&gt;
+
+&lt;p&gt;Un objet est dit récursif s’il apparait dans sa définition.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;structure de données récursives: &lt;em&gt;listes&lt;/em&gt;, &lt;em&gt;arbres&lt;/em&gt; et &lt;em&gt;graphes&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;algorithmes récursif: si une des opérations est un appel à l’algorithme en &lt;strong&gt;lui même&lt;/strong&gt; mais à un rang inférieur&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;la récursivité c’est quand le sous-problème est de la &lt;strong&gt;même nature&lt;/strong&gt; que le problème initial mais à un rang inférieur&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Chaque appel de la fonction récursive est une nouvelle &lt;strong&gt;instance de la fonction&lt;/strong&gt; (&lt;script type=&quot;math/tex&quot;&gt;\neq&lt;/script&gt; même fonction car les paramètres sont différents).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;nouvelle instance à chaque appel&lt;/li&gt;
+  &lt;li&gt;chaque appel est différent du précédent, il n’y a pas &lt;em&gt;duplication&lt;/em&gt; du contexte, c’est un &lt;strong&gt;contexte différent&lt;/strong&gt; à chaque appel.&lt;/li&gt;
+  &lt;li&gt;paramètres différents &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; fonction différente&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Dire  &lt;em&gt;“une fonction récursive est une fonction qui se rappelle elle-même”&lt;/em&gt; est donc &lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;FAUX&lt;/strong&gt;&lt;/span&gt; (à moitié faux mais faux quand même).&lt;/p&gt;
+
+&lt;h3 id=&quot;phases-dun-algorithme-récursif&quot;&gt;Phases d’un algorithme récursif&lt;/h3&gt;
+
+&lt;p&gt;L’éxécution proprement dite peut se décomposer en deux temp:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Phase de descente&lt;/strong&gt;: appels récursifs (et création d’un contexte pour chacun d’entre eux) jusqu’à la condition terminale&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Phase de remontée&lt;/strong&gt;: retour des résultats et libération des contextes devenus inutiles&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;terminal--non-terminal&quot;&gt;Terminal &amp;amp; non-terminal&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Terminal&lt;/strong&gt;: aucune opération ne suit l’appel récursif&lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\quad \Rightarrow&lt;/script&gt; la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Non-terminal&lt;/strong&gt;: des opérations suivent l’appel récursif. (On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat).&lt;br /&gt;
+&lt;script type=&quot;math/tex&quot;&gt;\quad \Rightarrow&lt;/script&gt; la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;La question à se poser et qui ne nécéssite pas de comprendre l’algorithme c’est:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;span style=&quot;color:green&quot;&gt; &lt;strong&gt;Est-ce qu’un return précède un appel de la fonction-elle même ?&lt;/strong&gt; &lt;/span&gt;&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;oui &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; récursivité ** non-terminale**&lt;/li&gt;
+    &lt;li&gt;non &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; récursivité ** terminale**&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;pour-la-programmation-récursive-il-faut&quot;&gt;Pour la programmation récursive il faut…&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;avoir une condition terminale&lt;/li&gt;
+  &lt;li&gt;avoir un appel récursif dont un des paramètres converge vers la condition terminale&lt;/li&gt;
+  &lt;li&gt;s’assurer que la condition est toujours atteinte après un nombre fini d’appels&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;eviter-la-récursivité-quand&quot;&gt;Eviter la récursivité quand…&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;la récurence est d’ordre plus grand que 1 (c’est à dire que la valeur au rang &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; ne dépend pas seulement du rang &lt;script type=&quot;math/tex&quot;&gt;n-1&lt;/script&gt; mais aussi de &lt;script type=&quot;math/tex&quot;&gt;n-2&lt;/script&gt;, voir &lt;script type=&quot;math/tex&quot;&gt;n-3&lt;/script&gt;, …)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;récursivité-vs-itération&quot;&gt;Récursivité vs itération&lt;/h3&gt;
+
+&lt;p&gt;La récursivité est toujours plus lente que l’itération sauf pour la récursivité terminale. Cependant, la majorité des compilateurs détectent et supprime la phase de remonté. Une fonction récursive terminale est donc aussi rapide qu’une fonction itérative.&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; De part sa lisibilité accrue, la &lt;strong&gt;récursivité terminale&lt;/strong&gt; est à privilégier sur l’itération.&lt;/p&gt;
+
+&lt;h4 id=&quot;a-retenir&quot;&gt;A retenir&lt;/h4&gt;
+
+&lt;p&gt;Qu’est-ce que la récursivité?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Une fonction qui appelle la même fonction avec des paramètres différents.   &lt;em&gt;La fonction appellée s’execute dans un contexte différent de la première fonction&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Dans quels cas l’utiliser?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Pour des problèmes récurrents.  &lt;em&gt;Si le sous problème est de même nature que le problème initial mais de rang inférieur&lt;/em&gt;&lt;/li&gt;
+    &lt;li&gt;Sur des structures de données récursives&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Points primordiaux d’une fonction récursive?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Condition terminale. &lt;em&gt;Atteinte après un nombre fini d’appels&lt;/em&gt;&lt;/li&gt;
+    &lt;li&gt;Un appel récursif. &lt;em&gt;Dont les paramètres convergent vers la condition terminale.&lt;/em&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Types de récursivité?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Terminale: (aucune opération ne suit l’appel récursif) La phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.&lt;/li&gt;
+    &lt;li&gt;Non-terminale: (des opérations suivent l’appel récursif) On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Tue, 13 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/algo/Algo-resume-cp2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/algo/Algo-resume-cp2.html</guid>
+        
+        <category>algo</category>
+        
+        <category>tri</category>
+        
+        <category>recursivite</category>
+        
+        
+        <category>Algo</category>
+        
+      </item>
     
       <item>
         <title>Présentation projet p1: avancement, juin 2017</title>
@@ -463,6 +744,9 @@ Désolé d'avoir accepté trop vite, j'étais super occupé (je le suis toujours
 &lt;h2 id=&quot;codes&quot;&gt;Codes&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/RoscaS/algo_sort&quot;&gt;Repo&lt;/a&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;résumé&quot;&gt;Résumé&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;/algo/resume-cp2.html&quot;&gt;Résumé cp3&lt;/a&gt;&lt;/p&gt;
+
 &lt;h2 id=&quot;definition&quot;&gt;Definition&lt;/h2&gt;
 
 &lt;ol&gt;
@@ -529,12 +813,7 @@ L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;
   &lt;li&gt;les valeurs des paramètres et des variables définies par la fonction&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;!--&lt;iframe width=&quot;800&quot; height=&quot;550&quot; frameborder=&quot;0&quot; src=&quot;http://pythontutor.com/iframe-embed.html#code=def%20factorielle%28n%29%3A%0A%20%20%20%20if%20%28n%20%3D%3D%201%29%3A%0A%20%20%20%20%20%20%20%20return%201%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20n%20*%20factorielle%28n%20-%201%29%0A%0A%0Aprint%28factorielle%284%29%29&amp;codeDivHeight=400&amp;codeDivWidth=350&amp;cumulative=false&amp;curInstr=12&amp;heapPrimitives=false&amp;origin=opt-frontend.js&amp;py=3&amp;rawInputLstJSON=%5B%5D&amp;textReferences=false&quot;&gt; &lt;/iframe&gt;--&gt;&lt;/p&gt;
-
-&lt;!--&lt;div class=&quot;image&quot; style=&quot;width: 100%&quot;&gt;
-    &lt;a  href=&quot;https://visualgo.net/en/recursion&quot;&gt;&lt;img src=&quot;/00illustrations/algo-recur/fibo8.gif&quot; &gt;&lt;/a&gt;
-&lt;/div&gt;--&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://goo.gl/QGxNHe&quot;&gt;version interactive&lt;/a&gt;
 &lt;img src=&quot;/00illustrations/algo-recur/facto-py.gif&quot; height=&quot;auto&quot; /&gt;&lt;/p&gt;
@@ -840,9 +1119,143 @@ La récursivité terminale revient à appliquer l’adage &lt;em&gt;Diviser pour
 
 &lt;p&gt;&lt;strong&gt;La  fonction  itérative  correspondante  est  donc  moins  efficace  qu’une  fonction écrite directement en itératif.&lt;/strong&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;exemples-dalgorithmes-récursifs&quot;&gt;Exemples d’algorithmes récursifs&lt;/h2&gt;
+
+&lt;h4 id=&quot;factorielle&quot;&gt;Factorielle&lt;/h4&gt;
+&lt;p&gt;Retourne la factorielle d’un nombre (&lt;script type=&quot;math/tex&quot;&gt;\large !n&lt;/script&gt;)&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;facto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;facto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion non-terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;descending&quot;&gt;Descending&lt;/h4&gt;
+&lt;p&gt;Print les nombres à partir de &lt;script type=&quot;math/tex&quot;&gt;\large n&lt;/script&gt; jusque &lt;script type=&quot;math/tex&quot;&gt;0&lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;descending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;descending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;ascending&quot;&gt;Ascending&lt;/h4&gt;
+&lt;p&gt;Même chose que le précédent mais de &lt;script type=&quot;math/tex&quot;&gt;0&lt;/script&gt; à &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ascending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ascending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion terminale. &lt;em&gt;Comparer avec le précédent&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;somme&quot;&gt;Somme&lt;/h4&gt;
+&lt;p&gt;Retourne la somme des nombres de &lt;script type=&quot;math/tex&quot;&gt;1&lt;/script&gt; à &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;somme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;somme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion non-terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;sommetab&quot;&gt;SommeTab&lt;/h4&gt;
+&lt;p&gt;Retourne la somme des nombres dans un tableau&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sommeTab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sommeTab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion non-terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;multiple-de-13&quot;&gt;multiple de 13&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiple13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;multiple13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;elever-à-la-puissance-nt&quot;&gt;Elever à la puissance (NT)&lt;/h4&gt;
+&lt;p&gt;Élève &lt;script type=&quot;math/tex&quot;&gt;a&lt;/script&gt; à la puissance &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;ss&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;puissance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;puissanceNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion non-terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;elever-à-la-puissance-t&quot;&gt;Elever à la puissance (T)&lt;/h4&gt;
+&lt;p&gt;Élève &lt;script type=&quot;math/tex&quot;&gt;a&lt;/script&gt; à la puissance &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;ss&lt;/p&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;puissanceT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;puissanceT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;palindrome&quot;&gt;Palindrome&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;palindrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;palindrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Récursion terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;cherche-valeur&quot;&gt;Cherche valeur&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;searchVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;searchVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;récursion terminale&lt;/p&gt;
+
+&lt;h4 id=&quot;fibbonacci-cest-mal-&quot;&gt;Fibbonacci (c’est mal !)&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
 &lt;h2 id=&quot;algorithmes-de-tri-en-mode-récursif&quot;&gt;Algorithmes de tri en mode récursif&lt;/h2&gt;
 
-&lt;p&gt;&lt;em&gt;à compléter&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id=&quot;tri-bulle&quot;&gt;Tri-bulle&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;tri-extract&quot;&gt;Tri-extract&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;tri-insert&quot;&gt;Tri-insert&lt;/h4&gt;
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;résumé-1&quot;&gt;Résumé&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;/algo/resume-cp2.html&quot;&gt;Résumé cp3&lt;/a&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 02 Jun 2017 00:00:00 +0200</pubDate>
@@ -945,33 +1358,6 @@ La récursivité terminale revient à appliquer l’adage &lt;em&gt;Diviser pour
         
         
         <category>Math</category>
-        
-      </item>
-    
-      <item>
-        <title>Présentation sur l'IA</title>
-        <description>&lt;h1 id=&quot;cours-de-communication-présentation-ia-01062017&quot;&gt;Cours de communication: Présentation IA 01/06/2017&lt;/h1&gt;
-
-&lt;h2 id=&quot;slides&quot;&gt;Slides&lt;/h2&gt;
-
-&lt;iframe width=&quot;770&quot; height=&quot;515&quot; src=&quot;https://gitpitch.com/RoscaS/com_presentation_IA/master?grs=github&amp;amp;t=white&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;références&quot;&gt;Références&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html&quot;&gt;waitbutwhy&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.huffingtonpost.fr/2015/09/13/futur-intelligence-artificielle-humanite-immortalite-25-ans-2040_n_8123014.html&quot;&gt;Comment le futur de l’IA pourrait révolutionner le monde d’ici 25 ans&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.itesoft.com/fr/lintelligence-artificielle-un-rapide-tour-dhorizon/&quot;&gt;IA tour d’horizon&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://medium.com/latelier-verrocchio/lintelligence-artificielle-et-l-avenir-de-notre-monde-partie-1-2-5904d164f4cf&quot;&gt;IA et avenir de notre monde&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.digitalcorner-wavestone.com/2015/06/lintelligence-artificielle-lavenir-de-lhumanite/&quot;&gt;IA, l’avenir de l’humanité?&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 28 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/presentations/presentation-references.html</link>
-        <guid isPermaLink="true">http://localhost:4000/presentations/presentation-references.html</guid>
-        
-        
-        <category>Presentations</category>
         
       </item>
     

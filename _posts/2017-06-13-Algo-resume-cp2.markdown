@@ -56,7 +56,7 @@ $$ O(n^2) $$
 * Autant de distributions que de caractères qui composent l'élément avec la clé la plus **longue** du tableau à trier.
 * Les distributions commencent par le caractère le plus à droite, du premier élément du tableau
 * Placement de cet élément dans la file correspondant à ce caractère et ainsi de suite pour tous les éléments
-* Celon le principe du **FIFO** on sort les éléments des files dans l'**ordre croissant** des files (pour un tri croissant) et on les replace dans le tableau initial.
+* Selon le principe du **FIFO** on sort les éléments des files dans l'**ordre croissant** des files (pour un tri croissant) et on les replace dans le tableau initial.
 * On répète pour le caractère à l'indice -1,-2,...
 
 ```
@@ -166,16 +166,17 @@ $$\Rightarrow $$ De part sa lisibilité accrue, la **récursivité terminale** e
 
 Qu'est-ce que la récursivité?  
 
-> Une fonction qui appelle la même fonction avec des paramètres différents.   _La fonction appellée s'execute dans un contexte différent de la première fonction_ $$ \Rightarrow $$ mieux !
+> Une fonction qui appelle la même fonction avec des paramètres différents.   _La fonction appellée s'execute dans un contexte différent de la première fonction_ 
 
 Dans quels cas l'utiliser?
 
-> Pour des problèmes récurrents.  _Si le sous problème est de même nature que le problème initial mais de rang inférieur_ $$ \Rightarrow $$ mieux !
+> 1. Pour des problèmes récurrents.  _Si le sous problème est de même nature que le problème initial mais de rang inférieur_
+> 2. Sur des structures de données récursives
 
 Points primordiaux d'une fonction récursive?
 
-> 1. Condition terminale. _Atteinte après un nombre fini d'appels_ $$ \Rightarrow $$ mieux !
-> 2. Un appel récursif. _Dont les paramètres convergent vers la condition terminale._ $$ \Rightarrow $$ mieux !
+> 1. Condition terminale. _Atteinte après un nombre fini d'appels_
+> 2. Un appel récursif. _Dont les paramètres convergent vers la condition terminale._
 
 Types de récursivité?
 

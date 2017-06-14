@@ -114,6 +114,9 @@
 <h2 id="codes">Codes</h2>
 <p><a href="https://github.com/RoscaS/algo_sort">Repo</a></p>
 
+<h2 id="résumé">Résumé</h2>
+<p><a href="/algo/resume-cp2.html">Résumé cp3</a></p>
+
 <h2 id="definition">Definition</h2>
 
 <ol>
@@ -180,12 +183,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
   <li>les valeurs des paramètres et des variables définies par la fonction</li>
 </ul>
 
-<p><br />
-<!--<iframe width="800" height="550" frameborder="0" src="http://pythontutor.com/iframe-embed.html#code=def%20factorielle%28n%29%3A%0A%20%20%20%20if%20%28n%20%3D%3D%201%29%3A%0A%20%20%20%20%20%20%20%20return%201%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20n%20*%20factorielle%28n%20-%201%29%0A%0A%0Aprint%28factorielle%284%29%29&codeDivHeight=400&codeDivWidth=350&cumulative=false&curInstr=12&heapPrimitives=false&origin=opt-frontend.js&py=3&rawInputLstJSON=%5B%5D&textReferences=false"> </iframe>--></p>
-
-<!--<div class="image" style="width: 100%">
-    <a  href="https://visualgo.net/en/recursion"><img src="/00illustrations/algo-recur/fibo8.gif" ></a>
-</div>-->
+<p><br /></p>
 
 <p><a href="https://goo.gl/QGxNHe">version interactive</a>
 <img src="/00illustrations/algo-recur/facto-py.gif" height="auto" /></p>
@@ -491,9 +489,143 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 
 <p><strong>La  fonction  itérative  correspondante  est  donc  moins  efficace  qu’une  fonction écrite directement en itératif.</strong></p>
 
+<h2 id="exemples-dalgorithmes-récursifs">Exemples d’algorithmes récursifs</h2>
+
+<h4 id="factorielle">Factorielle</h4>
+<p>Retourne la factorielle d’un nombre (<script type="math/tex">\large !n</script>)</p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">facto</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;}</span>
+    <span class="k">return</span> <span class="n">facto</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">;</span>  
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion non-terminale</p>
+
+<h4 id="descending">Descending</h4>
+<p>Print les nombres à partir de <script type="math/tex">\large n</script> jusque <script type="math/tex">0</script></p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">descending</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+    <span class="n">descending</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion terminale</p>
+
+<h4 id="ascending">Ascending</h4>
+<p>Même chose que le précédent mais de <script type="math/tex">0</script> à <script type="math/tex">n</script></p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">ascending</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">ascending</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion terminale. <em>Comparer avec le précédent</em></p>
+
+<h4 id="somme">Somme</h4>
+<p>Retourne la somme des nombres de <script type="math/tex">1</script> à <script type="math/tex">n</script></p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">somme</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span> <span class="k">return</span> <span class="n">n</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="n">somme</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion non-terminale</p>
+
+<h4 id="sommetab">SommeTab</h4>
+<p>Retourne la somme des nombres dans un tableau</p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">sommeTab</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">[</span><span class="n">len</span><span class="p">];</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">[</span><span class="n">len</span><span class="p">]</span> <span class="o">+</span> <span class="n">sommeTab</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">len</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion non-terminale</p>
+
+<h4 id="multiple-de-13">multiple de 13</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">multiple13</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">13</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">)</span>  <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">multiple13</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">13</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion terminale</p>
+
+<h4 id="elever-à-la-puissance-nt">Elever à la puissance (NT)</h4>
+<p>Élève <script type="math/tex">a</script> à la puissance <script type="math/tex">n</script>ss</p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">puissance</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="n">puissanceNT</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion non-terminale</p>
+
+<h4 id="elever-à-la-puissance-t">Elever à la puissance (T)</h4>
+<p>Élève <script type="math/tex">a</script> à la puissance <script type="math/tex">n</script>ss</p>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">puissanceT</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">t</span> <span class="o">*=</span> <span class="n">a</span><span class="p">;</span>  
+    <span class="n">puissanceT</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion terminale</p>
+
+<h4 id="palindrome">Palindrome</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">palindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">d</span><span class="o">-</span><span class="n">g</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="p">{</span> <span class="n">palindrome</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Récursion terminale</p>
+
+<h4 id="cherche-valeur">Cherche valeur</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">searchVal</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">idx</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">g</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> 
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">g</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">searchVal</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">idx</span><span class="p">,</span><span class="n">val</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>récursion terminale</p>
+
+<h4 id="fibbonacci-cest-mal-">Fibbonacci (c’est mal !)</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">fib</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">?</span> <span class="n">n</span><span class="o">:</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
 <h2 id="algorithmes-de-tri-en-mode-récursif">Algorithmes de tri en mode récursif</h2>
 
-<p><em>à compléter</em></p>
+<h4 id="tri-bulle">Tri-bulle</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<h4 id="tri-extract">Tri-extract</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<h4 id="tri-insert">Tri-insert</h4>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<h2 id="résumé-1">Résumé</h2>
+
+<p><a href="/algo/resume-cp2.html">Résumé cp3</a></p>
 
 
 </div>
