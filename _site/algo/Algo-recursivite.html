@@ -597,7 +597,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <span class="p">}</span>
 </code></pre>
 </div>
-<p>récursion terminale</p>
+<p>Récursion terminale</p>
 
 <h4 id="fibbonacci-cest-mal-">Fibbonacci (c’est mal !)</h4>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">fib</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
@@ -609,19 +609,74 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <h2 id="algorithmes-de-tri-en-mode-récursif">Algorithmes de tri en mode récursif</h2>
 
 <h4 id="tri-bulle">Tri-bulle</h4>
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">echange</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="n">t</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>   <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">t</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">triBulle</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-</span><span class="n">g</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">g</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">echange</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">triBulle</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 </div>
+<p>Récursion terminale</p>
 
 <h4 id="tri-extract">Tri-extract</h4>
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">echanger</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">a</span><span class="p">];</span>
+    <span class="n">t</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">b</span><span class="p">];</span>
+    <span class="n">t</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">placerMinGauche</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">idxMin</span>  <span class="o">=</span> <span class="n">g</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">[</span><span class="n">idxMin</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">idxMin</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">echanger</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">idxMin</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">triExtract</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-</span><span class="n">g</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">placerMinGauche</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+        <span class="n">triExtract</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 </div>
+<p>Récursion terminale</p>
 
 <h4 id="tri-insert">Tri-insert</h4>
-<div class="language-c++ highlighter-rouge"><pre class="highlight"><code>
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">insertion</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span>
+    <span class="k">while</span> <span class="p">((</span><span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">temp</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="n">g</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="n">j</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">t</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">triInsert</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">g</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">triInsert</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">insertion</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 </div>
+<p>Récursion terminale</p>
 
 <h2 id="résumé-1">Résumé</h2>
 

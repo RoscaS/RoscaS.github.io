@@ -110,7 +110,7 @@
 <h3 id="philanthropie">Philanthropie</h3>
 <p>(du grec ancien φίλος / phílos « amoureux » et ἄνθρωπος / ánthrôpos « homme », « genre humain ») <strong>est la philosophie ou doctrine de vie qui met l’humanité au premier plan de ses priorités</strong>. Un philanthrope cherche à améliorer le sort de ses semblables par de multiples moyens.</p>
 
-<h2 id="ia">IA</h2>
+<h2 id="ia-types">IA (types)</h2>
 
 <h3 id="sources">Sources:</h3>
 <p><a href="http://www.oezratty.net/wordpress/2016/avancees-intelligence-artificielle-1/">oezratty.net</a> (fr) impressionnant !</p>
@@ -250,6 +250,73 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
 </table>
 
 <p><span style="color:#F92672"><strong>X86 fonctionne en Little endian</strong></span></p>
+
+<h2 id="algo">Algo</h2>
+
+<h4 id="tad">TAD</h4>
+<p>Spécification mathématique d’un ensemble de valeurs et de l’ensemble des opérations qu’elles peuvent effectuer. Il est qualifié d’abstrait car il correspond à un cahier des charges qu’une structure de données doit ensuite implémenter.</p>
+
+<h4 id="scd">SCD</h4>
+<p>Implémentation concrète d’un TAD dans un langage.</p>
+
+<h4 id="heuristique">Heuristique</h4>
+<p>Méthode qui fournit rapidement (temps polynomial) une solution réalisable mais pas forcément optimale pour un problème d’une complexité hors du possible pour l’approche statistique.</p>
+
+<h4 id="déterministe">Déterministe</h4>
+<p>Toute execution de cet algorithme sur les mêmes données donne lieu à la même suite d’opérations.</p>
+
+<h4 id="linéaire">Linéaire</h4>
+<p>il existe un premier et un dernier élément, tous les autres éléments ont un élément qui les précède et un autre qui les suit.</p>
+
+<h4 id="homogène">Homogène</h4>
+<p>Même type</p>
+
+<h4 id="accès-séquentiel">accès séquentiel</h4>
+<p>On accède aux données dans un ordre défini contrairement à un accès direct où on peut accéder à n’importe quel élément quand on veut.</p>
+
+<h4 id="dichotomique">Dichotomique</h4>
+
+<p>On peut illustrer l’intérêt de la recherche dichotomique par l’exemple du jeu suivant.</p>
+
+<p>A et B jouent au jeu suivant :</p>
+
+<p>A choisit un nombre entre 0 et 100, et ne le communique pas à B, B doit trouver
+ce nombre en posant des questions à A dont les réponses ne peuvent être que oui ou non.</p>
+
+<p>B doit essayer de poser le moins de questions possible. Une stratégie pour B est d’essayer tous les nombres, mais il peut aller plus rapidement comme le montre le scenario suivant :</p>
+
+<p>A choisit 66 et attend les questions de B :</p>
+<ul>
+  <li>B sait que le nombre est entre 0 et 100</li>
+</ul>
+
+<p>Au milieu se trouve 50, B demande donc :<br />
+<em>Est-ce que le nombre est plus grand que 50?</em>
+A répond <em>Oui</em> .</p>
+
+<ul>
+  <li>B sait maintenant que le nombre est entre 51 et 100, au milieu se trouve 75, il demande donc :</li>
+</ul>
+
+<p><em>Est-ce que le nombre est plus grand que 75?</em>
+A répond  <em>Non</em></p>
+
+<ul>
+  <li>Et ainsi de suite :</li>
+</ul>
+
+<p><em>Plus grand que 63?</em> (<script type="math/tex">63 = \large \frac{51+75}{2}</script>) <br />
+ <em>Oui</em>   <br />
+ <em>Plus grand que 69?</em> (<script type="math/tex">69 = \large \frac{63+75}{2}</script>)   <br />
+ <em>Non</em>   <br />
+ <em>Plus grand que 66?</em> (<script type="math/tex">66 = \large \frac{69+63}{2}</script>)   <br />
+ <em>Non</em>   <br />
+ <em>Plus grand que 65?</em> (<script type="math/tex">65 \large \approx \frac{63+66}{2}</script>)    <br />
+ <em>Oui</em></p>
+
+<ul>
+  <li>B sait maintenant que le nombre est entre 66 et 66, autrement dit qu’il s’agit de 66 : il a trouvé le nombre choisi par A en seulement 7 questions.</li>
+</ul>
 
 </div>
 

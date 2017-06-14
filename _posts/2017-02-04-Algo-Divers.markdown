@@ -2,7 +2,7 @@
 layout: post
 title: "Algo: Divers"
 subtitle: "Algorithmes divers"
-date: 2017-06-05
+date: 2017-04-02
 author: Sol
 category: Algo
 tags: algo
