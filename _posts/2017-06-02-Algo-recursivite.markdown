@@ -473,7 +473,7 @@ bool searchVal(int *t, int g, int d, int &idx, int val) {
     return searchVal(t,g+1,d,idx,val);
 }
 ```
-récursion terminale
+Récursion terminale
 
 #### Fibbonacci (c'est mal !)
 ```c++
@@ -487,18 +487,73 @@ int fib(int n) {
 
 #### Tri-bulle
 ```c++
+void echange(int *t, int idx) {
+    int temp = t[idx];
+    t[idx]   = t[idx-1];
+    t[idx-1] = temp;
+}
 
+void triBulle(int *t, int g, int d) {
+    if (d-g >= 1) {
+        for (int i = d; i >= g; --i) {
+            if (t[i] < t[i-1]) {
+                echange(t, i);
+            }
+        }
+        triBulle(t, g+1, d);
+    }
+}
 ```
+Récursion terminale
 
 #### Tri-extract
 ```c++
+void echanger(int *t, int a, int b)
+{
+    int temp = t[a];
+    t[a] = t[b];
+    t[b] = temp;
+}
 
+void placerMinGauche(int *t, int g, int d) {
+    int idxMin  = g;
+    for (int i = g+1; i <= d; ++i) {
+        if (t[i] < t[idxMin]) {
+            idxMin = i;
+        }
+    }
+    echanger(t, g, idxMin);
+}
+
+void triExtract(int *t, int g, int d) {
+    if (d-g >= 1) {
+        placerMinGauche(t,g,d);
+        triExtract(t,g+1,d);
+    }
+}
 ```
+Récursion terminale
 
 #### Tri-insert
 ```c++
+void insertion(int *t, int g, int idx) {
+    int j = idx-1;
+    int temp = t[idx];
+    while ((t[j] > temp) && (j >= g)) {
+        t[j+1] = t[j];
+        j--;
+    }
+    t[j+1] = temp;
+}
 
+void triInsert(int *t, int g, int d) {
+    if (d - g >= 1) {
+        triInsert(t,g,d-1);
+        insertion(t,g,d);
+    }
+}
 ```
+Récursion terminale
 
 
 ## Résumé
