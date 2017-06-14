@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/Py-Regex.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Regex</title>
+  <meta name="description" content="Todo  Exemples en Python (Jupyter)">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Regex</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="14 Jun 2017" itemprop="datePublished">Jun 14 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">Py</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">regex</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Regex cheatSheet</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="todo">Todo</h2>
+<ul>
+  <li>Exemples en Python (Jupyter)</li>
+</ul>
+
+<h2 id="basic">Basic</h2>
+
+<h3 id="core">Core</h3>
+
+<p><code class="highlighter-rouge">abc…</code>          <em>Letters</em>  <br />
+<code class="highlighter-rouge">123…</code>          <em>Digits</em>  <br />
+<code class="highlighter-rouge">\d</code>            <em>Any Digit</em>  <br />
+<code class="highlighter-rouge">\D</code>            <em>Any Non-digit char</em>  <br />
+<code class="highlighter-rouge">. </code>            <em>Any char</em>  <br />
+<code class="highlighter-rouge">\.</code>            <em>Period</em>  <br />
+<code class="highlighter-rouge">[abc]</code>         <em>Only a, b, or c</em>  <br />
+<code class="highlighter-rouge">[^abc]</code>        <em>Not a, b, nor c</em>  <br />
+<code class="highlighter-rouge">[a-z]</code>         <em>Characters a to z</em>  <br />
+<code class="highlighter-rouge">[0-9]</code>         <em>Numbers 0 to 9</em>  <br />
+<code class="highlighter-rouge">\w</code>            <em>Any Alphanum char</em>  <br />
+<code class="highlighter-rouge">\W</code>            <em>Any Non-alphanum char</em>  <br />
+<code class="highlighter-rouge">\n</code>            <em>a newline</em>  <br />
+<code class="highlighter-rouge">\t</code>            <em>a tab</em>  <br />
+<code class="highlighter-rouge">\r</code>            <em>carriage return</em>  <br />
+<code class="highlighter-rouge"><span class="p">{</span><span class="err">m</span><span class="p">}</span></code>           <em>m Repetitions</em>  <br />
+<code class="highlighter-rouge"><span class="p">{</span><span class="err">m,n</span><span class="p">}</span></code>         <em>m to n Repetitions</em>  <br />
+<code class="highlighter-rouge">*</code>             <em>0 or more repetitions</em>  <br />
+<code class="highlighter-rouge">+</code>             <em>1 or more repetitions</em>  <br />
+<code class="highlighter-rouge">?</code>             <em>Optional char</em>  <br />
+<code class="highlighter-rouge">\s</code>            <em>Any Whitespace</em>  <br />
+<code class="highlighter-rouge">\S</code>            <em>Any Non-whitespace char</em>  <br />
+<code class="highlighter-rouge">^…$</code>           <em>Starts and ends</em>  <br />
+<code class="highlighter-rouge">(…)</code>           <em>Capture Group</em>  <br />
+<code class="highlighter-rouge">(a(bc))</code>       <em>Capture Sub-group</em>  <br />
+<code class="highlighter-rouge">(.*)</code>          <em>Capture all</em>  <br />
+<code class="highlighter-rouge">(abcdef)</code>     <em>Matches abc or def</em>  <br />
+<code class="highlighter-rouge">\b</code>        <em>boundary word/non-word</em></p>
+
+<h2 id="in-python">In python</h2>
+
+<p>Match aregex @ start of str:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>match only if pattern fit all str:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>match first pattern found:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Return the string obtained by replacing the leftmost non-overlapping occurrences of the pattern in string by the replacement:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Same as sub, + return the nb of sub made:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">subn</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Split a string by the occurrences of a pattern:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">maxsplit</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Find all occurrences of a pattern in a str:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Return an iterator yielding a match object:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>or each match.
+Compile a pattern into a RegexObject:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Clear the regular expression cache:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">purge</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Backslash all non-alphanumerics in a string:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">()</span>
+</code></pre>
+</div>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Regex@&amp;url=http://localhost:4000/py/Py-Regex.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/Py-Regex.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/Py-Regex.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

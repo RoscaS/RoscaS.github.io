@@ -1,0 +1,104 @@
+---
+layout: post
+title: "Py: Regex"
+subtitle: "Regex cheatSheet"
+date: 2017-06-14
+author: Sol
+category: Py
+tags: Py regex
+finished: false
+---
+
+## Todo
+* Exemples en Python (Jupyter)
+
+## Basic
+
+### Core
+
+`abc…`          _Letters_    
+`123…`          _Digits_    
+`\d`            _Any Digit_    
+`\D`            _Any Non-digit char_    
+`. `            _Any char_    
+`\.`            _Period_    
+`[abc]`         _Only a, b, or c_    
+`[^abc]`        _Not a, b, nor c_    
+`[a-z]`         _Characters a to z_    
+`[0-9]`         _Numbers 0 to 9_    
+`\w`            _Any Alphanum char_    
+`\W`            _Any Non-alphanum char_    
+`\n`            _a newline_    
+`\t`            _a tab_    
+`\r`            _carriage return_    
+`{m}`           _m Repetitions_    
+`{m,n}`         _m to n Repetitions_    
+`*`             _0 or more repetitions_    
+`+`             _1 or more repetitions_    
+`?`             _Optional char_    
+`\s`            _Any Whitespace_    
+`\S`            _Any Non-whitespace char_    
+`^…$`           _Starts and ends_    
+`(…)`           _Capture Group_    
+`(a(bc))`       _Capture Sub-group_    
+`(.*)`          _Capture all_    
+`(abcdef)`     _Matches abc or def_    
+`\b`        _boundary word/non-word_    
+
+## In python
+
+Match aregex @ start of str:
+```py
+re.match(pattern,string)
+```
+
+match only if pattern fit all str:
+```py
+re.fullmatch(pattern,string)
+```
+
+match first pattern found:
+```py
+re.search(pattern,string)
+```
+
+Return the string obtained by replacing the leftmost non-overlapping occurrences of the pattern in string by the replacement:
+```py
+re.sub(pattern, repl, string, count=0, flags=0)
+```
+
+Same as sub, + return the nb of sub made:
+```py
+re.subn(pattern, repl, string)
+```
+
+Split a string by the occurrences of a pattern:
+```py
+re.split(pattern, string, maxsplit=0)
+```
+
+Find all occurrences of a pattern in a str:
+```py
+re.findall(pattern,string)
+```
+
+Return an iterator yielding a match object:
+```py
+re.finditer()
+```
+
+or each match.
+Compile a pattern into a RegexObject:
+```py
+re.compile()
+```
+
+Clear the regular expression cache:
+```py
+re.purge()
+```
+
+Backslash all non-alphanumerics in a string:
+```py
+re.escape()
+```

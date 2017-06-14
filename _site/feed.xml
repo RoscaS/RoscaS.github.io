@@ -6,9 +6,120 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 14 Jun 2017 19:29:07 +0200</pubDate>
-    <lastBuildDate>Wed, 14 Jun 2017 19:29:07 +0200</lastBuildDate>
+    <pubDate>Wed, 14 Jun 2017 19:51:16 +0200</pubDate>
+    <lastBuildDate>Wed, 14 Jun 2017 19:51:16 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Py: Regex</title>
+        <description>&lt;h2 id=&quot;todo&quot;&gt;Todo&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Exemples en Python (Jupyter)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;basic&quot;&gt;Basic&lt;/h2&gt;
+
+&lt;h3 id=&quot;core&quot;&gt;Core&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;abc…&lt;/code&gt;          &lt;em&gt;Letters&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;123…&lt;/code&gt;          &lt;em&gt;Digits&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\d&lt;/code&gt;            &lt;em&gt;Any Digit&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\D&lt;/code&gt;            &lt;em&gt;Any Non-digit char&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;. &lt;/code&gt;            &lt;em&gt;Any char&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\.&lt;/code&gt;            &lt;em&gt;Period&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;[abc]&lt;/code&gt;         &lt;em&gt;Only a, b, or c&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;[^abc]&lt;/code&gt;        &lt;em&gt;Not a, b, nor c&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;[a-z]&lt;/code&gt;         &lt;em&gt;Characters a to z&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;[0-9]&lt;/code&gt;         &lt;em&gt;Numbers 0 to 9&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\w&lt;/code&gt;            &lt;em&gt;Any Alphanum char&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\W&lt;/code&gt;            &lt;em&gt;Any Non-alphanum char&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\n&lt;/code&gt;            &lt;em&gt;a newline&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\t&lt;/code&gt;            &lt;em&gt;a tab&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\r&lt;/code&gt;            &lt;em&gt;carriage return&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;           &lt;em&gt;m Repetitions&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;m,n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;         &lt;em&gt;m to n Repetitions&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;*&lt;/code&gt;             &lt;em&gt;0 or more repetitions&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;             &lt;em&gt;1 or more repetitions&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;             &lt;em&gt;Optional char&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\s&lt;/code&gt;            &lt;em&gt;Any Whitespace&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\S&lt;/code&gt;            &lt;em&gt;Any Non-whitespace char&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;^…$&lt;/code&gt;           &lt;em&gt;Starts and ends&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;(…)&lt;/code&gt;           &lt;em&gt;Capture Group&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;(a(bc))&lt;/code&gt;       &lt;em&gt;Capture Sub-group&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;(.*)&lt;/code&gt;          &lt;em&gt;Capture all&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;(abcdef)&lt;/code&gt;     &lt;em&gt;Matches abc or def&lt;/em&gt;  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;\b&lt;/code&gt;        &lt;em&gt;boundary word/non-word&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;in-python&quot;&gt;In python&lt;/h2&gt;
+
+&lt;p&gt;Match aregex @ start of str:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;match only if pattern fit all str:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fullmatch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;match first pattern found:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Return the string obtained by replacing the leftmost non-overlapping occurrences of the pattern in string by the replacement:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Same as sub, + return the nb of sub made:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;repl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Split a string by the occurrences of a pattern:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;maxsplit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Find all occurrences of a pattern in a str:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Return an iterator yielding a match object:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;finditer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;or each match.
+Compile a pattern into a RegexObject:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Clear the regular expression cache:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;purge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Backslash all non-alphanumerics in a string:&lt;/p&gt;
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;escape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 14 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/py/Py-Regex.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/Py-Regex.html</guid>
+        
+        <category>Py</category>
+        
+        <category>regex</category>
+        
+        
+        <category>Py</category>
+        
+      </item>
     
       <item>
         <title>Algo: Résumé CP2</title>
@@ -1384,238 +1495,6 @@ La récursivité terminale revient à appliquer l’adage &lt;em&gt;Diviser pour
         
         
         <category>Presentations</category>
-        
-      </item>
-    
-      <item>
-        <title>Divers: Définitions (en-fr)</title>
-        <description>&lt;h1 id=&quot;définitions&quot;&gt;Définitions&lt;/h1&gt;
-
-&lt;h2 id=&quot;divers&quot;&gt;Divers&lt;/h2&gt;
-
-&lt;h3 id=&quot;philanthropie&quot;&gt;Philanthropie&lt;/h3&gt;
-&lt;p&gt;(du grec ancien φίλος / phílos « amoureux » et ἄνθρωπος / ánthrôpos « homme », « genre humain ») &lt;strong&gt;est la philosophie ou doctrine de vie qui met l’humanité au premier plan de ses priorités&lt;/strong&gt;. Un philanthrope cherche à améliorer le sort de ses semblables par de multiples moyens.&lt;/p&gt;
-
-&lt;h2 id=&quot;ia-types&quot;&gt;IA (types)&lt;/h2&gt;
-
-&lt;h3 id=&quot;sources&quot;&gt;Sources:&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;http://www.oezratty.net/wordpress/2016/avancees-intelligence-artificielle-1/&quot;&gt;oezratty.net&lt;/a&gt; (fr) impressionnant !&lt;/p&gt;
-
-&lt;h3 id=&quot;intelligence-symbolique&quot;&gt;intelligence symbolique&lt;/h3&gt;
-&lt;p&gt;Résout les problèmes avec de la connaissance (c’est le domaine actuel de l’IA et du machine learning).&lt;/p&gt;
-
-&lt;h3 id=&quot;intelligence-computationnelle&quot;&gt;intelligence computationnelle&lt;/h3&gt;
-&lt;p&gt;Résout des problèmes avec des données issues d’exemples et de l’apprentissage. Ce dernier domaine intègre notamment les réseaux neuronaux, la logique floue et les algorithmes génétiques.&lt;/p&gt;
-
-&lt;h3 id=&quot;le-symbolisme&quot;&gt;le symbolisme&lt;/h3&gt;
-&lt;p&gt;Se focalise sur la pensée abstraite,&lt;/p&gt;
-
-&lt;h3 id=&quot;le-connectionisme&quot;&gt;le connectionisme&lt;/h3&gt;
-&lt;p&gt;se focalise sur la perception, dont la vision, la reconnaissance des formes et qui s’appuie notamment sur les réseaux neuronaux artificiels&lt;/p&gt;
-
-&lt;h3 id=&quot;le-comportementalisme&quot;&gt;le comportementalisme&lt;/h3&gt;
-&lt;p&gt;s’intéresse aux pensées subjectives de la perception. C’est dans ce  domaine que l’on peut intégrer: 
-    * l’informatique affective (affective computing) qui étudie les moyens de reconnaitre, exprimer, synthétiser et modéliser les émotions humaines. C’est une capacité  qu’IBM Watson est censé apporter au robot Pepper d’Aldebaran / Softbank.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Automatisation des processus cognitifs et en s’appuyant sur quatre étapes : l’observation des faits et données, leur interprétation, leur évaluation et la décision, avec une action ou une proposition d’actions, souvent basée sur des statistiques.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;it&quot;&gt;IT&lt;/h2&gt;
-
-&lt;h3 id=&quot;endiannes&quot;&gt;endiannes&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Ordre dans lequel les octets sont organisés dans une case mémoire &lt;strong&gt;ou dans une communication&lt;/strong&gt;. Big endian et Little endian sont deux architectures différentes.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;big-endian&quot;&gt;Big endian&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;byte de poids fort&lt;/strong&gt; à gauche.&lt;br /&gt;
-Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 1 byte&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;adr:&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;val:&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 2 byte:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;span style=&quot;color:#F92672&quot;&gt;&lt;strong&gt;Tous les protocoles TCP/IP communiquent en big-endian&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;little-endian&quot;&gt;Little endian&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;byte de poid faible&lt;/strong&gt; à gauche. &lt;br /&gt;
-Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 1 byte&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;adr:&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;val:&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 2 byte:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;span style=&quot;color:#F92672&quot;&gt;&lt;strong&gt;X86 fonctionne en Little endian&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;algo&quot;&gt;Algo&lt;/h2&gt;
-
-&lt;h4 id=&quot;tad&quot;&gt;TAD&lt;/h4&gt;
-&lt;p&gt;Spécification mathématique d’un ensemble de valeurs et de l’ensemble des opérations qu’elles peuvent effectuer. Il est qualifié d’abstrait car il correspond à un cahier des charges qu’une structure de données doit ensuite implémenter.&lt;/p&gt;
-
-&lt;h4 id=&quot;scd&quot;&gt;SCD&lt;/h4&gt;
-&lt;p&gt;Implémentation concrète d’un TAD dans un langage.&lt;/p&gt;
-
-&lt;h4 id=&quot;heuristique&quot;&gt;Heuristique&lt;/h4&gt;
-&lt;p&gt;Méthode qui fournit rapidement (temps polynomial) une solution réalisable mais pas forcément optimale pour un problème d’une complexité hors du possible pour l’approche statistique.&lt;/p&gt;
-
-&lt;h4 id=&quot;déterministe&quot;&gt;Déterministe&lt;/h4&gt;
-&lt;p&gt;Toute execution de cet algorithme sur les mêmes données donne lieu à la même suite d’opérations.&lt;/p&gt;
-
-&lt;h4 id=&quot;linéaire&quot;&gt;Linéaire&lt;/h4&gt;
-&lt;p&gt;il existe un premier et un dernier élément, tous les autres éléments ont un élément qui les précède et un autre qui les suit.&lt;/p&gt;
-
-&lt;h4 id=&quot;homogène&quot;&gt;Homogène&lt;/h4&gt;
-&lt;p&gt;Même type&lt;/p&gt;
-
-&lt;h4 id=&quot;accès-séquentiel&quot;&gt;accès séquentiel&lt;/h4&gt;
-&lt;p&gt;On accède aux données dans un ordre défini contrairement à un accès direct où on peut accéder à n’importe quel élément quand on veut.&lt;/p&gt;
-
-&lt;h4 id=&quot;dichotomique&quot;&gt;Dichotomique&lt;/h4&gt;
-
-&lt;p&gt;On peut illustrer l’intérêt de la recherche dichotomique par l’exemple du jeu suivant.&lt;/p&gt;
-
-&lt;p&gt;A et B jouent au jeu suivant :&lt;/p&gt;
-
-&lt;p&gt;A choisit un nombre entre 0 et 100, et ne le communique pas à B, B doit trouver
-ce nombre en posant des questions à A dont les réponses ne peuvent être que oui ou non.&lt;/p&gt;
-
-&lt;p&gt;B doit essayer de poser le moins de questions possible. Une stratégie pour B est d’essayer tous les nombres, mais il peut aller plus rapidement comme le montre le scenario suivant :&lt;/p&gt;
-
-&lt;p&gt;A choisit 66 et attend les questions de B :&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;B sait que le nombre est entre 0 et 100&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Au milieu se trouve 50, B demande donc :&lt;br /&gt;
-&lt;em&gt;Est-ce que le nombre est plus grand que 50?&lt;/em&gt;
-A répond &lt;em&gt;Oui&lt;/em&gt; .&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;B sait maintenant que le nombre est entre 51 et 100, au milieu se trouve 75, il demande donc :&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Est-ce que le nombre est plus grand que 75?&lt;/em&gt;
-A répond  &lt;em&gt;Non&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Et ainsi de suite :&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Plus grand que 63?&lt;/em&gt; (&lt;script type=&quot;math/tex&quot;&gt;63 = \large \frac{51+75}{2}&lt;/script&gt;) &lt;br /&gt;
- &lt;em&gt;Oui&lt;/em&gt;   &lt;br /&gt;
- &lt;em&gt;Plus grand que 69?&lt;/em&gt; (&lt;script type=&quot;math/tex&quot;&gt;69 = \large \frac{63+75}{2}&lt;/script&gt;)   &lt;br /&gt;
- &lt;em&gt;Non&lt;/em&gt;   &lt;br /&gt;
- &lt;em&gt;Plus grand que 66?&lt;/em&gt; (&lt;script type=&quot;math/tex&quot;&gt;66 = \large \frac{69+63}{2}&lt;/script&gt;)   &lt;br /&gt;
- &lt;em&gt;Non&lt;/em&gt;   &lt;br /&gt;
- &lt;em&gt;Plus grand que 65?&lt;/em&gt; (&lt;script type=&quot;math/tex&quot;&gt;65 \large \approx \frac{63+66}{2}&lt;/script&gt;)    &lt;br /&gt;
- &lt;em&gt;Oui&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;B sait maintenant que le nombre est entre 66 et 66, autrement dit qu’il s’agit de 66 : il a trouvé le nombre choisi par A en seulement 7 questions.&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Fri, 26 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/divers/divers-definitions.html</link>
-        <guid isPermaLink="true">http://localhost:4000/divers/divers-definitions.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Divers</category>
         
       </item>
     
