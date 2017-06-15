@@ -9,6 +9,10 @@ tags: reseau sockets smtp tcp udp c fr
 finished: false
 ---
 
+## todo
+
+[Session Hijacking](http://www.tenouk.com/Module43b.html)
+
 ## 1. Interaction client serveur
 <img src="/00illustrations/socket2/diag1.png" height="auto">
 
