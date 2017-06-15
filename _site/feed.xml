@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 15 Jun 2017 19:22:01 +0200</pubDate>
-    <lastBuildDate>Thu, 15 Jun 2017 19:22:01 +0200</lastBuildDate>
+    <pubDate>Fri, 16 Jun 2017 00:48:19 +0200</pubDate>
+    <lastBuildDate>Fri, 16 Jun 2017 00:48:19 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -511,22 +511,22 @@ Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;htons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hostshort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Cette fonction converti 16-bit (2-byte) de &lt;strong&gt;host byte order&lt;/strong&gt; vers network byte order.&lt;/p&gt;
+&lt;p&gt;Converti 16-bit (2-byte) de &lt;strong&gt;host byte order&lt;/strong&gt; vers network byte order.&lt;/p&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;htonl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hostlong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Cette fonction converti 32-bit (4-byte) de &lt;strong&gt;host byte order&lt;/strong&gt; vers network byte order.&lt;/p&gt;
+&lt;p&gt;Converti 32-bit (4-byte) de &lt;strong&gt;host byte order&lt;/strong&gt; vers network byte order.&lt;/p&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ntohs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netshort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Cette fonction converti 16-bit (2-byte) de network byte order vers &lt;strong&gt;host byte order&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Converti 16-bit (2-byte) de network byte order vers &lt;strong&gt;host byte order&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ntohl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netlong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;Cette fonction converti 32-bit de network byte order vers &lt;strong&gt;host byte order&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Converti 32-bit de network byte order vers &lt;strong&gt;host byte order&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;fonction-pour-déterminter-lendiannes-dune-machine&quot;&gt;Fonction pour déterminter l’endiannes d’une machine&lt;/h2&gt;
 
@@ -970,7 +970,70 @@ little-endian
 
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;chercher de la doc&lt;/span&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;fonctions-daide&quot;&gt;Fonctions d’aide&lt;/h1&gt;
+&lt;h1 id=&quot;fonctions-utiles&quot;&gt;Fonctions utiles&lt;/h1&gt;
+
+&lt;h2 id=&quot;write&quot;&gt;write()&lt;/h2&gt;
+&lt;p&gt;Tente d’écrire &lt;code class=&quot;highlighter-rouge&quot;&gt;nbytes&lt;/code&gt; du buffer pointé par &lt;code class=&quot;highlighter-rouge&quot;&gt;buf&lt;/code&gt; dans le fichier associé au descripteur de fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;fieldes&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;unistd.h&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fildes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nbyte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cet appel retourne le nombre de bytes dans le fichiers associé avec le paramètre &lt;code class=&quot;highlighter-rouge&quot;&gt;fildes&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;paramètres-12&quot;&gt;Paramètres&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;fildes&lt;/strong&gt;: descripteur de socket retourné par la fonction socket()&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;buf&lt;/strong&gt;: pointeur  qui pointe sur les données à envoyer&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;nbyte&lt;/strong&gt;: nombre de bytes à écrire.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;read&quot;&gt;read()&lt;/h2&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;unistd.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fildes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nbyte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;paramètres-13&quot;&gt;Paramètres&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;fildes&lt;/strong&gt;: descripteur de socket retourné par la fonction socket()&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;buf&lt;/strong&gt;: pointeur  qui pointe sur les données à lire&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;nbyte&lt;/strong&gt;: nombre de bytes à lire.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;fork&quot;&gt;fork()&lt;/h2&gt;
+&lt;p&gt;Crée un nouveau process (process enfant) qui sera la copie conforme du process parent .&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;sys/types.h&amp;gt;
+#include &amp;lt;unistd.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fork&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;bzero&quot;&gt;bzero()&lt;/h2&gt;
+
+&lt;p&gt;Place &lt;code class=&quot;highlighter-rouge&quot;&gt;nbyte&lt;/code&gt; bytes “\0” (NULL) dans la string &lt;em&gt;s&lt;/em&gt;. Cette fonction est utile pour set les strucures socket à des valeurs = NULL.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bzero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nbyte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;paramètres-14&quot;&gt;Paramètres&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;s&lt;/strong&gt;: spécifie la string à remplire&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;nbyte&lt;/strong&gt;: spécifie le nombre de bytes à remplire&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;mise-en-pratique-serveur-tcp&quot;&gt;Mise en pratique: serveur TCP&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Créér un socket avec l’appel système &lt;code class=&quot;highlighter-rouge&quot;&gt;socket()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Wed, 14 Jun 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/reseau/reseau-prog-sock-theorie.html</link>

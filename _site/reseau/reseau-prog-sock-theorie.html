@@ -610,22 +610,22 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">htons</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">hostshort</span><span class="p">)</span> 
 </code></pre>
 </div>
-<p>Cette fonction converti 16-bit (2-byte) de <strong>host byte order</strong> vers network byte order.</p>
+<p>Converti 16-bit (2-byte) de <strong>host byte order</strong> vers network byte order.</p>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">htonl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">hostlong</span><span class="p">)</span> 
 </code></pre>
 </div>
-<p>Cette fonction converti 32-bit (4-byte) de <strong>host byte order</strong> vers network byte order.</p>
+<p>Converti 32-bit (4-byte) de <strong>host byte order</strong> vers network byte order.</p>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ntohs</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">netshort</span><span class="p">)</span> 
 </code></pre>
 </div>
-<p>Cette fonction converti 16-bit (2-byte) de network byte order vers <strong>host byte order</strong>.</p>
+<p>Converti 16-bit (2-byte) de network byte order vers <strong>host byte order</strong>.</p>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ntohl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">netlong</span><span class="p">)</span> 
 </code></pre>
 </div>
-<p>Cette fonction converti 32-bit de network byte order vers <strong>host byte order</strong>.</p>
+<p>Converti 32-bit de network byte order vers <strong>host byte order</strong>.</p>
 
 <h2 id="fonction-pour-déterminter-lendiannes-dune-machine">Fonction pour déterminter l’endiannes d’une machine</h2>
 
@@ -1069,7 +1069,70 @@ little-endian
 
 <p><span style="color:red">chercher de la doc</span></p>
 
-<h1 id="fonctions-daide">Fonctions d’aide</h1>
+<h1 id="fonctions-utiles">Fonctions utiles</h1>
+
+<h2 id="write">write()</h2>
+<p>Tente d’écrire <code class="highlighter-rouge">nbytes</code> du buffer pointé par <code class="highlighter-rouge">buf</code> dans le fichier associé au descripteur de fichier <code class="highlighter-rouge">fieldes</code></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;unistd.h&gt;
+</span><span class="kt">int</span> <span class="n">write</span><span class="p">(</span><span class="kt">int</span> <span class="n">fildes</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cet appel retourne le nombre de bytes dans le fichiers associé avec le paramètre <code class="highlighter-rouge">fildes</code>.</p>
+
+<h3 id="paramètres-12">Paramètres</h3>
+
+<ul>
+  <li><strong>fildes</strong>: descripteur de socket retourné par la fonction socket()</li>
+  <li><strong>buf</strong>: pointeur  qui pointe sur les données à envoyer</li>
+  <li><strong>nbyte</strong>: nombre de bytes à écrire.</li>
+</ul>
+
+<h2 id="read">read()</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;unistd.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fildes</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h3 id="paramètres-13">Paramètres</h3>
+<ul>
+  <li><strong>fildes</strong>: descripteur de socket retourné par la fonction socket()</li>
+  <li><strong>buf</strong>: pointeur  qui pointe sur les données à lire</li>
+  <li><strong>nbyte</strong>: nombre de bytes à lire.</li>
+</ul>
+
+<h2 id="fork">fork()</h2>
+<p>Crée un nouveau process (process enfant) qui sera la copie conforme du process parent .</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h2 id="bzero">bzero()</h2>
+
+<p>Place <code class="highlighter-rouge">nbyte</code> bytes “\0” (NULL) dans la string <em>s</em>. Cette fonction est utile pour set les strucures socket à des valeurs = NULL.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="n">bzero</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h3 id="paramètres-14">Paramètres</h3>
+<ul>
+  <li><strong>s</strong>: spécifie la string à remplire</li>
+  <li><strong>nbyte</strong>: spécifie le nombre de bytes à remplire</li>
+</ul>
+
+<h1 id="mise-en-pratique-serveur-tcp">Mise en pratique: serveur TCP</h1>
+
+<ul>
+  <li>Créér un socket avec l’appel système <code class="highlighter-rouge">socket()</code></li>
+  <li></li>
+</ul>
 
 </div>
 

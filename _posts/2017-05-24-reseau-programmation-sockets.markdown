@@ -11,19 +11,6 @@ finished: false
 
 # Programmation de sockets
 
-## TODO:
-
-* getaddrinfo
-* conversions
-    * htons()--"Host to Network Short"
-    * htonl()--"Host to Network Long"
-    * ntohs()--"Network to Host Short"
-    * ntohl()--"Network to Host Long"
-    * atoi() -> int
-
-    * inet\_ntoa()
-    * ...
-
 
 ## ressources:
 [simple-client.c (base)](http://cvs.alphanet.ch/cgi-bin/cvsweb/~checkout~/schaefer/public/cours/HE-ARC/DECOUVERTE-OS-et-RESEAUX/script/code/client-TCP/donnee/RELEASES/simple-client.tar.gz?rev=HEAD;content-type=application%2Fx-gzip)  
@@ -38,9 +25,82 @@ finished: false
 [best](https://www.tutorialspoint.com/unix_sockets/socket_summary.htm)  
 
 
-# Linux
+# Qu'est-ce qu'un socket?
 
-## 1. Client HTTP
+Un socket autorise la communication entre deux process différents.
+* Sur la même machine
+* Entre des machines distantes
+
+Sur Unix, toutes les actions I/O sont faites en écrivant ou en lisant un **descripteur de fichier**. 
+
+> L'entrée standard STDIN, la sortie standard STDOUT et l'erreur standard STDERR sont les trois descripteurs de fichier POSIX standard pour tout processus qui n'est pas un _daemon_.  
+[wikipedia: descripteur de fichiers](https://fr.wikipedia.org/wiki/Descripteur_de_fichier)
+
+Un **descripteur de fichier** est un entier `int` associé avec un **fichier ouvert**. Ce fichier peut être:
+* Une connexion réseau
+* Un fichier texte
+* Un terminal
+* ...
+
+D'un point de vue programmatique, un socket ressemble et se comporte comme un descripteur de fichier. On utilise sur lui des fonctions comme `read()` et `write()` qui fonctionnent de la même façon avec un socket que sur des fichiers ou sur des pipes.
+
+# 2. Contexte d'utilisation
+
+Un socket Unix est utilisé dans un contexte **client-serveur**.
+Un **Serveur** est un process qui effectue des actions (fonctions) à la demande d'un **client**. La plupart des protocoles de la couche application (FTP, SMTP, POP3...) utilisent des sockets pour:
+
+1. établir une connexion entre client et serveur
+2. échager des donnnées
+
+# 3. Types de sockets
+
+types de sockets sont disponible pour les utilisateurs. 
+
+Stream Sockets (**TCP**)
+* fiables
+* orienté connexion
+* pas de limite de taille
+* message d'erreur en cas d'échec de l'envoi
+
+Datagram Sockets (**UDP**)
+* non-fiable
+* non-orienté connexion (pas de phase connexion comme en TCP,  construction d'un paquet avec les coordonnées de la destination et puis envoi)
+
+Raw Sockets
+* utilisés dans le developpement de protocoles de communication ...
+* ... et le [hacking](https://fr.wikipedia.org/wiki/Berkeley_sockets)
+
+
+Les process sont théoriquement censés communiquer uniquement entre sockets de même type mais il n'y a aucune restriction qui empêche la communication entre sockets de type différent.
+
+# 4. Modèle "Client Server"
+La majorité des applications d'Internet utilisent ce Modèle il se réfère à:
+Deux process ou deux applications qui communiquent en échangeant des informations. L'un des deux process agit comme un client et l'autre comme un serveur.
+
+### Processus Client
+Typiquement celui qui fait  la requête d'informations. Après avoir reçu la résponse, ce process soit se termine soit continue à faire des traitements.
+
+**exemple**: Un navigateur internet est une application **client** qui envoie une requête à un serveur Web pour recevoir une page HTML.
+
+### Processus Serveur
+C'est le process qui reçoit les requêtes de la part des clients. Après avoir reçu une requête d'un client, ce process va effectuer le traitement demandé (rassembler des informations, et les renvoyer au client). Une fois ces taches éffectuées le process est disponible pour servir un autre client. **Les process serveurs sont toujours prêts à servir les requêtes qui leurs parviennent**.
+
+**exemple**: Un serveur web est toujours entrain d'attendre des requêtes de navigateurs internet. Aussi tôt qu'un client (navigateur) lui fait parvenir une requête, il lui renvoie la page demandée.
+
+> Un client a besoin de connaitre l'adresse d'un serveur mais pas l'inverse. 
+
+### Types de serveurs
+
+* Serveurs **itératifs**: forme la plus simple. Le serveur gère un client à la fois et les clients attendent pour s'y connecter.
+
+* Serveurs **concurents (Concurrent(en))**: gènre plusieurs processus en parallèle et permet de servire plusieurs requêtes à la fois. La forme la plus simple pour implémenter un serveur concurent sous Unix est de **FORKER** un processus enfant pour prendre en charge chaque client.
+
+### Interaction entre client et serveur
+Ce schéma décrit l'intéraction complète entre un client et un serveur.
+
+<img src="/00illustrations/socket2/diag1.png" height="auto">
+
+# 5. Client HTTP
 
 
 ### a. Création de socket
@@ -352,7 +412,7 @@ Dans notre exemple www.google.com est un serveur HTTP et notre navigateur est cl
 Avant de faire notre propre serveur, nous allons passer par quelques explications d'ordre général sur la programmation de sockets.
 
 
-## 2. Trouver l'ip d'un domaine
+# 6. Trouver l'ip d'un domaine
 
 Quand on se connecte à un hôte distant, il est nécéssaire d'avoir son adresse IP. C'est là que la fonction `gethostbyname` nous est utile. Elle prend un nom de domaine comme paramètre et retourne une structure de type `hostent` et contient l'IP que l'on cherche. `gethostbynam` vit dans le header `<netdb.h>`.
 
@@ -418,7 +478,7 @@ Nous avons vu quelques structure importantes qui reviennent tout le temps dans l
 3. sockaddr : informations sur le socket
 4. `hostent` : l'IP de l'hôte utilisé par la fonction `gethostbyname`
 
-## 3. Serveur HTTP
+## 7. Serveur HTTP
 
 ### a. cycle de vie
 
@@ -627,174 +687,179 @@ int main(int argc, char **argv)
 En décortiquant le screenshot, nous pouvons voir que le Serveur tourne en permanance et accepte toutes les connexions telnet qu'on lui propose. Une fois qu'on coupe le serveur, les 3 connexions cessent automatiquement (logique).
 
 
-## 5. Gérer plusieurs connexions avec des threads
-
-Pour gérer toutes les connexions proprement, nous avons besoin d'une fonction qui va gérer des **threads**.
-
-Le programme dans le main accepte une connexion, crée un nouveau thread pour cette connexion et retourne accepter des nouvelles connexions.
-
-Sur Linux la gestion des threads (threading) peut se faire avec la librairie **pthread** (posix threads). Personnelement je n'ai pas encore eu le temps de me documenter à son sujet et je pense que c'est quand même important. En attendant, il n'est pas compliqué de l'utiliser pour arriver à nos fins.
-
-Nous devons dans un premier temps faire un fichier Makefile pour y ajouter le lien de la librairie dont est dependent pthread.
-
-```makefile
-TARGET=serveurHTTP-multiThreads
-CFLAGS=-Wall -lpthread
-
-all: $(TARGET)
-
-clean:
-	rm -f $(TARGET)
-```
-
-Et voila le code avec la gestion des threads:
+# 5. Serveur TCP de base avec fork() des process enfants
 
 
 ```c
+#include<sys/socket.h>
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>    // strlen
-#include<sys/socket.h>
-#include<arpa/inet.h> // inet_addr
-#include<unistd.h>    // write
-#include<pthread.h>   // threading
+#include<string.h>      // strlen
+#include<arpa/inet.h>   // inet_addr
+#include<unistd.h>      // write
 
-void *connection_handler(void *);
+void childProcess(int sock);
 
-int main(int argc, char **argv)
-{
-    // variables
-    int socket_desc, new_socket, c; 
-    int *new_sock;
-    struct sockaddr_in server, client;
-    char* message;
+int main (int argc, char **argv) {
+    int socket_desc;
+    int new_socket;
+    int n, pid;
+    char buffer[256];
+    struct sockaddr_in server;
+    struct sockaddr_in client;
 
-    // creation de socket
+    // creation du socket
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
-    if (socket_desc == -1)
-    {
-        printf("\nCould not create socket\n");
+
+    if (socket_desc == -1) {
+        perror("ERROR opening socket");
+        exit(1);
     }
 
     // initialisation des membres de l'objet server
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_port = htons (8888);
+    server.sin_port = htons(8888);
 
     // bind
-    if (bind(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0)
-    {
-        puts("\nbind failded\n");
-        return 1;
+    if (bind(socket_desc, (struct sockaddr * )&server, sizeof(server)) < 0) {
+        perror("ERROR on binding");
+        exit(1);
     }
-    puts("\nbind done\n");
+    printf("\nbind done\n");
 
-    // ecoute
+    // sleep mode en attendant un client
     listen(socket_desc, 3);
+    printf("\nwaiting for incoming connections...\n");
 
-    // Accepte les connexions
-    puts("Waiting for incoming connections...\n");
-    c = sizeof(struct sockaddr_in);
+    n = sizeof(struct sockaddr_in);
 
-    while ( (new_socket = accept(socket_desc, (struct sockaddr * )&client, (socklen_t * )&c)) )
-    {
-        // affiche les infos du client
-        printf("Connection from %s:%d accepted\n",inet_ntoa(client.sin_addr), ntohs(client.sin_port));
+    // boucle infinie qui accepte et fork les clients distant
+    while(1) {
+        new_socket = accept(socket_desc, (struct sockaddr *) &client, (socklen_t *) &n);
 
-        // repond au client
-        message = "Hello client, I heave received your connexion. You will be assigned a handler...\n.";
-        write(new_socket, message, strlen(message));
-
-        // creation du thread
-        pthread_t sniffer_thread;
-        new_sock = malloc(1); 
-        *new_sock = new_socket;
-
-        if (pthread_create( &sniffer_thread, NULL, connection_handler, (void * ) new_sock) < 0)
-        {
-            perror("could not create thread\n");
-            return 1;
+        if (new_socket < 0) {
+            perror("ERROR on accept");
+            exit(1);
         }
 
-        puts("Handler assigned\n");
-    }
+        // affiche les infos du client
+        printf("Connection from %s:%d accepted\n", 
+            inet_ntoa(client.sin_addr), // conversion adr en un format Inet Std dot Ntation (str)
+            ntohs(client.sin_port)); // conversion Network Byte Order vers Host Byte Order (endianess)
+            
+        // creation process enfant
+        pid = fork();
 
-    if (new_socket < 0)
-    {
-        perror("accept failed\n");
-        return 1;
-    }
+        if (pid < 0) {
+            perror("ERROR on fork");
+            exit(1);
+        }
 
+        if (pid == 0) {
+            // processus du client
+            close(socket_desc);
+            childProcess(new_socket);
+            exit(0);
+        }
+        else {
+            close(new_socket);
+        }
+    }
     return 0;
 }
 
-void *connection_handler(void *socket_desc)
-{
-    // prend la description du socket
-    int sock = *(int * )socket_desc;
+void childProcess(int sock) {
+    int n;
+    char buffer[256];
+    bzero(buffer,256);
 
-    char *message;
+    // lecture du message du client
+    n = read(sock, buffer, 255);
 
-    // envoie quelques messages au client
-    message = "Greetings! I'm your connection handler\n";
-    write(sock, message, strlen(message));
+    if (n < 0) {
+        perror("ERROR reading from socket\n");
+        exit(1);
+    }
+    // affichage message client
+    printf("Message from client: %s\n", buffer);
 
-    message = "My job is to communicate with you";
-    write(sock, message, strlen(message));
+    // ecrit une reponse au client
+    n = write(sock, "ok", 18);
 
-    // libere la memoire
-    free(socket_desc);
-
-    return 0;
+    if (n < 0) {
+        perror("ERROR reading from socket");
+        exit(1);
+    }
 }
 ```
 
-
-### Rendons tout ça interessant...
-
-Notre fonction `connection_handler` n'est pas terrible. Elle s'introduit et se termine directement après.
-
-Cette fonction ne devrait pas se terminer avant que le client ne se deconnecte et pourquoi ne pas rajouter un peu de fun au passage:
+# 6. client TCP basique 
 
 ```c
-void *connection_handler(void *socket_desc)
-{
-    // prend la description du socket
-    int sock = *(int * )socket_desc;
-    int read_size;
-    char *message, client_message[2000];
+#include<stdio.h>
+#include<stdlib.h>
+#include<netdb.h>
+#include<unistd.h>
+#include<string.h>
 
-    // envoie quelques messages au client
-    message = "Greetings! I'm your connection handler\n";
-    write(sock, message, strlen(message));
 
-    message = "Now type somthing and I will repeat it.";
-    write(sock, message, strlen(message));
+int main (int argc, char **argv) {
+    int socket_desc;
+    int portno;
+    int n;
+    struct sockaddr_in server_addr;
+    struct hostent *server;
 
-    // reception de message
-    while ((read_size = recv(sock, client_message, 2000, 0)) > 0)
-    {
-        // renvoie le message au client
-        write(sock, client_message, strlen(client_message));
+    char buffer[256];
+
+    if (argc < 3) {
+        fprintf(stderr, "usage %s hostname port\n", argv[0]);
+        exit(0);
     }
 
-    if (read_size == 0)
-    {
-        puts("Client disconnected");
-        fflush(stdout);
-    }
-    else if (read_size == -1)
-    {
-        perror("recv failed");
+    portno = atoi(argv[2]);
+
+    // creation socket
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc < 0) {
+        perror("ERROR opening socket");
+        exit(1);
     }
 
-    // libere la memoire
-    free(socket_desc);
+    server = gethostbyname(argv[1]);
+
+    if (server == NULL) {
+        fprintf(stderr, "ERROR, no such host\n");
+        exit(0);
+    }
+
+    bzero(( char *) &server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    bcopy(( char *)server->h_addr, (char *) &server_addr.sin_addr.s_addr, server->h_length);
+    server_addr.sin_port = htons(portno);
+
+    // connexion au serveur
+    if (connect(socket_desc, (struct sockaddr*) &server_addr, sizeof(server_addr)) < 0) {
+        perror("ERROR connecting");
+        exit(1);
+    }
+
+    // demande a l'utilisateur d'ecrire un message qui sera affiche chez le serveur
+    printf("Please enter a message: ");
+    bzero(buffer,256);
+    fgets(buffer,255,stdin);
+
+    // envoie du message
+    n = write(socket_desc, buffer, 255);
+
+    if (n < 0) {
+        perror("ERROR reading from socket");
+        exit(1);
+    }
+
+    printf("%s\n", buffer);
 
     return 0;
 }
 ```
-
-Nous avons maintenant un **serveur multi-thread et communicatif**. Ça devient interessant !
-A partir de là on peut facilement imaginer comment faire un petit chat...
-
