@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Reseau: Programmation sockets (théorie)</title>
-  <meta name="description" content="Programmation socket en C sous Linux">
+  <meta name="description" content="">
 </head>
 
 
@@ -111,9 +111,9 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h1 id="programmation-socket-en-c-sous-linux">Programmation socket en C sous Linux</h1>
+    <!--# Programmation socket en C sous Linux-->
 
-<h2 id="1-quest-ce-quun-socket">1. Qu’est-ce qu’un socket?</h2>
+<h1 id="1-quest-ce-quun-socket">1. Qu’est-ce qu’un socket?</h1>
 
 <p>Un socket autorise la communication entre deux process différents.</p>
 <ul>
@@ -138,7 +138,7 @@
 
 <p>D’un point de vue programmatique, un socket ressemble et se comporte comme un descripteur de fichier. On utilise sur lui des fonctions comme <code class="highlighter-rouge">read()</code> et <code class="highlighter-rouge">write()</code> qui fonctionnent de la même façon avec un socket que sur des fichiers ou sur des pipes.</p>
 
-<h2 id="2-contexte-dutilisation">2. Contexte d’utilisation</h2>
+<h1 id="2-contexte-dutilisation">2. Contexte d’utilisation</h1>
 
 <p>Un socket Unix est utilisé dans un contexte <strong>client-serveur</strong>.
 Un <strong>Serveur</strong> est un process qui effectue des actions (fonctions) à la demande d’un <strong>client</strong>. La plupart des protocoles de la couche application (FTP, SMTP, POP3…) utilisent des sockets pour:</p>
@@ -148,7 +148,7 @@ Un <strong>Serveur</strong> est un process qui effectue des actions (fonctions) 
   <li>échager des donnnées</li>
 </ol>
 
-<h2 id="3-types-de-sockets">3. Types de sockets</h2>
+<h1 id="3-types-de-sockets">3. Types de sockets</h1>
 
 <p>types de sockets sont disponible pour les utilisateurs.</p>
 
@@ -174,7 +174,7 @@ Un <strong>Serveur</strong> est un process qui effectue des actions (fonctions) 
 
 <p>Les process sont théoriquement censés communiquer uniquement entre sockets de même type mais il n’y a aucune restriction qui empêche la communication entre sockets de type différent.</p>
 
-<h2 id="4-modèle-client-server">4. Modèle “Client Server”</h2>
+<h1 id="4-modèle-client-server">4. Modèle “Client Server”</h1>
 <p>La majorité des applications d’Internet utilisent ce Modèle il se réfère à:
 Deux process ou deux applications qui communiquent en échangeant des informations. L’un des deux process agit comme un client et l’autre comme un serveur.</p>
 
@@ -219,11 +219,11 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
 
 <p><img src="/00illustrations/socket2/diag1.png" height="auto" /></p>
 
-<h2 id="5-unix-socket---structures">5. Unix Socket - Structures</h2>
+<h1 id="5-unix-socket---structures">5. Unix Socket - Structures</h1>
 
 <p>Plusieurs structures sont utilisées pour la programmations socket sous Unix. Celles-ci contiennent des infomations concernant entre autre l’adresse et le port. La plupart des fonctions socket nécéssitent un pointeur sur l’adresse d’une structure comme argument.</p>
 
-<h3 id="sockaddr">sockaddr</h3>
+<h2 id="sockaddr">sockaddr</h2>
 <p>Contient des informations sur le socket</p>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr</span> <span class="p">{</span>
@@ -258,7 +258,7 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
   </tbody>
 </table>
 
-<h3 id="sockaddr_in">sockaddr_in</h3>
+<h2 id="sockaddr_in">sockaddr_in</h2>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="p">{</span>
    <span class="kt">short</span> <span class="kt">int</span>            <span class="n">sin_family</span><span class="p">;</span>
@@ -304,7 +304,7 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
   </tbody>
 </table>
 
-<h3 id="in_addr">in_addr</h3>
+<h2 id="in_addr">in_addr</h2>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">in_addr</span> <span class="p">{</span>
    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">s_addr</span><span class="p">;</span>
@@ -332,7 +332,7 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
   </tbody>
 </table>
 
-<h3 id="hostent">hostent</h3>
+<h2 id="hostent">hostent</h2>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">hostent</span> <span class="p">{</span>
    <span class="kt">char</span>  <span class="o">*</span><span class="n">h_name</span><span class="p">;</span> 
@@ -388,7 +388,7 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
 
 <p><em>note: h_addr est définis comme étant h_addr_list[0] pour assurer une retro compatibilité</em></p>
 
-<h3 id="servent">servent</h3>
+<h2 id="servent">servent</h2>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="p">{</span>
    <span class="kt">char</span>   <span class="o">*</span><span class="n">s_name</span><span class="p">;</span> 
@@ -434,7 +434,7 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
   </tbody>
 </table>
 
-<h3 id="conseils-dutilisation">Conseils d’utilisation</h3>
+<h2 id="conseils-dutilisation">Conseils d’utilisation</h2>
 
 <ul>
   <li>
@@ -448,7 +448,7 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
   </li>
 </ul>
 
-<h2 id="6-ports-et-services-fonctions">6. Ports et services (fonctions)</h2>
+<h1 id="6-ports-et-services-fonctions">6. Ports et services (fonctions)</h1>
 <p>Unix nous fournit les fonctions suivantes pour fetch un nom de service du répertoire /etc/services</p>
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="o">*</span><span class="n">getservbyname</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">proto</span><span class="p">)</span>
 </code></pre>
@@ -462,15 +462,15 @@ Deux process ou deux applications qui communiquent en échangeant des informatio
 
 <p>La valeur de retour des deux fonctions est un ponteur sur la structure <code class="highlighter-rouge">servent</code> vue un peu plus haut.</p>
 
-<h2 id="7-ordre-des-bytes-représentation-des-bytes-en-mémoire">7. Ordre des bytes (représentation des bytes en mémoire)</h2>
+<h1 id="7-ordre-des-bytes-représentation-des-bytes-en-mémoire">7. Ordre des bytes (représentation des bytes en mémoire)</h1>
 
-<h3 id="endiannes">endiannes</h3>
+<h2 id="endiannes">endiannes</h2>
 
 <blockquote>
   <p>Ordre dans lequel les octets sont organisés dans une case mémoire <strong>ou dans une communication</strong>. Big endian et Little endian sont deux architectures différentes.</p>
 </blockquote>
 
-<h4 id="big-endian">Big endian</h4>
+<h3 id="big-endian">Big endian</h3>
 <p><strong>byte de poids fort</strong> à gauche.<br />
 Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
 
@@ -524,7 +524,7 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
 
 <p><span style="color:#F92672"><strong>Tous les protocoles TCP/IP communiquent en big-endian</strong></span></p>
 
-<h4 id="little-endian">Little endian</h4>
+<h3 id="little-endian">Little endian</h3>
 <p><strong>byte de poid faible</strong> à gauche. <br />
 Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
 
@@ -578,7 +578,7 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
 
 <p><span style="color:#F92672"><strong>X86 fonctionne en Little endian</strong></span></p>
 
-<h3 id="fonctions-pour-changer-lordre-des-bytes">Fonctions pour changer l’ordre des bytes</h3>
+<h2 id="fonctions-pour-changer-lordre-des-bytes">Fonctions pour changer l’ordre des bytes</h2>
 
 <table>
   <thead>
@@ -627,7 +627,7 @@ Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</c
 </div>
 <p>Cette fonction converti 32-bit de network byte order vers <strong>host byte order</strong>.</p>
 
-<h3 id="fonction-pour-déterminter-lendiannes-dune-machine">Fonction pour déterminter l’endiannes d’une machine</h3>
+<h2 id="fonction-pour-déterminter-lendiannes-dune-machine">Fonction pour déterminter l’endiannes d’une machine</h2>
 
 <div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
 </span>
@@ -667,7 +667,7 @@ little-endian
 </code></pre>
 </div>
 
-<h2 id="8-fonctions-pour-manipuler-les-adresses-ip">8. Fonctions pour manipuler les adresses IP</h2>
+<h1 id="8-fonctions-pour-manipuler-les-adresses-ip">8. Fonctions pour manipuler les adresses IP</h1>
 
 <p>Ces fonctions convertissent des IP entre le format ASCII string (lecture par un humain) et le format Network Byte Order (valeurs binaires contenues dans les structures vues plus haut).</p>
 
@@ -728,7 +728,348 @@ little-endian
   <li>Converti l’adresse de l’hôte spécifié en une string dans le format <em>Internet standard dot notation</em>.</li>
 </ul>
 
-<h2 id="fonctions-principales">Fonctions principales</h2>
+<h1 id="fonctions-principales">Fonctions principales</h1>
+
+<p><img src="/00illustrations/socket2/diag1.png" height="auto" /></p>
+
+<p>Reprenons les fonctions sur ce diagramme:</p>
+
+<h2 id="socket">socket()</h2>
+<p>Pour effectuer des taches I/O, la première chose dont un process a besoin est d’appeler la fonction <code class="highlighter-rouge">socket()</code> en spécifiant le type de protocol de communication (TCP/UDP) et la famille (IPv4/6).</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">socket</span> <span class="p">(</span><span class="kt">int</span> <span class="n">family</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocol</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Cet appel retourne un <strong>descripteur de socket</strong> (descripteur de fichier) qu’on peut utiliser pour les appels système.</p>
+
+<h3 id="paramètres">Paramètres:</h3>
+
+<ul>
+  <li>Famille: spécifie la famille du protocol parmis les suivants</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">famille</th>
+      <th style="text-align: center">desciption</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">AF_INET</td>
+      <td style="text-align: center">protocol IPv4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">AF_INET6</td>
+      <td style="text-align: center">protocol IPv6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">AF_LOCAL</td>
+      <td style="text-align: center">protocol domaine Unix</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">AF_ROUTE</td>
+      <td style="text-align: center">socket de routage</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">AF_KEY</td>
+      <td style="text-align: center">clé</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Type: spécifie le type de socket à utiliser parmis les suivants</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">type</th>
+      <th style="text-align: center">desciption</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">SOCK_STREAM</td>
+      <td style="text-align: center">stream socket (TCP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SOCK_DGRAM</td>
+      <td style="text-align: center">datagrm socket (UDP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SOCK_SEQPACKET</td>
+      <td style="text-align: center">sequence packet socket</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SOCK_RAW</td>
+      <td style="text-align: center">raw socket</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Protocole: doit être cohérent avec le choix précédent ou à <code class="highlighter-rouge">0</code> pour laisser le système en choisir un par défaut.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">protocol</th>
+      <th style="text-align: center">desciption</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">IPROTO_TCP</td>
+      <td style="text-align: center">TCP transport protocol</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">IPROTO_UDP</td>
+      <td style="text-align: center">UDP transport protocol</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">IPROTO_SCTP</td>
+      <td style="text-align: center">SCTP transport protocol</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="connect">connect()</h2>
+<p>Utilisée par les clients TCP pour établir une connextion avec un serveur TCP</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">connect</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">serv_addr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">addrlen</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cet appel retourne 0 si il se connecte avec succes à un serveur -1 dans le cas d’une erreur.</p>
+
+<h3 id="paramètres-1">Paramètres</h3>
+
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction socket()</li>
+  <li><strong>serv_addr</strong>: pointeur sur la structure <code class="highlighter-rouge">sockaddr</code> qui contient l’IP et le port destination</li>
+  <li><strong>addrlen</strong>: à set sur <code class="highlighter-rouge">sizeof(struct sockaddr)</code></li>
+</ul>
+
+<h2 id="bind">bind()</h2>
+<p>Cette fonction assigne un l’adresse d’un protocol local à un socket. Avec les protocoles IP, l’adresse du protocol est une combinaison de:</p>
+<ul>
+  <li>l’IPv4 sur 32 bits et le port TCP ou UDP sur 16 bits</li>
+  <li>l’iPv6 sur 128 bits et le port rcp ou UDP sur 16 bits</li>
+</ul>
+
+<p><strong>Cette fonction est uniquement employée par les serveurs TCP</strong></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">bind</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">my_addr</span><span class="p">,</span><span class="kt">int</span> <span class="n">addrlen</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cet appel retourn 0 si le bind à l’adresse est réussit, -1 dans le cas d’une erreur.</p>
+
+<h3 id="paramètres-2">Paramètres</h3>
+<ul>
+  <li><strong>sockfd</strong>: c’est un descritpeur de socket que retourne la fonction socket()</li>
+  <li><strong>my_addr</strong>: pointeur sur la structure <code class="highlighter-rouge">sockaddr</code> qui contient l’IP et le port local</li>
+  <li><strong>addrlen</strong>: à set sur <code class="highlighter-rouge">sizeof(struct sockaddr)</code></li>
+</ul>
+
+<p>Une valeur de <code class="highlighter-rouge">0</code> pour le numéro de port veut dire que le système va choisir un port aléatoire.</p>
+
+<p>Si on passe <code class="highlighter-rouge">INNDDR_ANY</code> comme valeur pour l’adresse IP, celà veut dire que l’IP sera assignée automatiquement.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">server</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">INADDR_ANY</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>note: Tous les ports jusque 1024 sont réservés (well known ports). Le choix d’un port se fait dans la plage des 1024-65535 sauf si se sont ceux utilisés par d’autres programmes</p>
+</blockquote>
+
+<h2 id="listen">listen()</h2>
+<p>Cette fonction est <strong>uniquement appellée par les serveurs TCP</strong> et effectue deux actions:</p>
+
+<ul>
+  <li>
+    <p>transforme un socket non-connecté en socket passif (indique que le Kernel devrait accepter les connextions entrantes sur ce socket).</p>
+  </li>
+  <li>
+    <p>le second paramètre de cette fonction spécifie le nombre maximum de connexions que le Kernel doit autoriser en queue de ce socket.</p>
+  </li>
+</ul>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">listen</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span><span class="kt">int</span> <span class="n">backlog</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Cet appel retourn 0 en cas de réussite et -1 dans le cas d’une erreur.</p>
+
+<h3 id="paramètres-3">Paramètres</h3>
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>backlog</strong>: nombre de connexions autorisés</li>
+</ul>
+
+<h2 id="accept">accept()</h2>
+<p>Cette fonction est appellée par un serveur TCP pour retourner le prochainne connextion en queue.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">accept</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">cliaddr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="o">*</span><span class="n">addrlen</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Cet appel retourne un descripteur (strictement positif) en casss de success et -1 en cas d’erreur. Le descripteur retourné est assumé être un descripteur de socket client et nous pourons utiliser les opérations read/write sur ce descripteur pour commmuniquer avec le client.</p>
+
+<h3 id="paramètres-4">Paramètres</h3>
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>clientaddr</strong>: pointeur sur la structure <code class="highlighter-rouge">sockaddr</code> qui contient l’IP et le port du client</li>
+  <li><strong>addrlen</strong>: à set sur <code class="highlighter-rouge">sizeof(struct sockaddr)</code></li>
+</ul>
+
+<h2 id="send">send()</h2>
+<p>Utilisé pour envoyer des données via socket stream (TCP)</p>
+
+<p>Pour envoyer des données, nous pouvons utiliser <code class="highlighter-rouge">write()</code></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">send</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cet appel retourne le nombre de bytes envoyés et -1 dans le cas d’une erreur.</p>
+
+<h3 id="paramètres-5">Paramètres</h3>
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>msg</strong>: pointeur sur la donnée qu’on veut envoyer</li>
+  <li><strong>len</strong>: longueur de la donnée qu’on veut envoyer (bytes)</li>
+  <li><strong>flags</strong>: set sur 0;</li>
+</ul>
+
+<h2 id="recv">recv()</h2>
+<p>Est utilisé pour recevoir des données d’un socket strean (TCP)</p>
+
+<p>Nous pouvons utiliser <code class="highlighter-rouge">read()</code> pour lire la donnée.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">recv</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cet appel retourne le nombre de bytes lu dans le buffer ou -1 en cas d’erreur.</p>
+
+<h3 id="paramètres-6">Paramètres</h3>
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>buf</strong> : le buffer qui contient les  données</li>
+  <li><strong>len</strong>: longueur de la donnée qu’on veut envoyer (bytes)</li>
+  <li><strong>flags</strong>: set sur 0</li>
+</ul>
+
+<h2 id="sendto">sendto()</h2>
+<p>Utilisée pour envoyer des données via socket datagram(UDP)</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">sendto</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">tolen</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Cet appel retourne  le nombre de bytes envoyés et -1 en cas d’erreur</p>
+
+<h3 id="paramètres-7">Paramètres</h3>
+
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>msg</strong> : pointeur sur la donnée à envoyer</li>
+  <li><strong>len</strong>: longueur de la donnée qu’on veut envoyer (bytes)</li>
+  <li><strong>flags</strong>: set sur 0</li>
+  <li><strong>to</strong>: pointeur sur la strucuture <code class="highlighter-rouge">sockaddr</code> coté hôte</li>
+  <li><strong>tolen</strong>: set sur zero</li>
+</ul>
+
+<h2 id="recvfrom">recvfrom()</h2>
+<p>Utilisée pour recevoir des données d’un socket datagram</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">recvfrom</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">fromlen</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Cet appel retourne le nombre de bytes lu dans le buffer ou 01 dans le cas d’une erreur</p>
+
+<h3 id="paramètres-8">Paramètres</h3>
+
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>buf</strong> : le buffer qui contient les  données</li>
+  <li><strong>len</strong>: longueur de la donnée qu’on veut envoyer (bytes)</li>
+  <li><strong>flags</strong>: set sur 0</li>
+  <li><strong>from</strong>: pointeur sur la structure <code class="highlighter-rouge">sockaddr</code></li>
+  <li><strong>fromlen</strong> set to <code class="highlighter-rouge">sizeof(struct sockaddr)</code></li>
+</ul>
+
+<h2 id="close">close()</h2>
+<p>Cette fonction est utilisée pour fermer la communication entre client et serveur.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">close</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockdf</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>retourne 0 en cas de succes et -1 en cas d’erreur.</p>
+
+<h3 id="paramètres-9">Paramètres</h3>
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+</ul>
+
+<h2 id="shutdown">shutdown()</h2>
+<p>Utilisée pour mettre fin à la communication (gracefully). Entre client et serveur. Cette fonction donne plusde contrôle que la fonction <code class="highlighter-rouge">close()</code></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">shutdown</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">how</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Cet appel retourne 0 en cas desucces et -1 en cas d’erreur</p>
+
+<h3 id="paramètres-10">Paramètres</h3>
+
+<ul>
+  <li><strong>sockfd</strong>: descripteur de socket retourné par la fonction <code class="highlighter-rouge">socket()</code></li>
+  <li><strong>how</strong>: une des trois valeurs suivantes:
+    * <strong>0</strong>: indique que recevoir des données n’est pas permis
+    * <strong>1</strong>: indique que l’envoi de données est autorisé
+    * <strong>2</strong>: indique que l’envoi ET la réception ne sont pas autorisé.</li>
+</ul>
+
+<blockquote>
+  <p>Quand when = 2 c’est équivalent à close()</p>
+</blockquote>
+
+<h2 id="select">select()</h2>
+<p>Cette fonction indique quel descripteur de fichier est prêt à être lu, ecrit ou a des erreurs en attente.</p>
+
+<p><span style="color:red">chercher de la doc</span></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code> <span class="kt">int</span> <span class="n">select</span><span class="p">(</span><span class="kt">int</span>  <span class="n">nfds</span><span class="p">,</span> <span class="n">fd_set</span>  <span class="o">*</span><span class="n">readfds</span><span class="p">,</span> <span class="n">fd_set</span>  <span class="o">*</span><span class="n">writefds</span><span class="p">,</span> <span class="n">fd_set</span> <span class="o">*</span><span class="n">errorfds</span><span class="p">,</span> <span class="k">struct</span> <span class="n">timeval</span> <span class="o">*</span><span class="n">timeout</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>Cet appel retourne 0 en cas de succes et -1 en cas d’erreur.</p>
+
+<h3 id="paramètres-11">Paramètres</h3>
+
+<p><span style="color:red">chercher de la doc</span></p>
+
+<h1 id="fonctions-daide">Fonctions d’aide</h1>
 
 </div>
 

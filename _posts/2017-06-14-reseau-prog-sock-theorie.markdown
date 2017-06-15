@@ -9,9 +9,9 @@ tags: reseau sockets smtp tcp udp c fr
 finished: false
 ---
 
-# Programmation socket en C sous Linux
+<!--# Programmation socket en C sous Linux-->
 
-## 1. Qu'est-ce qu'un socket?
+# 1. Qu'est-ce qu'un socket?
 
 Un socket autorise la communication entre deux process différents.
 * Sur la même machine
@@ -30,7 +30,7 @@ Un **descripteur de fichier** est un entier `int` associé avec un **fichier ouv
 
 D'un point de vue programmatique, un socket ressemble et se comporte comme un descripteur de fichier. On utilise sur lui des fonctions comme `read()` et `write()` qui fonctionnent de la même façon avec un socket que sur des fichiers ou sur des pipes.
 
-## 2. Contexte d'utilisation
+# 2. Contexte d'utilisation
 
 Un socket Unix est utilisé dans un contexte **client-serveur**.
 Un **Serveur** est un process qui effectue des actions (fonctions) à la demande d'un **client**. La plupart des protocoles de la couche application (FTP, SMTP, POP3...) utilisent des sockets pour:
@@ -38,7 +38,7 @@ Un **Serveur** est un process qui effectue des actions (fonctions) à la demande
 1. établir une connexion entre client et serveur
 2. échager des donnnées
 
-## 3. Types de sockets
+# 3. Types de sockets
 
 types de sockets sont disponible pour les utilisateurs. 
 
@@ -59,7 +59,7 @@ Raw Sockets
 
 Les process sont théoriquement censés communiquer uniquement entre sockets de même type mais il n'y a aucune restriction qui empêche la communication entre sockets de type différent.
 
-## 4. Modèle "Client Server"
+# 4. Modèle "Client Server"
 La majorité des applications d'Internet utilisent ce Modèle il se réfère à:
 Deux process ou deux applications qui communiquent en échangeant des informations. L'un des deux process agit comme un client et l'autre comme un serveur.
 
@@ -92,11 +92,11 @@ Ce schéma décrit l'intéraction complète entre un client et un serveur.
 
 <img src="/00illustrations/socket2/diag1.png" height="auto">
 
-## 5. Unix Socket - Structures
+# 5. Unix Socket - Structures
 
 Plusieurs structures sont utilisées pour la programmations socket sous Unix. Celles-ci contiennent des infomations concernant entre autre l'adresse et le port. La plupart des fonctions socket nécéssitent un pointeur sur l'adresse d'une structure comme argument.
 
-### sockaddr
+## sockaddr
 Contient des informations sur le socket
 
 ```c
@@ -117,7 +117,7 @@ Structure d'adresse générique qui sera passé dans la majorité des appels de 
 
 
 
-### sockaddr_in
+## sockaddr_in
 
 ```c
 struct sockaddr_in {
@@ -140,7 +140,7 @@ Permet de référencer (pointer) les divers éléments du socket
 
 
 
-### in_addr
+## in_addr
 
 ```c
 struct in_addr {
@@ -157,7 +157,7 @@ Cette structure est uniquement utilisée dans la structure précédente et conti
 
 
 
-### hostent
+## hostent
 
 ```c
 struct hostent {
@@ -185,7 +185,7 @@ Contient des informations sur l'hôte
 _note: h\_addr est définis comme étant h\_addr\_list[0] pour assurer une retro compatibilité_
 
 
-### servent
+## servent
 
 ```c
 struct servent {
@@ -207,7 +207,7 @@ Contient des informations sur les service et les ports associés
 | s_proto | TCP<br>UDP | protocole utilisé |  
 
 
-### Conseils d'utilisation
+## Conseils d'utilisation
 
 * Ces structures sont au coeur de la programmation réseau. Nous les initialisons, remplissons et leurs passons des pointeurs qui pointent vers diverses fonctions de sockets. Parfois nous passons un pointeur à l'une de ces structure ce qui à pour effet de compléter les données de la structure.
 
@@ -216,7 +216,7 @@ Contient des informations sur les service et les ports associés
 * Quand une fonction socket remplit une de ces structures, nous passons également la longueure de la strucure par référence pour que sa valeur puisse être modifié par la fonction.
 
 
-## 6. Ports et services (fonctions)
+# 6. Ports et services (fonctions)
 Unix nous fournit les fonctions suivantes pour fetch un nom de service du répertoire /etc/services
 ```c
 struct servent *getservbyname(char *name, char *proto)
@@ -230,13 +230,13 @@ Cet appel prend le port et le nom du protocole et retourne le **nom** du service
 
 La valeur de retour des deux fonctions est un ponteur sur la structure `servent` vue un peu plus haut.
 
-## 7. Ordre des bytes (représentation des bytes en mémoire)
+# 7. Ordre des bytes (représentation des bytes en mémoire)
 
-### endiannes
+## endiannes
 
 > Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication**. Big endian et Little endian sont deux architectures différentes.
 
-#### Big endian
+### Big endian
 **byte de poids fort** à gauche.  
 Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
 
@@ -254,7 +254,7 @@ Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de c
 <span style="color:#F92672">**Tous les protocoles TCP/IP communiquent en big-endian**</span>
 
 
-#### Little endian
+### Little endian
 **byte de poid faible** à gauche.   
 Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de cases de 1 byte
 
@@ -270,7 +270,7 @@ Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de c
 
 <span style="color:#F92672">**X86 fonctionne en Little endian**</span>
 
-### Fonctions pour changer l'ordre des bytes
+## Fonctions pour changer l'ordre des bytes
 
 | attribut | description |    
 |:--:|:--:|    
@@ -299,7 +299,7 @@ unsigned long ntohl(unsigned long netlong)
 ```
 Cette fonction converti 32-bit de network byte order vers **host byte order**.
 
-### Fonction pour déterminter l'endiannes d'une machine
+## Fonction pour déterminter l'endiannes d'une machine
 
 
 ```c
@@ -340,7 +340,7 @@ little-endian
 $>
 ```
 
-## 8. Fonctions pour manipuler les adresses IP
+# 8. Fonctions pour manipuler les adresses IP
 
 Ces fonctions convertissent des IP entre le format ASCII string (lecture par un humain) et le format Network Byte Order (valeurs binaires contenues dans les structures vues plus haut).
 
@@ -395,7 +395,7 @@ char *inet_ntoa(struct in_addr inaddr)
 ```
 * Converti l'adresse de l'hôte spécifié en une string dans le format _Internet standard dot notation_.
 
-## Fonctions principales 
+# Fonctions principales 
 
 <img src="/00illustrations/socket2/diag1.png" height="auto">
 
@@ -627,6 +627,73 @@ Cet appel retourne 0 en cas desucces et -1 en cas d'erreur
 > Quand when = 2 c'est équivalent à close()
 
 ## select()
+Cette fonction indique quel descripteur de fichier est prêt à être lu, ecrit ou a des erreurs en attente.
+
+<span style="color:red">chercher de la doc</span>
+
+```c
+ int select(int  nfds, fd_set  *readfds, fd_set  *writefds, fd_set *errorfds, struct timeval *timeout);
+```
+Cet appel retourne 0 en cas de succes et -1 en cas d'erreur.
+
+### Paramètres
+
+<span style="color:red">chercher de la doc</span>
 
 
+# Fonctions utiles
 
+## write()
+Tente d'écrire `nbytes` du buffer pointé par `buf` dans le fichier associé au descripteur de fichier `fieldes`
+
+```c
+#include <unistd.h>
+int write(int fildes, const void *buf, int nbyte);
+```
+Cet appel retourne le nombre de bytes dans le fichiers associé avec le paramètre `fildes`.
+
+### Paramètres
+
+* **fildes**: descripteur de socket retourné par la fonction socket()
+* **buf**: pointeur  qui pointe sur les données à envoyer
+* **nbyte**: nombre de bytes à écrire.
+
+## read()
+
+```c
+#include <unistd.h>
+
+int read(int fildes, const void *buf, int nbyte);
+```
+
+### Paramètres
+* **fildes**: descripteur de socket retourné par la fonction socket()
+* **buf**: pointeur  qui pointe sur les données à lire
+* **nbyte**: nombre de bytes à lire.
+
+## fork()
+Crée un nouveau process (process enfant) qui sera la copie conforme du process parent .
+
+```c
+#include <sys/types.h>
+#include <unistd.h>
+
+int fork(void);
+```
+
+## bzero()
+
+Place `nbyte` bytes "\0" (NULL) dans la string _s_. Cette fonction est utile pour set les strucures socket à des valeurs = NULL.
+
+```c
+void bzero(void *s, int nbyte);
+```
+
+### Paramètres
+* **s**: spécifie la string à remplire
+* **nbyte**: spécifie le nombre de bytes à remplire
+
+
+# Mise en pratique: serveur TCP
+
+* Créér un socket avec l'appel système`socket()`
