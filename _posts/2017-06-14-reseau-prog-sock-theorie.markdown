@@ -396,3 +396,237 @@ char *inet_ntoa(struct in_addr inaddr)
 * Converti l'adresse de l'hôte spécifié en une string dans le format _Internet standard dot notation_.
 
 ## Fonctions principales 
+
+<img src="/00illustrations/socket2/diag1.png" height="auto">
+
+Reprenons les fonctions sur ce diagramme:
+
+## socket()
+Pour effectuer des taches I/O, la première chose dont un process a besoin est d'appeler la fonction `socket()` en spécifiant le type de protocol de communication (TCP/UDP) et la famille (IPv4/6).
+
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int socket (int family, int type, int protocol);
+```
+
+Cet appel retourne un **descripteur de socket** (descripteur de fichier) qu'on peut utiliser pour les appels système.
+
+### Paramètres:
+
+* Famille: spécifie la famille du protocol parmis les suivants
+
+| famille | desciption |
+|:--:|:--:| 
+| AF_INET | protocol IPv4 |
+| AF_INET6 | protocol IPv6 |
+| AF_LOCAL | protocol domaine Unix |
+| AF_ROUTE | socket de routage |
+| AF_KEY | clé |
+
+* Type: spécifie le type de socket à utiliser parmis les suivants
+
+| type | desciption |
+|:--:|:--:| 
+| SOCK_STREAM | stream socket (TCP) |
+| SOCK_DGRAM | datagrm socket (UDP) |
+| SOCK_SEQPACKET | sequence packet socket |
+| SOCK_RAW | raw socket |
+
+* Protocole: doit être cohérent avec le choix précédent ou à `0` pour laisser le système en choisir un par défaut.
+
+| protocol | desciption |
+|:--:|:--:| 
+| IPROTO_TCP | TCP transport protocol |
+| IPROTO_UDP | UDP transport protocol |
+| IPROTO_SCTP | SCTP transport protocol |
+
+## connect()
+Utilisée par les clients TCP pour établir une connextion avec un serveur TCP
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int connect(int sockfd, struct sockaddr *serv_addr, int addrlen);
+```
+Cet appel retourne 0 si il se connecte avec succes à un serveur -1 dans le cas d'une erreur.
+
+### Paramètres
+
+* **sockfd**: descripteur de socket retourné par la fonction socket()
+* **serv_addr**: pointeur sur la structure `sockaddr` qui contient l'IP et le port destination
+* **addrlen**: à set sur `sizeof(struct sockaddr)`
+
+## bind()
+Cette fonction assigne un l'adresse d'un protocol local à un socket. Avec les protocoles IP, l'adresse du protocol est une combinaison de:
+* l'IPv4 sur 32 bits et le port TCP ou UDP sur 16 bits
+* l'iPv6 sur 128 bits et le port rcp ou UDP sur 16 bits
+
+**Cette fonction est uniquement employée par les serveurs TCP**
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int bind(int sockfd, struct sockaddr *my_addr,int addrlen);
+```
+Cet appel retourn 0 si le bind à l'adresse est réussit, -1 dans le cas d'une erreur.
+
+### Paramètres
+* **sockfd**: c'est un descritpeur de socket que retourne la fonction socket()
+* **my_addr**: pointeur sur la structure `sockaddr` qui contient l'IP et le port local
+* **addrlen**: à set sur `sizeof(struct sockaddr)`
+
+Une valeur de `0` pour le numéro de port veut dire que le système va choisir un port aléatoire.
+
+Si on passe `INNDDR_ANY` comme valeur pour l'adresse IP, celà veut dire que l'IP sera assignée automatiquement.
+
+```c
+server.sin_port = 0;
+server.sin_addr.s_addr = INADDR_ANY;
+```
+
+> note: Tous les ports jusque 1024 sont réservés (well known ports). Le choix d'un port se fait dans la plage des 1024-65535 sauf si se sont ceux utilisés par d'autres programmes
+
+## listen()
+Cette fonction est **uniquement appellée par les serveurs TCP** et effectue deux actions:
+
+* transforme un socket non-connecté en socket passif (indique que le Kernel devrait accepter les connextions entrantes sur ce socket).
+
+* le second paramètre de cette fonction spécifie le nombre maximum de connexions que le Kernel doit autoriser en queue de ce socket.
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int listen(int sockfd,int backlog);
+```
+
+Cet appel retourn 0 en cas de réussite et -1 dans le cas d'une erreur.
+
+### Paramètres
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **backlog**: nombre de connexions autorisés
+
+## accept()
+Cette fonction est appellée par un serveur TCP pour retourner le prochainne connextion en queue.
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int accept (int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
+```
+
+Cet appel retourne un descripteur (strictement positif) en casss de success et -1 en cas d'erreur. Le descripteur retourné est assumé être un descripteur de socket client et nous pourons utiliser les opérations read/write sur ce descripteur pour commmuniquer avec le client.
+
+### Paramètres
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **clientaddr**: pointeur sur la structure `sockaddr` qui contient l'IP et le port du client
+* **addrlen**: à set sur `sizeof(struct sockaddr)`
+
+## send()
+Utilisé pour envoyer des données via socket stream (TCP)
+
+Pour envoyer des données, nous pouvons utiliser `write()`
+
+```c
+int send(int sockfd, const void *msg, int len, int flags);
+```
+Cet appel retourne le nombre de bytes envoyés et -1 dans le cas d'une erreur.
+
+### Paramètres
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **msg**: pointeur sur la donnée qu'on veut envoyer
+* **len**: longueur de la donnée qu'on veut envoyer (bytes) 
+* **flags**: set sur 0;
+
+## recv()
+Est utilisé pour recevoir des données d'un socket strean (TCP)
+
+Nous pouvons utiliser `read()` pour lire la donnée.
+
+```c
+int recv(int sockfd, void *buf, int len, unsigned int flags);
+```
+Cet appel retourne le nombre de bytes lu dans le buffer ou -1 en cas d'erreur.
+
+### Paramètres
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **buf** : le buffer qui contient les  données
+* **len**: longueur de la donnée qu'on veut envoyer (bytes) 
+* **flags**: set sur 0
+
+## sendto()
+Utilisée pour envoyer des données via socket datagram(UDP)
+
+```c
+int sendto(int sockfd, const void *msg, int len, unsigned int flags, const struct sockaddr *to, int tolen);
+```
+
+Cet appel retourne  le nombre de bytes envoyés et -1 en cas d'erreur
+
+### Paramètres
+
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **msg** : pointeur sur la donnée à envoyer
+* **len**: longueur de la donnée qu'on veut envoyer (bytes) 
+* **flags**: set sur 0
+* **to**: pointeur sur la strucuture `sockaddr` coté hôte
+* **tolen**: set sur zero
+
+## recvfrom()
+Utilisée pour recevoir des données d'un socket datagram
+
+```c
+int recvfrom(int sockfd, void *buf, int len, unsigned int flags struct sockaddr *from, int *fromlen);
+```
+
+Cet appel retourne le nombre de bytes lu dans le buffer ou 01 dans le cas d'une erreur
+
+### Paramètres
+
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **buf** : le buffer qui contient les  données
+* **len**: longueur de la donnée qu'on veut envoyer (bytes) 
+* **flags**: set sur 0
+* **from**: pointeur sur la structure `sockaddr`
+* **fromlen** set to `sizeof(struct sockaddr)`
+
+## close()
+Cette fonction est utilisée pour fermer la communication entre client et serveur.
+
+```c
+int close(int sockdf);
+```
+retourne 0 en cas de succes et -1 en cas d'erreur.
+
+### Paramètres
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+
+## shutdown()
+Utilisée pour mettre fin à la communication (gracefully). Entre client et serveur. Cette fonction donne plusde contrôle que la fonction `close()`
+
+```c
+int shutdown(int sockfd, int how)
+```
+
+Cet appel retourne 0 en cas desucces et -1 en cas d'erreur
+
+### Paramètres
+
+* **sockfd**: descripteur de socket retourné par la fonction `socket()`
+* **how**: une des trois valeurs suivantes:
+      * **0**: indique que recevoir des données n'est pas permis
+      * **1**: indique que l'envoi de données est autorisé
+      * **2**: indique que l'envoi ET la réception ne sont pas autorisé.
+
+> Quand when = 2 c'est équivalent à close()
+
+## select()
+
+
+
