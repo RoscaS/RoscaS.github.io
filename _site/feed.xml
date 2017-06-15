@@ -6,9 +6,680 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 14 Jun 2017 19:55:32 +0200</pubDate>
-    <lastBuildDate>Wed, 14 Jun 2017 19:55:32 +0200</lastBuildDate>
+    <pubDate>Thu, 15 Jun 2017 03:56:55 +0200</pubDate>
+    <lastBuildDate>Thu, 15 Jun 2017 03:56:55 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Reseau: Programmation sockets (théorie)</title>
+        <description>&lt;h1 id=&quot;programmation-socket-en-c-sous-linux&quot;&gt;Programmation socket en C sous Linux&lt;/h1&gt;
+
+&lt;h2 id=&quot;1-quest-ce-quun-socket&quot;&gt;1. Qu’est-ce qu’un socket?&lt;/h2&gt;
+
+&lt;p&gt;Un socket autorise la communication entre deux process différents.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Sur la même machine&lt;/li&gt;
+  &lt;li&gt;Entre des machines distantes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sur Unix, toutes les actions I/O sont faites en écrivant ou en lisant un &lt;strong&gt;descripteur de fichier&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;L’entrée standard STDIN, la sortie standard STDOUT et l’erreur standard STDERR sont les trois descripteurs de fichier POSIX standard pour tout processus qui n’est pas un &lt;em&gt;daemon&lt;/em&gt;.&lt;br /&gt;
+&lt;a href=&quot;https://fr.wikipedia.org/wiki/Descripteur_de_fichier&quot;&gt;wikipedia: descripteur de fichiers&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Un &lt;strong&gt;descripteur de fichier&lt;/strong&gt; est un entier &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt; associé avec un &lt;strong&gt;fichier ouvert&lt;/strong&gt;. Ce fichier peut être:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Une connexion réseau&lt;/li&gt;
+  &lt;li&gt;Un fichier texte&lt;/li&gt;
+  &lt;li&gt;Un terminal&lt;/li&gt;
+  &lt;li&gt;…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;D’un point de vue programmatique, un socket ressemble et se comporte comme un descripteur de fichier. On utilise sur lui des fonctions comme &lt;code class=&quot;highlighter-rouge&quot;&gt;read()&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;write()&lt;/code&gt; qui fonctionnent de la même façon avec un socket que sur des fichiers ou sur des pipes.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-contexte-dutilisation&quot;&gt;2. Contexte d’utilisation&lt;/h2&gt;
+
+&lt;p&gt;Un socket Unix est utilisé dans un contexte &lt;strong&gt;client-serveur&lt;/strong&gt;.
+Un &lt;strong&gt;Serveur&lt;/strong&gt; est un process qui effectue des actions (fonctions) à la demande d’un &lt;strong&gt;client&lt;/strong&gt;. La plupart des protocoles de la couche application (FTP, SMTP, POP3…) utilisent des sockets pour:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;établir une connexion entre client et serveur&lt;/li&gt;
+  &lt;li&gt;échager des donnnées&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;3-types-de-sockets&quot;&gt;3. Types de sockets&lt;/h2&gt;
+
+&lt;p&gt;types de sockets sont disponible pour les utilisateurs.&lt;/p&gt;
+
+&lt;p&gt;Stream Sockets (&lt;strong&gt;TCP&lt;/strong&gt;)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;fiables&lt;/li&gt;
+  &lt;li&gt;orienté connexion&lt;/li&gt;
+  &lt;li&gt;pas de limite de taille&lt;/li&gt;
+  &lt;li&gt;message d’erreur en cas d’échec de l’envoi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Datagram Sockets (&lt;strong&gt;UDP&lt;/strong&gt;)&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;non-fiable&lt;/li&gt;
+  &lt;li&gt;non-orienté connexion (pas de phase connexion comme en TCP,  construction d’un paquet avec les coordonnées de la destination et puis envoi)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Raw Sockets&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;utilisés dans le developpement de protocoles de communication …&lt;/li&gt;
+  &lt;li&gt;… et le &lt;a href=&quot;https://fr.wikipedia.org/wiki/Berkeley_sockets&quot;&gt;hacking&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Les process sont théoriquement censés communiquer uniquement entre sockets de même type mais il n’y a aucune restriction qui empêche la communication entre sockets de type différent.&lt;/p&gt;
+
+&lt;h2 id=&quot;4-modèle-client-server&quot;&gt;4. Modèle “Client Server”&lt;/h2&gt;
+&lt;p&gt;La majorité des applications d’Internet utilisent ce Modèle il se réfère à:
+Deux process ou deux applications qui communiquent en échangeant des informations. L’un des deux process agit comme un client et l’autre comme un serveur.&lt;/p&gt;
+
+&lt;h3 id=&quot;processus-client&quot;&gt;Processus Client&lt;/h3&gt;
+&lt;p&gt;Typiquement celui qui fait  la requête d’informations. Après avoir reçu la résponse, ce process soit se termine soit continue à faire des traitements.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;exemple&lt;/strong&gt;: Un navigateur internet est une application &lt;strong&gt;client&lt;/strong&gt; qui envoie une requête à un serveur Web pour recevoir une page HTML.&lt;/p&gt;
+
+&lt;h3 id=&quot;processus-serveur&quot;&gt;Processus Serveur&lt;/h3&gt;
+&lt;p&gt;C’est le process qui reçoit les requêtes de la part des clients. Après avoir reçu une requête d’un client, ce process va effectuer le traitement demandé (rassembler des informations, et les renvoyer au client). Une fois ces taches éffectuées le process est disponible pour servir un autre client. &lt;strong&gt;Les process serveurs sont toujours prêts à servir les requêtes qui leurs parviennent&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;exemple&lt;/strong&gt;: Un serveur web est toujours entrain d’attendre des requêtes de navigateurs internet. Aussi tôt qu’un client (navigateur) lui fait parvenir une requête, il lui renvoie la page demandée.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Un client a besoin de connaitre l’adresse d’un serveur mais pas l’inverse.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;architectures-t2-et-t3&quot;&gt;Architectures T2 et T3&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;T2&lt;/strong&gt;: le client interagit directement avec le serveur. Ce type d’architecture peut avoir des problèmes de sécurité (gérés grâce au SSL: Secure Socket Layer) et des soucis de performance.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;T3&lt;/strong&gt;: Un logiciel appelé &lt;strong&gt;Middlewarese&lt;/strong&gt; placé entre client et serveur et est utilisé pour effectuer des tests de sécurité.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;types-de-serveurs&quot;&gt;Types de serveurs&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Serveurs &lt;strong&gt;itératifs&lt;/strong&gt;: forme la plus simple. Le serveur gère un client à la fois et les clients attendent pour s’y connecter.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Serveurs &lt;strong&gt;concurents (Concurrent(en))&lt;/strong&gt;: gènre plusieurs processus en parallèle et permet de servire plusieurs requêtes à la fois. La forme la plus simple pour implémenter un serveur concurent sous Unix est de &lt;strong&gt;FORKER&lt;/strong&gt; un processus enfant pour prendre en charge chaque client.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;interaction-entre-client-et-serveur&quot;&gt;Interaction entre client et serveur&lt;/h3&gt;
+&lt;p&gt;Ce schéma décrit l’intéraction complète entre un client et un serveur.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/00illustrations/socket2/diag1.png&quot; height=&quot;auto&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5-unix-socket---structures&quot;&gt;5. Unix Socket - Structures&lt;/h2&gt;
+
+&lt;p&gt;Plusieurs structures sont utilisées pour la programmations socket sous Unix. Celles-ci contiennent des infomations concernant entre autre l’adresse et le port. La plupart des fonctions socket nécéssitent un pointeur sur l’adresse d’une structure comme argument.&lt;/p&gt;
+
+&lt;h3 id=&quot;sockaddr&quot;&gt;sockaddr&lt;/h3&gt;
+&lt;p&gt;Contient des informations sur le socket&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;sa_family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;             &lt;span class=&quot;n&quot;&gt;sa_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Structure d’adresse générique qui sera passé dans la majorité des appels de fonction.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;description des membres:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;attribut&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;valeur&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sa_family&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;AF_INET&lt;br /&gt;AF_UNIX&lt;br /&gt;AF_NS&lt;br /&gt;AF_IMPLIK&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sa_data&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Protocol-specific Adress&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;les 14 bytes de ce champ sont interprété en fonction du type d’adresse.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;sockaddr_in&quot;&gt;sockaddr_in&lt;/h3&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr_in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;            &lt;span class=&quot;n&quot;&gt;sin_family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;sin_port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_addr&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;sin_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;sin_zero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Permet de référencer (pointer) les divers éléments du socket&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;description des membres:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;attribut&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;valeur&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sa_family&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;AF_INET&lt;br /&gt;AF_UNIX&lt;br /&gt;AF_NS&lt;br /&gt;AF_IMPLIK&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sin_port&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Service Port&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;numéro de port sur 16 bits (Network Byte Order)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sin_addr&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;IP Address&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;adresse IP sur 32 bits (Network Byte Order)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;sin_zero&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;ne s’utilise pas/plus&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;valeur à set sur NULL&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;in_addr&quot;&gt;in_addr&lt;/h3&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_addr&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cette structure est uniquement utilisée dans la structure précédente et contient le netid/hostid sur 32 bits&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;description des membres:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;attribut&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;valeur&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;s_addr&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;service port&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;adresse IP sur 32 bits (Network Byte Order)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;hostent&quot;&gt;hostent&lt;/h3&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hostent&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h_aliases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+   &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;h_addrtype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
+   &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;h_length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h_addr_list&lt;/span&gt;
+	
+&lt;span class=&quot;c1&quot;&gt;// define h_addr  h_addr_list[0]
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Contient des informations sur l’hôte&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;description des membres:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;attribut&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;valeur&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;h_name&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;url&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;nom de domaine de l’hôte&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;h_aliases&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;TI&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;liste d’alias de l’hôte&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;h_addrtype&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;AF_INET&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;h_lenght&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;4&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;longeur de l’ip (byte). 4 pour IP&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;h_addr_list&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;in_addr&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;liste de pointeurs (pour le protocol IP)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;em&gt;note: h_addr est définis comme étant h_addr_list[0] pour assurer une retro compatibilité&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;servent&quot;&gt;servent&lt;/h3&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;servent&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_aliases&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+   &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;s_port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
+   &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_proto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Contient des informations sur les service et les ports associés&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;description des membres:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;attribut&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;valeur&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;s_name&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;http&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;nom officiel du serveur. (SMTP, FTP, POP3,…)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;s_aliases&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;ALIAS&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;liste d’alias du service. Le plus souvent sera set à NULL&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;s_port&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;80&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;numéro de port associé (ex. Si HTTP =&amp;gt; 80)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;s_proto&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;TCP&lt;br /&gt;UDP&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;protocole utilisé&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;conseils-dutilisation&quot;&gt;Conseils d’utilisation&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Ces structures sont au coeur de la programmation réseau. Nous les initialisons, remplissons et leurs passons des pointeurs qui pointent vers diverses fonctions de sockets. Parfois nous passons un pointeur à l’une de ces structure ce qui à pour effet de compléter les données de la structure.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Toujours passer ces structures par référence (pointeur) accompagné de la taill de cette dernière.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Quand une fonction socket remplit une de ces structures, nous passons également la longueure de la strucure par référence pour que sa valeur puisse être modifié par la fonction.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;6-ports-et-services-fonctions&quot;&gt;6. Ports et services (fonctions)&lt;/h2&gt;
+&lt;p&gt;Unix nous fournit les fonctions suivantes pour fetch un nom de service du répertoire /etc/services&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;servent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getservbyname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;proto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cet appel prend le nom du service et le nom du protocole et retourne le &lt;strong&gt;numéro de port&lt;/strong&gt; correspondant au service.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;servent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getservbyport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;proto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cet appel prend le port et le nom du protocole et retourne le &lt;strong&gt;nom&lt;/strong&gt; du service correspondant.&lt;/p&gt;
+
+&lt;p&gt;La valeur de retour des deux fonctions est un ponteur sur la structure &lt;code class=&quot;highlighter-rouge&quot;&gt;servent&lt;/code&gt; vue un peu plus haut.&lt;/p&gt;
+
+&lt;h2 id=&quot;7-ordre-des-bytes-représentation-des-bytes-en-mémoire&quot;&gt;7. Ordre des bytes (représentation des bytes en mémoire)&lt;/h2&gt;
+
+&lt;h3 id=&quot;endiannes&quot;&gt;endiannes&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Ordre dans lequel les octets sont organisés dans une case mémoire &lt;strong&gt;ou dans une communication&lt;/strong&gt;. Big endian et Little endian sont deux architectures différentes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;big-endian&quot;&gt;Big endian&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;byte de poids fort&lt;/strong&gt; à gauche.&lt;br /&gt;
+Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 1 byte&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;adr:&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;val:&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 2 byte:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:#F92672&quot;&gt;&lt;strong&gt;Tous les protocoles TCP/IP communiquent en big-endian&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;little-endian&quot;&gt;Little endian&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;byte de poid faible&lt;/strong&gt; à gauche. &lt;br /&gt;
+Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 1 byte&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;adr:&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;strong&gt;val:&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Rangement en mémoire de la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;0xA0B70708&lt;/code&gt; dans une structure mémoire de cases de 2 byte:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;0&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;1&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;2&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;3&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt; &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;07&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;08&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt; &lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;A0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;B7&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;…&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:#F92672&quot;&gt;&lt;strong&gt;X86 fonctionne en Little endian&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;fonctions-pour-changer-lordre-des-bytes&quot;&gt;Fonctions pour changer l’ordre des bytes&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;attribut&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;htons()&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;host to Network Short&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;htonl()&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;host to Network Long&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;ntohl()&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Network to Host Long&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;ntohs()&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;Network to Host Short&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;htons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hostshort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cette fonction converti 16-bit (2-byte) de &lt;strong&gt;host byte order&lt;/strong&gt; vers network byte order.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;htonl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hostlong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cette fonction converti 32-bit (4-byte) de &lt;strong&gt;host byte order&lt;/strong&gt; vers network byte order.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ntohs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netshort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cette fonction converti 16-bit (2-byte) de network byte order vers &lt;strong&gt;host byte order&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ntohl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netlong&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cette fonction converti 32-bit de network byte order vers &lt;strong&gt;host byte order&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;fonction-pour-déterminter-lendiannes-dune-machine&quot;&gt;Fonction pour déterminter l’endiannes d’une machine&lt;/h3&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;stdio.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+   &lt;span class=&quot;k&quot;&gt;union&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)];&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;un&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	
+   &lt;span class=&quot;n&quot;&gt;un&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x0102&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   
+   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;un&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;un&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;big-endian&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      
+      &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;un&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;un&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;little-endian&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      
+      &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;unknown&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sizeof(short) = %d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	
+   &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;output sur ma machine (core I7)&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$&amp;gt; &lt;/span&gt;gcc byteorder.c
+&lt;span class=&quot;gp&quot;&gt;$&amp;gt; &lt;/span&gt;./a.out
+little-endian
+&lt;span class=&quot;nv&quot;&gt;$&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;8-fonctions-pour-manipuler-les-adresses-ip&quot;&gt;8. Fonctions pour manipuler les adresses IP&lt;/h2&gt;
+
+&lt;p&gt;Ces fonctions convertissent des IP entre le format ASCII string (lecture par un humain) et le format Network Byte Order (valeurs binaires contenues dans les structures vues plus haut).&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inet_aton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addrptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Converti la string spécifiée (au format &lt;em&gt;Internet standard dot notation&lt;/em&gt;) en format Network Adress&lt;/li&gt;
+  &lt;li&gt;Range l’adresse dans la structure spécifiée.&lt;/li&gt;
+  &lt;li&gt;Le format de l’adresse convertie est Network Bye Order (bytes de gauches à droite).&lt;/li&gt;
+  &lt;li&gt;Retourne 1 si la string était valide et 0 si une erreur survient.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Exemple d’utilisation:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;arpa/inet.h&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(...)&lt;/span&gt;
+
+   &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_addr&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;addrptr&lt;/span&gt;
+   
+   &lt;span class=&quot;n&quot;&gt;memset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addrptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addrptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;retval&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inet_aton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;68.178.157.132&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addrptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;(...)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;in_addr_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inet_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;Converti la string spécifiée (au format &lt;em&gt;Internet standard dot notation&lt;/em&gt;) en format entier &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt; modifié&lt;/li&gt;
+  &lt;li&gt;Le format de l’adresse convertie est Network Bye Order (bytes de gauches à droite).&lt;/li&gt;
+  &lt;li&gt;Retourne une adresse IPv4 au format binaire sur 32 bits et une erreur de type INADDR_NONE&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Exemple d’utilisation:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;arpa/inet.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;(...)&lt;/span&gt;
+
+   &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr_in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+   &lt;span class=&quot;n&quot;&gt;memset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inet_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;68.178.157.132&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+   
+&lt;span class=&quot;p&quot;&gt;(...)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inet_ntoa&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_addr&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;Converti l’adresse de l’hôte spécifié en une string dans le format &lt;em&gt;Internet standard dot notation&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;fonctions-principales&quot;&gt;Fonctions principales&lt;/h2&gt;
+</description>
+        <pubDate>Wed, 14 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/reseau/reseau-prog-sock-theorie.html</link>
+        <guid isPermaLink="true">http://localhost:4000/reseau/reseau-prog-sock-theorie.html</guid>
+        
+        <category>reseau</category>
+        
+        <category>sockets</category>
+        
+        <category>smtp</category>
+        
+        <category>tcp</category>
+        
+        <category>udp</category>
+        
+        <category>c</category>
+        
+        <category>fr</category>
+        
+        
+        <category>Reseau</category>
+        
+      </item>
+    
+      <item>
+        <title>Reseau: Client SMTP</title>
+        <description>
+</description>
+        <pubDate>Wed, 14 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/reseau/reseau-client-SMTP.html</link>
+        <guid isPermaLink="true">http://localhost:4000/reseau/reseau-client-SMTP.html</guid>
+        
+        <category>reseau</category>
+        
+        <category>sockets</category>
+        
+        <category>smtp</category>
+        
+        <category>tcp</category>
+        
+        <category>udp</category>
+        
+        <category>c</category>
+        
+        <category>fr</category>
+        
+        
+        <category>Reseau</category>
+        
+      </item>
     
       <item>
         <title>Py: Regex</title>
@@ -16,6 +687,11 @@
 &lt;ul&gt;
   &lt;li&gt;Exemples en Python (Jupyter)&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;h2 id=&quot;liens&quot;&gt;Liens&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://regexone.com/&quot;&gt;tuto regex&lt;/a&gt;   &lt;br /&gt;
+&lt;a href=&quot;http://regexr.com/&quot;&gt;analyse d’expressions (premier choix)&lt;/a&gt; &lt;br /&gt;
+&lt;a href=&quot;https://regex101.com/tests&quot;&gt;analyse d’expressions 2&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;basic&quot;&gt;Basic&lt;/h2&gt;
 
@@ -1380,121 +2056,6 @@ La récursivité terminale revient à appliquer l’adage &lt;em&gt;Diviser pour
         
         
         <category>Algo</category>
-        
-      </item>
-    
-      <item>
-        <title>Notes</title>
-        <description>&lt;h2 id=&quot;notes&quot;&gt;Notes&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/&quot;&gt;Reddit post 1&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Something that really helped me was learning basic group theory and ring theory, it gave me much needed knowledge of and understanding about how (for example) arithmetic actually works on a more fundamental level. I cannot recommend it enough.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;basic groupe theory&lt;/code&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ring theory&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/&quot;&gt;Reddit post 1&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;latex&quot;&gt;Latex&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://fr.wikibooks.org/wiki/LaTeX/%C3%89crire_des_math%C3%A9matiques&quot;&gt;wikibooks&lt;/a&gt;&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{n!}{k!(n - k)!}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\frac{n}{k}&lt;/script&gt;
-
-&lt;p&gt;\begin{equation} 
-    c^2 = a^2 + b^2.
-    \label{eq:pythagoras}
-\end{equation}&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;x_{1,2} = \frac{- b \pm \sqrt{\Delta}}{2a}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sqrt[4]{x^4} = |x|&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\acute{a}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;a', a^\prime&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\grave{a}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{a}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\widehat{ABC}&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\tilde{a}&lt;/script&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;matrix : matrice sans délimiteur ;&lt;/li&gt;
-  &lt;li&gt;pmatrix : matrice entre parenthèses (…) ;&lt;/li&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;vmatrix : matrice entre barres&lt;/td&gt;
-          &lt;td&gt;…&lt;/td&gt;
-          &lt;td&gt;;&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;table&gt;
-      &lt;tbody&gt;
-        &lt;tr&gt;
-          &lt;td&gt;Vmatrix : matrice entre doubles barres&lt;/td&gt;
-          &lt;td&gt; &lt;/td&gt;
-          &lt;td&gt;…&lt;/td&gt;
-          &lt;td&gt; &lt;/td&gt;
-          &lt;td&gt;;&lt;/td&gt;
-        &lt;/tr&gt;
-      &lt;/tbody&gt;
-    &lt;/table&gt;
-  &lt;/li&gt;
-  &lt;li&gt;bmatrix : matrice entre crochets […] ;&lt;/li&gt;
-  &lt;li&gt;Bmatrix : matrice entre accolades {…}.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;\begin{pmatrix}
-   a_1 &amp;amp; b_1 &lt;br /&gt;
-   a_2 &amp;amp; b_2 
-\end{pmatrix}&lt;/p&gt;
-</description>
-        <pubDate>Thu, 01 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/math/math-notes.html</link>
-        <guid isPermaLink="true">http://localhost:4000/math/math-notes.html</guid>
-        
-        
-        <category>Math</category>
-        
-      </item>
-    
-      <item>
-        <title>Présentation sur l'IA</title>
-        <description>&lt;h1 id=&quot;cours-de-communication-présentation-ia-01062017&quot;&gt;Cours de communication: Présentation IA 01/06/2017&lt;/h1&gt;
-
-&lt;h2 id=&quot;slides&quot;&gt;Slides&lt;/h2&gt;
-
-&lt;iframe width=&quot;770&quot; height=&quot;515&quot; src=&quot;https://gitpitch.com/RoscaS/com_presentation_IA/master?grs=github&amp;amp;t=white&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;références&quot;&gt;Références&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html&quot;&gt;waitbutwhy&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.huffingtonpost.fr/2015/09/13/futur-intelligence-artificielle-humanite-immortalite-25-ans-2040_n_8123014.html&quot;&gt;Comment le futur de l’IA pourrait révolutionner le monde d’ici 25 ans&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.itesoft.com/fr/lintelligence-artificielle-un-rapide-tour-dhorizon/&quot;&gt;IA tour d’horizon&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://medium.com/latelier-verrocchio/lintelligence-artificielle-et-l-avenir-de-notre-monde-partie-1-2-5904d164f4cf&quot;&gt;IA et avenir de notre monde&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.digitalcorner-wavestone.com/2015/06/lintelligence-artificielle-lavenir-de-lhumanite/&quot;&gt;IA, l’avenir de l’humanité?&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 28 May 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/presentations/presentation-references.html</link>
-        <guid isPermaLink="true">http://localhost:4000/presentations/presentation-references.html</guid>
-        
-        
-        <category>Presentations</category>
         
       </item>
     

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-prog-sock-theorie.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reseau: Programmation sockets (théorie)</title>
+  <meta name="description" content="Programmation socket en C sous Linux">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Reseau: Programmation sockets (théorie)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="14 Jun 2017" itemprop="datePublished">Jun 14 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">sockets</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">smtp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">c</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Linux, langage C</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="programmation-socket-en-c-sous-linux">Programmation socket en C sous Linux</h1>
+
+<h2 id="1-quest-ce-quun-socket">1. Qu’est-ce qu’un socket?</h2>
+
+<p>Un socket autorise la communication entre deux process différents.</p>
+<ul>
+  <li>Sur la même machine</li>
+  <li>Entre des machines distantes</li>
+</ul>
+
+<p>Sur Unix, toutes les actions I/O sont faites en écrivant ou en lisant un <strong>descripteur de fichier</strong>.</p>
+
+<blockquote>
+  <p>L’entrée standard STDIN, la sortie standard STDOUT et l’erreur standard STDERR sont les trois descripteurs de fichier POSIX standard pour tout processus qui n’est pas un <em>daemon</em>.<br />
+<a href="https://fr.wikipedia.org/wiki/Descripteur_de_fichier">wikipedia: descripteur de fichiers</a></p>
+</blockquote>
+
+<p>Un <strong>descripteur de fichier</strong> est un entier <code class="highlighter-rouge">int</code> associé avec un <strong>fichier ouvert</strong>. Ce fichier peut être:</p>
+<ul>
+  <li>Une connexion réseau</li>
+  <li>Un fichier texte</li>
+  <li>Un terminal</li>
+  <li>…</li>
+</ul>
+
+<p>D’un point de vue programmatique, un socket ressemble et se comporte comme un descripteur de fichier. On utilise sur lui des fonctions comme <code class="highlighter-rouge">read()</code> et <code class="highlighter-rouge">write()</code> qui fonctionnent de la même façon avec un socket que sur des fichiers ou sur des pipes.</p>
+
+<h2 id="2-contexte-dutilisation">2. Contexte d’utilisation</h2>
+
+<p>Un socket Unix est utilisé dans un contexte <strong>client-serveur</strong>.
+Un <strong>Serveur</strong> est un process qui effectue des actions (fonctions) à la demande d’un <strong>client</strong>. La plupart des protocoles de la couche application (FTP, SMTP, POP3…) utilisent des sockets pour:</p>
+
+<ol>
+  <li>établir une connexion entre client et serveur</li>
+  <li>échager des donnnées</li>
+</ol>
+
+<h2 id="3-types-de-sockets">3. Types de sockets</h2>
+
+<p>types de sockets sont disponible pour les utilisateurs.</p>
+
+<p>Stream Sockets (<strong>TCP</strong>)</p>
+<ul>
+  <li>fiables</li>
+  <li>orienté connexion</li>
+  <li>pas de limite de taille</li>
+  <li>message d’erreur en cas d’échec de l’envoi</li>
+</ul>
+
+<p>Datagram Sockets (<strong>UDP</strong>)</p>
+<ul>
+  <li>non-fiable</li>
+  <li>non-orienté connexion (pas de phase connexion comme en TCP,  construction d’un paquet avec les coordonnées de la destination et puis envoi)</li>
+</ul>
+
+<p>Raw Sockets</p>
+<ul>
+  <li>utilisés dans le developpement de protocoles de communication …</li>
+  <li>… et le <a href="https://fr.wikipedia.org/wiki/Berkeley_sockets">hacking</a></li>
+</ul>
+
+<p>Les process sont théoriquement censés communiquer uniquement entre sockets de même type mais il n’y a aucune restriction qui empêche la communication entre sockets de type différent.</p>
+
+<h2 id="4-modèle-client-server">4. Modèle “Client Server”</h2>
+<p>La majorité des applications d’Internet utilisent ce Modèle il se réfère à:
+Deux process ou deux applications qui communiquent en échangeant des informations. L’un des deux process agit comme un client et l’autre comme un serveur.</p>
+
+<h3 id="processus-client">Processus Client</h3>
+<p>Typiquement celui qui fait  la requête d’informations. Après avoir reçu la résponse, ce process soit se termine soit continue à faire des traitements.</p>
+
+<p><strong>exemple</strong>: Un navigateur internet est une application <strong>client</strong> qui envoie une requête à un serveur Web pour recevoir une page HTML.</p>
+
+<h3 id="processus-serveur">Processus Serveur</h3>
+<p>C’est le process qui reçoit les requêtes de la part des clients. Après avoir reçu une requête d’un client, ce process va effectuer le traitement demandé (rassembler des informations, et les renvoyer au client). Une fois ces taches éffectuées le process est disponible pour servir un autre client. <strong>Les process serveurs sont toujours prêts à servir les requêtes qui leurs parviennent</strong>.</p>
+
+<p><strong>exemple</strong>: Un serveur web est toujours entrain d’attendre des requêtes de navigateurs internet. Aussi tôt qu’un client (navigateur) lui fait parvenir une requête, il lui renvoie la page demandée.</p>
+
+<blockquote>
+  <p>Un client a besoin de connaitre l’adresse d’un serveur mais pas l’inverse.</p>
+</blockquote>
+
+<h3 id="architectures-t2-et-t3">Architectures T2 et T3</h3>
+
+<ul>
+  <li>
+    <p><strong>T2</strong>: le client interagit directement avec le serveur. Ce type d’architecture peut avoir des problèmes de sécurité (gérés grâce au SSL: Secure Socket Layer) et des soucis de performance.</p>
+  </li>
+  <li>
+    <p><strong>T3</strong>: Un logiciel appelé <strong>Middlewarese</strong> placé entre client et serveur et est utilisé pour effectuer des tests de sécurité.</p>
+  </li>
+</ul>
+
+<h3 id="types-de-serveurs">Types de serveurs</h3>
+
+<ul>
+  <li>
+    <p>Serveurs <strong>itératifs</strong>: forme la plus simple. Le serveur gère un client à la fois et les clients attendent pour s’y connecter.</p>
+  </li>
+  <li>
+    <p>Serveurs <strong>concurents (Concurrent(en))</strong>: gènre plusieurs processus en parallèle et permet de servire plusieurs requêtes à la fois. La forme la plus simple pour implémenter un serveur concurent sous Unix est de <strong>FORKER</strong> un processus enfant pour prendre en charge chaque client.</p>
+  </li>
+</ul>
+
+<h3 id="interaction-entre-client-et-serveur">Interaction entre client et serveur</h3>
+<p>Ce schéma décrit l’intéraction complète entre un client et un serveur.</p>
+
+<p><img src="/00illustrations/socket2/diag1.png" height="auto" /></p>
+
+<h2 id="5-unix-socket---structures">5. Unix Socket - Structures</h2>
+
+<p>Plusieurs structures sont utilisées pour la programmations socket sous Unix. Celles-ci contiennent des infomations concernant entre autre l’adresse et le port. La plupart des fonctions socket nécéssitent un pointeur sur l’adresse d’une structure comme argument.</p>
+
+<h3 id="sockaddr">sockaddr</h3>
+<p>Contient des informations sur le socket</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr</span> <span class="p">{</span>
+   <span class="kt">unsigned</span> <span class="kt">short</span>   <span class="n">sa_family</span><span class="p">;</span>
+   <span class="kt">char</span>             <span class="n">sa_data</span><span class="p">[</span><span class="mi">14</span><span class="p">];</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Structure d’adresse générique qui sera passé dans la majorité des appels de fonction.</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">sa_family</td>
+      <td style="text-align: center">AF_INET<br />AF_UNIX<br />AF_NS<br />AF_IMPLIK</td>
+      <td style="text-align: center">représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sa_data</td>
+      <td style="text-align: center">Protocol-specific Adress</td>
+      <td style="text-align: center">les 14 bytes de ce champ sont interprété en fonction du type d’adresse.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="sockaddr_in">sockaddr_in</h3>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="p">{</span>
+   <span class="kt">short</span> <span class="kt">int</span>            <span class="n">sin_family</span><span class="p">;</span>
+   <span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span>   <span class="n">sin_port</span><span class="p">;</span>
+   <span class="k">struct</span> <span class="n">in_addr</span>       <span class="n">sin_addr</span><span class="p">;</span>
+   <span class="kt">unsigned</span> <span class="kt">char</span>        <span class="n">sin_zero</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Permet de référencer (pointer) les divers éléments du socket</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">sa_family</td>
+      <td style="text-align: center">AF_INET<br />AF_UNIX<br />AF_NS<br />AF_IMPLIK</td>
+      <td style="text-align: center">représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sin_port</td>
+      <td style="text-align: center">Service Port</td>
+      <td style="text-align: center">numéro de port sur 16 bits (Network Byte Order)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sin_addr</td>
+      <td style="text-align: center">IP Address</td>
+      <td style="text-align: center">adresse IP sur 32 bits (Network Byte Order)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sin_zero</td>
+      <td style="text-align: center">ne s’utilise pas/plus</td>
+      <td style="text-align: center">valeur à set sur NULL</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="in_addr">in_addr</h3>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">in_addr</span> <span class="p">{</span>
+   <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">s_addr</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Cette structure est uniquement utilisée dans la structure précédente et contient le netid/hostid sur 32 bits</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">s_addr</td>
+      <td style="text-align: center">service port</td>
+      <td style="text-align: center">adresse IP sur 32 bits (Network Byte Order)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="hostent">hostent</h3>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">hostent</span> <span class="p">{</span>
+   <span class="kt">char</span>  <span class="o">*</span><span class="n">h_name</span><span class="p">;</span> 
+   <span class="kt">char</span> <span class="o">**</span><span class="n">h_aliases</span><span class="p">;</span> 
+   <span class="kt">int</span>    <span class="n">h_addrtype</span><span class="p">;</span>  
+   <span class="kt">int</span>    <span class="n">h_length</span><span class="p">;</span>    
+   <span class="kt">char</span> <span class="o">**</span><span class="n">h_addr_list</span>
+	
+<span class="c1">// define h_addr  h_addr_list[0]
+</span><span class="p">};</span>
+</code></pre>
+</div>
+<p>Contient des informations sur l’hôte</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">h_name</td>
+      <td style="text-align: center">url</td>
+      <td style="text-align: center">nom de domaine de l’hôte</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_aliases</td>
+      <td style="text-align: center">TI</td>
+      <td style="text-align: center">liste d’alias de l’hôte</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_addrtype</td>
+      <td style="text-align: center">AF_INET</td>
+      <td style="text-align: center">représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_lenght</td>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">longeur de l’ip (byte). 4 pour IP</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_addr_list</td>
+      <td style="text-align: center">in_addr</td>
+      <td style="text-align: center">liste de pointeurs (pour le protocol IP)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>note: h_addr est définis comme étant h_addr_list[0] pour assurer une retro compatibilité</em></p>
+
+<h3 id="servent">servent</h3>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="p">{</span>
+   <span class="kt">char</span>   <span class="o">*</span><span class="n">s_name</span><span class="p">;</span> 
+   <span class="kt">char</span>  <span class="o">**</span><span class="n">s_aliases</span><span class="p">;</span> 
+   <span class="kt">int</span>     <span class="n">s_port</span><span class="p">;</span>  
+   <span class="kt">char</span>   <span class="o">*</span><span class="n">s_proto</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Contient des informations sur les service et les ports associés</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">s_name</td>
+      <td style="text-align: center">http</td>
+      <td style="text-align: center">nom officiel du serveur. (SMTP, FTP, POP3,…)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">s_aliases</td>
+      <td style="text-align: center">ALIAS</td>
+      <td style="text-align: center">liste d’alias du service. Le plus souvent sera set à NULL</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">s_port</td>
+      <td style="text-align: center">80</td>
+      <td style="text-align: center">numéro de port associé (ex. Si HTTP =&gt; 80)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">s_proto</td>
+      <td style="text-align: center">TCP<br />UDP</td>
+      <td style="text-align: center">protocole utilisé</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="conseils-dutilisation">Conseils d’utilisation</h3>
+
+<ul>
+  <li>
+    <p>Ces structures sont au coeur de la programmation réseau. Nous les initialisons, remplissons et leurs passons des pointeurs qui pointent vers diverses fonctions de sockets. Parfois nous passons un pointeur à l’une de ces structure ce qui à pour effet de compléter les données de la structure.</p>
+  </li>
+  <li>
+    <p>Toujours passer ces structures par référence (pointeur) accompagné de la taill de cette dernière.</p>
+  </li>
+  <li>
+    <p>Quand une fonction socket remplit une de ces structures, nous passons également la longueure de la strucure par référence pour que sa valeur puisse être modifié par la fonction.</p>
+  </li>
+</ul>
+
+<h2 id="6-ports-et-services-fonctions">6. Ports et services (fonctions)</h2>
+<p>Unix nous fournit les fonctions suivantes pour fetch un nom de service du répertoire /etc/services</p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="o">*</span><span class="n">getservbyname</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">proto</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>Cet appel prend le nom du service et le nom du protocole et retourne le <strong>numéro de port</strong> correspondant au service.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="o">*</span><span class="n">getservbyport</span><span class="p">(</span><span class="kt">int</span> <span class="n">port</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">proto</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>Cet appel prend le port et le nom du protocole et retourne le <strong>nom</strong> du service correspondant.</p>
+
+<p>La valeur de retour des deux fonctions est un ponteur sur la structure <code class="highlighter-rouge">servent</code> vue un peu plus haut.</p>
+
+<h2 id="7-ordre-des-bytes-représentation-des-bytes-en-mémoire">7. Ordre des bytes (représentation des bytes en mémoire)</h2>
+
+<h3 id="endiannes">endiannes</h3>
+
+<blockquote>
+  <p>Ordre dans lequel les octets sont organisés dans une case mémoire <strong>ou dans une communication</strong>. Big endian et Little endian sont deux architectures différentes.</p>
+</blockquote>
+
+<h4 id="big-endian">Big endian</h4>
+<p><strong>byte de poids fort</strong> à gauche.<br />
+Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">adr:</th>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>val:</strong></td>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 2 byte:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span style="color:#F92672"><strong>Tous les protocoles TCP/IP communiquent en big-endian</strong></span></p>
+
+<h4 id="little-endian">Little endian</h4>
+<p><strong>byte de poid faible</strong> à gauche. <br />
+Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 1 byte</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">adr:</th>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>val:</strong></td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Rangement en mémoire de la valeur <code class="highlighter-rouge">0xA0B70708</code> dans une structure mémoire de cases de 2 byte:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">0</th>
+      <th style="text-align: center">1</th>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">2</th>
+      <th style="text-align: center">3</th>
+      <th style="text-align: center"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">07</td>
+      <td style="text-align: center">08</td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center">A0</td>
+      <td style="text-align: center">B7</td>
+      <td style="text-align: center">…</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span style="color:#F92672"><strong>X86 fonctionne en Little endian</strong></span></p>
+
+<h3 id="fonctions-pour-changer-lordre-des-bytes">Fonctions pour changer l’ordre des bytes</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">htons()</td>
+      <td style="text-align: center">host to Network Short</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">htonl()</td>
+      <td style="text-align: center">host to Network Long</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">ntohl()</td>
+      <td style="text-align: center">Network to Host Long</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">ntohs()</td>
+      <td style="text-align: center">Network to Host Short</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">htons</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">hostshort</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>Cette fonction converti 16-bit (2-byte) de <strong>host byte order</strong> vers network byte order.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">htonl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">hostlong</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>Cette fonction converti 32-bit (4-byte) de <strong>host byte order</strong> vers network byte order.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ntohs</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">netshort</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>Cette fonction converti 16-bit (2-byte) de network byte order vers <strong>host byte order</strong>.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ntohl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">netlong</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>Cette fonction converti 32-bit de network byte order vers <strong>host byte order</strong>.</p>
+
+<h3 id="fonction-pour-déterminter-lendiannes-dune-machine">Fonction pour déterminter l’endiannes d’une machine</h3>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="k">union</span> <span class="p">{</span>
+      <span class="kt">short</span> <span class="n">s</span><span class="p">;</span>
+      <span class="kt">char</span> <span class="n">c</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">short</span><span class="p">)];</span>
+   <span class="p">}</span><span class="n">un</span><span class="p">;</span>
+	
+   <span class="n">un</span><span class="p">.</span><span class="n">s</span> <span class="o">=</span> <span class="mh">0x0102</span><span class="p">;</span>
+   
+   <span class="k">if</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">short</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">un</span><span class="p">.</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">un</span><span class="p">.</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"big-endian</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">un</span><span class="p">.</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">un</span><span class="p">.</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"little-endian</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      
+      <span class="k">else</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"unknown</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="k">else</span> <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"sizeof(short) = %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">short</span><span class="p">));</span>
+   <span class="p">}</span>
+	
+   <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>output sur ma machine (core I7)</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$&gt; </span>gcc byteorder.c
+<span class="gp">$&gt; </span>./a.out
+little-endian
+<span class="nv">$&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="8-fonctions-pour-manipuler-les-adresses-ip">8. Fonctions pour manipuler les adresses IP</h2>
+
+<p>Ces fonctions convertissent des IP entre le format ASCII string (lecture par un humain) et le format Network Byte Order (valeurs binaires contenues dans les structures vues plus haut).</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">inet_aton</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strptr</span><span class="p">,</span> <span class="k">struct</span> <span class="n">in_addr</span> <span class="o">*</span><span class="n">addrptr</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>Converti la string spécifiée (au format <em>Internet standard dot notation</em>) en format Network Adress</li>
+  <li>Range l’adresse dans la structure spécifiée.</li>
+  <li>Le format de l’adresse convertie est Network Bye Order (bytes de gauches à droite).</li>
+  <li>Retourne 1 si la string était valide et 0 si une erreur survient.</li>
+</ul>
+
+<p><strong>Exemple d’utilisation:</strong></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;arpa/inet.h&gt;
+</span><span class="p">(...)</span>
+
+   <span class="kt">int</span> <span class="n">retval</span><span class="p">;</span>
+   <span class="k">struct</span> <span class="n">in_addr</span> <span class="n">addrptr</span>
+   
+   <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">addrptr</span><span class="p">,</span> <span class="sc">'\0'</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">addrptr</span><span class="p">));</span>
+   <span class="n">retval</span> <span class="o">=</span> <span class="n">inet_aton</span><span class="p">(</span><span class="s">"68.178.157.132"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">addrptr</span><span class="p">);</span>
+
+<span class="p">(...)</span>
+</code></pre>
+</div>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">in_addr_t</span> <span class="n">inet_addr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strptr</span><span class="p">)</span>
+</code></pre>
+</div>
+<ul>
+  <li>Converti la string spécifiée (au format <em>Internet standard dot notation</em>) en format entier <code class="highlighter-rouge">int</code> modifié</li>
+  <li>Le format de l’adresse convertie est Network Bye Order (bytes de gauches à droite).</li>
+  <li>Retourne une adresse IPv4 au format binaire sur 32 bits et une erreur de type INADDR_NONE</li>
+</ul>
+
+<p><strong>Exemple d’utilisation:</strong></p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;arpa/inet.h&gt;
+</span>
+<span class="p">(...)</span>
+
+   <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">dest</span><span class="p">;</span>
+
+   <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">dest</span><span class="p">,</span> <span class="sc">'\0'</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">dest</span><span class="p">));</span>
+   <span class="n">dest</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">inet_addr</span><span class="p">(</span><span class="s">"68.178.157.132"</span><span class="p">);</span>
+   
+<span class="p">(...)</span>
+</code></pre>
+</div>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">inet_ntoa</span><span class="p">(</span><span class="k">struct</span> <span class="n">in_addr</span> <span class="n">inaddr</span><span class="p">)</span>
+</code></pre>
+</div>
+<ul>
+  <li>Converti l’adresse de l’hôte spécifié en une string dans le format <em>Internet standard dot notation</em>.</li>
+</ul>
+
+<h2 id="fonctions-principales">Fonctions principales</h2>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Reseau: Programmation sockets (théorie)@&amp;url=http://localhost:4000/reseau/reseau-prog-sock-theorie.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-prog-sock-theorie.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-prog-sock-theorie.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Reseau: programmation de sockets (fr)"
-subtitle: "en c et C++"
+title: "Reseau: Programmation sockets (tuto)"
+subtitle: "tuto pratique"
 date: 2017-05-24
 author: Sol
 category: Reseau
