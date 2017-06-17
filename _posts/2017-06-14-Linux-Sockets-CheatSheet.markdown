@@ -10,8 +10,9 @@ finished: false
 ---
 
 ## todo
-* struct addrinfo  
-[Session Hijacking](http://www.tenouk.com/Module43b.html)  
+* [woot](http://www.spi.ens.fr/beig/systeme/sockets.html) (fr)
+* [struct addrinfo](https://stackoverflow.com/questions/23401147/what-is-the-difference-between-struct-addrinfo-and-struct-sockaddr)
+* à lire: [Session Hijacking](http://www.tenouk.com/Module43b.html)  
 
 ## 1. Interaction client serveur
 <img src="/00illustrations/socket2/diag1.png" height="auto">
@@ -302,3 +303,22 @@ Contient des informations sur les service et les ports associés
 | s_proto | TCP<br>UDP | protocole utilisé |  
 
 
+
+## 8. divers
+
+### strcmp
+
+```c
+int strcmp(const char *str1, const char *str2)
+```
+
+**Parameters**:
+
+* str1 -- This is the first string to be compared.
+* str2 -- This is the second string to be compared.
+
+**Return Value**:
+
+* if Return value < 0 then it indicates str1 is less than str2.
+* if Return value > 0 then it indicates str2 is less than str1.
+* if Return value = 0 then it indicates str1 is equal to str2.
