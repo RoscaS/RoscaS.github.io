@@ -6,7 +6,7 @@ date: 2017-06-14
 author: Sol
 category: Reseau
 tags: reseau sockets smtp tcp udp c fr
-finished: false
+finished: true
 ---
 ## liens
 [repo](https://github.com/RoscaS/c_client_SMTP)
@@ -519,7 +519,7 @@ Voici également une capture d’un track du process clientSMTP qui nous montre 
 
 <a href="/00illustrations/SMTP/PIDenfant.png"><img src="/00illustrations/SMTP/PIDenfant.png" height="auto"></a>
 
-### 3. erreur 5xx 
+### 4. erreur 5xx 
 
 ```
 sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ./clientSMTP3 sol.rosca@gmail test mail.txt aspmx.l.google.com test@testt.ch
