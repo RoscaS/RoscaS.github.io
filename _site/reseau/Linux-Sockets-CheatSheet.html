@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/reseau/Linux-Sockets-CheatSheet.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reseau: Linux socket cheatSheet</title>
+  <meta name="description" content="todo  woot (fr)  struct addrinfo  à lire: Session Hijacking">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Reseau: Linux socket cheatSheet</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="14 Jun 2017" itemprop="datePublished">Jun 14 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">sockets</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">smtp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tcp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">udp</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">c</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Linux, langage C</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="todo">todo</h2>
+<ul>
+  <li><a href="http://www.spi.ens.fr/beig/systeme/sockets.html">woot</a> (fr)</li>
+  <li><a href="https://stackoverflow.com/questions/23401147/what-is-the-difference-between-struct-addrinfo-and-struct-sockaddr">struct addrinfo</a></li>
+  <li>à lire: <a href="http://www.tenouk.com/Module43b.html">Session Hijacking</a></li>
+</ul>
+
+<h2 id="1-interaction-client-serveur">1. Interaction client serveur</h2>
+<p><img src="/00illustrations/socket2/diag1.png" height="auto" /></p>
+
+<h2 id="2-port-and-service-functions">2. Port and Service Functions</h2>
+<p>Unix provides the following functions to fetch service name from the /etc/services file.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="o">*</span><span class="n">getservbyname</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">proto</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>This call takes a service name and a protocol name and returns the corresponding port number for that service.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="o">*</span><span class="n">getservbyport</span><span class="p">(</span><span class="kt">int</span> <span class="n">port</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">proto</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>This call takes a port number and a protocol name and returns the corresponding service name.</p>
+
+<h2 id="3-byte-ordering-functions">3. Byte Ordering Functions</h2>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">htons</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">hostshort</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This function converts 16-bit (2-byte) quantities from host byte order to network byte order.</p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">htonl</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">hostlong</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This function converts 32-bit (4-byte) quantities from host byte order to network byte order.</p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ntohs</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">netshort</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This function converts 16-bit (2-byte) quantities from network byte order to host byte order.</p>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ntohl</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">netlong</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This function converts 32-bit quantities from network byte order to host byte order.</p>
+
+<h2 id="4-ip-address-functions">4. IP Address Functions</h2>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">inet_aton</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strptr</span><span class="p">,</span> <span class="k">struct</span> <span class="n">in_addr</span> <span class="o">*</span><span class="n">addrptr</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This function call converts the specified string,in the Internet standard dot notation, to a network address, and stores the address in the structure provided. The converted address will be in Network Byte Order (bytes ordered from left to right). It returns 1 if the string is valid and 0 on error.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="n">in_addr_t</span> <span class="n">inet_addr</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strptr</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>This function call converts the specified string, in the Internet standard dot notation, to an integer value suitable for use as an Internet address. The converted address will be in Network Byte Order (bytes ordered from left to right). It returns a 32-bit binary network byte ordered IPv4 address and INADDR_NONE on error.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">inet_ntoa</span> <span class="p">(</span><span class="k">struct</span> <span class="n">in_addr</span> <span class="n">inaddr</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>This function call converts the specified Internet host address to a string in the Internet standard dot notation.</p>
+
+<h2 id="5-socket-core-functions">5. Socket Core Functions</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">socket</span> <span class="p">(</span><span class="kt">int</span> <span class="n">family</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocol</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This call returns a socket descriptor that you can use in later system calls or it gives you -1 on error.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">connect</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">serv_addr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">addrlen</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The connect function is used by a TCP client to establish a connection with a TCP server. This call returns 0 if it successfully connects to the server, otherwise it returns -1.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">bind</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">my_addr</span><span class="p">,</span><span class="kt">int</span> <span class="n">addrlen</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The bind function assigns a local protocol address to a socket. This call returns 0 if it successfully binds to the address, otherwise it returns -1.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">listen</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">backlog</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The listen function is called only by a TCP server to listen for the client request. This call returns 0 on success, otherwise it returns -1.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">accept</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">cliaddr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="o">*</span><span class="n">addrlen</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The accept function is called by a TCP server to accept client requests and to establish actual connection. This call returns a non-negative descriptor on success, otherwise it returns -1.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">send</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The send function is used to send data over stream sockets or CONNECTED datagram sockets. This call returns the number of bytes sent out, otherwise it returns -1.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">recv</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The recv function is used to receive data over stream sockets or CONNECTED datagram sockets. This call returns the number of bytes read into the buffer, otherwise it returns -1 on error.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">sendto</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">tolen</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The sendto function is used to send data over UNCONNECTED datagram sockets. This call returns the number of bytes sent, otherwise it returns -1 on error.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">recvfrom</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">flags</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">fromlen</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The recvfrom function is used to receive data from UNCONNECTED datagram sockets. This call returns the number of bytes read into the buffer, otherwise it returns -1 on error.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">close</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The close function is used to close a communication between the client and the server. This call returns 0 on success, otherwise it returns -1.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">shutdown</span> <span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">how</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The shutdown function is used to gracefully close a communication between the client and the server. This function gives more control in comparison to close function. It returns 0 on success, -1 otherwise.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">select</span> <span class="p">(</span><span class="kt">int</span> <span class="n">nfds</span><span class="p">,</span> <span class="n">fd_set</span> <span class="o">*</span><span class="n">readfds</span><span class="p">,</span> <span class="n">fd_set</span> <span class="o">*</span><span class="n">writefds</span><span class="p">,</span> <span class="n">fd_set</span> <span class="o">*</span><span class="n">errorfds</span><span class="p">,</span> <span class="k">struct</span> <span class="n">timeval</span> <span class="o">*</span><span class="n">timeout</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>This function is used to read or write multiple sockets.</p>
+
+<h2 id="6-socket-helper-functions">6. Socket Helper Functions</h2>
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">write</span> <span class="p">(</span><span class="kt">int</span> <span class="n">fildes</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The write function attempts to write nbyte bytes from the buffer pointed to by buf to the file associated with the open file descriptor, fildes. Upon successful completion, write() returns the number of bytes actually written to the file associated with fildes. This number is never greater than nbyte. Otherwise, -1 is returned.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">read</span> <span class="p">(</span><span class="kt">int</span> <span class="n">fildes</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>The read function attempts to read nbyte bytes from the file associated with the open file descriptor, fildes, into the buffer pointed to by buf. Upon successful completion, write() returns the number of bytes actually written to the file associated with fildes. This number is never greater than nbyte. Otherwise, -1 is returned.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">fork</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> 
+</code></pre>
+</div>
+<p>The fork function creates a new process. The new process, called the child process, will be an exact copy of the calling process (parent process).</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="n">bzero</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>The bzero function places nbyte null bytes in the string s. This function will be used to set all the socket structures with null values.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">bcmp</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">s2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>The bcmp function compares the byte string s1 against the byte string s2. Both the strings are assumed to be nbyte bytes long.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="n">bcopy</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">s2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>The bcopy function copies nbyte bytes from the string s1 to the string s2. Overlapping strings are handled correctly.</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">memset</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nbyte</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>The memset function is also used to set structure variables in the same way as bzero.</p>
+
+<h1 id="7-linux-socket-structures">7. Linux Socket: Structures</h1>
+
+<h2 id="sockaddr">sockaddr</h2>
+<p>Contient des informations sur le socket</p>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr</span> <span class="p">{</span>
+   <span class="kt">unsigned</span> <span class="kt">short</span>   <span class="n">sa_family</span><span class="p">;</span>
+   <span class="kt">char</span>             <span class="n">sa_data</span><span class="p">[</span><span class="mi">14</span><span class="p">];</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Structure d’adresse générique qui sera passé dans la majorité des appels de fonction.</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">sa_family</td>
+      <td style="text-align: center">AF_INET<br />AF_UNIX<br />AF_NS<br />AF_IMPLIK</td>
+      <td style="text-align: center">représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sa_data</td>
+      <td style="text-align: center">Protocol-specific Adress</td>
+      <td style="text-align: center">les 14 bytes de ce champ sont interprété en fonction du type d’adresse.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="sockaddr_in">sockaddr_in</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="p">{</span>
+   <span class="kt">short</span> <span class="kt">int</span>            <span class="n">sin_family</span><span class="p">;</span>
+   <span class="kt">unsigned</span> <span class="kt">short</span> <span class="kt">int</span>   <span class="n">sin_port</span><span class="p">;</span>
+   <span class="k">struct</span> <span class="n">in_addr</span>       <span class="n">sin_addr</span><span class="p">;</span>
+   <span class="kt">unsigned</span> <span class="kt">char</span>        <span class="n">sin_zero</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Permet de référencer (pointer) les divers éléments du socket</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">sa_family</td>
+      <td style="text-align: center">AF_INET<br />AF_UNIX<br />AF_NS<br />AF_IMPLIK</td>
+      <td style="text-align: center">représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sin_port</td>
+      <td style="text-align: center">Service Port</td>
+      <td style="text-align: center">numéro de port sur 16 bits (Network Byte Order)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sin_addr</td>
+      <td style="text-align: center">IP Address</td>
+      <td style="text-align: center">adresse IP sur 32 bits (Network Byte Order)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">sin_zero</td>
+      <td style="text-align: center">ne s’utilise pas/plus</td>
+      <td style="text-align: center">valeur à set sur NULL</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="in_addr">in_addr</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">in_addr</span> <span class="p">{</span>
+   <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">s_addr</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Cette structure est uniquement utilisée dans la structure précédente et contient le netid/hostid sur 32 bits</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">s_addr</td>
+      <td style="text-align: center">service port</td>
+      <td style="text-align: center">adresse IP sur 32 bits (Network Byte Order)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="hostent">hostent</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">hostent</span> <span class="p">{</span>
+   <span class="kt">char</span>  <span class="o">*</span><span class="n">h_name</span><span class="p">;</span> 
+   <span class="kt">char</span> <span class="o">**</span><span class="n">h_aliases</span><span class="p">;</span> 
+   <span class="kt">int</span>    <span class="n">h_addrtype</span><span class="p">;</span>  
+   <span class="kt">int</span>    <span class="n">h_length</span><span class="p">;</span>    
+   <span class="kt">char</span> <span class="o">**</span><span class="n">h_addr_list</span>
+	
+<span class="c1">// define h_addr  h_addr_list[0]
+</span><span class="p">};</span>
+</code></pre>
+</div>
+<p>Contient des informations sur l’hôte</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">h_name</td>
+      <td style="text-align: center">url</td>
+      <td style="text-align: center">nom de domaine de l’hôte</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_aliases</td>
+      <td style="text-align: center">TI</td>
+      <td style="text-align: center">liste d’alias de l’hôte</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_addrtype</td>
+      <td style="text-align: center">AF_INET</td>
+      <td style="text-align: center">représente une famille d’adresses (ipv4/6). On utilise généralement AF_INET (protocole IP)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_lenght</td>
+      <td style="text-align: center">4</td>
+      <td style="text-align: center">longeur de l’ip (byte). 4 pour IP</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">h_addr_list</td>
+      <td style="text-align: center">in_addr</td>
+      <td style="text-align: center">liste de pointeurs (pour le protocol IP)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>note: h_addr est définis comme étant h_addr_list[0] pour assurer une retro compatibilité</em></p>
+
+<h2 id="servent">servent</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">servent</span> <span class="p">{</span>
+   <span class="kt">char</span>   <span class="o">*</span><span class="n">s_name</span><span class="p">;</span> 
+   <span class="kt">char</span>  <span class="o">**</span><span class="n">s_aliases</span><span class="p">;</span> 
+   <span class="kt">int</span>     <span class="n">s_port</span><span class="p">;</span>  
+   <span class="kt">char</span>   <span class="o">*</span><span class="n">s_proto</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+<p>Contient des informations sur les service et les ports associés</p>
+
+<p><strong>description des membres:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">attribut</th>
+      <th style="text-align: center">valeur</th>
+      <th style="text-align: center">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">s_name</td>
+      <td style="text-align: center">http</td>
+      <td style="text-align: center">nom officiel du serveur. (SMTP, FTP, POP3,…)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">s_aliases</td>
+      <td style="text-align: center">ALIAS</td>
+      <td style="text-align: center">liste d’alias du service. Le plus souvent sera set à NULL</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">s_port</td>
+      <td style="text-align: center">80</td>
+      <td style="text-align: center">numéro de port associé (ex. Si HTTP =&gt; 80)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">s_proto</td>
+      <td style="text-align: center">TCP<br />UDP</td>
+      <td style="text-align: center">protocole utilisé</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="8-exemple-fork">8. exemple fork()</h2>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;unistd.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">arc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"--beginning of program</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+	<span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"creating child</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+	<span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span> 
+
+	<span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// child process
+</span>		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+			<span class="c1">// printf("child process: counter = %d\n", ++counter);
+</span>		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// parent process
+</span>		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+			<span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+			<span class="c1">// printf("parent process: counter = %d\n", ++counter);
+</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+				<span class="n">printf</span><span class="p">(</span><span class="s">"Exit parent process... child alone.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+				<span class="n">printf</span><span class="p">(</span><span class="s">"Child will display a message when he is done (21sec).</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+				<span class="n">printf</span><span class="p">(</span><span class="s">"user prompt should be available:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+				<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> 
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="c1">// fork failed
+</span>		<span class="n">printf</span><span class="p">(</span><span class="s">"fork() failed!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">printf</span><span class="p">(</span><span class="s">"--end of child process</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="8-divers">8. divers</h2>
+
+<h3 id="strcmp">strcmp</h3>
+
+<div class="language-c highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">strcmp</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str2</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>Parameters</strong>:</p>
+
+<ul>
+  <li>str1 – This is the first string to be compared.</li>
+  <li>str2 – This is the second string to be compared.</li>
+</ul>
+
+<p><strong>Return Value</strong>:</p>
+
+<ul>
+  <li>if Return value &lt; 0 then it indicates str1 is less than str2.</li>
+  <li>if Return value &gt; 0 then it indicates str2 is less than str1.</li>
+  <li>if Return value = 0 then it indicates str1 is equal to str2.</li>
+</ul>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Reseau: Linux socket cheatSheet@&amp;url=http://localhost:4000/reseau/Linux-Sockets-CheatSheet.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/Linux-Sockets-CheatSheet.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/Linux-Sockets-CheatSheet.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

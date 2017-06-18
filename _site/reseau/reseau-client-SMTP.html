@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Reseau: Client SMTP</title>
-  <meta name="description" content="">
+  <meta name="description" content="liensrepo">
 </head>
 
 
@@ -111,7 +111,545 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
+    <h2 id="liens">liens</h2>
+<p><a href="https://github.com/RoscaS/c_client_SMTP">repo</a></p>
+
+<h2 id="client-smtp">Client smtp</h2>
+
+<h3 id="overview">Overview</h3>
+
+<p>Les fonctions de communication de ce client sont sous la forme d’une <strong>machine d’état</strong> dont voici le diagramme:
+<img src="/00illustrations/SMTP/etat.png" align="middle" height="auto" /></p>
+
+<p>Explications:
+<img src="/00illustrations/SMTP/etats.png" align="middle" height="auto" /></p>
+
+<p>Avant de rentrer dans l’automate, les paramètres rentrés en ligne de commande sont transmis à la fonction <code class="highlighter-rouge">initMD()</code> qui effectue l’initialiasation d’un objet de type <strong>MailData</strong>.  Cet objet nous permet de facilement déplacer les parametres.</p>
+
+<p>L’objet de type <strong>MailData</strong> est transmis à la fonction <code class="highlighter-rouge">machinEtat()</code> qui crée d’abord une connexion (via la fonction <code class="highlighter-rouge">connexion()</code>) au serveur spécifié en paramètre à la ligne de commande avant de rentrer dans la machine d’état. Nos données passent ensuite par plusieurs états qui permettent la détection d’erreurs et le bon fonctionnement d’un envoi d’email. Le passage d’un état à l’autre se fait en fonction du premier chiffre (poids fort) du code erreur renvoyé par le serveur.</p>
+
+<p>Le logiciel est capable de détecter si l’envoie a été <strong>grey-listé</strong>. Si tel est le cas, il va <code class="highlighter-rouge">fork()</code> le process et relancer une instance de la fonction <code class="highlighter-rouge">machinEtat()</code> dans le process enfant pendant que le process parent est terminé. Cette manipulation permet d’entre autres récupérer le prompt après un avertissement. Après 20 minutes le process fils va faire une nouvelle tentative d’envoi de l’email.</p>
+
+<h2 id="compilation">Compilation</h2>
+
+<p>Elle se fait à l’aide d’un simple make dans le folder où se trouve le fichier <code class="highlighter-rouge">.c</code>.</p>
+
+<div class="language-makefile highlighter-rouge"><pre class="highlight"><code><span class="nv">TARGET</span><span class="o">=</span>clientSMTP
+<span class="nv">CFLAGS</span><span class="o">=</span>-Wall -lpthread
+
+<span class="nl">all</span><span class="o">:</span> <span class="nf">$(TARGET)</span>
+
+<span class="nl">clean</span><span class="o">:</span>
+	rm -f <span class="nv">$(TARGET)</span>
+</code></pre>
+</div>
+
+<h2 id="utilisation">Utilisation</h2>
+<p>Il suffit de lancer le client en remplaçant les paramètres par ceux désirés:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>./clientSMTP from subject filePath domainDNS destination <span class="o">[</span>port]
+</code></pre>
+</div>
+
+<h2 id="code-source">Code source:</h2>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;string.h&gt;
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;unistd.h&gt;
+#include&lt;netdb.h&gt;
+</span>
+<span class="cp">#define PORT_SMTP 25 // SMTP: port 25, (587: auth, 465: ssl)
+#define BUFFER_SIZE 1024
+</span>
+<span class="c1">// etats (DECOMMENTER CES LIGNES POUR USAGE !)
+// #define START 0
+// #define HELO 1
+// #define FROM 2
+// #define TO   3
+// #define DATA 4
+// #define SUBJ 5
+// #define BODY 6
+// #define DOT  7
+// #define QUIT 8
+// #define ERROR4 9
+// #define ERROR5 10
+</span>
+<span class="c1">// machineEtat: on/off
+</span><span class="cp">#define OFF 0
+#define ON  1
+</span>
+<span class="c1">// struct parametres
+</span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">MailData</span> <span class="n">MailData</span><span class="p">;</span>
+<span class="k">struct</span> <span class="n">MailData</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">source</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sujet</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filePath</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">domainDns</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">destination</span><span class="p">;</span>
+          <span class="kt">int</span>   <span class="n">portno</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// initialisation des parametres
+</span><span class="kt">void</span> <span class="nf">initMD</span><span class="p">(</span><span class="n">MailData</span> <span class="o">*</span><span class="n">md</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">arg</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">md</span><span class="o">-&gt;</span><span class="n">source</span>      <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+     <span class="n">md</span><span class="o">-&gt;</span><span class="n">sujet</span>       <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+     <span class="n">md</span><span class="o">-&gt;</span><span class="n">filePath</span>    <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+     <span class="n">md</span><span class="o">-&gt;</span><span class="n">domainDns</span>   <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+     <span class="n">md</span><span class="o">-&gt;</span><span class="n">destination</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+
+     <span class="k">if</span><span class="p">(</span><span class="n">arg</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">!=</span><span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">md</span><span class="o">-&gt;</span><span class="n">portno</span>  <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">arg</span><span class="p">[</span><span class="mi">6</span><span class="p">]);</span>
+     <span class="p">}</span>
+     <span class="k">else</span> <span class="p">{</span>
+        <span class="n">md</span><span class="o">-&gt;</span><span class="n">portno</span>  <span class="o">=</span> <span class="n">PORT_SMTP</span><span class="p">;</span>
+     <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// prototypes
+</span><span class="kt">int</span>  <span class="n">machineEtat</span><span class="p">(</span><span class="k">const</span> <span class="n">MailData</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">sleepTime</span><span class="p">);</span>
+<span class="kt">int</span>  <span class="n">connexion</span><span class="p">(</span><span class="k">const</span> <span class="n">MailData</span> <span class="o">*</span><span class="n">md</span><span class="p">);</span>
+<span class="kt">void</span> <span class="n">finConnexion</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">sock</span><span class="p">);</span>
+<span class="kt">void</span> <span class="n">errExit</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">err</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">sock</span><span class="p">);</span>
+
+
+<span class="c1">// =================================================
+// ==========           Main              ========== 
+// =================================================
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//check args
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"ERROR bad-args</span><span class="se">\n</span><span class="s">usage:</span><span class="se">\t</span><span class="s">%s source subject filePath domainDNS destination [port]</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// declaration &amp; initialisation objet MailData
+</span>    <span class="n">MailData</span> <span class="n">md1</span><span class="p">;</span>
+    <span class="n">initMD</span><span class="p">(</span><span class="o">&amp;</span><span class="n">md1</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="c1">// lancement machine d'etat
+</span>    <span class="n">machineEtat</span><span class="p">(</span><span class="o">&amp;</span><span class="n">md1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// ========= End of Main ==========
+</span>
+
+
+<span class="c1">// =================================================
+// ==========           Connexion         ========== 
+// =================================================
+</span>
+<span class="kt">int</span> <span class="nf">connexion</span><span class="p">(</span><span class="k">const</span> <span class="n">MailData</span> <span class="o">*</span><span class="n">md</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// declaration des variables utiles
+</span>    <span class="kt">int</span>                <span class="n">sock</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">servAddr</span><span class="p">;</span>    
+    <span class="k">struct</span> <span class="n">hostent</span>    <span class="o">*</span><span class="n">serv</span><span class="p">;</span>        
+
+    <span class="c1">// creation socket
+</span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: error opening socket"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// initialisation des attributs descripteurs socket
+</span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">serv</span> <span class="o">=</span> <span class="n">gethostbyname</span><span class="p">(</span><span class="n">md</span><span class="o">-&gt;</span><span class="n">domainDns</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: no such host"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">bzero</span><span class="p">(</span> <span class="p">(</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">servAddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">servAddr</span><span class="p">));</span>    
+    <span class="n">servAddr</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+
+    <span class="n">bcopy</span><span class="p">(</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span>  <span class="n">serv</span><span class="o">-&gt;</span><span class="n">h_addr</span><span class="p">,</span> 
+           <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">servAddr</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="p">,</span> 
+                     <span class="n">serv</span><span class="o">-&gt;</span><span class="n">h_length</span><span class="p">);</span>
+
+    <span class="n">servAddr</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="n">md</span><span class="o">-&gt;</span><span class="n">portno</span><span class="p">);</span>
+
+    <span class="c1">// connexion au serveur
+</span>    <span class="k">if</span> <span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> 
+               <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span><span class="o">*</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">servAddr</span><span class="p">,</span> 
+               <span class="k">sizeof</span><span class="p">(</span><span class="n">servAddr</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: error connecting"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Connected to %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">md</span><span class="o">-&gt;</span><span class="n">domainDns</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">sock</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ========= End of connexion ==========
+</span>
+
+<span class="c1">// =================================================
+// ========== connexionFin ==========         
+// =================================================
+</span>
+<span class="kt">void</span> <span class="nf">finConnexion</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">sock</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sock</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Closing connexion...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ========= End of connexionFin ==========
+</span>
+
+<span class="c1">// =================================================
+// ========== machineEtat ==========         
+// =================================================
+</span>
+<span class="kt">int</span> <span class="nf">machineEtat</span><span class="p">(</span><span class="k">const</span> <span class="n">MailData</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sleepTime</span><span class="p">)</span> <span class="p">{</span>
+
+	<span class="n">sleep</span><span class="p">(</span><span class="n">sleepTime</span><span class="p">);</span>
+
+    <span class="kt">int</span>  <span class="n">etat</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">onOff</span><span class="p">,</span> <span class="n">recup</span><span class="p">,</span> <span class="n">pid</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="n">BUFFER_SIZE</span><span class="p">];</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span>   <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="kt">FILE</span> <span class="o">*</span><span class="n">txt</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="n">onOff</span> <span class="o">=</span> <span class="n">ON</span><span class="p">;</span> 
+    <span class="n">etat</span>  <span class="o">=</span> <span class="n">START</span><span class="p">;</span>
+    <span class="n">sock</span>  <span class="o">=</span> <span class="n">connexion</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">f</span> <span class="o">=</span> <span class="n">fdopen</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: can't open socket"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="n">onOff</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">recup</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="k">switch</span><span class="p">(</span><span class="n">etat</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="k">case</span> <span class="n">START</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: START: Initialisation de la communication</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">HELO</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: HELO</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">"HELO host</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">FROM</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: FROM</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">"MAIL FROM: &lt;%s&gt;</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">source</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"MAIL FROM: &lt;%s&gt;</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">source</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">TO</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: TO</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">"RCPT TO: &lt;%s&gt;</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"RCPT TO: &lt;%s&gt;</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">destination</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">DATA</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: DATA</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">"DATA</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">SUBJ</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: SUBJ</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">"Subject: %s</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">sujet</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"Subject: %s</span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">sujet</span><span class="p">);</span>
+                <span class="n">recup</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">BODY</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: BODY</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">txt</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="n">args</span><span class="o">-&gt;</span><span class="n">filePath</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)))</span> <span class="p">{</span>           <span class="c1">// DRY
+</span>                    <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: can't open mail file"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="k">while</span> <span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">txt</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="n">fputs</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span><span class="n">f</span><span class="p">);</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">buffer</span> <span class="p">);</span>
+                <span class="p">}</span>
+                <span class="n">fclose</span><span class="p">(</span><span class="n">txt</span><span class="p">);</span>
+                <span class="n">recup</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">DOT</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: DOT</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">"</span><span class="se">\r\n</span><span class="s">.</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">QUIT</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: QUIT</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s">"QUIT</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">onOff</span> <span class="o">=</span> <span class="n">OFF</span><span class="p">;</span>                                
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">ERROR4</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: ERROR4</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"ERROR %c%c%c: grey-listed</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"forking process...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">onOff</span> <span class="o">=</span> <span class="n">OFF</span><span class="p">;</span>
+
+                <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+
+                <span class="c1">// process enfant
+</span>                <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">"Child process: retrying to send in 20'...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                    <span class="n">machineEtat</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="mi">1200</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// process parent
+</span>                <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">printf</span><span class="p">(</span><span class="s">"Exit parent process..</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                    <span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+                    <span class="n">finConnexion</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+                <span class="p">}</span>
+
+	            <span class="c1">// echec forking
+</span>	            <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: fork failed"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>   
+	            <span class="p">}</span>
+
+                <span class="k">break</span><span class="p">;</span>     
+
+            <span class="k">case</span> <span class="n">ERROR5</span><span class="p">:</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Etat: ERROR5</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"ERROR %c%c%c: final-error</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+                <span class="n">finConnexion</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+                <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"exit...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            
+            <span class="nl">default:</span>
+                <span class="n">errExit</span><span class="p">(</span><span class="s">"ERROR: unknown error"</span><span class="p">,</span> <span class="n">sock</span><span class="p">);</span>       
+        <span class="p">}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">recup</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fgets</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">f</span><span class="p">);</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+
+            
+            <span class="k">if</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'2'</span> <span class="o">||</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'3'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="o">++</span><span class="n">etat</span><span class="p">;</span> 
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'4'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">etat</span> <span class="o">=</span> <span class="n">ERROR4</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'5'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">etat</span> <span class="o">=</span> <span class="n">ERROR5</span><span class="p">;</span>
+            <span class="p">}</span>  
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">etat</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="o">++</span><span class="n">etat</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
     
+    <span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+    <span class="n">finConnexion</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ========= End of machineEtat ==========
+</span>
+
+<span class="c1">// =================================================
+// ========== errExit ==========         
+// =================================================
+</span>
+<span class="kt">void</span> <span class="nf">errExit</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">err</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">sock</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">err</span><span class="p">);</span>
+    <span class="n">finConnexion</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"exit...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ========= End of errExit ==========
+</span>
+</code></pre>
+</div>
+
+<h2 id="tests">Tests</h2>
+
+<h3 id="1-localhost">1. localhost</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ./clientSMTP3 un@deux.com test mail.txt localhost un@trois.com
+Trying localhost
+Connected to localhost
+
+Etat: START
+220 debian.home ESMTP Exim 4.84_2 Sun, 18 Jun 2017 10:32:02 -0500
+
+Etat: HELO
+250 debian.home Hello localhost [127.0.0.1]
+
+Etat: FROM
+MAIL FROM: &lt;un@deux.com&gt;
+250 OK
+
+Etat: TO
+RCPT TO: &lt;un@trois.com&gt;
+250 Accepted
+
+Etat: DATA
+354 Enter message, ending with "." on a line by itself
+
+Etat: SUBJ
+Subject: test
+
+Etat: BODY
+C'est pour ce soir!
+
+
+Etat: DOT
+250 OK id=1dMcBG-000179-FR
+
+Etat: QUIT
+221 debian.home closing connection
+sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ 
+</code></pre>
+</div>
+
+<p><a href="/00illustrations/SMTP/wiresharkLocalHost.png"><img src="/00illustrations/SMTP/wiresharkLocalHost.png" height="auto" /></a></p>
+
+<h3 id="2-serveur-mail-réel">2. serveur mail réel</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ./clientSMTP3 sol.rosca@he-arc.ch test mail.txt smtprel.he-arc.ch steven.jeanneret@outlook.com 
+Trying smtprel.he-arc.ch
+Connected to smtprel.he-arc.ch
+
+Etat: START
+220 ***************************************************
+
+Etat: HELO
+250 srv-smtpapp1.he-arc.ch
+
+Etat: FROM
+MAIL FROM: &lt;sol.rosca@he-arc.ch&gt;
+250 2.1.0 Ok
+
+Etat: TO
+RCPT TO: &lt;steven.jeanneret@outlook.com&gt;
+250 2.1.5 Ok
+
+Etat: DATA
+354 End data with &lt;CR&gt;&lt;LF&gt;.&lt;CR&gt;&lt;LF&gt;
+
+Etat: SUBJ
+Subject: test
+
+Etat: BODY
+C'est pour ce soir!
+
+
+Etat: DOT
+250 2.0.0 Ok: queued as 1F45B60DC2
+
+Etat: QUIT
+221 2.0.0 Bye
+sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ 
+</code></pre>
+</div>
+
+<p><a href="/00illustrations/SMTP/wiresharkSMTPREL.png"><img src="/00illustrations/SMTP/wiresharkSMTPREL.png" height="auto" /></a></p>
+
+<p>Ici, nous testons donc avec un serveur fonctionnel. Voici une copie d’écran du mail reçu</p>
+
+<p><a href="/00illustrations/SMTP/SMTPREL-Steven.jpg"><img src="/00illustrations/SMTP/SMTPREL-Steven.jpg" height="auto" align="middle" /></a></p>
+
+<h3 id="3-erreur-4xx-et-fork">3. Erreur 4xx et fork()</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ./clientSMTP3 nathan.latino@he-arc.ch test mail.txt smtp.alphanet.ch schaefer@alphanet.ch
+Trying smtp.alphanet.ch
+Connected to smtp.alphanet.ch
+
+Etat: START
+220 shakotay.alphanet.ch ESMTP Postfix (Debian/GNU)
+
+Etat: HELO
+250 shakotay.alphanet.ch
+
+Etat: FROM
+MAIL FROM: &lt;nathan.latino@he-arc.ch&gt;
+250 2.1.0 Ok
+
+Etat: TO
+RCPT TO: &lt;schaefer@alphanet.ch&gt;
+450 4.2.0 &lt;schaefer@alphanet.ch&gt;: Recipient address rejected: Greylisted, see http://postgrey.schweikert.ch/help/alphanet.ch.html
+
+Etat: ERROR4
+ERROR 450: grey-listed
+Forking process...
+Exit parent process..
+Child process: retrying to send in 20'...
+sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ls
+total 28
+-rwxr-xr-x 1 sol sol 12008 Jun 18 10:15 clientSMTP3
+-rwxr-xr-x 1 sol sol  6886 Jun 18 10:15 clientSMTP3.c
+-rwxr-xr-x 1 sol sol    20 Jun 18 09:23 mail.txt
+-rwxr-xr-x 1 sol sol    84 Jun 18 09:23 makefile
+sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ Trying smtp.alphanet.ch
+Connected to smtp.alphanet.ch
+
+Etat: START
+220 shakotay.alphanet.ch ESMTP Postfix (Debian/GNU)
+
+Etat: HELO
+250 shakotay.alphanet.ch
+
+Etat: FROM
+MAIL FROM: &lt;nathan.latino@he-arc.ch&gt;
+250 2.1.0 Ok
+
+Etat: TO
+RCPT TO: &lt;schaefer@alphanet.ch&gt;
+450 4.2.0 &lt;schaefer@alphanet.ch&gt;: Recipient address rejected: Greylisted, see http://postgrey.schweikert.ch/help/alphanet.ch.html
+
+Etat: ERROR4
+ERROR 450: grey-listed
+Forking process...
+Exit parent process..
+Child process: retrying to send in 20'...
+</code></pre>
+</div>
+
+<p><a href="/00illustrations/SMTP/wiresharkForkGreyList.png"><img src="/00illustrations/SMTP/wiresharkForkGreyList.png" height="auto" /></a></p>
+
+<p>Si nous observons le timing des différentes entrées, nous voyons qu’elles correspondent au log précédent. Pour faciliter les tests du méchanisme de <code class="highlighter-rouge">fork()</code> le temps de réémission a été réduit à 30 secondes (dans la version finale ce temps à été ajusté à 20 minutes). La partie du milieux ne nous interesse pas, c’est l’activité réseau normale.</p>
+
+<p>Voici également une capture d’un track du process clientSMTP qui nous montre le process parent dans un premier temps et qui laisse sa place au process enfant (2e capture). Dans la pratique, au moment de l’arrêt du process parent, nous récupérons le prompts.</p>
+
+<p><a href="/00illustrations/SMTP/PIDparent.png"><img src="/00illustrations/SMTP/PIDparent.png" height="auto" /></a></p>
+
+<p><a href="/00illustrations/SMTP/PIDenfant.png"><img src="/00illustrations/SMTP/PIDenfant.png" height="auto" /></a></p>
+
+<h3 id="3-erreur-5xx">3. erreur 5xx</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ./clientSMTP3 sol.rosca@gmail test mail.txt aspmx.l.google.com test@testt.ch
+Trying aspmx.l.google.com
+Connected to aspmx.l.google.com
+
+Etat: START
+220 mx.google.com ESMTP h32si6380560edc.376 - gsmtp
+
+Etat: HELO
+250 mx.google.com at your service
+
+Etat: FROM
+MAIL FROM: &lt;sol.rosca@gmail&gt;
+250 2.1.0 OK h32si6380560edc.376 - gsmtp
+
+Etat: TO
+RCPT TO: &lt;test@testt.ch&gt;
+550-5.1.1 The email account that you tried to reach does not exist. Please try
+
+Etat: ERROR5
+ERROR 550: final error
+exit...
+sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ 
+</code></pre>
+</div>
+
+<p><a href="/00illustrations/SMTP/wiresharkERR5xx.png"><img src="/00illustrations/SMTP/wiresharkERR5xx.png" height="auto" /></a></p>
+
+<p>Pour forcer une erreur de type 5xx, nous avons volontairement entré une adresse de destination invalide pour ce serveur (gmail). 
+Nous pouvons constater que malgré l’erreur, la fermeture de la communication se fait de façon gracieuse.</p>
 
 </div>
 
