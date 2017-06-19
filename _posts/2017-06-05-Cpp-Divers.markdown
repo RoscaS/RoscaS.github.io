@@ -48,3 +48,31 @@ int main()
 * `cout` first have to find the type and then print 
 
 > Additionally `printf()` statements are shorter to write.
+
+
+## Tester la casse d'un char
+
+![img](https://i.stack.imgur.com/vDNf8.gif)
+
+```c++
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main()
+{
+    string s;
+    cin >> s;   
+    for (int i = 0; i < 100; ++i) {
+        if (s[i] <= 90) {
+            s[i] = s[i] + 32;
+        }
+        else {
+            s[i] = s[i] - 32;
+        }
+    }
+    
+    cout << s << endl;
+    return 0;
+}
+```
