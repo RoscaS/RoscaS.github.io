@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/linux/Linux-CheatSeet.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Linux: CheatSheet</title>
+  <meta name="description" content="General">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Linux: CheatSheet</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="19 Jun 2017" itemprop="datePublished">Jun 19 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">Linux</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Commandes utiles</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="general">General</h1>
+
+<ul>
+  <li>installer:<br />
+<code class="highlighter-rouge">sudo dpkg -i *.deb</code></li>
+  <li>dld et installe:<br />
+<code class="highlighter-rouge">apt-get install</code> <em>SoftName</em></li>
+  <li>check if a package is installed:<br />
+<code class="highlighter-rouge">apt-cache policy</code> <em>pkg-name</em></li>
+  <li>download:<br />
+<code class="highlighter-rouge">wget</code> <em>“url”</em></li>
+  <li>switch user:<br />
+<code class="highlighter-rouge">su</code> <em>username</em></li>
+  <li>HD space:<br />
+<code class="highlighter-rouge">df</code></li>
+  <li>pause terminal:<br />
+<code class="highlighter-rouge">sleep</code> <em>seconds</em></li>
+  <li>compile:<br />
+<code class="highlighter-rouge">gcc -Wall file.c -o file</code></li>
+  <li>user:<br />
+<code class="highlighter-rouge">whoami</code></li>
+  <li>fait tout:<br />
+<code class="highlighter-rouge">ipcalc</code> <code class="highlighter-rouge">ip</code> <code class="highlighter-rouge">-s</code> SR1 SR2 SR3</li>
+  <li>vérifie présence de make sur la machine:
+<code class="highlighter-rouge">which</code> <em>make</em></li>
+</ul>
+
+<h1 id="networking">Networking</h1>
+
+<p>Configuration des adresses IP des interfaces via <code class="highlighter-rouge">ifconfig</code>
+chaque interface est identifiée par un nom:</p>
+
+<ul>
+  <li><strong>eth0</strong>     première carte Ethernet</li>
+  <li><strong>eth0:0</strong>   alias de la première carte Ethernet</li>
+  <li><strong>eth0:1</strong>   alias de la seconde carte Ethernet</li>
+  <li><strong>lo:</strong>      loopback ou interface de bouclage</li>
+</ul>
+
+<h2 id="fourre-tout">fourre tout</h2>
+
+<ul>
+  <li>ICMP echo:<br />
+<code class="highlighter-rouge">ping</code></li>
+  <li>traceroute (/usr/sbin):<br />
+<code class="highlighter-rouge">traceroute</code></li>
+  <li>super traceroute:<br />
+<code class="highlighter-rouge">mtr</code></li>
+  <li>sniffer:<br />
+<code class="highlighter-rouge">tcpdump -i eth0</code> <code class="highlighter-rouge">protocol</code></li>
+  <li>infos sur l’ip:<br />
+<code class="highlighter-rouge">whois</code> <code class="highlighter-rouge">url/ip</code></li>
+  <li>check ARP cache:<br />
+<code class="highlighter-rouge">arp</code></li>
+  <li>flush entry found:<br />
+<code class="highlighter-rouge">arp -d</code></li>
+  <li>better tool to clear arp:<br />
+<code class="highlighter-rouge">ip (-s) (-s) neigh flush all</code></li>
+</ul>
+
+<h2 id="ifconfig">ifconfig</h2>
+
+<ul>
+  <li>Liste des interfaces réseau configurées:<br />
+<code class="highlighter-rouge">ifconfig</code></li>
+  <li>Configurer une interface réseau:<br />
+<code class="highlighter-rouge">ifconfig ethX</code> <em>ip</em> <code class="highlighter-rouge">netmask</code> <em>msk</em> <code class="highlighter-rouge">up</code></li>
+  <li>fonctionne aussi:<br />
+<code class="highlighter-rouge">ifconfig</code> <code class="highlighter-rouge">ethX</code> <em>CIDR</em> <code class="highlighter-rouge">up</code></li>
+  <li>ajouter carte reseau:<br />
+<code class="highlighter-rouge">ifconfig</code> <code class="highlighter-rouge">eth0:0</code> <em>ip</em> <code class="highlighter-rouge">netmask</code> <em>msk</em></li>
+</ul>
+
+<h2 id="route">route</h2>
+<ul>
+  <li>affiche table de routage:<br />
+<code class="highlighter-rouge">route</code> <code class="highlighter-rouge">-n</code></li>
+  <li>ajoute route (dev est utile pour les routeurs?):<br />
+<code class="highlighter-rouge">route</code> <code class="highlighter-rouge">add</code> <code class="highlighter-rouge">-net</code> <em>ip</em> <code class="highlighter-rouge">netmask</code> <em>msk</em> <code class="highlighter-rouge">gw</code> <em>routeur</em> <code class="highlighter-rouge">[dev ethX]</code></li>
+  <li>supprime route:<br />
+<code class="highlighter-rouge">route</code> <code class="highlighter-rouge">del</code> <code class="highlighter-rouge">-net</code> <em>ip</em> <code class="highlighter-rouge">netmask</code> <em>msk</em> <code class="highlighter-rouge">gw</code> <em>routeur</em> <code class="highlighter-rouge">[dev ethX]</code></li>
+  <li>supprime route: (par defau)<br />
+<code class="highlighter-rouge">route</code> <code class="highlighter-rouge">del</code> <code class="highlighter-rouge">-net</code> 0.0.0.0/24</li>
+  <li>ajoute default gw:<br />
+<code class="highlighter-rouge">route</code> <code class="highlighter-rouge">add</code> <code class="highlighter-rouge">default gw</code> <em>ip_gw</em> <code class="highlighter-rouge">netmask</code> <em>msk</em> <code class="highlighter-rouge">[dev ethX]</code></li>
+  <li>ajoute default gw:<br />
+<code class="highlighter-rouge">route</code> <code class="highlighter-rouge">add</code> <code class="highlighter-rouge">default gw</code> <em>ip_gw</em> <strong>SANS MASK</strong></li>
+</ul>
+
+<p>Exemple de route valable: (gw = 192.168.50.2)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.50.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
+0.0.0.0         192.168.50.2    0.0.0.0         UG    0      0        0 eth0
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Modifier le serveur DNS dans <code class="highlighter-rouge">/etc/resolv.conf</code></p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Passerelle</th>
+      <th>Genmask</th>
+      <th>Indic</th>
+      <th>Metric</th>
+      <th>Ref</th>
+      <th>Use</th>
+      <th>Iface</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>139.124.187.4</td>
+      <td>0.0.0.0</td>
+      <td>255.255.255.255</td>
+      <td>UH</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>eth0</td>
+    </tr>
+    <tr>
+      <td>139.124.187.0</td>
+      <td>0.0.0.0</td>
+      <td>255.255.255.0</td>
+      <td>U</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+      <td>eth0</td>
+    </tr>
+    <tr>
+      <td>127.0.0.0</td>
+      <td>0.0.0.0</td>
+      <td>255.0.0.0</td>
+      <td>U</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>lo</td>
+    </tr>
+    <tr>
+      <td>0.0.0.0</td>
+      <td>139.24.87.1</td>
+      <td>0.0.0.0</td>
+      <td>UG</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+      <td>eth0</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li><strong>Indic</strong>: flags, indications sur la route.</li>
+  <li><strong>U</strong>: route est en service (activée).</li>
+  <li><strong>H</strong>: destination est un ordinateur (host). Si pas <strong>h</strong> =&gt; dest = réseau.</li>
+  <li><strong>G</strong>: route pas directe &amp; passerelle est un routeur (gateway).</li>
+  <li><strong>D</strong>: route a été créée par une redirection (message ICMP).</li>
+  <li><strong>M</strong>: route a été modifiée par une redirection (message ICMP).</li>
+  <li><strong>!</strong>: route est rejetée (option reject).</li>
+</ul>
+
+<h2 id="serveur-dhcp">Serveur DHCP</h2>
+
+<h3 id="création-de-serveur">Création de serveur:</h3>
+
+<p>Dans <strong>/etc/dhcp3/dhcpd.conf</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.1.51  192.168.1.99;     
+}
+ddns-update-style none;
+</code></pre>
+</div>
+
+<h3 id="lancer-serveur-dhcp">lancer serveur dhcp:</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>/etc/init.d/dhcpd start
+</code></pre>
+</div>
+
+<h3 id="passage-en-mode-auto">passage en mode auto</h3>
+
+<p>Dans <strong>/etc/network/interfaces</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>auto eth0
+allow-hotplug eth0
+iface eth0 inet dhcp
+</code></pre>
+</div>
+
+<h3 id="divers">divers</h3>
+
+<h4 id="add-nameserver-dns">add nameserver (DNS)</h4>
+
+<p>Dans <strong>/etc/resolv.conf</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>nameserver ipv  (pc1: 192.168.43.1)
+</code></pre>
+</div>
+
+<ul>
+  <li>defini le nom de la machine:
+<code class="highlighter-rouge">hostname</code> nom</li>
+  <li>requete DHCP:
+sudo <code class="highlighter-rouge">dhclient</code> eth0</li>
+  <li>ports:
+<code class="highlighter-rouge">/etc/services</code></li>
+  <li>config ip (Obsolet?):
+<code class="highlighter-rouge">/etc/hosts</code></li>
+</ul>
+
+<h4 id="config-ip-data">config IP data:</h4>
+<p>Dans <strong>/etc/network/interfaces</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>allow-hotplug eth0
+#iface eth0 inet dhcp 
+iface eth0 inet static
+            adress 192.168.0.3
+            netmask 255.255.255.0
+            network 192.168.0.0
+            broadcast 192.168.0.255
+            gw ?
+</code></pre>
+</div>
+
+<h4 id="passage-en-mode-routeur">Passage en mode routeur</h4>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> &gt; /proc/sys/net/ipv4/ip_forward 1
+</code></pre>
+</div>
+
+<h2 id="arp-approfondir">ARP <span style="color:red"><strong>Approfondir!</strong></span></h2>
+<p>/usr/sbin/arp      (si pas dans le path)
+/usr/sbin/arp -n   (si pas dans le path)</p>
+
+<p>-a, -n, -d et -s.</p>
+
+<p>Defaut arp entry ttl</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>cat /proc/sys/net/ipv4/neigh/default/gc_stale_time
+</code></pre>
+</div>
+
+<h2 id="netstat">netstat</h2>
+<p>Utile pour tout ce qui concerne les <strong>sockets</strong> et les <strong>ports</strong></p>
+
+<ul>
+  <li>voir tous les sockets:<br />
+<code class="highlighter-rouge">netstat -an</code></li>
+  <li>sockets ipv4:<br />
+<code class="highlighter-rouge">netstat -an --inet</code></li>
+  <li>sockets ipv6:<br />
+<code class="highlighter-rouge">netstat -an --inet6</code></li>
+  <li>socket en écoute:<br />
+<code class="highlighter-rouge">netstat --inet --listen -NNNN</code></li>
+  <li>socket en écoute:<br />
+<code class="highlighter-rouge">netstat --inet6 --listen -NNNN</code></li>
+  <li>identification du process lié (PID/prgrm name):<br />
+<code class="highlighter-rouge">sudo netstat -p</code></li>
+</ul>
+
+<blockquote>
+  <ul>
+    <li><code class="highlighter-rouge">-a</code> display all sockets</li>
+    <li><code class="highlighter-rouge">-n</code> ne résoud pas les noms</li>
+  </ul>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~$ sudo netstat -p -n --inet --listen 6834
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      453/sshd        
+tcp        0      0 0.0.0.0:12345           0.0.0.0:*               LISTEN      6834/a-tracer   
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      844/exim4       
+udp        0      0 0.0.0.0:59362           0.0.0.0:*                           828/dhclient    
+udp        0      0 0.0.0.0:68              0.0.0.0:*                           828/dhclient    
+udp        0      0 10.0.2.15:123           0.0.0.0:*                           498/ntpd        
+udp        0      0 127.0.0.1:123           0.0.0.0:*                           498/ntpd        
+udp        0      0 0.0.0.0:123             0.0.0.0:*                           498/ntpd  
+</code></pre>
+</div>
+
+<h2 id="strace">strace</h2>
+<p>Traçage des <strong>appels système</strong></p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>strace -e socket,connect ./simple-client localhost 7000
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">-e</code> <strong>expr</strong>: permet de filtrer les résultats. Séparer par une virgule les mot clés.</li>
+</ul>
+
+<h2 id="ltrace">Ltrace</h2>
+<p>Comme <code class="highlighter-rouge">strace</code> mais pour les fonctions de la <strong>LIBC</strong></p>
+
+<blockquote>
+  <p>Penser à utiliser Wireshark!</p>
+</blockquote>
+
+<h2 id="netcat-approfondir">netcat <span style="color:red"><strong>Approfondir!</strong></span></h2>
+<p>Création de serveurs/clients ? (tcp only?)</p>
+
+<ul>
+  <li><code class="highlighter-rouge">nc -l -p</code> <em>port</em>: Création d’un serveur TCP
+    <ul>
+      <li><code class="highlighter-rouge">-l</code> : listen mode des connexions entrantes</li>
+      <li><code class="highlighter-rouge">-p</code> : port local</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="divers-1">Divers</h1>
+
+<h2 id="oneliners">oneLiners</h2>
+
+<ul>
+  <li>entrées uniques:<br />
+<code class="highlighter-rouge">cat log.txt | uniq -u | wc -l</code></li>
+  <li>2 entrées les plus fréquentes:<br />
+<code class="highlighter-rouge">cat log.txt | uniq -c | sort -n | tail -2</code></li>
+  <li>find recursive and move:<br />
+<code class="highlighter-rouge">find ./ -type f -name '*.ttf' -exec mv -i {} ./  \;</code></li>
+</ul>
+
+<h2 id="process">process:</h2>
+<ul>
+  <li>current shell process:<br />
+<code class="highlighter-rouge">ps</code></li>
+  <li>nice display:<br />
+<code class="highlighter-rouge">pstree</code></li>
+  <li>all actifs process:<br />
+<code class="highlighter-rouge">ps -u</code></li>
+  <li>processus actifs + PID current shell:<br />
+<code class="highlighter-rouge">jobs -l</code></li>
+  <li>suspend le process:<br />
+<code class="highlighter-rouge">CTRL + Z</code></li>
+  <li>bring a bg process to fg:<br />
+<code class="highlighter-rouge">fg</code> <em>[PID]</em></li>
+  <li>put process into back ground:<br />
+<code class="highlighter-rouge">bg</code></li>
+  <li>kill processkill:<br />
+<code class="highlighter-rouge">kill</code> <em>pid</em></li>
+  <li>kill signals:<br />
+<code class="highlighter-rouge">kill -l</code></li>
+</ul>
+
+<h2 id="tee">tee</h2>
+
+<ul>
+  <li>
+    <p>Envoie en même temps stdout vers un fichier et vers l’écran:<br />
+<code class="highlighter-rouge">tee [-a] file</code><br />
+  <code class="highlighter-rouge">-a</code>: append [CTRL]+c to exit</p>
+  </li>
+  <li>
+    <p>Lance make et stocke sa sortie dans build.log:
+<code class="highlighter-rouge">make</code> | <code class="highlighter-rouge">tee</code> <em>build.log</em></p>
+  </li>
+</ul>
+
+<p>Lance la commande make install et rajoute sa sortie à la fin du fichier build.log:
+<code class="highlighter-rouge">make</code> <em>install</em> | <code class="highlighter-rouge">tee</code> <code class="highlighter-rouge">-a</code></p>
+
+<h2 id="uniq">uniq:</h2>
+<p><code class="highlighter-rouge">-u</code>:only uniq lines
+<code class="highlighter-rouge">-c</code>:count occurences repetition</p>
+
+<h2 id="sort">sort:</h2>
+<p><code class="highlighter-rouge">-n</code>:numeric sort. bigger -&gt; end
+<code class="highlighter-rouge">-d</code>:alphabetic sort (nie les chifres)
+<code class="highlighter-rouge">-f</code>:ignore la cassecat</p>
+
+<p>##shutdown</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>init 0          <span class="c"># shutdown</span>
+shutdown -h now <span class="c"># shutdown</span>
+-r now          <span class="c"># reboot</span>
+</code></pre>
+</div>
+
+<h2 id="tool-screen">tool screen</h2>
+
+<p><code class="highlighter-rouge">screen</code>:       <em>start</em><br />
+<code class="highlighter-rouge">ctrl</code>-<code class="highlighter-rouge">a</code> <code class="highlighter-rouge">c</code>: <em>create windows</em><br />
+<code class="highlighter-rouge">ctrl</code>-<code class="highlighter-rouge">a</code> <code class="highlighter-rouge">n</code>: <em>switch next</em><br />
+<code class="highlighter-rouge">ctrl</code>-<code class="highlighter-rouge">a</code> <code class="highlighter-rouge">p</code>: <em>switch previous</em></p>
+
+<p>Command key:  ^A   Literal ^A:  a</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>break      ^B b          only       Q
+clear      C             other      ^A
+colon      :             pow_break  B
+copy       ^[ [          pow_detach D
+detach     ^D d          prev       ^P p ^?
+digraph    ^V            readbuf    &amp;amp;amp;amp;lt;
+displays   *             redisplay  ^L l
+fit        F             removebuf  =
+flow       ^F f          reset      Z
+focus      ^I            screen     ^C c
+hardcopy   h             select     '
+help       ?             silence    _
+</code></pre>
+</div>
+
+<h2 id="users">users</h2>
+<ul>
+  <li>add user:  <br />
+<code class="highlighter-rouge">sudo adduser username</code></li>
+  <li>add sudo:<br />
+<code class="highlighter-rouge">sudo usermod -aG sudo username</code></li>
+  <li>delete all from user:	<br />
+<code class="highlighter-rouge">userdel -r username</code></li>
+</ul>
+
+<h2 id="shell-log">shell log</h2>
+
+<p><code class="highlighter-rouge">script</code> <code class="highlighter-rouge">-a</code> <em>my-file</em>       : (myfile is the output file)(proactif)<br />
+<code class="highlighter-rouge">history</code> <code class="highlighter-rouge">&gt;</code> <em>file-name</em>     :(save the session)</p>
+
+<h2 id="tar">Tar</h2>
+
+<p><code class="highlighter-rouge">tar cvf</code> <em>ar­chi­ve</em> <em>fi­chiers ou répert­oir­es</em></p>
+<ul>
+  <li><code class="highlighter-rouge">-c</code>: créer</li>
+  <li><code class="highlighter-rouge">-x</code>: extract</li>
+  <li><code class="highlighter-rouge">v</code> : suit progre­ssion</li>
+  <li><code class="highlighter-rouge">f</code> : fichier</li>
+</ul>
+
+<p>tar -cf nomFichierCompresse.tar fichierAcompresser :compresse</p>
+
+<p>tar -tvf &lt;ar­chi­ve&gt; : affiche le contenu d’une archive ou vérifie son intégrité (t : test)
+tar -xvf &lt;ar­chi­ve&gt; : ext tous les fichiers d’une archive
+tar -xvf &lt;ar­chi­ve&gt; &lt;fi­chiers ou rép.&gt; : ext seulement quelques fichiers d’une archive</p>
+
+<h2 id="rar">rar</h2>
+
+<p><code class="highlighter-rouge">unrar</code> <code class="highlighter-rouge">x</code> <em>Filename.rar</em> : (x = crée Filename et décompresse dedans)</p>
+
+<h2 id="zip">zip</h2>
+
+<ul>
+  <li>Compresser:<br />
+<code class="highlighter-rouge">zip</code> <code class="highlighter-rouge">-r</code> <em>nom_fichier.zip</em> <em>repertoire_ou_ fichier</em></li>
+  <li>decompresser:  <br />
+<code class="highlighter-rouge">unzip</code> <em>nom_fichier.zip</em> <code class="highlighter-rouge">-d</code> <em>destination</em></li>
+</ul>
+
+<h2 id="scripts">scripts:</h2>
+<p>tous les scripts commencent par:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>chmod +x script.sh
+</code></pre>
+</div>
+<p>ou</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>chmod 0755 script.sh
+</code></pre>
+</div>
+<p>launch:
+<code class="highlighter-rouge">./script.sh</code></p>
+
+<h2 id="cut">cut:</h2>
+
+<p>Extract portions of text from a file by selecting column.</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cat test.txt
+</code></pre>
+</div>
+<p><code class="highlighter-rouge">cat</code><code class="highlighter-rouge">:for file oriented operations.
+</code>cp<code class="highlighter-rouge">:for copy files or directories.
+`ls</code> :to list out files and directories with its attributes.</p>
+
+<p><em>select column of char:</em></p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cut -c2 test.txt
+a
+p
+s
+</code></pre>
+</div>
+
+<p><em>using range:</em></p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cut -c1-3 test.txt
+cat
+cp
+ls
+</code></pre>
+</div>
+
+<p><em>start pos:</em></p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cut -c3- test.txt
+</code></pre>
+</div>
+
+<p><em>end pos:</em></p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cut -c-8 test.txt
+cat comm
+cp comma
+ls comma
+</code></pre>
+</div>
+
+<p><em>start-end:</em></p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>cut -c3-8 test.txt 
+t comm
+ comma
+ comma
+</code></pre>
+</div>
+
+<h4 id="cool-stuff">Cool stuff</h4>
+
+<p><code class="highlighter-rouge">-f</code>: FIELD-LIST (Print only the fields listed in FIELD-LIST.)
+<code class="highlighter-rouge">-d</code>: specifies what is the field delimiter</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cat /etc/passwd | tail -5
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+sol:x:1000:1000:sol,,,:/home/sol:/bin/bash
+git:x:1001:1001:,,,:/home/git:/bin/bash
+vde2-net:x:119:130::/var/run/vde2:/bin/false
+uml-net:x:120:131::/home/uml-net:/bin/false
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>cut -d':' -f1 /etc/passwd | tail -5
+hplip
+sol
+git
+vde2-net
+uml-net
+</code></pre>
+</div>
+
+<h2 id="diff-and-patching">diff and patching</h2>
+
+<p><code class="highlighter-rouge">$ diff originalfile updatedfile &gt; patchfile.patch</code><br />
+<code class="highlighter-rouge">$ patch originalfile -i patchfile.patch -o updatedfile</code><br />
+<code class="highlighter-rouge">$ diff -s updatedfile [/path/to/the/original/updatedfile]/updatefile (check)</code><br />
+<code class="highlighter-rouge">$ gcc -Wall updatedfile.c -o updatedfile</code></p>
+
+<h2 id="running-a-command-as-another-local-user">Running a command as another local user</h2>
+
+<p><code class="highlighter-rouge">sudo -u</code> <em>username</em> <em>command</em>: (replace username)</p>
+
+<h2 id="sudo-list">Sudo list:</h2>
+
+<p>The list of users that can execute sudo can be modified
+by running (req root): sudo /usr/sbin/visudo
+The syntax of every sudo line is:</p>
+
+<p>user machine=(effective_user) command</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>user 			: name of the new sudo user
+machine			: host name in which sudo is valid
+effective_user	: stands for the effective users that are 
+				  allowed to execute the commands.
+command			: represents a set of commands that the
+				  can run.
+</code></pre>
+</div>
+
+<h2 id="the-sticky-bit-permission">The sticky bit permission:</h2>
+
+<p>It’s a permission bit that protects the files within a directory. 
+If the directory have the sticky bit set, a file can be deleted
+only by the owner of the file, the owner of the directory or root.</p>
+
+<ul>
+  <li>set the sticky bit:
+<code class="highlighter-rouge">chmod</code> <code class="highlighter-rouge">+t</code> file:</li>
+  <li>unset it:
+<code class="highlighter-rouge">chmod</code> <code class="highlighter-rouge">-t</code> file:</li>
+</ul>
+
+<h2 id="guest-extension">guest extension</h2>
+
+<p><code class="highlighter-rouge">sudo apt-get update</code> <br />
+<code class="highlighter-rouge">sudo apt-get upgrade</code> <br />
+<code class="highlighter-rouge">sudo apt-get install virtualbox-guest-x11</code></p>
+
+<p>##grep:</p>
+
+<p><code class="highlighter-rouge">grep</code> <em>option</em> <em>motif</em> <em>path</em><br />
+Affiche chaque ligne des file contenant le motif. Le motif est une expression régulière</p>
+
+<p><code class="highlighter-rouge">-v</code>: lignes qui ne contie­nnent pas le motif<br />
+<code class="highlighter-rouge">-c</code>: seulement le nombre de lignes<br />
+<code class="highlighter-rouge">-n</code>: numéros des lignes trouvées<br />
+<code class="highlighter-rouge">-i</code>: pas sensible à la casse<br />
+<code class="highlighter-rouge">-r</code>: recursif<br />
+<code class="highlighter-rouge">-E</code>: extended regex</p>
+
+<ul>
+  <li>parcourt les f et affiche les lignes qui corresp au motif:<br />
+<code class="highlighter-rouge">grep</code> <em>mo­tif</em> <em>fi­chi­ers­</em></li>
+  <li>affiche les lignes contenant erreur dans les fichiers *.log:<br />
+<code class="highlighter-rouge">grep</code> <em>erreur</em> *.log</li>
+  <li>idem + osef casse:<br />
+<code class="highlighter-rouge">grep</code> -i erreur *.log</li>
+  <li>idem + récursif:<br />
+<code class="highlighter-rouge">grep</code> <code class="highlighter-rouge">-ri</code> <em>erreur</em></li>
+  <li>affiche toutes les lignes des fichiers sauf celles qui contie­nnent info:<br />
+<code class="highlighter-rouge">grep</code> <code class="highlighter-rouge">-v</code> <em>info</em> *.log</li>
+</ul>
+
+<p>ex:</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>grep -r He-Arc ./
+</code></pre>
+</div>
+
+<h2 id="sed">sed:</h2>
+<p>Voici une petite astuce bien pratique qui permet de changer une chaîne de caractères par une autre, contenue dans un fichier texte. Tout ceci se réalise en une seule ligne de commande, grâce à sed.
+Voici un exemple d’utilisation :</p>
+
+<p><code class="highlighter-rouge">sed -i -e "s/chaines1/chaine2/g"</code> <em>fichier</em></p>
+
+<p>A noter que si la chaîne contient des caractères spéciaux, 
+on devra les échapper avec ‘'. Voici un exemple oû l
+‘on remplace “/home” par “/tmp”:</p>
+
+<p><code class="highlighter-rouge">sed -i -e "s/\/home/\/tmp/g"</code> <em>fichier</em></p>
+
+<p>Si on a besoin de remplacer une chaîne par une autre pour toute 
+une liste de fichiers contenue dans un répertoire, 
+on pourra utiliser ce petit script basé sur le même principe :</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="k">for </span>file <span class="k">in</span> <span class="k">*</span>.txt
+<span class="k">do</span>
+  echo <span class="s2">"Traitement de </span><span class="nv">$file</span><span class="s2"> ..."</span>
+  sed -i -e <span class="s2">"s/chaine1/chaine2/g"</span> <span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span>
+<span class="k">done</span> 
+</code></pre>
+</div>
+
+<p>Ce dernier va :</p>
+<ol>
+  <li>établir la liste de tous les fichiers dont l’extension est .txt</li>
+  <li>puis effectuer le remplacement</li>
+</ol>
+
+<p>Une autre méthode donnée en commentaire qui utilise 
+la commande find et qui permet de traiter des sous-dossier en plus :</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find . -name "*.txt" -type f -exec sed -i "s/chaine1/chaine2/g" {} \;
+</code></pre>
+</div>
+
+<h4 id="find-and-replace-with-sed">FIND AND REPLACE with SED</h4>
+
+<p>Let us start off simple:
+Imagine you have a large file ( txt, php, html, anything ) and you want to 
+replace all the words “ugly” with “beautiful” because you just met your old 
+friend Sue again and she/he is coming over for a visit.</p>
+
+<p>This is the command:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ sed -i 's/ugly/beautiful/g' /home/bruno/old-friends/sue.txt
+</code></pre>
+</div>
+
+<p>Well, that command speaks for itself “sed” edits “-i in place ( on the spot ) 
+and replaces the word “ugly with “beautiful” in the file “/home/bruno/old-friends/sue.txt”</p>
+
+<p>Now, here comes the real magic:
+Imagine you have a whole lot of files in a directory 
+( all about Sue ) and you want the same command to do
+all those files in one go because she/he is standing right 
+at the door . . 
+Remember the find command ? We will combine the two:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ find /home/bruno/old-friends -type f -exec sed -i 's/ugly/beautiful/g' {} \;
+</code></pre>
+</div>
+
+<p>Sure in combination with the find command you can do all 
+kind of nice tricks, even if you don’t remember where 
+the files are located !</p>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Linux: CheatSheet@&amp;url=http://localhost:4000/linux/Linux-CheatSeet.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/linux/Linux-CheatSeet.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/linux/Linux-CheatSeet.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

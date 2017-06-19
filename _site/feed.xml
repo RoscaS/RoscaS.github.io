@@ -6,9 +6,702 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 19 Jun 2017 01:25:43 +0200</pubDate>
-    <lastBuildDate>Mon, 19 Jun 2017 01:25:43 +0200</lastBuildDate>
+    <pubDate>Mon, 19 Jun 2017 04:12:19 +0200</pubDate>
+    <lastBuildDate>Mon, 19 Jun 2017 04:12:19 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Linux: CheatSheet</title>
+        <description>&lt;h1 id=&quot;general&quot;&gt;General&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;installer:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i *.deb&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;dld et installe:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-get install&lt;/code&gt; &lt;em&gt;SoftName&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;check if a package is installed:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-cache policy&lt;/code&gt; &lt;em&gt;pkg-name&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;download:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;wget&lt;/code&gt; &lt;em&gt;“url”&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;switch user:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt; &lt;em&gt;username&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;HD space:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;pause terminal:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sleep&lt;/code&gt; &lt;em&gt;seconds&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;compile:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;gcc -Wall file.c -o file&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;user:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;whoami&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;fait tout:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ipcalc&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-s&lt;/code&gt; SR1 SR2 SR3&lt;/li&gt;
+  &lt;li&gt;vérifie présence de make sur la machine:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;which&lt;/code&gt; &lt;em&gt;make&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;networking&quot;&gt;Networking&lt;/h1&gt;
+
+&lt;p&gt;Configuration des adresses IP des interfaces via &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;
+chaque interface est identifiée par un nom:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;eth0&lt;/strong&gt;     première carte Ethernet&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;eth0:0&lt;/strong&gt;   alias de la première carte Ethernet&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;eth0:1&lt;/strong&gt;   alias de la seconde carte Ethernet&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;lo:&lt;/strong&gt;      loopback ou interface de bouclage&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;fourre-tout&quot;&gt;fourre tout&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ICMP echo:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;traceroute (/usr/sbin):&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;traceroute&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;super traceroute:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;mtr&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sniffer:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;tcpdump -i eth0&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;protocol&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;infos sur l’ip:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;whois&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;url/ip&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;check ARP cache:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;arp&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;flush entry found:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;arp -d&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;better tool to clear arp:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ip (-s) (-s) neigh flush all&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;ifconfig&quot;&gt;ifconfig&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Liste des interfaces réseau configurées:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Configurer une interface réseau:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig ethX&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;up&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;fonctionne aussi:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ethX&lt;/code&gt; &lt;em&gt;CIDR&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;up&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;ajouter carte reseau:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;eth0:0&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;route&quot;&gt;route&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;affiche table de routage:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;ajoute route (dev est utile pour les routeurs?):&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-net&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;gw&lt;/code&gt; &lt;em&gt;routeur&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[dev ethX]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;supprime route:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;del&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-net&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;gw&lt;/code&gt; &lt;em&gt;routeur&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[dev ethX]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;supprime route: (par defau)&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;del&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-net&lt;/code&gt; 0.0.0.0/24&lt;/li&gt;
+  &lt;li&gt;ajoute default gw:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;default gw&lt;/code&gt; &lt;em&gt;ip_gw&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[dev ethX]&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;ajoute default gw:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;default gw&lt;/code&gt; &lt;em&gt;ip_gw&lt;/em&gt; &lt;strong&gt;SANS MASK&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Exemple de route valable: (gw = 192.168.50.2)&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.50.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
+0.0.0.0         192.168.50.2    0.0.0.0         UG    0      0        0 eth0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Modifier le serveur DNS dans &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/resolv.conf&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Destination&lt;/th&gt;
+      &lt;th&gt;Passerelle&lt;/th&gt;
+      &lt;th&gt;Genmask&lt;/th&gt;
+      &lt;th&gt;Indic&lt;/th&gt;
+      &lt;th&gt;Metric&lt;/th&gt;
+      &lt;th&gt;Ref&lt;/th&gt;
+      &lt;th&gt;Use&lt;/th&gt;
+      &lt;th&gt;Iface&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;139.124.187.4&lt;/td&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;255.255.255.255&lt;/td&gt;
+      &lt;td&gt;UH&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;eth0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;139.124.187.0&lt;/td&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;255.255.255.0&lt;/td&gt;
+      &lt;td&gt;U&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;eth0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;127.0.0.0&lt;/td&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;255.0.0.0&lt;/td&gt;
+      &lt;td&gt;U&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;lo&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;139.24.87.1&lt;/td&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;UG&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;eth0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Indic&lt;/strong&gt;: flags, indications sur la route.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;U&lt;/strong&gt;: route est en service (activée).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;H&lt;/strong&gt;: destination est un ordinateur (host). Si pas &lt;strong&gt;h&lt;/strong&gt; =&amp;gt; dest = réseau.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;G&lt;/strong&gt;: route pas directe &amp;amp; passerelle est un routeur (gateway).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;D&lt;/strong&gt;: route a été créée par une redirection (message ICMP).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;M&lt;/strong&gt;: route a été modifiée par une redirection (message ICMP).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;!&lt;/strong&gt;: route est rejetée (option reject).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;serveur-dhcp&quot;&gt;Serveur DHCP&lt;/h2&gt;
+
+&lt;h3 id=&quot;création-de-serveur&quot;&gt;Création de serveur:&lt;/h3&gt;
+
+&lt;p&gt;Dans &lt;strong&gt;/etc/dhcp3/dhcpd.conf&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.1.51  192.168.1.99;     
+}
+ddns-update-style none;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;lancer-serveur-dhcp&quot;&gt;lancer serveur dhcp:&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/etc/init.d/dhcpd start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;passage-en-mode-auto&quot;&gt;passage en mode auto&lt;/h3&gt;
+
+&lt;p&gt;Dans &lt;strong&gt;/etc/network/interfaces&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;auto eth0
+allow-hotplug eth0
+iface eth0 inet dhcp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;divers&quot;&gt;divers&lt;/h3&gt;
+
+&lt;h4 id=&quot;add-nameserver-dns&quot;&gt;add nameserver (DNS)&lt;/h4&gt;
+
+&lt;p&gt;Dans &lt;strong&gt;/etc/resolv.conf&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nameserver ipv  (pc1: 192.168.43.1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;defini le nom de la machine:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;hostname&lt;/code&gt; nom&lt;/li&gt;
+  &lt;li&gt;requete DHCP:
+sudo &lt;code class=&quot;highlighter-rouge&quot;&gt;dhclient&lt;/code&gt; eth0&lt;/li&gt;
+  &lt;li&gt;ports:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/services&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;config ip (Obsolet?):
+&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;config-ip-data&quot;&gt;config IP data:&lt;/h4&gt;
+&lt;p&gt;Dans &lt;strong&gt;/etc/network/interfaces&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;allow-hotplug eth0
+#iface eth0 inet dhcp 
+iface eth0 inet static
+            adress 192.168.0.3
+            netmask 255.255.255.0
+            network 192.168.0.0
+            broadcast 192.168.0.255
+            gw ?
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;passage-en-mode-routeur&quot;&gt;Passage en mode routeur&lt;/h4&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/ip_forward 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;arp-approfondir&quot;&gt;ARP &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Approfondir!&lt;/strong&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;/usr/sbin/arp      (si pas dans le path)
+/usr/sbin/arp -n   (si pas dans le path)&lt;/p&gt;
+
+&lt;p&gt;-a, -n, -d et -s.&lt;/p&gt;
+
+&lt;p&gt;Defaut arp entry ttl&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat /proc/sys/net/ipv4/neigh/default/gc_stale_time
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;netstat&quot;&gt;netstat&lt;/h2&gt;
+&lt;p&gt;Utile pour tout ce qui concerne les &lt;strong&gt;sockets&lt;/strong&gt; et les &lt;strong&gt;ports&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;voir tous les sockets:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -an&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sockets ipv4:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -an --inet&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;sockets ipv6:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -an --inet6&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;socket en écoute:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat --inet --listen -NNNN&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;socket en écoute:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat --inet6 --listen -NNNN&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;identification du process lié (PID/prgrm name):&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo netstat -p&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt; display all sockets&lt;/li&gt;
+    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt; ne résoud pas les noms&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~$ sudo netstat -p -n --inet --listen 6834
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      453/sshd        
+tcp        0      0 0.0.0.0:12345           0.0.0.0:*               LISTEN      6834/a-tracer   
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      844/exim4       
+udp        0      0 0.0.0.0:59362           0.0.0.0:*                           828/dhclient    
+udp        0      0 0.0.0.0:68              0.0.0.0:*                           828/dhclient    
+udp        0      0 10.0.2.15:123           0.0.0.0:*                           498/ntpd        
+udp        0      0 127.0.0.1:123           0.0.0.0:*                           498/ntpd        
+udp        0      0 0.0.0.0:123             0.0.0.0:*                           498/ntpd  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;strace&quot;&gt;strace&lt;/h2&gt;
+&lt;p&gt;Traçage des &lt;strong&gt;appels système&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;strace -e socket,connect ./simple-client localhost 7000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-e&lt;/code&gt; &lt;strong&gt;expr&lt;/strong&gt;: permet de filtrer les résultats. Séparer par une virgule les mot clés.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;ltrace&quot;&gt;Ltrace&lt;/h2&gt;
+&lt;p&gt;Comme &lt;code class=&quot;highlighter-rouge&quot;&gt;strace&lt;/code&gt; mais pour les fonctions de la &lt;strong&gt;LIBC&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Penser à utiliser Wireshark!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;netcat-approfondir&quot;&gt;netcat &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Approfondir!&lt;/strong&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;Création de serveurs/clients ? (tcp only?)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;nc -l -p&lt;/code&gt; &lt;em&gt;port&lt;/em&gt;: Création d’un serveur TCP
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-l&lt;/code&gt; : listen mode des connexions entrantes&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-p&lt;/code&gt; : port local&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;divers-1&quot;&gt;Divers&lt;/h1&gt;
+
+&lt;h2 id=&quot;oneliners&quot;&gt;oneLiners&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;entrées uniques:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cat log.txt | uniq -u | wc -l&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;2 entrées les plus fréquentes:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;cat log.txt | uniq -c | sort -n | tail -2&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;find recursive and move:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -type f -name '*.ttf' -exec mv -i {} ./  \;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;process&quot;&gt;process:&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;current shell process:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ps&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;nice display:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;pstree&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;all actifs process:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ps -u&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;processus actifs + PID current shell:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;jobs -l&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;suspend le process:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL + Z&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;bring a bg process to fg:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;fg&lt;/code&gt; &lt;em&gt;[PID]&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;put process into back ground:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;bg&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;kill processkill:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;kill&lt;/code&gt; &lt;em&gt;pid&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;kill signals:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;kill -l&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;tee&quot;&gt;tee&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Envoie en même temps stdout vers un fichier et vers l’écran:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;tee [-a] file&lt;/code&gt;&lt;br /&gt;
+  &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt;: append [CTRL]+c to exit&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Lance make et stocke sa sortie dans build.log:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt; | &lt;code class=&quot;highlighter-rouge&quot;&gt;tee&lt;/code&gt; &lt;em&gt;build.log&lt;/em&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Lance la commande make install et rajoute sa sortie à la fin du fichier build.log:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt; &lt;em&gt;install&lt;/em&gt; | &lt;code class=&quot;highlighter-rouge&quot;&gt;tee&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;uniq&quot;&gt;uniq:&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-u&lt;/code&gt;:only uniq lines
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt;:count occurences repetition&lt;/p&gt;
+
+&lt;h2 id=&quot;sort&quot;&gt;sort:&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt;:numeric sort. bigger -&amp;gt; end
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt;:alphabetic sort (nie les chifres)
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-f&lt;/code&gt;:ignore la cassecat&lt;/p&gt;
+
+&lt;p&gt;##shutdown&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;init 0          &lt;span class=&quot;c&quot;&gt;# shutdown&lt;/span&gt;
+shutdown -h now &lt;span class=&quot;c&quot;&gt;# shutdown&lt;/span&gt;
+-r now          &lt;span class=&quot;c&quot;&gt;# reboot&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;tool-screen&quot;&gt;tool screen&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;screen&lt;/code&gt;:       &lt;em&gt;start&lt;/em&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt;: &lt;em&gt;create windows&lt;/em&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt;: &lt;em&gt;switch next&lt;/em&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;: &lt;em&gt;switch previous&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Command key:  ^A   Literal ^A:  a&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;break      ^B b          only       Q
+clear      C             other      ^A
+colon      :             pow_break  B
+copy       ^[ [          pow_detach D
+detach     ^D d          prev       ^P p ^?
+digraph    ^V            readbuf    &amp;amp;amp;amp;amp;lt;
+displays   *             redisplay  ^L l
+fit        F             removebuf  =
+flow       ^F f          reset      Z
+focus      ^I            screen     ^C c
+hardcopy   h             select     '
+help       ?             silence    _
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;users&quot;&gt;users&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;add user:  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo adduser username&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;add sudo:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo usermod -aG sudo username&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;delete all from user:	&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;userdel -r username&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;shell-log&quot;&gt;shell log&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt; &lt;em&gt;my-file&lt;/em&gt;       : (myfile is the output file)(proactif)&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;history&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; &lt;em&gt;file-name&lt;/em&gt;     :(save the session)&lt;/p&gt;
+
+&lt;h2 id=&quot;tar&quot;&gt;Tar&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tar cvf&lt;/code&gt; &lt;em&gt;ar­chi­ve&lt;/em&gt; &lt;em&gt;fi­chiers ou répert­oir­es&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt;: créer&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-x&lt;/code&gt;: extract&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt; : suit progre­ssion&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; : fichier&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;tar -cf nomFichierCompresse.tar fichierAcompresser :compresse&lt;/p&gt;
+
+&lt;p&gt;tar -tvf &amp;lt;ar­chi­ve&amp;gt; : affiche le contenu d’une archive ou vérifie son intégrité (t : test)
+tar -xvf &amp;lt;ar­chi­ve&amp;gt; : ext tous les fichiers d’une archive
+tar -xvf &amp;lt;ar­chi­ve&amp;gt; &amp;lt;fi­chiers ou rép.&amp;gt; : ext seulement quelques fichiers d’une archive&lt;/p&gt;
+
+&lt;h2 id=&quot;rar&quot;&gt;rar&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;unrar&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; &lt;em&gt;Filename.rar&lt;/em&gt; : (x = crée Filename et décompresse dedans)&lt;/p&gt;
+
+&lt;h2 id=&quot;zip&quot;&gt;zip&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Compresser:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;zip&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-r&lt;/code&gt; &lt;em&gt;nom_fichier.zip&lt;/em&gt; &lt;em&gt;repertoire_ou_ fichier&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;decompresser:  &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;unzip&lt;/code&gt; &lt;em&gt;nom_fichier.zip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; &lt;em&gt;destination&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;scripts&quot;&gt;scripts:&lt;/h2&gt;
+&lt;p&gt;tous les scripts commencent par:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod +x script.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;ou&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod 0755 script.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;launch:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;./script.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cut&quot;&gt;cut:&lt;/h2&gt;
+
+&lt;p&gt;Extract portions of text from a file by selecting column.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cat test.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:for file oriented operations.
+&lt;/code&gt;cp&lt;code class=&quot;highlighter-rouge&quot;&gt;:for copy files or directories.
+`ls&lt;/code&gt; :to list out files and directories with its attributes.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;select column of char:&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c2 test.txt
+a
+p
+s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;using range:&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c1-3 test.txt
+cat
+cp
+ls
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;start pos:&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c3- test.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;end pos:&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c-8 test.txt
+cat comm
+cp comma
+ls comma
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;start-end:&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c3-8 test.txt 
+t comm
+ comma
+ comma
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;cool-stuff&quot;&gt;Cool stuff&lt;/h4&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-f&lt;/code&gt;: FIELD-LIST (Print only the fields listed in FIELD-LIST.)
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt;: specifies what is the field delimiter&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cat /etc/passwd | tail -5
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+sol:x:1000:1000:sol,,,:/home/sol:/bin/bash
+git:x:1001:1001:,,,:/home/git:/bin/bash
+vde2-net:x:119:130::/var/run/vde2:/bin/false
+uml-net:x:120:131::/home/uml-net:/bin/false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cut -d':' -f1 /etc/passwd | tail -5
+hplip
+sol
+git
+vde2-net
+uml-net
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;diff-and-patching&quot;&gt;diff and patching&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ diff originalfile updatedfile &amp;gt; patchfile.patch&lt;/code&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;$ patch originalfile -i patchfile.patch -o updatedfile&lt;/code&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;$ diff -s updatedfile [/path/to/the/original/updatedfile]/updatefile (check)&lt;/code&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;$ gcc -Wall updatedfile.c -o updatedfile&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;running-a-command-as-another-local-user&quot;&gt;Running a command as another local user&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo -u&lt;/code&gt; &lt;em&gt;username&lt;/em&gt; &lt;em&gt;command&lt;/em&gt;: (replace username)&lt;/p&gt;
+
+&lt;h2 id=&quot;sudo-list&quot;&gt;Sudo list:&lt;/h2&gt;
+
+&lt;p&gt;The list of users that can execute sudo can be modified
+by running (req root): sudo /usr/sbin/visudo
+The syntax of every sudo line is:&lt;/p&gt;
+
+&lt;p&gt;user machine=(effective_user) command&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user 			: name of the new sudo user
+machine			: host name in which sudo is valid
+effective_user	: stands for the effective users that are 
+				  allowed to execute the commands.
+command			: represents a set of commands that the
+				  can run.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;the-sticky-bit-permission&quot;&gt;The sticky bit permission:&lt;/h2&gt;
+
+&lt;p&gt;It’s a permission bit that protects the files within a directory. 
+If the directory have the sticky bit set, a file can be deleted
+only by the owner of the file, the owner of the directory or root.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;set the sticky bit:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;+t&lt;/code&gt; file:&lt;/li&gt;
+  &lt;li&gt;unset it:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-t&lt;/code&gt; file:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;guest-extension&quot;&gt;guest extension&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get update&lt;/code&gt; &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get upgrade&lt;/code&gt; &lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get install virtualbox-guest-x11&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;##grep:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;em&gt;option&lt;/em&gt; &lt;em&gt;motif&lt;/em&gt; &lt;em&gt;path&lt;/em&gt;&lt;br /&gt;
+Affiche chaque ligne des file contenant le motif. Le motif est une expression régulière&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt;: lignes qui ne contie­nnent pas le motif&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt;: seulement le nombre de lignes&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt;: numéros des lignes trouvées&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-i&lt;/code&gt;: pas sensible à la casse&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-r&lt;/code&gt;: recursif&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;-E&lt;/code&gt;: extended regex&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;parcourt les f et affiche les lignes qui corresp au motif:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;em&gt;mo­tif&lt;/em&gt; &lt;em&gt;fi­chi­ers­&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;affiche les lignes contenant erreur dans les fichiers *.log:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;em&gt;erreur&lt;/em&gt; *.log&lt;/li&gt;
+  &lt;li&gt;idem + osef casse:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; -i erreur *.log&lt;/li&gt;
+  &lt;li&gt;idem + récursif:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-ri&lt;/code&gt; &lt;em&gt;erreur&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;affiche toutes les lignes des fichiers sauf celles qui contie­nnent info:&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; &lt;em&gt;info&lt;/em&gt; *.log&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ex:&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;grep -r He-Arc ./
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;sed&quot;&gt;sed:&lt;/h2&gt;
+&lt;p&gt;Voici une petite astuce bien pratique qui permet de changer une chaîne de caractères par une autre, contenue dans un fichier texte. Tout ceci se réalise en une seule ligne de commande, grâce à sed.
+Voici un exemple d’utilisation :&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sed -i -e &quot;s/chaines1/chaine2/g&quot;&lt;/code&gt; &lt;em&gt;fichier&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;A noter que si la chaîne contient des caractères spéciaux, 
+on devra les échapper avec ‘'. Voici un exemple oû l
+‘on remplace “/home” par “/tmp”:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sed -i -e &quot;s/\/home/\/tmp/g&quot;&lt;/code&gt; &lt;em&gt;fichier&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Si on a besoin de remplacer une chaîne par une autre pour toute 
+une liste de fichiers contenue dans un répertoire, 
+on pourra utiliser ce petit script basé sur le même principe :&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;file &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.txt
+&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  echo &lt;span class=&quot;s2&quot;&gt;&quot;Traitement de &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
+  sed -i -e &lt;span class=&quot;s2&quot;&gt;&quot;s/chaine1/chaine2/g&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ce dernier va :&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;établir la liste de tous les fichiers dont l’extension est .txt&lt;/li&gt;
+  &lt;li&gt;puis effectuer le remplacement&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Une autre méthode donnée en commentaire qui utilise 
+la commande find et qui permet de traiter des sous-dossier en plus :&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name &quot;*.txt&quot; -type f -exec sed -i &quot;s/chaine1/chaine2/g&quot; {} \;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;find-and-replace-with-sed&quot;&gt;FIND AND REPLACE with SED&lt;/h4&gt;
+
+&lt;p&gt;Let us start off simple:
+Imagine you have a large file ( txt, php, html, anything ) and you want to 
+replace all the words “ugly” with “beautiful” because you just met your old 
+friend Sue again and she/he is coming over for a visit.&lt;/p&gt;
+
+&lt;p&gt;This is the command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sed -i 's/ugly/beautiful/g' /home/bruno/old-friends/sue.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Well, that command speaks for itself “sed” edits “-i in place ( on the spot ) 
+and replaces the word “ugly with “beautiful” in the file “/home/bruno/old-friends/sue.txt”&lt;/p&gt;
+
+&lt;p&gt;Now, here comes the real magic:
+Imagine you have a whole lot of files in a directory 
+( all about Sue ) and you want the same command to do
+all those files in one go because she/he is standing right 
+at the door . . 
+Remember the find command ? We will combine the two:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ find /home/bruno/old-friends -type f -exec sed -i 's/ugly/beautiful/g' {} \;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Sure in combination with the find command you can do all 
+kind of nice tricks, even if you don’t remember where 
+the files are located !&lt;/p&gt;
+</description>
+        <pubDate>Mon, 19 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/linux/Linux-CheatSeet.html</link>
+        <guid isPermaLink="true">http://localhost:4000/linux/Linux-CheatSeet.html</guid>
+        
+        <category>Linux</category>
+        
+        
+        <category>Linux</category>
+        
+      </item>
     
       <item>
         <title>Reseau: Client SMTP</title>
@@ -520,7 +1213,7 @@ Child process: retrying to send in 20'...
 
 &lt;p&gt;&lt;a href=&quot;/00illustrations/SMTP/PIDenfant.png&quot;&gt;&lt;img src=&quot;/00illustrations/SMTP/PIDenfant.png&quot; height=&quot;auto&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;3-erreur-5xx&quot;&gt;3. erreur 5xx&lt;/h3&gt;
+&lt;h3 id=&quot;4-erreur-5xx&quot;&gt;4. erreur 5xx&lt;/h3&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~/code/clientSMTP/SMTP/clientSMTP$ ./clientSMTP3 sol.rosca@gmail test mail.txt aspmx.l.google.com test@testt.ch
 Trying aspmx.l.google.com
@@ -1823,603 +2516,6 @@ Désolé d'avoir accepté trop vite, j'étais super occupé (je le suis toujours
         
         
         <category>Divers</category>
-        
-      </item>
-    
-      <item>
-        <title>Algo: Recursivité (fr)</title>
-        <description>&lt;h1 id=&quot;récursivité&quot;&gt;Récursivité&lt;/h1&gt;
-
-&lt;h2 id=&quot;sources&quot;&gt;Sources&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://visualgo.net/en/recursion&quot;&gt;visualgo.net&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://www.u-picardie.fr/~furst/docs/3-Recursivite.pdf&quot;&gt;u-picardie&lt;/a&gt;  &lt;em&gt;aller fouiller un peu, ça semble bien !&lt;/em&gt;&lt;br /&gt;
-&lt;a href=&quot;https://fr.wikipedia.org&quot;&gt;wikipedia.org&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;codes&quot;&gt;Codes&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/RoscaS/algo_sort&quot;&gt;Repo&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;résumé&quot;&gt;Résumé&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;/algo/resume-cp2.html&quot;&gt;Résumé cp3&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;definition&quot;&gt;Definition&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Un objet est dit récursif si il se définit à partir de lui-même, &lt;em&gt;si il apparait dans sa définition&lt;/em&gt;.&lt;/li&gt;
-  &lt;li&gt;Une construction est &lt;strong&gt;récursive&lt;/strong&gt; si elle se définit à partir d’elle-même.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;img src=&quot;/00illustrations/algo-recur/sier.png&quot; height=&quot;auto&quot; /&gt;&lt;/p&gt;
-
-  &lt;p&gt;&lt;em&gt;triangle de Sierpinski&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Quelques acronymes récursifs courants:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;PHP, GNU, LAME, WINE, YAML
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;en-informatique&quot;&gt;En informatique&lt;/h2&gt;
-
-&lt;p&gt;En informatique, un programme est dit &lt;strong&gt;récursif&lt;/strong&gt; s’il s’appelle lui même. Il s’agit donc &lt;strong&gt;forcément d’une fonction&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Exemple:&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\large factorielle&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;\large n! = 1 \cdot 2 \cdot \ldots \cdot n \Rightarrow n! = n \cdot (n-1)!&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/00illustrations/algo-recur/facto1-def.png&quot; height=&quot;250&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;L’appel récursif est traité comme n’importe quel appel de fonction.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/00illustrations/algo-recur/facto1.png&quot; height=&quot;700&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;condition-darrêt&quot;&gt;Condition d’arrêt&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Pusqu’une fonction récursive s’appelle elle-même, il est impératif qu’on prévoit une &lt;span style=&quot;color:red&quot;&gt; condition d’arrêt &lt;/span&gt; à la récursion, sinon le programme ne s’arrête jamais !&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;On doit toujours tester en premier la condition d’arrêt&lt;/strong&gt;, et ensuite, si la condition n’est pas vérifiée, lancer un appel récursif.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;em&gt;Exemple de la factorielle:&lt;/em&gt; &lt;span style=&quot;color:red&quot;&gt; &lt;script type=&quot;math/tex&quot;&gt;\large si&lt;/script&gt; &lt;/span&gt; &lt;script type=&quot;math/tex&quot;&gt;\large n \neq 1, \quad n \cdot (n-1)!&lt;/script&gt; &lt;span style=&quot;color:red&quot;&gt; &lt;script type=&quot;math/tex&quot;&gt;\large sinon&lt;/script&gt;&lt;/span&gt;&lt;script type=&quot;math/tex&quot;&gt;\large, \quad n! =1&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/00illustrations/algo-recur/facto2-def.png&quot; height=&quot;250&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;main()&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;/00illustrations/algo-recur/facto2.png&quot; height=&quot;600&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;a href=&quot;https://visualgo.net/en/recursion&quot;&gt;animation&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;pile-dexecution-stack&quot;&gt;Pile d’execution (stack)&lt;/h2&gt;
-
-&lt;p&gt;La récursivité fonctionne car chaque appel de fonction est différent.
-L’appel d’une fonction se fait dans un  &lt;span style=&quot;color:red&quot;&gt; contexte d’execution &lt;/span&gt; propre, qui contient:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;l’adresse mémoire de l’instruction qui a appelé la fonction&lt;/li&gt;
-  &lt;li&gt;les valeurs des paramètres et des variables définies par la fonction&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://goo.gl/QGxNHe&quot;&gt;version interactive&lt;/a&gt;
-&lt;img src=&quot;/00illustrations/algo-recur/facto-py.gif&quot; height=&quot;auto&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Prévoir à l’avance le nombre d’appels d’une fonction récursive pouvant être en cours simultanément en mémoire est &lt;strong&gt;impossible&lt;/strong&gt;. La récursivité suppose donc une &lt;span style=&quot;color:red&quot;&gt; allocation dynamique &lt;/span&gt; de la mémoire (à l’execution).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Attention:&lt;/strong&gt; éxecuter trop d’appels de fonction fera déborder le stack !&lt;/p&gt;
-
-&lt;h2 id=&quot;récursif-vs-itératif&quot;&gt;Récursif VS itératif&lt;/h2&gt;
-
-&lt;p&gt;Il est souvent possible d’écrire un même algorithme en itératif et en récursif.&lt;/p&gt;
-
-&lt;p&gt;L’exécution d’une version récursive d’un algorithme est généralement un peu moins rapide que celle de la version itérative, même si le nombre d’instructions est le même (à cause de la gestion des appels de fonction).&lt;/p&gt;
-
-&lt;!--![/00illustrations/algo-recur/recVSit.png](/00illustrations/algo-recur/recVSit.png)--&gt;
-
-&lt;div class=&quot;image&quot; style=&quot;width: 100%&quot;&gt;
-    &lt;a href=&quot;/00illustrations/algo-recur/recVSit.png&quot;&gt;&lt;img src=&quot;/00illustrations/algo-recur/recVSit.png&quot; /&gt;&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Un algorithme récursif peut conduire à exécuter bien plus d’instructions que la version itérative.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Exemple:&lt;/em&gt; la suite de Fibonacci&lt;/p&gt;
-
-&lt;h3 id=&quot;suite-de-fibbonacci-large-n--45&quot;&gt;Suite de Fibbonacci (&lt;script type=&quot;math/tex&quot;&gt;\large n = 45&lt;/script&gt;)&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Par définition, les deux premiers nombres de la suite de Fibonacci sont 1 et 1 &lt;a href=&quot;https://fr.wikipedia.org/wiki/Suite_de_Fibonacci&quot;&gt;ou&lt;/a&gt; 0 et 1. Nous devons en tenir compte pour l’implémentation.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;récursif&quot;&gt;récursif:&lt;/h4&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-// 1134903170
-// 10.859 seconds
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Temps d’execution: &lt;script type=&quot;math/tex&quot;&gt;\large \color{red}{10.859} \; secondes&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;version plus compacte:&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;     
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fib2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-// 1134903170
-// 10.738 seconds
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Temps d’execution: &lt;script type=&quot;math/tex&quot;&gt;\large \color{red}{10.738} \; secondes&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;version très compacte:&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fib3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-// 1134903170
-// 9.752 seconds
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Temps d’execution: &lt;script type=&quot;math/tex&quot;&gt;\large \color{red}{9.752} \; secondes&lt;/script&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;itératif&quot;&gt;itératif:&lt;/h4&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib_it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;           
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-// 1134903170
-// 0.389 seconds
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Temps d’execution: &lt;script type=&quot;math/tex&quot;&gt;\large \color{green}{0.389} \; secondes&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;Les différences de temps d’éxecution parlent pour elles mêmes et cette animation nous aide à en comprendre la raison:&lt;/p&gt;
-
-&lt;div class=&quot;image&quot; style=&quot;width: 100%&quot;&gt;
-    &lt;a href=&quot;https://visualgo.net/en/recursion&quot;&gt;&lt;img src=&quot;/00illustrations/algo-recur/fibo8.gif&quot; /&gt;&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;récursivité-terminale-et-non-terminale&quot;&gt;Récursivité terminale et non terminale&lt;/h2&gt;
-
-&lt;p&gt;En programmation, on distingue, pour des raisons d’efficacité, 2 types d’algorithmes récursifs.&lt;/p&gt;
-
-&lt;h3 id=&quot;1-récursivité-terminale&quot;&gt;1. récursivité Terminale&lt;/h3&gt;
-
-&lt;p&gt;Un algorithme est terminal si aucune opération ne sui l’appel récursif.
-C’est l’appel récursif qui “termine” l’algorithme.
-Toutes les opération sont faites avant l’appel récursif: La phase de remontée devient alors inutile (elle ne fait aucun traitement, hormis le réajustement de la pile).
-La récursivité terminale revient à appliquer l’adage &lt;em&gt;Diviser pour régner&lt;/em&gt; de la façon suivante:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;On traite la données courante&lt;/li&gt;
-  &lt;li&gt;Le même traitement est appliqué au reste des données&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-récursivité-non--terminale&quot;&gt;2. Récursivité non- terminale&lt;/h3&gt;
-
-&lt;p&gt;Un algorithme récursif est &lt;strong&gt;non-terminal&lt;/strong&gt; lorsque des opérations suivent l’appel récursif. C’est notament le cas lorsque l’appel récursif est utilisé dans une expression pour calculer un résultat. Toutes les opérations ne sont pas faites avant l’appel récursif: la phase de remontée fait une partie du traitement, elle contient souvent la majorité des opérations. La récursivité no-terminale revient à appliquer l’adage &lt;em&gt;diviser pour régner&lt;/em&gt; de la façon suivante:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;On réduit le problème à son cas trivial&lt;/li&gt;
-  &lt;li&gt;On traite le cas et on élargit l’ensemble des données traitées.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;points-cruciaux-pour-la-programmation-récursive&quot;&gt;Points cruciaux pour la programmation récursive&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Avoir une condition terminale&lt;/li&gt;
-  &lt;li&gt;Avoir un appel récursif dont un des paramètres converge vers la condition terminale&lt;/li&gt;
-  &lt;li&gt;S’assurer que la condition est &lt;strong&gt;TOUJOURS&lt;/strong&gt; atteinte après un nombre fini d’appels&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;quand-éviter-dutiliser-un-algorithme-récursif-&quot;&gt;Quand éviter d’utiliser un algorithme récursif ?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Lorsque la récurence est d’ordre plus grande que 1 (c’est à dire que l valeur au rang &lt;script type=&quot;math/tex&quot;&gt;\large n&lt;/script&gt; ne dépend pas seulement du rang &lt;script type=&quot;math/tex&quot;&gt;\large n-1&lt;/script&gt;, mais aussi de &lt;script type=&quot;math/tex&quot;&gt;\large n-2&lt;/script&gt;, voir &lt;script type=&quot;math/tex&quot;&gt;\large n-3&lt;/script&gt;,… )&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Une utilisation “aveugle” de la récursivité impliquera une redondance de calculs. Dans ce cas, il peut être utile de dérouler l’algorithme avant de l’implémenter pour s’assurer qu’il ne génère pas d’opeerations inutiles.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;récursivité-et-itérations&quot;&gt;Récursivité et itérations&lt;/h2&gt;
-
-&lt;p&gt;Tout algorithme récursif a un équivalent itératif. La réciproque est également vraie en théorie, mais le passage de l’un à l’autre n’est pas toujours aisé. La procédure de &lt;strong&gt;derécursivation&lt;/strong&gt; consiste à gérer dans le programme le comportement de la pile lors des appels récursifs.&lt;/p&gt;
-
-&lt;p&gt;En règle générale, un algorithme récursif est moins performant qu’un algorithme itératif : Chaque appel récursif nécessite d’empiler le contexte de la fonction (cadre de pile), puis la condition terminale atteinte, dépiler ce contexte avant d’exécuter les instructions qui suivent l’appel récursif.  La création, le changement et la libération de contextes sont donc des opérations supplémentaires non réalisées par l’équivalent itératif. &lt;strong&gt;Les algorithmes récursifs sont donc moins performants que leurs équivalents itératifs&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Exception à cette règle, la récursivité terminale est détectée par la majorité des compilateurs et comme il n’y pas d’instruction à exécuter après l’appel récursif terminal, la phase de remontée pourra être supprimée. &lt;strong&gt;Dans la plupart des cas, une fonction récursive terminale aura donc la même performance que son équivalente itérative&lt;/strong&gt;. La récursivité sera alors privilégiée, pour sa lisibilité et son élégance.&lt;/p&gt;
-
-&lt;h2 id=&quot;précisions-sur-les-deux-types-de-récursivité-terminalnon-terminal&quot;&gt;Précisions sur les deux types de récursivité (terminal/non terminal)&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Une fonction récursive est dite &lt;span style=&quot;color:red&quot;&gt;terminale&lt;/span&gt; si aucun traitement n’est effectué à la remontée d’ un appel récursif (sauf le retour d’une valeur).&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Une fonction récursive est dite &lt;span style=&quot;color:green&quot;&gt;non terminale&lt;/span&gt; si le résultat de l’appel récursif est utilisé pour réaliser un traitement (en plus du retour d’une valeur).&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Exemple de non terminalité : forme récursive non terminale  de la factorielle, les calculs se font à la remontée. C’est l’exemple au détbut de cette page !&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielleNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;si&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alors&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sinon&lt;/span&gt; 
-        &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factorielleNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;finsi&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fin&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;exemple-de-terminalité-&quot;&gt;Exemple de terminalité :&lt;/h3&gt;
-
-&lt;p&gt;On peut facilement rendre notre fonction factorielle terminale:&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// la fonction doit être appelée en mettant resultat à 1
-&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielleT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;si&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alors&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sinon&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielleT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resultat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;finsi&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fin&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;intérêt-de-la-récursivité-terminale&quot;&gt;Intérêt de la récursivité terminale&lt;/h3&gt;
-
-&lt;p&gt;Une fonction récursive &lt;span style=&quot;color:red&quot;&gt;terminale&lt;/span&gt; est en théorie plus efficace (mais souvent moins facile à écrire) que son équivalent non terminale: il n’y a qu’une phase de descente et pas de phase de remontée.&lt;/p&gt;
-
-&lt;p&gt;En récursivité &lt;span style=&quot;color:green&quot;&gt;terminale&lt;/span&gt; , les appels récursifs n’ont pas besoin d’êtres empilés dans la pile d’exécution car l’appel suivant remplace simplement l’appel précédent dans le contexte d’exécution.&lt;/p&gt;
-
-&lt;p&gt;Certains langages utilisent cette propriété pour exécuter les récursions terminales aussi efficacement que les itérations.&lt;/p&gt;
-
-&lt;p&gt;Il est possible de transformer de façon simple une fonction récursive terminale en une fonction itérative : c’est la &lt;span style=&quot;color:green&quot;&gt;dérécursivation&lt;/span&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;une-fonction-récursive-terminale-a-pour-forme-générale&quot;&gt;Une fonction récursive terminale a pour forme générale:&lt;/h4&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;I0&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;si&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alors&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;I1&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sinon&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;I2&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;finsi&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fin&lt;/span&gt;    
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;T&lt;/strong&gt; est le type de retour&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;P&lt;/strong&gt; est la liste des paramètres&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;C&lt;/strong&gt; est la condition d’arrêt&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;I0&lt;/strong&gt; le bloc d’instructions exécuté dans tous les cas&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;I1&lt;/strong&gt; le bloc d’instructions exécuté si &lt;strong&gt;C&lt;/strong&gt; est vraie&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;I2&lt;/strong&gt; est le bloc d’instructions exécuté si &lt;strong&gt;C&lt;/strong&gt; est fausse&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;f&lt;/strong&gt; la fonction de transformation des paramètres&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;fonction-itérative-correspondante&quot;&gt;Fonction itérative correspondante:&lt;/h4&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iterative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;IO&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;tantque&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;faire&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;I2&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;I0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;fintantque&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;I1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;dérécursivation-de-la-factorielle-terminale&quot;&gt;Dérécursivation de la factorielle terminale:&lt;/h3&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// cette fonction doit être appelée avec a=1
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielleRecurTerm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;si&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alors&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sinon&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;finsi&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fin&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factorielleIter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;entier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;tantque&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;faire&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;–&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;fintantque&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;retourne&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fin&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;forme-générale-dune-fonction-récursive-non-terminale&quot;&gt;Forme générale d’une fonction récursive non terminale:&lt;/h4&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;avec&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;retour&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;debut&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;I0&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;si&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alors&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;I1&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;sinon&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;I2&lt;/span&gt; 
-            &lt;span class=&quot;n&quot;&gt;recursive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;I3&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;finsi&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fin&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;T&lt;/strong&gt; est le type de retour
-&lt;strong&gt;P&lt;/strong&gt; est la liste des paramètres
-&lt;strong&gt;C&lt;/strong&gt; est la condition d’arrêt
-&lt;strong&gt;I0&lt;/strong&gt; le bloc d’instructions exécuté dans tous les cas
-&lt;strong&gt;I1&lt;/strong&gt; le bloc d’instructions exécuté si &lt;strong&gt;C&lt;/strong&gt; est vraie 
-&lt;strong&gt;I2&lt;/strong&gt; et I3 les blocs d’instructions exécutés si &lt;strong&gt;C&lt;/strong&gt; est fausse
-&lt;strong&gt;f&lt;/strong&gt; la fonction de tranformation des paramètres&lt;/p&gt;
-
-&lt;p&gt;La fonction  itérative correspondante  doit  gérer  la  sauvegarde  des  contextes d’exécution (valeurs des paramètres de la fonction).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;La  fonction  itérative  correspondante  est  donc  moins  efficace  qu’une  fonction écrite directement en itératif.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;exemples-dalgorithmes-récursifs&quot;&gt;Exemples d’algorithmes récursifs&lt;/h2&gt;
-
-&lt;h4 id=&quot;factorielle&quot;&gt;Factorielle&lt;/h4&gt;
-&lt;p&gt;Retourne la factorielle d’un nombre (&lt;script type=&quot;math/tex&quot;&gt;\large !n&lt;/script&gt;)&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;facto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;facto&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion non-terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;descending&quot;&gt;Descending&lt;/h4&gt;
-&lt;p&gt;Print les nombres à partir de &lt;script type=&quot;math/tex&quot;&gt;\large n&lt;/script&gt; jusque &lt;script type=&quot;math/tex&quot;&gt;0&lt;/script&gt;&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;descending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;descending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;ascending&quot;&gt;Ascending&lt;/h4&gt;
-&lt;p&gt;Même chose que le précédent mais de &lt;script type=&quot;math/tex&quot;&gt;0&lt;/script&gt; à &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ascending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ascending&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale. &lt;em&gt;Comparer avec le précédent&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;somme&quot;&gt;Somme&lt;/h4&gt;
-&lt;p&gt;Retourne la somme des nombres de &lt;script type=&quot;math/tex&quot;&gt;1&lt;/script&gt; à &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;somme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;somme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion non-terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;sommetab&quot;&gt;SommeTab&lt;/h4&gt;
-&lt;p&gt;Retourne la somme des nombres dans un tableau&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sommeTab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sommeTab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion non-terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;multiple-de-13&quot;&gt;multiple de 13&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;multiple13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;multiple13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;elever-à-la-puissance-nt&quot;&gt;Elever à la puissance (NT)&lt;/h4&gt;
-&lt;p&gt;Élève &lt;script type=&quot;math/tex&quot;&gt;a&lt;/script&gt; à la puissance &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;ss&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;puissance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;puissanceNT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion non-terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;elever-à-la-puissance-t&quot;&gt;Elever à la puissance (T)&lt;/h4&gt;
-&lt;p&gt;Élève &lt;script type=&quot;math/tex&quot;&gt;a&lt;/script&gt; à la puissance &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt;ss&lt;/p&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;puissanceT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-    &lt;span class=&quot;n&quot;&gt;puissanceT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;palindrome&quot;&gt;Palindrome&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;palindrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;palindrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;cherche-valeur&quot;&gt;Cherche valeur&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;searchVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;searchVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;fibbonacci-cest-mal-&quot;&gt;Fibbonacci (c’est mal !)&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;algorithmes-de-tri-en-mode-récursif&quot;&gt;Algorithmes de tri en mode récursif&lt;/h2&gt;
-
-&lt;h4 id=&quot;tri-bulle&quot;&gt;Tri-bulle&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;echange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;triBulle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-                &lt;span class=&quot;n&quot;&gt;echange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;triBulle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;tri-extract&quot;&gt;Tri-extract&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;echanger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;placerMinGauche&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idxMin&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idxMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;idxMin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;echanger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idxMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;triExtract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;placerMinGauche&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;triExtract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h4 id=&quot;tri-insert&quot;&gt;Tri-insert&lt;/h4&gt;
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insertion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;triInsert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;triInsert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;insertion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Récursion terminale&lt;/p&gt;
-
-&lt;h2 id=&quot;résumé-1&quot;&gt;Résumé&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;/algo/resume-cp2.html&quot;&gt;Résumé cp3&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 02 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/algo/Algo-recursivite.html</link>
-        <guid isPermaLink="true">http://localhost:4000/algo/Algo-recursivite.html</guid>
-        
-        <category>algo</category>
-        
-        <category>recursivite</category>
-        
-        <category>fr</category>
-        
-        
-        <category>Algo</category>
         
       </item>
     
