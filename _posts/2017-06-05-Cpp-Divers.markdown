@@ -76,3 +76,13 @@ int main()
     return 0;
 }
 ```
+
+## String len
+
+```c++
+char *a = "poule";
+cout << strlen(a) << endl;
+
+string b = "poule";
+cout << b.size() << endl;
+```
