@@ -86,3 +86,28 @@ cout << strlen(a) << endl;
 string b = "poule";
 cout << b.size() << endl;
 ```
+
+## Spaces in user input
+
+```c++
+using namespace std;
+
+
+int main() {
+    int i = 4;
+    double d = 4.0;
+    string s = "HackerRank ";
+
+    int I;
+    double D;
+    string S;
+
+    cin >> I;
+    cin >> D;
+    getline(cin >> ws, S);
+
+    printf("%d\n%.1f\n", i+I, d+D);
+    cout << s+S << endl;
+    return 0;
+}
+```
