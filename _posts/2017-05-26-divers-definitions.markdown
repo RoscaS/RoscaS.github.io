@@ -47,7 +47,7 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 [stackoverflow](https://stackoverflow.com/questions/302459/what-is-a-programming-idiom)  
 
-An "idiom" in (non-programming) language is a saying or expression which is unique to a particular language. Generally something which doesn't follow the "rules" of the langauge, and just exist because native speakers "just know" what it means. 
+> An "idiom" in (non-programming) language is a saying or expression which is unique to a particular language. Generally something which doesn't follow the "rules" of the langauge, and just exist because native speakers "just know" what it means. 
 
 Moving this to the programming arena, we get things like:
 
