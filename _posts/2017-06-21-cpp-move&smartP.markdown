@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cpp: Smart pointers et Move"
-subtitle: "Sémantique de ces objets"
+subtitle: "Conceptes et sémantique de déplacement"
 date: 2017-06-21
 author: Sol
 category: Cpp
@@ -213,7 +213,7 @@ int main() {
 }
 ```
 
-Comme nous ne fournissons pas de cstr de copies ou de srucharge de l'opérateur d'assignation, C++ nous les génère par défaut. Et ces versions de base ne font qu'une **shallow copy**.
+Comme nous ne fournissons pas de cstr de copies ou de srucharge de l'pd'assignation, C++ nous les génère par défaut. Et ces versions de  d'assignation surchargé base ne font qu'une **shallow copy**.
 
 Quand nous initialisons `res`2 avec `res`1, les deux variables de type Auto_ptr1 pointent sur la même ressource et donc naturellement quand `res1` sort de portée, les ressources qu'il possède sont détruites et laisse `res2` avec un pointeur qui pointe dans le vide. Quand `res2` sort a son tour de portée il détruit des ressources déjà détruites et entraine un crash.
 
@@ -232,10 +232,10 @@ int main() {
 
 `res1` est copié par valeur en paramètre (`res`) de `passByValue()` entrainant une duplication de l'objet Ressource... crash.
 
-* Une solution serait de `delete` le cstr de copies et la surcharge de l'opérateur d'affectation et donc empécher les copies ce qui aurait pour effet de rêgler le problème des passages par valeur (ce qui d'un sens est une bonne chose, car il est évident qu'on ne passe pas ce genre de valeurs par valeur.)
+* Une solution serait de `delete` le cstr de copies et la surcharge de l'p d'affectation et donc empécher les copies ce qui aurait pour efet  d'assignation surchargé de rêgler le problème des passages par valeur (ce qui d'un sens est une bonne chose, car il est évident qu'on ne passe pas ce genre de valeurs par valeur.)
 
     * $$ \large \Rightarrow $$ on se retrouve avec un nouveau problème... 
-Sans le cstr de copie et la surcharge de l'opérateur d'affectation, comment retourner une valeur de type **Auto_ptr1** ?
+Sans le cstr de copie et la surcharge de l'p d'affectation, cmment  d'assignation surchargé retourner une valeur de type **Auto_ptr1** ?
 
 ```cpp
 ??? generateurDeRessource() {
@@ -250,11 +250,102 @@ Sans le cstr de copie et la surcharge de l'opérateur d'affectation, comment ret
 
 * L'option du passage par valeur comme vu plus haut, fait crasher le programme à cause des **shallow copy** et des pointeurs dupliqués.
 
-* Personnaliser le cstr de copies et la surcharge de l'opérateur de d'assignation en les faisant faire des **deep copy** fonctionnera mais **les copies sont couteuses en ressources** (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies _inutiles_ uniquement pour retourner un objet **Auto\_ptr1** d'une fonction. De plus assigner ou initialiser un _simple pointeur_ ne copie pas l'objet pointé donc pourquoi un _smart pointer_ agirait différament?
+* Personnaliser le cstr de copies et la surcharge de l'p d  d'assignation surchargé d'assignation en les faisant faire des **deep copy** fonctionnera mais **les copies sont couteuses en ressources** (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies _inutiles_ uniquement pour retourner un objet **Auto\_ptr1** d'une fonction. De plus assigner ou initialiser un _simple pointeur_ ne copie pas l'objet pointé donc pourquoi un _smart pointer_ agirait différament?
 
 Bon bah... On fait quoi alors?
 
+## Move semantics
+
+À la place d'avoir notre cstr de copies ou notre oppérateur d'assignations qui copient le pointeur ("Sémantique de copie"), on peut à la place **transférer/déplacer** (move) la possession (ownership) du pointeur de la source à l'objet de destination.
+
+Le concepte de  **sémentique de déplacement** (Move semantics) exprime qu'une classe va transférer la possèssion d'un objet à la place d'en faire une copie.
+
+Faisons une mise à jour de notre classe **Auto_ptr1** pour illustrer ce concepte:
+
+```c++
+#include <iostream>
+using namespace std;
+
+template<typename T>
+class Auto_ptr2
+{
+    T* _ptr;
+public:
+    Auto_ptr2(T* ptr=nullptr): _ptr(ptr) {}
+    ~Auto_ptr2() { delete _ptr; }
+
+    // cstr de copie qui implémente la sémantique de déplacement
+    Auto_ptr2(Auto_ptr2 &a) // a n'est PAS const !
+    {
+        _ptr   = a._ptr;    // Transfer le ptr classique de source à obj local
+        a._ptr = nullptr;   // On s'assure que la source ne possède plus le ptr
+    }
+
+    // OL de l'op d'assignation qui implémente la sémantique de déplacement
+    Auto_ptr2& operator=(Auto_ptr2 &a) // a n'est PAS const !
+    {
+        if (&a == this) { // Self alloc check
+            return *this;
+        }
+
+        delete _ptr; // On assure de la désallocation d'un 
+                     // éventuel ptr possédé par la destination
+        _ptr   = a._ptr;  // Transfer le ptr classique de source à obj local
+        a._ptr = nullptr; // On s'assure que la source ne possède plus le ptr
+        return *this;        
+    }
+
+    T& operator*() const { return *_ptr; }
+    T* operator->() const { return _ptr; }
+    bool isNull() const { return _ptr == nullptr; }
+};
 
 
+class Ressource
+{
+public:
+    Ressource() { cout << "Ressource acquise\n"; }
+    ~Ressource() { cout << "Ressource detruites\n"; }
+};
 
+
+int main() {
+    Auto_ptr2<Ressource> res1(new Ressource);
+    Auto_ptr2<Ressource> res2; // initialement nullptr
+
+    cout << "res1 est " << (res1.isNull() ? "null\n": "non null\n");
+    cout << "res2 est " << (res2.isNull() ? "null\n": "non null\n");
+
+    res2 = res1; // res2 reprend la possession, res1 est set null
+
+    cout << "Transfère de possession fait\n";
+
+    cout << "res1 est " << (res1.isNull() ? "null\n": "non null\n");
+    cout << "res2 est " << (res2.isNull() ? "null\n": "non null\n");
+
+    return 0;
+}
+```
+
+output:
+
+```
+Ressource acquise
+res1 est non null
+res2 est null
+Transfère de possession fait
+res1 est null
+res2 est non null
+Ressource detruite
+```
+
+Notre surcharge de l'opérateur d'assignation a eu le résultat attendu et a bien transféré la possession de `_ptr` de `res1` à `res2`. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.
+
+## Un mot sur std::auto_ptr et pourquoi l'éviter
+
+Jusqu'ici nous avons grossomodo implémenté ce qui ressemble à l'implémentation de std::auto_ptr de la version 98 de C++.
+
+Même si c'est un bon cas d'école, cette implémentation est à éviter pour de nombreuses raisons. Plus d'info en bas de cette page: [learncpp.com](http://www.learncpp.com/cpp-tutorial/15-1-intro-to-smart-pointers-move-semantics/)
+
+> std::auto_ptr est obsolet et ne devrait pas être utilisé. Il est dailleurs prévu que cette fonction de la STL soit retirée à la révision 17 de C++.
 

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/cpp-R-value-L-value.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: R-value et L-value</title>
+  <meta name="description" content="  Il existe d’autres -values que les deux présentés ici. Pour plus d’info: cppreference">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: R-value et L-value</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="21 Jun 2017" itemprop="datePublished">Jun 21 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">cpp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>plus particulièrement: Références sur les R-value</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <blockquote>
+  <p>Il existe d’autres -values que les deux présentés ici. Pour plus d’info: <a href="http://en.cppreference.com/w/cpp/language/value_category">cppreference</a></p>
+</blockquote>
+
+<p>Malgré la présence du mot “valeur” dans le nom <strong>l-value **et **r-value</strong> ne sont en réalité pas des valeurs mais plutôt des propriétés des expressions.</p>
+
+<p>Toute expression en C++ à <strong>deux propriétés</strong>:</p>
+<ol>
+  <li>Un <strong>type</strong>: Utilisé pour le typage et la vérification)</li>
+  <li>Une <strong>catégorie de valeur</strong>: Utilisé pour certains types de vérification syntaxique comme “est-ce que le résultat de cette expression peut être assigné ici”</li>
+</ol>
+
+<p><em>La défintion formelle de ce qu’est une L-value et une R-value est largement audessus de ma compréhension actuelle et je vais me contenter d’expliquer dans les grandes lignes ce qui à mon niveau est important.</em></p>
+
+<h4 id="l-value">L-value</h4>
+
+<p>Il est plus facile de penser à une L-value (également appelé “locator value”) comme à une fonction ou un objet (ou une expression qui s’évalue comme une fonction ou un objet). <strong>Toutes</strong> les L-values se voient assigné une adresse en mémoire.</p>
+
+<p>Initialement dans les vielles version de C++, les L-values étaient définies comme “valeurs qui peuvent se retrouver à gauche de l’opérateur d’assignation”. Celà dit, depuis l’introduction du mot clé <code class="highlighter-rouge">const</code>, les l-values se sont fait diviser en deux sous-catégories:</p>
+
+<ul>
+  <li>L_value <strong>modifiables</strong></li>
+  <li>L_value <strong>non-modifiables</strong></li>
+</ul>
+
+<h4 id="r-value">R-value</h4>
+
+<p>Il est plus simple de penser à une R-value comme étant <em>tout ce qui n’est pas une L-value</em>. Celà inclue:</p>
+
+<ul>
+  <li>“literals” (ex. <code class="highlighter-rouge">5</code>)</li>
+  <li>valeurs temporaires (ex. <code class="highlighter-rouge">x+1</code>)</li>
+  <li>objets anonymes (ex. <code class="highlighter-rouge">Fraction(5,2)</code>)</li>
+</ul>
+
+<p>Les r-values sont typiquement:</p>
+
+<ul>
+  <li>évaluées pour leur valeurs</li>
+  <li>ont une portée</li>
+  <li>on ne peut pas leur assigner quelque chose</li>
+</ul>
+
+<p>Cette règle de non assignement possible</p>
+
+<h2 id="référence-à-une-l-value">référence à une L-value</h2>
+
+<p>On ne peut référencer une L-value qu’avec des L-value <strong>modifiables</strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">reference L-value</th>
+      <th style="text-align: center">peut être init avec</th>
+      <th style="text-align: center">peut modifier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">L-value modifiable</td>
+      <td style="text-align: center">oui</td>
+      <td style="text-align: center">oui</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">L-value non-modifiable</td>
+      <td style="text-align: center">non</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">R-value</td>
+      <td style="text-align: center">non</td>
+      <td style="text-align: center">non</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Les références L-value à des objets <code class="highlighter-rouge">const</code> peuvent être initialisées indiférament avec des L_values ou des R-values cependant ces valeurs ne peuvent être modifiés:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">reference L-value à une <code class="highlighter-rouge">const</code></th>
+      <th style="text-align: center">peut être init avec</th>
+      <th style="text-align: center">peut modifier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">L-value modifiable</td>
+      <td style="text-align: center">oui</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">L-value non-modifiable</td>
+      <td style="text-align: center">oui</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">R-value</td>
+      <td style="text-align: center">oui</td>
+      <td style="text-align: center">non</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Les références sur des objets <code class="highlighter-rouge">const</code> sont particulièrement utiles car elles nous permettent de passer n’importe quel type d’argument (L-value ou R-value) dans une fonction sans faire de copie de l’argument.</p>
+</blockquote>
+
+<h2 id="référence-à-une-r-value">référence à une R-value</h2>
+
+<p>Une référence R-value est une référence faite pour être uniquement initialisée avec une R-value.</p>
+
+<blockquote>
+  <p>Une référence sur une L-value est faite avec une esperluette <code class="highlighter-rouge">&amp;</code>, une référence sur une R-value se fait avec 2 esperluettes <code class="highlighter-rouge">&amp;&amp;</code>.</p>
+</blockquote>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kt">int</span> <span class="o">&amp;</span><span class="n">lref</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// référence L-value initialisée avec L-value x
+</span><span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">rref</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// référence R-value initialisée avec R-value 5
+</span></code></pre>
+</div>
+
+<p>Les références R-value ne peuvent être initialisées avec des L-value:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">reference R-value</th>
+      <th style="text-align: center">peut être init avec</th>
+      <th style="text-align: center">peut modifier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">L-value modifiable</td>
+      <td style="text-align: center">non</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">L-value non-modifiable</td>
+      <td style="text-align: center">non</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">R-value</td>
+      <td style="text-align: center">oui</td>
+      <td style="text-align: center">oui</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">reference R-value à une <code class="highlighter-rouge">const</code></th>
+      <th style="text-align: center">peut être init avec</th>
+      <th style="text-align: center">peut modifier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">L-value modifiable</td>
+      <td style="text-align: center">non</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">L-value non-modifiable</td>
+      <td style="text-align: center">non</td>
+      <td style="text-align: center">non</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">R-value</td>
+      <td style="text-align: center">oui</td>
+      <td style="text-align: center">non</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Les références R-value ont deux propriétés qui nous interesse pour le moment:</p>
+
+<ol>
+  <li>Elles étendent la durée de vie (lifespan) de l’objet qui les initialise avec la durée de vie (lifespan) de la référence R-value.
+    <blockquote>
+      <p>Les références L_value à des objets <code class="highlighter-rouge">const</code> fait la même chose mais c’est bien plus utilie pour les références R-value à cause de la portée des expressions des R-value.</p>
+    </blockquote>
+  </li>
+  <li>Les références R-value non <code class="highlighter-rouge">cont</code>nous permettent de modifier la R-value.</li>
+</ol>
+
+<hr />
+<p>Quelles lignes ne vont pas compiler?</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+ 
+	<span class="c1">// l-value references
+</span>	<span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref1</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// A
+</span>	<span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref2</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// B
+</span> 
+	<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref3</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// C
+</span>	<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref4</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// D
+</span> 
+	<span class="c1">// r-value references
+</span>	<span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref5</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// E
+</span>	<span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref6</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// F
+</span> 
+	<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref7</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// G
+</span>	<span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref8</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// H
+</span>	
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Si nous suivons les indications des tableaux précédent on peut identfier que les cas: <code class="highlighter-rouge">B</code>, <code class="highlighter-rouge">E</code> et <code class="highlighter-rouge">G</code> ne compileront pas.</p>
+
+<h2 id="exemples">Exemples:</h2>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Fraction</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">_num</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_den</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Fraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="n">_num</span><span class="p">(</span><span class="n">num</span><span class="p">),</span> <span class="n">_den</span><span class="p">(</span><span class="n">den</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="k">friend</span> <span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Fraction</span> <span class="o">&amp;</span><span class="n">f1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">_num</span> <span class="o">&lt;&lt;</span> <span class="s">"/"</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">_den</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Fraction</span> <span class="o">&amp;&amp;</span><span class="n">rref</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// reference R-value à une fraction anonyme
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rref</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// fin de portée de rref et Fraction anonyme
+</span><span class="p">}</span>
+
+<span class="c1">// output:
+// 3/5
+</span></code></pre>
+</div>
+
+<p>En tant qu’objet anonyme, Fraction(3,5) devrait normalement se retrouver hors contexte à la fin de l’expression dans laquelle elle est définie mais comme on la référence par une R-value, sa durée de vie est étendue jusqu’à la fin du bloc.</p>
+
+<p>Voyons maintenant un exemple moins intuitif:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">rref</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// Comme nous initialisons une référence R-value à une expression literale
+</span>    <span class="c1">// un "temporaire" avec une valeur de 5 est créé ici.
+</span>
+    <span class="n">rref</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rref</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// output:
+// 10
+</span></code></pre>
+</div>
+
+<p>Il peut sembler étrange d’initialiser une référence R-value avec une expression literale et ensuite pouvoir changer cette valeur. Ce qu’il se passe quand on initialise une R-value avec une expression litérale, c’est qu’un <strong>temporaire</strong> est créé à partir de l’expression litérale pour que la référence puisse référencer un objet (temporaire) et non une expression litérale.</p>
+
+<blockquote>
+  <p>Les références R-value <strong>ne sont pas</strong> souvent utilisées comme dans ces deux exemples.</p>
+</blockquote>
+
+<h2 id="référence-r-value-comme-paramètre-de-fonction">référence R-value comme paramètre de fonction</h2>
+
+<p>Utilité principale des références R-value. Très utile pour la surcharge de fonctions quand on veut avoir des comportements différents pour les arguments L-value et R-value.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">lref</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// argument L-value choisira cette fonction
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"reference L-value a const</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">lref</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// argument R-value choisira cette fonction
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"reference R-value</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">// argument L-value appel la version L-value de func()
+</span>    <span class="n">func</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// argument R-value appel la version R-value de func()
+</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// output:
+</span>
+<span class="c1">// reference L-value a const
+// reference R-value
+</span></code></pre>
+</div>
+
+<h2 id="pourquoi-">Pourquoi ?</h2>
+
+<p>Ces mécanismes sont importants pour pouvoir comprendre la <a href="\cpp\cpp-move&amp;smartP.html"><strong>sémantique de déplacement</strong></a></p>
+
+<h2 id="important">Important</h2>
+
+<p><strong>On ne devrait presque jamais retourner une référence sur une R-value pour la même raison qu’on ne devrait presque jamais retourner une référence L-value!</strong> Si on le fait, dans la majorité des cas, la valeur de retour sera une référence pointant sur un objet qui est sorti de son contexte à la fin de la fonction!</p>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: R-value et L-value@&amp;url=http://localhost:4000/cpp/cpp-R-value-L-value.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/cpp-R-value-L-value.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/cpp-R-value-L-value.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

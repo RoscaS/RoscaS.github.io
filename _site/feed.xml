@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 21 Jun 2017 21:45:06 +0200</pubDate>
-    <lastBuildDate>Wed, 21 Jun 2017 21:45:06 +0200</lastBuildDate>
+    <pubDate>Thu, 22 Jun 2017 01:16:57 +0200</pubDate>
+    <lastBuildDate>Thu, 22 Jun 2017 01:16:57 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -220,7 +220,7 @@ Ressource detruites
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’opérateur d’assignation, C++ nous les génère par défaut. Et ces versions de base ne font qu’une &lt;strong&gt;shallow copy&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’pd’assignation, C++ nous les génère par défaut. Et ces versions de  d’assignation surchargé base ne font qu’une &lt;strong&gt;shallow copy&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Quand nous initialisons &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;2 avec &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;1, les deux variables de type Auto_ptr1 pointent sur la même ressource et donc naturellement quand &lt;code class=&quot;highlighter-rouge&quot;&gt;res1&lt;/code&gt; sort de portée, les ressources qu’il possède sont détruites et laisse &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt; avec un pointeur qui pointe dans le vide. Quand &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt; sort a son tour de portée il détruit des ressources déjà détruites et entraine un crash.&lt;/p&gt;
 
@@ -241,11 +241,11 @@ Ressource detruites
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Une solution serait de &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; le cstr de copies et la surcharge de l’opérateur d’affectation et donc empécher les copies ce qui aurait pour effet de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)&lt;/p&gt;
+    &lt;p&gt;Une solution serait de &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; le cstr de copies et la surcharge de l’p d’affectation et donc empécher les copies ce qui aurait pour efet  d’assignation surchargé de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\large \Rightarrow&lt;/script&gt; on se retrouve avec un nouveau problème… 
-Sans le cstr de copie et la surcharge de l’opérateur d’affectation, comment retourner une valeur de type &lt;strong&gt;Auto_ptr1&lt;/strong&gt; ?&lt;/li&gt;
+Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assignation surchargé retourner une valeur de type &lt;strong&gt;Auto_ptr1&lt;/strong&gt; ?&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -268,11 +268,108 @@ Sans le cstr de copie et la surcharge de l’opérateur d’affectation, comment
     &lt;p&gt;L’option du passage par valeur comme vu plus haut, fait crasher le programme à cause des &lt;strong&gt;shallow copy&lt;/strong&gt; et des pointeurs dupliqués.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Personnaliser le cstr de copies et la surcharge de l’opérateur de d’assignation en les faisant faire des &lt;strong&gt;deep copy&lt;/strong&gt; fonctionnera mais &lt;strong&gt;les copies sont couteuses en ressources&lt;/strong&gt; (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies &lt;em&gt;inutiles&lt;/em&gt; uniquement pour retourner un objet &lt;strong&gt;Auto_ptr1&lt;/strong&gt; d’une fonction. De plus assigner ou initialiser un &lt;em&gt;simple pointeur&lt;/em&gt; ne copie pas l’objet pointé donc pourquoi un &lt;em&gt;smart pointer&lt;/em&gt; agirait différament?&lt;/p&gt;
+    &lt;p&gt;Personnaliser le cstr de copies et la surcharge de l’p d  d’assignation surchargé d’assignation en les faisant faire des &lt;strong&gt;deep copy&lt;/strong&gt; fonctionnera mais &lt;strong&gt;les copies sont couteuses en ressources&lt;/strong&gt; (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies &lt;em&gt;inutiles&lt;/em&gt; uniquement pour retourner un objet &lt;strong&gt;Auto_ptr1&lt;/strong&gt; d’une fonction. De plus assigner ou initialiser un &lt;em&gt;simple pointeur&lt;/em&gt; ne copie pas l’objet pointé donc pourquoi un &lt;em&gt;smart pointer&lt;/em&gt; agirait différament?&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Bon bah… On fait quoi alors?&lt;/p&gt;
+
+&lt;h2 id=&quot;move-semantics&quot;&gt;Move semantics&lt;/h2&gt;
+
+&lt;p&gt;À la place d’avoir notre cstr de copies ou notre oppérateur d’assignations qui copient le pointeur (“Sémantique de copie”), on peut à la place &lt;strong&gt;transférer/déplacer&lt;/strong&gt; (move) la possession (ownership) du pointeur de la source à l’objet de destination.&lt;/p&gt;
+
+&lt;p&gt;Le concepte de  &lt;strong&gt;sémentique de déplacement&lt;/strong&gt; (Move semantics) exprime qu’une classe va transférer la possèssion d’un objet à la place d’en faire une copie.&lt;/p&gt;
+
+&lt;p&gt;Faisons une mise à jour de notre classe &lt;strong&gt;Auto_ptr1&lt;/strong&gt; pour illustrer ce concepte:&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Auto_ptr2&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// cstr de copie qui implémente la sémantique de déplacement
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// a n'est PAS const !
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// Transfer le ptr classique de source à obj local
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// On s'assure que la source ne possède plus le ptr
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// OL de l'op d'assignation qui implémente la sémantique de déplacement
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// a n'est PAS const !
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Self alloc check
+&lt;/span&gt;            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// On assure de la désallocation d'un 
+&lt;/span&gt;                     &lt;span class=&quot;c1&quot;&gt;// éventuel ptr possédé par la destination
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// Transfer le ptr classique de source à obj local
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// On s'assure que la source ne possède plus le ptr
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;        
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Ressource&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource acquise&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource detruites&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// initialement nullptr
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;res1 est &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;non null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;res2 est &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;non null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;res2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// res2 reprend la possession, res1 est set null
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Transfère de possession fait&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;res1 est &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;non null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;res2 est &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;non null&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Ressource acquise
+res1 est non null
+res2 est null
+Transfère de possession fait
+res1 est null
+res2 est non null
+Ressource detruite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Notre surcharge de l’opérateur d’assignation a eu le résultat attendu et a bien transféré la possession de &lt;code class=&quot;highlighter-rouge&quot;&gt;_ptr&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;res1&lt;/code&gt; à &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt;. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.&lt;/p&gt;
+
+&lt;h2 id=&quot;un-mot-sur-stdauto_ptr-et-pourquoi-léviter&quot;&gt;Un mot sur std::auto_ptr et pourquoi l’éviter&lt;/h2&gt;
+
+&lt;p&gt;Jusqu’ici nous avons grossomodo implémenté ce qui ressemble à l’implémentation de std::auto_ptr de la version 98 de C++.&lt;/p&gt;
+
+&lt;p&gt;Même si c’est un bon cas d’école, cette implémentation est à éviter pour de nombreuses raisons. Plus d’info en bas de cette page: &lt;a href=&quot;http://www.learncpp.com/cpp-tutorial/15-1-intro-to-smart-pointers-move-semantics/&quot;&gt;learncpp.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;std::auto_ptr est obsolet et ne devrait pas être utilisé. Il est dailleurs prévu que cette fonction de la STL soit retirée à la révision 17 de C++.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 </description>
         <pubDate>Wed, 21 Jun 2017 00:00:00 +0200</pubDate>
@@ -280,6 +377,331 @@ Sans le cstr de copie et la surcharge de l’opérateur d’affectation, comment
         <guid isPermaLink="true">http://localhost:4000/cpp/cpp-move&smartP.html</guid>
         
         <category>Cpp</category>
+        
+        
+        <category>Cpp</category>
+        
+      </item>
+    
+      <item>
+        <title>Cpp: R-value et L-value</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Il existe d’autres -values que les deux présentés ici. Pour plus d’info: &lt;a href=&quot;http://en.cppreference.com/w/cpp/language/value_category&quot;&gt;cppreference&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Malgré la présence du mot “valeur” dans le nom &lt;strong&gt;l-value **et **r-value&lt;/strong&gt; ne sont en réalité pas des valeurs mais plutôt des propriétés des expressions.&lt;/p&gt;
+
+&lt;p&gt;Toute expression en C++ à &lt;strong&gt;deux propriétés&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Un &lt;strong&gt;type&lt;/strong&gt;: Utilisé pour le typage et la vérification)&lt;/li&gt;
+  &lt;li&gt;Une &lt;strong&gt;catégorie de valeur&lt;/strong&gt;: Utilisé pour certains types de vérification syntaxique comme “est-ce que le résultat de cette expression peut être assigné ici”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;La défintion formelle de ce qu’est une L-value et une R-value est largement audessus de ma compréhension actuelle et je vais me contenter d’expliquer dans les grandes lignes ce qui à mon niveau est important.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;l-value&quot;&gt;L-value&lt;/h4&gt;
+
+&lt;p&gt;Il est plus facile de penser à une L-value (également appelé “locator value”) comme à une fonction ou un objet (ou une expression qui s’évalue comme une fonction ou un objet). &lt;strong&gt;Toutes&lt;/strong&gt; les L-values se voient assigné une adresse en mémoire.&lt;/p&gt;
+
+&lt;p&gt;Initialement dans les vielles version de C++, les L-values étaient définies comme “valeurs qui peuvent se retrouver à gauche de l’opérateur d’assignation”. Celà dit, depuis l’introduction du mot clé &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;, les l-values se sont fait diviser en deux sous-catégories:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;L_value &lt;strong&gt;modifiables&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;L_value &lt;strong&gt;non-modifiables&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;r-value&quot;&gt;R-value&lt;/h4&gt;
+
+&lt;p&gt;Il est plus simple de penser à une R-value comme étant &lt;em&gt;tout ce qui n’est pas une L-value&lt;/em&gt;. Celà inclue:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;“literals” (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;5&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;valeurs temporaires (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;x+1&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;objets anonymes (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction(5,2)&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Les r-values sont typiquement:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;évaluées pour leur valeurs&lt;/li&gt;
+  &lt;li&gt;ont une portée&lt;/li&gt;
+  &lt;li&gt;on ne peut pas leur assigner quelque chose&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Cette règle de non assignement possible&lt;/p&gt;
+
+&lt;h2 id=&quot;référence-à-une-l-value&quot;&gt;référence à une L-value&lt;/h2&gt;
+
+&lt;p&gt;On ne peut référencer une L-value qu’avec des L-value &lt;strong&gt;modifiables&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;reference L-value&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Les références L-value à des objets &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; peuvent être initialisées indiférament avec des L_values ou des R-values cependant ces valeurs ne peuvent être modifiés:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;reference L-value à une &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Les références sur des objets &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; sont particulièrement utiles car elles nous permettent de passer n’importe quel type d’argument (L-value ou R-value) dans une fonction sans faire de copie de l’argument.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;référence-à-une-r-value&quot;&gt;référence à une R-value&lt;/h2&gt;
+
+&lt;p&gt;Une référence R-value est une référence faite pour être uniquement initialisée avec une R-value.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Une référence sur une L-value est faite avec une esperluette &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt;, une référence sur une R-value se fait avec 2 esperluettes &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&amp;amp;&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// référence L-value initialisée avec L-value x
+&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// référence R-value initialisée avec R-value 5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Les références R-value ne peuvent être initialisées avec des L-value:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;reference R-value&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;reference R-value à une &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Les références R-value ont deux propriétés qui nous interesse pour le moment:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Elles étendent la durée de vie (lifespan) de l’objet qui les initialise avec la durée de vie (lifespan) de la référence R-value.
+    &lt;blockquote&gt;
+      &lt;p&gt;Les références L_value à des objets &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; fait la même chose mais c’est bien plus utilie pour les références R-value à cause de la portée des expressions des R-value.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Les références R-value non &lt;code class=&quot;highlighter-rouge&quot;&gt;cont&lt;/code&gt;nous permettent de modifier la R-value.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Quelles lignes ne vont pas compiler?&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+ 
+	&lt;span class=&quot;c1&quot;&gt;// l-value references
+&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// A
+&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// B
+&lt;/span&gt; 
+	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// C
+&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// D
+&lt;/span&gt; 
+	&lt;span class=&quot;c1&quot;&gt;// r-value references
+&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// E
+&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// F
+&lt;/span&gt; 
+	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// G
+&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// H
+&lt;/span&gt;	
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Si nous suivons les indications des tableaux précédent on peut identfier que les cas: &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;E&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;G&lt;/code&gt; ne compileront pas.&lt;/p&gt;
+
+&lt;h2 id=&quot;exemples&quot;&gt;Exemples:&lt;/h2&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Fraction&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;friend&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// reference R-value à une fraction anonyme
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// fin de portée de rref et Fraction anonyme
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// output:
+// 3/5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;En tant qu’objet anonyme, Fraction(3,5) devrait normalement se retrouver hors contexte à la fin de l’expression dans laquelle elle est définie mais comme on la référence par une R-value, sa durée de vie est étendue jusqu’à la fin du bloc.&lt;/p&gt;
+
+&lt;p&gt;Voyons maintenant un exemple moins intuitif:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Comme nous initialisons une référence R-value à une expression literale
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// un &quot;temporaire&quot; avec une valeur de 5 est créé ici.
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// output:
+// 10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il peut sembler étrange d’initialiser une référence R-value avec une expression literale et ensuite pouvoir changer cette valeur. Ce qu’il se passe quand on initialise une R-value avec une expression litérale, c’est qu’un &lt;strong&gt;temporaire&lt;/strong&gt; est créé à partir de l’expression litérale pour que la référence puisse référencer un objet (temporaire) et non une expression litérale.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Les références R-value &lt;strong&gt;ne sont pas&lt;/strong&gt; souvent utilisées comme dans ces deux exemples.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;référence-r-value-comme-paramètre-de-fonction&quot;&gt;référence R-value comme paramètre de fonction&lt;/h2&gt;
+
+&lt;p&gt;Utilité principale des références R-value. Très utile pour la surcharge de fonctions quand on veut avoir des comportements différents pour les arguments L-value et R-value.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument L-value choisira cette fonction
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;reference L-value a const&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument R-value choisira cette fonction
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;reference R-value&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument L-value appel la version L-value de func()
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument R-value appel la version R-value de func()
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// output:
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// reference L-value a const
+// reference R-value
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;pourquoi-&quot;&gt;Pourquoi ?&lt;/h2&gt;
+
+&lt;p&gt;Ces mécanismes sont importants pour pouvoir comprendre la &lt;a href=&quot;\cpp\cpp-move&amp;amp;smartP.html&quot;&gt;&lt;strong&gt;sémantique de déplacement&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;important&quot;&gt;Important&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;On ne devrait presque jamais retourner une référence sur une R-value pour la même raison qu’on ne devrait presque jamais retourner une référence L-value!&lt;/strong&gt; Si on le fait, dans la majorité des cas, la valeur de retour sera une référence pointant sur un objet qui est sorti de son contexte à la fin de la fonction!&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 21 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/cpp/cpp-R-value-L-value.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-R-value-L-value.html</guid>
+        
+        <category>cpp</category>
         
         
         <category>Cpp</category>
@@ -2584,24 +3006,6 @@ l’entier renvoyé par &lt;script type=&quot;math/tex&quot;&gt;\large \log_{10}
         <category>Py</category>
         
         <category>numpy</category>
-        
-        <category>matplotlib</category>
-        
-        
-        <category>Py</category>
-        
-      </item>
-    
-      <item>
-        <title>Py: MatPlotLib</title>
-        <description>&lt;script src=&quot;https://gist.github.com/RoscaS/f11a70e996b92becf0cae9fb904ca8f0.js&quot;&gt;&lt;/script&gt;
-
-</description>
-        <pubDate>Tue, 06 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/py/Py-MatPlotLib.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/Py-MatPlotLib.html</guid>
-        
-        <category>Py</category>
         
         <category>matplotlib</category>
         

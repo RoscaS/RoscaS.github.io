@@ -90,7 +90,7 @@
 <div class="post-content">
     <center>
 	
-	<p>Sémantique de ces objets</p>
+	<p>Conceptes et sémantique de déplacement</p>
 	
     </center>
 	<h2>Directory</h2>
@@ -307,7 +307,7 @@ Ressource detruites
 </code></pre>
 </div>
 
-<p>Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’opérateur d’assignation, C++ nous les génère par défaut. Et ces versions de base ne font qu’une <strong>shallow copy</strong>.</p>
+<p>Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’pd’assignation, C++ nous les génère par défaut. Et ces versions de  d’assignation surchargé base ne font qu’une <strong>shallow copy</strong>.</p>
 
 <p>Quand nous initialisons <code class="highlighter-rouge">res</code>2 avec <code class="highlighter-rouge">res</code>1, les deux variables de type Auto_ptr1 pointent sur la même ressource et donc naturellement quand <code class="highlighter-rouge">res1</code> sort de portée, les ressources qu’il possède sont détruites et laisse <code class="highlighter-rouge">res2</code> avec un pointeur qui pointe dans le vide. Quand <code class="highlighter-rouge">res2</code> sort a son tour de portée il détruit des ressources déjà détruites et entraine un crash.</p>
 
@@ -328,11 +328,11 @@ Ressource detruites
 
 <ul>
   <li>
-    <p>Une solution serait de <code class="highlighter-rouge">delete</code> le cstr de copies et la surcharge de l’opérateur d’affectation et donc empécher les copies ce qui aurait pour effet de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)</p>
+    <p>Une solution serait de <code class="highlighter-rouge">delete</code> le cstr de copies et la surcharge de l’p d’affectation et donc empécher les copies ce qui aurait pour efet  d’assignation surchargé de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)</p>
 
     <ul>
       <li><script type="math/tex">\large \Rightarrow</script> on se retrouve avec un nouveau problème… 
-Sans le cstr de copie et la surcharge de l’opérateur d’affectation, comment retourner une valeur de type <strong>Auto_ptr1</strong> ?</li>
+Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assignation surchargé retourner une valeur de type <strong>Auto_ptr1</strong> ?</li>
     </ul>
   </li>
 </ul>
@@ -355,11 +355,108 @@ Sans le cstr de copie et la surcharge de l’opérateur d’affectation, comment
     <p>L’option du passage par valeur comme vu plus haut, fait crasher le programme à cause des <strong>shallow copy</strong> et des pointeurs dupliqués.</p>
   </li>
   <li>
-    <p>Personnaliser le cstr de copies et la surcharge de l’opérateur de d’assignation en les faisant faire des <strong>deep copy</strong> fonctionnera mais <strong>les copies sont couteuses en ressources</strong> (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies <em>inutiles</em> uniquement pour retourner un objet <strong>Auto_ptr1</strong> d’une fonction. De plus assigner ou initialiser un <em>simple pointeur</em> ne copie pas l’objet pointé donc pourquoi un <em>smart pointer</em> agirait différament?</p>
+    <p>Personnaliser le cstr de copies et la surcharge de l’p d  d’assignation surchargé d’assignation en les faisant faire des <strong>deep copy</strong> fonctionnera mais <strong>les copies sont couteuses en ressources</strong> (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies <em>inutiles</em> uniquement pour retourner un objet <strong>Auto_ptr1</strong> d’une fonction. De plus assigner ou initialiser un <em>simple pointeur</em> ne copie pas l’objet pointé donc pourquoi un <em>smart pointer</em> agirait différament?</p>
   </li>
 </ul>
 
 <p>Bon bah… On fait quoi alors?</p>
+
+<h2 id="move-semantics">Move semantics</h2>
+
+<p>À la place d’avoir notre cstr de copies ou notre oppérateur d’assignations qui copient le pointeur (“Sémantique de copie”), on peut à la place <strong>transférer/déplacer</strong> (move) la possession (ownership) du pointeur de la source à l’objet de destination.</p>
+
+<p>Le concepte de  <strong>sémentique de déplacement</strong> (Move semantics) exprime qu’une classe va transférer la possèssion d’un objet à la place d’en faire une copie.</p>
+
+<p>Faisons une mise à jour de notre classe <strong>Auto_ptr1</strong> pour illustrer ce concepte:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr2</span>
+<span class="p">{</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Auto_ptr2</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="o">=</span><span class="nb">nullptr</span><span class="p">)</span><span class="o">:</span> <span class="n">_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="o">~</span><span class="n">Auto_ptr2</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// cstr de copie qui implémente la sémantique de déplacement
+</span>    <span class="n">Auto_ptr2</span><span class="p">(</span><span class="n">Auto_ptr2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="c1">// a n'est PAS const !
+</span>    <span class="p">{</span>
+        <span class="n">_ptr</span>   <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>    <span class="c1">// Transfer le ptr classique de source à obj local
+</span>        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>   <span class="c1">// On s'assure que la source ne possède plus le ptr
+</span>    <span class="p">}</span>
+
+    <span class="c1">// OL de l'op d'assignation qui implémente la sémantique de déplacement
+</span>    <span class="n">Auto_ptr2</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Auto_ptr2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="c1">// a n'est PAS const !
+</span>    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Self alloc check
+</span>            <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span> <span class="c1">// On assure de la désallocation d'un 
+</span>                     <span class="c1">// éventuel ptr possédé par la destination
+</span>        <span class="n">_ptr</span>   <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>  <span class="c1">// Transfer le ptr classique de source à obj local
+</span>        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="c1">// On s'assure que la source ne possède plus le ptr
+</span>        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>        
+    <span class="p">}</span>
+
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span> <span class="o">==</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruites</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr2</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span>
+    <span class="n">Auto_ptr2</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">;</span> <span class="c1">// initialement nullptr
+</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res1 est "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">res1</span><span class="p">.</span><span class="n">isNull</span><span class="p">()</span> <span class="o">?</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="o">:</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res2 est "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">res2</span><span class="p">.</span><span class="n">isNull</span><span class="p">()</span> <span class="o">?</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="o">:</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="n">res2</span> <span class="o">=</span> <span class="n">res1</span><span class="p">;</span> <span class="c1">// res2 reprend la possession, res1 est set null
+</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Transfère de possession fait</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res1 est "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">res1</span><span class="p">.</span><span class="n">isNull</span><span class="p">()</span> <span class="o">?</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="o">:</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res2 est "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">res2</span><span class="p">.</span><span class="n">isNull</span><span class="p">()</span> <span class="o">?</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="o">:</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+res1 est non null
+res2 est null
+Transfère de possession fait
+res1 est null
+res2 est non null
+Ressource detruite
+</code></pre>
+</div>
+
+<p>Notre surcharge de l’opérateur d’assignation a eu le résultat attendu et a bien transféré la possession de <code class="highlighter-rouge">_ptr</code> de <code class="highlighter-rouge">res1</code> à <code class="highlighter-rouge">res2</code>. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.</p>
+
+<h2 id="un-mot-sur-stdauto_ptr-et-pourquoi-léviter">Un mot sur std::auto_ptr et pourquoi l’éviter</h2>
+
+<p>Jusqu’ici nous avons grossomodo implémenté ce qui ressemble à l’implémentation de std::auto_ptr de la version 98 de C++.</p>
+
+<p>Même si c’est un bon cas d’école, cette implémentation est à éviter pour de nombreuses raisons. Plus d’info en bas de cette page: <a href="http://www.learncpp.com/cpp-tutorial/15-1-intro-to-smart-pointers-move-semantics/">learncpp.com</a></p>
+
+<blockquote>
+  <p>std::auto_ptr est obsolet et ne devrait pas être utilisé. Il est dailleurs prévu que cette fonction de la STL soit retirée à la révision 17 de C++.</p>
+</blockquote>
 
 
 </div>
