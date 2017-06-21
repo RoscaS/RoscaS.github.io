@@ -14,6 +14,8 @@ finished: false
 * [struct addrinfo](https://stackoverflow.com/questions/23401147/what-is-the-difference-between-struct-addrinfo-and-struct-sockaddr)
 * à lire: [Session Hijacking](http://www.tenouk.com/Module43b.html)  
 
+* atoi() ... [cppref](http://en.cppreference.com/w/cpp/string/basic_string/stol)  
+
 ## 1. Interaction client serveur
 <img src="/00illustrations/socket2/diag1.png" height="auto">
 
