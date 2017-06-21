@@ -45,6 +45,8 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 ### idiom
 
+[stackoverflow](https://stackoverflow.com/questions/302459/what-is-a-programming-idiom)  
+
 An "idiom" in (non-programming) language is a saying or expression which is unique to a particular language. Generally something which doesn't follow the "rules" of the langauge, and just exist because native speakers "just know" what it means. 
 
 Moving this to the programming arena, we get things like:
@@ -62,6 +64,8 @@ if (c != 0)
  ```
 
 which every C/C++ programmer understand, but would totally baffle someone coming from a different programming language.
+
+> In natural language an idiom is something whose meaning cannot be constructed from the meanings of its constituent terms. In other words it is an indivisible atom semantically even though syntactically it can be divided. So in programming, idioms are things you don't question but just rote-memorize and can be productive with.
 
 ### endiannes
 
