@@ -43,6 +43,26 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 ## IT
 
+### idiom
+
+An "idiom" in (non-programming) language is a saying or expression which is unique to a particular language. Generally something which doesn't follow the "rules" of the langauge, and just exist because native speakers "just know" what it means. 
+
+Moving this to the programming arena, we get things like:
+
+```c
+if(c=GetValue())
+    {...}
+ ```
+which actually means:
+
+ ```C
+c = GetValue();
+if (c != 0)
+    {....}
+ ```
+
+which every C/C++ programmer understand, but would totally baffle someone coming from a different programming language.
+
 ### endiannes
 
 > Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication**. Big endian et Little endian sont deux architectures différentes.
