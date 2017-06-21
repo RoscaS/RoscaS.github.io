@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/cpp-move&smartP.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: Smart pointers et Move</title>
+  <meta name="description" content="Introduction">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: Smart pointers et Move</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="21 Jun 2017" itemprop="datePublished">Jun 21 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">Cpp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Sémantique de ces objets</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="introduction">Introduction</h1>
+
+<p>Dans la fonction suivante…</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">someFunction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Resource</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">;</span> <span class="c1">// Resource is a struct or class
+</span> 
+    <span class="c1">// do stuff with ptr here
+</span> 
+    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>… de nombreuses choses peuvent arriver qui vont empécher la réallocation de la mémoire.</p>
+
+<p>Un <code class="highlighter-rouge">return</code>:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">someFunction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Resource</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">;</span>
+ 
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Enter an integer: "</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span> <span class="c1">// the function returns early, and ptr won’t be deleted!
+</span> 
+    <span class="c1">// do stuff with ptr here
+</span> 
+    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Un <code class="highlighter-rouge">throw</code>:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">someFunction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Resource</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">;</span>
+ 
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Enter an integer: "</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// the function returns early, and ptr won’t be deleted!
+</span> 
+    <span class="c1">// do stuff with ptr here
+</span> 
+    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>De nombreux autres cas éxistent qui causent la fin de contexte prématuré de la fonction et l’empèche d’arriver au <code class="highlighter-rouge">delete</code>.</p>
+
+<p><strong>Conséquence</strong>: la mémoire allouée pour la variable <code class="highlighter-rouge">ptr</code> n’est pas désallouée et il s’en suit une fuite de mémoire.</p>
+
+<h2 id="god-bless-the-classes-">God bless the classes !</h2>
+
+<p>Comme nous le savons, un détail très pratique des classes et le fait qu’elles soient équipées d’un destructeur qui s’exécute automatiquement quand un objet de la classe se retrouve hors portée (out of scope). Si nous allouons de la mémoire dans le constructeur et la déallouons dans le destructeur, nous avons la certitude que la mémoire sera restituée à la destruction de l’objet (peu importe si il sort de portée, est explicitement delete,…). Ce concepte est au coeur du paradigme de programmation <a href="https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization">RAII</a> (Resource Acquisition Is Initialization).</p>
+
+<p>Considérons une classe dont le seul job est de “posséder” (own) un pointeur qu’on lui passe et de désallouer ce pointeur une fois que l’objet se retrouve hors context.</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr1</span> 
+<span class="p">{</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// on passe un pointeur à "posséder" à la cstrction
+</span>    <span class="n">Auto_ptr1</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="o">=</span><span class="nb">nullptr</span><span class="p">)</span> <span class="o">:</span><span class="n">_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="c1">// le dstr s'assure de la désallocation.
+</span>
+     <span class="o">~</span><span class="n">Auto_ptr1</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// access aux données pointées
+</span>    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span> <span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// classe de test
+</span><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruites</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// allocation de mémoire...
+</span>    <span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">{</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">};</span> 
+
+    <span class="c1">// ... mais pas de delte nécéssaire
+</span>
+    <span class="c1">// De plus, à noter que Ressource entre chevrons ne requiert pas
+</span>    <span class="c1">// de *     car c'est pris en charge par le template.
+</span>    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// L'objet res se retrouve hors portée ici, est détruit
+</span>    <span class="c1">// et nous récupérons les ressources allouées.
+</span><span class="p">}</span>
+
+<span class="c1">// output:
+</span>
+<span class="c1">// Ressource acquise
+// Ressource détruites
+</span>
+</code></pre>
+</div>
+
+<ol>
+  <li>Création dynamique d’un objet de type <strong>Ressource</strong></li>
+  <li>Passage de cet objet en paramètre lors de la création d’un objet (<code class="highlighter-rouge">res</code>) de type <strong>Auto_ptr1</strong></li>
+</ol>
+
+<p><span style="color:red">À partir de ce moment la variable <code class="highlighter-rouge">res</code> <strong>possède</strong> (own) l’objet Ressource.</span></p>
+
+<p>Comme <code class="highlighter-rouge">res</code> est déclaré en tant que variable locale, sa portée est le bloc où elle est créé. Il se retrouvera hors de portée et <strong>sera détruit</strong> à la fin du bloc <script type="math/tex">\large \Rightarrow</script> pas à se soucier de sa désallocation.</p>
+
+<blockquote>
+  <p>Aussi longtemps que <strong>Auto_ptr1</strong> est définit localement (pas global…), la destruction des ressources qu’elle possède sont assurées de destruction (même en cas de fin de contexte prématurée).</p>
+</blockquote>
+
+<h2 id="définition-dun-smart-pointer">Définition d’un smart pointer</h2>
+
+<p>Une classe de ce genre est appellée <strong>smart_pointer</strong>. C’est une composition qui est faite pour gérer la mémoire allouée dynamiquement (simples pointeurs) et assurer que la mémoire est restituée quand le smart_pointer se retrouve hors contexte.</p>
+
+<h2 id="exemple-plus-pratique">Exemple plus pratique</h2>
+
+<p>Reprenons l’exemple de la fonction <code class="highlighter-rouge">doSomething()</code> et voyons comment notre nouvelle classe gère les problèmes posés:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">fonction</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// variable ptr possède l'objet Ressource
+</span>    <span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">ptr</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Entrez un entier:"</span><span class="p">;</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">return</span><span class="p">;</span> <span class="c1">// fin prématurée de la fonction
+</span>    <span class="p">}</span>
+
+    <span class="n">ptr</span><span class="o">-&gt;</span><span class="n">ditBonjour</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">fonction</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>ouput avec une input != 0:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Entrez un entier:4
+Salut
+Ressource detruites
+</code></pre>
+</div>
+
+<p>output avec un input = 0:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Entrez un entier:0
+Ressource detruites
+</code></pre>
+</div>
+
+<p>Nous voyons donc ici que même dans le cas où la fonction est terminée de façon prématurée, les ressources sont quand même désallouées.</p>
+
+<h2 id="problèmes">Problèmes</h2>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">{</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">};</span>
+    <span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">{</span><span class="n">res1</span><span class="p">};</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Ce programme va éventuellement afficher …</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Ressource detruites
+Ressource detruites
+</code></pre>
+</div>
+
+<p>… avant de crasher</p>
+
+<p>Le programme suivant aura le même résultat:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">{</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">};</span>
+    <span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">;</span>
+    <span class="n">res2</span> <span class="o">=</span> <span class="n">res1</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’opérateur d’assignation, C++ nous les génère par défaut. Et ces versions de base ne font qu’une <strong>shallow copy</strong>.</p>
+
+<p>Quand nous initialisons <code class="highlighter-rouge">res</code>2 avec <code class="highlighter-rouge">res</code>1, les deux variables de type Auto_ptr1 pointent sur la même ressource et donc naturellement quand <code class="highlighter-rouge">res1</code> sort de portée, les ressources qu’il possède sont détruites et laisse <code class="highlighter-rouge">res2</code> avec un pointeur qui pointe dans le vide. Quand <code class="highlighter-rouge">res2</code> sort a son tour de portée il détruit des ressources déjà détruites et entraine un crash.</p>
+
+<p>Le programme suivant nous produirait un résultat similaire:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">passByValue</span><span class="p">(</span><span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">Auto_ptr1</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span>
+	<span class="n">passByValue</span><span class="p">(</span><span class="n">res1</span><span class="p">);</span>
+ 
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">res1</code> est copié par valeur en paramètre (<code class="highlighter-rouge">res</code>) de <code class="highlighter-rouge">passByValue()</code> entrainant une duplication de l’objet Ressource… crash.</p>
+
+<ul>
+  <li>
+    <p>Une solution serait de <code class="highlighter-rouge">delete</code> le cstr de copies et la surcharge de l’opérateur d’affectation et donc empécher les copies ce qui aurait pour effet de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)</p>
+
+    <ul>
+      <li><script type="math/tex">\large \Rightarrow</script> on se retrouve avec un nouveau problème… 
+Sans le cstr de copie et la surcharge de l’opérateur d’affectation, comment retourner une valeur de type <strong>Auto_ptr1</strong> ?</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="o">???</span> <span class="n">generateurDeRessource</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Ressource</span> <span class="o">*</span><span class="n">r</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ressource</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">Auto_ptr</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>Le <strong>retour par référence</strong> n’est <strong>pas</strong> possible car la variable locales <strong>Auto_ptr1</strong> sera détruite à la fin du contexte de la fonction et la variable à l’autre bout de l’appel de la fonction se retrouvera avec une référence dans le vide.</p>
+  </li>
+  <li>
+    <p>Le passage par adrèsse est ce qu’on cherche à éviter dans cet article donc on oublie aussi.</p>
+  </li>
+  <li>
+    <p>L’option du passage par valeur comme vu plus haut, fait crasher le programme à cause des <strong>shallow copy</strong> et des pointeurs dupliqués.</p>
+  </li>
+  <li>
+    <p>Personnaliser le cstr de copies et la surcharge de l’opérateur de d’assignation en les faisant faire des <strong>deep copy</strong> fonctionnera mais <strong>les copies sont couteuses en ressources</strong> (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies <em>inutiles</em> uniquement pour retourner un objet <strong>Auto_ptr1</strong> d’une fonction. De plus assigner ou initialiser un <em>simple pointeur</em> ne copie pas l’objet pointé donc pourquoi un <em>smart pointer</em> agirait différament?</p>
+  </li>
+</ul>
+
+<p>Bon bah… On fait quoi alors?</p>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: Smart pointers et Move@&amp;url=http://localhost:4000/cpp/cpp-move&smartP.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/cpp-move&smartP.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/cpp-move&smartP.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
