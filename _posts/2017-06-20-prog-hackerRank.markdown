@@ -74,58 +74,37 @@ Nous effectuons les $$ \large q = 2 $$ requêtes suivantes:
 2. Trouver le tableau à l'indexe $$ \large i = 1 $$, qui correspond à $$ \large a[1] = [1,2,8,9,3] $$. Nous devons `print` la valeur à l'indexe $$ \large j = 3 $$ de ce tableau qui comme nous pouvons le voir est 9.
 
 
-### Resolution
+### Solution
 
 ```c++
-#include <cmath>
-#include <string>
 #include <cstdio>
 #include <vector>
 #include <iostream>
 using namespace std;
 
-
-void display(vector<vector<int>> t) {
-    for (int i = 0; i <= t.size(); i++) {
-        for (int j = 0; j <= t[i].size(); i++) {
-            cout << t[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
-
 int main() {
-    int n; // nbr of tabs in ptr tab
-    int k; // nbr of values in tabs
-    int q; // nbr of queries
-    int x; // value of [i][j]s
+    int tabs, q;
+    int size, val;
+    int x,y;
 
-    // cin >> n, q;
-    // cin >> n;
+    cin >> tabs >> q;
 
-    vector<vector<int>> vecTab;
+    vector<vector<int>> tabsVec;
 
-    // for (int i = 1; i <= n; ++i) {
-    //     int input;
-    //     while (cin >> input) {
-    //         vecTab[i].push_back(input);
-    //     }
-    // }
-
-    vector<vector<int>> a;
-
-    while (cin >> n) {
-        vector<int> line(n);
-        for (int col = 0; col < n; ++col) {
-            cin >> line[col];
+    for (int i = 0; i < tabs; ++i) {
+        vector<int> temp;
+        cin >> size;
+        for (int j = 0; j < size; ++j) {
+            cin >> val;
+            temp.push_back(val);
         }
-
-        a.push_back(line);
+        tabsVec.push_back(temp);
     }
 
-
-    display(vecTab);
+    for (int i = 0; i < q; ++i) {
+        cin >> x >> y;
+        cout << tabsVec[x][y] << "\n";
+    }
 
     return 0;
 }
