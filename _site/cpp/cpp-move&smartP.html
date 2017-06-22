@@ -810,8 +810,96 @@ Ressource detruite
 
 <p>Auto_ptr5 est (finalement) une bonne classe smart pointer. En réalité celle que contient la STL (std::unique_ptr) lui ressemble beaucoup.</p>
 
-<h2 id="dernier-exemple">Dernier exemple</h2>
+<h2 id="teste-de-performance">Teste de performance</h2>
 
+<p>Le code suivant va nous permetre de tester et comparer les performances de la copie vs déplacement.
+Nous allons allouer 1 million  d’int sur le heap et à l’aide d’une nouvelle classe (<code class="highlighter-rouge">Timer</code>) nous allons mesurer la vitesse d’excution de notre programme.</p>
+
+<p>version copie: (deep copy)</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;chrono&gt; // for std::chrono functions
+</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">DynamicArray</span>
+<span class="p">{</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_arr</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_len</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">DynamicArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">len</span><span class="p">)</span><span class="o">:</span> <span class="n">_len</span><span class="p">(</span><span class="n">len</span><span class="p">),</span> <span class="n">_arr</span><span class="p">(</span><span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">len</span><span class="p">])</span> <span class="p">{}</span>
+    <span class="o">~</span><span class="n">DynamicArray</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span> <span class="p">[]</span> <span class="n">_arr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="c1">// cstr de copie
+</span>    <span class="n">DynamicArray</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span><span class="o">:</span> <span class="n">_len</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">_len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">_len</span><span class="p">];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">_arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// opérateur d'affectation
+</span>    <span class="n">DynamicArray</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arr</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">delete</span> <span class="p">[]</span> <span class="n">_arr</span><span class="p">;</span>
+
+        <span class="n">_len</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">_len</span><span class="p">;</span>
+        <span class="n">_arr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">_len</span><span class="p">];</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">_arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">getLen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_len</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">idx</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_arr</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span> <span class="p">}</span>
+    <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">idx</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_arr</span><span class="p">[</span><span class="n">idx</span><span class="p">];</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Timer</span>
+<span class="p">{</span>
+    <span class="c1">// type aliase pour rendre l'acces plus facile
+</span>    <span class="k">using</span> <span class="kt">clock_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="p">;</span>
+    <span class="k">using</span> <span class="n">second_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="kt">clock_t</span><span class="o">&gt;</span> <span class="n">_beg</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Timer</span><span class="p">()</span><span class="o">:</span> <span class="n">_beg</span><span class="p">(</span><span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">())</span> <span class="p">{}</span>
+    <span class="kt">void</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span> <span class="n">_beg</span> <span class="o">=</span> <span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">();</span> <span class="p">}</span>
+    <span class="kt">double</span> <span class="n">elapsed</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> 
+        <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">second_t</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">_beg</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Retourne une copie de l'array avec toutes le variables doublées
+</span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">DynamicArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">cloneArrayAndDouble</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">){</span>
+    <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">dbl</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">getLen</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">getLen</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dbl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">dbl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Timer</span> <span class="n">t</span><span class="p">;</span>
+    <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">getLen</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">cloneArrayAndDouble</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">elapsed</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Sur ma machine (i7 @ 3ghz)</p>
 
 </div>
 

@@ -672,5 +672,93 @@ Si nous tentons de passer une L-value de type Auto_ptr5 à une fonction, le comp
 
 Auto_ptr5 est (finalement) une bonne classe smart pointer. En réalité celle que contient la STL (std::unique\_ptr) lui ressemble beaucoup.
 
-## Dernier exemple
+## Teste de performance
 
+Le code suivant va nous permetre de tester et comparer les performances de la copie vs déplacement.
+Nous allons allouer 1 million  d'int sur le heap et à l'aide d'une nouvelle classe (`Timer`) nous allons mesurer la vitesse d'excution de notre programme.
+
+version copie: (deep copy)
+
+```c++
+#include<iostream>
+#include<chrono> // for std::chrono functions
+
+template<typename T>
+class DynamicArray
+{
+    T* _arr;
+    int _len;
+public:
+    DynamicArray(int len): _len(len), _arr(new T[len]) {}
+    ~DynamicArray() { delete [] _arr; }
+    // cstr de copie
+    DynamicArray(const DynamicArray &arr): _len(arr._len) {
+        _arr = new T[_len];
+        for (int i = 0; i < _len; ++i) {
+            _arr[i] = arr._arr[i];
+        }
+    }
+
+    // opérateur d'affectation
+    DynamicArray& operator=(const DynamicArray &arr) {
+        if (&arr == this) {
+            return *this;
+        }
+        delete [] _arr;
+
+        _len = arr._len;
+        _arr = new T[_len];
+
+        for (int i = 0; i < _len; ++i) {
+            _arr[i] = arr._arr[i];
+        }
+
+        return *this;
+    }
+
+    int getLen() const { return _len; }
+    T& operator[](int idx) { return _arr[idx]; }
+    const T& operator[](int idx) const { return _arr[idx]; }
+};
+
+class Timer
+{
+    // type aliase pour rendre l'acces plus facile
+    using clock_t = std::chrono::high_resolution_clock;
+    using second_t = std::chrono::duration<double, std::ratio<1>>;
+
+    std::chrono::time_point<clock_t> _beg;
+
+public:
+    Timer(): _beg(clock_t::now()) {}
+    void reset() { _beg = clock_t::now(); }
+    double elapsed() const { 
+        return std::chrono::duration_cast<second_t>(clock_t::now() - _beg).count();
+    }
+};
+
+// Retourne une copie de l'array avec toutes le variables doublées
+template<typename T>
+DynamicArray<T> cloneArrayAndDouble(const DynamicArray<T> &arr){
+    DynamicArray<T> dbl(arr.getLen());
+    for (int i = 0; i < arr.getLen(); ++i) {
+        dbl[i] = arr[i] *2;
+    }
+
+    return dbl;
+}
+
+int main() {
+    Timer t;
+    DynamicArray<int> arr(1000000);
+
+    for (int i = 0; i < arr.getLen(); ++i) {
+        arr[i] = i;
+    }
+
+    arr = cloneArrayAndDouble(arr);
+
+    std::cout << t.elapsed();
+}
+```
+Sur ma machine (i7 @ 3ghz) : 0.0185144
