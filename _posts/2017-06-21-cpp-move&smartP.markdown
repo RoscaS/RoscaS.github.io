@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cpp: Sémantique de déplacement & smart_ptr"
+title: "Cpp: Sémantique de déplacement & intro smart_ptr"
 subtitle: "Introduction aux smart_ptr et à la sémantique de déplacement"
 date: 2017-06-21
 author: Sol

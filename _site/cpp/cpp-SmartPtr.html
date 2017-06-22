@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/cpp-SmartPtr.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: unique_ptr &amp; shared_ptr</title>
+  <meta name="description" content="Lecture utile avant de se lancer dans ce poste">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: unique_ptr & shared_ptr</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="22 Jun 2017" itemprop="datePublished">Jun 22 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">cpp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="lecture-utile-avant-de-se-lancer-dans-ce-poste">Lecture utile avant de se lancer dans ce poste</h2>
+
+<ul>
+  <li><a href="\cpp\cpp-R-value-L-value.html">L-value et R-value</a></li>
+  <li><a href="\cpp\cpp-semantiqueCopie.html">Sémantique de copie</a></li>
+  <li><a href="\cpp\cpp-move&amp;smartP.html">Sémantique de déplacement</a><br />
+Ce dernier point est un prérequis plus qu’un conseil.</li>
+</ul>
+
+<h2 id="sources">sources</h2>
+
+<ul>
+  <li><a href="http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/">learncpp.com</a> (ch 15.1 à 15.7)</li>
+  <li><a href="https://stackoverflow.com/">stackoverflow</a></li>
+  <li><a href="https://fr.wikipedia.org/wiki/S%C3%A9mantique">wikipedia</a></li>
+</ul>
+
+<h1 id="stdunique_ptr">std::unique_ptr</h1>
+
+<p>Au début de <a href="\cpp\cpp-move&amp;smartP.html">cet</a> article on a vu les dangers de l’utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointer.</p>
+
+<h2 id="rappel">rappel</h2>
+
+<blockquote>
+  <p>Un smart ponter est une classe qui gère (possède, own) un objet alloué dynamiquement et s’assure que l’objet est est proprement néttoyé en fin de vie (généralement quand il sort de portée).</p>
+
+  <p>À cause de cette propriété, un smart pointeur <strong>ne doit jamais</strong> être lui même dynamiquement alloué. Si c’était le cas, tout le mécanisme de gestion serait saboté et on se retrouverait à coup sur avec des fuites de mémoire. Si l’allocation est toujours faite statiquement (en tant que variable locale où “composition member of a class”), il est garantis que le smart pointer se retrouvera lui même hors de portée lorsque l’objet qu’il contient se retrouvera hors de portée assurant le néttoyage de la ressource et du smart pointer.</p>
+</blockquote>
+
+<p>La librairie de C++ 11 possède 4 types de smart pointer:</p>
+<ul>
+  <li><code class="highlighter-rouge">std::auto_ptr</code> à fuir comme la peste (sera retiré à la révision 17)</li>
+  <li><code class="highlighter-rouge">std::unique_ptr</code> qui remplace efficacement le précédent et le plus utilisé des 4</li>
+  <li><code class="highlighter-rouge">std::shared_ptr</code></li>
+  <li><code class="highlighter-rouge">std::weak_ptr</code></li>
+</ul>
+
+<h2 id="stdunique_ptr-1">std::unique_ptr</h2>
+
+<p>Utilisé pour gérer dynamiquement un objet alloué dynamiquement mais dont unique_ptr est le seul possésseur.</p>
+
+<p><code class="highlighter-rouge">std::unique_ptr</code> vit dans les header <code class="highlighter-rouge">memory</code></p>
+
+<p>Considérons cet exemple:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;memory&gt;    // pour std::unique_ptr
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource détruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span> <span class="c1">// Ressource créé ici
+</span>	<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">;</span> <span class="c1">// commence comme nullptr
+</span> 
+
+    <span class="c1">// res2 = res1; // ne compilera pas: affectation par copie disabled
+</span>	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res1 est"</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="o">?</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span> <span class="o">:</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res2 est"</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="o">?</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span> <span class="o">:</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+ 
+	<span class="n">res2</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">res1</span><span class="p">);</span> <span class="c1">// res2 reprend l'ownership, res1 est set à null
+</span> 
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ownership transferred</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+ 
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res1 est"</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="o">?</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span> <span class="o">:</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"res2 est"</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="o">?</span> <span class="s">"non null</span><span class="se">\n</span><span class="s">"</span> <span class="o">:</span> <span class="s">"null</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Comme <code class="highlighter-rouge">unique_ptr</code> a été conçu avec la sémantique de déplacement en tête, si nous voulons transférer l’ownership d’un unique_ptr à un autre nous <strong>devons</strong> utiliser la sémantique de déplacement. Dans l’exemple plus haut nous faisons ça via la fonction <code class="highlighter-rouge">std::move()</code> qui converti res1 en R-value et force l’utilisation de la sémantique de déplacement.</p>
+
+<h2 id="accès-aux-membres">Accès aux membres</h2>
+
+<p>Comme les pointeurs traditionnels:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">*</code> retourne une référence de la ressource possédée</li>
+  <li><code class="highlighter-rouge">-&gt;</code> retourne un pointeur sur la ressource possédée</li>
+</ul>
+
+<blockquote>
+  <p>Il est important de garder en tête que pour de multiples raisons unique_ptr peut ne pas posséder de ressource !</p>
+</blockquote>
+
+<p>Si nous castons un unique_ptr en bool il renvoie true si il possède une ressource (false daans le cas contraire) comme dans l’exemple suivant:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource détruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">friend</span> <span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Ressource</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">"Je suis une ressource</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">){</span> <span class="c1">// cast implicite vers bool pour assurer la possession
+</span>             <span class="c1">// de ressource 
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span><span class="p">;</span> <span class="c1">// print la ressource possédée par res.
+</span>    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Je suis une ressource
+Ressource détruite
+</code></pre>
+</div>
+
+<h2 id="stdunique_ptr-et-tableaux">std::unique_ptr et tableaux</h2>
+
+<p>unique_ptr gère très bien le delete de tableaux (delete []), il n’y a aucun problème pour l’utiliser dans ce contexte. Celà dit dans presque tous les cas <strong>il est préférable d’utiliser les classes std::vector ou std::array qu’un smart pointer et un tableau classique !</strong></p>
+
+<h3 id="règle">Règle</h3>
+<p><span style="color:red">Favoriser l’utilisation de std::vector, std::array ou std::string sur l’utilisation d’unique_ptr avec un tableau fixe ou dynamique.</span></p>
+
+<h2 id="stdmake_unique-c-14">std::make_unique (C++ 14)</h2>
+
+<p>C++14 apporte une nouvelle fonction <code class="highlighter-rouge">std::make_unique()</code>. Cette fonction template construit un objet du type spécifié et l’initialise avec les arguments passé à la fonction.</p>
+
+<p><span style="color:red">pas d’initialisation uniforme possible ! </span></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Fraction</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+	<span class="kt">int</span> <span class="n">_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">_den</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+ 
+<span class="k">public</span><span class="o">:</span>
+	<span class="n">Fraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="n">_num</span><span class="p">(</span><span class="n">num</span><span class="p">),</span> <span class="n">_den</span><span class="p">(</span><span class="n">den</span><span class="p">)</span> <span class="p">{}</span>
+ 
+	<span class="k">friend</span> <span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Fraction</span> <span class="o">&amp;</span><span class="n">f1</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">_num</span> <span class="o">&lt;&lt;</span> <span class="s">"/"</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">_den</span><span class="p">;</span>
+		<span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">};</span>
+ 
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// crée UNE fraction allouée dynamiquement (3/5)
+</span>	<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Fraction</span><span class="o">&gt;</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Fraction</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">f1</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+ 
+    <span class="c1">// crée un tableu dynamique de fractions de longueur 4
+</span>    <span class="c1">// on peut aussi utiliser auto pour faciliter encore plus
+</span>	<span class="k">auto</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Fraction</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">f2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+ 
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>3/5
+0/1
+</code></pre>
+</div>
+
+<p>L’utilisation de std::make_unique() est optionelle mais à privilégier.<br />
+<a href="http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/">plus d’info</a></p>
+
+<h2 id="unique_ptr-en-retour-de-fonction">unique_ptr en retour de fonction</h2>
+
+<p>Aucun soucis de ce coté…</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">creeRessource</span><span class="p">()</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="p">}</span>
+ 
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">creeRessource</span><span class="p">();</span>
+    <span class="c1">// fait qqch
+</span> 
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Dans ce code, creeRessource() retourne un objet unique_ptr par valeur. Si cette valeur n’est pas attribuée, l’objet t’emporaire se retrouvera hors porté et sera néttoyé ainsi que la ressource qu’il contient. Si assigné, comme dans notre cas, la sémantique de déplacement est utilisée pour le retour. Ce qui en fait un moyen bien plus safe pour retourner des valeurs qu’un pointeur traditionnel.</p>
+
+<h3 id="règle-1">Règle</h3>
+<p><span style="color:red">Ne jamais retourner un unique_ptr par référence ou par pointeur à moins d’avoir une raison spécifique de le faire !</span></p>
+
+<h2 id="passer-un-unique_ptr-à-une-fonction">Passer un unique_ptr à une fonction</h2>
+<p>Si nous voulons passer un un unique_ptr à une fonction sans perdre la possession de l’objet, on la passe par référence <span style="color:red">const</span></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource détruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="n">ostream</span> <span class="o">&amp;</span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Ressource</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">"Je suis une ressource</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">utiliseRessource</span><span class="p">(</span><span class="k">const</span> <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="n">utiliseRessource</span><span class="p">(</span><span class="n">ptr</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fin</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// ressource détruite ici
+</span><span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Je suis une ressource
+
+Fin
+Ressource détruite
+</code></pre>
+</div>
+
+<p>Si au contraire, nous voulons que la fonction prènne la possession de l’objet, nous passons le unique_ptr par valeur mais attention à utiliser un <code class="highlighter-rouge">std::move</code> car la sémentique de déplacement ne joue plus.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">prendPossession</span><span class="p">(</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="p">}</span>   
+<span class="p">}</span> <span class="c1">// la ressource est détruite ici
+</span>
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="c1">// prendPossession(ptr) // ne fonctionne pas, on doit forcer
+</span>                            <span class="c1">// la sémantique de déplacement
+</span>
+    <span class="n">prendPossession</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">ptr</span><span class="p">));</span> <span class="c1">// ok !
+</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fin</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Je suis une ressource
+
+Ressource détruite
+Fin
+</code></pre>
+</div>
+
+<p>Bien noter que dans ce cas la posssession a été transfefée à prendPossession() et que la ressource à été détruite à la fin du contexte de la fonction et non pas à la fin du main.</p>
+
+<h2 id="mauvais-usage-dunique_ptr">Mauvais usage d’unique_ptr</h2>
+
+<p>Il existe deux façons de chier dans la colle en utilisant unique_ptr. Ces deux façons sont faciles à éviter.</p>
+
+<ol>
+  <li>Ne pas laisser de multiples classes gérer la même ressource:
+    <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">Ressource</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">;</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<p>Même si la syntaxe est légale, le résultat sera que <code class="highlighter-rouge">res1</code> et <code class="highlighter-rouge">res2</code> vont tenter de delete la Ressource ce qui est biensur une sitation à éviter!</p>
+
+<ol>
+  <li>Ne pas delete manuellement la ressource encapsulée dans unique_ptr.</li>
+</ol>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">Ressource</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ressource</span><span class="p">;</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+<span class="k">delete</span> <span class="n">res</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>La situation est semblable à la première et aura les mêmes conséquences.</p>
+
+<p><span style="color:green">A noter que la fonction <code class="highlighter-rouge">std::make_unique()</code> empèche ces deux situations de se produire  par accident!!</span></p>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: unique_ptr & shared_ptr@&amp;url=http://localhost:4000/cpp/cpp-SmartPtr.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/cpp-SmartPtr.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/cpp-SmartPtr.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
