@@ -9,6 +9,20 @@ tags: Cpp
 finished: false
 ---
 
+## Lecture utile avant de se lancer dans ce poste
+
+* [L-value et R-value](\cpp\cpp-R-value-L-value.html)
+* [Sémantique de copie](\cpp\cpp-semantiqueCopie.html) 
+* [définition de la sémantique (it)](\divers\divers-definitions.html)
+
+## sources
+
+* [learncpp.com](http://www.learncpp.com/cpp-tutorial/15-1-intro-to-smart-pointers-move-semantics/) (ch 15.1 à 15.7)
+* [stackoverflow](https://stackoverflow.com/)
+* [wikipedia](https://fr.wikipedia.org/wiki/S%C3%A9mantique)
+
+
+
 ## Introduction
 
 Dans la fonction suivante...
