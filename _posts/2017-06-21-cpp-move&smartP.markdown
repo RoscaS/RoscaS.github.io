@@ -23,7 +23,7 @@ finished: false
 
 
 
-## Introduction
+# Introduction
 
 Dans la fonction suivante...
 
@@ -373,7 +373,7 @@ Avant d'aller plus loin il est interessant de vite fait voir ce qui se passe sur
 Et puis sur [celle-ci](\cpp\cpp-semantiqueCopie.html) aussi tant qu'à faire...
 
 
-## Constructeur de copies et opérateur d'affectation
+# Constructeur de copies et opérateur d'affectation
 
 * Le **constructeur de copie** est utilisé pour initialiser une classe en faisant une copie d'un objet de la même classe.
 
@@ -672,7 +672,7 @@ Si nous tentons de passer une L-value de type Auto_ptr5 à une fonction, le comp
 
 Auto_ptr5 est (finalement) une bonne classe smart pointer. En réalité celle que contient la STL (std::unique\_ptr) lui ressemble beaucoup.
 
-## Teste de performance
+# Teste de performance
 
 Le code suivant va nous permetre de tester et comparer les performances de la copie vs déplacement.
 Nous allons allouer 1 million  d'int sur le heap et à l'aide d'une nouvelle classe (`Timer`) nous allons mesurer la vitesse d'excution de notre programme.
@@ -692,25 +692,25 @@ public:
     DynamicArray(int len): _len(len), _arr(new T[len]) {}
     ~DynamicArray() { delete [] _arr; }
     // cstr de copie
-    DynamicArray(const DynamicArray &arr): _len(arr._len) {
+    DynamicArray(const DynamicArray &s): _len(s._len) {
         _arr = new T[_len];
         for (int i = 0; i < _len; ++i) {
-            _arr[i] = arr._arr[i];
+            _arr[i] = s._arr[i];
         }
     }
 
     // opérateur d'affectation
-    DynamicArray& operator=(const DynamicArray &arr) {
-        if (&arr == this) {
+    DynamicArray& operator=(const DynamicArray &s) {
+        if (&s == this) {
             return *this;
         }
         delete [] _arr;
 
-        _len = arr._len;
+        _len = s._len;
         _arr = new T[_len];
 
         for (int i = 0; i < _len; ++i) {
-            _arr[i] = arr._arr[i];
+            _arr[i] = s._arr[i];
         }
 
         return *this;
@@ -723,7 +723,7 @@ public:
 
 class Timer
 {
-    // type aliase pour rendre l'acces plus facile
+    // type alias pour rendre l'acces plus facile
     using clock_t = std::chrono::high_resolution_clock;
     using second_t = std::chrono::duration<double, std::ratio<1>>;
 
@@ -761,4 +761,254 @@ int main() {
     std::cout << t.elapsed();
 }
 ```
-Sur ma machine (i7 @ 3ghz) : 0.0185144
+
+
+Output sur ma machine (i7 @ 2.9ghz):
+
+
+
+```
+0.0200022
+```
+
+
+Maintenant modifions la paire de copie par une paire de  déplacement:
+
+
+
+```cpp
+#include<iostream>
+#include<chrono> // for std::chrono functions
+
+template<typename T>
+class DynamicArray
+{
+    T* _arr;
+    int _len;
+public:
+    DynamicArray(int len): _len(len), _arr(new T[len]) {}
+    ~DynamicArray() { delete [] _arr; }
+    // cstr de copie disabled
+    DynamicArray(const DynamicArray &s) = delete;
+
+    // opérateur d'affectation disabled
+    DynamicArray& operator=(const DynamicArray &s) = delete;
+
+    // move cstr
+    DynamicArray(DynamicArray &&s): _len(s._len), _arr(s._arr) {
+        s._len = 0;
+        s._arr = nullptr;
+    }
+
+    // affectation de copies
+    DynamicArray& operator=(DynamicArray &&s) {
+        if (&s == this) { return *this; }
+        delete [] _arr;
+
+        _len   = s._len;
+        _arr   = s._arr;
+        s._len = 0;
+        s._arr = nullptr;
+
+        return *this;
+    }
+
+
+
+    int getLen() const { return _len; }
+    T& operator[](int idx) { return _arr[idx]; }
+    const T& operator[](int idx) const { return _arr[idx]; }
+};
+
+class Timer
+{
+    // type alias pour rendre l'acces plus facile
+    using clock_t = std::chrono::high_resolution_clock;
+    using second_t = std::chrono::duration<double, std::ratio<1>>;
+
+    std::chrono::time_point<clock_t> _beg;
+
+public:
+    Timer(): _beg(clock_t::now()) {}
+    void reset() { _beg = clock_t::now(); }
+    double elapsed() const { 
+        return std::chrono::duration_cast<second_t>(clock_t::now() - _beg).count();
+    }
+};
+
+// Retourne une copie de l'array avec toutes le variables doublées
+template<typename T>
+DynamicArray<T> cloneArrayAndDouble(const DynamicArray<T> &arr){
+    DynamicArray<T> dbl(arr.getLen());
+    for (int i = 0; i < arr.getLen(); ++i) {
+        dbl[i] = arr[i] *2;
+    }
+
+    return dbl;
+}
+
+int main() {
+    Timer t;
+    DynamicArray<int> arr(1000000);
+
+    for (int i = 0; i < arr.getLen(); ++i) {
+        arr[i] = i;
+    }
+
+    arr = cloneArrayAndDouble(arr);
+
+    std::cout << t.elapsed();
+}
+```
+Sur la même machine l'output est:
+
+```
+0.010002
+```
+Si nous comparons le temps d'éxecution des deux programmes:  
+$$ \Large \frac{0.010002}{0.0200022} $$ $$ \approx 0.5 \Rightarrow 50\% $$ plus rapide !
+
+# std::move
+
+Une fois convaincu par l'utilité de la sémantique de déplacement, il n'est pas étonnant qu'on veuille l'utiliser à toutes les sauces. Cependant, on risque de tomber sur des situations où les objets qu'on travaille sont des L-value et non pas des R-value.
+
+Considérons cet exemple:
+
+```cpp
+#include<iostream>
+#include<string>
+
+template<typename T>
+void swap(T& a, T& b) {
+    T tmp {a}; // invoque le cstr de copie
+    a = b;     // invoque la surcharge affectation(copie)
+    b = tmp;   // invoque la surcharge affectation(copie)
+}
+
+
+int main() {
+    string x{"abc"};
+    string y{"de"};
+
+    std::cout << "x: " << x << "\n";
+    std::cout << "y: " << y << "\n";
+
+    swap(x,y);
+
+    std::cout << "x: " << x << "\n";
+    std::cout << "y: " << y << "\n";
+
+    return 0;
+}
+```
+La fonction  swap les deux strings en faisant 3 copies et le programme nous retourne:
+
+```
+x: abc
+y: de
+x: de
+y: abc
+```
+
+Comme vu dans les précédents exemples, ces copies sont couteuses et dans ce cas inutiles.
+Au vue de ce que nous avons appris jusque maintenant, il peut être interessant d'utiliser la sémantique de déplacement à la place de faire des copies.
+
+Le problème est que les paramètres `A` et `B` sont des références de L-value et que donc même si nous avions un cstr de déplacement et une surcharge de l'opérateur d'affectation (déplacement) le compilateur choisirait la paire de copie.
+
+C'est là qu'est utile la fonction `std::move` de la libairie standard.
+**Cette fonction ne sert qu'à une chose: convertir ses arguments en R-value.** Cette fonction vit dans le header `#utility`
+
+Voici le même programme mais avec une conversion via `std::move` de nos L-value en R-value.
+
+```cpp
+template<typename T>
+void swap(T& a, T& b) {
+    T tmp {std::move(a)}; // invoque le cstr de déplacement
+    a = std::move(b);     // invoque la surcharge affectation(déplacement)
+    b = std::move(tmp);   // invoque la surcharge affectation(déplacement)
+}
+
+
+
+int main() {
+    string x{"abc"};
+    string y{"de"};
+
+    std::cout << "x: " << x << "\n";
+    std::cout << "y: " << y << "\n";
+
+    swap(x,y);
+
+    std::cout << "x: " << x << "\n";
+    std::cout << "y: " << y << "\n";
+
+    return 0;
+}
+```
+
+Mêmes résultats...
+```
+x: abc
+y: de
+x: de
+y: abc
+```
+
+Mais beaucoup plus performant.
+
+## Autre exemple
+
+Nous pouvons utiliser `std::move` pour remplire un élément d'un conteneur comme un vecteur qui prend des L-value.
+
+Dans l'exemple suivant, premièrement nous ajoutons un élément à un vecteur en le copiant et ensuite nous ajoutons un autre élément en utilisant la sémantique de déplacement.
+
+```cpp
+#include<iostream>
+#include<string>
+#include<vector>
+
+int main() {
+    std::vector<std::string> v;
+    std::string str = "poule";
+
+    std::cout << "Copie de la str\n";
+    v.push_back(str); // appelle la version L-value de push_back => copie
+
+    std::cout << "str: " << str << "\n";
+    std::cout << "vector: " << v[0] << "\n";
+
+    std::cout << "\nDéplacement de str\n";
+
+    v.push_back(std::move(str)); // appelle la version R-value de 
+                                 // push_back => déplacement
+
+    std::cout << "str: " << str << "\n";
+    std::cout << "vector: " << v[0] << " " << v[1] << "\n";
+
+    return 0;   
+}
+```
+
+output:
+
+```
+Copie de la str
+str: poule
+vector: poule
+
+Déplacement de str
+str: 
+vector: poule poule
+```
+
+Le code et l'output parlent pour eux même.
+
+## Autres cas où utiliser std::move
+
+* **Pendant le try d'un tableau**. Beaucoup d'[algorithme de try](\algo\Algo-tri.html) utilisent l'échange de paires d'éléments (select, bulle, ...). L'utilisation de la sémentique de déplacement peut aussi augmenter les performance de ces algorithmes.
+
+* Peut églement être utile si nous voulons déplacer le contenu d'un smart ptr à un autre smart ptr.
+
+## Conclusion sur std::move
+
+Cette fonction peut-être utilisée dans les cas où nous voulons traiter une L-value comme une R-value pour forcer l'utilisation de la sémantique de déplacement sur celle de copie.
