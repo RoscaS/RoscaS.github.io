@@ -67,6 +67,24 @@ which every C/C++ programmer understand, but would totally baffle someone coming
 
 > In natural language an idiom is something whose meaning cannot be constructed from the meanings of its constituent terms. In other words it is an indivisible atom semantically even though syntactically it can be divided. So in programming, idioms are things you don't question but just rote-memorize and can be productive with.
 
+### Sémantique
+[wikipedia (general)](https://fr.wikipedia.org/wiki/S%C3%A9mantique)  
+[wikipedia (IT)](https://fr.wikipedia.org/wiki/S%C3%A9mantique_des_langages_de_programmation)
+La sémantique est une branche de la linguistique qui étudie les signifiés, ce dont on parle, ce que l'on veut énoncer. Sa branche symétrique, la syntaxe, concerne pour sa part le signifiant, sa forme, sa langue, sa graphie, sa grammaire, etc ; c'est la forme de l'énoncé.
+
+En particulier, la sémantique possède plusieurs objets d'étude :
+
+* la signification des mots composés 
+* les rapports de sens entre les mots (relations d'homonymie, de synonymie, d'antonymie, de polysémie, d'hyperonymie, d'hyponymie, etc.) 
+* la distribution des actants au sein d'un énoncé 
+* les conditions de vérité d'un énoncé 
+* l'analyse critique du discours 
+* la pragmatique, est considérée comme une branche de la sémantique.
+
+**En informatique théorique, la sémantique formelle (des langages de programmation) est l’étude de la signification des programmes informatiques vus en tant qu’objets mathématiques.**
+
+Il y a entre la sémantique et la syntaxe le même rapport qu'entre le fond et la forme.
+
 ### endiannes
 
 > Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication**. Big endian et Little endian sont deux architectures différentes.
