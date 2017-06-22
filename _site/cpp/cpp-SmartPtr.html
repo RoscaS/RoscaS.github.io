@@ -404,6 +404,83 @@ Fin
 
 <p><span style="color:green">A noter que la fonction <code class="highlighter-rouge">std::make_unique()</code> empèche ces deux situations de se produire  par accident!!</span></p>
 
+<h1 id="stdshared_ptr">std::shared_ptr</h1>
+
+<p>Contrairement à unique_ptr qui est fait pour ne posséder qu’une ressource, shared_pointer est fait pour gérer les cas où nous avons besoin de plusieurs smart pointer qui possède la même ressource.</p>
+
+<p>shared_ptr garde de façon interne trace des du nombre d’autres shared_ptr qui possède une même ressource.</p>
+
+<p>Tant qu’il y a au moins un shared_ptr qui possède une la ressource, cette dernière ne sera pas désaoullée même si d’autres shared_ptr sont détruits.</p>
+
+<p>Aussitôt que le dernier shared_ptr possèdant la ressource pase hors portée (ou est réassignée …), la ressource est désaoullée.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;memory&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource détruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// alloue une ressource et la donne au shared_ptr
+</span>    <span class="n">Ressource</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ressource</span><span class="p">;</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">ptr1</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+    <span class="p">{</span>
+        <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">ptr2</span><span class="p">(</span><span class="n">ptr1</span><span class="p">);</span> <span class="c1">// initialisation par
+</span>        <span class="c1">// copie du premier shared_ptr
+</span>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fin de context du premier shared_Ptr</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="c1">// ptr2 sors de portée ici mais rien ne se passe
+</span>    
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fin de context du second shared_Ptr</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span> <span class="c1">// ptr1 sors de portée ici et les ressources allouées sont
+// détruites.
+</span></code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Fin de context du premier shared_Ptr
+Fin de context du second shared_Ptr
+Ressource détruite
+</code></pre>
+</div>
+
+<p>Noter qu’on a créé le second shared_ptr en copiant le premier shared_ptr. <span style="color:red"> Ceci est important ! </span> Considérons le code suivant:</p>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// alloue une ressource et la donne au shared_ptr
+</span>    <span class="n">Ressource</span> <span class="o">*</span><span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ressource</span><span class="p">;</span>
+    <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">ptr1</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+    <span class="p">{</span>
+        <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">ptr2</span><span class="p">(</span><span class="n">res</span><span class="p">);</span> <span class="c1">// cree ptr2 directement
+</span>        <span class="c1">// à partir de la ressource (et non pas ptr1);
+</span>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fin de context du premier shared_Ptr</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="c1">// ptr2 sors de portée ici et les ressources sont détruites
+</span>    
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fin de context du second shared_Ptr</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span> <span class="c1">// ptr1 sors de portée ici et les ressources allouées sont
+// détruites... encore CRASH !
+</span></code></pre>
+</div>
+
+<p>Crash !</p>
+
+<p>La différence est ici que nous créons deux shared_ptr indépendant l’un de l’autre. Malgré qu’ils pointent tous les deux sur la même ressource, ils n’en ont pas conscience et quand ptr2 sors de portée, il pense être le seul à posséder cette ressource et la détruit. Une fois que ptr1 sors de portée, il re-détruit les ressources et celà entraine donc un crash.</p>
+
+<p>Cette situation est facile à éviter en gardant en tête d’utiliser un cstr de copie ou un opérateur d’affectation quand nous voulons utiliser plusieurs shared_ptr sur la même ressource.</p>
+
+<h3 id="règle-2">Règle</h3>
+
+<p><span style="color:red"> Toujours faire une copie d’un shared_ptr déja éxistant quand on a besoin de plus d’un shared_pointer pointant sur la même ressource.  </span></p>
+
+<h2 id="stdmake_shared">std::make_shared</h2>
 
 </div>
 

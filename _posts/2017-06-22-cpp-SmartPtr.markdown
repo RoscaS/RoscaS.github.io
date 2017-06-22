@@ -300,3 +300,80 @@ La situation est semblable à la première et aura les mêmes conséquences.
 <span  style="color:green">A noter que la fonction `std::make_unique()` empèche ces deux situations de se produire  par accident!!</span>
 
 
+# std::shared_ptr
+
+Contrairement à unique_ptr qui est fait pour ne posséder qu'une ressource, shared\_pointer est fait pour gérer les cas où nous avons besoin de plusieurs smart pointer qui possède la même ressource.
+
+shared_ptr garde de façon interne trace des du nombre d'autres shared\_ptr qui possède une même ressource.
+
+Tant qu'il y a au moins un shared_ptr qui possède une la ressource, cette dernière ne sera pas désaoullée même si d'autres shared\_ptr sont détruits.
+
+Aussitôt que le dernier shared_ptr possèdant la ressource pase hors portée (ou est réassignée ...), la ressource est désaoullée.
+
+```cpp
+#include<iostream>
+#include<memory>
+using namespace std;
+
+class Ressource
+{
+public:
+    Ressource() { cout << "Ressource acquise\n"; }
+    ~Ressource() { cout << "Ressource détruite\n"; }
+};
+
+int main() {
+    // alloue une ressource et la donne au shared_ptr
+    Ressource *res = new Ressource;
+    shared_ptr<Ressource> ptr1(res);
+    {
+        shared_ptr<Ressource> ptr2(ptr1); // initialisation par
+        // copie du premier shared_ptr
+        cout << "Fin de context du premier shared_Ptr\n";
+    } // ptr2 sors de portée ici mais rien ne se passe
+    
+    cout << "Fin de context du second shared_Ptr\n";
+    return 0;
+} // ptr1 sors de portée ici et les ressources allouées sont
+// détruites.
+```
+
+output:
+
+```
+Ressource acquise
+Fin de context du premier shared_Ptr
+Fin de context du second shared_Ptr
+Ressource détruite
+```
+
+Noter qu'on a créé le second shared_ptr en copiant le premier shared\_ptr. <span style="color:red"> Ceci est important ! </span> Considérons le code suivant:
+
+```c++
+int main() {
+    // alloue une ressource et la donne au shared_ptr
+    Ressource *res = new Ressource;
+    shared_ptr<Ressource> ptr1(res);
+    {
+        shared_ptr<Ressource> ptr2(res); // cree ptr2 directement
+        // à partir de la ressource (et non pas ptr1);
+        cout << "Fin de context du premier shared_Ptr\n";
+    } // ptr2 sors de portée ici et les ressources sont détruites
+    
+    cout << "Fin de context du second shared_Ptr\n";
+    return 0;
+} // ptr1 sors de portée ici et les ressources allouées sont
+// détruites... encore CRASH !
+```
+
+Crash !
+
+La différence est ici que nous créons deux shared_ptr indépendant l'un de l'autre. Malgré qu'ils pointent tous les deux sur la même ressource, ils n'en ont pas conscience et quand ptr2 sors de portée, il pense être le seul à posséder cette ressource et la détruit. Une fois que ptr1 sors de portée, il re-détruit les ressources et celà entraine donc un crash.
+
+Cette situation est facile à éviter en gardant en tête d'utiliser un cstr de copie ou un opérateur d'affectation quand nous voulons utiliser plusieurs shared_ptr sur la même ressource.
+
+### Règle
+
+<span style="color:red"> Toujours faire une copie d'un shared_ptr déja éxistant quand on a besoin de plus d'un shared\_pointer pointant sur la même ressource.  </span>
+
+## std::make_shared
