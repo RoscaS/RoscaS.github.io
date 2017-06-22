@@ -87,6 +87,17 @@ En particulier, la sémantique possède plusieurs objets d'étude :
 
 Il y a entre la sémantique et la syntaxe le même rapport qu'entre le fond et la forme.
 
+### Process, Thread and Handle
+[superuser](https://superuser.com/questions/1065826/handles-vs-threads-vs-processes)  
+
+
+A Process is a isolated memory structure which supports an application in OS hardware and software. A Windows Process contains 1 or more Threads. [Wikipedia](https://en.wikipedia.org/wiki/Process_%28computing%29)
+
+A Thread is a single set of sequential machine-code instructions that the processor executes. Any time the CPU runs an Instruction on behalf of an application, it does so via a thread. Threads within a process may access the processes memory (to the extent that the specific operation on the memory element is "thread-safe" and doesn't present unreconciled concurrency issues). A Process may speed its operation by using multiple threads, each performing an isolated task by running their stream of instructions through a different CPU Execution unit (CPU/core/virtual core) simultaneously.[Wikipedia](https://en.wikipedia.org/wiki/Thread_%28computing%29)
+
+A Handle is a logical association with a shared resource like a file, Window, memory location, etc. When a thread opens a file, it establishes a "handle" to the file, and internally it acts like a "name" for that instance of the file. Handles are used to link to transitory or environmental resources outside the processes memory structure. A handle leak is a type of software issue that can in extreme cases, destabilize a system. It is caused by a program requesting a handle to a resource, and failing to deallocate it when the program is done with the resource. Based on your number however, I see nothing wrong there. [Wikipedia](https://en.wikipedia.org/wiki/Handle_%28computing%29)
+
+
 ### endiannes
 
 > Ordre dans lequel les octets sont organisés dans une case mémoire **ou dans une communication**. Big endian et Little endian sont deux architectures différentes.
