@@ -69,7 +69,9 @@ which every C/C++ programmer understand, but would totally baffle someone coming
 
 ### Sémantique
 [wikipedia (general)](https://fr.wikipedia.org/wiki/S%C3%A9mantique)  
-[wikipedia (IT)](https://fr.wikipedia.org/wiki/S%C3%A9mantique_des_langages_de_programmation)
+[wikipedia (IT)](https://fr.wikipedia.org/wiki/S%C3%A9mantique_des_langages_de_programmation)  
+
+
 La sémantique est une branche de la linguistique qui étudie les signifiés, ce dont on parle, ce que l'on veut énoncer. Sa branche symétrique, la syntaxe, concerne pour sa part le signifiant, sa forme, sa langue, sa graphie, sa grammaire, etc ; c'est la forme de l'énoncé.
 
 En particulier, la sémantique possède plusieurs objets d'étude :
