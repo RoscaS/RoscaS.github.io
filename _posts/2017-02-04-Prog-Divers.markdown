@@ -39,6 +39,8 @@ for i in range(3,-1,-1):
 ```
 
 ## Nice round (Cpp)
+Le cast en int (py ou cpp) va suprimer la décimale peu importe sa valeur.
+Le `+ .5` avant le cast sur `tot` assure que la valeur après le cast sera arrondie en fonction de la décimale.
 
 ```cpp
 int main() {
@@ -46,18 +48,13 @@ int main() {
     int b = 17;
     int c = 5;
 
-    // cin >> a >> b >> c;
-
     float B = static_cast<float>(b);
     float C = static_cast<float>(c);
     float tot = a + (a*(B/100)) + (a*(C/100));
 
-    cout << "The total meal cost is " << static_cast<int>(tot+0.5) << " dollars." << endl;
+    cout << "The total meal cost is " << static_cast<int>(tot + .5) 
+         << " dollars." << endl;
 
-    // Caster int va arrondir vers le bas peu importe la décimale.
-    // Pour avoir une valeur arrondie en fonction des décimales 
-    // (> 0.5 vers le haut et < 0.5 vers le bas),
-    // on ajoute le + .5
     return 0;
 }
 ```

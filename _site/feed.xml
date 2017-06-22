@@ -6,13 +6,120 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 22 Jun 2017 01:18:06 +0200</pubDate>
-    <lastBuildDate>Thu, 22 Jun 2017 01:18:06 +0200</lastBuildDate>
+    <pubDate>Thu, 22 Jun 2017 04:27:07 +0200</pubDate>
+    <lastBuildDate>Thu, 22 Jun 2017 04:27:07 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
-        <title>Cpp: Smart pointers et Move</title>
-        <description>&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+        <title>Cpp: Semantique de copie (rappel)</title>
+        <description>&lt;h2 id=&quot;rappel-types-dinitialisation&quot;&gt;Rappel: types d’initialisation:&lt;/h2&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Fraction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;den&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;m_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m_den&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;friend&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;initialisation-large-directe&quot;&gt;Initialisation &lt;strong&gt;&lt;script type=&quot;math/tex&quot;&gt;\large directe&lt;/script&gt;&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;int x(5);&lt;/code&gt; initialisation directe d’un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction f1(5,4);&lt;/code&gt; initiasation directe d’un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; appelle le cstr de &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction(int,int)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;initialisation-large-uniforme&quot;&gt;Initialisation &lt;strong&gt;&lt;script type=&quot;math/tex&quot;&gt;\large uniforme&lt;/script&gt;&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;int y{5};&lt;/code&gt; initialisation uniforme d’un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction f2{5,3};&lt;/code&gt;  initialisation uniforme d’un objet de type ‘Fraction`
+    &lt;ul&gt;
+      &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; appelle le cstr de &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction(int,int)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;initialisation-par-large-copie&quot;&gt;Initialisation par &lt;strong&gt;&lt;script type=&quot;math/tex&quot;&gt;\large copie&lt;/script&gt;&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;int z = 6;&lt;/code&gt; initialisation par copie d’un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction f3 = Fraction(6);&lt;/code&gt; initialisation par copie d’un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; appelle le constructeur &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction(6,1)&lt;/code&gt; &lt;strong&gt;ou&lt;/strong&gt; le cstr de copie. Ce dernier n’est généralement pas le premier choix du compilateur pour raison de performance.&lt;/li&gt;
+      &lt;li&gt;Cette façon de faire est évaluée de la même façon que le serait &lt;code class=&quot;highlighter-rouge&quot;&gt;Fractionf3(fraction(6));&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction f4 = 7;&lt;/code&gt; initialisation par copie d’un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction&lt;/code&gt;.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; le compilateur va tenter de trouver une façon de convertir 7 en un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction&lt;/code&gt; ce qui va invoquer le cstr &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction(7,1)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Autre cas d’initialisation par copie:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Passage d’une classe (objet de type…) comme argument&lt;/li&gt;
+    &lt;li&gt;Retour d’une classe (objet de type…)&lt;/li&gt;
+  &lt;/ul&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;règle&quot;&gt;Règle&lt;/h3&gt;
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Éviter l’initialisation par copie au profit de de l’initialisation uniforme&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;rappel-opérateur-daffectation-et-cstr-de-copie&quot;&gt;Rappel: Opérateur d’affectation et cstr de copie&lt;/h2&gt;
+&lt;p&gt;Le constructeur de copie et l’opérateur d’assignation sont presque équivalents, les deux copient un objet dans un autre.&lt;/p&gt;
+
+&lt;h4 id=&quot;opérateur-daffectation&quot;&gt;Opérateur d’affectation&lt;/h4&gt;
+&lt;p&gt;Remplace le contenu d’objets préexistants (comme c’est une affectation, il assigne une valeur à un objet qui existe déja).&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// initialisation (contient du garbage)
+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// affectation à un objet préexistant
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Il est évident qu’on ne peut pas faire &lt;code class=&quot;highlighter-rouge&quot;&gt;b = 5;&lt;/code&gt; sans avoir fait au préalable l’initialisation &lt;code class=&quot;highlighter-rouge&quot;&gt;int b;&lt;/code&gt;. Dans la même logique: &lt;code class=&quot;highlighter-rouge&quot;&gt;f1 = (5,2);&lt;/code&gt; doit être précédé de &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction f1;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;constructeur-de-copies&quot;&gt;Constructeur de copies&lt;/h4&gt;
+&lt;p&gt;Initialise de nouveaux objets.&lt;/p&gt;
+
+&lt;h3 id=&quot;règle-1&quot;&gt;Règle&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;si un nouvel objet doit être créé avant qu’une copie puisse se faire le cstr de copies est utilisé (inclut le passage d’objet en argument (par valeur) et le retour d’objets par valeur).&lt;/span&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;si un nouvel objet ne doit pas forcément être créé avant qu’une copie puisse se passer, on utilise l’opérateur d’affectation.&lt;/span&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 21 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/cpp/cpp-semantiqueCopie.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-semantiqueCopie.html</guid>
+        
+        <category>cpp</category>
+        
+        
+        <category>Cpp</category>
+        
+      </item>
+    
+      <item>
+        <title>Cpp: Sémantique de déplacement &amp; smart_ptr</title>
+        <description>&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;Dans la fonction suivante…&lt;/p&gt;
 
@@ -220,7 +327,7 @@ Ressource detruites
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’pd’assignation, C++ nous les génère par défaut. Et ces versions de  d’assignation surchargé base ne font qu’une &lt;strong&gt;shallow copy&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’operateur d’affectation, C++ nous les génère par défaut. Ces versions de base ne font qu’une &lt;strong&gt;shallow copy&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Quand nous initialisons &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;2 avec &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt;1, les deux variables de type Auto_ptr1 pointent sur la même ressource et donc naturellement quand &lt;code class=&quot;highlighter-rouge&quot;&gt;res1&lt;/code&gt; sort de portée, les ressources qu’il possède sont détruites et laisse &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt; avec un pointeur qui pointe dans le vide. Quand &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt; sort a son tour de portée il détruit des ressources déjà détruites et entraine un crash.&lt;/p&gt;
 
@@ -241,11 +348,11 @@ Ressource detruites
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Une solution serait de &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; le cstr de copies et la surcharge de l’p d’affectation et donc empécher les copies ce qui aurait pour efet  d’assignation surchargé de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)&lt;/p&gt;
+    &lt;p&gt;Une solution serait de &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; le cstr de copies et la surcharge de l’operateur d’affectation. Cela aurait pour effet d’empécher les copies et donc de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)&lt;/p&gt;
 
     &lt;ul&gt;
       &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\large \Rightarrow&lt;/script&gt; on se retrouve avec un nouveau problème… 
-Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assignation surchargé retourner une valeur de type &lt;strong&gt;Auto_ptr1&lt;/strong&gt; ?&lt;/li&gt;
+Sans le cstr de copie ou de surcharge de l’opérateur d’affectation, comment  retourner une valeur de type &lt;strong&gt;Auto_ptr1&lt;/strong&gt; ?&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -268,7 +375,7 @@ Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assi
     &lt;p&gt;L’option du passage par valeur comme vu plus haut, fait crasher le programme à cause des &lt;strong&gt;shallow copy&lt;/strong&gt; et des pointeurs dupliqués.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Personnaliser le cstr de copies et la surcharge de l’p d  d’assignation surchargé d’assignation en les faisant faire des &lt;strong&gt;deep copy&lt;/strong&gt; fonctionnera mais &lt;strong&gt;les copies sont couteuses en ressources&lt;/strong&gt; (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies &lt;em&gt;inutiles&lt;/em&gt; uniquement pour retourner un objet &lt;strong&gt;Auto_ptr1&lt;/strong&gt; d’une fonction. De plus assigner ou initialiser un &lt;em&gt;simple pointeur&lt;/em&gt; ne copie pas l’objet pointé donc pourquoi un &lt;em&gt;smart pointer&lt;/em&gt; agirait différament?&lt;/p&gt;
+    &lt;p&gt;Personnaliser le cstr de copies et la surcharge de l’opérateur d’affectation en s’assurant qu’ils facent des &lt;strong&gt;deep copy&lt;/strong&gt; fonctionnerait mais &lt;strong&gt;les copies sont couteuses en ressources&lt;/strong&gt; (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies &lt;em&gt;inutiles&lt;/em&gt; uniquement pour retourner un objet &lt;strong&gt;Auto_ptr1&lt;/strong&gt; d’une fonction. De plus assigner ou initialiser un &lt;em&gt;simple pointeur&lt;/em&gt; ne copie pas l’objet pointé donc pourquoi un &lt;em&gt;smart pointer&lt;/em&gt; agirait différament?&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -276,7 +383,7 @@ Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assi
 
 &lt;h2 id=&quot;move-semantics&quot;&gt;Move semantics&lt;/h2&gt;
 
-&lt;p&gt;À la place d’avoir notre cstr de copies ou notre oppérateur d’assignations qui copient le pointeur (“Sémantique de copie”), on peut à la place &lt;strong&gt;transférer/déplacer&lt;/strong&gt; (move) la possession (ownership) du pointeur de la source à l’objet de destination.&lt;/p&gt;
+&lt;p&gt;À la place d’avoir notre cstr de copies ou notre oppérateur d’affectation qui copient le pointeur (“Sémantique de copie”), on peut à la place &lt;strong&gt;transférer/déplacer&lt;/strong&gt; (move) la possession (ownership) du pointeur de la source à l’objet de destination.&lt;/p&gt;
 
 &lt;p&gt;Le concepte de  &lt;strong&gt;sémentique de déplacement&lt;/strong&gt; (Move semantics) exprime qu’une classe va transférer la possèssion d’un objet à la place d’en faire une copie.&lt;/p&gt;
 
@@ -300,7 +407,7 @@ Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assi
 &lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;// On s'assure que la source ne possède plus le ptr
 &lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;c1&quot;&gt;// OL de l'op d'assignation qui implémente la sémantique de déplacement
+    &lt;span class=&quot;c1&quot;&gt;// OL de l'op d'affectation qui implémente la sémantique de déplacement
 &lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// a n'est PAS const !
 &lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Self alloc check
@@ -359,7 +466,7 @@ Ressource detruite
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Notre surcharge de l’opérateur d’assignation a eu le résultat attendu et a bien transféré la possession de &lt;code class=&quot;highlighter-rouge&quot;&gt;_ptr&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;res1&lt;/code&gt; à &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt;. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.&lt;/p&gt;
+&lt;p&gt;Notre surcharge de l’opérateur d’affectation a eu le résultat attendu et a bien transféré la possession de &lt;code class=&quot;highlighter-rouge&quot;&gt;_ptr&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;res1&lt;/code&gt; à &lt;code class=&quot;highlighter-rouge&quot;&gt;res2&lt;/code&gt;. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.&lt;/p&gt;
 
 &lt;h2 id=&quot;un-mot-sur-stdauto_ptr-et-pourquoi-léviter&quot;&gt;Un mot sur std::auto_ptr et pourquoi l’éviter&lt;/h2&gt;
 
@@ -370,6 +477,344 @@ Ressource detruite
 &lt;blockquote&gt;
   &lt;p&gt;std::auto_ptr est obsolet et ne devrait pas être utilisé. Il est dailleurs prévu que cette fonction de la STL soit retirée à la révision 17 de C++.&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;h2 id=&quot;références-sur-r-value-et-l-value&quot;&gt;Références sur R-value et L-value&lt;/h2&gt;
+
+&lt;p&gt;Avant d’aller plus loin il est interessant de vite fait voir ce qui se passe sur &lt;a href=&quot;\cpp\cpp-R-value-L-value.html&quot;&gt;cette&lt;/a&gt; page un peu barbante mais utile pour la suite.&lt;/p&gt;
+
+&lt;h2 id=&quot;sémantique-de-copie&quot;&gt;Sémantique de copie&lt;/h2&gt;
+
+&lt;p&gt;Et puis sur &lt;a href=&quot;\cpp\cpp-semantiqueCopie.html&quot;&gt;celle-ci&lt;/a&gt; aussi tant qu’à faire…&lt;/p&gt;
+
+&lt;h2 id=&quot;constructeur-de-copies-et-opérateur-daffectation&quot;&gt;Constructeur de copies et opérateur d’affectation&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Le &lt;strong&gt;constructeur de copie&lt;/strong&gt; est utilisé pour initialiser une classe en faisant une copie d’un objet de la même classe.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;La &lt;strong&gt;surcharge de l’opérateur d’affectation&lt;/strong&gt; est utilisée pour copier les membres d’un objet dans un autre objet déjà existant.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Par défaut, le compilateur génère un constructeur de copie et opérateur d’affectation si &lt;strong&gt;l’un des deux&lt;/strong&gt; n’est explicitement fournit.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Ces fonctions fournies par le compilateur font des &lt;strong&gt;shallow copies&lt;/strong&gt; ce qui peut causer des problèmes pour les classes qui allouent dynamiquement de la mémoire.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;Les classes qui allouent dynamiquement de la mémoire &lt;strong&gt;doivent&lt;/strong&gt; fournir des fonctions qui font des &lt;strong&gt;deep copy&lt;/strong&gt; à la place ! &lt;/span&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Reprenons l’exemple de la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Auto_ptr&lt;/code&gt; et ajoutons y un constructeur de copie et une surcharge de l’opérateur d’affectation pour respecter le dernier point.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Auto_ptr3&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// cstr de copie, deep copie a._ptr dans _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// surcharge opérateur d'affectation, deep copie a._ptr dans _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// self assign-check
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// désalloue d'éventuelles ressources
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// copie les ressources
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;   
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Ressource&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource acquise&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource detruite&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generationRessource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// cette valeur de retour invoque le cstr de copie
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mainRes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mainRes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generationRessource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// cette affectation invoque 
+&lt;/span&gt;                                    &lt;span class=&quot;c1&quot;&gt;// la surcharge de l'op d'affectation
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Dans ce programme la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;generationRessource()&lt;/code&gt; crée une ressource encapsulée dans un smart pointer qui est ensuite retourné à la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt; et affectée à un objet Auto_ptr3 préexistant.&lt;/p&gt;
+
+&lt;p&gt;L’output est:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Ressource acquise
+Ressource acquise
+Ressource detruite
+Ressource acquise
+Ressource detruite
+Ressource detruite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;… beaucoup de ressources créées et détruites pour un si simple programme. Si nous décortiquons ce dernier, nous pouvons identifier 6 étapes clés (une par message printé).&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Dans la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;generationRessource()&lt;/code&gt;, la variable locale &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; est créée et initialisée avec des ressources allouées dynamiquement &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; premier message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;acquise&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; est retourné dans le &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt; par copie de valeur. On retourne de cette façon car &lt;strong&gt;res&lt;/strong&gt; est une variable locale à la fonction et une référence à cette dernière pointerait dans le vide une fois la fonction finie. &lt;code class=&quot;highlighter-rouge&quot;&gt;Res&lt;/code&gt; est donc construit par copie dans un &lt;strong&gt;objet temporaire&lt;/strong&gt;. Comme notre cstr de copie fait une &lt;strong&gt;deep copie&lt;/strong&gt;, une nouvelle Ressource est allouée d’où le second message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;acquise&lt;/script&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; sort de portée et donc la Ressource initiale est détruite ce qui cause le premièr message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;detruite&lt;/script&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;L’objet temporaire est assigné à la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;mainRes&lt;/code&gt; par &lt;strong&gt;assignement par copie&lt;/strong&gt;. Comme notre cstr de copies gère la &lt;strong&gt;deep copy&lt;/strong&gt;, une nouvelle ressource est allouée et causant le 3e message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;acquise&lt;/script&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;L’expression d’affectation finie, et l’&lt;strong&gt;objet temporaire&lt;/strong&gt; se retrouve hors de portée et détruit d’où le second message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;detruite&lt;/script&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;À la fin du &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;mainRes&lt;/code&gt; sors lui aussi de portée et génère notre dernier message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;detruite&lt;/script&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; bien comprendre les points 2 et 5 ! &lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Résultat des courses, pour un appel du constructeur de copie pour copier &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; dans un temporaire et une affectation du temporaire dans le &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt; dans la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;resMain&lt;/code&gt; on se retrouve avec 3 objets différents au total.&lt;/p&gt;
+
+&lt;p&gt;Pour le moins &lt;strong&gt;innéfficient&lt;/strong&gt; mais au moins ça ne crash pas!&lt;/p&gt;
+
+&lt;h2 id=&quot;constructeur-de-déplacement-et-affectation-de-déplacement&quot;&gt;Constructeur de déplacement et affectation de déplacement&lt;/h2&gt;
+
+&lt;p&gt;C++ 11 définit deux nouvelles fonctions au service de la sémantique de déplacement:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Un constructeur de déplacement&lt;/li&gt;
+  &lt;li&gt;Une surcharge de l’opérateur d’affectation pour le déplacement&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Leur définition fonctionne de façon analogue à celle du cstr de copie et la surcharge de l’opérateur d’affectation à la différence que les fonctions dédiées au déplacement prennent des références à des R-value &lt;strong&gt;non-constantes&lt;/strong&gt; à la place des R-value constantes de leur homologues de copie.&lt;/p&gt;
+
+&lt;p&gt;Voici notre fonction Auto_ptr améliorée de la capacité de déplacement (la paire de fonctions dédiées à la copie sont toujours là pour la comparaison).&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Auto_ptr4&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// cstr de copie, deep copie a._ptr dans _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// cstr de déplacement, transfère la possèssion de a._ptr a _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// surcharge opérateur d'affectation, deep copie a._ptr dans _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// self assign-check
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// désalloue d'éventuelles ressources
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// copie les ressources
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Affectation de déplcement, transfère la possèssion de a._ptr a _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// self assign-check
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// désalloue d'éventuelles ressources
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// transfère la possèssion de a._ptr a _ptr
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;   
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Ressource&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource acquise&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource detruite&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generationRessource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// cette valeur de retour invoque le cstr de copie
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mainRes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mainRes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generationRessource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// cette affectation invoque 
+&lt;/span&gt;                                    &lt;span class=&quot;c1&quot;&gt;// la surcharge de l'op d'affectation
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Ces nouvelles fonctions sont très simples. À la place de &lt;strong&gt;deep copy&lt;/strong&gt; l’objet source (a) dans le nouvel objet, ils se contente de bouger (voler) les ressoues de l’objet source. Ceci implique une &lt;strong&gt;shallow copy&lt;/strong&gt; du pointeur de la source dans l’objet et un set du pointeur de la source à &lt;code class=&quot;highlighter-rouge&quot;&gt;nullptr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Le nouvel output ressemble à:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Ressource acquise
+Ressource detruite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Beaucoup mieux !&lt;/p&gt;
+
+&lt;p&gt;Le flow du programme reste le même que le précédent sauf qu’à la place d’appeler le constructeur de copie et l’opérateur d’affectation, ce programme appel les homologues dédiés au déplacement.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Dans la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;generationRessource()&lt;/code&gt;, la variable locale &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; est créée et initialisée avec des ressources allouées dynamiquement &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; premier message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;acquise&lt;/script&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; est retourné dans le &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt; par valeur: &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; via le cstr de déplacement est transféré dans un objet temporaire créé dynamiquement.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; sort de portée. Comme &lt;code class=&quot;highlighter-rouge&quot;&gt;res&lt;/code&gt; ne possède plus de pointeur (car déplacé dans l’objet temporaire), nous n’avons pas de print.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;L’objet temporaire est assigné à la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;mainRes&lt;/code&gt; ce qui transfère l’objet créé dynamiquement et contenu dans la variable temporaire à &lt;code class=&quot;highlighter-rouge&quot;&gt;mainRes&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;L’expression d’affectation finie, l’&lt;strong&gt;objet temporaire&lt;/strong&gt; se retrouve hors de portée et est détruit mais comme cet objet temporaire à transféré son contenu, il ne possède plus de pointeur (il est maintenant dans &lt;code class=&quot;highlighter-rouge&quot;&gt;mainRes&lt;/code&gt;) et lors de cette destruction, nous n’avons pas de print no plus.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;À la fin du &lt;code class=&quot;highlighter-rouge&quot;&gt;main()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;mainRes&lt;/code&gt; sors de portée et génère le message &lt;script type=&quot;math/tex&quot;&gt;Ressource\;detruite&lt;/script&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Résultat des courses, à la place de copier notre ressource deux fois, nous la transfèrons deux fois. &lt;span style=&quot;color:red&quot;&gt;Ce qui est plus efficace au niveau ressources.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;La paire dédiée au déplacement n’est pas fournie par défaut.&lt;/p&gt;
+
+&lt;h2 id=&quot;règle&quot;&gt;Règle&lt;/h2&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;Pour utiliser le constructeur de déplacement et l’affectation de déplacement nous devons les fournir nous même.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;quand-est-la-paire-dédiée-au-déplacement-appelée-&quot;&gt;Quand est la paire dédiée au déplacement appelée ?&lt;/h2&gt;
+&lt;p&gt;Lorsque ces fonctions sont définies et que l’argument pour la construction ou l’affectation est une R-value. Cette R-value est typiquement un literal ou une valeur temporaire.&lt;/p&gt;
+
+&lt;h2 id=&quot;copie-vs-déplacement&quot;&gt;Copie VS déplacement&lt;/h2&gt;
+
+&lt;h3 id=&quot;copie&quot;&gt;Copie&lt;/h3&gt;
+&lt;p&gt;Si nous construisons ou affectons un objet et que l’argument est une L-value, il est préférable de copier cette L-value. On ne peut assumer qu’il est safe de la modifier car on pourait en avoir besoin plus tard dans le programme.&lt;/p&gt;
+
+&lt;p&gt;Dans le cas d’une exression comme &lt;code class=&quot;highlighter-rouge&quot;&gt;a = b&lt;/code&gt;, il est impensable que &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt; change de valeur.&lt;/p&gt;
+
+&lt;h3 id=&quot;déplacement&quot;&gt;déplacement&lt;/h3&gt;
+&lt;p&gt;Si nous construisons ou affectons un objet et que l’argument est une R-value, nous savons que cette R-value n’est d’une façon ou d’une autre qu’un objet temporaire. À la place de le copier (ce qui peut couter cher en ressources), on peut simplement transférer les ressources qu’il possède (bien moins couteux en ressources) à l’objet que nous construisons ou affectons.&lt;/p&gt;
+
+&lt;p&gt;C’est safe car de toutes façons l’objet temporaire ser détruit à la fin de l’expression et que donc nous savons que nous n’allons pas la réutiliser.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;C++11, grâce au références R-value nous permet de donner des comportements différents si l’argument est une R-value ou une L-value. Cela nous permet d’avoir plus de liberté et d’être plus intéligent dans le choix des comportement de nos objets.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;empécher-la-copie&quot;&gt;Empécher la copie&lt;/h2&gt;
+&lt;p&gt;Dans notre version de la class Auto_ptr précédent, nous avons laissé la paire de copie pour pouvoir visuellement comparer les deux paires.&lt;/p&gt;
+
+&lt;p&gt;Dans les classes qui sont capable de faire des déplacements, il parfois désirable de &lt;strong&gt;delete&lt;/strong&gt;  la paire de copie pour s’assurer qu’aucune copie ne sera faite.&lt;/p&gt;
+
+&lt;p&gt;Dans le cas de notre exemple, nous ne voulons pas que notre objet générique &lt;code class=&quot;highlighter-rouge&quot;&gt;T&lt;/code&gt; soit copié. D’une part car c’est couteux en ressources et d’autre part car en fonction du type (classe) &lt;code class=&quot;highlighter-rouge&quot;&gt;T&lt;/code&gt; utilisé, il se peut que cette dernière ne supporte pas la copie.&lt;/p&gt;
+
+&lt;p&gt;Voici une version de la classe Auto_ptr qui gère la sémantique de déplacement mais pas celle de copie:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Auto_ptr5&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// cstr de copie, copies non supportées !
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// cstr de déplacement, transfère la possèssion de a._ptr a _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// surcharge opérateur d'affectation, copies non supportées !
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// Affectation de déplcement, transfère la possèssion de a._ptr a _ptr
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Auto_ptr5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// self assign-check
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// désalloue d'éventuelles ressources
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// transfère la possèssion de a._ptr a _ptr
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;isNull&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_ptr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nullptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;   
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Si nous tentons de passer une L-value de type Auto_ptr5 à une fonction, le compilateur se pleindrait que le constructeur de copie requis pour l’initialisation de copies a été delete. C’est une bonne chose car nous ne devrions pas passer Auto_ptr5 par référence L-value constante de toutes façon !&lt;/p&gt;
+
+&lt;p&gt;Auto_ptr5 est (finalement) une bonne classe smart pointer. En réalité celle que contient la STL (std::unique_ptr) lui ressemble beaucoup.&lt;/p&gt;
+
+&lt;h2 id=&quot;dernier-exemple&quot;&gt;Dernier exemple&lt;/h2&gt;
 
 </description>
         <pubDate>Wed, 21 Jun 2017 00:00:00 +0200</pubDate>
@@ -698,8 +1143,8 @@ Ressource detruite
 
 </description>
         <pubDate>Wed, 21 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/cpp/cpp-R-value-L-value.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-R-value-L-value.html</guid>
+        <link>http://localhost:4000/cpp/cpp-R-value-L-value-Copy.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-R-value-L-value-Copy.html</guid>
         
         <category>cpp</category>
         
@@ -2984,33 +3429,6 @@ l’entier renvoyé par &lt;script type=&quot;math/tex&quot;&gt;\large \log_{10}
         
         
         <category>Presentations</category>
-        
-      </item>
-    
-      <item>
-        <title>Py: NumPy</title>
-        <description>&lt;h2 id=&quot;cheatsheet&quot;&gt;cheatSheet&lt;/h2&gt;
-&lt;script src=&quot;https://gist.github.com/RoscaS/ed44a51eb27f3172e419d69563fa2ade.js&quot;&gt;&lt;/script&gt;
-
-&lt;h2 id=&quot;résumé&quot;&gt;résumé&lt;/h2&gt;
-&lt;script src=&quot;https://gist.github.com/RoscaS/05a8c7cf0eeb1b2b4865e641721cdae4.js&quot;&gt;&lt;/script&gt;
-
-&lt;h2 id=&quot;exercices&quot;&gt;Exercices&lt;/h2&gt;
-&lt;script src=&quot;https://gist.github.com/RoscaS/affa5118cdbd00aa881f2a98fc46eacc.js&quot;&gt;&lt;/script&gt;
-
-</description>
-        <pubDate>Tue, 06 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/py/Py-NumPy.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/Py-NumPy.html</guid>
-        
-        <category>Py</category>
-        
-        <category>numpy</category>
-        
-        <category>matplotlib</category>
-        
-        
-        <category>Py</category>
         
       </item>
     

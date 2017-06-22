@@ -40,7 +40,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Cpp: Smart pointers et Move</title>
+  <title>Cpp: Sémantique de déplacement &amp; smart_ptr</title>
   <meta name="description" content="Introduction">
 </head>
 
@@ -51,7 +51,7 @@
 <header class="post-header">
 
     <center>
-		<div class="post-title" itemprop="name headline">Cpp: Smart pointers et Move</div>
+		<div class="post-title" itemprop="name headline">Cpp: Sémantique de déplacement & smart_ptr</div>
 
 		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="21 Jun 2017" itemprop="datePublished">Jun 21 2017</time>
 
@@ -90,7 +90,7 @@
 <div class="post-content">
     <center>
 	
-	<p>Conceptes et sémantique de déplacement</p>
+	<p>Introduction aux smart_ptr et à la sémantique de déplacement</p>
 	
     </center>
 	<h2>Directory</h2>
@@ -99,7 +99,7 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h1 id="introduction">Introduction</h1>
+    <h2 id="introduction">Introduction</h2>
 
 <p>Dans la fonction suivante…</p>
 
@@ -307,7 +307,7 @@ Ressource detruites
 </code></pre>
 </div>
 
-<p>Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’pd’assignation, C++ nous les génère par défaut. Et ces versions de  d’assignation surchargé base ne font qu’une <strong>shallow copy</strong>.</p>
+<p>Comme nous ne fournissons pas de cstr de copies ou de srucharge de l’operateur d’affectation, C++ nous les génère par défaut. Ces versions de base ne font qu’une <strong>shallow copy</strong>.</p>
 
 <p>Quand nous initialisons <code class="highlighter-rouge">res</code>2 avec <code class="highlighter-rouge">res</code>1, les deux variables de type Auto_ptr1 pointent sur la même ressource et donc naturellement quand <code class="highlighter-rouge">res1</code> sort de portée, les ressources qu’il possède sont détruites et laisse <code class="highlighter-rouge">res2</code> avec un pointeur qui pointe dans le vide. Quand <code class="highlighter-rouge">res2</code> sort a son tour de portée il détruit des ressources déjà détruites et entraine un crash.</p>
 
@@ -328,11 +328,11 @@ Ressource detruites
 
 <ul>
   <li>
-    <p>Une solution serait de <code class="highlighter-rouge">delete</code> le cstr de copies et la surcharge de l’p d’affectation et donc empécher les copies ce qui aurait pour efet  d’assignation surchargé de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)</p>
+    <p>Une solution serait de <code class="highlighter-rouge">delete</code> le cstr de copies et la surcharge de l’operateur d’affectation. Cela aurait pour effet d’empécher les copies et donc de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)</p>
 
     <ul>
       <li><script type="math/tex">\large \Rightarrow</script> on se retrouve avec un nouveau problème… 
-Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assignation surchargé retourner une valeur de type <strong>Auto_ptr1</strong> ?</li>
+Sans le cstr de copie ou de surcharge de l’opérateur d’affectation, comment  retourner une valeur de type <strong>Auto_ptr1</strong> ?</li>
     </ul>
   </li>
 </ul>
@@ -355,7 +355,7 @@ Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assi
     <p>L’option du passage par valeur comme vu plus haut, fait crasher le programme à cause des <strong>shallow copy</strong> et des pointeurs dupliqués.</p>
   </li>
   <li>
-    <p>Personnaliser le cstr de copies et la surcharge de l’p d  d’assignation surchargé d’assignation en les faisant faire des <strong>deep copy</strong> fonctionnera mais <strong>les copies sont couteuses en ressources</strong> (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies <em>inutiles</em> uniquement pour retourner un objet <strong>Auto_ptr1</strong> d’une fonction. De plus assigner ou initialiser un <em>simple pointeur</em> ne copie pas l’objet pointé donc pourquoi un <em>smart pointer</em> agirait différament?</p>
+    <p>Personnaliser le cstr de copies et la surcharge de l’opérateur d’affectation en s’assurant qu’ils facent des <strong>deep copy</strong> fonctionnerait mais <strong>les copies sont couteuses en ressources</strong> (et peuvent donc ne pas être désirable ou même possible en fonction de la complexité du problème) mais surtout nous ne voulons pas faire des copies <em>inutiles</em> uniquement pour retourner un objet <strong>Auto_ptr1</strong> d’une fonction. De plus assigner ou initialiser un <em>simple pointeur</em> ne copie pas l’objet pointé donc pourquoi un <em>smart pointer</em> agirait différament?</p>
   </li>
 </ul>
 
@@ -363,7 +363,7 @@ Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assi
 
 <h2 id="move-semantics">Move semantics</h2>
 
-<p>À la place d’avoir notre cstr de copies ou notre oppérateur d’assignations qui copient le pointeur (“Sémantique de copie”), on peut à la place <strong>transférer/déplacer</strong> (move) la possession (ownership) du pointeur de la source à l’objet de destination.</p>
+<p>À la place d’avoir notre cstr de copies ou notre oppérateur d’affectation qui copient le pointeur (“Sémantique de copie”), on peut à la place <strong>transférer/déplacer</strong> (move) la possession (ownership) du pointeur de la source à l’objet de destination.</p>
 
 <p>Le concepte de  <strong>sémentique de déplacement</strong> (Move semantics) exprime qu’une classe va transférer la possèssion d’un objet à la place d’en faire une copie.</p>
 
@@ -387,7 +387,7 @@ Sans le cstr de copie et la surcharge de l’p d’affectation, cmment  d’assi
 </span>        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>   <span class="c1">// On s'assure que la source ne possède plus le ptr
 </span>    <span class="p">}</span>
 
-    <span class="c1">// OL de l'op d'assignation qui implémente la sémantique de déplacement
+    <span class="c1">// OL de l'op d'affectation qui implémente la sémantique de déplacement
 </span>    <span class="n">Auto_ptr2</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Auto_ptr2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="c1">// a n'est PAS const !
 </span>    <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Self alloc check
@@ -446,7 +446,7 @@ Ressource detruite
 </code></pre>
 </div>
 
-<p>Notre surcharge de l’opérateur d’assignation a eu le résultat attendu et a bien transféré la possession de <code class="highlighter-rouge">_ptr</code> de <code class="highlighter-rouge">res1</code> à <code class="highlighter-rouge">res2</code>. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.</p>
+<p>Notre surcharge de l’opérateur d’affectation a eu le résultat attendu et a bien transféré la possession de <code class="highlighter-rouge">_ptr</code> de <code class="highlighter-rouge">res1</code> à <code class="highlighter-rouge">res2</code>. Par conséquant on ne se retrouve pas avec des copies dupliqués du pointeur et tout se retrouve proprement nettoyé à la fin du programme.</p>
 
 <h2 id="un-mot-sur-stdauto_ptr-et-pourquoi-léviter">Un mot sur std::auto_ptr et pourquoi l’éviter</h2>
 
@@ -457,6 +457,344 @@ Ressource detruite
 <blockquote>
   <p>std::auto_ptr est obsolet et ne devrait pas être utilisé. Il est dailleurs prévu que cette fonction de la STL soit retirée à la révision 17 de C++.</p>
 </blockquote>
+
+<h2 id="références-sur-r-value-et-l-value">Références sur R-value et L-value</h2>
+
+<p>Avant d’aller plus loin il est interessant de vite fait voir ce qui se passe sur <a href="\cpp\cpp-R-value-L-value.html">cette</a> page un peu barbante mais utile pour la suite.</p>
+
+<h2 id="sémantique-de-copie">Sémantique de copie</h2>
+
+<p>Et puis sur <a href="\cpp\cpp-semantiqueCopie.html">celle-ci</a> aussi tant qu’à faire…</p>
+
+<h2 id="constructeur-de-copies-et-opérateur-daffectation">Constructeur de copies et opérateur d’affectation</h2>
+
+<ul>
+  <li>
+    <p>Le <strong>constructeur de copie</strong> est utilisé pour initialiser une classe en faisant une copie d’un objet de la même classe.</p>
+  </li>
+  <li>
+    <p>La <strong>surcharge de l’opérateur d’affectation</strong> est utilisée pour copier les membres d’un objet dans un autre objet déjà existant.</p>
+  </li>
+  <li>
+    <p>Par défaut, le compilateur génère un constructeur de copie et opérateur d’affectation si <strong>l’un des deux</strong> n’est explicitement fournit.</p>
+  </li>
+  <li>
+    <p>Ces fonctions fournies par le compilateur font des <strong>shallow copies</strong> ce qui peut causer des problèmes pour les classes qui allouent dynamiquement de la mémoire.</p>
+  </li>
+  <li>
+    <p><span style="color:red">Les classes qui allouent dynamiquement de la mémoire <strong>doivent</strong> fournir des fonctions qui font des <strong>deep copy</strong> à la place ! </span></p>
+  </li>
+</ul>
+
+<p>Reprenons l’exemple de la classe <code class="highlighter-rouge">Auto_ptr</code> et ajoutons y un constructeur de copie et une surcharge de l’opérateur d’affectation pour respecter le dernier point.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr3</span>
+<span class="p">{</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Auto_ptr3</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="o">=</span><span class="nb">nullptr</span><span class="p">)</span><span class="o">:</span> <span class="n">_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="o">~</span><span class="n">Auto_ptr3</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// cstr de copie, deep copie a._ptr dans _ptr
+</span>    <span class="n">Auto_ptr3</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_ptr</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// surcharge opérateur d'affectation, deep copie a._ptr dans _ptr
+</span>    <span class="n">Auto_ptr3</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// self assign-check
+</span>        <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// désalloue d'éventuelles ressources
+</span>        <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span>
+        <span class="c1">// copie les ressources
+</span>        <span class="n">_ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span>  <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span>   <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span> <span class="o">==</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>   
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Auto_ptr3</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">generationRessource</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr3</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span> <span class="c1">// cette valeur de retour invoque le cstr de copie
+</span><span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr3</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">mainRes</span><span class="p">;</span>
+    <span class="n">mainRes</span> <span class="o">=</span> <span class="n">generationRessource</span><span class="p">();</span> <span class="c1">// cette affectation invoque 
+</span>                                    <span class="c1">// la surcharge de l'op d'affectation
+</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Dans ce programme la fonction <code class="highlighter-rouge">generationRessource()</code> crée une ressource encapsulée dans un smart pointer qui est ensuite retourné à la fonction <code class="highlighter-rouge">main()</code> et affectée à un objet Auto_ptr3 préexistant.</p>
+
+<p>L’output est:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Ressource acquise
+Ressource detruite
+Ressource acquise
+Ressource detruite
+Ressource detruite
+</code></pre>
+</div>
+<p>… beaucoup de ressources créées et détruites pour un si simple programme. Si nous décortiquons ce dernier, nous pouvons identifier 6 étapes clés (une par message printé).</p>
+
+<ol>
+  <li>
+    <p>Dans la fonction <code class="highlighter-rouge">generationRessource()</code>, la variable locale <code class="highlighter-rouge">res</code> est créée et initialisée avec des ressources allouées dynamiquement <script type="math/tex">\Rightarrow</script> premier message <script type="math/tex">Ressource\;acquise</script></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">res</code> est retourné dans le <code class="highlighter-rouge">main()</code> par copie de valeur. On retourne de cette façon car <strong>res</strong> est une variable locale à la fonction et une référence à cette dernière pointerait dans le vide une fois la fonction finie. <code class="highlighter-rouge">Res</code> est donc construit par copie dans un <strong>objet temporaire</strong>. Comme notre cstr de copie fait une <strong>deep copie</strong>, une nouvelle Ressource est allouée d’où le second message <script type="math/tex">Ressource\;acquise</script>.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">res</code> sort de portée et donc la Ressource initiale est détruite ce qui cause le premièr message <script type="math/tex">Ressource\;detruite</script>.</p>
+  </li>
+  <li>
+    <p>L’objet temporaire est assigné à la variable <code class="highlighter-rouge">mainRes</code> par <strong>assignement par copie</strong>. Comme notre cstr de copies gère la <strong>deep copy</strong>, une nouvelle ressource est allouée et causant le 3e message <script type="math/tex">Ressource\;acquise</script>.</p>
+  </li>
+  <li>
+    <p>L’expression d’affectation finie, et l’<strong>objet temporaire</strong> se retrouve hors de portée et détruit d’où le second message <script type="math/tex">Ressource\;detruite</script>.</p>
+  </li>
+  <li>
+    <p>À la fin du <code class="highlighter-rouge">main()</code>, <code class="highlighter-rouge">mainRes</code> sors lui aussi de portée et génère notre dernier message <script type="math/tex">Ressource\;detruite</script>.</p>
+  </li>
+</ol>
+
+<p><span style="color:red"> bien comprendre les points 2 et 5 ! </span></p>
+
+<p>Résultat des courses, pour un appel du constructeur de copie pour copier <code class="highlighter-rouge">res</code> dans un temporaire et une affectation du temporaire dans le <code class="highlighter-rouge">main()</code> dans la variable <code class="highlighter-rouge">resMain</code> on se retrouve avec 3 objets différents au total.</p>
+
+<p>Pour le moins <strong>innéfficient</strong> mais au moins ça ne crash pas!</p>
+
+<h2 id="constructeur-de-déplacement-et-affectation-de-déplacement">Constructeur de déplacement et affectation de déplacement</h2>
+
+<p>C++ 11 définit deux nouvelles fonctions au service de la sémantique de déplacement:</p>
+
+<ul>
+  <li>Un constructeur de déplacement</li>
+  <li>Une surcharge de l’opérateur d’affectation pour le déplacement</li>
+</ul>
+
+<p>Leur définition fonctionne de façon analogue à celle du cstr de copie et la surcharge de l’opérateur d’affectation à la différence que les fonctions dédiées au déplacement prennent des références à des R-value <strong>non-constantes</strong> à la place des R-value constantes de leur homologues de copie.</p>
+
+<p>Voici notre fonction Auto_ptr améliorée de la capacité de déplacement (la paire de fonctions dédiées à la copie sont toujours là pour la comparaison).</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr4</span>
+<span class="p">{</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Auto_ptr4</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="o">=</span><span class="nb">nullptr</span><span class="p">)</span><span class="o">:</span> <span class="n">_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="o">~</span><span class="n">Auto_ptr4</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// cstr de copie, deep copie a._ptr dans _ptr
+</span>    <span class="n">Auto_ptr4</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr4</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_ptr</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// cstr de déplacement, transfère la possèssion de a._ptr a _ptr
+</span>    <span class="n">Auto_ptr4</span><span class="p">(</span><span class="n">Auto_ptr4</span> <span class="o">&amp;&amp;</span><span class="n">a</span><span class="p">)</span><span class="o">:</span> <span class="n">_ptr</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// surcharge opérateur d'affectation, deep copie a._ptr dans _ptr
+</span>    <span class="n">Auto_ptr4</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr4</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// self assign-check
+</span>        <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// désalloue d'éventuelles ressources
+</span>        <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span>
+        <span class="c1">// copie les ressources
+</span>        <span class="n">_ptr</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+        <span class="o">*</span><span class="n">_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Affectation de déplcement, transfère la possèssion de a._ptr a _ptr
+</span>    <span class="n">Auto_ptr4</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Auto_ptr4</span> <span class="o">&amp;&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// self assign-check
+</span>        <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// désalloue d'éventuelles ressources
+</span>        <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span>
+        <span class="c1">// transfère la possèssion de a._ptr a _ptr
+</span>        <span class="n">_ptr</span>   <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> 
+    <span class="p">}</span>
+
+
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span>  <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span>   <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span> <span class="o">==</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>   
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Auto_ptr4</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">generationRessource</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr4</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="k">new</span> <span class="n">Ressource</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">;</span> <span class="c1">// cette valeur de retour invoque le cstr de copie
+</span><span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Auto_ptr4</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span> <span class="n">mainRes</span><span class="p">;</span>
+    <span class="n">mainRes</span> <span class="o">=</span> <span class="n">generationRessource</span><span class="p">();</span> <span class="c1">// cette affectation invoque 
+</span>                                    <span class="c1">// la surcharge de l'op d'affectation
+</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>Ces nouvelles fonctions sont très simples. À la place de <strong>deep copy</strong> l’objet source (a) dans le nouvel objet, ils se contente de bouger (voler) les ressoues de l’objet source. Ceci implique une <strong>shallow copy</strong> du pointeur de la source dans l’objet et un set du pointeur de la source à <code class="highlighter-rouge">nullptr</code>.</p>
+
+<p>Le nouvel output ressemble à:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+Ressource detruite
+</code></pre>
+</div>
+
+<p>Beaucoup mieux !</p>
+
+<p>Le flow du programme reste le même que le précédent sauf qu’à la place d’appeler le constructeur de copie et l’opérateur d’affectation, ce programme appel les homologues dédiés au déplacement.</p>
+
+<ol>
+  <li>
+    <p>Dans la fonction <code class="highlighter-rouge">generationRessource()</code>, la variable locale <code class="highlighter-rouge">res</code> est créée et initialisée avec des ressources allouées dynamiquement <script type="math/tex">\Rightarrow</script> premier message <script type="math/tex">Ressource\;acquise</script></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">res</code> est retourné dans le <code class="highlighter-rouge">main()</code> par valeur: <code class="highlighter-rouge">res</code> via le cstr de déplacement est transféré dans un objet temporaire créé dynamiquement.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">res</code> sort de portée. Comme <code class="highlighter-rouge">res</code> ne possède plus de pointeur (car déplacé dans l’objet temporaire), nous n’avons pas de print.</p>
+  </li>
+  <li>
+    <p>L’objet temporaire est assigné à la variable <code class="highlighter-rouge">mainRes</code> ce qui transfère l’objet créé dynamiquement et contenu dans la variable temporaire à <code class="highlighter-rouge">mainRes</code>.</p>
+  </li>
+  <li>
+    <p>L’expression d’affectation finie, l’<strong>objet temporaire</strong> se retrouve hors de portée et est détruit mais comme cet objet temporaire à transféré son contenu, il ne possède plus de pointeur (il est maintenant dans <code class="highlighter-rouge">mainRes</code>) et lors de cette destruction, nous n’avons pas de print no plus.</p>
+  </li>
+  <li>
+    <p>À la fin du <code class="highlighter-rouge">main()</code>, <code class="highlighter-rouge">mainRes</code> sors de portée et génère le message <script type="math/tex">Ressource\;detruite</script>.</p>
+  </li>
+</ol>
+
+<p>Résultat des courses, à la place de copier notre ressource deux fois, nous la transfèrons deux fois. <span style="color:red">Ce qui est plus efficace au niveau ressources.</span></p>
+
+<p>La paire dédiée au déplacement n’est pas fournie par défaut.</p>
+
+<h2 id="règle">Règle</h2>
+
+<p><span style="color:red">Pour utiliser le constructeur de déplacement et l’affectation de déplacement nous devons les fournir nous même.</span></p>
+
+<h2 id="quand-est-la-paire-dédiée-au-déplacement-appelée-">Quand est la paire dédiée au déplacement appelée ?</h2>
+<p>Lorsque ces fonctions sont définies et que l’argument pour la construction ou l’affectation est une R-value. Cette R-value est typiquement un literal ou une valeur temporaire.</p>
+
+<h2 id="copie-vs-déplacement">Copie VS déplacement</h2>
+
+<h3 id="copie">Copie</h3>
+<p>Si nous construisons ou affectons un objet et que l’argument est une L-value, il est préférable de copier cette L-value. On ne peut assumer qu’il est safe de la modifier car on pourait en avoir besoin plus tard dans le programme.</p>
+
+<p>Dans le cas d’une exression comme <code class="highlighter-rouge">a = b</code>, il est impensable que <code class="highlighter-rouge">b</code> change de valeur.</p>
+
+<h3 id="déplacement">déplacement</h3>
+<p>Si nous construisons ou affectons un objet et que l’argument est une R-value, nous savons que cette R-value n’est d’une façon ou d’une autre qu’un objet temporaire. À la place de le copier (ce qui peut couter cher en ressources), on peut simplement transférer les ressources qu’il possède (bien moins couteux en ressources) à l’objet que nous construisons ou affectons.</p>
+
+<p>C’est safe car de toutes façons l’objet temporaire ser détruit à la fin de l’expression et que donc nous savons que nous n’allons pas la réutiliser.</p>
+
+<blockquote>
+  <p>C++11, grâce au références R-value nous permet de donner des comportements différents si l’argument est une R-value ou une L-value. Cela nous permet d’avoir plus de liberté et d’être plus intéligent dans le choix des comportement de nos objets.</p>
+</blockquote>
+
+<h2 id="empécher-la-copie">Empécher la copie</h2>
+<p>Dans notre version de la class Auto_ptr précédent, nous avons laissé la paire de copie pour pouvoir visuellement comparer les deux paires.</p>
+
+<p>Dans les classes qui sont capable de faire des déplacements, il parfois désirable de <strong>delete</strong>  la paire de copie pour s’assurer qu’aucune copie ne sera faite.</p>
+
+<p>Dans le cas de notre exemple, nous ne voulons pas que notre objet générique <code class="highlighter-rouge">T</code> soit copié. D’une part car c’est couteux en ressources et d’autre part car en fonction du type (classe) <code class="highlighter-rouge">T</code> utilisé, il se peut que cette dernière ne supporte pas la copie.</p>
+
+<p>Voici une version de la classe Auto_ptr qui gère la sémantique de déplacement mais pas celle de copie:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr5</span>
+<span class="p">{</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Auto_ptr5</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="o">=</span><span class="nb">nullptr</span><span class="p">)</span><span class="o">:</span> <span class="n">_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="o">~</span><span class="n">Auto_ptr5</span><span class="p">()</span> <span class="p">{</span> <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// cstr de copie, copies non supportées !
+</span>    <span class="n">Auto_ptr5</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr5</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="c1">// cstr de déplacement, transfère la possèssion de a._ptr a _ptr
+</span>    <span class="n">Auto_ptr5</span><span class="p">(</span><span class="n">Auto_ptr5</span> <span class="o">&amp;&amp;</span><span class="n">a</span><span class="p">)</span><span class="o">:</span> <span class="n">_ptr</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// surcharge opérateur d'affectation, copies non supportées !
+</span>    <span class="n">Auto_ptr5</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr5</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="c1">// Affectation de déplcement, transfère la possèssion de a._ptr a _ptr
+</span>    <span class="n">Auto_ptr5</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Auto_ptr5</span> <span class="o">&amp;&amp;</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// self assign-check
+</span>        <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// désalloue d'éventuelles ressources
+</span>        <span class="k">delete</span> <span class="n">_ptr</span><span class="p">;</span>
+        <span class="c1">// transfère la possèssion de a._ptr a _ptr
+</span>        <span class="n">_ptr</span>   <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span><span class="p">;</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">_ptr</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> 
+    <span class="p">}</span>
+
+
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span>  <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_ptr</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span>   <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_ptr</span> <span class="o">==</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>   
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>Si nous tentons de passer une L-value de type Auto_ptr5 à une fonction, le compilateur se pleindrait que le constructeur de copie requis pour l’initialisation de copies a été delete. C’est une bonne chose car nous ne devrions pas passer Auto_ptr5 par référence L-value constante de toutes façon !</p>
+
+<p>Auto_ptr5 est (finalement) une bonne classe smart pointer. En réalité celle que contient la STL (std::unique_ptr) lui ressemble beaucoup.</p>
+
+<h2 id="dernier-exemple">Dernier exemple</h2>
 
 
 </div>
@@ -469,7 +807,7 @@ Ressource detruite
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Cpp: Smart pointers et Move@&amp;url=http://localhost:4000/cpp/cpp-move&smartP.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Cpp: Sémantique de déplacement & smart_ptr@&amp;url=http://localhost:4000/cpp/cpp-move&smartP.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
