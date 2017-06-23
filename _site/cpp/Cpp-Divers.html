@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Cpp: Divers</title>
-  <meta name="description" content="What is the difference between printf() and coutQuora">
+  <meta name="description" content="Uniform initialization syntaxVittorio Romeo">
 </head>
 
 
@@ -99,7 +99,95 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="what-is-the-difference-between-printf-and-cout">What is the difference between <code class="highlighter-rouge">printf()</code> and <code class="highlighter-rouge">cout</code></h2>
+    <h2 id="uniform-initialization-syntax">Uniform initialization syntax</h2>
+<p><a href="https://www.youtube.com/watch?v=tPbrWAbzyTE">Vittorio Romeo</a></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+</span>
+<span class="k">struct</span> <span class="n">Exemple</span>
+<span class="p">{</span>
+    <span class="n">Exemple</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Constructor</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> 
+    <span class="p">}</span>
+    <span class="n">Exemple</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="kt">int</span> <span class="n">X</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Operator=</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Meme si celà ressemble à une affectation,
+</span>    <span class="c1">// ce n'est pas le cas. C'est une déclaration
+</span>    <span class="c1">// et donc nous appelons ici le constructeur
+</span>    <span class="c1">// Exemple::Exemple(int) qui print "Construcor".
+</span>    <span class="n">Exemple</span> <span class="n">exemple1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+    <span class="c1">// Ceci est une affectation et print donc "Operator=",
+</span>    <span class="n">exemple1</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    
+    <span class="c1">// Utilisation de la syntaxe d'initialisation uniforme:
+</span>
+    <span class="c1">// Ici est est clair que nous appelons le constructeur
+</span>    <span class="n">Exemple</span> <span class="n">exemple2</span><span class="p">{</span><span class="mi">10</span><span class="p">};</span>
+
+    <span class="c1">// exemple2{20}; &lt;= erreur à compilation. Nous ne pouvons
+</span>    <span class="c1">// pas affecter de valeur de cette façon.
+</span>
+    <span class="c1">// Il est maintenant clair que ceci est une affectation
+</span>    <span class="n">exemple2</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+    <span class="c1">// La synyaxe devient uniforme parenthèses pour les fonctions
+</span>    <span class="c1">// acolades pour les classes. Exemple avec un simple agrégat:
+</span>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span> <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span> <span class="p">};</span>
+
+    <span class="c1">// Initialisation et affectation d'une instance:
+</span>    <span class="n">Point</span> <span class="n">a</span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">};</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Autre exemple:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Vector2</span> <span class="p">{</span> <span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span> <span class="p">};</span>
+
+<span class="c1">// Ces deux fonctions sont équivalentes
+// en utilisant la syntaxe { ... } nous économisons
+// quelques frapes:
+</span>
+<span class="n">Vector2</span> <span class="nf">getMyVector1</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Vector2</span><span class="p">(</span> <span class="mf">5.</span><span class="n">f</span><span class="p">,</span> <span class="mf">5.</span><span class="n">f</span><span class="p">);</span> <span class="p">}</span>
+<span class="n">Vector2</span> <span class="nf">getMyVector2</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span> <span class="mf">5.</span><span class="n">f</span><span class="p">,</span> <span class="mf">5.</span><span class="n">f</span><span class="p">};</span> <span class="p">}</span>
+
+<span class="c1">// Note importante:
+// Si nous utilisons 'auto' pour laisser le compilateur
+// déduire le type, NE JAMAIS utiliser la syntaxe '{ ... }'
+// Cette façon de faire dans ce contexte est la façon de 
+// déclarer une 'std::initializer list'. Quand nous utilisons
+// 'auto' il faut toujours utiliser l'initialisation l'initialisation
+// directe ( ... ).
+</span>
+<span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// (ok, x est un 'int')
+</span><span class="k">auto</span> <span class="n">x</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>  <span class="c1">// (ok, x est un 'int')
+</span><span class="k">auto</span> <span class="n">x</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span>  <span class="c1">// (nok, x est un 'std::initializer_list&lt;int&gt;')
+</span></code></pre>
+</div>
+
+<p>Vraiment pratique:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">a</span><span class="p">{</span><span class="mi">1</span><span class="p">},</span> <span class="n">b</span><span class="p">{</span><span class="mi">2</span><span class="p">},</span> <span class="n">c</span><span class="p">{</span><span class="mi">3</span><span class="p">};</span>
+        <span class="kt">float</span> <span class="n">d</span><span class="p">{</span><span class="mf">10.</span><span class="n">f</span><span class="p">},</span> <span class="n">e</span><span class="p">{</span><span class="mf">13.</span><span class="n">f</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="what-is-the-difference-between-printf-and-cout">What is the difference between <code class="highlighter-rouge">printf()</code> and <code class="highlighter-rouge">cout</code></h2>
 <p><a href="https://www.quora.com/What-is-the-difference-between-printf-cout-in-C++">Quora</a></p>
 
 <p><code class="highlighter-rouge">printf</code> is a function and <code class="highlighter-rouge">cout</code> is a global (namespaced) variable.</p>

@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Jun 2017 01:52:32 +0200</pubDate>
-    <lastBuildDate>Fri, 23 Jun 2017 01:52:32 +0200</lastBuildDate>
+    <pubDate>Fri, 23 Jun 2017 19:02:50 +0200</pubDate>
+    <lastBuildDate>Fri, 23 Jun 2017 19:02:50 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -27,6 +27,59 @@ Ce dernier point est un prérequis plus qu’un conseil.&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/&quot;&gt;learncpp.com&lt;/a&gt; (ch 15.1 à 15.7)&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/&quot;&gt;stackoverflow&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://fr.wikipedia.org/wiki/S%C3%A9mantique&quot;&gt;wikipedia&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;en-bref&quot;&gt;En bref&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l’objet se retrouve hors de son contexte d’utilisation.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;La sémantique de copie permet à un objet d’une classe d’être copié. Ceci est réalisé à l’aide du constructeur de copie et de l’opérateur d’affectation (surcharge copie).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;La sémantique de déplacement permet à un objet d’être tranféré d’un possésseur à un autre à la place d’en faire une copie couteuse. Ceci est réalisé à l’aide du constructeur de déplacement et de l’opérateur d’affectation (surcharge déplacement).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::auto_ptr&lt;/code&gt; est déprécié et ne doit pas être utilisé.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&amp;amp;). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Si nous construisons un objet ou faisons une affectation dont l’argument est une L-value, il vaut dans la plus part des cas mieux &lt;strong&gt;copier&lt;/strong&gt; (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l’expressions &lt;code class=&quot;highlighter-rouge&quot;&gt;a = b&lt;/code&gt; il est évident que &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt; ne subira aucune modification.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Quand nous construisons un objet ou faisons une affectation dont l’argument est une R-value, nous savons que cette R-value n’est d’une certaine façon qu’un objet temporaire. À la place de faire une couteuse copie, nous pouvons transférer les ressours à l’objet que nous construisons ou affectons. C’est une procédure safe car de toutes façon l’objet temporaire sera détruit à la fin du contexte et ne sera plus utilisé plus lui loin dans le programme.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Nous pouvons utiliser le mot clé &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; pour &lt;em&gt;disable&lt;/em&gt; la sémantique de copie dans les classes que nous créons en settant &lt;code class=&quot;highlighter-rouge&quot;&gt;= delete&lt;/code&gt; dans le header du constructeur de copie et de la surcharge de l’opperateur d’affectation.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::move&lt;/code&gt; nous permet de traiter une L-value comme étant une R-value. C’est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d’une L-value&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::unique_ptr&lt;/code&gt; est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::make_unique()&lt;/code&gt; (C++14) devrait être favorisée sur l’utilisation de new pour la création d’un &lt;code class=&quot;highlighter-rouge&quot;&gt;std::unique_ptr&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::unique_ptr&lt;/code&gt; &lt;em&gt;disable&lt;/em&gt; la sémantique de copie&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::shared_ptr&lt;/code&gt; est la classe de smart pointer à utiliser quand nous avons besoin que plusieurs objets accèdent à la même ressource. La ressource ne sera détruite que lorsque le dernier &lt;code class=&quot;highlighter-rouge&quot;&gt;std::shared_ptr&lt;/code&gt; qui la possède sera hors contexte.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::make_shared()&lt;/code&gt; devrait être favorisé pour créér de nouveaus &lt;code class=&quot;highlighter-rouge&quot;&gt;std::shared_ptr&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;avec &lt;code class=&quot;highlighter-rouge&quot;&gt;std::shared_ptr&lt;/code&gt; la sémantique de copie &lt;strong&gt;doit&lt;/strong&gt; être utilisée pour créér un pointeur supplémentaire pointant sur le même objet.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::weak_ptr&lt;/code&gt; est la classe de smart pointer à utiliser quand on a besoin d’un ou plusieurs objets capable de voir et d’accéder à une ressource possédée par un &lt;code class=&quot;highlighter-rouge&quot;&gt;std::shared_ptr&lt;/code&gt; mais qui n’a pas d’influance sur la destruction de la ressource.&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;stdunique_ptr&quot;&gt;std::unique_ptr&lt;/h1&gt;
@@ -396,6 +449,45 @@ Ressource détruite
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; Toujours faire une copie d’un shared_ptr déja éxistant quand on a besoin de plus d’un shared_pointer pointant sur la même ressource.  &lt;/span&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;stdmake_shared&quot;&gt;std::make_shared&lt;/h2&gt;
+
+&lt;p&gt;De la même façon que &lt;code class=&quot;highlighter-rouge&quot;&gt;std::make_unique()&lt;/code&gt; nous permet de créér un un unique_ptr, make_shared peut (et devrait) être utilisé pour créér un shared_ptr.&lt;/p&gt;
+
+&lt;p&gt;Reprenons le précédent exemple en utilisant make_shared:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;memory&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Ressource&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource acquise&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ressource détruite&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// alloue une ressource et possédée par shared_ptr
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;make_shared&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ressource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ptr1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// crée ptr2 en utilisant le cstr de copie
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fin de context du premier shared_Ptr&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ptr2 sors de portée ici et rien ne se passe
+&lt;/span&gt;    
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fin de context du second shared_Ptr&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ptr1 sors de portée ici et les ressources allouées sont détruites
+&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;Il est plus performant d’utiliser make_shared que de créér un pointeur avec new et d’ensuite le passer a shared_ptr.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conversion-unique-rightarrow-shared&quot;&gt;Conversion unique &lt;script type=&quot;math/tex&quot;&gt;\rightarrow&lt;/script&gt; shared&lt;/h2&gt;
+
+&lt;p&gt;Un des constructeurs de shared_ptr permet transformer un unique_ptr en shared_ptr.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; L’inverse n’est pas possible. &lt;/span&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 22 Jun 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/cpp/cpp-SmartPtr.html</link>
