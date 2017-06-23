@@ -574,6 +574,40 @@ Ressource détruite
 
 <p><span style="color:red"> L’inverse n’est pas possible. </span></p>
 
+<h1 id="quiz">Quiz:</h1>
+
+<h3 id="1-explain-when-you-should-use-the-following-types-of-pointers">1. Explain when you should use the following types of pointers:</h3>
+
+<ul>
+  <li>std::unique_ptr</li>
+</ul>
+
+<p>std::unique_ptr should be used when you want a smart pointer to manage a dynamic object that is not going to be shared.</p>
+
+<ul>
+  <li>std::shared_ptr</li>
+</ul>
+
+<p>std::shared_ptr should be used when you want a smart pointer to manage a dynamic object that may be shared. The object won’t be deallocated until all std::shared_ptr holding the object are destroyed.</p>
+
+<ul>
+  <li>std::weak_ptr</li>
+</ul>
+
+<p>std::weak_ptr should be used when you want access to an object that is being managed by a std::shared_ptr, but don’t want the lifetime of the std::shared_ptr to be tied to the lifetime of the std::weak_ptr.</p>
+
+<ul>
+  <li>std::auto_ptr</li>
+</ul>
+
+<p>std::auto_ptr is deprecated and slated for removal in C++17. It should not be used.</p>
+
+<h3 id="2-explain-how-r-values-references-enable-move-semantics">2. Explain how r-values references enable move semantics.</h3>
+
+<p>Hide Solution</p>
+
+<p>Because r-values are temporary, we know they are going to get destroyed after they are used. When passing or return an r-value by value, it’s wasteful to make a copy and then destroy the original. Instead, we can simply move (steal) the r-value’s resources, which is generally more efficient.</p>
+
 </div>
 
 <div>

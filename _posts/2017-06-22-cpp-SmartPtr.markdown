@@ -452,3 +452,27 @@ int main() {
 Un des constructeurs de shared_ptr permet transformer un unique\_ptr en shared\_ptr. 
 
 <span style="color:red"> L'inverse n'est pas possible. </span>
+
+# Quiz:
+
+### 1. Explain when you should use the following types of pointers:
+
+* std::unique_ptr
+
+std::unique_ptr should be used when you want a smart pointer to manage a dynamic object that is not going to be shared.
+
+* std::shared_ptr
+
+std::shared\_ptr should be used when you want a smart pointer to manage a dynamic object that may be shared. The object won’t be deallocated until all std::shared_ptr holding the object are destroyed.
+
+* std::weak_ptr
+
+std::weak\_ptr should be used when you want access to an object that is being managed by a std::shared\_ptr, but don’t want the lifetime of the std::shared\_ptr to be tied to the lifetime of the std::weak_ptr.
+
+* std::auto_ptr
+
+std::auto_ptr is deprecated and slated for removal in C++17. It should not be used.
+
+### 2. Explain how r-values references enable move semantics.
+
+Because r-values are temporary, we know they are going to get destroyed after they are used. When passing or return an r-value by value, it’s wasteful to make a copy and then destroy the original. Instead, we can simply move (steal) the r-value’s resources, which is generally more efficient.
