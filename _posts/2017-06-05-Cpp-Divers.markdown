@@ -9,6 +9,97 @@ tags: Cpp
 finished: false
 ---
 
+## Uniform initialization syntax
+[Vittorio Romeo](https://www.youtube.com/watch?v=tPbrWAbzyTE)  
+
+```cpp
+#include<iostream>
+
+struct Exemple
+{
+    Exemple(int x)
+    {
+        std::cout << "Constructor\n"; 
+    }
+    Exemple& operator=(int X)
+    {
+        std::cout << "Operator=\n";
+        return *this;
+    }
+};
+
+
+int main()
+{
+    // Meme si celà ressemble à une affectation,
+    // ce n'est pas le cas. C'est une déclaration
+    // et donc nous appelons ici le constructeur
+    // Exemple::Exemple(int) qui print "Construcor".
+    Exemple exemple1 = 10;
+
+    // Ceci est une affectation et print donc "Operator=",
+    exemple1 = 5;
+
+    
+    // Utilisation de la syntaxe d'initialisation uniforme:
+
+    // Ici est est clair que nous appelons le constructeur
+    Exemple exemple2{10};
+
+    // exemple2{20}; <= erreur à compilation. Nous ne pouvons
+    // pas affecter de valeur de cette façon.
+
+    // Il est maintenant clair que ceci est une affectation
+    exemple2 = 10;
+
+    // La synyaxe devient uniforme parenthèses pour les fonctions
+    // acolades pour les classes. Exemple avec un simple agrégat:
+    struct Point { int x, y; };
+
+    // Initialisation et affectation d'une instance:
+    Point a{2,4};
+    
+    return 0;
+}
+```
+
+Autre exemple:
+
+```cpp
+struct Vector2 { float x, y; };
+
+// Ces deux fonctions sont équivalentes
+// en utilisant la syntaxe { ... } nous économisons
+// quelques frapes:
+
+Vector2 getMyVector1() { return Vector2( 5.f, 5.f); }
+Vector2 getMyVector2() { return { 5.f, 5.f}; }
+
+// Note importante:
+// Si nous utilisons 'auto' pour laisser le compilateur
+// déduire le type, NE JAMAIS utiliser la syntaxe '{ ... }'
+// Cette façon de faire dans ce contexte est la façon de 
+// déclarer une 'std::initializer list'. Quand nous utilisons
+// 'auto' il faut toujours utiliser l'initialisation l'initialisation
+// directe ( ... ).
+
+auto x = 5; // (ok, x est un 'int')
+auto x(5);  // (ok, x est un 'int')
+auto x{5};  // (nok, x est un 'std::initializer_list<int>')
+```
+
+Vraiment pratique:
+
+```cpp
+int main() {
+        int a{1}, b{2}, c{3};
+        float d{10.f}, e{13.f}
+}
+```
+
+
+
+
 ## What is the difference between `printf()` and `cout`
 [Quora](https://www.quora.com/What-is-the-difference-between-printf-cout-in-C++)
 
