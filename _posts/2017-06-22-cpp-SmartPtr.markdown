@@ -56,6 +56,90 @@ Ce dernier point est un prérequis plus qu'un conseil.
 
 * `std::weak_ptr` est la classe de smart pointer à utiliser quand on a besoin d'un ou plusieurs objets capable de voir et d'accéder à une ressource possédée par un `std::shared_ptr` mais qui n'a pas d'influance sur la destruction de la ressource.
 
+# Exemples pratiques
+
+## shared_ptr et make\_shared
+
+```cpp
+class Ressource
+{
+public:
+	Ressource() { std::cout << "Ressource acquise\n"; }
+	~Ressource() { std::cout << "Ressource detruite\n"; }
+    void poke() { std::cout << "\tPoked!\n"; }
+};
+ 
+int main() {
+
+    {
+        std::shared_ptr<Ressource>ptr1 = std::make_shared<Ressource>();
+        ptr1->poke();
+        {
+            {
+                std::shared_ptr<Ressource>ptr2{ptr1};
+                ptr2->poke();  
+            }
+            std::cout << "sortie contexte ptr2\n";
+        }
+        std::cout << "ressource toujours accessible par ptr1\n";
+        ptr1->poke();
+    }
+    std::cout << "sortie contexte ptr1\n";
+
+	return 0;
+}
+```
+output:
+
+```
+Ressource acquise
+	Poked!
+	Poked!
+sortie contexte ptr2
+ressource toujours accessible par ptr1
+	Poked!
+Ressource detruite
+sortie contexte ptr1
+```
+
+## mot clé auto
+
+Le code suivant est équivalent au précédent mais plus court
+
+```cpp
+class Ressource
+{
+public:
+	Ressource() { std::cout << "Ressource acquise\n"; }
+	~Ressource() { std::cout << "Ressource detruite\n"; }
+    void poke() { std::cout << "\tPoked!\n"; }
+};
+ 
+int main() {
+
+    {
+        auto ptr1 = std::make_shared<Ressource>();
+        ptr1->poke();
+        {
+            {
+                auto ptr2 = ptr1; 
+                auto ptr3(ptr1);  // equivalent !
+                // auto ptr4{ptr1}; // mot clé auto -> pas de { ... }
+                ptr2->poke();  
+            }
+            std::cout << "sortie contexte ptr2\n";
+        }
+        std::cout << "ressource toujours accessible par ptr1\n";
+        ptr1->poke();
+    }
+    std::cout << "sortie contexte ptr1\n";
+
+	return 0;
+}
+```
+<span style="color:red"> Si nous utilisons le mot clé `auto` nous ne pouvons pas utiliser l'initialisation uniforme ! </span>
+[Plus d'info](\cpp\cpp-Divers.html)
+
 
 
 # std::unique_ptr

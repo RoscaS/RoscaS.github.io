@@ -167,6 +167,90 @@ Ce dernier point est un prérequis plus qu’un conseil.</li>
   </li>
 </ul>
 
+<h1 id="exemples-pratiques">Exemples pratiques</h1>
+
+<h2 id="shared_ptr-et-make_shared">shared_ptr et make_shared</h2>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+	<span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+	<span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">poke</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">Poked!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+        <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="n">ptr2</span><span class="p">{</span><span class="n">ptr1</span><span class="p">};</span>
+                <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>  
+            <span class="p">}</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr2</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ressource toujours accessible par ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+	Poked!
+	Poked!
+sortie contexte ptr2
+ressource toujours accessible par ptr1
+	Poked!
+Ressource detruite
+sortie contexte ptr1
+</code></pre>
+</div>
+
+<h2 id="mot-clé-auto">mot clé auto</h2>
+
+<p>Le code suivant est équivalent au précédent mais plus court</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+	<span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+	<span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">poke</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">Poked!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+        <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="k">auto</span> <span class="n">ptr2</span> <span class="o">=</span> <span class="n">ptr1</span><span class="p">;</span> 
+                <span class="k">auto</span> <span class="n">ptr3</span><span class="p">(</span><span class="n">ptr1</span><span class="p">);</span>  <span class="c1">// equivalent !
+</span>                <span class="c1">// auto ptr4{ptr1}; // mot clé auto -&gt; pas de { ... }
+</span>                <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>  
+            <span class="p">}</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr2</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ressource toujours accessible par ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p><span style="color:red"> Si nous utilisons le mot clé <code class="highlighter-rouge">auto</code> nous ne pouvons pas utiliser l’initialisation uniforme ! </span>
+<a href="\cpp\cpp-Divers.html">Plus d’info</a></p>
+
 <h1 id="stdunique_ptr">std::unique_ptr</h1>
 
 <p>Au début de <a href="\cpp\cpp-move&amp;smartP.html">cet</a> article on a vu les dangers de l’utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointer.</p>
@@ -603,8 +687,6 @@ Ressource détruite
 <p>std::auto_ptr is deprecated and slated for removal in C++17. It should not be used.</p>
 
 <h3 id="2-explain-how-r-values-references-enable-move-semantics">2. Explain how r-values references enable move semantics.</h3>
-
-<p>Hide Solution</p>
 
 <p>Because r-values are temporary, we know they are going to get destroyed after they are used. When passing or return an r-value by value, it’s wasteful to make a copy and then destroy the original. Instead, we can simply move (steal) the r-value’s resources, which is generally more efficient.</p>
 
