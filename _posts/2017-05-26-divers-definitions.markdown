@@ -230,14 +230,14 @@ A répond  _Non_
 Une fonction monotone est une fonction numérique qui reste toujours soit croissante soit décroissante. **Son sens de variation est constant**.
 
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Monotonicity_example1.png/330px-Monotonicity_example1.png" align="left" height="150" float="left">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Monotonicity_example1.png/330px-Monotonicity_example1.png" align="left" height="150">
 > Fonction monotone croissante. 
 
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Monotonicity_example2.png/330px-Monotonicity_example2.png" align="left" height="150" float="left">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Monotonicity_example2.png/330px-Monotonicity_example2.png" align="left" height="150">
 > Fonction monotone décroissante. 
 
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Monotonicity_example3.png/330px-Monotonicity_example3.png" align="left" height="150" float="left">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Monotonicity_example3.png/330px-Monotonicity_example3.png" align="left" height="150">
 
 > Fonction qui n'est pas monotone
