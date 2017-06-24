@@ -6,9 +6,409 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 23 Jun 2017 19:46:05 +0200</pubDate>
-    <lastBuildDate>Fri, 23 Jun 2017 19:46:05 +0200</lastBuildDate>
+    <pubDate>Sat, 24 Jun 2017 03:53:17 +0200</pubDate>
+    <lastBuildDate>Sat, 24 Jun 2017 03:53:17 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Cpp: Flux</title>
+        <description>&lt;h2 id=&quot;1-flux&quot;&gt;1. Flux&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Un flux est une &lt;strong&gt;séquence d’octets transférés&lt;/strong&gt; entre la mémoire et les périphériques.&lt;/li&gt;
+  &lt;li&gt;C’est le programme qui donne une &lt;strong&gt;signification&lt;/strong&gt; aux octets d’un flux.&lt;/li&gt;
+  &lt;li&gt;Les flux fournissent une &lt;strong&gt;méthode unifiée&lt;/strong&gt; de traiter les E/S quel que soient les périphériques et les types de données à échanger.&lt;/li&gt;
+  &lt;li&gt;Hiérarchie basée sur &lt;strong&gt;ios&lt;/strong&gt;(in/out… &lt;span style=&quot;color:red&quot;&gt;a compléter&lt;/span&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Classes implémentant des flux:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;iostream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; E/S standard (clavier/écran)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;fstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; E/S dans les fichiers&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; E/S dans la mémoire (string)&lt;br /&gt;
+&lt;br /&gt;
+Toutes ces classes redéfinissent les opérateurs  &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;&amp;lt;&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-fichiers&quot;&gt;2. Fichiers&lt;/h2&gt;
+
+&lt;p&gt;Deux types de fichiers:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;texte (par défaut)&lt;/li&gt;
+  &lt;li&gt;binaire&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Deux modes d’accès:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;séquentiel&lt;/li&gt;
+  &lt;li&gt;direct (random acces)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;fstream&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Trois classes:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ifstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; lecture&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; ecriture&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;fstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; les deux&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;ouverture&quot;&gt;Ouverture&lt;/h3&gt;
+
+&lt;p&gt;Deux choix:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;constructeur
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ofstream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt;
+    &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Même signature, seules les valeurs par défaut changent.&lt;/p&gt;
+
+&lt;h3 id=&quot;paramètres-douverture&quot;&gt;Paramètres d’ouverture&lt;/h3&gt;
+
+&lt;p&gt;Le paramètre &lt;strong&gt;mode&lt;/strong&gt; est un champ de bits. On le combine avec l’opérateur bit à bit &lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::binary&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Mode binaire (mode texte par défaut)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::in&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Lecture (défaut pour &lt;code class=&quot;highlighter-rouge&quot;&gt;ifstream&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::out&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Ecriture (défaut pour &lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::app&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Ajout à la fin (append)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::trunc&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Écrase le contenu précédent (truncate)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::ate&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; position à la fin dés l’ouverture&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;exemple&quot;&gt;exemple&lt;/h4&gt;
+
+&lt;p&gt;Ouverture d’un fichier texte en écriture par ajout (append)&lt;/p&gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fstream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Log.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;fermeture&quot;&gt;Fermeture&lt;/h3&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;exemples&quot;&gt;Exemples&lt;/h3&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;string&amp;gt;
+#include&amp;lt;fstream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ofstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fOut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;monfichier.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fOut&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;PI= 3&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.14159&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'.'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fOut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fIn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;monfichier.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fIn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fIn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;--&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;--&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;L’utilisation des flux pour accéder aux fichiers soulève les mêmes problèmes que pour la console. Les caractères blancs sont concidérés comme des séparateurs. On peut utiliser la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;getline()&lt;/code&gt; pour les lire en entier.&lt;/li&gt;
+  &lt;li&gt;La méthode utilisée est la même, seuls les périphériques changent.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;ecriture&quot;&gt;Ecriture&lt;/h4&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;9.87&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'W'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// ofstream f(&quot;toto.txt&quot;, ios::out | ios::binary);
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;ofstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en ecriture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// ecrire dans le fichier binaire avec write
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// get size of file
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seekp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// aller à la fin
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// obtenir la position et la retourner
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;la taille du fichier est: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Termine&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;la taille du fichier est: 38
+Termine
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;ecriture-avec-&quot;&gt;Ecriture avec «&lt;/h4&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;78&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;9.87&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'W'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// ofstream f(&quot;poule.xyz&quot;, ios::out | ios::binary);
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;ofstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en ecriture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .write((char *)&amp;amp;a, sizeof(int)); 
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .write((char *)&amp;amp;b, sizeof(double));
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .write((char *)&amp;amp;c, sizeof(char));
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .write ((char *)&amp;amp;t1[i], sizeof(int));
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;lecture&quot;&gt;Lecture&lt;/h4&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;fstream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// ifstream f(&quot;poule.xyz&quot;, ios::in | ios::binary);
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en lecture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// lecture avec read
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// get size of file
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// aller à la fin
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// obtenir la pos et la retourner
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;La taille du fichier est: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;b = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;c = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;La taille du fichier est: 38
+a = 1
+b = 1
+c = 1
+256087
+256256
+256512
+256768
+257024
+257280
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;lecture-avec-&quot;&gt;Lecture avec &amp;gt;&amp;gt;&lt;/h4&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// ifstream f(&quot;poule.xyz&quot;);
+&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en ecriture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// lecture avec &amp;gt;&amp;gt;
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;a, sizeof(int));
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;b, sizeof(double));
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;c, sizeof(char));
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;t1[i], sizeof(int));
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// get size of file
+&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// aller à la fin
+&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// obtenir la position et la retourner
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;la taille du fichier est: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;
+         &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;b = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;
+         &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;c = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;traitements-derreurs&quot;&gt;Traitements d’erreurs&lt;/h3&gt;
+
+&lt;p&gt;Pour tous les flux (fichier, écran/clavier, mémoire), le traitement d’erreurs est similaire. Il se base sur l’état du flux (ios_base::iostate) codé par 4 bits (flags):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;goodbit&lt;/li&gt;
+  &lt;li&gt;badbit&lt;/li&gt;
+  &lt;li&gt;failbit&lt;/li&gt;
+  &lt;li&gt;eofbit&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;On peut &lt;strong&gt;tester et manipuler&lt;/strong&gt; l’état du flux avec les méthodes&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;good() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Aucune erreur&lt;/li&gt;
+  &lt;li&gt;bad() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Impossible d’extraire des données du flux&lt;/li&gt;
+  &lt;li&gt;fail() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Echec de l’opération&lt;/li&gt;
+  &lt;li&gt;eof() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Fin de fichier&lt;/li&gt;
+  &lt;li&gt;clear() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Réinitialisation des bits d’état&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;méthodes-de-lecture-distream&quot;&gt;Méthodes de lecture d’istream&lt;/h3&gt;
+
+&lt;h4 id=&quot;lecture-formatée&quot;&gt;Lecture formatée&lt;/h4&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;istream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;cin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;lecture-non-formatée&quot;&gt;Lecture non formatée&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;get()  &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; lecture d’un seul char&lt;/li&gt;
+  &lt;li&gt;getline() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; lecture d’une suite de char&lt;/li&gt;
+  &lt;li&gt;ignore() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; ?&lt;/li&gt;
+  &lt;li&gt;peek() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; donne le prochain char sans l’extraire&lt;/li&gt;
+  &lt;li&gt;seekg() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; positionnement sur un flux&lt;/li&gt;
+  &lt;li&gt;read() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; lecture de n char&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;méthodes-décriture-dostream&quot;&gt;Méthodes d’écriture d’ostream&lt;/h3&gt;
+
+&lt;h4 id=&quot;lecture-formatée-1&quot;&gt;Lecture formatée&lt;/h4&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;PI=&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;Écriture-non-formatée&quot;&gt;Écriture non formatée&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;put() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; écriture d’un seul char&lt;/li&gt;
+  &lt;li&gt;wirte() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; écriture du contenu d’un tampon&lt;/li&gt;
+  &lt;li&gt;flush() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; vidage de tampon&lt;/li&gt;
+  &lt;li&gt;tellp() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; positionnement courant sur le flux&lt;/li&gt;
+  &lt;li&gt;seekp() &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; positionnement sur un flux&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 23 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/cpp/cpp-Flux.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-Flux.html</guid>
+        
+        <category>cpp</category>
+        
+        
+        <category>Cpp</category>
+        
+      </item>
     
       <item>
         <title>Cpp: unique_ptr &amp; shared_ptr</title>
@@ -4086,287 +4486,6 @@ Compile a pattern into a RegexObject:&lt;/p&gt;
         
         
         <category>Reseau</category>
-        
-      </item>
-    
-      <item>
-        <title>Algo: Résumé CP2</title>
-        <description>&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; test: mercredi 14 juin 2017 à 10h00 (320) &lt;/span&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;liens&quot;&gt;Liens:&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Internes:&lt;br /&gt;
-&lt;a href=&quot;/algo/Algo-tri.html&quot;&gt;algorithmes de tri simples&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;/algo/recursivite.html&quot;&gt;récursivité&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://github.com/RoscaS/algo_sort&quot;&gt;repo(privé)&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Externes:&lt;br /&gt;
-&lt;a href=&quot;https://visualgo.net/en&quot;&gt;VisuAlgo&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-tri&quot;&gt;1. Tri&lt;/h2&gt;
-
-&lt;h3 id=&quot;tri-bulle&quot;&gt;Tri Bulle&lt;/h3&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;stable&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Sait détecter si un tableau est trié&lt;/strong&gt; (amélioration flag)&lt;/li&gt;
-  &lt;li&gt;Fait remonter les petites valeurs en &lt;strong&gt;échangeant&lt;/strong&gt; 2 valeurs contigues.&lt;/li&gt;
-  &lt;li&gt;À chaque parcours l’élément avec la clé la plus petite pas encore trié se retrouve en position définitive.&lt;/li&gt;
-  &lt;li&gt;À chaque parcours les autres éléments se déplacent vers leurs position définitive d’une case.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;tri-extract&quot;&gt;Tri Extract&lt;/h3&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;pas stable&lt;/strong&gt;&lt;/span&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Innéfficace pour les tableau déjà trié&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;Parcours le tableau et &lt;strong&gt;sélectionne&lt;/strong&gt; l’élément avec la clé la plus faible&lt;/li&gt;
-  &lt;li&gt;Echange à la fin du parcours avec l’élément à l’indice “gauche”&lt;/li&gt;
-  &lt;li&gt;Incrémentation de “gauche”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;tri-insert&quot;&gt;Tri Insert&lt;/h3&gt;
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;stable&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;Pour une valeur à &lt;strong&gt;insérer&lt;/strong&gt; dans un tableau déjà trié:
-    &lt;ul&gt;
-      &lt;li&gt;on décale chaque élément du tableau vers la droite tant que les clés sont plus grandes que la valeur à insérer&lt;/li&gt;
-      &lt;li&gt;on insère la valeur une fois que la clé de l’élément  à sa gauche est plus petit&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;tri-par-base&quot;&gt;Tri par Base&lt;/h3&gt;
-&lt;p&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n)&lt;/script&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;stable&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Efficace en temps mais pas en mémoire&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;Tri basé sur la &lt;strong&gt;distribution&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;Le nombre de files nécéssaire dépend de la base. (10 en base 10, 26 pour des char, 16 en hexa,…)&lt;/li&gt;
-  &lt;li&gt;Autant de distributions que de caractères qui composent l’élément avec la clé la plus &lt;strong&gt;longue&lt;/strong&gt; du tableau à trier.&lt;/li&gt;
-  &lt;li&gt;Les distributions commencent par le caractère le plus à droite, du premier élément du tableau&lt;/li&gt;
-  &lt;li&gt;Placement de cet élément dans la file correspondant à ce caractère et ainsi de suite pour tous les éléments&lt;/li&gt;
-  &lt;li&gt;Selon le principe du &lt;strong&gt;FIFO&lt;/strong&gt; on sort les éléments des files dans l’&lt;strong&gt;ordre croissant&lt;/strong&gt; des files (pour un tri croissant) et on les replace dans le tableau initial.&lt;/li&gt;
-  &lt;li&gt;On répète pour le caractère à l’indice -1,-2,…&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nbr: 2 5 3 4 8
-idx: 0 1 2 3 4
-mot: p o u l e
-
-première passe : dernier caractère (8 et e)
-ensuite, caractère à l'indice -1 (4 et l), ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;fonctions utiles:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;fonction-nombredeparcours&quot;&gt;fonction nombreDeParcours&lt;/h4&gt;
-&lt;p&gt;note: &lt;span style=&quot;color:red&quot;&gt; &lt;em&gt;refaire ces algo de façon générique&lt;/em&gt; &lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Nombre de distributions =  &lt;strong&gt;nombre de chiffres qui compose le plus grand nombre&lt;/strong&gt;.
-l’entier renvoyé par &lt;script type=&quot;math/tex&quot;&gt;\large \log_{10} n&lt;/script&gt; d’un nombre (&lt;script type=&quot;math/tex&quot;&gt;\large n&lt;/script&gt;) sera égal au nombre de chiffre qui le composent &lt;script type=&quot;math/tex&quot;&gt;\large -1&lt;/script&gt; (d’où le &lt;script type=&quot;math/tex&quot;&gt;\large+1&lt;/script&gt;).&lt;/p&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;nbParcours&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;log10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maximum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;Le cast est fait automatiquement par le type de la valeur de retour&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;fonction-extraireunite&quot;&gt;fonction extraireUnite&lt;/h4&gt;
-
-&lt;p&gt;&lt;strong&gt;retourner une unité spécifique d’un nombre&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;extraireUnite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;static_cast&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;em&gt;cast nécessaire pour éviter une &lt;a href=&quot;/algo/Algo-tri.html&quot;&gt;erreur de compilation&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;comparaison&quot;&gt;Comparaison&lt;/h3&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Algorithme&lt;/th&gt;
-      &lt;th&gt;Complexité au pire&lt;/th&gt;
-      &lt;th&gt;Stabilité&lt;/th&gt;
-      &lt;th&gt;Famille*&lt;/th&gt;
-      &lt;th&gt;Remarques&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Bulles et améliorations&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/td&gt;
-      &lt;td&gt;oui&lt;/td&gt;
-      &lt;td&gt;Echange&lt;/td&gt;
-      &lt;td&gt;Sait détecter un tableau trié&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Extraction&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;span style=&quot;color:red&quot;&gt;non&lt;/span&gt;&lt;/td&gt;
-      &lt;td&gt;Sélection&lt;/td&gt;
-      &lt;td&gt;Inefficace sur un tableau déja trié (le pire)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Insertion&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n^2)&lt;/script&gt;&lt;/td&gt;
-      &lt;td&gt;oui&lt;/td&gt;
-      &lt;td&gt;Insertion&lt;/td&gt;
-      &lt;td&gt;Intéressant pour insérer des vlaeurs dans un tableau déjà trié*&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Base&lt;/td&gt;
-      &lt;td&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;script type=&quot;math/tex&quot;&gt;O(n)&lt;/script&gt;&lt;/span&gt;&lt;/td&gt;
-      &lt;td&gt;oui&lt;/td&gt;
-      &lt;td&gt;Distribution&lt;/td&gt;
-      &lt;td&gt;Intéressant pour les petites valeurs (“petit” nombre de chiffres)&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;On peut trier les valeurs au fur et à mesure. Pour les autres, il est nécéssaire de les avoir toutes avant de commencer. En  &lt;em&gt;O(n)&lt;/em&gt;  dans le meilleur cas.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;2-récursivité&quot;&gt;2. Récursivité&lt;/h2&gt;
-
-&lt;p&gt;Un objet est dit récursif s’il apparait dans sa définition.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;structure de données récursives: &lt;em&gt;listes&lt;/em&gt;, &lt;em&gt;arbres&lt;/em&gt; et &lt;em&gt;graphes&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;algorithmes récursif: si une des opérations est un appel à l’algorithme en &lt;strong&gt;lui même&lt;/strong&gt; mais à un rang inférieur&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;la récursivité c’est quand le sous-problème est de la &lt;strong&gt;même nature&lt;/strong&gt; que le problème initial mais à un rang inférieur&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Chaque appel de la fonction récursive est une nouvelle &lt;strong&gt;instance de la fonction&lt;/strong&gt; (&lt;script type=&quot;math/tex&quot;&gt;\neq&lt;/script&gt; même fonction car les paramètres sont différents).&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;nouvelle instance à chaque appel&lt;/li&gt;
-  &lt;li&gt;chaque appel est différent du précédent, il n’y a pas &lt;em&gt;duplication&lt;/em&gt; du contexte, c’est un &lt;strong&gt;contexte différent&lt;/strong&gt; à chaque appel.&lt;/li&gt;
-  &lt;li&gt;paramètres différents &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; fonction différente&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Dire  &lt;em&gt;“une fonction récursive est une fonction qui se rappelle elle-même”&lt;/em&gt; est donc &lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;FAUX&lt;/strong&gt;&lt;/span&gt; (à moitié faux mais faux quand même).&lt;/p&gt;
-
-&lt;h3 id=&quot;phases-dun-algorithme-récursif&quot;&gt;Phases d’un algorithme récursif&lt;/h3&gt;
-
-&lt;p&gt;L’éxécution proprement dite peut se décomposer en deux temp:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Phase de descente&lt;/strong&gt;: appels récursifs (et création d’un contexte pour chacun d’entre eux) jusqu’à la condition terminale&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Phase de remontée&lt;/strong&gt;: retour des résultats et libération des contextes devenus inutiles&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;terminal--non-terminal&quot;&gt;Terminal &amp;amp; non-terminal&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Terminal&lt;/strong&gt;: aucune opération ne suit l’appel récursif&lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;\quad \Rightarrow&lt;/script&gt; la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;strong&gt;Non-terminal&lt;/strong&gt;: des opérations suivent l’appel récursif. (On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat).&lt;br /&gt;
-&lt;script type=&quot;math/tex&quot;&gt;\quad \Rightarrow&lt;/script&gt; la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;La question à se poser et qui ne nécéssite pas de comprendre l’algorithme c’est:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;span style=&quot;color:green&quot;&gt; &lt;strong&gt;Est-ce qu’un return précède un appel de la fonction-elle même ?&lt;/strong&gt; &lt;/span&gt;&lt;/p&gt;
-  &lt;ul&gt;
-    &lt;li&gt;oui &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; récursivité ** non-terminale**&lt;/li&gt;
-    &lt;li&gt;non &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; récursivité ** terminale**&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;pour-la-programmation-récursive-il-faut&quot;&gt;Pour la programmation récursive il faut…&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;avoir une condition terminale&lt;/li&gt;
-  &lt;li&gt;avoir un appel récursif dont un des paramètres converge vers la condition terminale&lt;/li&gt;
-  &lt;li&gt;s’assurer que la condition est toujours atteinte après un nombre fini d’appels&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;eviter-la-récursivité-quand&quot;&gt;Eviter la récursivité quand…&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;la récurence est d’ordre plus grand que 1 (c’est à dire que la valeur au rang &lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; ne dépend pas seulement du rang &lt;script type=&quot;math/tex&quot;&gt;n-1&lt;/script&gt; mais aussi de &lt;script type=&quot;math/tex&quot;&gt;n-2&lt;/script&gt;, voir &lt;script type=&quot;math/tex&quot;&gt;n-3&lt;/script&gt;, …)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;récursivité-vs-itération&quot;&gt;Récursivité vs itération&lt;/h3&gt;
-
-&lt;p&gt;La récursivité est toujours plus lente que l’itération sauf pour la récursivité terminale. Cependant, la majorité des compilateurs détectent et supprime la phase de remonté. Une fonction récursive terminale est donc aussi rapide qu’une fonction itérative.&lt;/p&gt;
-
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; De part sa lisibilité accrue, la &lt;strong&gt;récursivité terminale&lt;/strong&gt; est à privilégier sur l’itération.&lt;/p&gt;
-
-&lt;h4 id=&quot;a-retenir&quot;&gt;A retenir&lt;/h4&gt;
-
-&lt;p&gt;Qu’est-ce que la récursivité?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Une fonction qui appelle la même fonction avec des paramètres différents.   &lt;em&gt;La fonction appellée s’execute dans un contexte différent de la première fonction&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Dans quels cas l’utiliser?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;Pour des problèmes récurrents.  &lt;em&gt;Si le sous problème est de même nature que le problème initial mais de rang inférieur&lt;/em&gt;&lt;/li&gt;
-    &lt;li&gt;Sur des structures de données récursives&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Points primordiaux d’une fonction récursive?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;Condition terminale. &lt;em&gt;Atteinte après un nombre fini d’appels&lt;/em&gt;&lt;/li&gt;
-    &lt;li&gt;Un appel récursif. &lt;em&gt;Dont les paramètres convergent vers la condition terminale.&lt;/em&gt;&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Types de récursivité?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Terminale: (aucune opération ne suit l’appel récursif) La phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.&lt;/li&gt;
-    &lt;li&gt;Non-terminale: (des opérations suivent l’appel récursif) On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat.&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-</description>
-        <pubDate>Tue, 13 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/algo/Algo-resume-cp2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/algo/Algo-resume-cp2.html</guid>
-        
-        <category>algo</category>
-        
-        <category>tri</category>
-        
-        <category>recursivite</category>
-        
-        
-        <category>Algo</category>
         
       </item>
     

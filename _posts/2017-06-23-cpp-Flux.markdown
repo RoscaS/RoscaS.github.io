@@ -1,0 +1,370 @@
+---
+layout: post
+title: "Cpp: Flux"
+subtitle:  Flux et fichiers
+date: 2017-06-23
+author: Sol
+category: Cpp
+tags: cpp 
+finished: false
+---
+
+## 1. Flux
+
+* Un flux est une **séquence d'octets transférés** entre la mémoire et les périphériques. 
+* C'est le programme qui donne une **signification** aux octets d'un flux.
+* Les flux fournissent une **méthode unifiée** de traiter les E/S quel que soient les périphériques et les types de données à échanger.
+* Hiérarchie basée sur **ios**(in/out... <span style="color:red">a compléter</span>)
+
+Classes implémentant des flux:
+* `iostream` $$ \Rightarrow $$ E/S standard (clavier/écran)
+* `fstream` $$ \Rightarrow $$ E/S dans les fichiers
+* `sstream` $$ \Rightarrow $$ E/S dans la mémoire (string)  
+<br>
+Toutes ces classes redéfinissent les opérateurs  `<<` et `>>`
+
+## 2. Fichiers
+
+Deux types de fichiers:
+* texte (par défaut)
+* binaire
+
+Deux modes d'accès:
+* séquentiel
+* direct (random acces)
+
+```cpp
+#include <fstream>
+```
+Trois classes:
+* `ifstream` $$ \Rightarrow $$ lecture
+* `ofstream` $$ \Rightarrow $$ ecriture
+* `fstream` $$ \Rightarrow $$ les deux
+
+### Ouverture
+
+Deux choix:
+
+* constructeur 
+```cpp
+ifstream(char* nom, int mode)
+```
+
+```cpp
+ofstream(char* nom, int mode)
+```
+
+* méthode `open()` 
+```cpp
+open(char* nom, int mode)
+```
+
+Même signature, seules les valeurs par défaut changent.
+
+### Paramètres d'ouverture
+
+Le paramètre **mode** est un champ de bits. On le combine avec l'opérateur bit à bit `|`.
+
+* `ios::binary` $$ \Rightarrow $$ Mode binaire (mode texte par défaut)
+* `ios::in` $$ \Rightarrow $$ Lecture (défaut pour `ifstream`)
+* `ios::out` $$ \Rightarrow $$ Ecriture (défaut pour `ofstream`)
+* `ios::app` $$ \Rightarrow $$ Ajout à la fin (append)
+* `ios::trunc` $$ \Rightarrow $$ Écrase le contenu précédent (truncate)
+* `ios::ate` $$ \Rightarrow $$ position à la fin dés l'ouverture
+
+#### exemple
+
+Ouverture d'un fichier texte en écriture par ajout (append)
+```cpp
+fstream("Log.txt", ios::out | ios::app)
+```
+
+### Fermeture
+
+```cpp
+close()
+```
+
+### Exemples
+
+```cpp
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+
+int main() {
+    ofstream fOut("monfichier.txt");
+    fOut << "PI= 3" << 3.14159 << '.' << endl;
+    fOut.close();
+
+    ifstream fIn("monfichier.txt");
+    string s; double n; char c;
+    fIn >> s >> n >> c;
+    fIn.close();
+
+    cout << s << "--" << n << "--" << c << endl;
+
+    return 0;
+}
+```
+* L'utilisation des flux pour accéder aux fichiers soulève les mêmes problèmes que pour la console. Les caractères blancs sont concidérés comme des séparateurs. On peut utiliser la fonction `getline()` pour les lire en entier.
+* La méthode utilisée est la même, seuls les périphériques changent.
+
+
+#### Ecriture
+
+```cpp
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main(){
+    int a = 1;
+    int t1[6];
+    double b = 9.87;
+    char c = 'W';
+
+    for (int i = 0; i < 6; ++i) {
+        t1[i] = 1000+i;
+    }
+
+    // ofstream f("toto.txt", ios::out | ios::binary);
+    ofstream f("poule.xyz");
+
+    if (!f.is_open()) {
+        cout << "Impossible d'ouvrir le fichier en ecriture\n";
+        return -1;
+    }
+
+    // ecrire dans le fichier binaire avec write
+    f.write((char *)&a, sizeof(int));
+    f.write((char *)&b, sizeof(double));
+    f.write((char *)&c, sizeof(char));
+
+    for (int i = 0; i < 6; ++i) {
+        f.write ((char *)&t1[i], sizeof(int));
+    }
+
+    // get size of file
+    f.seekp(0, ios::end); // aller à la fin
+    int size = f.tellp(); // obtenir la position et la retourner
+    cout << "la taille du fichier est: " << size << endl;
+
+    f.close();
+    cout << "Termine\n";
+    
+    return 0;
+}
+```
+
+output:
+
+```
+la taille du fichier est: 38
+Termine
+```
+#### Ecriture avec <<
+
+```cpp
+int main() {
+
+    int a = 78;
+    int t1[6];
+    double b = 9.87;
+    char c = 'W';
+
+    for (int i = 0; i < 6; ++i) {
+        t1[i] = 1000+i;
+    }
+
+    // ofstream f("poule.xyz", ios::out | ios::binary);
+    ofstream f("poule.xyz");
+
+    if (!f.is_open()) {
+        cout << "Impossible d'ouvrir le fichier en ecriture\n";
+        return -1;
+    }
+
+    f << a << endl; // .write((char *)&a, sizeof(int)); 
+    f << a << endl; // .write((char *)&b, sizeof(double));
+    f << a << endl; // .write((char *)&c, sizeof(char));
+
+    for (int i = 0; i < 6; ++i) {
+        f << t1[i] << endl; // .write ((char *)&t1[i], sizeof(int));
+    }
+
+    return 0;
+}
+```
+
+#### Lecture
+
+```cpp
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+
+int main() {
+    int a;
+    double b;
+    int t1[6];
+    char c;
+    string s;
+
+    // ifstream f("poule.xyz", ios::in | ios::binary);
+    ifstream f("poule.xyz");
+
+    if (!f.is_open()) {
+        cout << "Impossible d'ouvrir le fichier en lecture\n";
+        return -1;
+    }
+
+    // lecture avec read
+    f.read ((char *)&a, sizeof(int));
+    f.read ((char *)&b, sizeof(double));
+    f.read ((char *)&c, sizeof(char));
+
+    for (int i = 0; i < 6; ++i)
+    {
+        f.read((char *)&t1[i], sizeof(int));
+    }
+
+    // get size of file
+
+    f.seekg(0, ios::end); // aller à la fin
+    int size = f.tellg(); // obtenir la pos et la retourner
+    cout << "La taille du fichier est: " << size << endl;
+
+    f.close();
+
+    cout << "a = " << a << endl;
+    cout << "b = " << a << endl;
+    cout << "c = " << a << endl;
+    
+    for (int i = 0; i < 6; ++i)
+    {
+        cout << t1[i] << endl;
+    }
+
+    return 0;
+}
+```
+
+output:
+
+```
+La taille du fichier est: 38
+a = 1
+b = 1
+c = 1
+256087
+256256
+256512
+256768
+257024
+257280
+```
+
+#### Lecture avec \>>
+
+```cpp
+int main(){
+    int a;
+    int t1[6];
+    double b;
+    char c;
+    
+    ifstream f ("poule.xyz", ios::in | ios::binary);
+    // ifstream f("poule.xyz");
+
+
+    if (!f.is_open()) {
+        cout << "Impossible d'ouvrir le fichier en ecriture\n";
+        return -1;
+    }
+
+    // lecture avec >>
+    f >> a; // .read ((char *)&a, sizeof(int));
+    f >> b; // .read ((char *)&b, sizeof(double));
+    f >> c; // .read ((char *)&c, sizeof(char));
+
+    for (int i = 0; i < 6; ++i) {
+        f >> t1[i]; // .read ((char *)&t1[i], sizeof(int));
+    }
+
+    // get size of file
+
+    f.seekg(0, ios::end); // aller à la fin
+    int size = f.tellg(); // obtenir la position et la retourner
+    cout << "la taille du fichier est: " << size << endl;
+
+    f.close();
+
+    cout << "a = " << a << endl
+         << "b = " << b << endl
+         << "c = " << c << endl;
+    
+    for (int i = 0; i < 6; ++i) {
+        cout << t1[i] << endl;
+    }
+    
+    return 0;
+}
+```
+
+### Traitements d'erreurs
+
+Pour tous les flux (fichier, écran/clavier, mémoire), le traitement d'erreurs est similaire. Il se base sur l'état du flux (ios_base::iostate) codé par 4 bits (flags):
+
+* goodbit
+* badbit
+* failbit
+* eofbit
+
+On peut **tester et manipuler** l'état du flux avec les méthodes
+
+* good() $$ \Rightarrow $$ Aucune erreur
+* bad() $$ \Rightarrow $$ Impossible d'extraire des données du flux
+* fail() $$ \Rightarrow $$ Echec de l'opération
+* eof() $$ \Rightarrow $$ Fin de fichier
+* clear() $$ \Rightarrow $$ Réinitialisation des bits d'état
+
+### Méthodes de lecture d'istream
+
+#### Lecture formatée
+
+```cpp
+istream& operator>>(var)
+
+cin >> var >> var2;
+
+```
+#### Lecture non formatée
+
+* get()  $$ \Rightarrow $$ lecture d'un seul char
+* getline() $$ \Rightarrow $$ lecture d'une suite de char
+* ignore() $$ \Rightarrow $$ ?
+* peek() $$ \Rightarrow $$ donne le prochain char sans l'extraire
+* seekg() $$ \Rightarrow $$ positionnement sur un flux
+* read() $$ \Rightarrow $$ lecture de n char
+
+### Méthodes d'écriture d'ostream
+
+#### Lecture formatée
+
+```cpp
+ostream& operator<<()
+
+cout << "PI=" << 3.14;
+```
+
+#### Écriture non formatée
+
+* put() $$ \Rightarrow $$ écriture d'un seul char
+* wirte() $$ \Rightarrow $$ écriture du contenu d'un tampon
+* flush() $$ \Rightarrow $$ vidage de tampon
+* tellp() $$ \Rightarrow $$ positionnement courant sur le flux
+* seekp() $$ \Rightarrow $$ positionnement sur un flux

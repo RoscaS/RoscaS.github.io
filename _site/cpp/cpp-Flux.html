@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/cpp-Flux.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: Flux</title>
+  <meta name="description" content="1. Flux">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: Flux</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="23 Jun 2017" itemprop="datePublished">Jun 23 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">cpp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Flux et fichiers</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="1-flux">1. Flux</h2>
+
+<ul>
+  <li>Un flux est une <strong>séquence d’octets transférés</strong> entre la mémoire et les périphériques.</li>
+  <li>C’est le programme qui donne une <strong>signification</strong> aux octets d’un flux.</li>
+  <li>Les flux fournissent une <strong>méthode unifiée</strong> de traiter les E/S quel que soient les périphériques et les types de données à échanger.</li>
+  <li>Hiérarchie basée sur <strong>ios</strong>(in/out… <span style="color:red">a compléter</span>)</li>
+</ul>
+
+<p>Classes implémentant des flux:</p>
+<ul>
+  <li><code class="highlighter-rouge">iostream</code> <script type="math/tex">\Rightarrow</script> E/S standard (clavier/écran)</li>
+  <li><code class="highlighter-rouge">fstream</code> <script type="math/tex">\Rightarrow</script> E/S dans les fichiers</li>
+  <li><code class="highlighter-rouge">sstream</code> <script type="math/tex">\Rightarrow</script> E/S dans la mémoire (string)<br />
+<br />
+Toutes ces classes redéfinissent les opérateurs  <code class="highlighter-rouge">&lt;&lt;</code> et <code class="highlighter-rouge">&gt;&gt;</code></li>
+</ul>
+
+<h2 id="2-fichiers">2. Fichiers</h2>
+
+<p>Deux types de fichiers:</p>
+<ul>
+  <li>texte (par défaut)</li>
+  <li>binaire</li>
+</ul>
+
+<p>Deux modes d’accès:</p>
+<ul>
+  <li>séquentiel</li>
+  <li>direct (random acces)</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;fstream&gt;
+</span></code></pre>
+</div>
+<p>Trois classes:</p>
+<ul>
+  <li><code class="highlighter-rouge">ifstream</code> <script type="math/tex">\Rightarrow</script> lecture</li>
+  <li><code class="highlighter-rouge">ofstream</code> <script type="math/tex">\Rightarrow</script> ecriture</li>
+  <li><code class="highlighter-rouge">fstream</code> <script type="math/tex">\Rightarrow</script> les deux</li>
+</ul>
+
+<h3 id="ouverture">Ouverture</h3>
+
+<p>Deux choix:</p>
+
+<ul>
+  <li>constructeur
+    <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ifstream</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">nom</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">)</span>
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ofstream</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">nom</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>méthode <code class="highlighter-rouge">open()</code>
+    <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">open</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">nom</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mode</span><span class="p">)</span>
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<p>Même signature, seules les valeurs par défaut changent.</p>
+
+<h3 id="paramètres-douverture">Paramètres d’ouverture</h3>
+
+<p>Le paramètre <strong>mode</strong> est un champ de bits. On le combine avec l’opérateur bit à bit <code class="highlighter-rouge">|</code>.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">ios::binary</code> <script type="math/tex">\Rightarrow</script> Mode binaire (mode texte par défaut)</li>
+  <li><code class="highlighter-rouge">ios::in</code> <script type="math/tex">\Rightarrow</script> Lecture (défaut pour <code class="highlighter-rouge">ifstream</code>)</li>
+  <li><code class="highlighter-rouge">ios::out</code> <script type="math/tex">\Rightarrow</script> Ecriture (défaut pour <code class="highlighter-rouge">ofstream</code>)</li>
+  <li><code class="highlighter-rouge">ios::app</code> <script type="math/tex">\Rightarrow</script> Ajout à la fin (append)</li>
+  <li><code class="highlighter-rouge">ios::trunc</code> <script type="math/tex">\Rightarrow</script> Écrase le contenu précédent (truncate)</li>
+  <li><code class="highlighter-rouge">ios::ate</code> <script type="math/tex">\Rightarrow</script> position à la fin dés l’ouverture</li>
+</ul>
+
+<h4 id="exemple">exemple</h4>
+
+<p>Ouverture d’un fichier texte en écriture par ajout (append)</p>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">fstream</span><span class="p">(</span><span class="s">"Log.txt"</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">app</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="fermeture">Fermeture</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">close</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h3 id="exemples">Exemples</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;string&gt;
+#include&lt;fstream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ofstream</span> <span class="n">fOut</span><span class="p">(</span><span class="s">"monfichier.txt"</span><span class="p">);</span>
+    <span class="n">fOut</span> <span class="o">&lt;&lt;</span> <span class="s">"PI= 3"</span> <span class="o">&lt;&lt;</span> <span class="mf">3.14159</span> <span class="o">&lt;&lt;</span> <span class="sc">'.'</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="n">ifstream</span> <span class="n">fIn</span><span class="p">(</span><span class="s">"monfichier.txt"</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span> <span class="kt">double</span> <span class="n">n</span><span class="p">;</span> <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">s</span> <span class="o">&gt;&gt;</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="s">"--"</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="s">"--"</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<ul>
+  <li>L’utilisation des flux pour accéder aux fichiers soulève les mêmes problèmes que pour la console. Les caractères blancs sont concidérés comme des séparateurs. On peut utiliser la fonction <code class="highlighter-rouge">getline()</code> pour les lire en entier.</li>
+  <li>La méthode utilisée est la même, seuls les périphériques changent.</li>
+</ul>
+
+<h4 id="ecriture">Ecriture</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">t1</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+    <span class="kt">double</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">9.87</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">'W'</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">+</span><span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ofstream f("toto.txt", ios::out | ios::binary);
+</span>    <span class="n">ofstream</span> <span class="n">f</span><span class="p">(</span><span class="s">"poule.xyz"</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en ecriture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ecrire dans le fichier binaire avec write
+</span>    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">double</span><span class="p">));</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">));</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">write</span> <span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="c1">// get size of file
+</span>    <span class="n">f</span><span class="p">.</span><span class="n">seekp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span> <span class="c1">// aller à la fin
+</span>    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">tellp</span><span class="p">();</span> <span class="c1">// obtenir la position et la retourner
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"la taille du fichier est: "</span> <span class="o">&lt;&lt;</span> <span class="n">size</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Termine</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>la taille du fichier est: 38
+Termine
+</code></pre>
+</div>
+<h4 id="ecriture-avec-">Ecriture avec «</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">78</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">t1</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+    <span class="kt">double</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">9.87</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">'W'</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">+</span><span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ofstream f("poule.xyz", ios::out | ios::binary);
+</span>    <span class="n">ofstream</span> <span class="n">f</span><span class="p">(</span><span class="s">"poule.xyz"</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en ecriture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// .write((char *)&amp;a, sizeof(int)); 
+</span>    <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// .write((char *)&amp;b, sizeof(double));
+</span>    <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// .write((char *)&amp;c, sizeof(char));
+</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// .write ((char *)&amp;t1[i], sizeof(int));
+</span>    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="lecture">Lecture</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;fstream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">t1</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+
+    <span class="c1">// ifstream f("poule.xyz", ios::in | ios::binary);
+</span>    <span class="n">ifstream</span> <span class="n">f</span><span class="p">(</span><span class="s">"poule.xyz"</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en lecture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// lecture avec read
+</span>    <span class="n">f</span><span class="p">.</span><span class="n">read</span> <span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">read</span> <span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">double</span><span class="p">));</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">read</span> <span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">));</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="c1">// get size of file
+</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span> <span class="c1">// aller à la fin
+</span>    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span> <span class="c1">// obtenir la pos et la retourner
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"La taille du fichier est: "</span> <span class="o">&lt;&lt;</span> <span class="n">size</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"a = "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"b = "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"c = "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>La taille du fichier est: 38
+a = 1
+b = 1
+c = 1
+256087
+256256
+256512
+256768
+257024
+257280
+</code></pre>
+</div>
+
+<h4 id="lecture-avec-">Lecture avec &gt;&gt;</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">t1</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+    <span class="kt">double</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+    
+    <span class="n">ifstream</span> <span class="n">f</span> <span class="p">(</span><span class="s">"poule.xyz"</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+    <span class="c1">// ifstream f("poule.xyz");
+</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en ecriture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// lecture avec &gt;&gt;
+</span>    <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// .read ((char *)&amp;a, sizeof(int));
+</span>    <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">;</span> <span class="c1">// .read ((char *)&amp;b, sizeof(double));
+</span>    <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">c</span><span class="p">;</span> <span class="c1">// .read ((char *)&amp;c, sizeof(char));
+</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="c1">// .read ((char *)&amp;t1[i], sizeof(int));
+</span>    <span class="p">}</span>
+
+    <span class="c1">// get size of file
+</span>
+    <span class="n">f</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span> <span class="c1">// aller à la fin
+</span>    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span> <span class="c1">// obtenir la position et la retourner
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"la taille du fichier est: "</span> <span class="o">&lt;&lt;</span> <span class="n">size</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"a = "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span>
+         <span class="o">&lt;&lt;</span> <span class="s">"b = "</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span>
+         <span class="o">&lt;&lt;</span> <span class="s">"c = "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="traitements-derreurs">Traitements d’erreurs</h3>
+
+<p>Pour tous les flux (fichier, écran/clavier, mémoire), le traitement d’erreurs est similaire. Il se base sur l’état du flux (ios_base::iostate) codé par 4 bits (flags):</p>
+
+<ul>
+  <li>goodbit</li>
+  <li>badbit</li>
+  <li>failbit</li>
+  <li>eofbit</li>
+</ul>
+
+<p>On peut <strong>tester et manipuler</strong> l’état du flux avec les méthodes</p>
+
+<ul>
+  <li>good() <script type="math/tex">\Rightarrow</script> Aucune erreur</li>
+  <li>bad() <script type="math/tex">\Rightarrow</script> Impossible d’extraire des données du flux</li>
+  <li>fail() <script type="math/tex">\Rightarrow</script> Echec de l’opération</li>
+  <li>eof() <script type="math/tex">\Rightarrow</script> Fin de fichier</li>
+  <li>clear() <script type="math/tex">\Rightarrow</script> Réinitialisation des bits d’état</li>
+</ul>
+
+<h3 id="méthodes-de-lecture-distream">Méthodes de lecture d’istream</h3>
+
+<h4 id="lecture-formatée">Lecture formatée</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">istream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+<span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">var</span> <span class="o">&gt;&gt;</span> <span class="n">var2</span><span class="p">;</span>
+
+</code></pre>
+</div>
+<h4 id="lecture-non-formatée">Lecture non formatée</h4>
+
+<ul>
+  <li>get()  <script type="math/tex">\Rightarrow</script> lecture d’un seul char</li>
+  <li>getline() <script type="math/tex">\Rightarrow</script> lecture d’une suite de char</li>
+  <li>ignore() <script type="math/tex">\Rightarrow</script> ?</li>
+  <li>peek() <script type="math/tex">\Rightarrow</script> donne le prochain char sans l’extraire</li>
+  <li>seekg() <script type="math/tex">\Rightarrow</script> positionnement sur un flux</li>
+  <li>read() <script type="math/tex">\Rightarrow</script> lecture de n char</li>
+</ul>
+
+<h3 id="méthodes-décriture-dostream">Méthodes d’écriture d’ostream</h3>
+
+<h4 id="lecture-formatée-1">Lecture formatée</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">()</span>
+
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"PI="</span> <span class="o">&lt;&lt;</span> <span class="mf">3.14</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h4 id="Écriture-non-formatée">Écriture non formatée</h4>
+
+<ul>
+  <li>put() <script type="math/tex">\Rightarrow</script> écriture d’un seul char</li>
+  <li>wirte() <script type="math/tex">\Rightarrow</script> écriture du contenu d’un tampon</li>
+  <li>flush() <script type="math/tex">\Rightarrow</script> vidage de tampon</li>
+  <li>tellp() <script type="math/tex">\Rightarrow</script> positionnement courant sur le flux</li>
+  <li>seekp() <script type="math/tex">\Rightarrow</script> positionnement sur un flux</li>
+</ul>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: Flux@&amp;url=http://localhost:4000/cpp/cpp-Flux.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/cpp-Flux.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/cpp-Flux.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
