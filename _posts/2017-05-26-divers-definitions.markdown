@@ -14,13 +14,7 @@ finished: false
 ### Philanthropie 
 (du grec ancien φίλος / phílos « amoureux » et ἄνθρωπος / ánthrôpos « homme », « genre humain ») **est la philosophie ou doctrine de vie qui met l'humanité au premier plan de ses priorités**. Un philanthrope cherche à améliorer le sort de ses semblables par de multiples moyens.
 
-
-
-
-
-
-
-
+---------------------------------------------------------------------------
 
 # IA (types)
 
@@ -49,7 +43,7 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 
 
-
+---------------------------------------------------------------------------
 
 
 
@@ -155,7 +149,7 @@ Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de c
 
 
 
-
+---------------------------------------------------------------------------
 
 
 
@@ -224,7 +218,7 @@ A répond  _Non_
 
 
 
-
+---------------------------------------------------------------------------
 
 
 
@@ -235,11 +229,15 @@ A répond  _Non_
 
 Une fonction monotone est une fonction numérique qui reste toujours soit croissante soit décroissante. **Son sens de variation est constant**.
 
-![alt](https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Monotonicity_example1.png/330px-Monotonicity_example1.png)
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Monotonicity_example1.png/330px-Monotonicity_example1.png" align="" height="150" float="left">
 > Fonction monotone croissante. 
 
-![alt](https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Monotonicity_example2.png/330px-Monotonicity_example2.png)
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Monotonicity_example2.png/330px-Monotonicity_example2.png" align="" height="150" float="left">
 > Fonction monotone décroissante. 
 
-![alt](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Monotonicity_example3.png/330px-Monotonicity_example3.png)
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Monotonicity_example1.png/330px-Monotonicity_example3.png" align="" height="150" float="left">
+
 > Fonction qui n'est pas monotone
