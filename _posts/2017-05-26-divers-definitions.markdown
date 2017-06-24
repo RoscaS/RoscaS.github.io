@@ -231,13 +231,13 @@ Une fonction monotone est une fonction numérique qui reste toujours soit croiss
 
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Monotonicity_example1.png/330px-Monotonicity_example1.png" align="left" height="150">
-> Fonction monotone croissante. 
-
+<br> <br> <span style="color:#888888">Fonction monotone croissante</span> <br> <br> <br> <br>
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Monotonicity_example2.png/330px-Monotonicity_example2.png" align="left" height="150">
-> Fonction monotone décroissante. 
-
+<br> <br> <span style="color:#888888">Fonction monotone décroissante</span> <br> <br> <br> <br>
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Monotonicity_example3.png/330px-Monotonicity_example3.png" align="left" height="150">
+<br> <br> <span style="color:#888888">Fonction qui n'est pas monotone</span> <br> <br> <br> <br> <br> <br>
 
-> Fonction qui n'est pas monotone
+
+## 
