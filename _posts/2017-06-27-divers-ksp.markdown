@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Divers: Kerbl Space Program (en-fr)"
+title: "Divers: Kerbal Space Program (en-fr)"
 subtitle: ""
 date: 2017-06-27
 author: Sol
