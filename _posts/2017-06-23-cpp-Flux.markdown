@@ -368,3 +368,415 @@ cout << "PI=" << 3.14;
 * flush() $$ \Rightarrow $$ vidage de tampon
 * tellp() $$ \Rightarrow $$ positionnement courant sur le flux
 * seekp() $$ \Rightarrow $$ positionnement sur un flux
+
+## 3. Le flux string
+
+* La source ou la destination d'un flux peut être une string
+* Point commun: les deux sont constitués d'octets
+* Intérêt: Conversion, transferts en mémoire (buffers)
+
+`#include <sstream>` $$ \Rightarrow $$ 3 classes:
+
+* istringstream $$ \Rightarrow $$ Entrée
+* ostringstream $$ \Rightarrow $$ Sortie
+* stringstream $$ \Rightarrow $$ Les deux
+
+### La classe string
+
+La STL impémente une classe string:
+```cpp
+#include<string> // permet d'utiliser la classe std::string
+```
+
+Il s'agit en fait d'une classe qui est la **spécialisation d'un template** dont la définition (dans `<string>`) est:
+
+```cpp
+typedef basic_string<char> string;
+```
+
+Avantages:
+* plus simple et plus sûr que `char*`
+* Définition de meethodes et opérateurs utiles
+
+#### Méthodes usuelles de string
+
+Opérateurs:
+
+* Affectation `=`
+* Concaténation `+=`,`+`
+* Comparaisons `==`, `<`, `>`, `<=`, `>=`
+
+Méthodes:
+
+* `int size ()` $$ \Rightarrow $$ Renvoie le nombre de caractères
+* `int lenght ()` $$ \Rightarrow $$ Renvoie le nombre de caractères
+* `int capacity ()` $$ \Rightarrow $$ taille possible sans la réallocation
+* `bool empty ()` $$ \Rightarrow $$ `true` si la string est vide `faux` sinon.
+* `int find ()` $$ \Rightarrow $$ position de la string `s` dans la string courante à partir de `pos`
+* `string substr(int start, int lenght)` $$ \Rightarrow $$ Sous string de longueur `lenght` à partir de `start`
+
+> Les comparaisons de strings sont faites dans l'odre lexicographique (comme un dictionnaire) et sont sensibles à la casse.
+
+#### Conversion de string (sans flux)
+
+<img src="/00illustrations/flux/conversionSTR1.png" align="" height="auto" float="right">
+
+```cpp
+#include<iostream>
+#include<cstdio>
+#include<string>
+using namespace std;
+
+int main() {
+    const char* p = "Hello";
+    std::string s(p);
+    std::string s2("--");
+    std::string s3 = "World";
+
+    std::cout << s << s2 << s3 << std::endl;
+
+    const char *p2;
+    p2 = s3.c_str();
+
+    printf("%s %s!\n", p, p2);    
+    return 0;
+}
+```
+
+### Conversions en type numériques
+
+<span style="color:red"> COMPLÉTER </span>  
+Voir cheatSheet sur la [programmation sockets](/reseau/reseau-Sockets-CheatSheet.html)  
+
+* `atoi()`
+* `atol()`
+* `atod()`
+* `itoa()`
+
+#### Conversion avec les flux de string
+
+```cpp
+#include<iostream>
+#include<sstream>
+
+int main() {
+    std::ostringstream a;
+    a << 10;
+    std::string b = a.str();
+    // Type => string
+    //   - envoyer dans le flux
+    //   - méthode str()
+
+    std::istringstream c("10");
+    int nb;
+    c >> nb;
+
+    // string => type
+    //  - créer flux de la chaîne 
+    //  - extraire du flux vers la var
+    return 0;
+}
+```
+## 4. vue d'ensemble
+
+<a href="/00illustrations/flux/headers.png"><img src="/00illustrations/flux/headers.png" align="" height="auto" float="right"></a>
+
+> Les classes du bus sont probablement `fstream` et `stringstream` car à la fois input et output (erreur sur la figure)
+
+## 5. Standard Template Library (STL)
+
+**Bibliothèque** de structures de données classiques et les **algorithmes** associés intégrée à la procédure de **standardisation** de C++. Basée sur des **templates de classes**, elle contient:
+
+* Conteneurs
+    * Séquentiels
+    * Associatifs
+* Itérateurs
+* Algorithmes
+* Objets fonctions (foncteurs <span style="color:red"> à creuser </span>)
+* Adaptateurs
+* Allocateurs
+
+Un foncteur est une entité qui peut être appelée comme un fonction. **Un objet d'uneclasse dans laquelle on a défini une surcharge de l'opérateur `()` est également un foncteur.**
+
+Un conteneur (container) est, comme son nom l'indique, un objet qui contient d'autres objets. Il fournit un moyen de gérer les objets contenus (au minimum ajout / supression, parfois insertion, tri, recherche,...) ainsi qu'un accès à ces objets qui dans le cas de la **STL** consiste très souvent en un iteerateur.
+
+Les **itérateurs** permettent de parcourir une collection d'objets sans avoir à se préoccuper de la manière dont ils sont stockés. Ceci permet aussi d'avoir une interface de manipulation commune, et c'est ainsi que la STL fournit des algorithmes génériques qui s'appliquent à la majorité de ses conteneurs (tri,recherche, ...).
+
+Parmi les conteneurs disponibles dans la STL on retrouve les tableaux (`vector`), les listes (`list`), les ensembles (`set`), les piles (`stack`) et beaucoup d'autres.
+
+### Les classes conteneurs
+
+Un conteneur est un objet qui permet de stocker d'autres objets.
+
+* Permet de gérer les objets contenus: ajout, supression (éventuellement insertion, tri, recherche)
+
+* Permet d'accéder aux objets contenus grâce aux **itérateurs**
+
+* Les **itérateurs** permettent de **parcourir** une collection d'objets sans avoir à se préoccuper de l'implémentation\*. Ceci permet d'avoir une **interface de manipulation commune**, pour les algorithmes génériques de la STL (tri, recherche, remplacement,...)
+
+Il existe deux types de conteurs:
+
+#### séquentiels
+Les éléments sont **ordonnés**. On peut parcourir le conteneur suivant cet ordre et insérer ou supprimer un élément en un endroit explicitement choisi;
+
+> Vecteur, liste, pile, file
+
+#### Associatifs
+Ce sont des conteneurs dont les éléments sont identifiés par une **clé** et ordonnés suivant celle-ci. Pour insérer un élément, il n'est en théorie plus utile de préciser un emplacement
+
+> dictionnaire, map
+
+### Conteneurs de séquences
+
+*`<vector>` $$ \Rightarrow $$ tableau dynamique contigu
+*`<array>` $$ \Rightarrow $$ tableau statique contigu
+*`<deque>` $$ \Rightarrow $$ File à double entrée
+*`<list>` $$ \Rightarrow $$ Liste doublement chainée
+*`<forward_list>` $$ \Rightarrow $$ Liste simplement chainée
+*`<queue>` $$ \Rightarrow $$ File
+*`<priority_queue>` $$ \Rightarrow $$  File
+*`<stack>` $$ \Rightarrow $$ Pile
+
+### Méthodes courantes des conteneurs
+
+* `clear()` $$ \Rightarrow $$ Vide le conteneur
+* `size()` $$ \Rightarrow $$ Retourne le nombre d'éléments
+* `empty()` $$ \Rightarrow $$ Teste si le conteneur est vide
+* `push_back()` $$ \Rightarrow $$ Ajoute un élément à la fin
+* `push_front()` $$ \Rightarrow $$ Ajoute un élément au début
+* `front()` $$ \Rightarrow $$ Renvoie le 1er élément
+* `pop_front()` $$ \Rightarrow $$ Supprime le premier élément
+* `insert()` $$ \Rightarrow $$ Insère un élément quelconque
+* `erase()` $$ \Rightarrow $$ Supprime un élément
+
+#### Exemple de conteneur séquentiel: vector
+
+```cpp
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+
+int main() {
+
+    vector<string> vect;
+    vect.push_back("introduction");
+    vect.push_back("une phrase");
+    vect.push_back("conclusion");
+
+    for (int i = 0; i < vect.size(); ++i) {
+        cout << vect[i] << endl;
+    }
+    return 0;
+}
+```
+
+#### Exemple de conteneur séquentiel: list
+
+```cpp
+#include<iostream>
+#include<list>
+using namespace std;
+
+int main() {
+    list<int> lst;
+    lst.push_back(1); // 1
+    lst.push_front(0); // 0 1
+    lst.insert(lst.begin(), 2); // 2 0 1
+    lst.insert(lst.end(), 3); //2 0 1 3
+    lst.pop_front(); // 0 1 3
+    return 0;
+}
+```
+
+#### Exemple de conteneur séquentiel: array
+
+```cpp
+#include<iostream>
+#include<array>
+using namespace std;
+
+int main() {
+    array<int, 3> a1 { {10, 11, 12} }; // uniform init
+    array<int, 3> a2 = {10, 11, 12};  // cstr de copie ou cstr
+
+    for (int i = 0; i < a1.size(); ++i) {
+        cout << a1[i] << endl;      // deux accesseurs
+        cout << a1.at(i) << endl;   // PAS equivalents
+    }
+    return 0;
+}
+```
+
+```cpp
+#include<iostream>
+#include<array>
+using namespace std;
+
+int main() {
+    array<int, 3> a1{ {10, 11, 12} };
+
+    // accès sans test. Affiche une 
+    // valeur quelconque
+    cout << a1[-1] << endl;
+
+    // Lève une exception: out_of_range
+    // what() -> array:at
+    cout << a1.at(-1) << endl;
+
+    return 0;
+}
+```
+La lasse `array` a des méthodes:
+* `size()` $$ \Rightarrow $$ plus besoin de passer un paramètre de taille aux fonctions ou utiliser `sizeof(tab)`/`sizeof(int)` par exemple.
+
+* Les accès par la méthode `at(indice)` sont sécurisés par des Exceptions.
+
+### Destruction d'un objet conteneur
+
+> Quand est il nécéssaire d'éffacer ce qui est stocké dans un vecteur?
+
+La réponse dépend de la nature de ce qui est stocké:
+
+* Si il s'agit d'un objet, il n'est pas utile de le détruire, il le sera lors de son retrait (pop), ou lorsque le vecteur sera détruit.
+
+* Par contre, si il s'git d'un pointeur sur un objet, il faut le détruire sinon le programme présentera une fuite de mémoire.
+
+### Imbrication de conteneurs
+
+Il est possible d'imbriquer les conteneurs de la STL. On peut ainsi, par exemple créer un vecteur de listes de strings par exemple (une chanson mémorisée dans un vecteur de couplets. Chaque couplet étant une liste de phrases):
+
+```cpp
+vector< list< string>> maChanson;
+```
+
+La définition d'un type intermédiaire peut augmenter la lisibilité:
+
+```cpp
+typedef list<string> Couplet;
+vector<Couplet> maChanson;
+```
+
+Des objets `vector` imbriqué simulent des tableux multidimentionnels. On peut initialiser une matrice identité $$m_{5 \time 5}$$ avec le code suivant:
+
+```cpp
+#include<iostream>
+#include<vector>
+using namespace std;
+
+typedef vector<float> Ligne;
+typedef vector<Ligne> Matrice;
+
+int main() {
+    Matrice m{5}; // 5 lignes de largeur 0
+
+    for (int i = 0; i < 5; ++i) {
+        m[i].resize(5); // fixe la longueur des lignes à 5
+        for (int j = 0; j < 5; ++j) {
+            if (i == j) { m[i][j] = 1; }
+            else { m[i][j] = 0; }
+        }
+    }
+
+    return 0;
+}
+```
+
+## 6. Les itérateurs
+
+* Les itérateurs sont une **généralisation des pointeurs**
+* ils permettent d'utiliser de **façon uniforme** divers conteneurs
+* ils permettent de spécifier une position à l'intérieur d'un conteneur. Ils peuvent être **incrémentés** et **déréférencés** (avec `*`) et deux itérateurs peuvent être comparés.
+* Tous les conteneurs disposent des méthodes:
+    * `begin()` $$ \Rightarrow $$ Renvoie un itérateur pointant sur le premier élément.
+    * `end()` $$ \Rightarrow $$ renvoie un itérateur pointant **arpès** le dernier élément
+
+> On ne peut pas déréférencecr l'itérateur renvoyé par la méthode `end()`
+
+<img src="/00illustrations/flux/iter.png" align="" height="auto" float="right">
+
+Ancienne syntaxe de déclaration:
+
+`container<type>::iterator nom;`
+
+```cpp
+vector<double>::iterator it
+```
+Un itérateur peut s'initialiser grâce aux méthodes `begin`, `end` ou `find` (containers non-séquentiels)
+
+```cpp
+vector<double>::iterator it(vect.begin());
+```
+
+#### Syntaxe C++11
+
+```cpp
+auto itr = vect.begin()
+```
+
+#### Exemple d'itérateur sur une liste
+
+```cpp
+#include<iostream>
+#include<list>
+using namespace std;
+
+int main() {
+
+    list<int> lst = {1,6,5,3,9};
+
+    // ancienne syntaxe déclaration uniforme
+    for (list<int>::iterator it{lst.begin()}; it != lst.end(); ++it) {
+        cout << *it << endl;
+    }
+
+    // nouvelle syntaxe 
+    for (auto it = lst.begin(); it != lst.end(); ++it) {
+        cout << *it << endl;
+    }
+
+    // nouvelle syntaxe déclaration uniforme
+    for (auto it{lst.begin()}; it != lst.end(); ++it) {
+        cout << *it << endl;
+    }
+    
+    return 0;
+}
+```
+
+#### Range based for loop
+
+```cpp
+vector<int> vec;
+vec.push_back(10);
+vec.push_back(20);
+
+for (auto const &x: vec) {
+    cout << x << endl;
+}
+```
+
+## 7. Conteneurs associatifs
+
+* dictionnaire $$ \Rightarrow $$ `map`, `multimap`
+* ensembles (listes ordonnée) $$ \Rightarrow $$ `set`, `multiset`
+* tableau de  booléens (bitArray?) $$ \Rightarrow $$ `bitset`
+
+Les tables associatives sont une **généralisation des tableux**: Les **indices** peuvent être **non-entier**.
+
+* Tableau que l'on pourrait indicer par des chaînes de caractères et écrire par exemple `moyenne["informatique"]`
+* On parle d'association **clé-valeur**
+* Les tables associatives sont définies dans la bibliothèque `<map>`
+* Elles nécessitent **deux types** pour leur déclaration: le type des **clés** (les index) et le type des **éléments indéxés**
+
+```cpp
+//      clé        valeur
+map<string, double> moyenneParBranche; // clé unique
+
+multimap<string, double> noteS_parBranche; // clé dupliquée
+```
+
+
+```
+

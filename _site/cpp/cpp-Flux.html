@@ -486,6 +486,473 @@ c = 1
   <li>seekp() <script type="math/tex">\Rightarrow</script> positionnement sur un flux</li>
 </ul>
 
+<h2 id="3-le-flux-string">3. Le flux string</h2>
+
+<ul>
+  <li>La source ou la destination d’un flux peut être une string</li>
+  <li>Point commun: les deux sont constitués d’octets</li>
+  <li>Intérêt: Conversion, transferts en mémoire (buffers)</li>
+</ul>
+
+<p><code class="highlighter-rouge">#include &lt;sstream&gt;</code> <script type="math/tex">\Rightarrow</script> 3 classes:</p>
+
+<ul>
+  <li>istringstream <script type="math/tex">\Rightarrow</script> Entrée</li>
+  <li>ostringstream <script type="math/tex">\Rightarrow</script> Sortie</li>
+  <li>stringstream <script type="math/tex">\Rightarrow</script> Les deux</li>
+</ul>
+
+<h3 id="la-classe-string">La classe string</h3>
+
+<p>La STL impémente une classe string:</p>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;string&gt; // permet d'utiliser la classe std::string
+</span></code></pre>
+</div>
+
+<p>Il s’agit en fait d’une classe qui est la <strong>spécialisation d’un template</strong> dont la définition (dans <code class="highlighter-rouge">&lt;string&gt;</code>) est:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">typedef</span> <span class="n">basic_string</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">string</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Avantages:</p>
+<ul>
+  <li>plus simple et plus sûr que <code class="highlighter-rouge">char*</code></li>
+  <li>Définition de meethodes et opérateurs utiles</li>
+</ul>
+
+<h4 id="méthodes-usuelles-de-string">Méthodes usuelles de string</h4>
+
+<p>Opérateurs:</p>
+
+<ul>
+  <li>Affectation <code class="highlighter-rouge">=</code></li>
+  <li>Concaténation <code class="highlighter-rouge">+=</code>,<code class="highlighter-rouge">+</code></li>
+  <li>Comparaisons <code class="highlighter-rouge">==</code>, <code class="highlighter-rouge">&lt;</code>, <code class="highlighter-rouge">&gt;</code>, <code class="highlighter-rouge">&lt;=</code>, <code class="highlighter-rouge">&gt;=</code></li>
+</ul>
+
+<p>Méthodes:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">int size ()</code> <script type="math/tex">\Rightarrow</script> Renvoie le nombre de caractères</li>
+  <li><code class="highlighter-rouge">int lenght ()</code> <script type="math/tex">\Rightarrow</script> Renvoie le nombre de caractères</li>
+  <li><code class="highlighter-rouge">int capacity ()</code> <script type="math/tex">\Rightarrow</script> taille possible sans la réallocation</li>
+  <li><code class="highlighter-rouge">bool empty ()</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">true</code> si la string est vide <code class="highlighter-rouge">faux</code> sinon.</li>
+  <li><code class="highlighter-rouge">int find ()</code> <script type="math/tex">\Rightarrow</script> position de la string <code class="highlighter-rouge">s</code> dans la string courante à partir de <code class="highlighter-rouge">pos</code></li>
+  <li><code class="highlighter-rouge">string substr(int start, int lenght)</code> <script type="math/tex">\Rightarrow</script> Sous string de longueur <code class="highlighter-rouge">lenght</code> à partir de <code class="highlighter-rouge">start</code></li>
+</ul>
+
+<blockquote>
+  <p>Les comparaisons de strings sont faites dans l’odre lexicographique (comme un dictionnaire) et sont sensibles à la casse.</p>
+</blockquote>
+
+<h4 id="conversion-de-string-sans-flux">Conversion de string (sans flux)</h4>
+
+<p><img src="/00illustrations/flux/conversionSTR1.png" align="" height="auto" float="right" /></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;string&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="s">"Hello"</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s2</span><span class="p">(</span><span class="s">"--"</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s3</span> <span class="o">=</span> <span class="s">"World"</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="n">s2</span> <span class="o">&lt;&lt;</span> <span class="n">s3</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p2</span><span class="p">;</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">s3</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s %s!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p2</span><span class="p">);</span>    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="conversions-en-type-numériques">Conversions en type numériques</h3>
+
+<p><span style="color:red"> COMPLÉTER </span><br />
+Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programmation sockets</a></p>
+
+<ul>
+  <li><code class="highlighter-rouge">atoi()</code></li>
+  <li><code class="highlighter-rouge">atol()</code></li>
+  <li><code class="highlighter-rouge">atod()</code></li>
+  <li><code class="highlighter-rouge">itoa()</code></li>
+</ul>
+
+<h4 id="conversion-avec-les-flux-de-string">Conversion avec les flux de string</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;sstream&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="c1">// Type =&gt; string
+</span>    <span class="c1">//   - envoyer dans le flux
+</span>    <span class="c1">//   - méthode str()
+</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">istringstream</span> <span class="n">c</span><span class="p">(</span><span class="s">"10"</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">nb</span><span class="p">;</span>
+    <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">nb</span><span class="p">;</span>
+
+    <span class="c1">// string =&gt; type
+</span>    <span class="c1">//  - créer flux de la chaîne 
+</span>    <span class="c1">//  - extraire du flux vers la var
+</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<h2 id="4-vue-densemble">4. vue d’ensemble</h2>
+
+<p><a href="/00illustrations/flux/headers.png"><img src="/00illustrations/flux/headers.png" align="" height="auto" float="right" /></a></p>
+
+<blockquote>
+  <p>Les classes du bus sont probablement <code class="highlighter-rouge">fstream</code> et <code class="highlighter-rouge">stringstream</code> car à la fois input et output (erreur sur la figure)</p>
+</blockquote>
+
+<h2 id="5-standard-template-library-stl">5. Standard Template Library (STL)</h2>
+
+<p><strong>Bibliothèque</strong> de structures de données classiques et les <strong>algorithmes</strong> associés intégrée à la procédure de <strong>standardisation</strong> de C++. Basée sur des <strong>templates de classes</strong>, elle contient:</p>
+
+<ul>
+  <li>Conteneurs
+    <ul>
+      <li>Séquentiels</li>
+      <li>Associatifs</li>
+    </ul>
+  </li>
+  <li>Itérateurs</li>
+  <li>Algorithmes</li>
+  <li>Objets fonctions (foncteurs <span style="color:red"> à creuser </span>)</li>
+  <li>Adaptateurs</li>
+  <li>Allocateurs</li>
+</ul>
+
+<p>Un foncteur est une entité qui peut être appelée comme un fonction. <strong>Un objet d’uneclasse dans laquelle on a défini une surcharge de l’opérateur <code class="highlighter-rouge">()</code> est également un foncteur.</strong></p>
+
+<p>Un conteneur (container) est, comme son nom l’indique, un objet qui contient d’autres objets. Il fournit un moyen de gérer les objets contenus (au minimum ajout / supression, parfois insertion, tri, recherche,…) ainsi qu’un accès à ces objets qui dans le cas de la <strong>STL</strong> consiste très souvent en un iteerateur.</p>
+
+<p>Les <strong>itérateurs</strong> permettent de parcourir une collection d’objets sans avoir à se préoccuper de la manière dont ils sont stockés. Ceci permet aussi d’avoir une interface de manipulation commune, et c’est ainsi que la STL fournit des algorithmes génériques qui s’appliquent à la majorité de ses conteneurs (tri,recherche, …).</p>
+
+<p>Parmi les conteneurs disponibles dans la STL on retrouve les tableaux (<code class="highlighter-rouge">vector</code>), les listes (<code class="highlighter-rouge">list</code>), les ensembles (<code class="highlighter-rouge">set</code>), les piles (<code class="highlighter-rouge">stack</code>) et beaucoup d’autres.</p>
+
+<h3 id="les-classes-conteneurs">Les classes conteneurs</h3>
+
+<p>Un conteneur est un objet qui permet de stocker d’autres objets.</p>
+
+<ul>
+  <li>
+    <p>Permet de gérer les objets contenus: ajout, supression (éventuellement insertion, tri, recherche)</p>
+  </li>
+  <li>
+    <p>Permet d’accéder aux objets contenus grâce aux <strong>itérateurs</strong></p>
+  </li>
+  <li>
+    <p>Les <strong>itérateurs</strong> permettent de <strong>parcourir</strong> une collection d’objets sans avoir à se préoccuper de l’implémentation*. Ceci permet d’avoir une <strong>interface de manipulation commune</strong>, pour les algorithmes génériques de la STL (tri, recherche, remplacement,…)</p>
+  </li>
+</ul>
+
+<p>Il existe deux types de conteurs:</p>
+
+<h4 id="séquentiels">séquentiels</h4>
+<p>Les éléments sont <strong>ordonnés</strong>. On peut parcourir le conteneur suivant cet ordre et insérer ou supprimer un élément en un endroit explicitement choisi;</p>
+
+<blockquote>
+  <p>Vecteur, liste, pile, file</p>
+</blockquote>
+
+<h4 id="associatifs">Associatifs</h4>
+<p>Ce sont des conteneurs dont les éléments sont identifiés par une <strong>clé</strong> et ordonnés suivant celle-ci. Pour insérer un élément, il n’est en théorie plus utile de préciser un emplacement</p>
+
+<blockquote>
+  <p>dictionnaire, map</p>
+</blockquote>
+
+<h3 id="conteneurs-de-séquences">Conteneurs de séquences</h3>
+
+<p>*<code class="highlighter-rouge">&lt;vector&gt;</code> <script type="math/tex">\Rightarrow</script> tableau dynamique contigu
+*<code class="highlighter-rouge">&lt;array&gt;</code> <script type="math/tex">\Rightarrow</script> tableau statique contigu
+*<code class="highlighter-rouge">&lt;deque&gt;</code> <script type="math/tex">\Rightarrow</script> File à double entrée
+*<code class="highlighter-rouge">&lt;list&gt;</code> <script type="math/tex">\Rightarrow</script> Liste doublement chainée
+*<code class="highlighter-rouge">&lt;forward_list&gt;</code> <script type="math/tex">\Rightarrow</script> Liste simplement chainée
+*<code class="highlighter-rouge">&lt;queue&gt;</code> <script type="math/tex">\Rightarrow</script> File
+*<code class="highlighter-rouge">&lt;priority_queue&gt;</code> <script type="math/tex">\Rightarrow</script>  File
+*<code class="highlighter-rouge">&lt;stack&gt;</code> <script type="math/tex">\Rightarrow</script> Pile</p>
+
+<h3 id="méthodes-courantes-des-conteneurs">Méthodes courantes des conteneurs</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">clear()</code> <script type="math/tex">\Rightarrow</script> Vide le conteneur</li>
+  <li><code class="highlighter-rouge">size()</code> <script type="math/tex">\Rightarrow</script> Retourne le nombre d’éléments</li>
+  <li><code class="highlighter-rouge">empty()</code> <script type="math/tex">\Rightarrow</script> Teste si le conteneur est vide</li>
+  <li><code class="highlighter-rouge">push_back()</code> <script type="math/tex">\Rightarrow</script> Ajoute un élément à la fin</li>
+  <li><code class="highlighter-rouge">push_front()</code> <script type="math/tex">\Rightarrow</script> Ajoute un élément au début</li>
+  <li><code class="highlighter-rouge">front()</code> <script type="math/tex">\Rightarrow</script> Renvoie le 1er élément</li>
+  <li><code class="highlighter-rouge">pop_front()</code> <script type="math/tex">\Rightarrow</script> Supprime le premier élément</li>
+  <li><code class="highlighter-rouge">insert()</code> <script type="math/tex">\Rightarrow</script> Insère un élément quelconque</li>
+  <li><code class="highlighter-rouge">erase()</code> <script type="math/tex">\Rightarrow</script> Supprime un élément</li>
+</ul>
+
+<h4 id="exemple-de-conteneur-séquentiel-vector">Exemple de conteneur séquentiel: vector</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;string&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">vect</span><span class="p">;</span>
+    <span class="n">vect</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">"introduction"</span><span class="p">);</span>
+    <span class="n">vect</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">"une phrase"</span><span class="p">);</span>
+    <span class="n">vect</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">"conclusion"</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vect</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">vect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="exemple-de-conteneur-séquentiel-list">Exemple de conteneur séquentiel: list</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;list&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">lst</span><span class="p">;</span>
+    <span class="n">lst</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// 1
+</span>    <span class="n">lst</span><span class="p">.</span><span class="n">push_front</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// 0 1
+</span>    <span class="n">lst</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">lst</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 2 0 1
+</span>    <span class="n">lst</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">//2 0 1 3
+</span>    <span class="n">lst</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span> <span class="c1">// 0 1 3
+</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="exemple-de-conteneur-séquentiel-array">Exemple de conteneur séquentiel: array</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;array&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="n">a1</span> <span class="p">{</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">}</span> <span class="p">};</span> <span class="c1">// uniform init
+</span>    <span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="n">a2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">};</span>  <span class="c1">// cstr de copie ou cstr
+</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>      <span class="c1">// deux accesseurs
+</span>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>   <span class="c1">// PAS equivalents
+</span>    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;array&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="n">a1</span><span class="p">{</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">}</span> <span class="p">};</span>
+
+    <span class="c1">// accès sans test. Affiche une 
+</span>    <span class="c1">// valeur quelconque
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// Lève une exception: out_of_range
+</span>    <span class="c1">// what() -&gt; array:at
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>La lasse <code class="highlighter-rouge">array</code> a des méthodes:</p>
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">size()</code> <script type="math/tex">\Rightarrow</script> plus besoin de passer un paramètre de taille aux fonctions ou utiliser <code class="highlighter-rouge">sizeof(tab)</code>/<code class="highlighter-rouge">sizeof(int)</code> par exemple.</p>
+  </li>
+  <li>
+    <p>Les accès par la méthode <code class="highlighter-rouge">at(indice)</code> sont sécurisés par des Exceptions.</p>
+  </li>
+</ul>
+
+<h3 id="destruction-dun-objet-conteneur">Destruction d’un objet conteneur</h3>
+
+<blockquote>
+  <p>Quand est il nécéssaire d’éffacer ce qui est stocké dans un vecteur?</p>
+</blockquote>
+
+<p>La réponse dépend de la nature de ce qui est stocké:</p>
+
+<ul>
+  <li>
+    <p>Si il s’agit d’un objet, il n’est pas utile de le détruire, il le sera lors de son retrait (pop), ou lorsque le vecteur sera détruit.</p>
+  </li>
+  <li>
+    <p>Par contre, si il s’git d’un pointeur sur un objet, il faut le détruire sinon le programme présentera une fuite de mémoire.</p>
+  </li>
+</ul>
+
+<h3 id="imbrication-de-conteneurs">Imbrication de conteneurs</h3>
+
+<p>Il est possible d’imbriquer les conteneurs de la STL. On peut ainsi, par exemple créer un vecteur de listes de strings par exemple (une chanson mémorisée dans un vecteur de couplets. Chaque couplet étant une liste de phrases):</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span> <span class="n">list</span><span class="o">&lt;</span> <span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">maChanson</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>La définition d’un type intermédiaire peut augmenter la lisibilité:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">typedef</span> <span class="n">list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">Couplet</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">Couplet</span><span class="o">&gt;</span> <span class="n">maChanson</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Des objets <code class="highlighter-rouge">vector</code> imbriqué simulent des tableux multidimentionnels. On peut initialiser une matrice identité <script type="math/tex">m_{5 \time 5}</script> avec le code suivant:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span> <span class="n">Ligne</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">Ligne</span><span class="o">&gt;</span> <span class="n">Matrice</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Matrice</span> <span class="n">m</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span> <span class="c1">// 5 lignes de largeur 0
+</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">resize</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// fixe la longueur des lignes à 5
+</span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="6-les-itérateurs">6. Les itérateurs</h2>
+
+<ul>
+  <li>Les itérateurs sont une <strong>généralisation des pointeurs</strong></li>
+  <li>ils permettent d’utiliser de <strong>façon uniforme</strong> divers conteneurs</li>
+  <li>ils permettent de spécifier une position à l’intérieur d’un conteneur. Ils peuvent être <strong>incrémentés</strong> et <strong>déréférencés</strong> (avec <code class="highlighter-rouge">*</code>) et deux itérateurs peuvent être comparés.</li>
+  <li>Tous les conteneurs disposent des méthodes:
+    <ul>
+      <li><code class="highlighter-rouge">begin()</code> <script type="math/tex">\Rightarrow</script> Renvoie un itérateur pointant sur le premier élément.</li>
+      <li><code class="highlighter-rouge">end()</code> <script type="math/tex">\Rightarrow</script> renvoie un itérateur pointant <strong>arpès</strong> le dernier élément</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>On ne peut pas déréférencecr l’itérateur renvoyé par la méthode <code class="highlighter-rouge">end()</code></p>
+</blockquote>
+
+<p><img src="/00illustrations/flux/iter.png" align="" height="auto" float="right" /></p>
+
+<p>Ancienne syntaxe de déclaration:</p>
+
+<p><code class="highlighter-rouge">container&lt;type&gt;::iterator nom;</code></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span>
+</code></pre>
+</div>
+<p>Un itérateur peut s’initialiser grâce aux méthodes <code class="highlighter-rouge">begin</code>, <code class="highlighter-rouge">end</code> ou <code class="highlighter-rouge">find</code> (containers non-séquentiels)</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span><span class="p">(</span><span class="n">vect</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+</code></pre>
+</div>
+
+<h4 id="syntaxe-c11">Syntaxe C++11</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">auto</span> <span class="n">itr</span> <span class="o">=</span> <span class="n">vect</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h4 id="exemple-ditérateur-sur-une-liste">Exemple d’itérateur sur une liste</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;list&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">lst</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">};</span>
+
+    <span class="c1">// ancienne syntaxe déclaration uniforme
+</span>    <span class="k">for</span> <span class="p">(</span><span class="n">list</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span><span class="p">{</span><span class="n">lst</span><span class="p">.</span><span class="n">begin</span><span class="p">()};</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// nouvelle syntaxe 
+</span>    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">lst</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// nouvelle syntaxe déclaration uniforme
+</span>    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span><span class="p">{</span><span class="n">lst</span><span class="p">.</span><span class="n">begin</span><span class="p">()};</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h4 id="range-based-for-loop">Range based for loop</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+<span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="k">const</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="7-conteneurs-associatifs">7. Conteneurs associatifs</h2>
+
+<ul>
+  <li>dictionnaire <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">map</code>, <code class="highlighter-rouge">multimap</code></li>
+  <li>ensembles (listes ordonnée) <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">set</code>, <code class="highlighter-rouge">multiset</code></li>
+  <li>tableau de  booléens (bitArray?) <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">bitset</code></li>
+</ul>
+
+<p>Les tables associatives sont une <strong>généralisation des tableux</strong>: Les <strong>indices</strong> peuvent être <strong>non-entier</strong>.</p>
+
+<ul>
+  <li>Tableau que l’on pourrait indicer par des chaînes de caractères et écrire par exemple <code class="highlighter-rouge">moyenne["informatique"]</code></li>
+  <li>On parle d’association <strong>clé-valeur</strong></li>
+  <li>Les tables associatives sont définies dans la bibliothèque <code class="highlighter-rouge">&lt;map&gt;</code></li>
+  <li>Elles nécessitent <strong>deux types</strong> pour leur déclaration: le type des <strong>clés</strong> (les index) et le type des <strong>éléments indéxés</strong></li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="c1">//      clé        valeur
+</span><span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">moyenneParBranche</span><span class="p">;</span> <span class="c1">// clé unique
+</span>
+<span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">noteS_parBranche</span><span class="p">;</span> <span class="c1">// clé dupliquée
+</span></code></pre>
+</div>
+
+<p>```</p>
+
+
 </div>
 
 <div>
