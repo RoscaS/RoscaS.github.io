@@ -97,7 +97,7 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="lecture-utile-avant-de-se-lancer-dans-ce-poste">Lecture utile avant de se lancer dans ce poste</h2>
+    <h3 id="lecture-utile-avant-de-se-lancer-dans-ce-poste">Lecture utile avant de se lancer dans ce poste</h3>
 
 <ul>
   <li><a href="\cpp\cpp-R-value-L-value.html">L-value et R-value</a></li>
@@ -106,158 +106,21 @@
 Ce dernier point est un prérequis plus qu’un conseil.</li>
 </ul>
 
-<h2 id="sources">sources</h2>
+<h3 id="sources">sources</h3>
 
 <ul>
   <li><a href="http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/">learncpp.com</a> (ch 15.1 à 15.7)</li>
   <li><a href="https://herbsutter.com/2013/05/29/gotw-89-solution-smart-pointers/">Herb Sutter’s blog GotW #89</a></li>
   <li><a href="https://stackoverflow.com/">stackoverflow</a></li>
   <li><a href="https://www.tutorialspoint.com">tutorialsPoint</a></li>
-  <li><a href="https://fr.wikipedia.org/wiki/S%C3%A9mantique">wikipedia</a></li>
+  <li><a href="https://fr.wikipedia.org/">wikipedia</a></li>
 </ul>
 
-<h1 id="en-bref">En bref</h1>
+<h2 id="stdunique_ptr">std::unique_ptr</h2>
 
-<ul>
-  <li>
-    <p>Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l’objet se retrouve hors de son contexte d’utilisation.</p>
-  </li>
-  <li>
-    <p>La sémantique de copie permet à un objet d’une classe d’être copié. Ceci est réalisé à l’aide du constructeur de copie et de l’opérateur d’affectation (surcharge copie).</p>
-  </li>
-  <li>
-    <p>La sémantique de déplacement permet à un objet d’être tranféré d’un possésseur à un autre à la place d’en faire une copie couteuse. Ceci est réalisé à l’aide du constructeur de déplacement et de l’opérateur d’affectation (surcharge déplacement).</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::auto_ptr</code> est déprécié et ne doit pas être utilisé.</p>
-  </li>
-  <li>
-    <p>Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&amp;). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.</p>
-  </li>
-  <li>
-    <p>Si nous construisons un objet ou faisons une affectation dont l’argument est une L-value, il vaut dans la plus part des cas mieux <strong>copier</strong> (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l’expressions <code class="highlighter-rouge">a = b</code> il est évident que <code class="highlighter-rouge">b</code> ne subira aucune modification.</p>
-  </li>
-  <li>
-    <p>Quand nous construisons un objet ou faisons une affectation dont l’argument est une R-value, nous savons que cette R-value n’est d’une certaine façon qu’un objet temporaire. À la place de faire une couteuse copie, nous pouvons transférer les ressours à l’objet que nous construisons ou affectons. C’est une procédure safe car de toutes façon l’objet temporaire sera détruit à la fin du contexte et ne sera plus utilisé plus lui loin dans le programme.</p>
-  </li>
-  <li>
-    <p>Nous pouvons utiliser le mot clé <code class="highlighter-rouge">delete</code> pour <em>disable</em> la sémantique de copie dans les classes que nous créons en settant <code class="highlighter-rouge">= delete</code> dans le header du constructeur de copie et de la surcharge de l’opperateur d’affectation.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::move</code> nous permet de traiter une L-value comme étant une R-value. C’est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d’une L-value</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::unique_ptr</code> est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::make_unique()</code> (C++14) devrait être favorisée sur l’utilisation de new pour la création d’un <code class="highlighter-rouge">std::unique_ptr</code>.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::unique_ptr</code> <em>disable</em> la sémantique de copie</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::shared_ptr</code> est la classe de smart pointer à utiliser quand nous avons besoin que plusieurs objets accèdent à la même ressource. La ressource ne sera détruite que lorsque le dernier <code class="highlighter-rouge">std::shared_ptr</code> qui la possède sera hors contexte.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::make_shared()</code> devrait être favorisé pour créér de nouveaus <code class="highlighter-rouge">std::shared_ptr</code>.</p>
-  </li>
-  <li>
-    <p>avec <code class="highlighter-rouge">std::shared_ptr</code> la sémantique de copie <strong>doit</strong> être utilisée pour créér un pointeur supplémentaire pointant sur le même objet.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">std::weak_ptr</code> est la classe de smart pointer à utiliser quand on a besoin d’un ou plusieurs objets capable de voir et d’accéder à une ressource possédée par un <code class="highlighter-rouge">std::shared_ptr</code> mais qui n’a pas d’influance sur la destruction de la ressource.</p>
-  </li>
-</ul>
+<p>Au début de <a href="\cpp\cpp-move&amp;smartP.html">cet</a> article nous avons vu les dangers de l’utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointers.</p>
 
-<h1 id="exemples-pratiques">Exemples pratiques</h1>
-
-<h2 id="shared_ptr-et-make_shared">shared_ptr et make_shared</h2>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-	<span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
-	<span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">void</span> <span class="n">poke</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">Poked!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">};</span>
- 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="p">{</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
-        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
-        <span class="p">{</span>
-            <span class="p">{</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="n">ptr2</span><span class="p">{</span><span class="n">ptr1</span><span class="p">};</span>
-                <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>  
-            <span class="p">}</span>
-            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr2</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ressource toujours accessible par ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
-    <span class="p">}</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-
-	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-<p>output:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
-	Poked!
-	Poked!
-sortie contexte ptr2
-ressource toujours accessible par ptr1
-	Poked!
-Ressource detruite
-sortie contexte ptr1
-</code></pre>
-</div>
-
-<h2 id="mot-clé-auto">mot clé auto</h2>
-
-<p>Le code suivant est équivalent au précédent mais plus court</p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
-<span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-	<span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
-	<span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">void</span> <span class="n">poke</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">Poked!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">};</span>
- 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="p">{</span>
-        <span class="k">auto</span> <span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
-        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
-        <span class="p">{</span>
-            <span class="p">{</span>
-                <span class="k">auto</span> <span class="n">ptr2</span> <span class="o">=</span> <span class="n">ptr1</span><span class="p">;</span> 
-                <span class="k">auto</span> <span class="n">ptr3</span><span class="p">(</span><span class="n">ptr1</span><span class="p">);</span>  <span class="c1">// equivalent !
-</span>                <span class="c1">// auto ptr4{ptr1}; // mot clé auto -&gt; pas de { ... }
-</span>                <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>  
-            <span class="p">}</span>
-            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr2</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ressource toujours accessible par ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
-    <span class="p">}</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-
-	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-<p><span style="color:red"> Si nous utilisons le mot clé <code class="highlighter-rouge">auto</code> nous ne pouvons pas utiliser l’initialisation uniforme ! </span>
-<a href="\cpp\cpp-Divers.html">Plus d’info</a></p>
-
-<h1 id="stdunique_ptr">std::unique_ptr</h1>
-
-<p>Au début de <a href="\cpp\cpp-move&amp;smartP.html">cet</a> article on a vu les dangers de l’utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointer.</p>
-
-<h2 id="rappel">rappel</h2>
+<h3 id="rappel">rappel</h3>
 
 <blockquote>
   <p>Un smart ponter est une classe qui gère (possède, own) un objet alloué dynamiquement et s’assure que l’objet est est proprement néttoyé en fin de vie (généralement quand il sort de portée).</p>
@@ -273,7 +136,7 @@ sortie contexte ptr1
   <li><code class="highlighter-rouge">std::weak_ptr</code></li>
 </ul>
 
-<h2 id="stdunique_ptr-1">std::unique_ptr</h2>
+<h3 id="stdunique_ptr-1">std::unique_ptr</h3>
 
 <p>Utilisé pour gérer dynamiquement un objet alloué dynamiquement mais dont unique_ptr est le seul possésseur.</p>
 
@@ -316,7 +179,7 @@ sortie contexte ptr1
 
 <p>Comme <code class="highlighter-rouge">unique_ptr</code> a été conçu avec la sémantique de déplacement en tête, si nous voulons transférer l’ownership d’un unique_ptr à un autre nous <strong>devons</strong> utiliser la sémantique de déplacement. Dans l’exemple plus haut nous faisons ça via la fonction <code class="highlighter-rouge">std::move()</code> qui converti res1 en R-value et force l’utilisation de la sémantique de déplacement.</p>
 
-<h2 id="accès-aux-membres">Accès aux membres</h2>
+<h3 id="accès-aux-membres">Accès aux membres</h3>
 
 <p>Comme les pointeurs traditionnels:</p>
 
@@ -364,14 +227,14 @@ Ressource détruite
 </code></pre>
 </div>
 
-<h2 id="stdunique_ptr-et-tableaux">std::unique_ptr et tableaux</h2>
+<h3 id="stdunique_ptr-et-tableaux">std::unique_ptr et tableaux</h3>
 
 <p>unique_ptr gère très bien le delete de tableaux (delete []), il n’y a aucun problème pour l’utiliser dans ce contexte. Celà dit dans presque tous les cas <strong>il est préférable d’utiliser les classes std::vector ou std::array qu’un smart pointer et un tableau classique !</strong></p>
 
-<h3 id="règle">Règle</h3>
+<h4 id="règle">Règle</h4>
 <p><span style="color:red">Favoriser l’utilisation de std::vector, std::array ou std::string sur l’utilisation d’unique_ptr avec un tableau fixe ou dynamique.</span></p>
 
-<h2 id="stdmake_unique-c-14">std::make_unique (C++ 14)</h2>
+<h3 id="stdmake_unique-c-14">std::make_unique (C++ 14)</h3>
 
 <p>C++14 apporte une nouvelle fonction <code class="highlighter-rouge">std::make_unique()</code>. Cette fonction template construit un objet du type spécifié et l’initialise avec les arguments passé à la fonction.</p>
 
@@ -418,7 +281,7 @@ Ressource détruite
 <p>L’utilisation de std::make_unique() est optionelle mais à privilégier.<br />
 <a href="http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/">plus d’info</a></p>
 
-<h2 id="unique_ptr-en-retour-de-fonction">unique_ptr en retour de fonction</h2>
+<h3 id="unique_ptr-en-retour-de-fonction">unique_ptr en retour de fonction</h3>
 
 <p>Aucun soucis de ce coté…</p>
 
@@ -437,10 +300,10 @@ Ressource détruite
 
 <p>Dans ce code, creeRessource() retourne un objet unique_ptr par valeur. Si cette valeur n’est pas attribuée, l’objet t’emporaire se retrouvera hors porté et sera néttoyé ainsi que la ressource qu’il contient. Si assigné, comme dans notre cas, la sémantique de déplacement est utilisée pour le retour. Ce qui en fait un moyen bien plus safe pour retourner des valeurs qu’un pointeur traditionnel.</p>
 
-<h3 id="règle-1">Règle</h3>
+<h4 id="règle-1">Règle</h4>
 <p><span style="color:red">Ne jamais retourner un unique_ptr par référence ou par pointeur à moins d’avoir une raison spécifique de le faire !</span></p>
 
-<h2 id="passer-un-unique_ptr-à-une-fonction">Passer un unique_ptr à une fonction</h2>
+<h3 id="passer-un-unique_ptr-à-une-fonction">Passer un unique_ptr à une fonction</h3>
 <p>Si nous voulons passer un un unique_ptr à une fonction sans perdre la possession de l’objet, on la passe par référence <span style="color:red">const</span></p>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
@@ -514,7 +377,7 @@ Fin
 
 <p>Bien noter que dans ce cas la posssession a été transfefée à prendPossession() et que la ressource à été détruite à la fin du contexte de la fonction et non pas à la fin du main.</p>
 
-<h2 id="mauvais-usage-dunique_ptr">Mauvais usage d’unique_ptr</h2>
+<h3 id="mauvais-usage-dunique_ptr">Mauvais usage d’unique_ptr</h3>
 
 <p>Il existe deux façons de chier dans la colle en utilisant unique_ptr. Ces deux façons sont faciles à éviter.</p>
 
@@ -543,7 +406,7 @@ Fin
 
 <p><span style="color:green">A noter que la fonction <code class="highlighter-rouge">std::make_unique()</code> empèche ces deux situations de se produire  par accident!!</span></p>
 
-<h1 id="stdshared_ptr">std::shared_ptr</h1>
+<h2 id="stdshared_ptr">std::shared_ptr</h2>
 
 <p>Contrairement à unique_ptr qui est fait pour ne posséder qu’une ressource, shared_pointer est fait pour gérer les cas où nous avons besoin de plusieurs smart pointer qui possède la même ressource.</p>
 
@@ -615,11 +478,11 @@ Ressource détruite
 
 <p>Cette situation est facile à éviter en gardant en tête d’utiliser un cstr de copie ou un opérateur d’affectation quand nous voulons utiliser plusieurs shared_ptr sur la même ressource.</p>
 
-<h3 id="règle-2">Règle</h3>
+<h4 id="règle-2">Règle</h4>
 
 <p><span style="color:red"> Toujours faire une copie d’un shared_ptr déja éxistant quand on a besoin de plus d’un shared_pointer pointant sur la même ressource.  </span></p>
 
-<h2 id="stdmake_shared">std::make_shared</h2>
+<h3 id="stdmake_shared">std::make_shared</h3>
 
 <p>De la même façon que <code class="highlighter-rouge">std::make_unique()</code> nous permet de créér un un unique_ptr, make_shared peut (et devrait) être utilisé pour créér un shared_ptr.</p>
 
@@ -654,15 +517,152 @@ Ressource détruite
 
 <p><span style="color:red">Il est plus performant d’utiliser make_shared que de créér un pointeur avec new et d’ensuite le passer a shared_ptr.</span></p>
 
-<h2 id="conversion-unique-rightarrow-shared">Conversion unique <script type="math/tex">\rightarrow</script> shared</h2>
+<h3 id="conversion-unique-rightarrow-shared">Conversion unique <script type="math/tex">\rightarrow</script> shared</h3>
 
 <p>Un des constructeurs de shared_ptr permet transformer un unique_ptr en shared_ptr.</p>
 
 <p><span style="color:red"> L’inverse n’est pas possible. </span></p>
 
-<h1 id="quiz">Quiz:</h1>
+<h2 id="en-bref">En bref</h2>
 
-<h3 id="1-explain-when-you-should-use-the-following-types-of-pointers">1. Explain when you should use the following types of pointers:</h3>
+<ul>
+  <li>
+    <p>Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l’objet se retrouve hors de son contexte d’utilisation.</p>
+  </li>
+  <li>
+    <p>La sémantique de copie permet à un objet d’une classe d’être copié. Ceci est réalisé à l’aide du constructeur de copie et de l’opérateur d’affectation (surcharge copie).</p>
+  </li>
+  <li>
+    <p>La sémantique de déplacement permet à un objet d’être tranféré d’un possésseur à un autre à la place d’en faire une copie couteuse. Ceci est réalisé à l’aide du constructeur de déplacement et de l’opérateur d’affectation (surcharge déplacement).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::auto_ptr</code> est déprécié et ne doit pas être utilisé.</p>
+  </li>
+  <li>
+    <p>Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&amp;). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.</p>
+  </li>
+  <li>
+    <p>Si nous construisons un objet ou faisons une affectation dont l’argument est une L-value, il vaut dans la plus part des cas mieux <strong>copier</strong> (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l’expressions <code class="highlighter-rouge">a = b</code> il est évident que <code class="highlighter-rouge">b</code> ne subira aucune modification.</p>
+  </li>
+  <li>
+    <p>Quand nous construisons un objet ou faisons une affectation dont l’argument est une R-value, nous savons que cette R-value n’est d’une certaine façon qu’un objet temporaire. À la place de faire une couteuse copie, nous pouvons transférer les ressours à l’objet que nous construisons ou affectons. C’est une procédure safe car de toutes façon l’objet temporaire sera détruit à la fin du contexte et ne sera plus utilisé plus lui loin dans le programme.</p>
+  </li>
+  <li>
+    <p>Nous pouvons utiliser le mot clé <code class="highlighter-rouge">delete</code> pour <em>disable</em> la sémantique de copie dans les classes que nous créons en settant <code class="highlighter-rouge">= delete</code> dans le header du constructeur de copie et de la surcharge de l’opperateur d’affectation.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::move</code> nous permet de traiter une L-value comme étant une R-value. C’est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d’une L-value</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::unique_ptr</code> est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::make_unique()</code> (C++14) devrait être favorisée sur l’utilisation de new pour la création d’un <code class="highlighter-rouge">std::unique_ptr</code>.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::unique_ptr</code> <em>disable</em> la sémantique de copie</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::shared_ptr</code> est la classe de smart pointer à utiliser quand nous avons besoin que plusieurs objets accèdent à la même ressource. La ressource ne sera détruite que lorsque le dernier <code class="highlighter-rouge">std::shared_ptr</code> qui la possède sera hors contexte.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::make_shared()</code> devrait être favorisé pour créér de nouveaus <code class="highlighter-rouge">std::shared_ptr</code>.</p>
+  </li>
+  <li>
+    <p>avec <code class="highlighter-rouge">std::shared_ptr</code> la sémantique de copie <strong>doit</strong> être utilisée pour créér un pointeur supplémentaire pointant sur le même objet.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">std::weak_ptr</code> est la classe de smart pointer à utiliser quand on a besoin d’un ou plusieurs objets capable de voir et d’accéder à une ressource possédée par un <code class="highlighter-rouge">std::shared_ptr</code> mais qui n’a pas d’influance sur la destruction de la ressource.</p>
+  </li>
+</ul>
+
+<h2 id="exemples-pratiques">Exemples pratiques</h2>
+
+<h3 id="shared_ptr-et-make_shared">shared_ptr et make_shared</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+	<span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+	<span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">poke</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">Poked!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+        <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="n">ptr2</span><span class="p">{</span><span class="n">ptr1</span><span class="p">};</span>
+                <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>  
+            <span class="p">}</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr2</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ressource toujours accessible par ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Ressource acquise
+	Poked!
+	Poked!
+sortie contexte ptr2
+ressource toujours accessible par ptr1
+	Poked!
+Ressource detruite
+sortie contexte ptr1
+</code></pre>
+</div>
+
+<h3 id="mot-clé-auto">mot clé auto</h3>
+
+<p>Le code suivant est équivalent au précédent mais plus court</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Ressource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+	<span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource acquise</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+	<span class="o">~</span><span class="n">Ressource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ressource detruite</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">poke</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">Poked!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Ressource</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+        <span class="p">{</span>
+            <span class="p">{</span>
+                <span class="k">auto</span> <span class="n">ptr2</span> <span class="o">=</span> <span class="n">ptr1</span><span class="p">;</span> 
+                <span class="k">auto</span> <span class="n">ptr3</span><span class="p">(</span><span class="n">ptr1</span><span class="p">);</span>  <span class="c1">// equivalent !
+</span>                <span class="c1">// auto ptr4{ptr1}; // mot clé auto -&gt; pas de { ... }
+</span>                <span class="n">ptr2</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>  
+            <span class="p">}</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr2</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"ressource toujours accessible par ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">poke</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"sortie contexte ptr1</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p><span style="color:red"> Si nous utilisons le mot clé <code class="highlighter-rouge">auto</code> nous ne pouvons pas utiliser l’initialisation uniforme ! </span>
+<a href="\cpp\cpp-Divers.html">Plus d’info</a></p>
+
+<h2 id="quiz-learncppcom">Quiz <a href="http://www.learncpp.com/cpp-tutorial/15-x-chapter-15-comprehensive-review/">learncpp.com</a>:</h2>
+
+<h4 id="1-explain-when-you-should-use-the-following-types-of-pointers">1. Explain when you should use the following types of pointers:</h4>
 
 <ul>
   <li>std::unique_ptr</li>
@@ -688,7 +688,7 @@ Ressource détruite
 
 <p>std::auto_ptr is deprecated and slated for removal in C++17. It should not be used.</p>
 
-<h3 id="2-explain-how-r-values-references-enable-move-semantics">2. Explain how r-values references enable move semantics.</h3>
+<h4 id="2-explain-how-r-values-references-enable-move-semantics">2. Explain how r-values references enable move semantics.</h4>
 
 <p>Because r-values are temporary, we know they are going to get destroyed after they are used. When passing or return an r-value by value, it’s wasteful to make a copy and then destroy the original. Instead, we can simply move (steal) the r-value’s resources, which is generally more efficient.</p>
 

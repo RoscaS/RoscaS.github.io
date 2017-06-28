@@ -9,147 +9,28 @@ tags: cpp
 finished: false
 ---
 
-## Lecture utile avant de se lancer dans ce poste
+### Lecture utile avant de se lancer dans ce poste
 
 * [L-value et R-value](\cpp\cpp-R-value-L-value.html)
 * [Sémantique de copie](\cpp\cpp-semantiqueCopie.html) 
 * [Sémantique de déplacement](\cpp\cpp-move&smartP.html)  
 Ce dernier point est un prérequis plus qu'un conseil.
 
-## sources
+### sources
 
 * [learncpp.com](http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/) (ch 15.1 à 15.7)
 * [Herb Sutter's blog GotW #89](https://herbsutter.com/2013/05/29/gotw-89-solution-smart-pointers/)
 * [stackoverflow](https://stackoverflow.com/)
 * [tutorialsPoint](https://www.tutorialspoint.com)
-* [wikipedia](https://fr.wikipedia.org/wiki/S%C3%A9mantique)
-
-
-# En bref
-
-* Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l'objet se retrouve hors de son contexte d'utilisation.
-
-* La sémantique de copie permet à un objet d'une classe d'être copié. Ceci est réalisé à l'aide du constructeur de copie et de l'opérateur d'affectation (surcharge copie).
-
-* La sémantique de déplacement permet à un objet d'être tranféré d'un possésseur à un autre à la place d'en faire une copie couteuse. Ceci est réalisé à l'aide du constructeur de déplacement et de l'opérateur d'affectation (surcharge déplacement).
-
-* `std::auto_ptr` est déprécié et ne doit pas être utilisé.
-
-* Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.
-
-* Si nous construisons un objet ou faisons une affectation dont l'argument est une L-value, il vaut dans la plus part des cas mieux **copier** (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l'expressions `a = b` il est évident que `b` ne subira aucune modification.
-
-* Quand nous construisons un objet ou faisons une affectation dont l'argument est une R-value, nous savons que cette R-value n'est d'une certaine façon qu'un objet temporaire. À la place de faire une couteuse copie, nous pouvons transférer les ressours à l'objet que nous construisons ou affectons. C'est une procédure safe car de toutes façon l'objet temporaire sera détruit à la fin du contexte et ne sera plus utilisé plus lui loin dans le programme.
-
-* Nous pouvons utiliser le mot clé `delete` pour _disable_ la sémantique de copie dans les classes que nous créons en settant `= delete` dans le header du constructeur de copie et de la surcharge de l'opperateur d'affectation.
-
-* `std::move` nous permet de traiter une L-value comme étant une R-value. C'est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d'une L-value
-
-* `std::unique_ptr` est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.
-
-* `std::make_unique()` (C++14) devrait être favorisée sur l'utilisation de new pour la création d'un `std::unique_ptr`. 
-
-* `std::unique_ptr` _disable_ la sémantique de copie
-
-* `std::shared_ptr` est la classe de smart pointer à utiliser quand nous avons besoin que plusieurs objets accèdent à la même ressource. La ressource ne sera détruite que lorsque le dernier `std::shared_ptr` qui la possède sera hors contexte.
-
-* `std::make_shared()` devrait être favorisé pour créér de nouveaus `std::shared_ptr`. 
-
-* avec `std::shared_ptr` la sémantique de copie **doit** être utilisée pour créér un pointeur supplémentaire pointant sur le même objet.
-
-* `std::weak_ptr` est la classe de smart pointer à utiliser quand on a besoin d'un ou plusieurs objets capable de voir et d'accéder à une ressource possédée par un `std::shared_ptr` mais qui n'a pas d'influance sur la destruction de la ressource.
-
-# Exemples pratiques
-
-## shared_ptr et make\_shared
-
-```cpp
-class Ressource
-{
-public:
-	Ressource() { std::cout << "Ressource acquise\n"; }
-	~Ressource() { std::cout << "Ressource detruite\n"; }
-    void poke() { std::cout << "\tPoked!\n"; }
-};
- 
-int main() {
-
-    {
-        std::shared_ptr<Ressource>ptr1 = std::make_shared<Ressource>();
-        ptr1->poke();
-        {
-            {
-                std::shared_ptr<Ressource>ptr2{ptr1};
-                ptr2->poke();  
-            }
-            std::cout << "sortie contexte ptr2\n";
-        }
-        std::cout << "ressource toujours accessible par ptr1\n";
-        ptr1->poke();
-    }
-    std::cout << "sortie contexte ptr1\n";
-
-	return 0;
-}
-```
-output:
-
-```
-Ressource acquise
-	Poked!
-	Poked!
-sortie contexte ptr2
-ressource toujours accessible par ptr1
-	Poked!
-Ressource detruite
-sortie contexte ptr1
-```
-
-## mot clé auto
-
-Le code suivant est équivalent au précédent mais plus court
-
-```cpp
-class Ressource
-{
-public:
-	Ressource() { std::cout << "Ressource acquise\n"; }
-	~Ressource() { std::cout << "Ressource detruite\n"; }
-    void poke() { std::cout << "\tPoked!\n"; }
-};
- 
-int main() {
-
-    {
-        auto ptr1 = std::make_shared<Ressource>();
-        ptr1->poke();
-        {
-            {
-                auto ptr2 = ptr1; 
-                auto ptr3(ptr1);  // equivalent !
-                // auto ptr4{ptr1}; // mot clé auto -> pas de { ... }
-                ptr2->poke();  
-            }
-            std::cout << "sortie contexte ptr2\n";
-        }
-        std::cout << "ressource toujours accessible par ptr1\n";
-        ptr1->poke();
-    }
-    std::cout << "sortie contexte ptr1\n";
-
-	return 0;
-}
-```
-<span style="color:red"> Si nous utilisons le mot clé `auto` nous ne pouvons pas utiliser l'initialisation uniforme ! </span>
-[Plus d'info](\cpp\cpp-Divers.html)
+* [wikipedia](https://fr.wikipedia.org/)
 
 
 
-# std::unique_ptr
+## std::unique_ptr
 
-Au début de [cet](\cpp\cpp-move&smartP.html) article on a vu les dangers de l'utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointer.
+Au début de [cet](\cpp\cpp-move&smartP.html) article nous avons vu les dangers de l'utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointers.
 
-## rappel
+### rappel
 
 > Un smart ponter est une classe qui gère (possède, own) un objet alloué dynamiquement et s'assure que l'objet est est proprement néttoyé en fin de vie (généralement quand il sort de portée).
 >
@@ -161,7 +42,7 @@ La librairie de C++ 11 possède 4 types de smart pointer:
 * `std::shared_ptr`
 * `std::weak_ptr`
 
-## std::unique_ptr
+### std::unique_ptr
 
 Utilisé pour gérer dynamiquement un objet alloué dynamiquement mais dont unique_ptr est le seul possésseur.
 
@@ -204,7 +85,7 @@ int main() {
 
 Comme `unique_ptr` a été conçu avec la sémantique de déplacement en tête, si nous voulons transférer l'ownership d'un unique_ptr à un autre nous **devons** utiliser la sémantique de déplacement. Dans l'exemple plus haut nous faisons ça via la fonction `std::move()` qui converti res1 en R-value et force l'utilisation de la sémantique de déplacement.
 
-## Accès aux membres
+### Accès aux membres
 
 Comme les pointeurs traditionnels:
 
@@ -248,14 +129,14 @@ Je suis une ressource
 Ressource détruite
 ```
 
-## std::unique_ptr et tableaux
+### std::unique_ptr et tableaux
 
 unique_ptr gère très bien le delete de tableaux (delete []), il n'y a aucun problème pour l'utiliser dans ce contexte. Celà dit dans presque tous les cas **il est préférable d'utiliser les classes std::vector ou std::array qu'un smart pointer et un tableau classique !**
 
-### Règle
+#### Règle
 <span  style="color:red">Favoriser l'utilisation de std::vector, std::array ou std::string sur l'utilisation d'unique_ptr avec un tableau fixe ou dynamique.</span>
 
-## std::make_unique (C++ 14)
+### std::make_unique (C++ 14)
 
 C++14 apporte une nouvelle fonction `std::make_unique()`. Cette fonction template construit un objet du type spécifié et l'initialise avec les arguments passé à la fonction.
 
@@ -302,7 +183,7 @@ output:
 L'utilisation de std::make_unique() est optionelle mais à privilégier.  
 [plus d'info](http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/)
 
-## unique_ptr en retour de fonction
+### unique_ptr en retour de fonction
 
 Aucun soucis de ce coté...
 
@@ -321,10 +202,10 @@ int main() {
 
 Dans ce code, creeRessource() retourne un objet unique_ptr par valeur. Si cette valeur n'est pas attribuée, l'objet t'emporaire se retrouvera hors porté et sera néttoyé ainsi que la ressource qu'il contient. Si assigné, comme dans notre cas, la sémantique de déplacement est utilisée pour le retour. Ce qui en fait un moyen bien plus safe pour retourner des valeurs qu'un pointeur traditionnel.
 
-### Règle
+#### Règle
 <span  style="color:red">Ne jamais retourner un unique_ptr par référence ou par pointeur à moins d'avoir une raison spécifique de le faire !</span>
 
-## Passer un unique_ptr à une fonction
+### Passer un unique_ptr à une fonction
 Si nous voulons passer un un unique_ptr à une fonction sans perdre la possession de l'objet, on la passe par référence <span  style="color:red">const</span>
 
 ```cpp
@@ -398,7 +279,7 @@ Fin
 
 Bien noter que dans ce cas la posssession a été transfefée à prendPossession() et que la ressource à été détruite à la fin du contexte de la fonction et non pas à la fin du main.
 
-## Mauvais usage d'unique_ptr
+### Mauvais usage d'unique_ptr
 
 Il existe deux façons de chier dans la colle en utilisant unique_ptr. Ces deux façons sont faciles à éviter.
 
@@ -423,7 +304,7 @@ La situation est semblable à la première et aura les mêmes conséquences.
 <span  style="color:green">A noter que la fonction `std::make_unique()` empèche ces deux situations de se produire  par accident!!</span>
 
 
-# std::shared_ptr
+## std::shared_ptr
 
 Contrairement à unique_ptr qui est fait pour ne posséder qu'une ressource, shared\_pointer est fait pour gérer les cas où nous avons besoin de plusieurs smart pointer qui possède la même ressource.
 
@@ -495,11 +376,11 @@ La différence est ici que nous créons deux shared_ptr indépendant l'un de l'a
 
 Cette situation est facile à éviter en gardant en tête d'utiliser un cstr de copie ou un opérateur d'affectation quand nous voulons utiliser plusieurs shared_ptr sur la même ressource.
 
-### Règle
+#### Règle
 
 <span style="color:red"> Toujours faire une copie d'un shared_ptr déja éxistant quand on a besoin de plus d'un shared\_pointer pointant sur la même ressource.  </span>
 
-## std::make_shared
+### std::make_shared
 
 De la même façon que `std::make_unique()` nous permet de créér un un unique\_ptr, make_shared peut (et devrait) être utilisé pour créér un shared\_ptr.
 
@@ -534,15 +415,139 @@ int main() {
 
 <span style="color:red">Il est plus performant d'utiliser make_shared que de créér un pointeur avec new et d'ensuite le passer a shared\_ptr.</span>
 
-## Conversion unique $$ \rightarrow $$ shared
+### Conversion unique $$ \rightarrow $$ shared
 
 Un des constructeurs de shared_ptr permet transformer un unique\_ptr en shared\_ptr. 
 
 <span style="color:red"> L'inverse n'est pas possible. </span>
 
-# Quiz:
 
-### 1. Explain when you should use the following types of pointers:
+## En bref
+
+* Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l'objet se retrouve hors de son contexte d'utilisation.
+
+* La sémantique de copie permet à un objet d'une classe d'être copié. Ceci est réalisé à l'aide du constructeur de copie et de l'opérateur d'affectation (surcharge copie).
+
+* La sémantique de déplacement permet à un objet d'être tranféré d'un possésseur à un autre à la place d'en faire une copie couteuse. Ceci est réalisé à l'aide du constructeur de déplacement et de l'opérateur d'affectation (surcharge déplacement).
+
+* `std::auto_ptr` est déprécié et ne doit pas être utilisé.
+
+* Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.
+
+* Si nous construisons un objet ou faisons une affectation dont l'argument est une L-value, il vaut dans la plus part des cas mieux **copier** (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l'expressions `a = b` il est évident que `b` ne subira aucune modification.
+
+* Quand nous construisons un objet ou faisons une affectation dont l'argument est une R-value, nous savons que cette R-value n'est d'une certaine façon qu'un objet temporaire. À la place de faire une couteuse copie, nous pouvons transférer les ressours à l'objet que nous construisons ou affectons. C'est une procédure safe car de toutes façon l'objet temporaire sera détruit à la fin du contexte et ne sera plus utilisé plus lui loin dans le programme.
+
+* Nous pouvons utiliser le mot clé `delete` pour _disable_ la sémantique de copie dans les classes que nous créons en settant `= delete` dans le header du constructeur de copie et de la surcharge de l'opperateur d'affectation.
+
+* `std::move` nous permet de traiter une L-value comme étant une R-value. C'est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d'une L-value
+
+* `std::unique_ptr` est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.
+
+* `std::make_unique()` (C++14) devrait être favorisée sur l'utilisation de new pour la création d'un `std::unique_ptr`. 
+
+* `std::unique_ptr` _disable_ la sémantique de copie
+
+* `std::shared_ptr` est la classe de smart pointer à utiliser quand nous avons besoin que plusieurs objets accèdent à la même ressource. La ressource ne sera détruite que lorsque le dernier `std::shared_ptr` qui la possède sera hors contexte.
+
+* `std::make_shared()` devrait être favorisé pour créér de nouveaus `std::shared_ptr`. 
+
+* avec `std::shared_ptr` la sémantique de copie **doit** être utilisée pour créér un pointeur supplémentaire pointant sur le même objet.
+
+* `std::weak_ptr` est la classe de smart pointer à utiliser quand on a besoin d'un ou plusieurs objets capable de voir et d'accéder à une ressource possédée par un `std::shared_ptr` mais qui n'a pas d'influance sur la destruction de la ressource.
+
+## Exemples pratiques
+
+### shared_ptr et make\_shared
+
+```cpp
+class Ressource
+{
+public:
+	Ressource() { std::cout << "Ressource acquise\n"; }
+	~Ressource() { std::cout << "Ressource detruite\n"; }
+    void poke() { std::cout << "\tPoked!\n"; }
+};
+ 
+int main() {
+
+    {
+        std::shared_ptr<Ressource>ptr1 = std::make_shared<Ressource>();
+        ptr1->poke();
+        {
+            {
+                std::shared_ptr<Ressource>ptr2{ptr1};
+                ptr2->poke();  
+            }
+            std::cout << "sortie contexte ptr2\n";
+        }
+        std::cout << "ressource toujours accessible par ptr1\n";
+        ptr1->poke();
+    }
+    std::cout << "sortie contexte ptr1\n";
+
+	return 0;
+}
+```
+output:
+
+```
+Ressource acquise
+	Poked!
+	Poked!
+sortie contexte ptr2
+ressource toujours accessible par ptr1
+	Poked!
+Ressource detruite
+sortie contexte ptr1
+```
+
+### mot clé auto
+
+Le code suivant est équivalent au précédent mais plus court
+
+```cpp
+class Ressource
+{
+public:
+	Ressource() { std::cout << "Ressource acquise\n"; }
+	~Ressource() { std::cout << "Ressource detruite\n"; }
+    void poke() { std::cout << "\tPoked!\n"; }
+};
+ 
+int main() {
+
+    {
+        auto ptr1 = std::make_shared<Ressource>();
+        ptr1->poke();
+        {
+            {
+                auto ptr2 = ptr1; 
+                auto ptr3(ptr1);  // equivalent !
+                // auto ptr4{ptr1}; // mot clé auto -> pas de { ... }
+                ptr2->poke();  
+            }
+            std::cout << "sortie contexte ptr2\n";
+        }
+        std::cout << "ressource toujours accessible par ptr1\n";
+        ptr1->poke();
+    }
+    std::cout << "sortie contexte ptr1\n";
+
+	return 0;
+}
+```
+<span style="color:red"> Si nous utilisons le mot clé `auto` nous ne pouvons pas utiliser l'initialisation uniforme ! </span>
+[Plus d'info](\cpp\cpp-Divers.html)
+
+
+
+
+
+
+## Quiz [learncpp.com](http://www.learncpp.com/cpp-tutorial/15-x-chapter-15-comprehensive-review/):
+
+#### 1. Explain when you should use the following types of pointers:
 
 * std::unique_ptr
 
@@ -560,6 +565,6 @@ std::weak\_ptr should be used when you want access to an object that is being ma
 
 std::auto_ptr is deprecated and slated for removal in C++17. It should not be used.
 
-### 2. Explain how r-values references enable move semantics.
+#### 2. Explain how r-values references enable move semantics.
 
 Because r-values are temporary, we know they are going to get destroyed after they are used. When passing or return an r-value by value, it’s wasteful to make a copy and then destroy the original. Instead, we can simply move (steal) the r-value’s resources, which is generally more efficient.
