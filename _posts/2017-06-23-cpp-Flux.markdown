@@ -778,24 +778,135 @@ multimap<string, double> noteS_parBranche; // clé dupliquée
 ```
 
 
+```cpp
+#include<iostream>
+#include<string>
+#include<map>
+using namespace std;
+
+int main() {
+    map<string, double> moyenne;
+    moyenne["informatique"] = 5.5;
+    moyenne["physique"] = 4.5;
+
+    // parcours de tous les éléments
+    for (auto it = moyenne.begin(); it != moyenne.end(); ++it) {
+        cout << "En " << it->first << ", j'ai " 
+             << it->second << " de moyenne.\n";
+    }
+
+    // recherche
+    cout << "Ma moyenne en informatique est de ";
+    cout << moyenne.find("informatique")->second << endl; 
+
+
+    // accès
+    auto it1 = moyenne.begin(); // 5.5
+    auto it2 = moyenne.find("Physique"); // 4.5
+    auto it3 = moyenne.end(); // ou moyenne.find("inexistant") => empty
+
+    return 0;
+}
+
+```
+
+`it.first` $$ \Rightarrow $$ Donne accès à la clé
+`it.second` $$ \Rightarrow $$ Donne accès à la valeur
+
+<img src="/00illustrations/flux/map.png" align="" height="auto" float="right">
+
+<span style="color:red"> **Attention!**</span>
+
+* Le simple fait d'accéder à une clé via l'opérateur `[ ]` insère cette clé (avec la donnée `T()`) dans le conteneur map.
+* L'opérateur  `[ ]` n'est donc pas adapté pour vérifier si une clé est présente dans un conteneur de type map.
+
+<span style="color:green"> Il faut utiliser la méthode `find()` </span>
+
+### std::pair<T1, T2>
+Dans l'éxemple précédent, `it` est un itérateur. Si on déréférence `it` (`*it`) on accède à un élément qui est de type `pair<const Key, T>`
+
+Une paire est une structure contenant **deux éléments** éventuellement de types différents. Certains algorithmes de la STP (`find()` par exemple) retournent des paires (position de l'élément trouvee et un booléen indiquant si il a été trouvé).
+
+```cpp
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main() {
+    std::pair<int, std::string> p = std::make_pair(5, "poule");
+    cout << p.first << ' ' << p.second << endl;
+    
+    return 0;
+}
+```
+
+### Exemple avec multimap
+
+```cpp
+#include<iostream>
+#include<map>
+using namespace std;
+
+int main() {
+    multimap<string, double> moyenne;
+    multimap<string, double> ::iterator it;
+
+    // les indices classiques ne fonctionnent pas avec les multimap !
+    // ils servent à l'affectation.
+
+    moyenne.insert(pair<string, double>("Informatique", 5.5));
+    moyenne.insert(pair<string, double>("Physique", 4.5));
+
+	// parcours de tous les éléments
+	for (it = moyenne.begin(); it != moyenne.end(); ++it)
+		 cout << "En " << it->first << ", j'ai " << it->second <<
+			   " de moyenne." << endl ;
+
+
+    return 0;
+}
+```
+
+output:
+```
+En Informatique, j'ai 5.5 de moyenne.
+En Physique, j'ai 4.5 de moyenne.
 ```
 
 
+### Afficher toutes les valeurs d'une même clé
+
+```cpp
+#include<iostream>
+#include<map>
+using namespace std;
+
+int main() {
+    multimap<string, double> moyenne;
+
+    moyenne.insert(pair<string, double>("Informatique", 5.5));
+    moyenne.insert(pair<string, double>("Physique", 4.5));
 
 
-Une platforme d'évaluation (critique?) anonyme (youtube like) mais avec login à creditential fort (via fb, gmail, ...).
-    => trouver un moyen (stackoverflow like) d'obliger la critique constructive et objective
+    string recherche = "Physique";
+    multimap<string, double>::iterator it;
+    multimap<string, double>::iterator itlow;
+    multimap<string, double>::iterator itup;
 
-* pour tous les domaines
-    * écoles
-    * entreprise
-    * administrations
-    * propriétaires 
-    * ...
+    itlow = moyenne.lower_bound(recherche);
+    itup = moyenne.upper_bound(recherche);
 
-* Dans un monde où les forts se pensent intouchable et tendent à faire n'importe quoi car ils savent que dans de nombreux cas ils sont impunis ce système à la sauce tripAdvisor pousse via contrainte sociale forte les gestionnaires à ne pas faire ce qu'ils veulent de peur de s'afficher.
+    cout << recherche << "===>";
+    for (it = itlow; it != itup; ++it) {
+        cout << " " << (*it).second;
+    }
+    cout << endl;
 
-* 
+    return 0;
+}
+```
 
-
-
+output:
+```
+Physique===> 4.5
+```

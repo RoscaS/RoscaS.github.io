@@ -950,27 +950,139 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 </span></code></pre>
 </div>
 
-<p>```</p>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;string&gt;
+#include&lt;map&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-<p>Une platforme d’évaluation (critique?) anonyme (youtube like) mais avec login à creditential fort (via fb, gmail, …).
-    =&gt; trouver un moyen (stackoverflow like) d’obliger la critique constructive et objective</p>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">moyenne</span><span class="p">;</span>
+    <span class="n">moyenne</span><span class="p">[</span><span class="s">"informatique"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">5.5</span><span class="p">;</span>
+    <span class="n">moyenne</span><span class="p">[</span><span class="s">"physique"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.5</span><span class="p">;</span>
+
+    <span class="c1">// parcours de tous les éléments
+</span>    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"En "</span> <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">", j'ai "</span> 
+             <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="s">" de moyenne.</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// recherche
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Ma moyenne en informatique est de "</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"informatique"</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> 
+
+
+    <span class="c1">// accès
+</span>    <span class="k">auto</span> <span class="n">it1</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">// 5.5
+</span>    <span class="k">auto</span> <span class="n">it2</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">"Physique"</span><span class="p">);</span> <span class="c1">// 4.5
+</span>    <span class="k">auto</span> <span class="n">it3</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="c1">// ou moyenne.find("inexistant") =&gt; empty
+</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">it.first</code> <script type="math/tex">\Rightarrow</script> Donne accès à la clé
+<code class="highlighter-rouge">it.second</code> <script type="math/tex">\Rightarrow</script> Donne accès à la valeur</p>
+
+<p><img src="/00illustrations/flux/map.png" align="" height="auto" float="right" /></p>
+
+<p><span style="color:red"> <strong>Attention!</strong></span></p>
 
 <ul>
-  <li>pour tous les domaines
-    <ul>
-      <li>écoles</li>
-      <li>entreprise</li>
-      <li>administrations</li>
-      <li>propriétaires</li>
-      <li>…</li>
-    </ul>
-  </li>
-  <li>
-    <p>Dans un monde où les forts se pensent intouchable et tendent à faire n’importe quoi car ils savent que dans de nombreux cas ils sont impunis ce système à la sauce tripAdvisor pousse via contrainte sociale forte les gestionnaires à ne pas faire ce qu’ils veulent de peur de s’afficher.</p>
-  </li>
-  <li></li>
+  <li>Le simple fait d’accéder à une clé via l’opérateur <code class="highlighter-rouge">[ ]</code> insère cette clé (avec la donnée <code class="highlighter-rouge">T()</code>) dans le conteneur map.</li>
+  <li>L’opérateur  <code class="highlighter-rouge">[ ]</code> n’est donc pas adapté pour vérifier si une clé est présente dans un conteneur de type map.</li>
 </ul>
 
+<p><span style="color:green"> Il faut utiliser la méthode <code class="highlighter-rouge">find()</code> </span></p>
+
+<h3 id="stdpairt1-t2">std::pair&lt;T1, T2&gt;</h3>
+<p>Dans l’éxemple précédent, <code class="highlighter-rouge">it</code> est un itérateur. Si on déréférence <code class="highlighter-rouge">it</code> (<code class="highlighter-rouge">*it</code>) on accède à un élément qui est de type <code class="highlighter-rouge">pair&lt;const Key, T&gt;</code></p>
+
+<p>Une paire est une structure contenant <strong>deux éléments</strong> éventuellement de types différents. Certains algorithmes de la STP (<code class="highlighter-rouge">find()</code> par exemple) retournent des paires (position de l’élément trouvee et un booléen indiquant si il a été trouvé).</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;string&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">"poule"</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="sc">' '</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="exemple-avec-multimap">Exemple avec multimap</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;map&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">moyenne</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="o">::</span><span class="n">iterator</span> <span class="n">it</span><span class="p">;</span>
+
+    <span class="c1">// les indices classiques ne fonctionnent pas avec les multimap !
+</span>    <span class="c1">// ils servent à l'affectation.
+</span>
+    <span class="n">moyenne</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Informatique"</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">));</span>
+    <span class="n">moyenne</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Physique"</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">));</span>
+
+	<span class="c1">// parcours de tous les éléments
+</span>	<span class="k">for</span> <span class="p">(</span><span class="n">it</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span>
+		 <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"En "</span> <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">", j'ai "</span> <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">&lt;&lt;</span>
+			   <span class="s">" de moyenne."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span> <span class="p">;</span>
+
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>En Informatique, j'ai 5.5 de moyenne.
+En Physique, j'ai 4.5 de moyenne.
+</code></pre>
+</div>
+
+<h3 id="afficher-toutes-les-valeurs-dune-même-clé">Afficher toutes les valeurs d’une même clé</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;map&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span> <span class="n">moyenne</span><span class="p">;</span>
+
+    <span class="n">moyenne</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Informatique"</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">));</span>
+    <span class="n">moyenne</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"Physique"</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">));</span>
+
+
+    <span class="n">string</span> <span class="n">recherche</span> <span class="o">=</span> <span class="s">"Physique"</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itlow</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">itup</span><span class="p">;</span>
+
+    <span class="n">itlow</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">recherche</span><span class="p">);</span>
+    <span class="n">itup</span> <span class="o">=</span> <span class="n">moyenne</span><span class="p">.</span><span class="n">upper_bound</span><span class="p">(</span><span class="n">recherche</span><span class="p">);</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">recherche</span> <span class="o">&lt;&lt;</span> <span class="s">"===&gt;"</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">it</span> <span class="o">=</span> <span class="n">itlow</span><span class="p">;</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">itup</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">).</span><span class="n">second</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Physique===&gt; 4.5
+</code></pre>
+</div>
 
 </div>
 
