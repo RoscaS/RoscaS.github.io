@@ -187,6 +187,35 @@
 </code></pre>
 </div>
 
+<h2 id="format-inline-display-trick">format inline display trick</h2>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;forward_list&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="k">const</span> <span class="n">forward_list</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="sc">'['</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">comma</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sc">'\0'</span><span class="p">,</span> <span class="sc">' '</span><span class="p">,</span> <span class="sc">'\0'</span><span class="p">};</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">x</span><span class="o">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="n">comma</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">comma</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="sc">','</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="sc">']'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">forward_list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">words</span> <span class="p">{</span><span class="s">"the"</span><span class="p">,</span> <span class="s">"frogurt"</span><span class="p">,</span> <span class="s">"is"</span><span class="p">,</span> <span class="s">"also"</span><span class="p">,</span> <span class="s">"cursed"</span><span class="p">};</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"words: "</span> <span class="o">&lt;&lt;</span> <span class="n">words</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>words: [the, frogurt, is, also, cursed]
+</code></pre>
+</div>
+
 <h2 id="what-is-the-difference-between-printf-and-cout">What is the difference between <code class="highlighter-rouge">printf()</code> and <code class="highlighter-rouge">cout</code></h2>
 <p><a href="https://www.quora.com/What-is-the-difference-between-printf-cout-in-C++">Quora</a></p>
 

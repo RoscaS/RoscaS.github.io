@@ -14,7 +14,7 @@ Slide du cours C++ He-arc: 1240.2.09 Bibliothèque Standard
 
 ## 1. Flux
 
-* Un flux est une **séquence d'octets transférés** entre la mémoire et les périphériques. 
+* Un flux est une **séquence d'octets transférée** entre la mémoire et les périphériques. 
 * C'est le programme qui donne une **signification** aux octets d'un flux.
 * Les flux fournissent une **méthode unifiée** de traiter les E/S quel que soient les périphériques et les types de données à échanger.
 * Hiérarchie basée sur **ios**(in/out... <span style="color:red">a compléter</span>)
@@ -813,8 +813,8 @@ int main() {
 
 ```
 
-`it.first` $$ \Rightarrow $$ Donne accès à la clé
-`it.second` $$ \Rightarrow $$ Donne accès à la valeur
+* `it.first` $$ \Rightarrow $$ Donne accès à la clé  
+* `it.second` $$ \Rightarrow $$ Donne accès à la valeur
 
 <img src="/00illustrations/flux/map.png" align="" height="auto" float="right">
 
@@ -975,4 +975,217 @@ La forme canonique (de **Coplien**) fournit un cadre à respecter pour les class
 **Pour utiliser les conteneurs ou algorithmes**, la classe doit être canonique et implémenter l'opérateur de comparaison `==`
 
 Si la notion d'ordre est nécessaire, la clsse devra également implémenter l'opérateur `<`
+
+## 11 Exemples pratiques
+
+### Vector
+
+```cpp
+#include<iostream>
+#include<vector>
+using namespace std;
+
+typedef vector<int> Tableau;
+
+
+void f(Tableau &tab1, Tableau &tab2) {
+    for (int i = 0; i < tab1.size(); ++i) {
+        tab2.push_back(tab1.front());
+    }
+}
+
+
+int main() {
+    // a)
+    { 
+        cout << "exercice a)\n";
+        Tableau tab;
+
+        for (int i = 0; i < 10; ++i) {
+            tab.push_back(tab.size()); 
+        }
+
+        for (const auto &x: tab) { cout << x << " "; }
+        // tab1 {0,1,2,3,4,5,6,7,8,9}
+    }
+
+    // b)
+    {
+        cout << "\nexercice b)\n";
+
+        Tableau tab1, tab2;
+        tab1.push_back(0);
+        f(tab1, tab2);
+        for (const auto &x: tab2) { cout << x << " "; }
+        // tab2 {0,0,0,0,0,0,0,0,0,0}
+        cout << endl;
+    }
+
+    // c)
+
+    {
+        cout << "\nexercice c)\n";
+        Tableau tab;
+        int loop = 0;
+        cout << tab.max_size() << endl; // 4 611 686 018 427 387 903
+
+        try
+        {
+            // for (unsigned int i = 0; i < tab.max_size()/8 + 1; ++i) {
+            //     tab.push_back(i);
+            //     ++ loop;
+            // }
+        }
+        catch (bad_alloc &e)
+        {
+            cout << "Erreur: " << e.what() << endl;
+        }
+        cout << "Loop: " << loop << endl;        
+
+        // sous reserve d'avoir assez de mémoire une exception de type 
+        // bad_alloc est levée
+    }
+
+    // d)
+    {
+        cout << "\nexercice d)\n";
+        Tableau tab(3,11);  // => {11,11,11}
+        Tableau tab2{3,11}; // => {3,11}
+        for (const auto &x: tab) { cout << x << " "; }
+        cout << endl;
+        tab[4] = 3; // rien ne se passe, même pas d'erreur pourtant 
+        // il y a débordement => DANGEREUX
+        for (const auto &x: tab) { cout << x << " "; } // 3 éléments affiché
+        cout << endl << tab[4] << endl; // sous reserve que ça ne crache pas, retourne 3
+
+        cout << "\n exercice e)\n";
+        try
+        {
+            cout << "tab.at(tab.size()) : " << tab.at(tab.size()) << endl;
+        }
+        catch (out_of_range &e)
+        {
+            cout << "\n Erreur : " << e.what() << endl;
+        }   // Erreur : vector::_M_range_check: __n (which is 3) >= this->size() (which is 3)
+    }
+
+    return 0;
+}
+```
+
+output:
+
+```
+exercice a)
+0 1 2 3 4 5 6 7 8 9 
+exercice b)
+0 
+
+exercice c)
+4611686018427387903
+Loop: 0
+
+exercice d)
+11 11 11 
+11 11 11 
+3
+
+ exercice e)
+tab.at(tab.size()) : 
+ Erreur : vector::_M_range_check: __n (which is 3) >= this->size() (which is 3)
+```
+
+### size, capacity et max_size
+
+```cpp
+#include<iostream> 
+#include<vector> 
+#include<windows.h> // Sleep
+#include<stdlib.h>  // system
+using namespace std; 
+
+
+ int main () {   
+    vector<int> myvector; 
+    // set some content in the vector:   
+    for (int i=0; i<100; i++) {
+        Sleep(200);
+        system("cls");
+        myvector.push_back(i); 
+        cout << "i: " << i << "\n";   
+        cout << "size: " << (int) myvector.size() << "\n";   
+        cout << "capacity: " << (int) myvector.capacity() << "\n";   
+        cout << "max_size: " << (int) myvector.max_size() << "\n\n";   
+    }
+   return 0; 
+}
+```
+output:
+
+<img src="/00illustrations/flux/sizeCapa.gif" align="" height="auto" float="right">
+
+* `size` est le nombre d'éléments dans le tableau
+* `capacity` est le nombre total d'éléments qu'il est possible d'introduire dans le tableau sans faire une nouvelle réallocation de mémoire
+* `max_size` est le nombre maximal d'éléments que peut avoir un conteneur
+
+### multimap
+
+```cpp
+#include<iostream>
+#include<string>
+#include<map>
+
+using namespace std;
+
+
+template<typename Key, typename Val>
+void showMultimap(const multimap<Key, Val> &m) {
+    //typename multimap<Key, Val>::const_iterator it;
+    for (auto it = m.begin(); it != m.end(); ++it) {
+        cout << it->first << "\t" << it->second << endl;
+    }
+    cout << endl;
+}
+
+template<typename Key, typename Val>
+void showMultimapRange(const multimap<Key, Val> &m, const Key &find) {
+
+    auto itlow = m.lower_bound(find);
+    auto itup  = m.upper_bound(find);
+
+    cout << find << " ==>";
+    for (auto it = itlow; it != itup; ++it) {
+        cout << " | " << (*it).second;
+    }
+    cout << endl;
+}
+
+int main() {
+    multimap<string, string> pays;
+
+    pays.insert(pair<string,string>("CH", "Berne"));
+    pays.insert(pair<string,string>("BE", "Nivelles"));
+    pays.insert(pair<string,string>("BE", "Liege"));
+    pays.insert(pair<string,string>("BE", "Mons"));
+
+    showMultimap(pays);
+    string s = "BE"; 
+    showMultimapRange(pays, s); // showMultimapRange(pays, "BE")
+                                // ne fonctionne pas !
+    showMultimapRange(pays, (string) "BE"); // on doit cast !
+                                
+    return 0;
+}
+```
+output:
+
+```
+BE	Nivelles
+BE	Liege
+BE	Mons
+CH	Berne
+
+BE==> | Nivelles | Liege | Mons
+BE==> | Nivelles | Liege | Mons
+```
 

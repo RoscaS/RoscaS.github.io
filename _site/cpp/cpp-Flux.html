@@ -105,7 +105,7 @@
 <h2 id="1-flux">1. Flux</h2>
 
 <ul>
-  <li>Un flux est une <strong>séquence d’octets transférés</strong> entre la mémoire et les périphériques.</li>
+  <li>Un flux est une <strong>séquence d’octets transférée</strong> entre la mémoire et les périphériques.</li>
   <li>C’est le programme qui donne une <strong>signification</strong> aux octets d’un flux.</li>
   <li>Les flux fournissent une <strong>méthode unifiée</strong> de traiter les E/S quel que soient les périphériques et les types de données à échanger.</li>
   <li>Hiérarchie basée sur <strong>ios</strong>(in/out… <span style="color:red">a compléter</span>)</li>
@@ -985,8 +985,10 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 </code></pre>
 </div>
 
-<p><code class="highlighter-rouge">it.first</code> <script type="math/tex">\Rightarrow</script> Donne accès à la clé
-<code class="highlighter-rouge">it.second</code> <script type="math/tex">\Rightarrow</script> Donne accès à la valeur</p>
+<ul>
+  <li><code class="highlighter-rouge">it.first</code> <script type="math/tex">\Rightarrow</script> Donne accès à la clé</li>
+  <li><code class="highlighter-rouge">it.second</code> <script type="math/tex">\Rightarrow</script> Donne accès à la valeur</li>
+</ul>
 
 <p><img src="/00illustrations/flux/map.png" align="" height="auto" float="right" /></p>
 
@@ -1152,6 +1154,221 @@ En Physique, j'ai 4.5 de moyenne.
 <p><strong>Pour utiliser les conteneurs ou algorithmes</strong>, la classe doit être canonique et implémenter l’opérateur de comparaison <code class="highlighter-rouge">==</code></p>
 
 <p>Si la notion d’ordre est nécessaire, la clsse devra également implémenter l’opérateur <code class="highlighter-rouge">&lt;</code></p>
+
+<h2 id="11-exemples-pratiques">11 Exemples pratiques</h2>
+
+<h3 id="vector">Vector</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">Tableau</span><span class="p">;</span>
+
+
+<span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Tableau</span> <span class="o">&amp;</span><span class="n">tab1</span><span class="p">,</span> <span class="n">Tableau</span> <span class="o">&amp;</span><span class="n">tab2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">tab1</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">tab2</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tab1</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// a)
+</span>    <span class="p">{</span> 
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"exercice a)</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">Tableau</span> <span class="n">tab</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">tab</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tab</span><span class="p">.</span><span class="n">size</span><span class="p">());</span> 
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">tab</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span> <span class="p">}</span>
+        <span class="c1">// tab1 {0,1,2,3,4,5,6,7,8,9}
+</span>    <span class="p">}</span>
+
+    <span class="c1">// b)
+</span>    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">exercice b)</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+        <span class="n">Tableau</span> <span class="n">tab1</span><span class="p">,</span> <span class="n">tab2</span><span class="p">;</span>
+        <span class="n">tab1</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="n">f</span><span class="p">(</span><span class="n">tab1</span><span class="p">,</span> <span class="n">tab2</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">tab2</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span> <span class="p">}</span>
+        <span class="c1">// tab2 {0,0,0,0,0,0,0,0,0,0}
+</span>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// c)
+</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">exercice c)</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">Tableau</span> <span class="n">tab</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">loop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">tab</span><span class="p">.</span><span class="n">max_size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// 4 611 686 018 427 387 903
+</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="c1">// for (unsigned int i = 0; i &lt; tab.max_size()/8 + 1; ++i) {
+</span>            <span class="c1">//     tab.push_back(i);
+</span>            <span class="c1">//     ++ loop;
+</span>            <span class="c1">// }
+</span>        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">bad_alloc</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Erreur: "</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Loop: "</span> <span class="o">&lt;&lt;</span> <span class="n">loop</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>        
+
+        <span class="c1">// sous reserve d'avoir assez de mémoire une exception de type 
+</span>        <span class="c1">// bad_alloc est levée
+</span>    <span class="p">}</span>
+
+    <span class="c1">// d)
+</span>    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">exercice d)</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">Tableau</span> <span class="n">tab</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">11</span><span class="p">);</span>  <span class="c1">// =&gt; {11,11,11}
+</span>        <span class="n">Tableau</span> <span class="n">tab2</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">11</span><span class="p">};</span> <span class="c1">// =&gt; {3,11}
+</span>        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">tab</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="n">tab</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// rien ne se passe, même pas d'erreur pourtant 
+</span>        <span class="c1">// il y a débordement =&gt; DANGEREUX
+</span>        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">x</span><span class="o">:</span> <span class="n">tab</span><span class="p">)</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// 3 éléments affiché
+</span>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="n">tab</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// sous reserve que ça ne crache pas, retourne 3
+</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s"> exercice e)</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">try</span>
+        <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"tab.at(tab.size()) : "</span> <span class="o">&lt;&lt;</span> <span class="n">tab</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">tab</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="p">(</span><span class="n">out_of_range</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s"> Erreur : "</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="p">}</span>   <span class="c1">// Erreur : vector::_M_range_check: __n (which is 3) &gt;= this-&gt;size() (which is 3)
+</span>    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>exercice a)
+0 1 2 3 4 5 6 7 8 9 
+exercice b)
+0 
+
+exercice c)
+4611686018427387903
+Loop: 0
+
+exercice d)
+11 11 11 
+11 11 11 
+3
+
+ exercice e)
+tab.at(tab.size()) : 
+ Erreur : vector::_M_range_check: __n (which is 3) &gt;= this-&gt;size() (which is 3)
+</code></pre>
+</div>
+
+<h3 id="size-capacity-et-max_size">size, capacity et max_size</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt; 
+#include&lt;vector&gt; 
+#include&lt;windows.h&gt; // Sleep
+#include&lt;stdlib.h&gt;  // system
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span> 
+
+
+ <span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>   
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">myvector</span><span class="p">;</span> 
+    <span class="c1">// set some content in the vector:   
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Sleep</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+        <span class="n">system</span><span class="p">(</span><span class="s">"cls"</span><span class="p">);</span>
+        <span class="n">myvector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> 
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"i: "</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>   
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"size: "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">myvector</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>   
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"capacity: "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">myvector</span><span class="p">.</span><span class="n">capacity</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>   
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"max_size: "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">myvector</span><span class="p">.</span><span class="n">max_size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">;</span>   
+    <span class="p">}</span>
+   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>output:</p>
+
+<p><img src="/00illustrations/flux/sizeCapa.gif" align="" height="auto" float="right" /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">size</code> est le nombre d’éléments dans le tableau</li>
+  <li><code class="highlighter-rouge">capacity</code> est le nombre total d’éléments qu’il est possible d’introduire dans le tableau sans faire une nouvelle réallocation de mémoire</li>
+  <li><code class="highlighter-rouge">max_size</code> est le nombre maximal d’éléments que peut avoir un conteneur</li>
+</ul>
+
+<h3 id="multimap">multimap</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;string&gt;
+#include&lt;map&gt;
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Key</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Val</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">showMultimap</span><span class="p">(</span><span class="k">const</span> <span class="n">multimap</span><span class="o">&lt;</span><span class="n">Key</span><span class="p">,</span> <span class="n">Val</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//typename multimap&lt;Key, Val&gt;::const_iterator it;
+</span>    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">m</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Key</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Val</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">showMultimapRange</span><span class="p">(</span><span class="k">const</span> <span class="n">multimap</span><span class="o">&lt;</span><span class="n">Key</span><span class="p">,</span> <span class="n">Val</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="k">const</span> <span class="n">Key</span> <span class="o">&amp;</span><span class="n">find</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="k">auto</span> <span class="n">itlow</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">find</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">itup</span>  <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">upper_bound</span><span class="p">(</span><span class="n">find</span><span class="p">);</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">find</span> <span class="o">&lt;&lt;</span> <span class="s">" ==&gt;"</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">itlow</span><span class="p">;</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">itup</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" | "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">).</span><span class="n">second</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">string</span><span class="o">&gt;</span> <span class="n">pays</span><span class="p">;</span>
+
+    <span class="n">pays</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"CH"</span><span class="p">,</span> <span class="s">"Berne"</span><span class="p">));</span>
+    <span class="n">pays</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"BE"</span><span class="p">,</span> <span class="s">"Nivelles"</span><span class="p">));</span>
+    <span class="n">pays</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"BE"</span><span class="p">,</span> <span class="s">"Liege"</span><span class="p">));</span>
+    <span class="n">pays</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"BE"</span><span class="p">,</span> <span class="s">"Mons"</span><span class="p">));</span>
+
+    <span class="n">showMultimap</span><span class="p">(</span><span class="n">pays</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"BE"</span><span class="p">;</span> 
+    <span class="n">showMultimapRange</span><span class="p">(</span><span class="n">pays</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span> <span class="c1">// showMultimapRange(pays, "BE")
+</span>                                <span class="c1">// ne fonctionne pas !
+</span>    <span class="n">showMultimapRange</span><span class="p">(</span><span class="n">pays</span><span class="p">,</span> <span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="s">"BE"</span><span class="p">);</span> <span class="c1">// on doit cast !
+</span>                                
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>BE	Nivelles
+BE	Liege
+BE	Mons
+CH	Berne
+
+BE==&gt; | Nivelles | Liege | Mons
+BE==&gt; | Nivelles | Liege | Mons
+</code></pre>
+</div>
 
 
 </div>

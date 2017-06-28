@@ -97,6 +97,34 @@ int main() {
 }
 ```
 
+## format inline display trick
+
+```cpp
+#include<iostream>
+#include<forward_list>
+using namespace std;
+
+template<typename T>
+ostream& operator<<(ostream &s, const forward_list<T> &v) {
+    s << '[';
+    char comma[3] = {'\0', ' ', '\0'};
+    for (const auto& x: v) {
+        s << comma << x;
+        comma[0] = ',';
+    }
+    return s << ']';
+}
+
+int main() {
+    forward_list<string> words {"the", "frogurt", "is", "also", "cursed"};
+    cout << "words: " << words << "\n";
+}
+```
+output:
+
+```
+words: [the, frogurt, is, also, cursed]
+```
 
 
 
