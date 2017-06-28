@@ -28,7 +28,7 @@ Ce dernier point est un prérequis plus qu'un conseil.
 
 ## std::unique_ptr
 
-Au début de [cet](\cpp\cpp-move&smartP.html) article nous avons vu les dangers de l'utilisation des pointeurs. Après y avoir également couvert les bases de la sémantique de déplacement, nous pouvons maintenant tenter de cerner les smart pointers.
+Au début de [cet](\cpp\cpp-move&smartP.html) article nous avons vu les dangers de l’utilisation des pointeurs. Après y avoir également couvert les bases de la sémantique de déplacement, nous pouvons maintenant tenter de cerner les smart pointers.
 
 ### rappel
 
@@ -424,7 +424,7 @@ Un des constructeurs de shared_ptr permet transformer un unique\_ptr en shared\_
 
 ## En bref
 
-* Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l'objet se retrouve hors de son contexte d'utilisation.
+* Un smart pointer est une classe qui permet d'assurer que la mémoire dynamiquement allouée à un objet soie libérée quand l'objet se retrouve hors de son contexte d'utilisation.
 
 * La sémantique de copie permet à un objet d'une classe d'être copié. Ceci est réalisé à l'aide du constructeur de copie et de l'opérateur d'affectation (surcharge copie).
 
@@ -432,7 +432,7 @@ Un des constructeurs de shared_ptr permet transformer un unique\_ptr en shared\_
 
 * `std::auto_ptr` est déprécié et ne doit pas être utilisé.
 
-* Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.
+* Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&&). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.
 
 * Si nous construisons un objet ou faisons une affectation dont l'argument est une L-value, il vaut dans la plus part des cas mieux **copier** (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l'expressions `a = b` il est évident que `b` ne subira aucune modification.
 
@@ -440,7 +440,7 @@ Un des constructeurs de shared_ptr permet transformer un unique\_ptr en shared\_
 
 * Nous pouvons utiliser le mot clé `delete` pour _disable_ la sémantique de copie dans les classes que nous créons en settant `= delete` dans le header du constructeur de copie et de la surcharge de l'opperateur d'affectation.
 
-* `std::move` nous permet de traiter une L-value comme étant une R-value. C'est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d'une L-value
+* `std::move()` nous permet de traiter une L-value comme étant une R-value. C'est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d'une L-value
 
 * `std::unique_ptr` est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.
 

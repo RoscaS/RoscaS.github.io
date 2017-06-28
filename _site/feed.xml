@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 28 Jun 2017 12:02:31 +0200</pubDate>
-    <lastBuildDate>Wed, 28 Jun 2017 12:02:31 +0200</lastBuildDate>
+    <pubDate>Wed, 28 Jun 2017 13:38:08 +0200</pubDate>
+    <lastBuildDate>Wed, 28 Jun 2017 13:38:08 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -216,7 +216,7 @@ Les grandes lignes y sont mais de nombreux points sont vagues et restent à êtr
       <item>
         <title>Cpp: Flux</title>
         <description>&lt;h2 id=&quot;sources&quot;&gt;Sources&lt;/h2&gt;
-&lt;p&gt;Slide du cours: 1240.2.09 Bibliothèque Standard&lt;/p&gt;
+&lt;p&gt;Slide du cours C++ He-arc: 1240.2.09 Bibliothèque Standard&lt;/p&gt;
 
 &lt;h2 id=&quot;1-flux&quot;&gt;1. Flux&lt;/h2&gt;
 
@@ -1713,7 +1713,7 @@ Ressource détruite
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Un smart pointer est une classe qui est faite pour assurer que la mémoire dynamiquement allouée à un objet est libérée quand l’objet se retrouve hors de son contexte d’utilisation.&lt;/p&gt;
+    &lt;p&gt;Un smart pointer est une classe qui permet d’assurer que la mémoire dynamiquement allouée à un objet soie libérée quand l’objet se retrouve hors de son contexte d’utilisation.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;La sémantique de copie permet à un objet d’une classe d’être copié. Ceci est réalisé à l’aide du constructeur de copie et de l’opérateur d’affectation (surcharge copie).&lt;/p&gt;
@@ -1725,7 +1725,7 @@ Ressource détruite
     &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::auto_ptr&lt;/code&gt; est déprécié et ne doit pas être utilisé.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&amp;amp;). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.&lt;/p&gt;
+    &lt;p&gt;Une référence sur une R-value est une référence qui est faite pour être initialisée avec une R-value. La syntaxe pour créér une tel référence implique deux esperluettes (&amp;amp;&amp;amp;). On peut créér des fonctions qui prennent des références à des R-value en paramètre mais nous ne devrions que très rarement retourner des références sur des R-value.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Si nous construisons un objet ou faisons une affectation dont l’argument est une L-value, il vaut dans la plus part des cas mieux &lt;strong&gt;copier&lt;/strong&gt; (et non pas déplacer) la L-value. On ne peut pas assumer le fait que cette L-value sera modifié quelque part dans la suite du programme. Dans l’expressions &lt;code class=&quot;highlighter-rouge&quot;&gt;a = b&lt;/code&gt; il est évident que &lt;code class=&quot;highlighter-rouge&quot;&gt;b&lt;/code&gt; ne subira aucune modification.&lt;/p&gt;
@@ -1737,7 +1737,7 @@ Ressource détruite
     &lt;p&gt;Nous pouvons utiliser le mot clé &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; pour &lt;em&gt;disable&lt;/em&gt; la sémantique de copie dans les classes que nous créons en settant &lt;code class=&quot;highlighter-rouge&quot;&gt;= delete&lt;/code&gt; dans le header du constructeur de copie et de la surcharge de l’opperateur d’affectation.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::move&lt;/code&gt; nous permet de traiter une L-value comme étant une R-value. C’est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d’une L-value&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::move()&lt;/code&gt; nous permet de traiter une L-value comme étant une R-value. C’est utile quand nous voulons forcer la sémantique de déplacement à la sémentique de copie dans le cas d’une L-value&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;std::unique_ptr&lt;/code&gt; est la classe de smart pointer que nous devrions utiliser. Elle possède une seul ressource non partageable.&lt;/p&gt;
