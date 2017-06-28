@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/cpp-IO-fichier.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: I/O dans des fichiers</title>
+  <meta name="description" content="Base">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: I/O dans des fichiers</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="28 Jun 2017" itemprop="datePublished">Jun 28 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">cpp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>lecture et écriture dans des fichiers</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="base">Base</h2>
+
+<h3 id="3-classes">3 classes</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">ifstream</code> <script type="math/tex">\Rightarrow</script> lecture</li>
+  <li><code class="highlighter-rouge">ofstream</code> <script type="math/tex">\Rightarrow</script> ecriture</li>
+  <li><code class="highlighter-rouge">fstream</code> <script type="math/tex">\Rightarrow</script> les deux</li>
+</ul>
+
+<h3 id="ouvrir-un-fichier">Ouvrir un fichier</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">filename</code> <script type="math/tex">\Rightarrow</script> string qui représente le nom du fichier</li>
+  <li><code class="highlighter-rouge">mode</code> <script type="math/tex">\Rightarrow</script> pramètre optionnel qui est une combinaison des flags suivants:</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">ios::in</code> <script type="math/tex">\Rightarrow</script> open for input operations</li>
+  <li><code class="highlighter-rouge">ios::out</code> <script type="math/tex">\Rightarrow</script> open for output operations</li>
+  <li><code class="highlighter-rouge">ios::binary</code> <script type="math/tex">\Rightarrow</script> open in binary mode</li>
+  <li><code class="highlighter-rouge">ios::ate</code> <script type="math/tex">\Rightarrow</script> set the initial position at the end of file if not set pos=beginning of the file</li>
+  <li><code class="highlighter-rouge">ios::app</code> <script type="math/tex">\Rightarrow</script> all output operations are performed at the end of the file, <strong>APPENDING</strong> the content to the current content of the file</li>
+  <li><code class="highlighter-rouge">ios::trunc</code> <script type="math/tex">\Rightarrow</script> override the content of the file</li>
+</ul>
+
+<p>Tous ces flags peuvent être combinés avec l’opérteur <code class="highlighter-rouge">|</code> (or bitwise).</p>
+
+<ul>
+  <li>Mode <strong>binaire</strong> écrit et lit sans prendre en compte le format</li>
+  <li>Mode <strong>non-binires</strong> (fichiers textes)</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ofstream</span> <span class="n">myfile</span><span class="p">;</span>
+<span class="n">myfile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">"example.bin"</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">app</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>équivalent à:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">ostream</span> <span class="n">myfile</span><span class="p">(</span><span class="s">"example.bin"</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">app</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Chacune des méthodes <code class="highlighter-rouge">open()</code> des classes <code class="highlighter-rouge">ofstream</code>, <code class="highlighter-rouge">ifstream</code>, <code class="highlighter-rouge">fstream</code> a un mode par défaut qui est utilisé si le fichier est ouver sans argument:</p>
+
+<ul>
+  <li>ofstream <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">ios::out</code></li>
+  <li>ifstream <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">ios::in</code></li>
+  <li>fstream <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">ios::in | ios::out</code></li>
+</ul>
+
+<p>Les modes par défaut de <code class="highlighter-rouge">ifstream</code> et <code class="highlighter-rouge">ofstream</code> sont combiné avec les éventuelles paramètres.</p>
+
+<p>Pour <code class="highlighter-rouge">fstream</code>, le mode par défaut n’est appliqué automatiquement si on ajoute des paramètres.</p>
+
+<p>Pour vérifier si un fichier à bien été ouver on utilise <code class="highlighter-rouge">is_open()</code></p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">myfile</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Fichier ouvert"</span><span class="p">;</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="fermeture">fermeture</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">myfile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+</code></pre>
+</div>
+
+<h3 id="fichiers-texte">fichiers texte</h3>
+
+<p>Text file streams are those where the ios::binary flag is not included in their opening mode. These files are designed to store text and thus all values that are input or output from/to them can suffer some formatting transformations, which do not necessarily correspond to their literal binary value.</p>
+
+<h3 id="ecriture">ecriture</h3>
+
+<p>Writing operations on text files are performed in the same way we operated with cout:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> 
+<span class="p">{</span>
+    <span class="n">ofstream</span> <span class="n">myfile</span> <span class="p">(</span><span class="s">"example.txt"</span><span class="p">);</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">myfile</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Unable to open file"</span><span class="p">;</span>
+        <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">myfile</span> <span class="o">&lt;&lt;</span> <span class="s">"This is a line.</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">myfile</span> <span class="o">&lt;&lt;</span> <span class="s">"This is another line.</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">myfile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>fichier example.txt:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>This is a line.
+This is another line.
+</code></pre>
+</div>
+
+<h3 id="lecture">lecture</h3>
+
+<p>Reading from a file can also be performed in the same way that we do with cin:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">line</span><span class="p">;</span>
+    <span class="n">ifstream</span> <span class="n">myfile</span> <span class="p">(</span><span class="s">"example.txt"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">myfile</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Unable to open file"</span><span class="p">;</span>
+        <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="k">while</span> <span class="p">(</span> <span class="n">getline</span> <span class="p">(</span><span class="n">myfile</span><span class="p">,</span><span class="n">line</span><span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">line</span> <span class="o">&lt;&lt;</span> <span class="sc">'\n'</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">myfile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>This is a line.
+This is another line.
+</code></pre>
+</div>
+
+<p>We have created a while loop that reads the file line by line, using getline. The value returned by getline is a reference to the stream object itself, which when evaluated as a boolean expression (as in this while-loop) is true if the stream is ready for more operations, and false if either the end of the file has been reached or if some other error occurred.</p>
+
+<h2 id="flags-détat">Flags d’état</h2>
+
+<p>Les méthodes suivantes servent à vérifier des états spécifiques d’un flux (ils retourne tous un bool)</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">bad()</code> <script type="math/tex">\Rightarrow</script> Returns true if a reading or writing operation fails. For example, in the case that we try to write to a file that is not open for writing or if the device where we try to write has no space left.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">fail()</code> <script type="math/tex">\Rightarrow</script> Returns true in the same cases as bad(), but also in the case that a format error happens, like when an alphabetical character is extracted when we are trying to read an integer number.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">eof()</code> <script type="math/tex">\Rightarrow</script> Returns true if a file open for reading has reached the end.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">good()</code> <script type="math/tex">\Rightarrow</script> It is the most generic state flag: it returns false in the same cases in which calling any of the previous functions would return true. Note that good and bad are not exact opposites (good checks more state flags at once).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">clear()</code> <script type="math/tex">\Rightarrow</script>  can be used to reset the state flags.</p>
+  </li>
+</ul>
+
+<h2 id="position">Position</h2>
+
+<p>All i/o streams objects keep internally -at least- one internal position:</p>
+
+<p><code class="highlighter-rouge">ifstream</code>, like <code class="highlighter-rouge">istream</code>, keeps an internal <strong>get</strong> position with the location of the element to be read in the next input operation.</p>
+
+<p><code class="highlighter-rouge">ofstream</code>, like <code class="highlighter-rouge">ostream</code>, keeps an internal <strong>put</strong> position with the location where the next element has to be written.</p>
+
+<p>Finally, <code class="highlighter-rouge">fstream</code>, keeps both, the <strong>get</strong> and the <strong>put</strong> position, like <code class="highlighter-rouge">iostream</code>.</p>
+
+<p>These internal stream positions point to the locations within the stream where the next reading or writing operation is performed. These positions can be observed and modified using the following member functions:</p>
+
+<p><code class="highlighter-rouge">tellg()</code> and <code class="highlighter-rouge">tellp()</code>
+These two member functions with no parameters return a value of the member type streampos, which is a type representing the current get position (in the case of <code class="highlighter-rouge">tellg</code>) or the put position (in the case of <code class="highlighter-rouge">tellp</code>).</p>
+
+<p><code class="highlighter-rouge">seekg()</code> and <code class="highlighter-rouge">seekp()</code>
+These functions allow to change the location of the get and put positions. Both functions are overloaded with two different prototypes. The first form is:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">seekg</span> <span class="p">(</span> <span class="n">position</span> <span class="p">);</span>
+<span class="n">seekp</span> <span class="p">(</span> <span class="n">position</span> <span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Using this prototype, the stream pointer is changed to the absolute position position (counting from the beginning of the file). The type for this parameter is <strong>streampos</strong>, which is the same type as returned by functions <code class="highlighter-rouge">tellg</code> and <code class="highlighter-rouge">tellp</code>.</p>
+
+<p>The other form for these functions is:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">seekg</span> <span class="p">(</span> <span class="n">offset</span><span class="p">,</span> <span class="n">direction</span> <span class="p">);</span>
+<span class="n">seekp</span> <span class="p">(</span> <span class="n">offset</span><span class="p">,</span> <span class="n">direction</span> <span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Using this prototype, the get or put position is set to an offset value relative to some specific point determined by the parameter direction. offset is of type streamoff. And direction is of type seekdir, which is an enumerated type that determines the point from where offset is counted from,and that can take any of the following values:</p>
+
+<p><code class="highlighter-rouge">ios::beg</code> <script type="math/tex">\Rightarrow</script> 	offset counted from the beginning of the stream
+<code class="highlighter-rouge">ios::cur</code> <script type="math/tex">\Rightarrow</script>	offset counted from the current position
+<code class="highlighter-rouge">ios::end</code> <script type="math/tex">\Rightarrow</script>	offset counted from the end of the stream</p>
+
+<h3 id="calculer-la-taille-dun-fichier">Calculer la taille d’un fichier</h3>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">streampos</span> <span class="n">begin</span><span class="p">,</span><span class="n">end</span><span class="p">;</span>
+    <span class="n">ifstream</span> <span class="n">myfile</span> <span class="p">(</span><span class="s">"example.txt"</span><span class="p">);</span>
+    <span class="n">begin</span> <span class="o">=</span> <span class="n">myfile</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+    <span class="n">myfile</span><span class="p">.</span><span class="n">seekg</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">myfile</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+    <span class="n">myfile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"size is: "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">begin</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">" bytes.</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>size is: 40 bytes.
+</code></pre>
+</div>
+
+<p><span style="color:red"> noter le type des variables begin et end ! </span><br />
+<code class="highlighter-rouge">streampos size;</code></p>
+
+<h2 id="fichiers-binaires">Fichiers binaires</h2>
+
+<p>For binary files, <strong>reading and writing data with the extraction and insertion operators (<code class="highlighter-rouge">&lt;&lt;</code> and <code class="highlighter-rouge">&gt;&gt;</code>) and functions like <code class="highlighter-rouge">getline</code> is not efficient</strong>, since we do not need to format any data and data is likely not formatted in lines.</p>
+
+<p>File streams include two member functions <strong>specifically designed</strong> to read and write binary data sequentially: <code class="highlighter-rouge">write</code> and <code class="highlighter-rouge">read</code>. The first one (<code class="highlighter-rouge">write</code>) is a member function of <code class="highlighter-rouge">ostream</code> (inherited by ofstream). And <code class="highlighter-rouge">read</code> is a member function of <code class="highlighter-rouge">istream</code> (inherited by ifstream). Objects of class fstream have both. Their prototypes are:</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="n">write</span> <span class="p">(</span> <span class="n">memory_block</span><span class="p">,</span> <span class="n">size</span> <span class="p">);</span>
+<span class="n">read</span> <span class="p">(</span> <span class="n">memory_block</span><span class="p">,</span> <span class="n">size</span> <span class="p">);</span>
+</code></pre>
+</div>
+
+<p>Where <strong>memory_block</strong> is of type char* (pointer to char), and represents the address of an array of bytes where the read data elements are stored or from where the data elements to be written are taken. The size parameter is an integer value that specifies the number of characters to be read or written from/to the memory block.</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">streampos</span> <span class="n">size</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">memblock</span><span class="p">;</span>
+
+    <span class="n">ifstream</span> <span class="n">file</span> <span class="p">(</span><span class="s">"example.bin"</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span><span class="o">|</span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="o">|</span><span class="n">ios</span><span class="o">::</span><span class="n">ate</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Unable to open file"</span><span class="p">;</span>
+        <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">size</span> <span class="o">=</span> <span class="n">file</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+    <span class="n">memblock</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span> <span class="p">[</span><span class="n">size</span><span class="p">];</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">seekg</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">beg</span><span class="p">);</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">read</span> <span class="p">(</span><span class="n">memblock</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"the entire file content is in memory"</span><span class="p">;</span>
+
+    <span class="k">delete</span> <span class="p">[]</span> <span class="n">memblock</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>In this example, the entire file is read and stored in a memory block.</p>
+
+<p>At this point we could operate with the data obtained from the file. But our program simply announces that the content of the file is in memory and then finishes.</p>
+
+<h2 id="buffer-et-sync">Buffer et sync</h2>
+
+<p>When we operate with file streams, these are associated to an internal buffer object of type <strong>streambuf</strong>. This buffer object may represent a memory block that acts as an intermediary between the stream and the physical file. For example, with an <code class="highlighter-rouge">ofstream</code>, each time the member function put (which writes a single character) is called, the character may be inserted in this intermediate buffer instead of being written directly to the physical file with which the stream is associated.</p>
+
+<p>The operating system may also define other layers of buffering for reading and writing to files.</p>
+
+<p>When the buffer is <strong>flushed</strong>, all the data contained in it is written to the physical medium (if it is an output stream). This process is called synchronization and takes place under any of the following circumstances:</p>
+
+<ul>
+  <li>
+    <p>When the file is closed: before closing a file, all buffers that have not yet been flushed are synchronized and all pending data is written or read to the physical medium.</p>
+  </li>
+  <li>
+    <p>When the buffer is full: Buffers have a certain size. When the buffer is full it is automatically synchronized.</p>
+  </li>
+  <li>
+    <p>Explicitly, with manipulators: When certain manipulators are used on streams, an explicit synchronization takes place. These manipulators are: <code class="highlighter-rouge">flush</code> and <code class="highlighter-rouge">endl</code>.</p>
+  </li>
+  <li>
+    <p>Explicitly, with member function <code class="highlighter-rouge">sync()</code>: Calling the stream’s member function <code class="highlighter-rouge">sync()</code> causes an immediate synchronization. This function returns an int value equal to -1 if the stream has no associated buffer or in case of failure. Otherwise (if the stream buffer was successfully synchronized) it returns 0.</p>
+  </li>
+</ul>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: I/O dans des fichiers@&amp;url=http://localhost:4000/cpp/cpp-IO-fichier.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/cpp-IO-fichier.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/cpp-IO-fichier.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

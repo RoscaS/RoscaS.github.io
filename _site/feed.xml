@@ -6,9 +6,326 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 28 Jun 2017 20:11:48 +0200</pubDate>
-    <lastBuildDate>Wed, 28 Jun 2017 20:11:48 +0200</lastBuildDate>
+    <pubDate>Thu, 29 Jun 2017 01:37:35 +0200</pubDate>
+    <lastBuildDate>Thu, 29 Jun 2017 01:37:35 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Cpp: I/O dans des fichiers</title>
+        <description>&lt;h2 id=&quot;base&quot;&gt;Base&lt;/h2&gt;
+
+&lt;h3 id=&quot;3-classes&quot;&gt;3 classes&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ifstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; lecture&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; ecriture&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;fstream&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; les deux&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;ouvrir-un-fichier&quot;&gt;Ouvrir un fichier&lt;/h3&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;filename&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; string qui représente le nom du fichier&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mode&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; pramètre optionnel qui est une combinaison des flags suivants:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::in&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; open for input operations&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::out&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; open for output operations&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::binary&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; open in binary mode&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::ate&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; set the initial position at the end of file if not set pos=beginning of the file&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::app&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; all output operations are performed at the end of the file, &lt;strong&gt;APPENDING&lt;/strong&gt; the content to the current content of the file&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::trunc&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; override the content of the file&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Tous ces flags peuvent être combinés avec l’opérteur &lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt; (or bitwise).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Mode &lt;strong&gt;binaire&lt;/strong&gt; écrit et lit sans prendre en compte le format&lt;/li&gt;
+  &lt;li&gt;Mode &lt;strong&gt;non-binires&lt;/strong&gt; (fichiers textes)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ofstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;example.bin&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;équivalent à:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;example.bin&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Chacune des méthodes &lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt; des classes &lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ifstream&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;fstream&lt;/code&gt; a un mode par défaut qui est utilisé si le fichier est ouver sans argument:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ofstream &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ios::out&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;ifstream &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ios::in&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;fstream &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ios::in | ios::out&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Les modes par défaut de &lt;code class=&quot;highlighter-rouge&quot;&gt;ifstream&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt; sont combiné avec les éventuelles paramètres.&lt;/p&gt;
+
+&lt;p&gt;Pour &lt;code class=&quot;highlighter-rouge&quot;&gt;fstream&lt;/code&gt;, le mode par défaut n’est appliqué automatiquement si on ajoute des paramètres.&lt;/p&gt;
+
+&lt;p&gt;Pour vérifier si un fichier à bien été ouver on utilise &lt;code class=&quot;highlighter-rouge&quot;&gt;is_open()&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Fichier ouvert&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;fermeture&quot;&gt;fermeture&lt;/h3&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;fichiers-texte&quot;&gt;fichiers texte&lt;/h3&gt;
+
+&lt;p&gt;Text file streams are those where the ios::binary flag is not included in their opening mode. These files are designed to store text and thus all values that are input or output from/to them can suffer some formatting transformations, which do not necessarily correspond to their literal binary value.&lt;/p&gt;
+
+&lt;h3 id=&quot;ecriture&quot;&gt;ecriture&lt;/h3&gt;
+
+&lt;p&gt;Writing operations on text files are performed in the same way we operated with cout:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; 
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ofstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;example.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Unable to open file&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;This is a line.&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;This is another line.&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;fichier example.txt:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is a line.
+This is another line.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;lecture&quot;&gt;lecture&lt;/h3&gt;
+
+&lt;p&gt;Reading from a file can also be performed in the same way that we do with cin:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+#include &amp;lt;string&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;example.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Unable to open file&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getline&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\n'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is a line.
+This is another line.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We have created a while loop that reads the file line by line, using getline. The value returned by getline is a reference to the stream object itself, which when evaluated as a boolean expression (as in this while-loop) is true if the stream is ready for more operations, and false if either the end of the file has been reached or if some other error occurred.&lt;/p&gt;
+
+&lt;h2 id=&quot;flags-détat&quot;&gt;Flags d’état&lt;/h2&gt;
+
+&lt;p&gt;Les méthodes suivantes servent à vérifier des états spécifiques d’un flux (ils retourne tous un bool)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bad()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Returns true if a reading or writing operation fails. For example, in the case that we try to write to a file that is not open for writing or if the device where we try to write has no space left.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;fail()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Returns true in the same cases as bad(), but also in the case that a format error happens, like when an alphabetical character is extracted when we are trying to read an integer number.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;eof()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Returns true if a file open for reading has reached the end.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;good()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; It is the most generic state flag: it returns false in the same cases in which calling any of the previous functions would return true. Note that good and bad are not exact opposites (good checks more state flags at once).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;clear()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  can be used to reset the state flags.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;position&quot;&gt;Position&lt;/h2&gt;
+
+&lt;p&gt;All i/o streams objects keep internally -at least- one internal position:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ifstream&lt;/code&gt;, like &lt;code class=&quot;highlighter-rouge&quot;&gt;istream&lt;/code&gt;, keeps an internal &lt;strong&gt;get&lt;/strong&gt; position with the location of the element to be read in the next input operation.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt;, like &lt;code class=&quot;highlighter-rouge&quot;&gt;ostream&lt;/code&gt;, keeps an internal &lt;strong&gt;put&lt;/strong&gt; position with the location where the next element has to be written.&lt;/p&gt;
+
+&lt;p&gt;Finally, &lt;code class=&quot;highlighter-rouge&quot;&gt;fstream&lt;/code&gt;, keeps both, the &lt;strong&gt;get&lt;/strong&gt; and the &lt;strong&gt;put&lt;/strong&gt; position, like &lt;code class=&quot;highlighter-rouge&quot;&gt;iostream&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;These internal stream positions point to the locations within the stream where the next reading or writing operation is performed. These positions can be observed and modified using the following member functions:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tellg()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;tellp()&lt;/code&gt;
+These two member functions with no parameters return a value of the member type streampos, which is a type representing the current get position (in the case of &lt;code class=&quot;highlighter-rouge&quot;&gt;tellg&lt;/code&gt;) or the put position (in the case of &lt;code class=&quot;highlighter-rouge&quot;&gt;tellp&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;seekg()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;seekp()&lt;/code&gt;
+These functions allow to change the location of the get and put positions. Both functions are overloaded with two different prototypes. The first form is:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;seekp&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Using this prototype, the stream pointer is changed to the absolute position position (counting from the beginning of the file). The type for this parameter is &lt;strong&gt;streampos&lt;/strong&gt;, which is the same type as returned by functions &lt;code class=&quot;highlighter-rouge&quot;&gt;tellg&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;tellp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The other form for these functions is:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;seekp&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;offset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;direction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Using this prototype, the get or put position is set to an offset value relative to some specific point determined by the parameter direction. offset is of type streamoff. And direction is of type seekdir, which is an enumerated type that determines the point from where offset is counted from,and that can take any of the following values:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::beg&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 	offset counted from the beginning of the stream
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::cur&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;	offset counted from the current position
+&lt;code class=&quot;highlighter-rouge&quot;&gt;ios::end&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;	offset counted from the end of the stream&lt;/p&gt;
+
+&lt;h3 id=&quot;calculer-la-taille-dun-fichier&quot;&gt;Calculer la taille d’un fichier&lt;/h3&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;streampos&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;example.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;size is: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; bytes.&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;size is: 40 bytes.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; noter le type des variables begin et end ! &lt;/span&gt;&lt;br /&gt;
+&lt;code class=&quot;highlighter-rouge&quot;&gt;streampos size;&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;fichiers-binaires&quot;&gt;Fichiers binaires&lt;/h2&gt;
+
+&lt;p&gt;For binary files, &lt;strong&gt;reading and writing data with the extraction and insertion operators (&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;&amp;lt;&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&amp;gt;&lt;/code&gt;) and functions like &lt;code class=&quot;highlighter-rouge&quot;&gt;getline&lt;/code&gt; is not efficient&lt;/strong&gt;, since we do not need to format any data and data is likely not formatted in lines.&lt;/p&gt;
+
+&lt;p&gt;File streams include two member functions &lt;strong&gt;specifically designed&lt;/strong&gt; to read and write binary data sequentially: &lt;code class=&quot;highlighter-rouge&quot;&gt;write&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;read&lt;/code&gt;. The first one (&lt;code class=&quot;highlighter-rouge&quot;&gt;write&lt;/code&gt;) is a member function of &lt;code class=&quot;highlighter-rouge&quot;&gt;ostream&lt;/code&gt; (inherited by ofstream). And &lt;code class=&quot;highlighter-rouge&quot;&gt;read&lt;/code&gt; is a member function of &lt;code class=&quot;highlighter-rouge&quot;&gt;istream&lt;/code&gt; (inherited by ifstream). Objects of class fstream have both. Their prototypes are:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory_block&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Where &lt;strong&gt;memory_block&lt;/strong&gt; is of type char* (pointer to char), and represents the address of an array of bytes where the read data elements are stored or from where the data elements to be written are taken. The size parameter is an integer value that specifies the number of characters to be read or written from/to the memory block.&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;fstream&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;streampos&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memblock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;example.bin&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Unable to open file&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;memblock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;beg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memblock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;the entire file content is in memory&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memblock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this example, the entire file is read and stored in a memory block.&lt;/p&gt;
+
+&lt;p&gt;At this point we could operate with the data obtained from the file. But our program simply announces that the content of the file is in memory and then finishes.&lt;/p&gt;
+
+&lt;h2 id=&quot;buffer-et-sync&quot;&gt;Buffer et sync&lt;/h2&gt;
+
+&lt;p&gt;When we operate with file streams, these are associated to an internal buffer object of type &lt;strong&gt;streambuf&lt;/strong&gt;. This buffer object may represent a memory block that acts as an intermediary between the stream and the physical file. For example, with an &lt;code class=&quot;highlighter-rouge&quot;&gt;ofstream&lt;/code&gt;, each time the member function put (which writes a single character) is called, the character may be inserted in this intermediate buffer instead of being written directly to the physical file with which the stream is associated.&lt;/p&gt;
+
+&lt;p&gt;The operating system may also define other layers of buffering for reading and writing to files.&lt;/p&gt;
+
+&lt;p&gt;When the buffer is &lt;strong&gt;flushed&lt;/strong&gt;, all the data contained in it is written to the physical medium (if it is an output stream). This process is called synchronization and takes place under any of the following circumstances:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;When the file is closed: before closing a file, all buffers that have not yet been flushed are synchronized and all pending data is written or read to the physical medium.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;When the buffer is full: Buffers have a certain size. When the buffer is full it is automatically synchronized.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Explicitly, with manipulators: When certain manipulators are used on streams, an explicit synchronization takes place. These manipulators are: &lt;code class=&quot;highlighter-rouge&quot;&gt;flush&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;endl&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Explicitly, with member function &lt;code class=&quot;highlighter-rouge&quot;&gt;sync()&lt;/code&gt;: Calling the stream’s member function &lt;code class=&quot;highlighter-rouge&quot;&gt;sync()&lt;/code&gt; causes an immediate synchronization. This function returns an int value equal to -1 if the stream has no associated buffer or in case of failure. Otherwise (if the stream buffer was successfully synchronized) it returns 0.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 28 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/cpp/cpp-IO-fichier.html</link>
+        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-IO-fichier.html</guid>
+        
+        <category>cpp</category>
+        
+        
+        <category>Cpp</category>
+        
+      </item>
     
       <item>
         <title>Idee</title>
@@ -500,50 +817,42 @@ c = 1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;h4 id=&quot;lecture-avec-&quot;&gt;Lecture avec &amp;gt;&amp;gt;&lt;/h4&gt;
+&lt;h4 id=&quot;lecture-1&quot;&gt;Lecture&lt;/h4&gt;
 
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    
-    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule.xyz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ifstream f(&quot;poule.xyz&quot;);
-&lt;/span&gt;
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;fstream&amp;gt;
+#include&amp;lt;string&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en ecriture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poeme.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en lecture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;        
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;c1&quot;&gt;// lecture avec &amp;gt;&amp;gt;
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;a, sizeof(int));
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;b, sizeof(double));
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;c, sizeof(char));
-&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// .read ((char *)&amp;amp;t1[i], sizeof(int));
-&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// get size of file
-&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;seekg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// aller à la fin
-&lt;/span&gt;    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tellg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// obtenir la position et la retourner
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;la taille du fichier est: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;a = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;
-         &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;b = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;
-         &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;c = &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;demain dès l'aube à l'heure où blanchit la campagne
+
+je partirai vois-tu je sais que tu m'attends 
+ 
+j'irai par la forêt j'irai par la montagne 
+ 
+je ne puis demeurer loin de toi plus longtemps 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -1437,8 +1746,8 @@ tab.at(tab.size()) :
 &lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
-
-&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// affiche tous les éléments du dico
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;showMultimap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multimap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c1&quot;&gt;//typename multimap&amp;lt;Key, Val&amp;gt;::const_iterator it;
 &lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -1447,7 +1756,8 @@ tab.at(tab.size()) :
     &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// affiche les éléments du dico dont la clé est &quot;find&quot;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;typename&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;showMultimapRange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;multimap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Val&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
     &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itlow&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lower_bound&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
@@ -1455,7 +1765,7 @@ tab.at(tab.size()) :
 
     &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;find&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; ==&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itlow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; | &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; | &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -1476,6 +1786,10 @@ tab.at(tab.size()) :
 &lt;/span&gt;                                
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;output:&lt;/p&gt;
@@ -1490,6 +1804,146 @@ BE==&amp;gt; | Nivelles | Liege | Mons
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
+&lt;p&gt;Ecrire un programme qui lise un fichier de texte donné en paramètre, complètement, mot par mot. Le programme créera une table associative (dictionnaire clé-valeur) avec comme clés les mots, et comme valeur le nombre d’occurrences. A la fin de l’exécution, le programme affichera le nombre total de mots contenu dans le texte, le nombre de mots différents, ainsi que le nombre d’occurrences de chaque mot.&lt;/p&gt;
+
+&lt;p&gt;poeme.txt:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;demain des l'aube a l'heure ou blanchit la campagne
+
+je partirai vois-tu je sais que tu m'attends
+
+j'irai par la foret j'irai par la montagne
+
+je ne puis demeurer loin de toi plus longtemps
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;fstream&amp;gt;
+#include&amp;lt;string&amp;gt;
+#include&amp;lt;vector&amp;gt;
+#include&amp;lt;map&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;poeme.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fillWordVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fillDict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multimap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;multimap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Impossible d'ouvrir le fichier en ecriture&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;        
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// split le fichiers en vecteur de mots
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;fillWordVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// remplit le dictionnaire
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fillDict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// display
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Le fichier contient &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; mots&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;il y a &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot; mots différents&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;nombre d'occurences de chaque mot:&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// affiche occurences de chaque mot:
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;second&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;x &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;first&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// idem 
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// for (auto it = dict.begin(); it != dict.end(); ++it) {
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//     cout &amp;lt;&amp;lt; it-&amp;gt;second &amp;lt;&amp;lt; &quot;x \&quot;&quot; &amp;lt;&amp;lt; it-&amp;gt;first &amp;lt;&amp;lt; &quot;\&quot;\n&quot;;
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// }
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fillWordVec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ifstream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;' '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'\''&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;sc&quot;&gt;'-'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+                    &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;vec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push_back&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+
+&lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fillDict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multimap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itlow&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lower_bound&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itup&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;upper_bound&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;auto&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itlow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;itup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Le fichier contient 40 mots
+il y a 31 mots différents
+nombre d'occurences de chaque mot:
+1x &quot;a&quot;
+1x &quot;attends&quot;
+1x &quot;aube&quot;
+1x &quot;blanchit&quot;
+1x &quot;campagne&quot;
+1x &quot;de&quot;
+1x &quot;demain&quot;
+1x &quot;demeurer&quot;
+1x &quot;des&quot;
+1x &quot;foret&quot;
+1x &quot;heure&quot;
+2x &quot;irai&quot;
+2x &quot;j&quot;
+3x &quot;je&quot;
+2x &quot;l&quot;
+3x &quot;la&quot;
+1x &quot;loin&quot;
+1x &quot;longtemps&quot;
+1x &quot;m&quot;
+1x &quot;montagne&quot;
+1x &quot;ne&quot;
+1x &quot;ou&quot;
+2x &quot;par&quot;
+1x &quot;partirai&quot;
+1x &quot;plus&quot;
+1x &quot;puis&quot;
+1x &quot;que&quot;
+1x &quot;sais&quot;
+1x &quot;toi&quot;
+2x &quot;tu&quot;
+1x &quot;vois&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Fri, 23 Jun 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/cpp/cpp-STL.html</link>
@@ -3733,699 +4187,6 @@ Chaqu’une des &lt;script type=&quot;math/tex&quot;&gt;\large q&lt;/script&gt; 
         
         
         <category>Prog</category>
-        
-      </item>
-    
-      <item>
-        <title>Linux: CheatSheet</title>
-        <description>&lt;h1 id=&quot;general&quot;&gt;General&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;installer:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo dpkg -i *.deb&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;dld et installe:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-get install&lt;/code&gt; &lt;em&gt;SoftName&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;check if a package is installed:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;apt-cache policy&lt;/code&gt; &lt;em&gt;pkg-name&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;download:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;wget&lt;/code&gt; &lt;em&gt;“url”&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;switch user:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt; &lt;em&gt;username&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;HD space:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;pause terminal:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sleep&lt;/code&gt; &lt;em&gt;seconds&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;compile:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;gcc -Wall file.c -o file&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;user:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;whoami&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;fait tout:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ipcalc&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ip&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-s&lt;/code&gt; SR1 SR2 SR3&lt;/li&gt;
-  &lt;li&gt;vérifie présence de make sur la machine:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;which&lt;/code&gt; &lt;em&gt;make&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;networking&quot;&gt;Networking&lt;/h1&gt;
-
-&lt;p&gt;Configuration des adresses IP des interfaces via &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;
-chaque interface est identifiée par un nom:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;eth0&lt;/strong&gt;     première carte Ethernet&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;eth0:0&lt;/strong&gt;   alias de la première carte Ethernet&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;eth0:1&lt;/strong&gt;   alias de la seconde carte Ethernet&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;lo:&lt;/strong&gt;      loopback ou interface de bouclage&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;fourre-tout&quot;&gt;fourre tout&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;ICMP echo:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;traceroute (/usr/sbin):&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;traceroute&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;super traceroute:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;mtr&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;sniffer:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;tcpdump -i eth0&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;protocol&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;infos sur l’ip:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;whois&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;url/ip&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;check ARP cache:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;arp&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;flush entry found:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;arp -d&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;better tool to clear arp:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ip (-s) (-s) neigh flush all&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;ifconfig&quot;&gt;ifconfig&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Liste des interfaces réseau configurées:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Configurer une interface réseau:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig ethX&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;up&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;fonctionne aussi:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ethX&lt;/code&gt; &lt;em&gt;CIDR&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;up&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;ajouter carte reseau:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;eth0:0&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;route&quot;&gt;route&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;affiche table de routage:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;ajoute route (dev est utile pour les routeurs?):&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-net&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;gw&lt;/code&gt; &lt;em&gt;routeur&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[dev ethX]&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;supprime route:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;del&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-net&lt;/code&gt; &lt;em&gt;ip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;gw&lt;/code&gt; &lt;em&gt;routeur&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[dev ethX]&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;supprime route: (par defau)&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;del&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-net&lt;/code&gt; 0.0.0.0/24&lt;/li&gt;
-  &lt;li&gt;ajoute default gw:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;default gw&lt;/code&gt; &lt;em&gt;ip_gw&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;netmask&lt;/code&gt; &lt;em&gt;msk&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;[dev ethX]&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;ajoute default gw:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;route&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;default gw&lt;/code&gt; &lt;em&gt;ip_gw&lt;/em&gt; &lt;strong&gt;SANS MASK&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Exemple de route valable: (gw = 192.168.50.2)&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
-192.168.50.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
-0.0.0.0         192.168.50.2    0.0.0.0         UG    0      0        0 eth0
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Modifier le serveur DNS dans &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/resolv.conf&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Destination&lt;/th&gt;
-      &lt;th&gt;Passerelle&lt;/th&gt;
-      &lt;th&gt;Genmask&lt;/th&gt;
-      &lt;th&gt;Indic&lt;/th&gt;
-      &lt;th&gt;Metric&lt;/th&gt;
-      &lt;th&gt;Ref&lt;/th&gt;
-      &lt;th&gt;Use&lt;/th&gt;
-      &lt;th&gt;Iface&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;139.124.187.4&lt;/td&gt;
-      &lt;td&gt;0.0.0.0&lt;/td&gt;
-      &lt;td&gt;255.255.255.255&lt;/td&gt;
-      &lt;td&gt;UH&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;eth0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;139.124.187.0&lt;/td&gt;
-      &lt;td&gt;0.0.0.0&lt;/td&gt;
-      &lt;td&gt;255.255.255.0&lt;/td&gt;
-      &lt;td&gt;U&lt;/td&gt;
-      &lt;td&gt;10&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;eth0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;127.0.0.0&lt;/td&gt;
-      &lt;td&gt;0.0.0.0&lt;/td&gt;
-      &lt;td&gt;255.0.0.0&lt;/td&gt;
-      &lt;td&gt;U&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;lo&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0.0.0.0&lt;/td&gt;
-      &lt;td&gt;139.24.87.1&lt;/td&gt;
-      &lt;td&gt;0.0.0.0&lt;/td&gt;
-      &lt;td&gt;UG&lt;/td&gt;
-      &lt;td&gt;10&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;eth0&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Indic&lt;/strong&gt;: flags, indications sur la route.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;U&lt;/strong&gt;: route est en service (activée).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;H&lt;/strong&gt;: destination est un ordinateur (host). Si pas &lt;strong&gt;h&lt;/strong&gt; =&amp;gt; dest = réseau.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;G&lt;/strong&gt;: route pas directe &amp;amp; passerelle est un routeur (gateway).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;D&lt;/strong&gt;: route a été créée par une redirection (message ICMP).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;M&lt;/strong&gt;: route a été modifiée par une redirection (message ICMP).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;!&lt;/strong&gt;: route est rejetée (option reject).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;serveur-dhcp&quot;&gt;Serveur DHCP&lt;/h2&gt;
-
-&lt;h3 id=&quot;création-de-serveur&quot;&gt;Création de serveur:&lt;/h3&gt;
-
-&lt;p&gt;Dans &lt;strong&gt;/etc/dhcp3/dhcpd.conf&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;subnet 192.168.1.0 netmask 255.255.255.0 {
-    range 192.168.1.51  192.168.1.99;     
-}
-ddns-update-style none;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;lancer-serveur-dhcp&quot;&gt;lancer serveur dhcp:&lt;/h3&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/etc/init.d/dhcpd start
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;passage-en-mode-auto&quot;&gt;passage en mode auto&lt;/h3&gt;
-
-&lt;p&gt;Dans &lt;strong&gt;/etc/network/interfaces&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;auto eth0
-allow-hotplug eth0
-iface eth0 inet dhcp
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;divers&quot;&gt;divers&lt;/h3&gt;
-
-&lt;h4 id=&quot;add-nameserver-dns&quot;&gt;add nameserver (DNS)&lt;/h4&gt;
-
-&lt;p&gt;Dans &lt;strong&gt;/etc/resolv.conf&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nameserver ipv  (pc1: 192.168.43.1)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;defini le nom de la machine:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;hostname&lt;/code&gt; nom&lt;/li&gt;
-  &lt;li&gt;requete DHCP:
-sudo &lt;code class=&quot;highlighter-rouge&quot;&gt;dhclient&lt;/code&gt; eth0&lt;/li&gt;
-  &lt;li&gt;ports:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/services&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;config ip (Obsolet?):
-&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;config-ip-data&quot;&gt;config IP data:&lt;/h4&gt;
-&lt;p&gt;Dans &lt;strong&gt;/etc/network/interfaces&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;allow-hotplug eth0
-#iface eth0 inet dhcp 
-iface eth0 inet static
-            adress 192.168.0.3
-            netmask 255.255.255.0
-            network 192.168.0.0
-            broadcast 192.168.0.255
-            gw ?
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;passage-en-mode-routeur&quot;&gt;Passage en mode routeur&lt;/h4&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/ip_forward 1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;arp-approfondir&quot;&gt;ARP &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Approfondir!&lt;/strong&gt;&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;/usr/sbin/arp      (si pas dans le path)
-/usr/sbin/arp -n   (si pas dans le path)&lt;/p&gt;
-
-&lt;p&gt;-a, -n, -d et -s.&lt;/p&gt;
-
-&lt;p&gt;Defaut arp entry ttl&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cat /proc/sys/net/ipv4/neigh/default/gc_stale_time
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;netstat&quot;&gt;netstat&lt;/h2&gt;
-&lt;p&gt;Utile pour tout ce qui concerne les &lt;strong&gt;sockets&lt;/strong&gt; et les &lt;strong&gt;ports&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;voir tous les sockets:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -an&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;sockets ipv4:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -an --inet&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;sockets ipv6:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat -an --inet6&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;socket en écoute:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat --inet --listen -NNNN&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;socket en écoute:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;netstat --inet6 --listen -NNNN&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;identification du process lié (PID/prgrm name):&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo netstat -p&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt; display all sockets&lt;/li&gt;
-    &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt; ne résoud pas les noms&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~$ sudo netstat -p -n --inet --listen 6834
-Active Internet connections (only servers)
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      453/sshd        
-tcp        0      0 0.0.0.0:12345           0.0.0.0:*               LISTEN      6834/a-tracer   
-tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      844/exim4       
-udp        0      0 0.0.0.0:59362           0.0.0.0:*                           828/dhclient    
-udp        0      0 0.0.0.0:68              0.0.0.0:*                           828/dhclient    
-udp        0      0 10.0.2.15:123           0.0.0.0:*                           498/ntpd        
-udp        0      0 127.0.0.1:123           0.0.0.0:*                           498/ntpd        
-udp        0      0 0.0.0.0:123             0.0.0.0:*                           498/ntpd  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;strace&quot;&gt;strace&lt;/h2&gt;
-&lt;p&gt;Traçage des &lt;strong&gt;appels système&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;strace -e socket,connect ./simple-client localhost 7000
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-e&lt;/code&gt; &lt;strong&gt;expr&lt;/strong&gt;: permet de filtrer les résultats. Séparer par une virgule les mot clés.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;ltrace&quot;&gt;Ltrace&lt;/h2&gt;
-&lt;p&gt;Comme &lt;code class=&quot;highlighter-rouge&quot;&gt;strace&lt;/code&gt; mais pour les fonctions de la &lt;strong&gt;LIBC&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Penser à utiliser Wireshark!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;netcat-approfondir&quot;&gt;netcat &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Approfondir!&lt;/strong&gt;&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;Création de serveurs/clients ? (tcp only?)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;nc -l -p&lt;/code&gt; &lt;em&gt;port&lt;/em&gt;: Création d’un serveur TCP
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-l&lt;/code&gt; : listen mode des connexions entrantes&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-p&lt;/code&gt; : port local&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;divers-1&quot;&gt;Divers&lt;/h1&gt;
-
-&lt;h2 id=&quot;oneliners&quot;&gt;oneLiners&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;entrées uniques:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;cat log.txt | uniq -u | wc -l&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;2 entrées les plus fréquentes:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;cat log.txt | uniq -c | sort -n | tail -2&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;find recursive and move:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;find ./ -type f -name '*.ttf' -exec mv -i {} ./  \;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;process&quot;&gt;process:&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;current shell process:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ps&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;nice display:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;pstree&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;all actifs process:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ps -u&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;processus actifs + PID current shell:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;jobs -l&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;suspend le process:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;CTRL + Z&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;bring a bg process to fg:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;fg&lt;/code&gt; &lt;em&gt;[PID]&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;put process into back ground:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;bg&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;kill processkill:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;kill&lt;/code&gt; &lt;em&gt;pid&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;kill signals:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;kill -l&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;tee&quot;&gt;tee&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Envoie en même temps stdout vers un fichier et vers l’écran:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;tee [-a] file&lt;/code&gt;&lt;br /&gt;
-  &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt;: append [CTRL]+c to exit&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Lance make et stocke sa sortie dans build.log:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt; | &lt;code class=&quot;highlighter-rouge&quot;&gt;tee&lt;/code&gt; &lt;em&gt;build.log&lt;/em&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Lance la commande make install et rajoute sa sortie à la fin du fichier build.log:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt; &lt;em&gt;install&lt;/em&gt; | &lt;code class=&quot;highlighter-rouge&quot;&gt;tee&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;uniq&quot;&gt;uniq:&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-u&lt;/code&gt;:only uniq lines
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt;:count occurences repetition&lt;/p&gt;
-
-&lt;h2 id=&quot;sort&quot;&gt;sort:&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt;:numeric sort. bigger -&amp;gt; end
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt;:alphabetic sort (nie les chifres)
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-f&lt;/code&gt;:ignore la cassecat&lt;/p&gt;
-
-&lt;p&gt;##shutdown&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;init 0          &lt;span class=&quot;c&quot;&gt;# shutdown&lt;/span&gt;
-shutdown -h now &lt;span class=&quot;c&quot;&gt;# shutdown&lt;/span&gt;
--r now          &lt;span class=&quot;c&quot;&gt;# reboot&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;tool-screen&quot;&gt;tool screen&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;screen&lt;/code&gt;:       &lt;em&gt;start&lt;/em&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt;: &lt;em&gt;create windows&lt;/em&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;n&lt;/code&gt;: &lt;em&gt;switch next&lt;/em&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;ctrl&lt;/code&gt;-&lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;p&lt;/code&gt;: &lt;em&gt;switch previous&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Command key:  ^A   Literal ^A:  a&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;break      ^B b          only       Q
-clear      C             other      ^A
-colon      :             pow_break  B
-copy       ^[ [          pow_detach D
-detach     ^D d          prev       ^P p ^?
-digraph    ^V            readbuf    &amp;amp;amp;amp;amp;lt;
-displays   *             redisplay  ^L l
-fit        F             removebuf  =
-flow       ^F f          reset      Z
-focus      ^I            screen     ^C c
-hardcopy   h             select     '
-help       ?             silence    _
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;users&quot;&gt;users&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;add user:  &lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo adduser username&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;add sudo:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo usermod -aG sudo username&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;delete all from user:	&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;userdel -r username&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;shell-log&quot;&gt;shell log&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;script&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt; &lt;em&gt;my-file&lt;/em&gt;       : (myfile is the output file)(proactif)&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;history&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;gt;&lt;/code&gt; &lt;em&gt;file-name&lt;/em&gt;     :(save the session)&lt;/p&gt;
-
-&lt;h2 id=&quot;tar&quot;&gt;Tar&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tar cvf&lt;/code&gt; &lt;em&gt;ar­chi­ve&lt;/em&gt; &lt;em&gt;fi­chiers ou répert­oir­es&lt;/em&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt;: créer&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-x&lt;/code&gt;: extract&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;v&lt;/code&gt; : suit progre­ssion&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; : fichier&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;tar -cf nomFichierCompresse.tar fichierAcompresser :compresse&lt;/p&gt;
-
-&lt;p&gt;tar -tvf &amp;lt;ar­chi­ve&amp;gt; : affiche le contenu d’une archive ou vérifie son intégrité (t : test)
-tar -xvf &amp;lt;ar­chi­ve&amp;gt; : ext tous les fichiers d’une archive
-tar -xvf &amp;lt;ar­chi­ve&amp;gt; &amp;lt;fi­chiers ou rép.&amp;gt; : ext seulement quelques fichiers d’une archive&lt;/p&gt;
-
-&lt;h2 id=&quot;rar&quot;&gt;rar&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;unrar&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; &lt;em&gt;Filename.rar&lt;/em&gt; : (x = crée Filename et décompresse dedans)&lt;/p&gt;
-
-&lt;h2 id=&quot;zip&quot;&gt;zip&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Compresser:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;zip&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-r&lt;/code&gt; &lt;em&gt;nom_fichier.zip&lt;/em&gt; &lt;em&gt;repertoire_ou_ fichier&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;decompresser:  &lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;unzip&lt;/code&gt; &lt;em&gt;nom_fichier.zip&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt; &lt;em&gt;destination&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;scripts&quot;&gt;scripts:&lt;/h2&gt;
-&lt;p&gt;tous les scripts commencent par:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod +x script.sh
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;ou&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod 0755 script.sh
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;launch:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;./script.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;cut&quot;&gt;cut:&lt;/h2&gt;
-
-&lt;p&gt;Extract portions of text from a file by selecting column.&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cat test.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;:for file oriented operations.
-&lt;/code&gt;cp&lt;code class=&quot;highlighter-rouge&quot;&gt;:for copy files or directories.
-`ls&lt;/code&gt; :to list out files and directories with its attributes.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;select column of char:&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c2 test.txt
-a
-p
-s
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;using range:&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c1-3 test.txt
-cat
-cp
-ls
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;start pos:&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c3- test.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;end pos:&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c-8 test.txt
-cat comm
-cp comma
-ls comma
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;em&gt;start-end:&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;cut -c3-8 test.txt 
-t comm
- comma
- comma
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;cool-stuff&quot;&gt;Cool stuff&lt;/h4&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-f&lt;/code&gt;: FIELD-LIST (Print only the fields listed in FIELD-LIST.)
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-d&lt;/code&gt;: specifies what is the field delimiter&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cat /etc/passwd | tail -5
-hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
-sol:x:1000:1000:sol,,,:/home/sol:/bin/bash
-git:x:1001:1001:,,,:/home/git:/bin/bash
-vde2-net:x:119:130::/var/run/vde2:/bin/false
-uml-net:x:120:131::/home/uml-net:/bin/false
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cut -d':' -f1 /etc/passwd | tail -5
-hplip
-sol
-git
-vde2-net
-uml-net
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;diff-and-patching&quot;&gt;diff and patching&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;$ diff originalfile updatedfile &amp;gt; patchfile.patch&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;$ patch originalfile -i patchfile.patch -o updatedfile&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;$ diff -s updatedfile [/path/to/the/original/updatedfile]/updatefile (check)&lt;/code&gt;&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;$ gcc -Wall updatedfile.c -o updatedfile&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;running-a-command-as-another-local-user&quot;&gt;Running a command as another local user&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo -u&lt;/code&gt; &lt;em&gt;username&lt;/em&gt; &lt;em&gt;command&lt;/em&gt;: (replace username)&lt;/p&gt;
-
-&lt;h2 id=&quot;sudo-list&quot;&gt;Sudo list:&lt;/h2&gt;
-
-&lt;p&gt;The list of users that can execute sudo can be modified
-by running (req root): sudo /usr/sbin/visudo
-The syntax of every sudo line is:&lt;/p&gt;
-
-&lt;p&gt;user machine=(effective_user) command&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;user 			: name of the new sudo user
-machine			: host name in which sudo is valid
-effective_user	: stands for the effective users that are 
-				  allowed to execute the commands.
-command			: represents a set of commands that the
-				  can run.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;the-sticky-bit-permission&quot;&gt;The sticky bit permission:&lt;/h2&gt;
-
-&lt;p&gt;It’s a permission bit that protects the files within a directory. 
-If the directory have the sticky bit set, a file can be deleted
-only by the owner of the file, the owner of the directory or root.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;set the sticky bit:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;+t&lt;/code&gt; file:&lt;/li&gt;
-  &lt;li&gt;unset it:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;chmod&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-t&lt;/code&gt; file:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;guest-extension&quot;&gt;guest extension&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get update&lt;/code&gt; &lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get upgrade&lt;/code&gt; &lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get install virtualbox-guest-x11&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;##grep:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;em&gt;option&lt;/em&gt; &lt;em&gt;motif&lt;/em&gt; &lt;em&gt;path&lt;/em&gt;&lt;br /&gt;
-Affiche chaque ligne des file contenant le motif. Le motif est une expression régulière&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt;: lignes qui ne contie­nnent pas le motif&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt;: seulement le nombre de lignes&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-n&lt;/code&gt;: numéros des lignes trouvées&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-i&lt;/code&gt;: pas sensible à la casse&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-r&lt;/code&gt;: recursif&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;-E&lt;/code&gt;: extended regex&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;parcourt les f et affiche les lignes qui corresp au motif:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;em&gt;mo­tif&lt;/em&gt; &lt;em&gt;fi­chi­ers­&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;affiche les lignes contenant erreur dans les fichiers *.log:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;em&gt;erreur&lt;/em&gt; *.log&lt;/li&gt;
-  &lt;li&gt;idem + osef casse:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; -i erreur *.log&lt;/li&gt;
-  &lt;li&gt;idem + récursif:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-ri&lt;/code&gt; &lt;em&gt;erreur&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;affiche toutes les lignes des fichiers sauf celles qui contie­nnent info:&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;grep&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; &lt;em&gt;info&lt;/em&gt; *.log&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ex:&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;grep -r He-Arc ./
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;sed&quot;&gt;sed:&lt;/h2&gt;
-&lt;p&gt;Voici une petite astuce bien pratique qui permet de changer une chaîne de caractères par une autre, contenue dans un fichier texte. Tout ceci se réalise en une seule ligne de commande, grâce à sed.
-Voici un exemple d’utilisation :&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sed -i -e &quot;s/chaines1/chaine2/g&quot;&lt;/code&gt; &lt;em&gt;fichier&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;A noter que si la chaîne contient des caractères spéciaux, 
-on devra les échapper avec ‘'. Voici un exemple oû l
-‘on remplace “/home” par “/tmp”:&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sed -i -e &quot;s/\/home/\/tmp/g&quot;&lt;/code&gt; &lt;em&gt;fichier&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Si on a besoin de remplacer une chaîne par une autre pour toute 
-une liste de fichiers contenue dans un répertoire, 
-on pourra utiliser ce petit script basé sur le même principe :&lt;/p&gt;
-
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;file &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.txt
-&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  echo &lt;span class=&quot;s2&quot;&gt;&quot;Traitement de &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; ...&quot;&lt;/span&gt;
-  sed -i -e &lt;span class=&quot;s2&quot;&gt;&quot;s/chaine1/chaine2/g&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Ce dernier va :&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;établir la liste de tous les fichiers dont l’extension est .txt&lt;/li&gt;
-  &lt;li&gt;puis effectuer le remplacement&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Une autre méthode donnée en commentaire qui utilise 
-la commande find et qui permet de traiter des sous-dossier en plus :&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;find . -name &quot;*.txt&quot; -type f -exec sed -i &quot;s/chaine1/chaine2/g&quot; {} \;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;find-and-replace-with-sed&quot;&gt;FIND AND REPLACE with SED&lt;/h4&gt;
-
-&lt;p&gt;Let us start off simple:
-Imagine you have a large file ( txt, php, html, anything ) and you want to 
-replace all the words “ugly” with “beautiful” because you just met your old 
-friend Sue again and she/he is coming over for a visit.&lt;/p&gt;
-
-&lt;p&gt;This is the command:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sed -i 's/ugly/beautiful/g' /home/bruno/old-friends/sue.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Well, that command speaks for itself “sed” edits “-i in place ( on the spot ) 
-and replaces the word “ugly with “beautiful” in the file “/home/bruno/old-friends/sue.txt”&lt;/p&gt;
-
-&lt;p&gt;Now, here comes the real magic:
-Imagine you have a whole lot of files in a directory 
-( all about Sue ) and you want the same command to do
-all those files in one go because she/he is standing right 
-at the door . . 
-Remember the find command ? We will combine the two:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ find /home/bruno/old-friends -type f -exec sed -i 's/ugly/beautiful/g' {} \;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Sure in combination with the find command you can do all 
-kind of nice tricks, even if you don’t remember where 
-the files are located !&lt;/p&gt;
-</description>
-        <pubDate>Mon, 19 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/linux/Linux-CheatSeet.html</link>
-        <guid isPermaLink="true">http://localhost:4000/linux/Linux-CheatSeet.html</guid>
-        
-        <category>Linux</category>
-        
-        
-        <category>Linux</category>
         
       </item>
     

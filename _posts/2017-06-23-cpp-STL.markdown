@@ -276,51 +276,43 @@ c = 1
 257280
 ```
 
-#### Lecture avec \>>
+#### Lecture
 
 ```cpp
-int main(){
-    int a;
-    int t1[6];
-    double b;
-    char c;
-    
-    ifstream f ("poule.xyz", ios::in | ios::binary);
-    // ifstream f("poule.xyz");
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespace std;
 
 
-    if (!f.is_open()) {
-        cout << "Impossible d'ouvrir le fichier en ecriture\n";
-        return -1;
+int main() {
+    string line;
+    ifstream f("poeme.txt");
+
+    if (!f.is_open()){
+        cout << "Impossible d'ouvrir le fichier en lecture\n";
+        return -1;        
     }
 
-    // lecture avec >>
-    f >> a; // .read ((char *)&a, sizeof(int));
-    f >> b; // .read ((char *)&b, sizeof(double));
-    f >> c; // .read ((char *)&c, sizeof(char));
-
-    for (int i = 0; i < 6; ++i) {
-        f >> t1[i]; // .read ((char *)&t1[i], sizeof(int));
+    while (getline(f, line)) {
+        cout << line << "\n";
     }
-
-    // get size of file
-
-    f.seekg(0, ios::end); // aller à la fin
-    int size = f.tellg(); // obtenir la position et la retourner
-    cout << "la taille du fichier est: " << size << endl;
 
     f.close();
-
-    cout << "a = " << a << endl
-         << "b = " << b << endl
-         << "c = " << c << endl;
-    
-    for (int i = 0; i < 6; ++i) {
-        cout << t1[i] << endl;
-    }
-    
     return 0;
 }
+
+```
+output:
+
+```
+demain dès l'aube à l'heure où blanchit la campagne
+
+je partirai vois-tu je sais que tu m'attends 
+ 
+j'irai par la forêt j'irai par la montagne 
+ 
+je ne puis demeurer loin de toi plus longtemps 
 ```
 
 ### Traitements d'erreurs
@@ -1142,7 +1134,7 @@ output:
 
 using namespace std;
 
-
+// affiche tous les éléments du dico
 template<typename Key, typename Val>
 void showMultimap(const multimap<Key, Val> &m) {
     //typename multimap<Key, Val>::const_iterator it;
@@ -1152,6 +1144,7 @@ void showMultimap(const multimap<Key, Val> &m) {
     cout << endl;
 }
 
+// affiche les éléments du dico dont la clé est "find"
 template<typename Key, typename Val>
 void showMultimapRange(const multimap<Key, Val> &m, const Key &find) {
 
@@ -1160,7 +1153,7 @@ void showMultimapRange(const multimap<Key, Val> &m, const Key &find) {
 
     cout << find << " ==>";
     for (auto it = itlow; it != itup; ++it) {
-        cout << " | " << (*it).second;
+        cout << " | " << it->second;
     }
     cout << endl;
 }
@@ -1181,6 +1174,10 @@ int main() {
                                 
     return 0;
 }
+
+}
+
+}
 ```
 output:
 
@@ -1194,3 +1191,145 @@ BE==> | Nivelles | Liege | Mons
 BE==> | Nivelles | Liege | Mons
 ```
 
+
+Ecrire un programme qui lise un fichier de texte donné en paramètre, complètement, mot par mot. Le programme créera une table associative (dictionnaire clé-valeur) avec comme clés les mots, et comme valeur le nombre d’occurrences. A la fin de l’exécution, le programme affichera le nombre total de mots contenu dans le texte, le nombre de mots différents, ainsi que le nombre d’occurrences de chaque mot.
+
+poeme.txt:
+
+```
+demain des l'aube a l'heure ou blanchit la campagne
+
+je partirai vois-tu je sais que tu m'attends
+
+j'irai par la foret j'irai par la montagne
+
+je ne puis demeurer loin de toi plus longtemps
+
+```
+
+
+```cpp
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<vector>
+#include<map>
+using namespace std;
+
+const string file = "poeme.txt";
+
+void fillWordVec(ifstream&, vector<string>&);
+void factor(vector<string>&, string&);
+bool fillDict(multimap<string, int>&, const string&);
+
+int main() {
+    ifstream f(file);
+    vector<string> all;
+    multimap<string, int> dict;
+
+    if (!f.is_open()){
+        cout << "Impossible d'ouvrir le fichier en ecriture\n";
+        return -1;        
+    }
+
+    // split le fichiers en vecteur de mots
+    fillWordVec(f, all);
+
+    // remplit le dictionnaire
+    for (const auto& x: all) { 
+        if(!fillDict(dict, (string) x)) {
+            dict.insert(pair<string, int>((string) x,1));
+        }
+    }
+
+    // display
+    cout << "Le fichier contient " << all.size() << " mots\n";
+    cout << "il y a " << dict.size() << " mots différents\n";
+    cout << "nombre d'occurences de chaque mot:\n";
+
+    // affiche occurences de chaque mot:
+    for (const auto& x: dict) {
+        cout << x.second << "x \"" << x.first << "\"\n";
+    }
+
+    // idem 
+    // for (auto it = dict.begin(); it != dict.end(); ++it) {
+    //     cout << it->second << "x \"" << it->first << "\"\n";
+    // }
+    f.close();
+    return 0;
+}
+
+void fillWordVec(ifstream &f, vector<string> &vec) {
+    string word, line;
+    while (getline(f, line)) {
+        if (!line.empty()) {
+            for (int i = 0; i < line.size(); ++i) {
+                if (line[i] == ' ' || line[i] == '\'' || line[i] == '-') {
+                    ++i;
+                    factor(vec, word);
+                }
+                word += line[i];
+            }
+            factor(vec, word);
+        }
+    }
+}
+
+void factor(vector<string> &vec, string &word) {
+    vec.push_back(word);
+    word.clear();  
+}
+
+
+bool fillDict(multimap<string, int> &m, const string &find) {
+    bool flag  = false;
+    auto itlow = m.lower_bound(find);
+    auto itup  = m.upper_bound(find);
+
+    for (auto it = itlow; it != itup; ++it) {
+        flag = true;
+        ++(it->second);
+    }
+    return flag;
+}
+```
+
+output:
+
+```
+Le fichier contient 40 mots
+il y a 31 mots différents
+nombre d'occurences de chaque mot:
+1x "a"
+1x "attends"
+1x "aube"
+1x "blanchit"
+1x "campagne"
+1x "de"
+1x "demain"
+1x "demeurer"
+1x "des"
+1x "foret"
+1x "heure"
+2x "irai"
+2x "j"
+3x "je"
+2x "l"
+3x "la"
+1x "loin"
+1x "longtemps"
+1x "m"
+1x "montagne"
+1x "ne"
+1x "ou"
+2x "par"
+1x "partirai"
+1x "plus"
+1x "puis"
+1x "que"
+1x "sais"
+1x "toi"
+2x "tu"
+1x "vois"
+```

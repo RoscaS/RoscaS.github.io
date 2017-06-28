@@ -384,50 +384,42 @@ c = 1
 </code></pre>
 </div>
 
-<h4 id="lecture-avec-">Lecture avec &gt;&gt;</h4>
+<h4 id="lecture-1">Lecture</h4>
 
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
-    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">t1</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
-    <span class="kt">double</span> <span class="n">b</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
-    
-    <span class="n">ifstream</span> <span class="n">f</span> <span class="p">(</span><span class="s">"poule.xyz"</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
-    <span class="c1">// ifstream f("poule.xyz");
-</span>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;fstream&gt;
+#include&lt;string&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en ecriture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">line</span><span class="p">;</span>
+    <span class="n">ifstream</span> <span class="n">f</span><span class="p">(</span><span class="s">"poeme.txt"</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">()){</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en lecture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>        
     <span class="p">}</span>
 
-    <span class="c1">// lecture avec &gt;&gt;
-</span>    <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// .read ((char *)&amp;a, sizeof(int));
-</span>    <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">;</span> <span class="c1">// .read ((char *)&amp;b, sizeof(double));
-</span>    <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">c</span><span class="p">;</span> <span class="c1">// .read ((char *)&amp;c, sizeof(char));
-</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">f</span> <span class="o">&gt;&gt;</span> <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="c1">// .read ((char *)&amp;t1[i], sizeof(int));
-</span>    <span class="p">}</span>
-
-    <span class="c1">// get size of file
-</span>
-    <span class="n">f</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span> <span class="c1">// aller à la fin
-</span>    <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span> <span class="c1">// obtenir la position et la retourner
-</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"la taille du fichier est: "</span> <span class="o">&lt;&lt;</span> <span class="n">size</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">line</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
 
     <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-
-    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"a = "</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span>
-         <span class="o">&lt;&lt;</span> <span class="s">"b = "</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span>
-         <span class="o">&lt;&lt;</span> <span class="s">"c = "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-    
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-    <span class="p">}</span>
-    
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+
+</code></pre>
+</div>
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>demain dès l'aube à l'heure où blanchit la campagne
+
+je partirai vois-tu je sais que tu m'attends 
+ 
+j'irai par la forêt j'irai par la montagne 
+ 
+je ne puis demeurer loin de toi plus longtemps 
 </code></pre>
 </div>
 
@@ -1321,8 +1313,8 @@ tab.at(tab.size()) :
 </span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-
-<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Key</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Val</span><span class="o">&gt;</span>
+<span class="c1">// affiche tous les éléments du dico
+</span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Key</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Val</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">showMultimap</span><span class="p">(</span><span class="k">const</span> <span class="n">multimap</span><span class="o">&lt;</span><span class="n">Key</span><span class="p">,</span> <span class="n">Val</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">//typename multimap&lt;Key, Val&gt;::const_iterator it;
 </span>    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">m</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
@@ -1331,7 +1323,8 @@ tab.at(tab.size()) :
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Key</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Val</span><span class="o">&gt;</span>
+<span class="c1">// affiche les éléments du dico dont la clé est "find"
+</span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Key</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Val</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">showMultimapRange</span><span class="p">(</span><span class="k">const</span> <span class="n">multimap</span><span class="o">&lt;</span><span class="n">Key</span><span class="p">,</span> <span class="n">Val</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="k">const</span> <span class="n">Key</span> <span class="o">&amp;</span><span class="n">find</span><span class="p">)</span> <span class="p">{</span>
 
     <span class="k">auto</span> <span class="n">itlow</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">find</span><span class="p">);</span>
@@ -1339,7 +1332,7 @@ tab.at(tab.size()) :
 
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">find</span> <span class="o">&lt;&lt;</span> <span class="s">" ==&gt;"</span><span class="p">;</span>
     <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">itlow</span><span class="p">;</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">itup</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" | "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">).</span><span class="n">second</span><span class="p">;</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">" | "</span> <span class="o">&lt;&lt;</span> <span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1360,6 +1353,10 @@ tab.at(tab.size()) :
 </span>                                
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="p">}</span>
 </code></pre>
 </div>
 <p>output:</p>
@@ -1374,6 +1371,146 @@ BE==&gt; | Nivelles | Liege | Mons
 </code></pre>
 </div>
 
+<p>Ecrire un programme qui lise un fichier de texte donné en paramètre, complètement, mot par mot. Le programme créera une table associative (dictionnaire clé-valeur) avec comme clés les mots, et comme valeur le nombre d’occurrences. A la fin de l’exécution, le programme affichera le nombre total de mots contenu dans le texte, le nombre de mots différents, ainsi que le nombre d’occurrences de chaque mot.</p>
+
+<p>poeme.txt:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>demain des l'aube a l'heure ou blanchit la campagne
+
+je partirai vois-tu je sais que tu m'attends
+
+j'irai par la foret j'irai par la montagne
+
+je ne puis demeurer loin de toi plus longtemps
+
+</code></pre>
+</div>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;fstream&gt;
+#include&lt;string&gt;
+#include&lt;vector&gt;
+#include&lt;map&gt;
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">const</span> <span class="n">string</span> <span class="n">file</span> <span class="o">=</span> <span class="s">"poeme.txt"</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">fillWordVec</span><span class="p">(</span><span class="n">ifstream</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="p">);</span>
+<span class="kt">void</span> <span class="n">factor</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&amp;</span><span class="p">,</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="kt">bool</span> <span class="n">fillDict</span><span class="p">(</span><span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">ifstream</span> <span class="n">f</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">all</span><span class="p">;</span>
+    <span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">dict</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">f</span><span class="p">.</span><span class="n">is_open</span><span class="p">()){</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Impossible d'ouvrir le fichier en ecriture</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>        
+    <span class="p">}</span>
+
+    <span class="c1">// split le fichiers en vecteur de mots
+</span>    <span class="n">fillWordVec</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">all</span><span class="p">);</span>
+
+    <span class="c1">// remplit le dictionnaire
+</span>    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">x</span><span class="o">:</span> <span class="n">all</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">fillDict</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="n">x</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">dict</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">((</span><span class="n">string</span><span class="p">)</span> <span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// display
+</span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Le fichier contient "</span> <span class="o">&lt;&lt;</span> <span class="n">all</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">" mots</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"il y a "</span> <span class="o">&lt;&lt;</span> <span class="n">dict</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">" mots différents</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"nombre d'occurences de chaque mot:</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="c1">// affiche occurences de chaque mot:
+</span>    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">x</span><span class="o">:</span> <span class="n">dict</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">.</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="s">"x </span><span class="se">\"</span><span class="s">"</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\"\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// idem 
+</span>    <span class="c1">// for (auto it = dict.begin(); it != dict.end(); ++it) {
+</span>    <span class="c1">//     cout &lt;&lt; it-&gt;second &lt;&lt; "x \"" &lt;&lt; it-&gt;first &lt;&lt; "\"\n";
+</span>    <span class="c1">// }
+</span>    <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">fillWordVec</span><span class="p">(</span><span class="n">ifstream</span> <span class="o">&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">word</span><span class="p">,</span> <span class="n">line</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">getline</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">line</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">line</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">' '</span> <span class="o">||</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'\''</span> <span class="o">||</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">'-'</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+                    <span class="n">factor</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="n">word</span> <span class="o">+=</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="n">factor</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">factor</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">vec</span><span class="p">,</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">word</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+    <span class="n">word</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>  
+<span class="p">}</span>
+
+
+<span class="kt">bool</span> <span class="nf">fillDict</span><span class="p">(</span><span class="n">multimap</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">find</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">flag</span>  <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">itlow</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">find</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">itup</span>  <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">upper_bound</span><span class="p">(</span><span class="n">find</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">itlow</span><span class="p">;</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">itup</span><span class="p">;</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="o">++</span><span class="p">(</span><span class="n">it</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">flag</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Le fichier contient 40 mots
+il y a 31 mots différents
+nombre d'occurences de chaque mot:
+1x "a"
+1x "attends"
+1x "aube"
+1x "blanchit"
+1x "campagne"
+1x "de"
+1x "demain"
+1x "demeurer"
+1x "des"
+1x "foret"
+1x "heure"
+2x "irai"
+2x "j"
+3x "je"
+2x "l"
+3x "la"
+1x "loin"
+1x "longtemps"
+1x "m"
+1x "montagne"
+1x "ne"
+1x "ou"
+2x "par"
+1x "partirai"
+1x "plus"
+1x "puis"
+1x "que"
+1x "sais"
+1x "toi"
+2x "tu"
+1x "vois"
+</code></pre>
+</div>
 
 </div>
 
