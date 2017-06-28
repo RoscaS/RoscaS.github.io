@@ -28,7 +28,7 @@ Ce dernier point est un prérequis plus qu'un conseil.
 
 ## std::unique_ptr
 
-Au début de [cet](\cpp\cpp-move&smartP.html) article nous avons vu les dangers de l'utilisation des pointeurs. Après avoir couvert les bases de la sémantique de déplacement dans le même poste nous pouvons maintenant tenter de cérner les smart pointers.
+Au début de [cet](\cpp\cpp-move&smartP.html) article nous avons vu les dangers de l'utilisation des pointeurs. Après y avoir également couvert les bases de la sémantique de déplacement, nous pouvons maintenant tenter de cerner les smart pointers.
 
 ### rappel
 
