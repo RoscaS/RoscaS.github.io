@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Cpp: Flux</title>
-  <meta name="description" content="1. Flux">
+  <meta name="description" content="SourcesSlide du cours: 1240.2.09 Bibliothèque Standard">
 </head>
 
 
@@ -99,7 +99,10 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="1-flux">1. Flux</h2>
+    <h2 id="sources">Sources</h2>
+<p>Slide du cours: 1240.2.09 Bibliothèque Standard</p>
+
+<h2 id="1-flux">1. Flux</h2>
 
 <ul>
   <li>Un flux est une <strong>séquence d’octets transférés</strong> entre la mémoire et les périphériques.</li>
@@ -1118,6 +1121,38 @@ En Physique, j'ai 4.5 de moyenne.
 <span class="p">}</span>
 </code></pre>
 </div>
+
+<h2 id="8-choix-dun-conteneur-stl">8. Choix d’un conteneur STL</h2>
+
+<p><img src="/00illustrations/flux/choix.png" align="" height="auto" float="right" /></p>
+
+<h2 id="9-algorithmes-de-la-stl">9. Algorithmes de la STL</h2>
+
+<p>La plupart des traitements courants sur des structures de données sont implémentés de façon <strong>optimale</strong> c’est à dire que dans la grande majorité des cas il est préférable de les utiliser.</p>
+
+<ul>
+  <li>ajouts, suppression, copies, déplacements, remplacements</li>
+  <li>traitements sur chaque élément</li>
+  <li>recherches</li>
+  <li>comptages</li>
+  <li>tris</li>
+</ul>
+
+<h2 id="10-forme-canonique-dune-classe">10. Forme canonique d’une classe</h2>
+
+<p>La forme canonique (de <strong>Coplien</strong>) fournit un cadre à respecter pour les classes ayant <strong>des attributs alloués dynamiquement</strong>. Une classe <code class="highlighter-rouge">T</code> est dite sous forme canonique (ou fome normale, forme standard) si elle possède:</p>
+
+<ul>
+  <li>un constructeur par défaut</li>
+  <li>un constructeur de copie</li>
+  <li>un destructeur</li>
+  <li>un opérateur d’affectation surchargé</li>
+</ul>
+
+<p><strong>Pour utiliser les conteneurs ou algorithmes</strong>, la classe doit être canonique et implémenter l’opérateur de comparaison <code class="highlighter-rouge">==</code></p>
+
+<p>Si la notion d’ordre est nécessaire, la clsse devra également implémenter l’opérateur <code class="highlighter-rouge">&lt;</code></p>
+
 
 </div>
 

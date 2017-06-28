@@ -19,8 +19,11 @@ Ce dernier point est un prérequis plus qu'un conseil.
 ## sources
 
 * [learncpp.com](http://www.learncpp.com/cpp-tutorial/15-5-stdunique_ptr/) (ch 15.1 à 15.7)
+* [Herb Sutter's blog GotW #89](https://herbsutter.com/2013/05/29/gotw-89-solution-smart-pointers/)
 * [stackoverflow](https://stackoverflow.com/)
+* [tutorialsPoint](https://www.tutorialspoint.com)
 * [wikipedia](https://fr.wikipedia.org/wiki/S%C3%A9mantique)
+
 
 # En bref
 

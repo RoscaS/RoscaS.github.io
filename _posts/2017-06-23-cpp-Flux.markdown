@@ -949,6 +949,30 @@ int main() {
 }
 ```
 
-## Choix d'un conteneur STL
+## 8. Choix d'un conteneur STL
 
 <img src="/00illustrations/flux/choix.png" align="" height="auto" float="right">
+
+## 9. Algorithmes de la STL
+
+La plupart des traitements courants sur des structures de données sont implémentés de façon **optimale** c'est à dire que dans la grande majorité des cas il est préférable de les utiliser.
+
+* ajouts, suppression, copies, déplacements, remplacements
+* traitements sur chaque élément
+* recherches
+* comptages
+* tris
+
+## 10. Forme canonique d'une classe
+
+La forme canonique (de **Coplien**) fournit un cadre à respecter pour les classes ayant **des attributs alloués dynamiquement**. Une classe `T` est dite sous forme canonique (ou fome normale, forme standard) si elle possède: 
+
+* un constructeur par défaut
+* un constructeur de copie
+* un destructeur
+* un opérateur d'affectation surchargé
+
+**Pour utiliser les conteneurs ou algorithmes**, la classe doit être canonique et implémenter l'opérateur de comparaison `==`
+
+Si la notion d'ordre est nécessaire, la clsse devra également implémenter l'opérateur `<`
+
