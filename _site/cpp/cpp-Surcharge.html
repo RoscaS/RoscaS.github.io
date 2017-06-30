@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/cpp/cpp-Surcharge.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cpp: Surcharge</title>
+  <meta name="description" content="1. Overview">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Cpp: Surcharge</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="30 Jun 2017" itemprop="datePublished">Jun 30 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">cpp</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Surcharge d'opérateurs</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="1-overview">1. Overview</h2>
+
+<p>surcharge.hpp</p>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include "surcharge.hpp"
+</span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="c1">// constructeurs:
+// Test::Test() {}
+</span><span class="n">Test</span><span class="o">::</span><span class="n">Test</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="n">test_</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">Test</span><span class="o">::</span><span class="n">Test</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span> <span class="n">test_</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span> <span class="n">list_</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">t</span><span class="p">];</span> <span class="p">}</span>
+<span class="n">Test</span><span class="o">::</span><span class="n">Test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// toutes les cases de la matrice = 0.0
+</span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">col</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">col</span><span class="p">)</span>
+            <span class="n">matrix_</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// interface:
+</span><span class="n">Test</span><span class="o">::</span><span class="n">getTest</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// surcharges:
+//      operateurs arithmetiques        Ces fonctions ne sont pas membres (friend)
+</span><span class="n">Test</span> <span class="k">operator</span> <span class="o">+</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">Test</span><span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">+</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">Test</span> <span class="k">operator</span> <span class="o">-</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">Test</span><span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">-</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">Test</span> <span class="k">operator</span> <span class="o">*</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">Test</span><span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">*</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">Test</span> <span class="k">operator</span> <span class="o">/</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">Test</span><span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">/</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="c1">//      operateurs de comparaison       Ces fonctions ne sont pas membres (friend)
+</span><span class="kt">bool</span> <span class="k">operator</span> <span class="o">==</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">==</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="k">operator</span> <span class="o">!=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">!=</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="k">operator</span> <span class="o">&gt;</span>  <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">&gt;</span>  <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="k">operator</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">&lt;=</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="k">operator</span> <span class="o">&lt;</span>  <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">&lt;</span>  <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="k">operator</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">c1</span><span class="p">.</span><span class="n">test_</span> <span class="o">&gt;=</span> <span class="n">c2</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">//      operateurs I/O                  Ces fonctions ne sont pas membres (friend)
+</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">"Centimes: "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">istream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">in</span> <span class="p">,</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="n">in</span> <span class="o">&gt;&gt;</span> <span class="n">c</span><span class="p">.</span><span class="n">test_</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// voir Fraction !!!
+</span>
+<span class="c1">//      operateurs unaires              Fonctions membre
+</span><span class="n">Test</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">-</span> <span class="p">()</span> <span class="k">const</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="n">Test</span><span class="p">(</span><span class="o">-</span><span class="n">test_</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">Test</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">+</span> <span class="p">()</span> <span class="k">const</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">!</span> <span class="p">()</span> <span class="k">const</span> 
+    <span class="p">{</span> <span class="k">return</span> <span class="p">(</span><span class="n">test_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="c1">//      operateurs inc/dec pre/postfix  Fonctions membre
+</span><span class="n">Test</span><span class="o">&amp;</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">++</span> <span class="p">()</span> 
+    <span class="p">{</span> <span class="o">++</span><span class="n">test_</span><span class="p">;</span> <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// prefix
+</span>
+<span class="n">Test</span><span class="o">&amp;</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">--</span> <span class="p">()</span> 
+    <span class="p">{</span> <span class="o">--</span><span class="n">test_</span><span class="p">;</span> <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// prefix
+</span>
+<span class="n">Test</span>  <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">++</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="n">Test</span> <span class="n">temp</span><span class="p">(</span><span class="n">test_</span><span class="p">);</span> <span class="o">++</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span> <span class="k">return</span> <span class="n">temp</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// postfix
+</span>
+<span class="n">Test</span>  <span class="n">Test</span><span class="o">::</span><span class="k">operator</span> <span class="o">--</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> 
+    <span class="p">{</span> <span class="n">Test</span> <span class="n">temp</span><span class="p">(</span><span class="n">test_</span><span class="p">);</span> <span class="o">--</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span> <span class="k">return</span> <span class="n">temp</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// postfix
+</span>
+<span class="c1">//      operateur de subscription []    Fonction membre
+</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span><span class="p">[]</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">index</span><span class="p">)</span> 
+    <span class="p">{</span><span class="k">return</span> <span class="n">list_</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="p">}</span>
+
+<span class="c1">//      parentheses
+</span><span class="kt">double</span><span class="o">&amp;</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span><span class="p">()(</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">)</span> 
+    <span class="p">{</span><span class="k">return</span> <span class="n">matrix_</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">];</span> <span class="p">}</span>
+
+<span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">Test</span><span class="o">::</span><span class="k">operator</span><span class="p">()(</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">)</span> <span class="k">const</span> 
+    <span class="p">{</span><span class="k">return</span> <span class="n">matrix_</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">];</span> <span class="p">}</span>
+
+
+
+
+<span class="c1">// OPPERATEURS += et -=     voir classe bitArr !!!
+</span>
+<span class="c1">// Bit&amp; operator+=(const int&amp; in){
+//       this-&gt;m_iNumber += rhs.m_iNumber;
+//       return *this;
+// }
+</span></code></pre>
+</div>
+
+<p>surcharge.cpp</p>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#pragma once
+#include &lt;iostream&gt;
+</span>
+<span class="k">class</span> <span class="nc">Test</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">test_</span><span class="p">;</span>
+    <span class="kt">int</span><span class="o">*</span> <span class="n">list_</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">matrix_</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// constructeurs
+</span>    <span class="n">Test</span><span class="p">();</span>
+    <span class="n">Test</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+    <span class="n">Test</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+    <span class="n">Test</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+    <span class="c1">// interface
+</span>    <span class="kt">int</span> <span class="n">getTest</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="c1">// surcharges
+</span>    <span class="c1">//      operateurs arithmetiques (binaire: 2 operandes)
+</span>    <span class="k">friend</span> <span class="n">Test</span> <span class="k">operator</span> <span class="o">+</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="n">Test</span> <span class="k">operator</span> <span class="o">-</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="n">Test</span> <span class="k">operator</span> <span class="o">*</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="n">Test</span> <span class="k">operator</span> <span class="o">/</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c2</span><span class="p">);</span>
+    <span class="c1">//      operateurs de comparaison (binaire: 2 operandes)
+</span>    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">==</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">!=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">&gt;</span>  <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">&lt;</span>  <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">);</span>
+    <span class="c1">//      operateurs I/O (binaire: 2 operandes)
+</span>    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
+    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&gt;&gt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">in</span> <span class="p">,</span> <span class="n">Test</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">);</span>
+    <span class="c1">//      operateurs unaires (unaire: 1 operande)
+</span>    <span class="n">Test</span> <span class="k">operator</span> <span class="o">-</span> <span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">Test</span> <span class="k">operator</span> <span class="o">+</span> <span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">bool</span>  <span class="k">operator</span> <span class="o">!</span> <span class="p">()</span> <span class="k">const</span><span class="p">;</span> <span class="c1">// retourne true si Test = 0
+</span>    <span class="c1">//      operateurs inc/dec pre/postfix (unaire: 1 operande)
+</span>    <span class="n">Test</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">++</span> <span class="p">();</span> <span class="c1">// prefix
+</span>    <span class="n">Test</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">--</span> <span class="p">();</span> <span class="c1">// prefix
+</span>    <span class="n">Test</span>  <span class="k">operator</span> <span class="o">++</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="c1">// postfix
+</span>    <span class="n">Test</span>  <span class="k">operator</span> <span class="o">--</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="c1">// postfix
+</span>    <span class="c1">//      operateur de subscription []
+</span>    <span class="kt">int</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="p">[]</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">index</span><span class="p">);</span>
+    <span class="c1">//      parentheses
+</span>    <span class="kt">double</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">()(</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">()(</span><span class="kt">int</span> <span class="n">row</span><span class="p">,</span> <span class="kt">int</span> <span class="n">col</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span> <span class="c1">// for const objects
+</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Cpp: Surcharge@&amp;url=http://localhost:4000/cpp/cpp-Surcharge.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cpp/cpp-Surcharge.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/cpp/cpp-Surcharge.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
