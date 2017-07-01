@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/reseau/reseau-SNMP.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reseau: SNMP</title>
+  <meta name="description" content="SourcesMkina-corpuswikipediapySnmp">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Reseau: SNMP</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="01 Jul 2017" itemprop="datePublished">Jul 1 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">reseau</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Simple Network Management Protocol</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="sources">Sources</h2>
+<p><a href="https://makina-corpus.com/blog/metier/2016/initiation-a-snmp-avec-python-pysnmp">Mkina-corpus</a><br />
+<a href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol">wikipedia</a>
+<a href="http://pysnmp.sourceforge.net/docs/snmp-design.html">pySnmp</a></p>
+
+<h2 id="1-introduction">1. Introduction</h2>
+
+<p><code class="highlighter-rouge">SNMP</code> signifie Simple Network Management Protocol. C’est un protocole de gestion de réseau. Concrètement il permet de <strong>superviser</strong> l’état des équipements réseaux ou d’un parc informatique, aussi bien que le materiel que les services:</p>
+
+<ul>
+  <li>Routeurs, switchs</li>
+  <li>Stations de travail</li>
+  <li>Imprimantes</li>
+  <li>Services (messagerie, ftp, ssh, http, processus, mémoire, …)</li>
+</ul>
+
+<p>Par <strong>supervision</strong> il faut comprendre “obtenir des informations” sur l’état de ces “éléments”. Ce protocole permet aussi d’effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d’une imprimante, …</p>
+
+<h3 id="fonctionnement">Fonctionnement</h3>
+
+<p>SNMP se base sur l’idée qu’un système de supervision de réseau se compose de</p>
+
+<ul>
+  <li>Noeuds à administrer (<strong>Managed Nodes</strong>), contenant chacun un <strong>agent</strong>.
+    <ul>
+      <li><strong>agent</strong> <script type="math/tex">\Rightarrow</script> service qui dialogue avec les managers pour échanger des informations sur l’état du noeud.</li>
+    </ul>
+  </li>
+  <li>D’au moins une station d’administration, le manager (<strong>Network Management Station</strong>)</li>
+  <li>D’un protocole permettant d’échanger de l’information entre les agents et le <strong>NMS</strong> ce protocole est <code class="highlighter-rouge">SNMP</code></li>
+</ul>
+
+<p><img src="http://pysnmp.sourceforge.net/_images/nms-components.svg" alt="alt" /></p>
+
+<ul>
+  <li>
+    <p>Le manager envoie des requêtes de type <code class="highlighter-rouge">GET</code> aux agents pour récuperer de l’information sur un service/une machine via le protocole SNMP</p>
+  </li>
+  <li>
+    <p>Il peut aussi envoyer des requêtes <code class="highlighter-rouge">SET</code> pour modifier l’état des services et/ou de la machine gérés par l’agent</p>
+  </li>
+  <li>
+    <p>Les agents peuvent envoyer des requêtes de type <code class="highlighter-rouge">TRAP</code> au manager pour signaler un dysfonctiionnement</p>
+  </li>
+  <li>
+    <p>Les agents peuvent être regroupés au travers d’un <strong>agent maître</strong></p>
+  </li>
+  <li>
+    <p>Les informations accessibles et fournies par les agents sont organisées dans une base “virtuelle” appelée <strong>MIB</strong>. Cette base est normalisée</p>
+  </li>
+</ul>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SNMP_communication_principles_diagram.PNG/1000px-SNMP_communication_principles_diagram.PNG" alt="alt" /></p>
+
+<h3 id="pourquoi-utiliser-snmp">Pourquoi utiliser SNMP?</h3>
+
+<ul>
+  <li>Protocole ancien supporté par presque tous les constructeurs de matériel réseau</li>
+  <li>Depuis la version 2, il est <strong>sécurisé</strong>, offrant un accès restreint à certaines informations et s’appuie sur des protocoles de chiffrement comme <code class="highlighter-rouge">SSH</code> et <code class="highlighter-rouge">TLS</code> (mais avec ses propres librairies et outils internes).</li>
+  <li>L’information contenue dans les <strong>MIBs</strong> est normalisée: quelque soit l’appareil et son constructeur, une même information sera accessible au même endroit et de la même manière.
+    <blockquote>
+      <p>Vous êtes l’administrteur réseau et vous voulez connaître la mémoire totale disponible d’une machine, vous l’obtiendrez de la même façon quelque soit l’OS (mac/W/Unix/android) et le matériel utilisé (AMD, ARM, Intel,…).</p>
+    </blockquote>
+  </li>
+  <li>Il est simple (les agents sont légers, la complexité est déportée au niveaua des managers)</li>
+  <li>Indépendant de l’architecture réseau et des éléments (Pc, imprimante, routeurs, …)</li>
+  <li>Extensible, on peut personnaliser les bases d’informations en surcroît de ce qu’offre le standard</li>
+  <li>Robuste. S’appuie sur <code class="highlighter-rouge">UDP</code> <strong>ou</strong> <code class="highlighter-rouge">TCP</code>: fonctionnera encore lorsque le réseau aura de graves problèmes d’engorgement (passe en <code class="highlighter-rouge">UDP</code>).</li>
+</ul>
+
+<h3 id="meta">Meta</h3>
+
+<p>Globlement ce protocole est très pratique, et est très répandu. Il  peu de concurrents matures mais il souffre de certains points négatifs:</p>
+
+<ul>
+  <li>Parfois, il n’est pas simple: Les <strong>MIBs</strong> sont “lisibles par l’homme” (mais ceux qui arrivent à le lire ne sont pas tous vraiment humains).</li>
+  <li>Le protocole est simple mais son implémentation peu être complexe</li>
+  <li>
+    <p>La version 3 a implémenté sa propre couche <code class="highlighter-rouge">SSH</code> plutôt que de faire comme <code class="highlighter-rouge">HTTPS</code> (du <code class="highlighter-rouge">HTTP</code> over <code class="highlighter-rouge">SSH</code>). Ceci rend pénible les communications: il n’y a pas d’auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée.</p>
+  </li>
+  <li>Certains concurrents commencent à voir le jour comme <code class="highlighter-rouge">WMI</code> et offrent une langage d’interrogation plus riche (<strong>WQL</strong>)</li>
+</ul>
+
+<h3 id="historique">Historique</h3>
+
+<ul>
+  <li>La première version du protocole date de 1989: Elle n’offre <strong>pas de sécurité</strong> et utilise l <strong>MIB</strong> v1 qui reste assez simple</li>
+  <li>La seconde version a été publiée en 1993
+    <ul>
+      <li><script type="math/tex">\Rightarrow</script> plus de sécurité tant au niveau de l’authentification que du chiffrement</li>
+      <li><script type="math/tex">\Rightarrow</script> permet l’administration distribuée</li>
+      <li><script type="math/tex">\Rightarrow</script> apporte une version plus riche de la <strong>MIB</strong> (MIB-2)</li>
+    </ul>
+  </li>
+  <li>La version 3 a été publiée en 1998
+    <ul>
+      <li><script type="math/tex">\Rightarrow</script> apporte des transactions chiffrées via <code class="highlighter-rouge">SSH</code></li>
+      <li><script type="math/tex">\Rightarrow</script> plus modulaire</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="dans-les-faits">Dans les faits</h3>
+
+<ul>
+  <li>La version 2 a eu du mal à démarrer et plusieurs “releases” ont été faites. C’est la version “2c” qui a su s’imposer. Plus d’informations:
+    <ul>
+      <li><a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-snmp-simple-network-management-protocol">presentation SNMP</a></li>
+      <li><a href="http://pysnmp.sourceforge.net/docs/snmp-history.html">PySNMP</a></li>
+    </ul>
+  </li>
+  <li>La version 3, tout comme la v2 a eu du mal à s’imposer aussi. Elle n’est toujours pas supportée par tous les matériels aujourd’hui même si cela s’est bien amélioré. Les problèmes de sécurité étant devenu vraiment sensibles de nos jours, elle est la <strong>version recommandée</strong>.</li>
+  <li><code class="highlighter-rouge">SNMP</code> domine le monde TCP/IP et il est le <strong>standard recommandé</strong> depuis mai 1990</li>
+</ul>
+
+<h2 id="2-les-mibs">2. Les MIBs</h2>
+
+<p>La <strong>Management Information Base</strong> est une base de données “virtuelle” permettant d’organiser de manière hiérarchique les informations fournies par les agents sur les équipements.</p>
+
+<p>Ce n’est pas une base de données à proprement parler comme une base relationnelle. Elle n’existe qu’au travers de l’agent qui est libre de l’implémenter comme il le souhaite. Quand l’agent ne fonctionne pas, il n’y a pas de données dans la <strong>MIB</strong>. Seule la description de la MIB (un fichier texte) existe.</p>
+
+<p>Une <strong>MIB</strong> décrit en fait comment numéroter/accéder à l’information.</p>
+
+<p><span style="color:red">C’est l’agent qui stock  (<strong>mais on devrait dire gère</strong>) cette information, laquelle est le plus souvent “volatile”, comme il veut.</span></p>
+
+<blockquote>
+  <p>Il est très important de bien comprendre le point précédent, c’est ce qui gêne souvent la compréhension des <strong>MIBs</strong> par les nouveaux arrivants sur ce protocole.</p>
+</blockquote>
+
+<p>Prenons l’exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique pr la <strong>MIB-2</strong>. Mais cette information est demandée par l’<strong>agent</strong> au système d’exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n’est donc pas “stockée” par l’OS. Elle n’est pas accessible au travers d’une requête <code class="highlighter-rouge">SQL</code>. Elle est fournie quand on la demande , et tant que l’agent ne l’a pas demandée lui-même à l’OS, elle n’est pas vraiment disponible ou n’a pas encore d’existence:</p>
+
+<ol>
+  <li>Le manager demande l’information à l’agent</li>
+  <li>L’agent reçoit la demande et appelle une primitive système pour l’obtenir</li>
+  <li>L’agent retourne l’information au manager</li>
+</ol>
+
+<p>C’est une information “volatile” qui n’est pas vraiment stockable.</p>
+
+<p>Beaucoup d’informatiions issues des <strong>MIBs</strong> sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée). Selon les constructeurs/OS ces informations pour la grande majorité afin quùne même information soit toujours demandée de la même manière par le manager. C’est à l’agent de savoir ou aller la chercher selon le matériel/service géré.</p>
+
+<p><strong>Cela apporte beaucoup de facilités dans l’écriture de sondes/outils de supervisions. C’est une des grandes forces de ce standard.</strong></p>
+
+<h3 id="mib-2">MIB-2</h3>
+
+<p>Une des <strong>MIB</strong> les plus ocnnues est la <strong>MIB-2</strong>, décrite par la <em>RFC 1213</em>. Elle est mise en oeuvre dans la presque totaltalité des équipements TCP/IP. Elle compte 10 groupes:</p>
+
+<ul>
+  <li>système</li>
+  <li>interfaces</li>
+  <li>Adresse Translation</li>
+  <li>IP</li>
+  <li>ICMP</li>
+  <li>TCP</li>
+  <li>UDP</li>
+  <li>EGP</li>
+  <li>transmission</li>
+  <li>SNMP</li>
+</ul>
+
+<p>C’est a dire que toute information que vous pourriez demander concernant la <strong>MIB-2</strong> sera classée dans l’un de ces groupes. Des exemples d’informations que vous pourriez retrouver dans ces ensembles, sont:</p>
+
+<ul>
+  <li>liste des processus (avec info mémoire et CPU)</li>
+  <li>débits réseaux</li>
+  <li>load average</li>
+  <li>utilisation mémoire</li>
+  <li>contact du système <script type="math/tex">\Rightarrow</script> uptime</li>
+  <li>utilisation de l’espace disque</li>
+  <li>tables de routage</li>
+</ul>
+
+<h3 id="exemple-de-descitpion-dune-mib">Exemple de descitpion d’une MIB</h3>
+
+<p>Enfin, les mibs sont décrites dans un “appelé”  <strong>ASN.1</strong>. L’exemple suivant présente l’information “descitpion d’interface (réseau) telle que décrite en ADN.1:</p>
+
+<pre><code class="language-asn">ifDescr OBJECT-TYPE
+ SYNTAX DisplayString (SIZE (0..255))
+ ACCESS read-only
+ STATUS mandatory
+ DESCRIPTION
+ "A textual string containing information about the
+ interface. This string should include the name of
+ the manufacturer, the product name and the version
+ of the hardware interface."
+ ::= { ifEntry 2 }
+</code></pre>
+
+<p>La lecture de la définition de cette donnée est assez compréhensible par elle-même:</p>
+
+<ul>
+  <li>nom: <code class="highlighter-rouge">ifDescr</code></li>
+  <li>type: <code class="highlighter-rouge">DisplayString</code>: une string de 255 char max</li>
+  <li>mode d’accès: “lecture seule”</li>
+  <li>son état: “obligatoire”</li>
+  <li>enfin son emplacement dans le noeud parent <code class="highlighter-rouge">ifEntry</code>: 2ème sous-élément du noeud <code class="highlighter-rouge">ifEntry</code></li>
+</ul>
+
+<p>### Organisation de l’information dans les MIBs</p>
+
+<p>Pour bien comprendre cette description “hiérarchique” de la donnée <code class="highlighter-rouge">ifDescr</code>, voici un graph représentant la hiérarchie principale de toutes les MIBs:</p>
+
+<p><img src="https://makina-corpus.com/blog/metier/2016/pysnmp/snmp_mib.png" alt="alt" /></p>
+
+<p>Sous le noeud racine, noté <code class="highlighter-rouge">.</code> se trouvent 3 informations numérotées:</p>
+<ul>
+  <li><code class="highlighter-rouge">CCITT</code> avec le numéro 0</li>
+  <li><code class="highlighter-rouge">ISO</code> avec le numéro 1</li>
+  <li><code class="highlighter-rouge">ISO - CCITT</code> avec le numéro 2
+ Sous le noeud <code class="highlighter-rouge">ISO</code> se trouvent 4 informations, elles aussi numérotées:</li>
+  <li>standard, avec le numéro 0</li>
+  <li>registration authority, avec le numéro 1</li>
+  <li>member body, avec le numéro 2</li>
+  <li>organization, avec le numéro 3
+ Par exemple, l’accès à l’information <strong>MIB-2</strong> se fera via le chemin:
+    <div class="highlighter-rouge"><pre class="highlight"><code>. 1 . 3 . 6 . 1 . 2 . 1
+</code></pre>
+    </div>
+    <p>ou encore:</p>
+    <div class="highlighter-rouge"><pre class="highlight"><code>. ISO . organisation . DoD . Internet . management . MIB-2
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h4 id="en-gros">En gros</h4>
+
+<p>Les <strong>MIBs</strong> définissent des informations en <strong>ASN.1</strong> lesquelles sont accessibles via un chemin exprimé avec des numéros ou les noms des informations parentes.</p>
+
+<h3 id="les-oid">Les OID</h3>
+
+<p>Les informations sont donc numérotées selon leur ordre dans l’arbre de la <strong>MIB</strong>, ces numéros sont appelées <strong>OID</strong> (Object IDentifier). Voici quelques exemples d’OIDs:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1.1 system : uptime, contact, nom
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1.2 interfaces: interfaces réseau
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1.4 ip: ip routing, etc
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1.5 icmp: icmp errors, discards... (icmp c'est par exemple le ping)
+</code></pre>
+</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1.6/7 tcp ou udp: états des connexions tcp ou udp
+</code></pre>
+</div>
+
+<p>La question devient maintenant “Comment trouver toutes les informations desponibles dans une MIB?”
+Les réponses seront:</p>
+
+<ul>
+  <li>En lisant les standards et normes associés <a href="https://tools.ietf.org/html/rfc1213">rfc1213</a></li>
+  <li>En exécutant des requêtes avec des outils <code class="highlighter-rouge">SNMP</code> qui permettent de prcoutir toute l’arborescence d’une <strong>MIB</strong></li>
+  <li>En parcourant ces <strong>MIBs</strong> via des sites Internet qui ont l’amabilité de les représenter facilement, comme le site <a href="http://www.commentcamarche.net/download/telecharger-34059278-ipmonitor">IP Monitor</a></li>
+</ul>
+
+<p>On observera sur ce dernier que le chemin complet à l’information <code class="highlighter-rouge">ifDescr</code> est fournit par l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.2.2.1.2</code>. C’est ce que va nous permettre de fire <strong>PySNMP</strong>: Envoyer des requêtes demandant l valeur d’un noeud (une information) située à un emplacement précis dans une <strong>MIB</strong> ou modifiant cette valeur.</p>
+
+<p>Et c’est tout…</p>
+
+<h3 id="un-univers-de-mibs">Un univers de MIBs</h3>
+
+<p>Il exite beaucoup de <strong>MIBs</strong> différentes:</p>
+
+<ul>
+  <li>Selon le matériel (routeur, imprimante…) les informations sont différentes</li>
+  <li>Pour cette raison, certains équipements ou constructeurs fournissent donc leurs propres <strong>MIB</strong> définissant une branche dans l’arbre des <strong>OIDs</strong> avec un numéro officiel défini auprès de l’<strong>IANA</strong> (Internet Assigned Numbers Authority). On retrouve par exemple <strong>CISCO</strong> à cette branche de l’arbre: <code class="highlighter-rouge">iso.org.dod.internet.private.entreprise.cisco</code> = <code class="highlighter-rouge">1.3.6.1.4.1.9</code> A cet emplacement, <code class="highlighter-rouge">CISCO</code> est libre de proposer les <strong>MIBs</strong> décrivant les informations de ses propres matériel comme il l’entend. Beaucoup d’autres sociétés en font autant, comme Alcatel/Nokia pour ne citer qu’eux.</li>
+</ul>
+
+<blockquote>
+  <p>Les sites/logiciels comme <strong>IP monitor</strong> présentent de nombreuses MIB pour différents types d’informations/matériel/services</p>
+</blockquote>
+
+<h2 id="3-les-communautés">3. Les communautés</h2>
+
+<p>L’accès aux informations d’une <strong>MIB</strong> est filtré par ce qu l’on appelle la “communauté”, <em>sauf version 3 du protocole</em>. La “communauté” est une sorte de de mot partagé, “public” par défaut. “public” peut-être rapproché du login “anonymous” disponible sur la plupart des serveurs <code class="highlighter-rouge">ftp</code>.</p>
+
+<p>Une demanade d’informations est toujours exécutée via une communauté. Selon la communauté utilisée, les informations reçues seront différentes:</p>
+
+<ul>
+  <li>la communauté “public” donne accès au niveau “read-only”</li>
+  <li>il existe un niveau privé en lecture/écriture (communauté “private”) qui est le plus souvent désactivé (il donne accès à toute la configuration système en écriture)</li>
+</ul>
+
+<p>Donc quand nous souhaitons accéder à/ou modifier une information d’un agent, on:</p>
+
+<ul>
+  <li>envoie une requête <code class="highlighter-rouge">GET</code>/<code class="highlighter-rouge">SET</code> à l’agent</li>
+  <li>en fournissant le chemin de l’information désirée, son <strong>OID</strong></li>
+  <li>en fournissant la communauté utilisée (“private” pour les modifications)</li>
+  <li>en fournissant l’adresse IP/nom de domaine ou s’exécute l’agent</li>
+  <li>le port utilisé est par défaut le port <code class="highlighter-rouge">161</code></li>
+</ul>
+
+<h2 id="4-utilisation-du-protocole-en-ligne-de-commande">4. Utilisation du protocole en ligne de commande</h2>
+
+<p>Pour bien comprendre ce que permet ce protocole, nous allons exécuter les commndes de base avec des <strong>outils systéme</strong>. Ceci permettra de toucher du doigt la mécanique sous-jacente et de vérifier que les agents comprennent bien nos roquêtes avant de les écrire en Python.</p>
+
+<h3 id="les-commandes">Les commandes</h3>
+
+<p>Requêtes proposées par le protocole pour permettre aux manager et agents de s’échanger de l’information:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Get</code><script type="math/tex">\Rightarrow</script> demande la valeur d’un <strong>OID</strong> par le manager à l’agent. L’agent retourne l’information via un message de type <code class="highlighter-rouge">Response</code></li>
+  <li><code class="highlighter-rouge">GetNext</code> <script type="math/tex">\Rightarrow</script> demande l’information suivante dans la <strong>MIB</strong>. Permet de parcourir une <strong>MIB</strong> sans connaître ce qu’elle contient</li>
+  <li><code class="highlighter-rouge">Set</code> <script type="math/tex">\Rightarrow</script> modifie la valeur associée aa un <strong>OID</strong></li>
+  <li><code class="highlighter-rouge">GetBulk</code> <script type="math/tex">\Rightarrow</script> demande tout un ensemble d’infos au manager contenant l’information demandée</li>
+  <li><code class="highlighter-rouge">Response</code> <script type="math/tex">\Rightarrow</script> message envoyé par l’agent au manager contenant l’information demandée</li>
+  <li><code class="highlighter-rouge">Trap</code>: <script type="math/tex">\Rightarrow</script>  message envoyé par l’agent au manager pour signaler un problème</li>
+  <li><code class="highlighter-rouge">Inform</code> <script type="math/tex">\Rightarrow</script> msg envoyé par le manager. Confirme réception du <code class="highlighter-rouge">trap</code>.</li>
+</ul>
+
+<h3 id="prérequis">Prérequis</h3>
+
+<p>Pour lancer nos premières commandes, il convient de disposer d’un agent et d’un manager.</p>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Reseau: SNMP@&amp;url=http://localhost:4000/reseau/reseau-SNMP.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reseau/reseau-SNMP.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/reseau/reseau-SNMP.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
