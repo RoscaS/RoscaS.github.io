@@ -6,15 +6,610 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 30 Jun 2017 08:28:22 +0200</pubDate>
-    <lastBuildDate>Fri, 30 Jun 2017 08:28:22 +0200</lastBuildDate>
-    <generator>Jekyll v3.4.3</generator>
+    <pubDate>Sat, 01 Jul 2017 02:39:48 +0200</pubDate>
+    <lastBuildDate>Sat, 01 Jul 2017 02:39:48 +0200</lastBuildDate>
+    <generator>Jekyll v3.5.0</generator>
+    
+      <item>
+        <title>web: Jekyll </title>
+        <description>&lt;h2 id=&quot;links&quot;&gt;links&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;jekyll website&lt;/a&gt;
+&lt;a href=&quot;https://jekyllrb.com/docs/home/&quot;&gt;jekyll doc&lt;/a&gt;
+&lt;a href=&quot;http://jekyllrb.com/tutorials/&quot;&gt;Hands on tutorial&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;usefull-cmd&quot;&gt;usefull cmd&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll --version&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;gem update jekyll&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; http://localhost:4000/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;1-intro&quot;&gt;1. Intro&lt;/h2&gt;
+
+&lt;p&gt;Jekyll is  simple, blog aware static site generator.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When in doubt, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;help&lt;/code&gt; command to remind you all available options and usage, it also works with the &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;build&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;serve&lt;/code&gt; subcommands, eg &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll help new&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll help build&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll new --help&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To brows the docs on-the-go, install the &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll-docs&lt;/code&gt; gem and run jekyll docs in your terminal.&lt;/p&gt;
+
+&lt;h3 id=&quot;keywords&quot;&gt;keywords:&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;static site generator&lt;/li&gt;
+  &lt;li&gt;blog aware&lt;/li&gt;
+  &lt;li&gt;template&lt;/li&gt;
+  &lt;li&gt;markdown&lt;/li&gt;
+  &lt;li&gt;liquid renderer&lt;/li&gt;
+  &lt;li&gt;github page&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-quick-start&quot;&gt;2. Quick start&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Install jekyll and Bundler &lt;strong&gt;gems&lt;/strong&gt; trough RubyGems
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jekyll&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bundler&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+    &lt;p&gt;Usefull only the first time.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Create a new Jekyll site at ./myblog&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;jekyll&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myblog&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bundler&lt;/code&gt; is a gem that manages other Ruby gems. Makes sure your gems and gem versions are compatible, and that you have all necessary dependencies each gem requires.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;GemFile.lock&lt;/code&gt; files informe Bundler about the gem requirements in your site.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;By default, the jekyll site installed by &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll new&lt;/code&gt; uses a gem-based theme called &lt;strong&gt;Minima&lt;/strong&gt;. With &lt;strong&gt;gem-based-themes&lt;/strong&gt;, some of the directories and files are stored in the theme-gem, hidden from your immediate view.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;To start with a blank slate, use &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll new myblog --blank&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-install&quot;&gt;3. install&lt;/h2&gt;
+
+&lt;p&gt;Best way: RubyGems at the terminal prompt.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jekyll&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Install Jekyll’s gem dependencies&lt;/p&gt;
+
+&lt;h2 id=&quot;4-basic-usage&quot;&gt;4. Basic usage&lt;/h2&gt;
+
+&lt;p&gt;The Jekyll gem mages a &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; executable vailable to you in your Terminal window.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The current folder will be generated into ./_site&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build --destination &amp;lt;destination&amp;gt;
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The current folder will be generated into &amp;lt;destination&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build --source &amp;lt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;&amp;gt; --destination &amp;lt;destination&amp;gt;
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The &amp;lt;source&amp;gt; folder will be generated into &amp;lt;destination&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll build --watch
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; The current folder will be generated into ./_site,&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#    watched for changes, and regenerated automatically.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Changes to &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; are not included during automatic regeneration&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;5-serve&quot;&gt;5. serve&lt;/h2&gt;
+
+&lt;p&gt;Jekyll comes with a built-in develoment server.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll serve
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; A development server will run at http://localhost:4000/&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Auto-regeneration: enabled. Use `--no-watch` to disable.&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll serve --detach
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; Same as `jekyll serve` but will detach from the current terminal.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#    If you need to kill the server, you can `kill &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# -9 1234` where &quot;1234&quot; is the PID.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#    If you cannot find the PID, then do, `ps aux | &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# grep jekyll` and kill the instance.&lt;/span&gt;
+
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;jekyll serve --no-watch
+&lt;span class=&quot;c&quot;&gt;# =&amp;gt; Same as `jekyll serve` but will not watch for changes.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;6-directories-structure&quot;&gt;6. Directories structure&lt;/h2&gt;
+
+&lt;p&gt;Jekyll is, at its core, a text transformation engine. The concept behind the system is this: you give it text written in your favorite markup language, be that Markdown, Textile, or just plain HTML, and it churns that through a layout or a series of layout files. Throughout that process you can tweak how you want the site URLs to look, what data gets displayed in the layout, and more. This is all done through editing text files; the static web site is the final product.&lt;/p&gt;
+
+&lt;p&gt;A basic Jekyll site usually looks something like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+├── _config.yml
+├── _data
+|   └── members.yml
+├── _drafts
+|   ├── begin-with-the-crazy-ideas.md
+|   └── on-simplicity-in-technology.md
+├── _includes
+|   ├── footer.html
+|   └── header.html
+├── _layouts
+|   ├── default.html
+|   └── post.html
+├── _posts
+|   ├── 2007-10-29-why-every-programmer-should-play-nethack.md
+|   └── 2009-04-26-barcamp-boston-4-roundup.md
+├── _sass
+|   ├── _base.scss
+|   └── _layout.scss
+├── _site
+├── .jekyll-metadata
+└── index.html # can also be an 'index.md' with valid YAML Frontmatter
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_config.yml&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+Stores &lt;strong&gt;configuration&lt;/strong&gt; data. Many of these options can be specified from the command line executable but it’s easier to specify them here so you don’t have to remember them.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_drafts&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+Drafts are unpublished posts. The format of these files is without a date: &lt;strong&gt;title.MARKUP&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+Partials that can be mixed and matched by your layouts and posts to facilitate reuse. The liquid tag &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;file.ext&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt; can be used to include the partial in &lt;strong&gt;_includes/file.ext&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_layouts&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+These are the templates that wrap posts. Layouts are chosen on a post-by-post basis in the YAML Front Matter, which is described in the next section. The &lt;strong&gt;liquid tag&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;&lt;/code&gt; is used to inject content into the web page.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_posts&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+Your dynamic content, so to speak. The naming convention of these files is important, and must follow the format: &lt;strong&gt;YEAR-MONTH-DAY-title.MARKUP&lt;/strong&gt;. The &lt;em&gt;permalinks&lt;/em&gt; can be customized for each post, but the date and markup language are determined solely by the file name.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_data&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Well-formatted site data should be placed here. The Jekyll engine will autoload all data files (using either the &lt;code class=&quot;highlighter-rouge&quot;&gt;.yml&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;.yaml&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.json&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;.csv&lt;/code&gt; formats and extensions) in this directory, and they will be accessible via &lt;strong&gt;site.data&lt;/strong&gt;. If there’s a file &lt;code class=&quot;highlighter-rouge&quot;&gt;members.yml&lt;/code&gt; under the directory, then you can access contents of the file through &lt;code class=&quot;highlighter-rouge&quot;&gt;site.data.members&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_sass&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;
+These are sass partials that can be imported into your &lt;code class=&quot;highlighter-rouge&quot;&gt;main.scss&lt;/code&gt; which will then be processed into a single &lt;strong&gt;stylesheet&lt;/strong&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;main.css&lt;/code&gt; that defines the styles to be used by your site.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_site&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+This is where the generated site will be placed (by default) once Jekyll is done transforming it. It’s probably a good idea to add this to your &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; file.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;.jekyll-metadata&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;
+This helps Jekyll keep track of which files have not been modified since the site was last built, and which files will need to be regenerated on the next build. This file will not be included in the generated site. It’s probably a good idea to add this to your &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitignore&lt;/code&gt; file.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;index.html&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+Provided that the file has a &lt;strong&gt;YAML Front Matter&lt;/strong&gt; section, it will be transformed by Jekyll. The same will happen for any &lt;code class=&quot;highlighter-rouge&quot;&gt;.html&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;.markdown&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;.md&lt;/code&gt;, or &lt;code class=&quot;highlighter-rouge&quot;&gt;.textile&lt;/code&gt; file in your site’s root directory or directories not listed above.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;&lt;em&gt;other files/folders&lt;/em&gt;&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; 
+Every other directory and file except for those listed above—such as &lt;code class=&quot;highlighter-rouge&quot;&gt;css&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;images&lt;/code&gt; folders,  &lt;code class=&quot;highlighter-rouge&quot;&gt;favicon.ico&lt;/code&gt; files, and so forth—will be copied verbatim to the generated site. There are plenty of &lt;strong&gt;sites already using Jekyll&lt;/strong&gt; if you’re curious to see how they’re laid out.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;directory-structure-of-jekyll-sites-using-gem-based-themes&quot;&gt;Directory structure of Jekyll sites using gem-based themes&lt;/h4&gt;
+&lt;p&gt;Starting Jekyll 3.2, a new Jekyll project bootstrapped with &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll new&lt;/code&gt; uses &lt;strong&gt;gem-based themes&lt;/strong&gt; to define the look of the site. This results in a lighter default directory structure : &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;_sass&lt;/code&gt; are stored in the theme-gem, by default.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;minima&lt;/strong&gt; is the current default theme, and &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle show minima&lt;/code&gt; will show you where minima theme’s files are stored on your computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;7-configuration&quot;&gt;7. Configuration&lt;/h2&gt;
+&lt;p&gt;These options can either be specified in a &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; file placed in your site’s root directory, or can be specified as flags for the &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; executable in the terminal.&lt;/p&gt;
+
+&lt;h3 id=&quot;configuration-settings&quot;&gt;Configuration settings&lt;/h3&gt;
+
+&lt;h4 id=&quot;global-configuration&quot;&gt;Global configuration&lt;/h4&gt;
+&lt;p&gt;The table below lists the available settings for Jekyll, and the various &lt;code class=&quot;highlighter-rouge&quot;&gt;options&lt;/code&gt; (specified in the configuration file) &lt;code class=&quot;highlighter-rouge&quot;&gt;flags&lt;/code&gt; (specified on the command-line) that control them.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://jekyllrb.com/docs/configuration/&quot;&gt;Jekyll’s web site&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;8-front-matter&quot;&gt;8. Front Matter&lt;/h2&gt;
+&lt;p&gt;This is where Jekyll get really cool. Any file that contains a &lt;strong&gt;YAML&lt;/strong&gt; front matter block will be processed by Jekyll as a special file. The front matter must be the first thing in the file and must take the form of valid YAML set between triple-dashed lines. Here is a basic example:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Blogging Like a Hacker&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Between these triple-dashed lines, you can set prdefined varibles or even create custom ones of your own. These variables will then be available to you to access using liquid tags, both further down in the file and also in any layouts or includes that the page or post in relies on.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;!! If you use &lt;strong&gt;UTF-8 encoding&lt;/strong&gt;, make sure that no &lt;code class=&quot;highlighter-rouge&quot;&gt;BOM&lt;/code&gt; header characters exist in your file or &lt;strong&gt;very, very bad things&lt;/strong&gt; will happen to Jekyll. &lt;strong&gt;Especilly on Windows&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ProTip™: Front Matter Variables Are Optional: If you want to use Liquid tags and variables but don’t need anything in your front matter, just leave it empty! The set of triple-dashed lines with nothing in between will still get Jekyll to process your file. (This is useful for things like CSS and RSS feeds!)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;predefined-global-variables&quot;&gt;Predefined Global Variables&lt;/h3&gt;
+
+&lt;p&gt;There are a number of predefined global variables that you can set in the front matter of a page or a post.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;layout&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; if set, this specifies the layout file to use. Use the layout file name without the file extension. Layout files must be placed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt; directory.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;permalink&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; if you need your processed blog post URLs to be something other than the site-wide style (default `/year/month/day/title.html), then you can set this variable and it will be used as the finl URL.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;published&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; set to false if you don’t want a specific post to show up when the site is generated&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ProTip™: Render Posts Marked As Unpublished
+To preview unpublished pages, simply run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll build&lt;/code&gt; with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--unpublished&lt;/code&gt; switch. Jekyll also has a handy drafts feature tailored specifically for blog posts.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;custom-variables&quot;&gt;Custom Variables&lt;/h3&gt;
+
+&lt;p&gt;Any variable in the front matter that are not predefined are mixed into the data that is sent to the &lt;strong&gt;Liquid templating engine&lt;/strong&gt; during the conversion. For instance, if you set a title, you can use that in your layout to set the page title:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt; {{ page.title}} &lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+        ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;predefined-variables-for-posts&quot;&gt;Predefined Variables for Posts&lt;/h3&gt;
+&lt;p&gt;These are available out-if-the-box to be used in the front matter for a post.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;date&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; A date here overrides the date from the name of the post. This can be used to ensure correct sorting of posts. A date is specified in the format &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD HH:MM:SS +/-TTTT&lt;/code&gt;; hours, minutes, seconds, and timezone offset are optional.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;category&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Instead of placing posts inside of folders, you can specify one or more categories that the post belongs to. When the site is generated the post will act as though it had been set with these categories normally. Categories (plural key) can be specified as a YAML list or a space-separated string.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tags&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Similar to categories, one or multiple tages can be added to a post. Also like categories, tags can be specified as a &lt;strong&gt;YAML list&lt;/strong&gt; or  space-separated string.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Protip: Don’t repeat yourself
+If you don’t want to repeat your frquently used front matter variables over and over, just defines &lt;strong&gt;defaults&lt;/strong&gt; for them and only override them when necessary (or not at all). This works both for predefined and custom variables.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;9-writing-posts&quot;&gt;9. Writing posts&lt;/h2&gt;
+
+&lt;p&gt;If you write articles and publish them online, you can publish and maintain a blog simply by managing a folder of text-files on your computer. Compared to the hassle of configuring and maintaining databases and web-based CMS systems, this will be a welcome change!&lt;/p&gt;
+
+&lt;h3 id=&quot;posts-folder&quot;&gt;Posts folder&lt;/h3&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; folder is where the blog posts lives. Generally Markdown or HTML, but can be other formats with the proper converter installed. All posts must have YAML Front Matter, and they will be converted from their source format into an HTML page that is part of your static site.&lt;/p&gt;
+
+&lt;h3 id=&quot;creating-post-files&quot;&gt;Creating Post Files&lt;/h3&gt;
+
+&lt;p&gt;Create a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. &lt;strong&gt;How you name files in this folder is important:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;YEAR-MONTH-DAY-title.MARKUP
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; is a four-digit number&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MONTH&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; two-digit number&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DAY&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; two-digit number&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;MARKUP&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; file extension of the format used&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples of valid post filenames:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2011-12-31-new-years-eve-is-awesome.md
+2012-09-12-how-to-write-a-blog.md
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;a-typical-post&quot;&gt;A typical post&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: post
+title:  &quot;Welcome to Jekyll!&quot;
+date:   2015-11-17 16:16:01 -0600
+categories: jekyll update
+---
+You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `bundle exec jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+
+To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Everything in between the first and second — are part of the YAML Front Matter, and everything after the second — will be rendered with Markdown and show up as “Content.”&lt;/p&gt;
+
+&lt;h3 id=&quot;displaying-an-index-of-posts&quot;&gt;Displaying an index of posts&lt;/h3&gt;
+
+&lt;p&gt;Creating an index of posts on another page (or in a template) is easy, thanks to the Liquid template language and its tags. Here’s a basic example of how to create a list of links to your blog posts:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/web/web-Jekyll.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;web: Jekyll &lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-Surcharge.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: Surcharge&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-IO-fichier.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: I/O dans des fichiers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/idee/&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Idee&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/divers/divers-temp.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Divers: Cpp Files&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/divers/divers-ksp.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Divers: Kerbal Space Program (en-fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-STL.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: STL&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-SmartPtr.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: unique_ptr &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; shared_ptr&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-semantiqueCopie.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: Semantique de copie (rappel)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-move&amp;amp;smartP.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: Sémantique de déplacement &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; intro smart_ptr&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/cpp-R-value-L-value-Copy.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: R-value et L-value&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/prog/prog-hackerRank.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Prog: HackerRank&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/linux/Linux-CheatSeet.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Linux: CheatSheet&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-client-SMTP.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: Client SMTP&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/py/Py-Regex.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Py: Regex&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/Linux-Sockets-CheatSheet.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: Linux socket cheatSheet&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/algo/Algo-resume-cp2.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Algo: Résumé CP2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/presentations/presentation-projet-P1.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Présentation projet p1: avancement, juin 2017&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/py/Py-NumPy.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Py: NumPy&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/py/Py-MatPlotLib.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Py: MatPlotLib&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/Cpp-Divers.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: Divers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/divers/divers-Randonnee.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Divers: Randonnée dans les Dolomites &lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/algo/Algo-recursivite.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Algo: Recursivité (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/math/math-notes.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Notes&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/presentations/presentation-references.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Présentation sur l'IA&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/divers/divers-definitions.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Divers: Définitions (en-fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-programmation-sockets.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: Programmation sockets (tuto)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/Cpp-exceptions-Handling.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: Exception handling (en)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/cpp/Cpp-makefile.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Cpp: makefile (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-labo5.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: Labo 5 (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-cp3.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: CP3 (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/algo/Algo-tri.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Algo: Tri (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/algo/Algo-Structures-de-donnees.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Algo: Structures de données&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-couche7.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: Couche 7, application (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-analogie-c4-5.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: relation couche 7,4,3 (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/reseau/reseau-couche4.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Reseau: Couche 4, transport (fr)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/algo/Algo-TAD-SDC-Complexite.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Algo: TAD, SDC et complexité (CP1)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/prog/Prog-Divers.html&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Prog: Divers&lt;span class=&quot;nt&quot;&gt;&amp;lt;/a&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+  
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Note that the &lt;code class=&quot;highlighter-rouge&quot;&gt;post&lt;/code&gt; variable only exists inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop above. If you wish to access the currently-rendering page/posts’s variables (the variables of the post/page that has the &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; loop in it), use the &lt;code class=&quot;highlighter-rouge&quot;&gt;page&lt;/code&gt; variable instead.&lt;/p&gt;
+
+&lt;h2 id=&quot;10-tags&quot;&gt;10. Tags&lt;/h2&gt;
+
+&lt;h3 id=&quot;includes&quot;&gt;Includes&lt;/h3&gt;
+
+&lt;p&gt;If you have small page snippets that you want to include in multiple places on your site, save the snippets as include files and insert them where required, by using the &lt;code class=&quot;highlighter-rouge&quot;&gt;include&lt;/code&gt; tag:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;footer.html&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Jekyll expects all include files to be placed in an &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes&lt;/code&gt; directory at the root of your source directory. In the above example, this will embed the contents of &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes/footer.html&lt;/code&gt; into the calling file.&lt;/p&gt;
+
+&lt;h3 id=&quot;using-variables-names-for-the-include-filepermalink&quot;&gt;Using variables names for the include filePermalink&lt;/h3&gt;
+
+&lt;p&gt;The name of the file you want to embed can be specified as a variable instead of an actual file name. For example, suppose you defined a variable in your page’s front matter like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;My page&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;my_variable&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;footer_company_a.html&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You could then reference that variable in your include:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;Page.my_varible&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;}}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;passing-parameters-to-includes&quot;&gt;Passing parameters to includes&lt;/h3&gt;
+
+&lt;p&gt;Passing parameters to includes is especially helpful when you want to hide away complex formatting from your Markdown content.&lt;/p&gt;
+
+&lt;p&gt;For example, suppose you have a special image syntax with complex formatting, and you don’t want your authors to remember the complex formatting. As a result, you decide to simplify the formatting by using an include with parameters. Here’s an example of the special image syntax you might want to populate with an include:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;figure&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://jekyllrb.com&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;logo.png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;max-width: 200px;&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Jekyll logo&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;figcaption&amp;gt;&lt;/span&gt;This is the Jekyll logo&lt;span class=&quot;nt&quot;&gt;&amp;lt;/figcaption&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/figure&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;You could templatize this content in your include and make each value available as a parameter, like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;figure&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;max-width: ;&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;figcaption&amp;gt;&amp;lt;/figcaption&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/figure&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;This include contains 5 parameters:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;url&lt;/li&gt;
+  &lt;li&gt;max-width&lt;/li&gt;
+  &lt;li&gt;file&lt;/li&gt;
+  &lt;li&gt;alt&lt;/li&gt;
+  &lt;li&gt;caption&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here’s an example that passes all the parameters to this include (the include file is named &lt;code class=&quot;highlighter-rouge&quot;&gt;image.html&lt;/code&gt;):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;image.html&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;url=&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;http://jekyllrb.com&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;max-width=&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;200px&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;file=&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;logo.png&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;Jekyll logo&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;caption=&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&quot;This is the Jekyll logo.&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;%}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Overall, you can create includes that act as templates for a variety of uses — inserting audio or video clips, alerts, special formatting, and more. &lt;strong&gt;However, note that you should avoid using too many includes&lt;/strong&gt;, as this will slow down the build time of your site. For example, don’t use includes every time you insert an image. (The above technique shows a use case for special images.)&lt;/p&gt;
+
+&lt;p&gt;Passing param&lt;/p&gt;
+
+&lt;h1 id=&quot;a-classer&quot;&gt;A CLASSER&lt;/h1&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; master configurtion file contains global configuration and variable destinations that are read once at execution time. Changes made to it during automatic regeneration are not loaded until the next execution.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;note: &lt;strong&gt;Data Files&lt;/strong&gt; are included and reloaded during automatic regenerations&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Fri, 30 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/web/web-Jekyll.html</link>
+        <guid isPermaLink="true">http://localhost:4000/web/web-Jekyll.html</guid>
+        
+        <category>web</category>
+        
+        <category>jekyll</category>
+        
+        <category>static</category>
+        
+        <category>generator</category>
+        
+        
+        <category>Web</category>
+        
+      </item>
     
       <item>
         <title>Cpp: Surcharge</title>
         <description>&lt;h2 id=&quot;1-overview&quot;&gt;1. Overview&lt;/h2&gt;
 
 &lt;p&gt;surcharge.hpp&lt;/p&gt;
+
 &lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
 #include &amp;lt;iomanip&amp;gt;
 #include &quot;surcharge.hpp&quot;
@@ -3903,331 +4498,6 @@ vector: poule poule
         <guid isPermaLink="true">http://localhost:4000/cpp/cpp-move&smartP.html</guid>
         
         <category>Cpp</category>
-        
-        
-        <category>Cpp</category>
-        
-      </item>
-    
-      <item>
-        <title>Cpp: R-value et L-value</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;Il existe d’autres -values que les deux présentés ici. Pour plus d’info: &lt;a href=&quot;http://en.cppreference.com/w/cpp/language/value_category&quot;&gt;cppreference&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Malgré la présence du mot “valeur” dans le nom &lt;strong&gt;l-value **et **r-value&lt;/strong&gt; ne sont en réalité pas des valeurs mais plutôt des propriétés des expressions.&lt;/p&gt;
-
-&lt;p&gt;Toute expression en C++ à &lt;strong&gt;deux propriétés&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Un &lt;strong&gt;type&lt;/strong&gt;: Utilisé pour le typage et la vérification)&lt;/li&gt;
-  &lt;li&gt;Une &lt;strong&gt;catégorie de valeur&lt;/strong&gt;: Utilisé pour certains types de vérification syntaxique comme “est-ce que le résultat de cette expression peut être assigné ici”&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;em&gt;La défintion formelle de ce qu’est une L-value et une R-value est largement audessus de ma compréhension actuelle et je vais me contenter d’expliquer dans les grandes lignes ce qui à mon niveau est important.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;l-value&quot;&gt;L-value&lt;/h4&gt;
-
-&lt;p&gt;Il est plus facile de penser à une L-value (également appelé “locator value”) comme à une fonction ou un objet (ou une expression qui s’évalue comme une fonction ou un objet). &lt;strong&gt;Toutes&lt;/strong&gt; les L-values se voient assigné une adresse en mémoire.&lt;/p&gt;
-
-&lt;p&gt;Initialement dans les vielles version de C++, les L-values étaient définies comme “valeurs qui peuvent se retrouver à gauche de l’opérateur d’assignation”. Celà dit, depuis l’introduction du mot clé &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;, les l-values se sont fait diviser en deux sous-catégories:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;L_value &lt;strong&gt;modifiables&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;L_value &lt;strong&gt;non-modifiables&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;r-value&quot;&gt;R-value&lt;/h4&gt;
-
-&lt;p&gt;Il est plus simple de penser à une R-value comme étant &lt;em&gt;tout ce qui n’est pas une L-value&lt;/em&gt;. Celà inclue:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;“literals” (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;5&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;valeurs temporaires (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;x+1&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;objets anonymes (ex. &lt;code class=&quot;highlighter-rouge&quot;&gt;Fraction(5,2)&lt;/code&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Les r-values sont typiquement:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;évaluées pour leur valeurs&lt;/li&gt;
-  &lt;li&gt;ont une portée&lt;/li&gt;
-  &lt;li&gt;on ne peut pas leur assigner quelque chose&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Cette règle de non assignement possible&lt;/p&gt;
-
-&lt;h2 id=&quot;référence-à-une-l-value&quot;&gt;référence à une L-value&lt;/h2&gt;
-
-&lt;p&gt;On ne peut référencer une L-value qu’avec des L-value &lt;strong&gt;modifiables&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;reference L-value&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Les références L-value à des objets &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; peuvent être initialisées indiférament avec des L_values ou des R-values cependant ces valeurs ne peuvent être modifiés:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;reference L-value à une &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Les références sur des objets &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; sont particulièrement utiles car elles nous permettent de passer n’importe quel type d’argument (L-value ou R-value) dans une fonction sans faire de copie de l’argument.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;référence-à-une-r-value&quot;&gt;référence à une R-value&lt;/h2&gt;
-
-&lt;p&gt;Une référence R-value est une référence faite pour être uniquement initialisée avec une R-value.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Une référence sur une L-value est faite avec une esperluette &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&lt;/code&gt;, une référence sur une R-value se fait avec 2 esperluettes &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;amp;&amp;amp;&lt;/code&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// référence L-value initialisée avec L-value x
-&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// référence R-value initialisée avec R-value 5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Les références R-value ne peuvent être initialisées avec des L-value:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;reference R-value&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;reference R-value à une &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt;&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut être init avec&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;peut modifier&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;L-value non-modifiable&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;R-value&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;oui&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;non&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Les références R-value ont deux propriétés qui nous interesse pour le moment:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Elles étendent la durée de vie (lifespan) de l’objet qui les initialise avec la durée de vie (lifespan) de la référence R-value.
-    &lt;blockquote&gt;
-      &lt;p&gt;Les références L_value à des objets &lt;code class=&quot;highlighter-rouge&quot;&gt;const&lt;/code&gt; fait la même chose mais c’est bien plus utilie pour les références R-value à cause de la portée des expressions des R-value.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Les références R-value non &lt;code class=&quot;highlighter-rouge&quot;&gt;cont&lt;/code&gt;nous permettent de modifier la R-value.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;hr /&gt;
-&lt;p&gt;Quelles lignes ne vont pas compiler?&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- 
-	&lt;span class=&quot;c1&quot;&gt;// l-value references
-&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// A
-&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// B
-&lt;/span&gt; 
-	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// C
-&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// D
-&lt;/span&gt; 
-	&lt;span class=&quot;c1&quot;&gt;// r-value references
-&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// E
-&lt;/span&gt;	&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// F
-&lt;/span&gt; 
-	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// G
-&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// H
-&lt;/span&gt;	
-	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Si nous suivons les indications des tableaux précédent on peut identfier que les cas: &lt;code class=&quot;highlighter-rouge&quot;&gt;B&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;E&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;G&lt;/code&gt; ne compileront pas.&lt;/p&gt;
-
-&lt;h2 id=&quot;exemples&quot;&gt;Exemples:&lt;/h2&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;iostream&amp;gt;
-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Fraction&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;private&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;friend&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;operator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ostream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_den&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Fraction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// reference R-value à une fraction anonyme
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// fin de portée de rref et Fraction anonyme
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-// 3/5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;En tant qu’objet anonyme, Fraction(3,5) devrait normalement se retrouver hors contexte à la fin de l’expression dans laquelle elle est définie mais comme on la référence par une R-value, sa durée de vie est étendue jusqu’à la fin du bloc.&lt;/p&gt;
-
-&lt;p&gt;Voyons maintenant un exemple moins intuitif:&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Comme nous initialisons une référence R-value à une expression literale
-&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;// un &quot;temporaire&quot; avec une valeur de 5 est créé ici.
-&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-// 10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Il peut sembler étrange d’initialiser une référence R-value avec une expression literale et ensuite pouvoir changer cette valeur. Ce qu’il se passe quand on initialise une R-value avec une expression litérale, c’est qu’un &lt;strong&gt;temporaire&lt;/strong&gt; est créé à partir de l’expression litérale pour que la référence puisse référencer un objet (temporaire) et non une expression litérale.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Les références R-value &lt;strong&gt;ne sont pas&lt;/strong&gt; souvent utilisées comme dans ces deux exemples.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;référence-r-value-comme-paramètre-de-fonction&quot;&gt;référence R-value comme paramètre de fonction&lt;/h2&gt;
-
-&lt;p&gt;Utilité principale des références R-value. Très utile pour la surcharge de fonctions quand on veut avoir des comportements différents pour les arguments L-value et R-value.&lt;/p&gt;
-
-&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument L-value choisira cette fonction
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;reference L-value a const&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument R-value choisira cette fonction
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;reference R-value&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument L-value appel la version L-value de func()
-&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// argument R-value appel la version R-value de func()
-&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// output:
-&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// reference L-value a const
-// reference R-value
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;pourquoi-&quot;&gt;Pourquoi ?&lt;/h2&gt;
-
-&lt;p&gt;Ces mécanismes sont importants pour pouvoir comprendre la &lt;a href=&quot;\cpp\cpp-move&amp;amp;smartP.html&quot;&gt;&lt;strong&gt;sémantique de déplacement&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;important&quot;&gt;Important&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;On ne devrait presque jamais retourner une référence sur une R-value pour la même raison qu’on ne devrait presque jamais retourner une référence L-value!&lt;/strong&gt; Si on le fait, dans la majorité des cas, la valeur de retour sera une référence pointant sur un objet qui est sorti de son contexte à la fin de la fonction!&lt;/p&gt;
-
-</description>
-        <pubDate>Wed, 21 Jun 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/cpp/cpp-R-value-L-value-Copy.html</link>
-        <guid isPermaLink="true">http://localhost:4000/cpp/cpp-R-value-L-value-Copy.html</guid>
-        
-        <category>cpp</category>
         
         
         <category>Cpp</category>
