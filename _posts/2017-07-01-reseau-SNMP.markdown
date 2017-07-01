@@ -422,7 +422,4 @@ Aussi quelque soit la solution retenue, désactivez systématiquement le mode an
 
 Enfin,  <span style="color:red"> il est très important de privilégier la version 3 du protocole ! </span> 
 
-## 5. Conclusion
-
-Les commandes de base du protocole `SNMP` sont assez simples une fois qu'on a compris comment manipuler les paramètres qu'elles utilisent.
 
