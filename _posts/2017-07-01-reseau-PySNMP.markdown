@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Reseau: SNMP"
-subtitle: "Simple Network Management Protocol"
+title: "Reseau: PySNMP"
+subtitle: "Tuto PySNMP"
 date: 2017-07-01
 author: Sol
 category: Reseau
