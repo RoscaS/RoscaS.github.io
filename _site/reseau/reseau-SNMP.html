@@ -115,7 +115,9 @@
   <li>Services (messagerie, ftp, ssh, http, processus, mémoire, …)</li>
 </ul>
 
-<p>Par <strong>supervision</strong> il faut comprendre “obtenir des informations” sur l’état de ces “éléments”. Ce protocole permet aussi d’effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d’une imprimante, …</p>
+<blockquote>
+  <p>Par <strong>supervision</strong> il faut comprendre “obtenir des informations” sur l’état de ces “éléments”. Ce protocole permet aussi d’effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d’une imprimante, …</p>
+</blockquote>
 
 <h3 id="fonctionnement">Fonctionnement</h3>
 
@@ -134,21 +136,11 @@
 <p><img src="http://pysnmp.sourceforge.net/_images/nms-components.svg" alt="alt" /></p>
 
 <ul>
-  <li>
-    <p>Le manager envoie des requêtes de type <code class="highlighter-rouge">GET</code> aux agents pour récuperer de l’information sur un service/une machine via le protocole SNMP</p>
-  </li>
-  <li>
-    <p>Il peut aussi envoyer des requêtes <code class="highlighter-rouge">SET</code> pour modifier l’état des services et/ou de la machine gérés par l’agent</p>
-  </li>
-  <li>
-    <p>Les agents peuvent envoyer des requêtes de type <code class="highlighter-rouge">TRAP</code> au manager pour signaler un dysfonctiionnement</p>
-  </li>
-  <li>
-    <p>Les agents peuvent être regroupés au travers d’un <strong>agent maître</strong></p>
-  </li>
-  <li>
-    <p>Les informations accessibles et fournies par les agents sont organisées dans une base “virtuelle” appelée <strong>MIB</strong>. Cette base est normalisée</p>
-  </li>
+  <li>Le manager envoie des requêtes de type <code class="highlighter-rouge">GET</code> aux agents pour récuperer de l’information sur un service/une machine via le protocole SNMP</li>
+  <li>Il peut aussi envoyer des requêtes <code class="highlighter-rouge">SET</code> pour modifier l’état des services et/ou de la machine gérés par l’agent</li>
+  <li>Les agents peuvent envoyer des requêtes de type <code class="highlighter-rouge">TRAP</code> au manager pour signaler un dysfonctionnement</li>
+  <li>Les agents peuvent être regroupés au travers d’un <strong>agent maître</strong></li>
+  <li>Les informations accessibles et fournies par les agents sont organisées dans une base “virtuelle” appelée <strong>MIB</strong>. Cette base est normalisée</li>
 </ul>
 
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SNMP_communication_principles_diagram.PNG/1000px-SNMP_communication_principles_diagram.PNG" alt="alt" /></p>
@@ -163,10 +155,10 @@
       <p>Vous êtes l’administrteur réseau et vous voulez connaître la mémoire totale disponible d’une machine, vous l’obtiendrez de la même façon quelque soit l’OS (mac/W/Unix/android) et le matériel utilisé (AMD, ARM, Intel,…).</p>
     </blockquote>
   </li>
-  <li>Il est simple (les agents sont légers, la complexité est déportée au niveaua des managers)</li>
+  <li>Il est simple (les agents sont légers, la complexité est déportée au niveau des managers)</li>
   <li>Indépendant de l’architecture réseau et des éléments (Pc, imprimante, routeurs, …)</li>
-  <li>Extensible, on peut personnaliser les bases d’informations en surcroît de ce qu’offre le standard</li>
-  <li>Robuste. S’appuie sur <code class="highlighter-rouge">UDP</code> <strong>ou</strong> <code class="highlighter-rouge">TCP</code>: fonctionnera encore lorsque le réseau aura de graves problèmes d’engorgement (passe en <code class="highlighter-rouge">UDP</code>).</li>
+  <li>Extensible, on peut personnaliser les bases d’informations en plus de ce qu’offre le standard</li>
+  <li>Robuste: S’appuie sur <code class="highlighter-rouge">UDP</code> <strong>ou</strong> <code class="highlighter-rouge">TCP</code>: fonctionnera encore lorsque le réseau aura de graves problèmes d’engorgement (passe en <code class="highlighter-rouge">UDP</code>).</li>
 </ul>
 
 <h3 id="meta">Meta</h3>
@@ -174,18 +166,24 @@
 <p>Globlement ce protocole est très pratique, et est très répandu. Il  peu de concurrents matures mais il souffre de certains points négatifs:</p>
 
 <ul>
-  <li>Parfois, il n’est pas simple: Les <strong>MIBs</strong> sont “lisibles par l’homme” (mais ceux qui arrivent à le lire ne sont pas tous vraiment humains).</li>
-  <li>Le protocole est simple mais son implémentation peu être complexe</li>
   <li>
-    <p>La version 3 a implémenté sa propre couche <code class="highlighter-rouge">SSH</code> plutôt que de faire comme <code class="highlighter-rouge">HTTPS</code> (du <code class="highlighter-rouge">HTTP</code> over <code class="highlighter-rouge">SSH</code>). Ceci rend pénible les communications: il n’y a pas d’auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée.</p>
+    <p>Parfois, il n’est pas simple: Les <strong>MIBs</strong> sont “lisibles par l’homme”  <em>mais ceux qui arrivent à le lire ne sont pas tous vraiment humains</em></p>
   </li>
-  <li>Certains concurrents commencent à voir le jour comme <code class="highlighter-rouge">WMI</code> et offrent une langage d’interrogation plus riche (<strong>WQL</strong>)</li>
+  <li>
+    <p>Le protocole est simple mais son implémentation peu être complexe</p>
+  </li>
+  <li>
+    <p>La version 3 a implémenté sa propre couche <code class="highlighter-rouge">SSH</code> plutôt que de faire comme <code class="highlighter-rouge">HTTPS</code> (du <code class="highlighter-rouge">HTTP</code> over <code class="highlighter-rouge">SSH</code>). Ceci rend pénible les communications: il n’y a pas d’auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée</p>
+  </li>
+  <li>
+    <p>Certains concurrents commencent à voir le jour comme <code class="highlighter-rouge">WMI</code> et offrent une langage d’interrogation plus riche (<strong>WQL</strong>)</p>
+  </li>
 </ul>
 
 <h3 id="historique">Historique</h3>
 
 <ul>
-  <li>La première version du protocole date de 1989: Elle n’offre <strong>pas de sécurité</strong> et utilise l <strong>MIB</strong> v1 qui reste assez simple</li>
+  <li>La première version du protocole date de 1989: Elle n’offre <strong>pas de sécurité</strong> et utilise l’<strong>MIB v1</strong>  qui reste assez simple</li>
   <li>La seconde version a été publiée en 1993
     <ul>
       <li><script type="math/tex">\Rightarrow</script> plus de sécurité tant au niveau de l’authentification que du chiffrement</li>
@@ -220,15 +218,17 @@
 
 <p>Ce n’est pas une base de données à proprement parler comme une base relationnelle. Elle n’existe qu’au travers de l’agent qui est libre de l’implémenter comme il le souhaite. Quand l’agent ne fonctionne pas, il n’y a pas de données dans la <strong>MIB</strong>. Seule la description de la MIB (un fichier texte) existe.</p>
 
-<p>Une <strong>MIB</strong> décrit en fait comment numéroter/accéder à l’information.</p>
+<blockquote>
+  <p>Une <strong>MIB</strong> décrit en fait comment numéroter/accéder à l’information.</p>
+</blockquote>
 
-<p><span style="color:red">C’est l’agent qui stock  (<strong>mais on devrait dire gère</strong>) cette information, laquelle est le plus souvent “volatile”, comme il veut.</span></p>
+<p><span style="color:red">C’est l’agent qui stock  (<strong>mais on devrait dire gère</strong>) comme il veut cette information, laquelle est le plus souvent “volatile”.</span></p>
 
 <blockquote>
   <p>Il est très important de bien comprendre le point précédent, c’est ce qui gêne souvent la compréhension des <strong>MIBs</strong> par les nouveaux arrivants sur ce protocole.</p>
 </blockquote>
 
-<p>Prenons l’exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique pr la <strong>MIB-2</strong>. Mais cette information est demandée par l’<strong>agent</strong> au système d’exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n’est donc pas “stockée” par l’OS. Elle n’est pas accessible au travers d’une requête <code class="highlighter-rouge">SQL</code>. Elle est fournie quand on la demande , et tant que l’agent ne l’a pas demandée lui-même à l’OS, elle n’est pas vraiment disponible ou n’a pas encore d’existence:</p>
+<p>Prenons l’exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique par la <strong>MIB-2</strong>. Mais cette information est demandée par l’<strong>agent</strong> au système d’exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n’est donc pas “stockée” par l’OS. Elle n’est pas accessible au travers d’une requête <code class="highlighter-rouge">SQL</code>. Elle est fournie quand on la demande , et tant que l’agent ne l’a pas demandée lui-même à l’OS, elle n’est pas vraiment disponible ou n’a pas encore d’existence.</p>
 
 <ol>
   <li>Le manager demande l’information à l’agent</li>
@@ -237,6 +237,10 @@
 </ol>
 
 <p>C’est une information “volatile” qui n’est pas vraiment stockable.</p>
+
+<blockquote>
+  <p>Note perso: en gros, l’agent demande une information qui a une certaine relevance à un moment T.</p>
+</blockquote>
 
 <p>Beaucoup d’informatiions issues des <strong>MIBs</strong> sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée). Selon les constructeurs/OS ces informations pour la grande majorité afin quùne même information soit toujours demandée de la même manière par le manager. C’est à l’agent de savoir ou aller la chercher selon le matériel/service géré.</p>
 
@@ -404,18 +408,54 @@ Les réponses seront:</p>
 <p>Requêtes proposées par le protocole pour permettre aux manager et agents de s’échanger de l’information:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Get</code><script type="math/tex">\Rightarrow</script> demande la valeur d’un <strong>OID</strong> par le manager à l’agent. L’agent retourne l’information via un message de type <code class="highlighter-rouge">Response</code></li>
-  <li><code class="highlighter-rouge">GetNext</code> <script type="math/tex">\Rightarrow</script> demande l’information suivante dans la <strong>MIB</strong>. Permet de parcourir une <strong>MIB</strong> sans connaître ce qu’elle contient</li>
-  <li><code class="highlighter-rouge">Set</code> <script type="math/tex">\Rightarrow</script> modifie la valeur associée aa un <strong>OID</strong></li>
-  <li><code class="highlighter-rouge">GetBulk</code> <script type="math/tex">\Rightarrow</script> demande tout un ensemble d’infos au manager contenant l’information demandée</li>
-  <li><code class="highlighter-rouge">Response</code> <script type="math/tex">\Rightarrow</script> message envoyé par l’agent au manager contenant l’information demandée</li>
-  <li><code class="highlighter-rouge">Trap</code>: <script type="math/tex">\Rightarrow</script>  message envoyé par l’agent au manager pour signaler un problème</li>
-  <li><code class="highlighter-rouge">Inform</code> <script type="math/tex">\Rightarrow</script> msg envoyé par le manager. Confirme réception du <code class="highlighter-rouge">trap</code>.</li>
+  <li><code class="highlighter-rouge">GET</code><script type="math/tex">\Rightarrow</script> demande la valeur d’un <strong>OID</strong> par le manager à l’agent. L’agent retourne l’information via un message de type <code class="highlighter-rouge">RESPONSE</code></li>
+  <li><code class="highlighter-rouge">GETNEXT</code> <script type="math/tex">\Rightarrow</script> demande l’information suivante dans la <strong>MIB</strong>. Permet de parcourir une <strong>MIB</strong> sans connaître ce qu’elle contient</li>
+  <li><code class="highlighter-rouge">SET</code> <script type="math/tex">\Rightarrow</script> modifie la valeur associée aa un <strong>OID</strong></li>
+  <li><code class="highlighter-rouge">GETBULK</code> <script type="math/tex">\Rightarrow</script> demande tout un ensemble d’infos au manager contenant l’information demandée</li>
+  <li><code class="highlighter-rouge">RESPONSE</code> <script type="math/tex">\Rightarrow</script> message envoyé par l’agent au manager contenant l’information demandée</li>
+  <li><code class="highlighter-rouge">TRAP</code>: <script type="math/tex">\Rightarrow</script>  message envoyé par l’agent au manager pour signaler un problème</li>
+  <li><code class="highlighter-rouge">INFORM</code> <script type="math/tex">\Rightarrow</script> msg envoyé par le manager. Confirme réception du <code class="highlighter-rouge">TRAP</code>.</li>
 </ul>
 
 <h3 id="prérequis">Prérequis</h3>
 
-<p>Pour lancer nos premières commandes, il convient de disposer d’un agent et d’un manager.</p>
+<p>Pour lancer nos premières commandes, il convient de disposer d’un agent et d’un manager. 
+Pour le manager, nous pouvons installer les outils <code class="highlighter-rouge">snmp</code> et <code class="highlighter-rouge">mibs</code> de base via ces commandes</p>
+
+<pre><code class="language-bsh">sudo apt-get install snmp snmp-mibs-downloader
+sudo apt-get install smitools libsmi
+</code></pre>
+<p>Pour trouver un agent, nous pouvons:</p>
+
+<ul>
+  <li>Essayer avec une imprimante réseau ou une machine possédant une adresse Ip. Généralement elles sont compatibles avec les protocoles <code class="highlighter-rouge">SNMP</code></li>
+  <li>Installer notre propre agent en suivant le tutoriel suivant: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-an-snmp-daemon-and-client-on-ubuntu-14-04">how to install and configure an SNMP Daemon and client (linux)</a></li>
+  <li><strong>Lancer nos commandes vers l’agent <code class="highlighter-rouge">demo.snmplabs.com</code> librement accessible via Internet.</strong></li>
+</ul>
+
+<blockquote>
+  <p>Si nous ne disposons pas de la possibilité d’installer les commandes <code class="highlighter-rouge">SNMP</code> sous Linux, il est bon de savoir que la librairie <code class="highlighter-rouge">PySNMP</code> propose des scripts équivalents en pur Python qu’on peut installer avec la commande <code class="highlighter-rouge">pip install pysnmp-apps</code></p>
+</blockquote>
+
+<h3 id="la-commande-get">La commande GET</h3>
+
+<p>Accepte plusieurs paramètres dont:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-v</code> <script type="math/tex">\Rightarrow</script> version du protocole</li>
+  <li><code class="highlighter-rouge">-c</code> <script type="math/tex">\Rightarrow</script> communauté</li>
+  <li><code class="highlighter-rouge">-O</code> <script type="math/tex">\Rightarrow</script> format de sortie (a,f,n,s,…)</li>
+</ul>
+
+<p><strong>exemple</strong></p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
+SNMPv2-MIB::sysDescr.0 <span class="o">=</span> STRING: SunOS zeus.snmplabs.com 4.1.3_U1 1 sun4m
+</code></pre>
+</div>
+
+<p>La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version <code class="highlighter-rouge">2c</code> (<code class="highlighter-rouge">v2c</code>) et la communauté <code class="highlighter-rouge">public</code>. Nous demandons l’information <code class="highlighter-rouge">sysDescr</code>. Pour ce faire nous ajoutons le chemin <code class="highlighter-rouge">.0</code> qui désigne la valeur du noeud <code class="highlighter-rouge">sysDescr</code>.</p>
+
+<p>Les autres valeurs sous un noeuds (<code class="highlighter-rouge">.1.2</code>, etc…) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d’un <code class="highlighter-rouge">OID</code> numérique <code class="highlighter-rouge">1.3.6.1.2.1.1.1.0</code> (<strong>ou textuel ou encore via le nom court</strong>. <script type="math/tex">\Rightarrow</script> normalement unique).</p>
 
 
 </div>

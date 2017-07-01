@@ -23,7 +23,7 @@ finished: false
 * Imprimantes
 * Services (messagerie, ftp, ssh, http, processus, mémoire, ...)
 
-Par **supervision** il faut comprendre "obtenir des informations" sur l'état de ces "éléments". Ce protocole permet aussi d'effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d'une imprimante, ...
+>Par **supervision** il faut comprendre "obtenir des informations" sur l'état de ces "éléments". Ce protocole permet aussi d'effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d'une imprimante, ...
 
 ### Fonctionnement
 
@@ -37,13 +37,9 @@ SNMP se base sur l'idée qu'un système de supervision de réseau se compose de
 ![alt](http://pysnmp.sourceforge.net/_images/nms-components.svg)
 
 * Le manager envoie des requêtes de type `GET` aux agents pour récuperer de l'information sur un service/une machine via le protocole SNMP
-
 * Il peut aussi envoyer des requêtes `SET` pour modifier l'état des services et/ou de la machine gérés par l'agent
-
-* Les agents peuvent envoyer des requêtes de type `TRAP` au manager pour signaler un dysfonctiionnement
-
+* Les agents peuvent envoyer des requêtes de type `TRAP` au manager pour signaler un dysfonctionnement
 * Les agents peuvent être regroupés au travers d'un **agent maître**
-
 * Les informations accessibles et fournies par les agents sont organisées dans une base "virtuelle" appelée **MIB**. Cette base est normalisée
 
 ![alt](https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SNMP_communication_principles_diagram.PNG/1000px-SNMP_communication_principles_diagram.PNG)
@@ -54,24 +50,26 @@ SNMP se base sur l'idée qu'un système de supervision de réseau se compose de
 * Depuis la version 2, il est **sécurisé**, offrant un accès restreint à certaines informations et s'appuie sur des protocoles de chiffrement comme `SSH` et `TLS` (mais avec ses propres librairies et outils internes).
 * L'information contenue dans les **MIBs** est normalisée: quelque soit l'appareil et son constructeur, une même information sera accessible au même endroit et de la même manière. 
 > Vous êtes l'administrteur réseau et vous voulez connaître la mémoire totale disponible d'une machine, vous l'obtiendrez de la même façon quelque soit l'OS (mac/W/Unix/android) et le matériel utilisé (AMD, ARM, Intel,...).
-* Il est simple (les agents sont légers, la complexité est déportée au niveaua des managers)
+* Il est simple (les agents sont légers, la complexité est déportée au niveau des managers)
 * Indépendant de l'architecture réseau et des éléments (Pc, imprimante, routeurs, ...)
-* Extensible, on peut personnaliser les bases d'informations en surcroît de ce qu'offre le standard
-* Robuste. S'appuie sur `UDP` **ou** `TCP`: fonctionnera encore lorsque le réseau aura de graves problèmes d'engorgement (passe en `UDP`).
+* Extensible, on peut personnaliser les bases d'informations en plus de ce qu'offre le standard
+* Robuste: S'appuie sur `UDP` **ou** `TCP`: fonctionnera encore lorsque le réseau aura de graves problèmes d'engorgement (passe en `UDP`).
 
 ### Meta
 
 Globlement ce protocole est très pratique, et est très répandu. Il  peu de concurrents matures mais il souffre de certains points négatifs:
 
-* Parfois, il n'est pas simple: Les **MIBs** sont "lisibles par l'homme" (mais ceux qui arrivent à le lire ne sont pas tous vraiment humains).
+* Parfois, il n'est pas simple: Les **MIBs** sont "lisibles par l'homme"  _mais ceux qui arrivent à le lire ne sont pas tous vraiment humains_
+
 * Le protocole est simple mais son implémentation peu être complexe
-* La version 3 a implémenté sa propre couche `SSH` plutôt que de faire comme `HTTPS` (du `HTTP` over `SSH`). Ceci rend pénible les communications: il n'y a pas d'auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée.
+
+* La version 3 a implémenté sa propre couche `SSH` plutôt que de faire comme `HTTPS` (du `HTTP` over `SSH`). Ceci rend pénible les communications: il n'y a pas d'auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée
 
 * Certains concurrents commencent à voir le jour comme `WMI` et offrent une langage d'interrogation plus riche (**WQL**)
 
 ### Historique
 
-* La première version du protocole date de 1989: Elle n'offre **pas de sécurité** et utilise l **MIB** v1 qui reste assez simple
+* La première version du protocole date de 1989: Elle n'offre **pas de sécurité** et utilise l'**MIB v1**  qui reste assez simple
 * La seconde version a été publiée en 1993
     * $$ \Rightarrow $$ plus de sécurité tant au niveau de l'authentification que du chiffrement
     * $$ \Rightarrow $$ permet l'administration distribuée
@@ -94,19 +92,21 @@ La **Management Information Base** est une base de données "virtuelle" permetta
 
 Ce n'est pas une base de données à proprement parler comme une base relationnelle. Elle n'existe qu'au travers de l'agent qui est libre de l'implémenter comme il le souhaite. Quand l'agent ne fonctionne pas, il n'y a pas de données dans la **MIB**. Seule la description de la MIB (un fichier texte) existe.
 
-Une **MIB** décrit en fait comment numéroter/accéder à l'information.
+>Une **MIB** décrit en fait comment numéroter/accéder à l'information.
 
-<span style="color:red">C'est l'agent qui stock  (**mais on devrait dire gère**) cette information, laquelle est le plus souvent "volatile", comme il veut.</span>
+<span style="color:red">C'est l'agent qui stock  (**mais on devrait dire gère**) comme il veut cette information, laquelle est le plus souvent "volatile".</span>
 
 >Il est très important de bien comprendre le point précédent, c'est ce qui gêne souvent la compréhension des **MIBs** par les nouveaux arrivants sur ce protocole.
 
-Prenons l'exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique pr la **MIB-2**. Mais cette information est demandée par l'**agent** au système d'exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n'est donc pas "stockée" par l'OS. Elle n'est pas accessible au travers d'une requête `SQL`. Elle est fournie quand on la demande , et tant que l'agent ne l'a pas demandée lui-même à l'OS, elle n'est pas vraiment disponible ou n'a pas encore d'existence:
+Prenons l'exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique par la **MIB-2**. Mais cette information est demandée par l'**agent** au système d'exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n'est donc pas "stockée" par l'OS. Elle n'est pas accessible au travers d'une requête `SQL`. Elle est fournie quand on la demande , et tant que l'agent ne l'a pas demandée lui-même à l'OS, elle n'est pas vraiment disponible ou n'a pas encore d'existence.
 
 1. Le manager demande l'information à l'agent
 2. L'agent reçoit la demande et appelle une primitive système pour l'obtenir
 3. L'agent retourne l'information au manager
 
 C'est une information "volatile" qui n'est pas vraiment stockable.
+
+>Note perso: en gros, l'agent demande une information qui a une certaine relevance à un moment T.
 
 Beaucoup d'informatiions issues des **MIBs** sont de cette nature, d'autres sont parfois stockées quelque part, comme le responsable d'une machine, le port d'un service ou encore l'état d'une ligne élecrtique ou d'une diode (éteinte, allumée). Selon les constructeurs/OS ces informations pour la grande majorité afin quùne même information soit toujours demandée de la même manière par le manager. C'est à l'agent de savoir ou aller la chercher selon le matériel/service géré.
 
@@ -255,18 +255,48 @@ Pour bien comprendre ce que permet ce protocole, nous allons exécuter les commn
 
 Requêtes proposées par le protocole pour permettre aux manager et agents de s'échanger de l'information:
 
-* `Get`$$ \Rightarrow $$ demande la valeur d'un **OID** par le manager à l'agent. L'agent retourne l'information via un message de type `Response`
-* `GetNext` $$ \Rightarrow $$ demande l'information suivante dans la **MIB**. Permet de parcourir une **MIB** sans connaître ce qu'elle contient
-* `Set` $$ \Rightarrow $$ modifie la valeur associée aa un **OID**
-* `GetBulk` $$ \Rightarrow $$ demande tout un ensemble d'infos au manager contenant l'information demandée
-* `Response` $$ \Rightarrow $$ message envoyé par l'agent au manager contenant l'information demandée
-* `Trap`: $$ \Rightarrow $$  message envoyé par l'agent au manager pour signaler un problème 
-* `Inform` $$ \Rightarrow $$ msg envoyé par le manager. Confirme réception du `trap`.
+* `GET`$$ \Rightarrow $$ demande la valeur d'un **OID** par le manager à l'agent. L'agent retourne l'information via un message de type `RESPONSE`
+* `GETNEXT` $$ \Rightarrow $$ demande l'information suivante dans la **MIB**. Permet de parcourir une **MIB** sans connaître ce qu'elle contient
+* `SET` $$ \Rightarrow $$ modifie la valeur associée aa un **OID**
+* `GETBULK` $$ \Rightarrow $$ demande tout un ensemble d'infos au manager contenant l'information demandée
+* `RESPONSE` $$ \Rightarrow $$ message envoyé par l'agent au manager contenant l'information demandée
+* `TRAP`: $$ \Rightarrow $$  message envoyé par l'agent au manager pour signaler un problème 
+* `INFORM` $$ \Rightarrow $$ msg envoyé par le manager. Confirme réception du `TRAP`.
 
 ### Prérequis
 
 Pour lancer nos premières commandes, il convient de disposer d'un agent et d'un manager. 
+Pour le manager, nous pouvons installer les outils `snmp` et `mibs` de base via ces commandes
 
+```bsh
+sudo apt-get install snmp snmp-mibs-downloader
+sudo apt-get install smitools libsmi
+```
+Pour trouver un agent, nous pouvons:
+
+* Essayer avec une imprimante réseau ou une machine possédant une adresse Ip. Généralement elles sont compatibles avec les protocoles `SNMP`
+* Installer notre propre agent en suivant le tutoriel suivant: [how to install and configure an SNMP Daemon and client (linux)](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-an-snmp-daemon-and-client-on-ubuntu-14-04)
+* **Lancer nos commandes vers l'agent `demo.snmplabs.com` librement accessible via Internet.**
+
+> Si nous ne disposons pas de la possibilité d'installer les commandes `SNMP` sous Linux, il est bon de savoir que la librairie `PySNMP` propose des scripts équivalents en pur Python qu'on peut installer avec la commande `pip install pysnmp-apps`
+
+### La commande GET
+
+Accepte plusieurs paramètres dont:
+
+* `-v` $$ \Rightarrow $$ version du protocole
+* `-c` $$ \Rightarrow $$ communauté
+* `-O` $$ \Rightarrow $$ format de sortie (a,f,n,s,...)
+
+**exemple**
+```sh
+$ snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
+SNMPv2-MIB::sysDescr.0 = STRING: SunOS zeus.snmplabs.com 4.1.3_U1 1 sun4m
+```
+
+La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version `2c` (`v2c`) et la communauté `public`. Nous demandons l'information `sysDescr`. Pour ce faire nous ajoutons le chemin `.0` qui désigne la valeur du noeud `sysDescr`.
+
+Les autres valeurs sous un noeuds (`.1.2`, etc...) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d'un `OID` numérique `1.3.6.1.2.1.1.1.0` (**ou textuel ou encore via le nom court**. $$ \Rightarrow $$ normalement unique).
 
 
 

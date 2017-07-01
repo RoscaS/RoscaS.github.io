@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 01 Jul 2017 16:56:32 +0200</pubDate>
-    <lastBuildDate>Sat, 01 Jul 2017 16:56:32 +0200</lastBuildDate>
+    <pubDate>Sat, 01 Jul 2017 17:57:21 +0200</pubDate>
+    <lastBuildDate>Sat, 01 Jul 2017 17:57:21 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -28,7 +28,9 @@
   &lt;li&gt;Services (messagerie, ftp, ssh, http, processus, mémoire, …)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Par &lt;strong&gt;supervision&lt;/strong&gt; il faut comprendre “obtenir des informations” sur l’état de ces “éléments”. Ce protocole permet aussi d’effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d’une imprimante, …&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Par &lt;strong&gt;supervision&lt;/strong&gt; il faut comprendre “obtenir des informations” sur l’état de ces “éléments”. Ce protocole permet aussi d’effectuer des actions de maintenance comme redémarrer un service ou une machine, nettoyer les têtes de lecture d’une imprimante, …&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h3 id=&quot;fonctionnement&quot;&gt;Fonctionnement&lt;/h3&gt;
 
@@ -47,21 +49,11 @@
 &lt;p&gt;&lt;img src=&quot;http://pysnmp.sourceforge.net/_images/nms-components.svg&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Le manager envoie des requêtes de type &lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt; aux agents pour récuperer de l’information sur un service/une machine via le protocole SNMP&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Il peut aussi envoyer des requêtes &lt;code class=&quot;highlighter-rouge&quot;&gt;SET&lt;/code&gt; pour modifier l’état des services et/ou de la machine gérés par l’agent&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Les agents peuvent envoyer des requêtes de type &lt;code class=&quot;highlighter-rouge&quot;&gt;TRAP&lt;/code&gt; au manager pour signaler un dysfonctiionnement&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Les agents peuvent être regroupés au travers d’un &lt;strong&gt;agent maître&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Les informations accessibles et fournies par les agents sont organisées dans une base “virtuelle” appelée &lt;strong&gt;MIB&lt;/strong&gt;. Cette base est normalisée&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;Le manager envoie des requêtes de type &lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt; aux agents pour récuperer de l’information sur un service/une machine via le protocole SNMP&lt;/li&gt;
+  &lt;li&gt;Il peut aussi envoyer des requêtes &lt;code class=&quot;highlighter-rouge&quot;&gt;SET&lt;/code&gt; pour modifier l’état des services et/ou de la machine gérés par l’agent&lt;/li&gt;
+  &lt;li&gt;Les agents peuvent envoyer des requêtes de type &lt;code class=&quot;highlighter-rouge&quot;&gt;TRAP&lt;/code&gt; au manager pour signaler un dysfonctionnement&lt;/li&gt;
+  &lt;li&gt;Les agents peuvent être regroupés au travers d’un &lt;strong&gt;agent maître&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Les informations accessibles et fournies par les agents sont organisées dans une base “virtuelle” appelée &lt;strong&gt;MIB&lt;/strong&gt;. Cette base est normalisée&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SNMP_communication_principles_diagram.PNG/1000px-SNMP_communication_principles_diagram.PNG&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
@@ -76,10 +68,10 @@
       &lt;p&gt;Vous êtes l’administrteur réseau et vous voulez connaître la mémoire totale disponible d’une machine, vous l’obtiendrez de la même façon quelque soit l’OS (mac/W/Unix/android) et le matériel utilisé (AMD, ARM, Intel,…).&lt;/p&gt;
     &lt;/blockquote&gt;
   &lt;/li&gt;
-  &lt;li&gt;Il est simple (les agents sont légers, la complexité est déportée au niveaua des managers)&lt;/li&gt;
+  &lt;li&gt;Il est simple (les agents sont légers, la complexité est déportée au niveau des managers)&lt;/li&gt;
   &lt;li&gt;Indépendant de l’architecture réseau et des éléments (Pc, imprimante, routeurs, …)&lt;/li&gt;
-  &lt;li&gt;Extensible, on peut personnaliser les bases d’informations en surcroît de ce qu’offre le standard&lt;/li&gt;
-  &lt;li&gt;Robuste. S’appuie sur &lt;code class=&quot;highlighter-rouge&quot;&gt;UDP&lt;/code&gt; &lt;strong&gt;ou&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt;: fonctionnera encore lorsque le réseau aura de graves problèmes d’engorgement (passe en &lt;code class=&quot;highlighter-rouge&quot;&gt;UDP&lt;/code&gt;).&lt;/li&gt;
+  &lt;li&gt;Extensible, on peut personnaliser les bases d’informations en plus de ce qu’offre le standard&lt;/li&gt;
+  &lt;li&gt;Robuste: S’appuie sur &lt;code class=&quot;highlighter-rouge&quot;&gt;UDP&lt;/code&gt; &lt;strong&gt;ou&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;TCP&lt;/code&gt;: fonctionnera encore lorsque le réseau aura de graves problèmes d’engorgement (passe en &lt;code class=&quot;highlighter-rouge&quot;&gt;UDP&lt;/code&gt;).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;meta&quot;&gt;Meta&lt;/h3&gt;
@@ -87,18 +79,24 @@
 &lt;p&gt;Globlement ce protocole est très pratique, et est très répandu. Il  peu de concurrents matures mais il souffre de certains points négatifs:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Parfois, il n’est pas simple: Les &lt;strong&gt;MIBs&lt;/strong&gt; sont “lisibles par l’homme” (mais ceux qui arrivent à le lire ne sont pas tous vraiment humains).&lt;/li&gt;
-  &lt;li&gt;Le protocole est simple mais son implémentation peu être complexe&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;La version 3 a implémenté sa propre couche &lt;code class=&quot;highlighter-rouge&quot;&gt;SSH&lt;/code&gt; plutôt que de faire comme &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTPS&lt;/code&gt; (du &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; over &lt;code class=&quot;highlighter-rouge&quot;&gt;SSH&lt;/code&gt;). Ceci rend pénible les communications: il n’y a pas d’auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée.&lt;/p&gt;
+    &lt;p&gt;Parfois, il n’est pas simple: Les &lt;strong&gt;MIBs&lt;/strong&gt; sont “lisibles par l’homme”  &lt;em&gt;mais ceux qui arrivent à le lire ne sont pas tous vraiment humains&lt;/em&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;Certains concurrents commencent à voir le jour comme &lt;code class=&quot;highlighter-rouge&quot;&gt;WMI&lt;/code&gt; et offrent une langage d’interrogation plus riche (&lt;strong&gt;WQL&lt;/strong&gt;)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Le protocole est simple mais son implémentation peu être complexe&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;La version 3 a implémenté sa propre couche &lt;code class=&quot;highlighter-rouge&quot;&gt;SSH&lt;/code&gt; plutôt que de faire comme &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTPS&lt;/code&gt; (du &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP&lt;/code&gt; over &lt;code class=&quot;highlighter-rouge&quot;&gt;SSH&lt;/code&gt;). Ceci rend pénible les communications: il n’y a pas d’auto-négociation pour le chiffrement et vous devez vous-même fournir 5 informations pour créer une connexion sécurisée&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Certains concurrents commencent à voir le jour comme &lt;code class=&quot;highlighter-rouge&quot;&gt;WMI&lt;/code&gt; et offrent une langage d’interrogation plus riche (&lt;strong&gt;WQL&lt;/strong&gt;)&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;historique&quot;&gt;Historique&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;La première version du protocole date de 1989: Elle n’offre &lt;strong&gt;pas de sécurité&lt;/strong&gt; et utilise l &lt;strong&gt;MIB&lt;/strong&gt; v1 qui reste assez simple&lt;/li&gt;
+  &lt;li&gt;La première version du protocole date de 1989: Elle n’offre &lt;strong&gt;pas de sécurité&lt;/strong&gt; et utilise l’&lt;strong&gt;MIB v1&lt;/strong&gt;  qui reste assez simple&lt;/li&gt;
   &lt;li&gt;La seconde version a été publiée en 1993
     &lt;ul&gt;
       &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; plus de sécurité tant au niveau de l’authentification que du chiffrement&lt;/li&gt;
@@ -133,15 +131,17 @@
 
 &lt;p&gt;Ce n’est pas une base de données à proprement parler comme une base relationnelle. Elle n’existe qu’au travers de l’agent qui est libre de l’implémenter comme il le souhaite. Quand l’agent ne fonctionne pas, il n’y a pas de données dans la &lt;strong&gt;MIB&lt;/strong&gt;. Seule la description de la MIB (un fichier texte) existe.&lt;/p&gt;
 
-&lt;p&gt;Une &lt;strong&gt;MIB&lt;/strong&gt; décrit en fait comment numéroter/accéder à l’information.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Une &lt;strong&gt;MIB&lt;/strong&gt; décrit en fait comment numéroter/accéder à l’information.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;C’est l’agent qui stock  (&lt;strong&gt;mais on devrait dire gère&lt;/strong&gt;) cette information, laquelle est le plus souvent “volatile”, comme il veut.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;C’est l’agent qui stock  (&lt;strong&gt;mais on devrait dire gère&lt;/strong&gt;) comme il veut cette information, laquelle est le plus souvent “volatile”.&lt;/span&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Il est très important de bien comprendre le point précédent, c’est ce qui gêne souvent la compréhension des &lt;strong&gt;MIBs&lt;/strong&gt; par les nouveaux arrivants sur ce protocole.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Prenons l’exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique pr la &lt;strong&gt;MIB-2&lt;/strong&gt;. Mais cette information est demandée par l’&lt;strong&gt;agent&lt;/strong&gt; au système d’exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n’est donc pas “stockée” par l’OS. Elle n’est pas accessible au travers d’une requête &lt;code class=&quot;highlighter-rouge&quot;&gt;SQL&lt;/code&gt;. Elle est fournie quand on la demande , et tant que l’agent ne l’a pas demandée lui-même à l’OS, elle n’est pas vraiment disponible ou n’a pas encore d’existence:&lt;/p&gt;
+&lt;p&gt;Prenons l’exemple du nombre de processus actifs sur une machine. Celui-ci est identifié de façon unique par la &lt;strong&gt;MIB-2&lt;/strong&gt;. Mais cette information est demandée par l’&lt;strong&gt;agent&lt;/strong&gt; au système d’exploitation au moment ou il reçoit une requête pour cette dernière, car cette donnée est changeante à chaque instant. Elle n’est donc pas “stockée” par l’OS. Elle n’est pas accessible au travers d’une requête &lt;code class=&quot;highlighter-rouge&quot;&gt;SQL&lt;/code&gt;. Elle est fournie quand on la demande , et tant que l’agent ne l’a pas demandée lui-même à l’OS, elle n’est pas vraiment disponible ou n’a pas encore d’existence.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Le manager demande l’information à l’agent&lt;/li&gt;
@@ -150,6 +150,10 @@
 &lt;/ol&gt;
 
 &lt;p&gt;C’est une information “volatile” qui n’est pas vraiment stockable.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note perso: en gros, l’agent demande une information qui a une certaine relevance à un moment T.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;Beaucoup d’informatiions issues des &lt;strong&gt;MIBs&lt;/strong&gt; sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée). Selon les constructeurs/OS ces informations pour la grande majorité afin quùne même information soit toujours demandée de la même manière par le manager. C’est à l’agent de savoir ou aller la chercher selon le matériel/service géré.&lt;/p&gt;
 
@@ -317,18 +321,54 @@ Les réponses seront:&lt;/p&gt;
 &lt;p&gt;Requêtes proposées par le protocole pour permettre aux manager et agents de s’échanger de l’information:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Get&lt;/code&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; demande la valeur d’un &lt;strong&gt;OID&lt;/strong&gt; par le manager à l’agent. L’agent retourne l’information via un message de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Response&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GetNext&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; demande l’information suivante dans la &lt;strong&gt;MIB&lt;/strong&gt;. Permet de parcourir une &lt;strong&gt;MIB&lt;/strong&gt; sans connaître ce qu’elle contient&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Set&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; modifie la valeur associée aa un &lt;strong&gt;OID&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GetBulk&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; demande tout un ensemble d’infos au manager contenant l’information demandée&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Response&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; message envoyé par l’agent au manager contenant l’information demandée&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Trap&lt;/code&gt;: &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  message envoyé par l’agent au manager pour signaler un problème&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Inform&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; msg envoyé par le manager. Confirme réception du &lt;code class=&quot;highlighter-rouge&quot;&gt;trap&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt;&lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; demande la valeur d’un &lt;strong&gt;OID&lt;/strong&gt; par le manager à l’agent. L’agent retourne l’information via un message de type &lt;code class=&quot;highlighter-rouge&quot;&gt;RESPONSE&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GETNEXT&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; demande l’information suivante dans la &lt;strong&gt;MIB&lt;/strong&gt;. Permet de parcourir une &lt;strong&gt;MIB&lt;/strong&gt; sans connaître ce qu’elle contient&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SET&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; modifie la valeur associée aa un &lt;strong&gt;OID&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GETBULK&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; demande tout un ensemble d’infos au manager contenant l’information demandée&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;RESPONSE&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; message envoyé par l’agent au manager contenant l’information demandée&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;TRAP&lt;/code&gt;: &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  message envoyé par l’agent au manager pour signaler un problème&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;INFORM&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; msg envoyé par le manager. Confirme réception du &lt;code class=&quot;highlighter-rouge&quot;&gt;TRAP&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;prérequis&quot;&gt;Prérequis&lt;/h3&gt;
 
-&lt;p&gt;Pour lancer nos premières commandes, il convient de disposer d’un agent et d’un manager.&lt;/p&gt;
+&lt;p&gt;Pour lancer nos premières commandes, il convient de disposer d’un agent et d’un manager. 
+Pour le manager, nous pouvons installer les outils &lt;code class=&quot;highlighter-rouge&quot;&gt;snmp&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;mibs&lt;/code&gt; de base via ces commandes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bsh&quot;&gt;sudo apt-get install snmp snmp-mibs-downloader
+sudo apt-get install smitools libsmi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pour trouver un agent, nous pouvons:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Essayer avec une imprimante réseau ou une machine possédant une adresse Ip. Généralement elles sont compatibles avec les protocoles &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Installer notre propre agent en suivant le tutoriel suivant: &lt;a href=&quot;https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-an-snmp-daemon-and-client-on-ubuntu-14-04&quot;&gt;how to install and configure an SNMP Daemon and client (linux)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Lancer nos commandes vers l’agent &lt;code class=&quot;highlighter-rouge&quot;&gt;demo.snmplabs.com&lt;/code&gt; librement accessible via Internet.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Si nous ne disposons pas de la possibilité d’installer les commandes &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt; sous Linux, il est bon de savoir que la librairie &lt;code class=&quot;highlighter-rouge&quot;&gt;PySNMP&lt;/code&gt; propose des scripts équivalents en pur Python qu’on peut installer avec la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install pysnmp-apps&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;la-commande-get&quot;&gt;La commande GET&lt;/h3&gt;
+
+&lt;p&gt;Accepte plusieurs paramètres dont:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-v&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; version du protocole&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-c&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; communauté&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-O&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; format de sortie (a,f,n,s,…)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;exemple&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
+SNMPv2-MIB::sysDescr.0 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; STRING: SunOS zeus.snmplabs.com 4.1.3_U1 1 sun4m
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version &lt;code class=&quot;highlighter-rouge&quot;&gt;2c&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;v2c&lt;/code&gt;) et la communauté &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt;. Nous demandons l’information &lt;code class=&quot;highlighter-rouge&quot;&gt;sysDescr&lt;/code&gt;. Pour ce faire nous ajoutons le chemin &lt;code class=&quot;highlighter-rouge&quot;&gt;.0&lt;/code&gt; qui désigne la valeur du noeud &lt;code class=&quot;highlighter-rouge&quot;&gt;sysDescr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Les autres valeurs sous un noeuds (&lt;code class=&quot;highlighter-rouge&quot;&gt;.1.2&lt;/code&gt;, etc…) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d’un &lt;code class=&quot;highlighter-rouge&quot;&gt;OID&lt;/code&gt; numérique &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.2.1.1.1.0&lt;/code&gt; (&lt;strong&gt;ou textuel ou encore via le nom court&lt;/strong&gt;. &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; normalement unique).&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 01 Jul 2017 00:00:00 +0200</pubDate>
