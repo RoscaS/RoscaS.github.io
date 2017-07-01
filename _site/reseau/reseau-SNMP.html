@@ -242,13 +242,17 @@
   <p>Note perso: en gros, l’agent demande une information qui a une certaine relevance à un moment T.</p>
 </blockquote>
 
-<p>Beaucoup d’informatiions issues des <strong>MIBs</strong> sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée). Selon les constructeurs/OS ces informations pour la grande majorité afin quùne même information soit toujours demandée de la même manière par le manager. C’est à l’agent de savoir ou aller la chercher selon le matériel/service géré.</p>
+<p>Beaucoup d’informations issues des <strong>MIBs</strong> sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée).</p>
 
-<p><strong>Cela apporte beaucoup de facilités dans l’écriture de sondes/outils de supervisions. C’est une des grandes forces de ce standard.</strong></p>
+<p>Selon les constructeurs/OS ces informations sont stockées physiquement différemment, mais la <strong>MIB</strong> les normalise pour la grande majorité afin qu’une même information soit toujours demandée de la même manière par le manager. <strong>C’est à l’agent de savoir ou aller la chercher</strong> selon le matériel/service géré.</p>
+
+<blockquote>
+  <p>Cela apporte beaucoup de facilités dans l’écriture de sondes/outils de supervisions. C’est une des grandes forces de ce standard.</p>
+</blockquote>
 
 <h3 id="mib-2">MIB-2</h3>
 
-<p>Une des <strong>MIB</strong> les plus ocnnues est la <strong>MIB-2</strong>, décrite par la <em>RFC 1213</em>. Elle est mise en oeuvre dans la presque totaltalité des équipements TCP/IP. Elle compte 10 groupes:</p>
+<p>Une des <strong>MIB</strong> les plus connues est la <strong>MIB-2</strong>, décrite par la <em>RFC 1213</em>. Elle est mise en oeuvre dans la presque totaltalité des équipements TCP/IP. Elle compte 10 groupes:</p>
 
 <ul>
   <li>système</li>
@@ -277,9 +281,9 @@
 
 <h3 id="exemple-de-descitpion-dune-mib">Exemple de descitpion d’une MIB</h3>
 
-<p>Enfin, les mibs sont décrites dans un “appelé”  <strong>ASN.1</strong>. L’exemple suivant présente l’information “descitpion d’interface (réseau) telle que décrite en ADN.1:</p>
+<p>Les mibs sont décrites dans un “langage” appelé  <strong>ASN.1</strong>. L’exemple suivant présente l’information “<strong>descitpion d’interface</strong> (réseau)” telle que décrite en <strong>ASN.1</strong>:</p>
 
-<pre><code class="language-asn">ifDescr OBJECT-TYPE
+<div class="highlighter-rouge"><pre class="highlight"><code>ifDescr OBJECT-TYPE
  SYNTAX DisplayString (SIZE (0..255))
  ACCESS read-only
  STATUS mandatory
@@ -290,6 +294,7 @@
  of the hardware interface."
  ::= { ifEntry 2 }
 </code></pre>
+</div>
 
 <p>La lecture de la définition de cette donnée est assez compréhensible par elle-même:</p>
 
@@ -297,7 +302,7 @@
   <li>nom: <code class="highlighter-rouge">ifDescr</code></li>
   <li>type: <code class="highlighter-rouge">DisplayString</code>: une string de 255 char max</li>
   <li>mode d’accès: “lecture seule”</li>
-  <li>son état: “obligatoire”</li>
+  <li>son état (<code class="highlighter-rouge">STATUS</code>): “obligatoire”</li>
   <li>enfin son emplacement dans le noeud parent <code class="highlighter-rouge">ifEntry</code>: 2ème sous-élément du noeud <code class="highlighter-rouge">ifEntry</code></li>
 </ul>
 
@@ -308,25 +313,32 @@
 <p><img src="https://makina-corpus.com/blog/metier/2016/pysnmp/snmp_mib.png" alt="alt" /></p>
 
 <p>Sous le noeud racine, noté <code class="highlighter-rouge">.</code> se trouvent 3 informations numérotées:</p>
+
 <ul>
   <li><code class="highlighter-rouge">CCITT</code> avec le numéro 0</li>
   <li><code class="highlighter-rouge">ISO</code> avec le numéro 1</li>
-  <li><code class="highlighter-rouge">ISO - CCITT</code> avec le numéro 2
- Sous le noeud <code class="highlighter-rouge">ISO</code> se trouvent 4 informations, elles aussi numérotées:</li>
+  <li><code class="highlighter-rouge">ISO - CCITT</code> avec le numéro 2</li>
+</ul>
+
+<p>Sous le noeud <code class="highlighter-rouge">ISO</code> se trouvent 4 informations, elles aussi numérotées:</p>
+
+<ul>
   <li>standard, avec le numéro 0</li>
   <li>registration authority, avec le numéro 1</li>
   <li>member body, avec le numéro 2</li>
-  <li>organization, avec le numéro 3
- Par exemple, l’accès à l’information <strong>MIB-2</strong> se fera via le chemin:
-    <div class="highlighter-rouge"><pre class="highlight"><code>. 1 . 3 . 6 . 1 . 2 . 1
-</code></pre>
-    </div>
-    <p>ou encore:</p>
-    <div class="highlighter-rouge"><pre class="highlight"><code>. ISO . organisation . DoD . Internet . management . MIB-2
-</code></pre>
-    </div>
-  </li>
+  <li>organization, avec le numéro 3</li>
 </ul>
+
+<p>Le chemin d’accès à l’information <code class="highlighter-rouge">organisation</code> située sous <code class="highlighter-rouge">ISO</code>, elle-même située sous la racine sera <code class="highlighter-rouge">.1.3</code> ou encore <code class="highlighter-rouge">.ISO.organzation</code>.</p>
+
+<p>Par exemple, l’accès à l’information <strong>MIB-2</strong> se fera via le chemin:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1
+</code></pre>
+</div>
+<p>ou encore</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>.ISO.organisation.DoD.Internet.management.MIB-2
+</code></pre>
+</div>
 
 <h4 id="en-gros">En gros</h4>
 
@@ -334,7 +346,7 @@
 
 <h3 id="les-oid">Les OID</h3>
 
-<p>Les informations sont donc numérotées selon leur ordre dans l’arbre de la <strong>MIB</strong>, ces numéros sont appelées <strong>OID</strong> (Object IDentifier). Voici quelques exemples d’OIDs:</p>
+<p>Les informations sont donc numérotées selon leur ordre dans l’arbre de la <strong>MIB</strong>, ces numéros sont appelées <strong>OID</strong> (Object IDentifier). Voici quelques exemples d’<strong>OIDs</strong>:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>.1.3.6.1.2.1.1 system : uptime, contact, nom
 </code></pre>
@@ -352,16 +364,16 @@
 </code></pre>
 </div>
 
-<p>La question devient maintenant “Comment trouver toutes les informations desponibles dans une MIB?”
+<p>La question devient maintenant “<strong>Comment trouver toutes les informations desponibles dans une MIB?</strong>”
 Les réponses seront:</p>
 
 <ul>
   <li>En lisant les standards et normes associés <a href="https://tools.ietf.org/html/rfc1213">rfc1213</a></li>
-  <li>En exécutant des requêtes avec des outils <code class="highlighter-rouge">SNMP</code> qui permettent de prcoutir toute l’arborescence d’une <strong>MIB</strong></li>
+  <li>En exécutant des requêtes avec des outils <code class="highlighter-rouge">SNMP</code> qui permettent de parcourir toute l’arborescence d’une <strong>MIB</strong></li>
   <li>En parcourant ces <strong>MIBs</strong> via des sites Internet qui ont l’amabilité de les représenter facilement, comme le site <a href="http://www.commentcamarche.net/download/telecharger-34059278-ipmonitor">IP Monitor</a></li>
 </ul>
 
-<p>On observera sur ce dernier que le chemin complet à l’information <code class="highlighter-rouge">ifDescr</code> est fournit par l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.2.2.1.2</code>. C’est ce que va nous permettre de fire <strong>PySNMP</strong>: Envoyer des requêtes demandant l valeur d’un noeud (une information) située à un emplacement précis dans une <strong>MIB</strong> ou modifiant cette valeur.</p>
+<p>On observera sur ce dernier que le chemin complet à l’information <code class="highlighter-rouge">ifDescr</code> est fournit par l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.2.2.1.2</code>. C’est ce que va nous permettre de fire <strong>PySNMP</strong>: Envoyer des requêtes demandant la valeur d’un noeud (une information) située à un emplacement précis dans une <strong>MIB</strong> ou modifiant cette valeur.</p>
 
 <p>Et c’est tout…</p>
 
@@ -371,7 +383,7 @@ Les réponses seront:</p>
 
 <ul>
   <li>Selon le matériel (routeur, imprimante…) les informations sont différentes</li>
-  <li>Pour cette raison, certains équipements ou constructeurs fournissent donc leurs propres <strong>MIB</strong> définissant une branche dans l’arbre des <strong>OIDs</strong> avec un numéro officiel défini auprès de l’<strong>IANA</strong> (Internet Assigned Numbers Authority). On retrouve par exemple <strong>CISCO</strong> à cette branche de l’arbre: <code class="highlighter-rouge">iso.org.dod.internet.private.entreprise.cisco</code> = <code class="highlighter-rouge">1.3.6.1.4.1.9</code> A cet emplacement, <code class="highlighter-rouge">CISCO</code> est libre de proposer les <strong>MIBs</strong> décrivant les informations de ses propres matériel comme il l’entend. Beaucoup d’autres sociétés en font autant, comme Alcatel/Nokia pour ne citer qu’eux.</li>
+  <li>Pour cette raison, certains équipements ou constructeurs fournissent donc leurs propres <strong>MIB</strong> définissant une branche dans l’arbre des <strong>OIDs</strong> avec un numéro officiel défini auprès de l’<strong>IANA</strong> (Internet Assigned Numbers Authority). On retrouve par exemple <strong>CISCO</strong> à cette branche de l’arbre: <code class="highlighter-rouge">iso.org.dod.internet.private.entreprise.cisco</code> = <code class="highlighter-rouge">1.3.6.1.4.1.9</code>. A cet emplacement, <code class="highlighter-rouge">CISCO</code> est libre de proposer les <strong>MIBs</strong> décrivant les informations de ses propres matériel comme il l’entend. Beaucoup d’autres sociétés en font autant, comme Alcatel/Nokia pour ne citer qu’eux.</li>
 </ul>
 
 <blockquote>
@@ -382,7 +394,7 @@ Les réponses seront:</p>
 
 <p>L’accès aux informations d’une <strong>MIB</strong> est filtré par ce qu l’on appelle la “communauté”, <em>sauf version 3 du protocole</em>. La “communauté” est une sorte de de mot partagé, “public” par défaut. “public” peut-être rapproché du login “anonymous” disponible sur la plupart des serveurs <code class="highlighter-rouge">ftp</code>.</p>
 
-<p>Une demanade d’informations est toujours exécutée via une communauté. Selon la communauté utilisée, les informations reçues seront différentes:</p>
+<p><strong>Une demanade d’informations est toujours exécutée via une communauté</strong>. Selon la communauté utilisée, les informations reçues seront différentes:</p>
 
 <ul>
   <li>la communauté “public” donne accès au niveau “read-only”</li>
@@ -401,7 +413,7 @@ Les réponses seront:</p>
 
 <h2 id="4-utilisation-du-protocole-en-ligne-de-commande">4. Utilisation du protocole en ligne de commande</h2>
 
-<p>Pour bien comprendre ce que permet ce protocole, nous allons exécuter les commndes de base avec des <strong>outils systéme</strong>. Ceci permettra de toucher du doigt la mécanique sous-jacente et de vérifier que les agents comprennent bien nos roquêtes avant de les écrire en Python.</p>
+<p>Pour bien comprendre ce que permet ce protocole, nous allons exécuter les commandes de base avec des <strong>outils systéme</strong>. Ceci permettra de toucher du doigt la mécanique sous-jacente et de vérifier que les agents comprennent bien nos roquêtes avant de les écrire en Python.</p>
 
 <h3 id="les-commandes">Les commandes</h3>
 
@@ -448,14 +460,135 @@ sudo apt-get install smitools libsmi
 </ul>
 
 <p><strong>exemple</strong></p>
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
-SNMPv2-MIB::sysDescr.0 <span class="o">=</span> STRING: SunOS zeus.snmplabs.com 4.1.3_U1 1 sun4m
+
+<p>Avant tout il faut commenter la ligne contenant <code class="highlighter-rouge">mibs :</code> dans <code class="highlighter-rouge">/etc/snmp/snmp.conf</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/Downloads/Python-3.6.1$ snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
+SNMPv2-MIB::sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
+
 </code></pre>
 </div>
 
 <p>La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version <code class="highlighter-rouge">2c</code> (<code class="highlighter-rouge">v2c</code>) et la communauté <code class="highlighter-rouge">public</code>. Nous demandons l’information <code class="highlighter-rouge">sysDescr</code>. Pour ce faire nous ajoutons le chemin <code class="highlighter-rouge">.0</code> qui désigne la valeur du noeud <code class="highlighter-rouge">sysDescr</code>.</p>
 
 <p>Les autres valeurs sous un noeuds (<code class="highlighter-rouge">.1.2</code>, etc…) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d’un <code class="highlighter-rouge">OID</code> numérique <code class="highlighter-rouge">1.3.6.1.2.1.1.1.0</code> (<strong>ou textuel ou encore via le nom court</strong>. <script type="math/tex">\Rightarrow</script> normalement unique).</p>
+
+<p>Même commande avec l’<strong>OID</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/Downloads/Python-3.6.1$ snmpget -v2c -c public -Oa demo.snmplabs.com 1.3.6.1.2.1.1.1.0
+iso.3.6.1.2.1.1.1.0 = STRING: "Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686"
+</code></pre>
+</div>
+
+<h3 id="la-commande-getnext">La commande GETNEXT</h3>
+
+<p>Elle accepte les mêmes paramètres que <code class="highlighter-rouge">GET</code> mais retourne non pas l’<code class="highlighter-rouge">OID</code> demandé mais celui qui suit dans l’arborescence. En chainant un <code class="highlighter-rouge">GET</code> puis plusieurs <code class="highlighter-rouge">GETNEXT</code> on peut donc consulter tout l’arbre d’une <code class="highlighter-rouge">MIB</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/Downloads/Python-3.6.1$ snmpgetnext -v2c -Oa -c public -Os demo.snmplabs.com sysDescr.0
+sysObjectID.0 = OID: netSnmpAgentOIDs.10
+</code></pre>
+</div>
+
+<p>On peut exécuter <code class="highlighter-rouge">GETNEXT</code> sur n’importe quel noeud, donc la racine d’une <strong>MIB</strong> mais parcoutir tout un arbre est laborieux.</p>
+
+<h3 id="les-commandes-get-bulk-et-walk">Les commandes GET BULK et WALK</h3>
+
+<p>Pour éviter d’envoyer plusieurs commandes <code class="highlighter-rouge">GET</code> les unes après les autres ce qui surcharge les échanges réseau, il est possible de demander à consulter plusieurs <code class="highlighter-rouge">OID</code> en une seule fois via la commande <code class="highlighter-rouge">GET BULK</code>. <strong>Mais tous les agents ne le supportent pas</strong>.</p>
+
+<p>On peut aussi utiliser la commande <code class="highlighter-rouge">WALK</code> pour parcoutir toute une arborescence, comme on le ferait avec <code class="highlighter-rouge">GET</code> et <code class="highlighter-rouge">GET NEXT</code>. Mais c’est la commande <code class="highlighter-rouge">WALK</code> qui les exécute pour nous.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/Downloads/Python-3.6.1$ snmpwalk -v2c -On -c public -Os demo.snmplabs.com system
+sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
+sysObjectID.0 = OID: netSnmpAgentOIDs.10
+sysUpTimeInstance = Timeticks: (274672133) 31 days, 18:58:41.33
+sysContact.0 = STRING: SNMP Laboratories, info@snmplabs.com
+sysName.0 = STRING: new system d
+sysLocation.0 = STRING: San Francisco, California, United States
+sysServices.0 = INTEGER: 72
+sysORLastChange.0 = Timeticks: (274672261) 31 days, 18:58:42.61
+sysORID.1 = OID: snmpFrameworkMIBCompliance
+sysORID.2 = OID: snmpMPDCompliance
+sysORID.3 = OID: usmMIBCompliance
+sysORID.4 = OID: snmpMIB
+sysORID.5 = OID: tcpMIB
+sysORID.6 = OID: ip
+sysORID.7 = OID: udpMIB
+sysORID.8 = OID: vacmBasicGroup
+sysORDescr.1 = STRING: The SNMP Management Architecture MIB.
+sysORDescr.2 = STRING: The MIB for Message Processing and Dispatching.
+sysORDescr.3 = STRING: The management information definitions for the SNMP User-based Security Model.
+sysORDescr.4 = STRING: The MIB module for SNMPv2 entities
+sysORDescr.5 = STRING: The MIB module for managing TCP implementations
+sysORDescr.6 = STRING: The MIB module for managing IP and ICMP implementations
+sysORDescr.7 = STRING: The MIB module for managing UDP implementations
+sysORDescr.8 = STRING: View-based Access Control Model for SNMP.
+sysORUpTime.1 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.2 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.3 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.4 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.5 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.6 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.7 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.8 = Timeticks: (1506) 0:00:15.06
+</code></pre>
+</div>
+
+<h3 id="traduire-les-oids">Traduire les OIDs</h3>
+
+<p>La commande <code class="highlighter-rouge">snmptranslate</code> permet de traduire des <code class="highlighter-rouge">OID</code> du mode numérique au mode texte et inversément</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~/Downloads/Python-3.6.1$ snmptranslate -On SNMPv2-MIB::sysDescr.0
+.1.3.6.1.2.1.1.1.0
+
+sol@debian:~/Downloads/Python-3.6.1$ snmptranslate .1.3.6.1.2.1.1.1.0
+SNMPv2-MIB::sysDescr.0
+</code></pre>
+</div>
+
+<h3 id="modifier-un-oid-la-commande-set">Modifier un OID, la commande SET</h3>
+
+<p>La commande <code class="highlighter-rouge">snmpset</code> permet de modifier la valeur d’un <code class="highlighter-rouge">OID</code>. Elle n’est disponible qu’avec le protocole <strong>v2</strong> et la communauté <code class="highlighter-rouge">private</code> ou le protocole <strong>v3</strong>.</p>
+
+<p>L’exemple suivant est fourni par le protocole v3. Les paramètres utilisés sont:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-u</code> <script type="math/tex">\Rightarrow</script>  utilisateur</li>
+  <li><code class="highlighter-rouge">-l</code> <script type="math/tex">\Rightarrow</script>  niveau de sécurité pour s’identifier</li>
+  <li><code class="highlighter-rouge">-a</code> <script type="math/tex">\Rightarrow</script>  protocole d’authentification (chiffrement mdp)</li>
+  <li><code class="highlighter-rouge">-A</code> <script type="math/tex">\Rightarrow</script>  mot de passe d’authentification</li>
+  <li><code class="highlighter-rouge">-x</code> <script type="math/tex">\Rightarrow</script>  algorithme de chiffrement pour la connexion</li>
+  <li><code class="highlighter-rouge">-X</code> <script type="math/tex">\Rightarrow</script>  mot de passe/salt pour le chiffrement de la connexion</li>
+</ul>
+
+<p>C’est là qu’on découvre le côté <strong>pénible du protocole v3</strong> qui implémente lui-même les connexions <code class="highlighter-rouge">SSH</code> sans faire de <code class="highlighter-rouge">SNMP</code> over <code class="highlighter-rouge">SSH</code>: Il n’y a pas d’auto-négociation des algorithmes de chiffremen, il faut tout préciser par sois-même. <span style="color:red"> Vrmt chiant…</span></p>
+
+<p><span style="color:red"> N’a pas fonctionné chez moi. </span></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ snmpget localhost sysLocation.0
+SNMPv2-MIB::sysLocation.0 = STRING: Rouans
+$ snmpset -u demo -l authPriv -a MD5 -x DES -A pass1 -X pass2 localhost sysLocation.0 s "Earth"
+SNMPv2-MIB::sysLocation.0 = STRING: Earth
+$ snmpget localhost sysLocation.0
+SNMPv2-MIB::sysLocation.0 = STRING: Earth
+</code></pre>
+</div>
+
+<h3 id="recommandations-concernant-lutilisation-du-protocole-snmp-et-outils-associés">Recommandations concernant l’utilisation du protocole SNMP et outils associés</h3>
+
+<p>Les versions 1 et 2 du protocole sont insuffisamment sécurisées (pas du tout pour la première)</p>
+
+<p>La protection dans la v2 du protocole se fait uniquement via les <code class="highlighter-rouge">communautés</code> qui n’utilisent pas de mdp. Ce n’est pas très fiable comme type de protection, car il suffit de connaître le nom de la communauté pour accéder aux informations d’un matériel qui pourrai s’avérer être sensible.</p>
+
+<p>Les agents de Windwos XP étaient particulièrement réputés pour proposer dans leur configuration par défaut beaucoup trop d’informations sensibles, comme les logins des utilisateurs qui étaient accessibles directement via la communauté <code class="highlighter-rouge">public</code>.</p>
+
+<p>Dans la pratique l’agent fournit par les outils NetSNMP (sous linux) est relativement lent et n’est pas forcément très bien sécurisé, beaucoup de failles sont découvertes régulièrement.</p>
+
+<p>Aussi quelque soit la solution retenue, désactivez systématiquement le mode anonyme, ou alors contrôlez chaque information proposée. Puis créer des <code class="highlighter-rouge">ACLS</code> d’accès à chaque <code class="highlighter-rouge">MIB</code> par utilisateur afin d’avoir une maîtrise complète de qui peut faire quoi.</p>
+
+<p>Enfin,  <span style="color:red"> il est très important de privilégier la version 3 du protocole ! </span></p>
+
+<h2 id="5-conclusion">5. Conclusion</h2>
+
+<p>Les commandes de base du protocole <code class="highlighter-rouge">SNMP</code> sont assez simples une fois qu’on a compris comment manipuler les paramètres qu’elles utilisent.</p>
 
 
 </div>

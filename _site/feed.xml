@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 01 Jul 2017 17:57:21 +0200</pubDate>
-    <lastBuildDate>Sat, 01 Jul 2017 17:57:21 +0200</lastBuildDate>
+    <pubDate>Sat, 01 Jul 2017 19:54:22 +0200</pubDate>
+    <lastBuildDate>Sat, 01 Jul 2017 19:54:22 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -155,13 +155,17 @@
   &lt;p&gt;Note perso: en gros, l’agent demande une information qui a une certaine relevance à un moment T.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Beaucoup d’informatiions issues des &lt;strong&gt;MIBs&lt;/strong&gt; sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée). Selon les constructeurs/OS ces informations pour la grande majorité afin quùne même information soit toujours demandée de la même manière par le manager. C’est à l’agent de savoir ou aller la chercher selon le matériel/service géré.&lt;/p&gt;
+&lt;p&gt;Beaucoup d’informations issues des &lt;strong&gt;MIBs&lt;/strong&gt; sont de cette nature, d’autres sont parfois stockées quelque part, comme le responsable d’une machine, le port d’un service ou encore l’état d’une ligne élecrtique ou d’une diode (éteinte, allumée).&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Cela apporte beaucoup de facilités dans l’écriture de sondes/outils de supervisions. C’est une des grandes forces de ce standard.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Selon les constructeurs/OS ces informations sont stockées physiquement différemment, mais la &lt;strong&gt;MIB&lt;/strong&gt; les normalise pour la grande majorité afin qu’une même information soit toujours demandée de la même manière par le manager. &lt;strong&gt;C’est à l’agent de savoir ou aller la chercher&lt;/strong&gt; selon le matériel/service géré.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Cela apporte beaucoup de facilités dans l’écriture de sondes/outils de supervisions. C’est une des grandes forces de ce standard.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h3 id=&quot;mib-2&quot;&gt;MIB-2&lt;/h3&gt;
 
-&lt;p&gt;Une des &lt;strong&gt;MIB&lt;/strong&gt; les plus ocnnues est la &lt;strong&gt;MIB-2&lt;/strong&gt;, décrite par la &lt;em&gt;RFC 1213&lt;/em&gt;. Elle est mise en oeuvre dans la presque totaltalité des équipements TCP/IP. Elle compte 10 groupes:&lt;/p&gt;
+&lt;p&gt;Une des &lt;strong&gt;MIB&lt;/strong&gt; les plus connues est la &lt;strong&gt;MIB-2&lt;/strong&gt;, décrite par la &lt;em&gt;RFC 1213&lt;/em&gt;. Elle est mise en oeuvre dans la presque totaltalité des équipements TCP/IP. Elle compte 10 groupes:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;système&lt;/li&gt;
@@ -190,9 +194,9 @@
 
 &lt;h3 id=&quot;exemple-de-descitpion-dune-mib&quot;&gt;Exemple de descitpion d’une MIB&lt;/h3&gt;
 
-&lt;p&gt;Enfin, les mibs sont décrites dans un “appelé”  &lt;strong&gt;ASN.1&lt;/strong&gt;. L’exemple suivant présente l’information “descitpion d’interface (réseau) telle que décrite en ADN.1:&lt;/p&gt;
+&lt;p&gt;Les mibs sont décrites dans un “langage” appelé  &lt;strong&gt;ASN.1&lt;/strong&gt;. L’exemple suivant présente l’information “&lt;strong&gt;descitpion d’interface&lt;/strong&gt; (réseau)” telle que décrite en &lt;strong&gt;ASN.1&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&quot;language-asn&quot;&gt;ifDescr OBJECT-TYPE
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ifDescr OBJECT-TYPE
  SYNTAX DisplayString (SIZE (0..255))
  ACCESS read-only
  STATUS mandatory
@@ -203,6 +207,7 @@
  of the hardware interface.&quot;
  ::= { ifEntry 2 }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;La lecture de la définition de cette donnée est assez compréhensible par elle-même:&lt;/p&gt;
 
@@ -210,7 +215,7 @@
   &lt;li&gt;nom: &lt;code class=&quot;highlighter-rouge&quot;&gt;ifDescr&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;type: &lt;code class=&quot;highlighter-rouge&quot;&gt;DisplayString&lt;/code&gt;: une string de 255 char max&lt;/li&gt;
   &lt;li&gt;mode d’accès: “lecture seule”&lt;/li&gt;
-  &lt;li&gt;son état: “obligatoire”&lt;/li&gt;
+  &lt;li&gt;son état (&lt;code class=&quot;highlighter-rouge&quot;&gt;STATUS&lt;/code&gt;): “obligatoire”&lt;/li&gt;
   &lt;li&gt;enfin son emplacement dans le noeud parent &lt;code class=&quot;highlighter-rouge&quot;&gt;ifEntry&lt;/code&gt;: 2ème sous-élément du noeud &lt;code class=&quot;highlighter-rouge&quot;&gt;ifEntry&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -221,25 +226,32 @@
 &lt;p&gt;&lt;img src=&quot;https://makina-corpus.com/blog/metier/2016/pysnmp/snmp_mib.png&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Sous le noeud racine, noté &lt;code class=&quot;highlighter-rouge&quot;&gt;.&lt;/code&gt; se trouvent 3 informations numérotées:&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;CCITT&lt;/code&gt; avec le numéro 0&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ISO&lt;/code&gt; avec le numéro 1&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ISO - CCITT&lt;/code&gt; avec le numéro 2
- Sous le noeud &lt;code class=&quot;highlighter-rouge&quot;&gt;ISO&lt;/code&gt; se trouvent 4 informations, elles aussi numérotées:&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ISO - CCITT&lt;/code&gt; avec le numéro 2&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sous le noeud &lt;code class=&quot;highlighter-rouge&quot;&gt;ISO&lt;/code&gt; se trouvent 4 informations, elles aussi numérotées:&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;standard, avec le numéro 0&lt;/li&gt;
   &lt;li&gt;registration authority, avec le numéro 1&lt;/li&gt;
   &lt;li&gt;member body, avec le numéro 2&lt;/li&gt;
-  &lt;li&gt;organization, avec le numéro 3
- Par exemple, l’accès à l’information &lt;strong&gt;MIB-2&lt;/strong&gt; se fera via le chemin:
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;. 1 . 3 . 6 . 1 . 2 . 1
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-    &lt;p&gt;ou encore:&lt;/p&gt;
-    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;. ISO . organisation . DoD . Internet . management . MIB-2
-&lt;/code&gt;&lt;/pre&gt;
-    &lt;/div&gt;
-  &lt;/li&gt;
+  &lt;li&gt;organization, avec le numéro 3&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;Le chemin d’accès à l’information &lt;code class=&quot;highlighter-rouge&quot;&gt;organisation&lt;/code&gt; située sous &lt;code class=&quot;highlighter-rouge&quot;&gt;ISO&lt;/code&gt;, elle-même située sous la racine sera &lt;code class=&quot;highlighter-rouge&quot;&gt;.1.3&lt;/code&gt; ou encore &lt;code class=&quot;highlighter-rouge&quot;&gt;.ISO.organzation&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, l’accès à l’information &lt;strong&gt;MIB-2&lt;/strong&gt; se fera via le chemin:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.1.3.6.1.2.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;ou encore&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.ISO.organisation.DoD.Internet.management.MIB-2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h4 id=&quot;en-gros&quot;&gt;En gros&lt;/h4&gt;
 
@@ -247,7 +259,7 @@
 
 &lt;h3 id=&quot;les-oid&quot;&gt;Les OID&lt;/h3&gt;
 
-&lt;p&gt;Les informations sont donc numérotées selon leur ordre dans l’arbre de la &lt;strong&gt;MIB&lt;/strong&gt;, ces numéros sont appelées &lt;strong&gt;OID&lt;/strong&gt; (Object IDentifier). Voici quelques exemples d’OIDs:&lt;/p&gt;
+&lt;p&gt;Les informations sont donc numérotées selon leur ordre dans l’arbre de la &lt;strong&gt;MIB&lt;/strong&gt;, ces numéros sont appelées &lt;strong&gt;OID&lt;/strong&gt; (Object IDentifier). Voici quelques exemples d’&lt;strong&gt;OIDs&lt;/strong&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.1.3.6.1.2.1.1 system : uptime, contact, nom
 &lt;/code&gt;&lt;/pre&gt;
@@ -265,16 +277,16 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;La question devient maintenant “Comment trouver toutes les informations desponibles dans une MIB?”
+&lt;p&gt;La question devient maintenant “&lt;strong&gt;Comment trouver toutes les informations desponibles dans une MIB?&lt;/strong&gt;”
 Les réponses seront:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;En lisant les standards et normes associés &lt;a href=&quot;https://tools.ietf.org/html/rfc1213&quot;&gt;rfc1213&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;En exécutant des requêtes avec des outils &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt; qui permettent de prcoutir toute l’arborescence d’une &lt;strong&gt;MIB&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;En exécutant des requêtes avec des outils &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt; qui permettent de parcourir toute l’arborescence d’une &lt;strong&gt;MIB&lt;/strong&gt;&lt;/li&gt;
   &lt;li&gt;En parcourant ces &lt;strong&gt;MIBs&lt;/strong&gt; via des sites Internet qui ont l’amabilité de les représenter facilement, comme le site &lt;a href=&quot;http://www.commentcamarche.net/download/telecharger-34059278-ipmonitor&quot;&gt;IP Monitor&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;On observera sur ce dernier que le chemin complet à l’information &lt;code class=&quot;highlighter-rouge&quot;&gt;ifDescr&lt;/code&gt; est fournit par l’&lt;strong&gt;OID&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.2.1.2.2.1.2&lt;/code&gt;. C’est ce que va nous permettre de fire &lt;strong&gt;PySNMP&lt;/strong&gt;: Envoyer des requêtes demandant l valeur d’un noeud (une information) située à un emplacement précis dans une &lt;strong&gt;MIB&lt;/strong&gt; ou modifiant cette valeur.&lt;/p&gt;
+&lt;p&gt;On observera sur ce dernier que le chemin complet à l’information &lt;code class=&quot;highlighter-rouge&quot;&gt;ifDescr&lt;/code&gt; est fournit par l’&lt;strong&gt;OID&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.2.1.2.2.1.2&lt;/code&gt;. C’est ce que va nous permettre de fire &lt;strong&gt;PySNMP&lt;/strong&gt;: Envoyer des requêtes demandant la valeur d’un noeud (une information) située à un emplacement précis dans une &lt;strong&gt;MIB&lt;/strong&gt; ou modifiant cette valeur.&lt;/p&gt;
 
 &lt;p&gt;Et c’est tout…&lt;/p&gt;
 
@@ -284,7 +296,7 @@ Les réponses seront:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Selon le matériel (routeur, imprimante…) les informations sont différentes&lt;/li&gt;
-  &lt;li&gt;Pour cette raison, certains équipements ou constructeurs fournissent donc leurs propres &lt;strong&gt;MIB&lt;/strong&gt; définissant une branche dans l’arbre des &lt;strong&gt;OIDs&lt;/strong&gt; avec un numéro officiel défini auprès de l’&lt;strong&gt;IANA&lt;/strong&gt; (Internet Assigned Numbers Authority). On retrouve par exemple &lt;strong&gt;CISCO&lt;/strong&gt; à cette branche de l’arbre: &lt;code class=&quot;highlighter-rouge&quot;&gt;iso.org.dod.internet.private.entreprise.cisco&lt;/code&gt; = &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.4.1.9&lt;/code&gt; A cet emplacement, &lt;code class=&quot;highlighter-rouge&quot;&gt;CISCO&lt;/code&gt; est libre de proposer les &lt;strong&gt;MIBs&lt;/strong&gt; décrivant les informations de ses propres matériel comme il l’entend. Beaucoup d’autres sociétés en font autant, comme Alcatel/Nokia pour ne citer qu’eux.&lt;/li&gt;
+  &lt;li&gt;Pour cette raison, certains équipements ou constructeurs fournissent donc leurs propres &lt;strong&gt;MIB&lt;/strong&gt; définissant une branche dans l’arbre des &lt;strong&gt;OIDs&lt;/strong&gt; avec un numéro officiel défini auprès de l’&lt;strong&gt;IANA&lt;/strong&gt; (Internet Assigned Numbers Authority). On retrouve par exemple &lt;strong&gt;CISCO&lt;/strong&gt; à cette branche de l’arbre: &lt;code class=&quot;highlighter-rouge&quot;&gt;iso.org.dod.internet.private.entreprise.cisco&lt;/code&gt; = &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.4.1.9&lt;/code&gt;. A cet emplacement, &lt;code class=&quot;highlighter-rouge&quot;&gt;CISCO&lt;/code&gt; est libre de proposer les &lt;strong&gt;MIBs&lt;/strong&gt; décrivant les informations de ses propres matériel comme il l’entend. Beaucoup d’autres sociétés en font autant, comme Alcatel/Nokia pour ne citer qu’eux.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
@@ -295,7 +307,7 @@ Les réponses seront:&lt;/p&gt;
 
 &lt;p&gt;L’accès aux informations d’une &lt;strong&gt;MIB&lt;/strong&gt; est filtré par ce qu l’on appelle la “communauté”, &lt;em&gt;sauf version 3 du protocole&lt;/em&gt;. La “communauté” est une sorte de de mot partagé, “public” par défaut. “public” peut-être rapproché du login “anonymous” disponible sur la plupart des serveurs &lt;code class=&quot;highlighter-rouge&quot;&gt;ftp&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Une demanade d’informations est toujours exécutée via une communauté. Selon la communauté utilisée, les informations reçues seront différentes:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Une demanade d’informations est toujours exécutée via une communauté&lt;/strong&gt;. Selon la communauté utilisée, les informations reçues seront différentes:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;la communauté “public” donne accès au niveau “read-only”&lt;/li&gt;
@@ -314,7 +326,7 @@ Les réponses seront:&lt;/p&gt;
 
 &lt;h2 id=&quot;4-utilisation-du-protocole-en-ligne-de-commande&quot;&gt;4. Utilisation du protocole en ligne de commande&lt;/h2&gt;
 
-&lt;p&gt;Pour bien comprendre ce que permet ce protocole, nous allons exécuter les commndes de base avec des &lt;strong&gt;outils systéme&lt;/strong&gt;. Ceci permettra de toucher du doigt la mécanique sous-jacente et de vérifier que les agents comprennent bien nos roquêtes avant de les écrire en Python.&lt;/p&gt;
+&lt;p&gt;Pour bien comprendre ce que permet ce protocole, nous allons exécuter les commandes de base avec des &lt;strong&gt;outils systéme&lt;/strong&gt;. Ceci permettra de toucher du doigt la mécanique sous-jacente et de vérifier que les agents comprennent bien nos roquêtes avant de les écrire en Python.&lt;/p&gt;
 
 &lt;h3 id=&quot;les-commandes&quot;&gt;Les commandes&lt;/h3&gt;
 
@@ -361,14 +373,135 @@ sudo apt-get install smitools libsmi
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;exemple&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
-SNMPv2-MIB::sysDescr.0 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; STRING: SunOS zeus.snmplabs.com 4.1.3_U1 1 sun4m
+
+&lt;p&gt;Avant tout il faut commenter la ligne contenant &lt;code class=&quot;highlighter-rouge&quot;&gt;mibs :&lt;/code&gt; dans &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/snmp/snmp.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~/Downloads/Python-3.6.1$ snmpget -v2c -c public -Oa demo.snmplabs.com sysDescr.0
+SNMPv2-MIB::sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
+
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version &lt;code class=&quot;highlighter-rouge&quot;&gt;2c&lt;/code&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;v2c&lt;/code&gt;) et la communauté &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt;. Nous demandons l’information &lt;code class=&quot;highlighter-rouge&quot;&gt;sysDescr&lt;/code&gt;. Pour ce faire nous ajoutons le chemin &lt;code class=&quot;highlighter-rouge&quot;&gt;.0&lt;/code&gt; qui désigne la valeur du noeud &lt;code class=&quot;highlighter-rouge&quot;&gt;sysDescr&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Les autres valeurs sous un noeuds (&lt;code class=&quot;highlighter-rouge&quot;&gt;.1.2&lt;/code&gt;, etc…) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d’un &lt;code class=&quot;highlighter-rouge&quot;&gt;OID&lt;/code&gt; numérique &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.2.1.1.1.0&lt;/code&gt; (&lt;strong&gt;ou textuel ou encore via le nom court&lt;/strong&gt;. &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; normalement unique).&lt;/p&gt;
+
+&lt;p&gt;Même commande avec l’&lt;strong&gt;OID&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~/Downloads/Python-3.6.1$ snmpget -v2c -c public -Oa demo.snmplabs.com 1.3.6.1.2.1.1.1.0
+iso.3.6.1.2.1.1.1.0 = STRING: &quot;Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;la-commande-getnext&quot;&gt;La commande GETNEXT&lt;/h3&gt;
+
+&lt;p&gt;Elle accepte les mêmes paramètres que &lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt; mais retourne non pas l’&lt;code class=&quot;highlighter-rouge&quot;&gt;OID&lt;/code&gt; demandé mais celui qui suit dans l’arborescence. En chainant un &lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt; puis plusieurs &lt;code class=&quot;highlighter-rouge&quot;&gt;GETNEXT&lt;/code&gt; on peut donc consulter tout l’arbre d’une &lt;code class=&quot;highlighter-rouge&quot;&gt;MIB&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~/Downloads/Python-3.6.1$ snmpgetnext -v2c -Oa -c public -Os demo.snmplabs.com sysDescr.0
+sysObjectID.0 = OID: netSnmpAgentOIDs.10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;On peut exécuter &lt;code class=&quot;highlighter-rouge&quot;&gt;GETNEXT&lt;/code&gt; sur n’importe quel noeud, donc la racine d’une &lt;strong&gt;MIB&lt;/strong&gt; mais parcoutir tout un arbre est laborieux.&lt;/p&gt;
+
+&lt;h3 id=&quot;les-commandes-get-bulk-et-walk&quot;&gt;Les commandes GET BULK et WALK&lt;/h3&gt;
+
+&lt;p&gt;Pour éviter d’envoyer plusieurs commandes &lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt; les unes après les autres ce qui surcharge les échanges réseau, il est possible de demander à consulter plusieurs &lt;code class=&quot;highlighter-rouge&quot;&gt;OID&lt;/code&gt; en une seule fois via la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;GET BULK&lt;/code&gt;. &lt;strong&gt;Mais tous les agents ne le supportent pas&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;On peut aussi utiliser la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;WALK&lt;/code&gt; pour parcoutir toute une arborescence, comme on le ferait avec &lt;code class=&quot;highlighter-rouge&quot;&gt;GET&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;GET NEXT&lt;/code&gt;. Mais c’est la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;WALK&lt;/code&gt; qui les exécute pour nous.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~/Downloads/Python-3.6.1$ snmpwalk -v2c -On -c public -Os demo.snmplabs.com system
+sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:11 CDT 2016 i686
+sysObjectID.0 = OID: netSnmpAgentOIDs.10
+sysUpTimeInstance = Timeticks: (274672133) 31 days, 18:58:41.33
+sysContact.0 = STRING: SNMP Laboratories, info@snmplabs.com
+sysName.0 = STRING: new system d
+sysLocation.0 = STRING: San Francisco, California, United States
+sysServices.0 = INTEGER: 72
+sysORLastChange.0 = Timeticks: (274672261) 31 days, 18:58:42.61
+sysORID.1 = OID: snmpFrameworkMIBCompliance
+sysORID.2 = OID: snmpMPDCompliance
+sysORID.3 = OID: usmMIBCompliance
+sysORID.4 = OID: snmpMIB
+sysORID.5 = OID: tcpMIB
+sysORID.6 = OID: ip
+sysORID.7 = OID: udpMIB
+sysORID.8 = OID: vacmBasicGroup
+sysORDescr.1 = STRING: The SNMP Management Architecture MIB.
+sysORDescr.2 = STRING: The MIB for Message Processing and Dispatching.
+sysORDescr.3 = STRING: The management information definitions for the SNMP User-based Security Model.
+sysORDescr.4 = STRING: The MIB module for SNMPv2 entities
+sysORDescr.5 = STRING: The MIB module for managing TCP implementations
+sysORDescr.6 = STRING: The MIB module for managing IP and ICMP implementations
+sysORDescr.7 = STRING: The MIB module for managing UDP implementations
+sysORDescr.8 = STRING: View-based Access Control Model for SNMP.
+sysORUpTime.1 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.2 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.3 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.4 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.5 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.6 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.7 = Timeticks: (1506) 0:00:15.06
+sysORUpTime.8 = Timeticks: (1506) 0:00:15.06
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;traduire-les-oids&quot;&gt;Traduire les OIDs&lt;/h3&gt;
+
+&lt;p&gt;La commande &lt;code class=&quot;highlighter-rouge&quot;&gt;snmptranslate&lt;/code&gt; permet de traduire des &lt;code class=&quot;highlighter-rouge&quot;&gt;OID&lt;/code&gt; du mode numérique au mode texte et inversément&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~/Downloads/Python-3.6.1$ snmptranslate -On SNMPv2-MIB::sysDescr.0
+.1.3.6.1.2.1.1.1.0
+
+sol@debian:~/Downloads/Python-3.6.1$ snmptranslate .1.3.6.1.2.1.1.1.0
+SNMPv2-MIB::sysDescr.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;modifier-un-oid-la-commande-set&quot;&gt;Modifier un OID, la commande SET&lt;/h3&gt;
+
+&lt;p&gt;La commande &lt;code class=&quot;highlighter-rouge&quot;&gt;snmpset&lt;/code&gt; permet de modifier la valeur d’un &lt;code class=&quot;highlighter-rouge&quot;&gt;OID&lt;/code&gt;. Elle n’est disponible qu’avec le protocole &lt;strong&gt;v2&lt;/strong&gt; et la communauté &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt; ou le protocole &lt;strong&gt;v3&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;L’exemple suivant est fourni par le protocole v3. Les paramètres utilisés sont:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-u&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  utilisateur&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-l&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  niveau de sécurité pour s’identifier&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-a&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  protocole d’authentification (chiffrement mdp)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-A&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  mot de passe d’authentification&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-x&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  algorithme de chiffrement pour la connexion&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-X&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  mot de passe/salt pour le chiffrement de la connexion&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;C’est là qu’on découvre le côté &lt;strong&gt;pénible du protocole v3&lt;/strong&gt; qui implémente lui-même les connexions &lt;code class=&quot;highlighter-rouge&quot;&gt;SSH&lt;/code&gt; sans faire de &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt; over &lt;code class=&quot;highlighter-rouge&quot;&gt;SSH&lt;/code&gt;: Il n’y a pas d’auto-négociation des algorithmes de chiffremen, il faut tout préciser par sois-même. &lt;span style=&quot;color:red&quot;&gt; Vrmt chiant…&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; N’a pas fonctionné chez moi. &lt;/span&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ snmpget localhost sysLocation.0
+SNMPv2-MIB::sysLocation.0 = STRING: Rouans
+$ snmpset -u demo -l authPriv -a MD5 -x DES -A pass1 -X pass2 localhost sysLocation.0 s &quot;Earth&quot;
+SNMPv2-MIB::sysLocation.0 = STRING: Earth
+$ snmpget localhost sysLocation.0
+SNMPv2-MIB::sysLocation.0 = STRING: Earth
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;recommandations-concernant-lutilisation-du-protocole-snmp-et-outils-associés&quot;&gt;Recommandations concernant l’utilisation du protocole SNMP et outils associés&lt;/h3&gt;
+
+&lt;p&gt;Les versions 1 et 2 du protocole sont insuffisamment sécurisées (pas du tout pour la première)&lt;/p&gt;
+
+&lt;p&gt;La protection dans la v2 du protocole se fait uniquement via les &lt;code class=&quot;highlighter-rouge&quot;&gt;communautés&lt;/code&gt; qui n’utilisent pas de mdp. Ce n’est pas très fiable comme type de protection, car il suffit de connaître le nom de la communauté pour accéder aux informations d’un matériel qui pourrai s’avérer être sensible.&lt;/p&gt;
+
+&lt;p&gt;Les agents de Windwos XP étaient particulièrement réputés pour proposer dans leur configuration par défaut beaucoup trop d’informations sensibles, comme les logins des utilisateurs qui étaient accessibles directement via la communauté &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dans la pratique l’agent fournit par les outils NetSNMP (sous linux) est relativement lent et n’est pas forcément très bien sécurisé, beaucoup de failles sont découvertes régulièrement.&lt;/p&gt;
+
+&lt;p&gt;Aussi quelque soit la solution retenue, désactivez systématiquement le mode anonyme, ou alors contrôlez chaque information proposée. Puis créer des &lt;code class=&quot;highlighter-rouge&quot;&gt;ACLS&lt;/code&gt; d’accès à chaque &lt;code class=&quot;highlighter-rouge&quot;&gt;MIB&lt;/code&gt; par utilisateur afin d’avoir une maîtrise complète de qui peut faire quoi.&lt;/p&gt;
+
+&lt;p&gt;Enfin,  &lt;span style=&quot;color:red&quot;&gt; il est très important de privilégier la version 3 du protocole ! &lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5-conclusion&quot;&gt;5. Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Les commandes de base du protocole &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt; sont assez simples une fois qu’on a compris comment manipuler les paramètres qu’elles utilisent.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 01 Jul 2017 00:00:00 +0200</pubDate>
