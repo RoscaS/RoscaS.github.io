@@ -40,8 +40,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Reseau: SNMP</title>
-  <meta name="description" content="SourcesMkina-corpuswikipediapySnmp">
+  <title>Reseau: PySNMP</title>
+  <meta name="description" content="SourcesMkina-corpus partie 2wikipediapySnmp">
 </head>
 
 
@@ -51,7 +51,7 @@
 <header class="post-header">
 
     <center>
-		<div class="post-title" itemprop="name headline">Reseau: SNMP</div>
+		<div class="post-title" itemprop="name headline">Reseau: PySNMP</div>
 
 		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="01 Jul 2017" itemprop="datePublished">Jul 1 2017</time>
 
@@ -90,7 +90,7 @@
 <div class="post-content">
     <center>
 	
-	<p>Simple Network Management Protocol</p>
+	<p>Tuto PySNMP</p>
 	
     </center>
 	<h2>Directory</h2>
@@ -100,7 +100,7 @@
 
 <div class="post-content" itemprop="articleBody">
     <h2 id="sources">Sources</h2>
-<p><a href="https://makina-corpus.com/blog/metier/2016/initiation-a-snmp-avec-python-pysnmp">Mkina-corpus</a><br />
+<p><a href="https://makina-corpus.com/blog/metier/2016/initiation-a-snmp-avec-python-pysnmp-partie2">Mkina-corpus partie 2</a><br />
 <a href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol">wikipedia</a>
 <a href="http://pysnmp.sourceforge.net/docs/snmp-design.html">pySnmp</a></p>
 
@@ -137,22 +137,187 @@
 <p>La librairie <code class="highlighter-rouge">PySNMP</code> s’appuie sur une utre librairie: <code class="highlighter-rouge">pyasn1</code> pour réaliser cela. La conversion des types <strong>ASN.1</strong> vers python est presque naturelle:</p>
 
 <div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pyasn1.type.univ</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="mi">42</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">Integer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Integer</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">Integer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="mi">0</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Integer</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="mi">42</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">OctetString</span><span class="p">(</span><span class="s">'Hello'</span><span class="p">)</span><span class="o">+</span><span class="s">', '</span><span class="o">+</span><span class="n">OctetString</span><span class="p">(</span><span class="n">hexValue</span><span class="o">=</span><span class="s">'5079534e4d5021'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">OctetString</span><span class="p">(</span><span class="s">'Hello'</span><span class="p">)</span> <span class="o">+</span> <span class="s">', '</span> <span class="o">+</span> <span class="n">OctetString</span><span class="p">(</span><span class="n">hexValue</span><span class="o">=</span><span class="s">'5079534e4d5021'</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
 <span class="n">Hello</span><span class="p">,</span> <span class="n">PySNMP</span><span class="err">!</span> 
  <span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">pyasn1</span><span class="o">.</span><span class="nb">type</span><span class="o">.</span><span class="n">univ</span><span class="o">.</span><span class="n">OctetString</span><span class="s">'&gt;</span><span class="err">
 </span><span class="s">&gt;&gt;&gt; </span><span class="err">
 </span></code></pre>
 </div>
+
+<h3 id="commandes-de-base">Commandes de base</h3>
+
+<p><code class="highlighter-rouge">PySNMP</code> propose différentes fonctions de <strong>bas niveau</strong> pour utiliser le protocole SNMP, mais il est conseillé d’utiliser le module <code class="highlighter-rouge">hlapi</code> signifiant <strong>High Level API</strong>.</p>
+
+<p>Ce dernier propose des fonctions de haut niveau assez faciles à paramétrer pour exécuter les commandes de base que l’on peut lister de cette manière:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">()</span> <span class="k">if</span> <span class="s">'Cmd'</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">help</span><span class="p">(</span><span class="s">'pysnmp.hlapi.getCmd'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">[</span><span class="s">'bulkCmd'</span><span class="p">,</span> <span class="s">'getCmd'</span><span class="p">,</span> <span class="s">'nextCmd'</span><span class="p">,</span> <span class="s">'setCmd'</span><span class="p">]</span>
+<span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">getCmd</span> <span class="ow">in</span> <span class="n">pysnmp</span><span class="o">.</span><span class="n">hlapi</span><span class="p">:</span>
+
+<span class="n">pysnmp</span><span class="o">.</span><span class="n">hlapi</span><span class="o">.</span><span class="n">getCmd</span> <span class="o">=</span> <span class="n">getCmd</span><span class="p">(</span><span class="n">snmpEngine</span><span class="p">,</span> <span class="n">authData</span><span class="p">,</span> <span class="n">transportTarget</span><span class="p">,</span> <span class="n">contextData</span><span class="p">,</span> <span class="o">*</span><span class="n">varBinds</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">Creates</span> <span class="n">a</span> <span class="n">generator</span> <span class="n">to</span> <span class="n">perform</span> <span class="n">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="n">SNMP</span> <span class="n">GET</span> <span class="n">queries</span><span class="o">.</span>
+
+<span class="o">...</span>
+</code></pre>
+</div>
+
+<p>Avant d’utiliser ces commandes nous allons apprendre à manipuler les paramètrer dont elles ont besoin:</p>
+<ul>
+  <li>Les <code class="highlighter-rouge">OIDs</code> qu’on souhaite consulter/modifier</li>
+  <li>Les éléments de connexion <code class="highlighter-rouge">communauté</code> pour le protocole v2 ou l’utilisateur pour le protocole v3</li>
+</ul>
+
+<h3 id="les-oids">Les OIDS</h3>
+
+<p>Les <code class="highlighter-rouge">OIDs</code> sont les identidiants des informations décrites dans les <code class="highlighter-rouge">MIBs</code>. Un <code class="highlighter-rouge">OID</code> indique le chemin à suivre dans l’arbre de la <code class="highlighter-rouge">MIB</code> pour trouver l’information</p>
+
+<p><code class="highlighter-rouge">1.2.3.0</code> pourrait se comprendre par:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">.</code> en partant de la place centrle, plusieurs rues sont face à vous</li>
+  <li><code class="highlighter-rouge">1</code> prenez la première à partir de la guche, vous arrivez sur une nouvelle place.</li>
+  <li><code class="highlighter-rouge">2</code> plusieurs rues sont de nouveau face  vous. Prenez la seconde sur votre gauche. Vous arrivez sur une nouvelle place</li>
+  <li><code class="highlighter-rouge">3</code> plusieurs rues sont de nouveau face  vous. Prenez la troisième sur votre gauche. Vous arrivez sur une nouvelle place</li>
+  <li><code class="highlighter-rouge">0</code> il y a une plaque sur la place, elle contient votre information. Si vous avez envoyé un <code class="highlighter-rouge">GET</code> vous la lisez, si vous avez envoyé un <code class="highlighter-rouge">SET</code> vous la modifiez</li>
+</ul>
+
+<p><img src="https://makina-corpus.com/blog/metier/2016/pysnmp/PySNMP1.png" alt="alt" /></p>
+
+<p>Un <code class="highlighter-rouge">OID</code> est représenté soit par une suite de valeurs numériques, soit par une suite de noms désignant chaque branche parcourue dans la <code class="highlighter-rouge">MIB</code>.</p>
+
+<p>Pour créér un <code class="highlighter-rouge">OID</code> avec <code class="highlighter-rouge">PySNMP</code> il convient d’instancier la classe <code class="highlighter-rouge">ObjectIdentity</code>.</p>
+
+<p>Un <code class="highlighter-rouge">OID</code> peut être défini par:</p>
+<ul>
+  <li>une string</li>
+  <li>un tuple</li>
+  <li>son libellé</li>
+</ul>
+
+<p>Les 4 instances suivantes définissent le même objet</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s">'1.3.6.1.2.1.1.3.0'</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s">'SNMPv2-MIB'</span><span class="p">,</span> <span class="s">'sysUpTime'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s">'iso.org.dod.internet.mgmt.mib-2.system.sysUpTime.0'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Cela semble simple mais à l’utilisation les soucis commencent:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s">'1.3.6.1.2.1.1.3.0'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getLabel</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getMibNode</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getMibSymbol</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getOid</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"c:</span><span class="err">\</span><span class="s">Users</span><span class="err">\</span><span class="s">sol.rosca</span><span class="err">\</span><span class="s">Cloud</span><span class="err">\</span><span class="s">Cours</span><span class="err">\</span><span class="s">Programmation</span><span class="err">\</span><span class="s">Python-Snmp</span><span class="se">\00\00</span><span class="s">.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getLabel</span><span class="p">())</span>
+  <span class="n">File</span> <span class="s">"C:</span><span class="err">\</span><span class="s">Python3</span><span class="err">\</span><span class="s">lib</span><span class="err">\</span><span class="s">site-packages</span><span class="err">\</span><span class="s">pysnmp</span><span class="err">\</span><span class="s">smi</span><span class="se">\r</span><span class="s">fc1902.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">186</span><span class="p">,</span> <span class="ow">in</span> <span class="n">getLabel</span>
+    <span class="k">raise</span> <span class="n">SmiError</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s object not fully initialized'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">pysnmp</span><span class="o">.</span><span class="n">smi</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">SmiError</span><span class="p">:</span> <span class="n">ObjectIdentity</span> <span class="nb">object</span> <span class="ow">not</span> <span class="n">fully</span> <span class="n">initialized</span>
+</code></pre>
+</div>
+<p>Il faut effectivement rechercher cet <code class="highlighter-rouge">OID</code> dans la <code class="highlighter-rouge">MIB</code>, ce n’est pas automatique car il y a de nombreuses <code class="highlighter-rouge">MIBs</code>. <code class="highlighter-rouge">PySNMP</code> est fourni avec tout un arsenal de <code class="highlighter-rouge">Mibs</code>, néanmoins il faut lui dire où les trouver.</p>
+
+<p>La commande <code class="highlighter-rouge">help</code> de <strong>Python</strong> montre qu’il existe une méthode <code class="highlighter-rouge">resolveWithMib</code>. Cette méthode prend en paramètre un objet <code class="highlighter-rouge">MibViewController</code>. Ce contrôleur a pour rôle de résoudre la correspondance <code class="highlighter-rouge">OID</code>/<code class="highlighter-rouge">MIB</code>.</p>
+
+<p>La doc de la classe <code class="highlighter-rouge">resolveWithMib</code> est quasiment inexistante. Cette classe prend un objet <code class="highlighter-rouge">MibBuilder</code> en argument lors de sa création. Il faut donc aller voir la classe <code class="highlighter-rouge">MibBuilder</code></p>
+
+<p>…mais une petite recherche dans l’arborescence de <code class="highlighter-rouge">PySNMP</code> montre qu’apparament un <code class="highlighter-rouge">MibViewController</code> s’obtient à partir du monteur <code class="highlighter-rouge">SNMP</code> engin. L’engin est en quelque sorte le coeur de la librairie <code class="highlighter-rouge">PySNMP</code> qui nous permet de dialoguer avec les différents éléments du protocole (messages, hôtes, communautés, <code class="highlighter-rouge">OIDs</code>, <code class="highlighter-rouge">MIBs</code>, etc…)</p>
+
+<p>On peut avoir plusieurs moteurs pour, par exemple travailler avec plusieurs <code class="highlighter-rouge">MIBs</code>. Notre code devient alors:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">se</span> <span class="o">=</span> <span class="n">SnmpEngine</span><span class="p">()</span>
+<span class="n">mvc</span> <span class="o">=</span> <span class="n">se</span><span class="o">.</span><span class="n">getUserContext</span><span class="p">(</span><span class="s">'mibViewController'</span><span class="p">)</span>
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s">'1.3.6.1.2.1.1.3.0'</span><span class="p">)</span>
+
+<span class="n">o</span><span class="o">.</span><span class="n">resolveWithMib</span><span class="p">(</span><span class="n">mvc</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getLabel</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getMibNode</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getMibSymbol</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getOid</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"c:</span><span class="err">\</span><span class="s">Users</span><span class="err">\</span><span class="s">sol.rosca</span><span class="err">\</span><span class="s">Cloud</span><span class="err">\</span><span class="s">Cours</span><span class="err">\</span><span class="s">Programmation</span><span class="err">\</span><span class="s">Python-Snmp</span><span class="se">\00\00</span><span class="s">.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">7</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">resolveWithMib</span><span class="p">(</span><span class="n">mvc</span><span class="p">)</span>
+  <span class="n">File</span> <span class="s">"C:</span><span class="err">\</span><span class="s">Python3</span><span class="err">\</span><span class="s">lib</span><span class="err">\</span><span class="s">site-packages</span><span class="err">\</span><span class="s">pysnmp</span><span class="err">\</span><span class="s">smi</span><span class="se">\r</span><span class="s">fc1902.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">356</span><span class="p">,</span> <span class="ow">in</span> <span class="n">resolveWithMib</span>
+    <span class="n">addMibCompiler</span><span class="p">(</span><span class="n">mibViewController</span><span class="o">.</span><span class="n">mibBuilder</span><span class="p">,</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="s">'NoneType'</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'mibBuilder'</span>
+</code></pre>
+</div>
+<p>Toujours pas…</p>
+
+<p>Le <code class="highlighter-rouge">mibViewController</code> n’est pas défini car nous n’avons pas créé de <code class="highlighter-rouge">UserContext</code>. La solution la plus simple revient, finalement, à créer nous-même le <code class="highlighter-rouge">MibViewController</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pysnmp.hlapi</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pysnmp.smi.view</span> <span class="kn">import</span> <span class="n">MibViewController</span>
+
+<span class="n">se</span> <span class="o">=</span> <span class="n">SnmpEngine</span><span class="p">()</span>
+<span class="n">mvc</span> <span class="o">=</span> <span class="n">se</span><span class="o">.</span><span class="n">getUserContext</span><span class="p">(</span><span class="s">'mibViewController'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">mvc</span><span class="p">:</span>
+    <span class="n">mvc</span> <span class="o">=</span> <span class="n">MibViewController</span><span class="p">(</span><span class="n">se</span><span class="o">.</span><span class="n">getMibBuilder</span><span class="p">())</span>
+
+<span class="n">o</span> <span class="o">=</span> <span class="n">ObjectIdentity</span><span class="p">(</span><span class="s">'1.3.6.1.2.1.1.3.0'</span><span class="p">)</span>
+<span class="n">o</span><span class="o">.</span><span class="n">resolveWithMib</span><span class="p">(</span><span class="n">mvc</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getLabel</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getMibNode</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getMibSymbol</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">getOid</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">prettyPrint</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>('iso', 'org', 'dod', 'internet', 'mgmt', 'mib-2', 'system', 'sysUpTime')
+MibScalar((1, 3, 6, 1, 2, 1, 1, 3), TimeTicks())
+('SNMPv2-MIB', 'sysUpTime', (ObjectName('0'),))
+1.3.6.1.2.1.1.3.0
+SNMPv2-MIB::sysUpTime.0
+</code></pre>
+</div>
+
+<p>Nous y voila. Le contrôleur de <code class="highlighter-rouge">MIB</code> utilise le <code class="highlighter-rouge">MIB</code> builder oar défaut de PySNMP qui stocke les versions “pythonisées” des <code class="highlighter-rouge">MIBS</code> dans le sous-dossier d’installation de <code class="highlighter-rouge">PySNMP</code>: <code class="highlighter-rouge">pysnmp/smi/mibs</code>. <span style="color:gree"> ne pas hésiter à y jetter un oeil </span> .</p>
 
 
 </div>
@@ -165,7 +330,7 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Reseau: SNMP@&amp;url=http://localhost:4000/reseau/reseau-PySNMP.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Reseau: PySNMP@&amp;url=http://localhost:4000/reseau/reseau-PySNMP.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
