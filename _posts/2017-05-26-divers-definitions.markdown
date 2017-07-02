@@ -14,6 +14,13 @@ finished: false
 ### Philanthropie 
 (du grec ancien φίλος / phílos « amoureux » et ἄνθρωπος / ánthrôpos « homme », « genre humain ») **est la philosophie ou doctrine de vie qui met l'humanité au premier plan de ses priorités**. Un philanthrope cherche à améliorer le sort de ses semblables par de multiples moyens.
 
+### Tautologie
+(du grec ταὐτολογία, composé de ταὐτό, « la même chose », et λέγω, « dire » : le fait de redire la même chose) est une phrase ou un effet de style ainsi tourné que sa formulation ne puisse être que vraie. La tautologie est apparentée au truisme (ou lapalissade) et au pléonasme. 
+
+En **logique mathématique**, le mot « tautologie » désigne une proposition toujours vraie selon les règles du calcul propositionnel. On utilise aussi l'adjectif tautologique en mathématiques pour désigner des structures qui émergent naturellement de la définition de certains objets.
+
+En **logique**, une tautologie est une formule valide pour toutes les assignations possibles et appartient au métalangage.
+
 ---------------------------------------------------------------------------
 
 # IA (types)
