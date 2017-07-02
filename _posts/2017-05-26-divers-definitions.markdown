@@ -151,7 +151,8 @@ Rangement en mémoire de la valeur `0xA0B70708` dans une structure mémoire de c
 <span style="color:#F92672">**X86 fonctionne en Little endian**</span>
 
 
-
+### Search Engine Optmization (SEO)  
+Search engines such as Google will drive traffic to your site if they think it’s relevant to what people are looking for
 
 
 
@@ -247,4 +248,7 @@ Une fonction monotone est une fonction numérique qui reste toujours soit croiss
 <br> <br> <span style="color:#888888">Fonction qui n'est pas monotone</span> <br> <br> <br> <br> <br> <br>
 
 
-## 
+# Quotes 
+
+>The best way to solve a problem is often to redefine it.
+>Michael Rabin
