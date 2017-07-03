@@ -163,7 +163,7 @@ ifDescr OBJECT-TYPE
  * mode d'accès: "lecture seule"
  * son état (`STATUS`): "obligatoire"
  * enfin son emplacement dans le noeud parent `ifEntry`: 2ème sous-élément du noeud `ifEntry`
-
+ 
  ### Organisation de l'information dans les MIBs
 
  Pour bien comprendre cette description "hiérarchique" de la donnée `ifDescr`, voici un graph représentant la hiérarchie principale de toutes les MIBs:
@@ -421,5 +421,3 @@ Dans la pratique l'agent fournit par les outils NetSNMP (sous linux) est relativ
 Aussi quelque soit la solution retenue, désactivez systématiquement le mode anonyme, ou alors contrôlez chaque information proposée. Puis créer des `ACLS` d'accès à chaque `MIB` par utilisateur afin d'avoir une maîtrise complète de qui peut faire quoi.
 
 Enfin,  <span style="color:red"> il est très important de privilégier la version 3 du protocole ! </span> 
-
-

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Reseau: Labo 5 (fr)"
+title: "Reseau: Labo 5 Programmation Sockets"
 subtitle: "labo 5: Application réseaux et sockets"
 date: 2017-05-21
 author: Sol
