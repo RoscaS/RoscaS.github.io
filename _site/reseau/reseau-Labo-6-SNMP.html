@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Reseau: Labo 6 SNMP &amp; Docker</title>
-  <meta name="description" content="1 Premiers pas avec SNMP">
+  <meta name="description" content="Premiers pas avec SNMP">
 </head>
 
 
@@ -99,18 +99,22 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="1-premiers-pas-avec-snmp">1 Premiers pas avec SNMP</h2>
+    <h1 id="premiers-pas-avec-snmp">Premiers pas avec SNMP</h1>
 
-<h3 id="objectifs">Objectifs</h3>
+<h2 id="objectifs">Objectifs</h2>
 <ul>
   <li>interroger un agent <code class="highlighter-rouge">SNMP</code> avec des outils <code class="highlighter-rouge">UNIX</code> (modèle PULL <strong>client-serveur</strong> classique)</li>
   <li>concepts de base de la <strong>MIB</strong></li>
   <li>modèle <code class="highlighter-rouge">PUSH</code>: les traps</li>
 </ul>
 
-<h3 id="question-3">question 3</h3>
+<h2 id="1-installation">1. Installation</h2>
 
-<p><strong>snmpget</strong></p>
+<h2 id="2-">2. ?</h2>
+
+<h2 id="3-experimentation">3. Experimentation</h2>
+
+<h3 id="snmpget">snmpget</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~$ snmpget -v 1 -c public 157.26.77.13 system.sysName.0
 SNMPv2-MIB::sysName.0 = STRING: gandalf
@@ -123,7 +127,7 @@ SNMPv2-MIB::sysName.0 = STRING: gandalf
 
 <p><img src="https://makina-corpus.com/blog/metier/2016/pysnmp/snmp_mib.png" alt="alt" /></p>
 
-<p><strong>snmpwalk</strong></p>
+<h3 id="snmpwalk">snmpwalk</h3>
 
 <p>Ici nous voyons le <strong>10 premières réponses</strong> à la commande <code class="highlighter-rouge">snmpWalk</code> avec en argument l’ip <code class="highlighter-rouge">157.26.77.13</code> en <strong>community</strong> <code class="highlighter-rouge">public</code></p>
 
@@ -144,7 +148,7 @@ SNMPv2-MIB::sysORID.1 = OID: SNMP-FRAMEWORK-MIB::snmpFrameworkMIBCompliance
 
 <p>Sur la capture Wireshark nous voyons que cette commande est une automatisation de la commande <code class="highlighter-rouge">getnext</code>. Cette commande parcours toute l’arborescence de la <strong>MIB</strong> accessible à l’adresse ip: <code class="highlighter-rouge">157.26.77.13</code> Nous voyons aussi les <strong>OIDs</strong> des services correspondant aux prints de la commnde sur la capture Wireshark.</p>
 
-<p><strong>snmpdf</strong></p>
+<h3 id="snmpdf">snmpdf</h3>
 
 <pre><code class="language-batch">sol@debian:~$ snmpdf -v 1 -c public 157.26.77.13
 Description                    size (kB)       Used  Available  Used%
@@ -168,6 +172,7 @@ Swap space                      11862012     620592   11241420     5%
 
 <p>Il est interessant de voir que dans un premier temps les requètes visent la description de chaque ligne et une fois les descriptions acquises les valeurs completant les colones <strong>size</strong>, <strong>used</strong>, <strong>available</strong> et <strong>used%</strong> dont demandées en une fois et reçues en une fois. (commande <code class="highlighter-rouge">getbulk</code>?)</p>
 
+<h2 id="4-questions">4. Questions</h2>
 
 </div>
 

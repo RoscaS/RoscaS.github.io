@@ -6,24 +6,28 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 03 Jul 2017 18:27:43 +0200</pubDate>
-    <lastBuildDate>Mon, 03 Jul 2017 18:27:43 +0200</lastBuildDate>
+    <pubDate>Mon, 03 Jul 2017 18:35:48 +0200</pubDate>
+    <lastBuildDate>Mon, 03 Jul 2017 18:35:48 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
         <title>Reseau: Labo 6 SNMP &amp; Docker</title>
-        <description>&lt;h2 id=&quot;1-premiers-pas-avec-snmp&quot;&gt;1 Premiers pas avec SNMP&lt;/h2&gt;
+        <description>&lt;h1 id=&quot;premiers-pas-avec-snmp&quot;&gt;Premiers pas avec SNMP&lt;/h1&gt;
 
-&lt;h3 id=&quot;objectifs&quot;&gt;Objectifs&lt;/h3&gt;
+&lt;h2 id=&quot;objectifs&quot;&gt;Objectifs&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;interroger un agent &lt;code class=&quot;highlighter-rouge&quot;&gt;SNMP&lt;/code&gt; avec des outils &lt;code class=&quot;highlighter-rouge&quot;&gt;UNIX&lt;/code&gt; (modèle PULL &lt;strong&gt;client-serveur&lt;/strong&gt; classique)&lt;/li&gt;
   &lt;li&gt;concepts de base de la &lt;strong&gt;MIB&lt;/strong&gt;&lt;/li&gt;
   &lt;li&gt;modèle &lt;code class=&quot;highlighter-rouge&quot;&gt;PUSH&lt;/code&gt;: les traps&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;question-3&quot;&gt;question 3&lt;/h3&gt;
+&lt;h2 id=&quot;1-installation&quot;&gt;1. Installation&lt;/h2&gt;
 
-&lt;p&gt;&lt;strong&gt;snmpget&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-&quot;&gt;2. ?&lt;/h2&gt;
+
+&lt;h2 id=&quot;3-experimentation&quot;&gt;3. Experimentation&lt;/h2&gt;
+
+&lt;h3 id=&quot;snmpget&quot;&gt;snmpget&lt;/h3&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sol@debian:~$ snmpget -v 1 -c public 157.26.77.13 system.sysName.0
 SNMPv2-MIB::sysName.0 = STRING: gandalf
@@ -36,7 +40,7 @@ SNMPv2-MIB::sysName.0 = STRING: gandalf
 
 &lt;p&gt;&lt;img src=&quot;https://makina-corpus.com/blog/metier/2016/pysnmp/snmp_mib.png&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;snmpwalk&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;snmpwalk&quot;&gt;snmpwalk&lt;/h3&gt;
 
 &lt;p&gt;Ici nous voyons le &lt;strong&gt;10 premières réponses&lt;/strong&gt; à la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;snmpWalk&lt;/code&gt; avec en argument l’ip &lt;code class=&quot;highlighter-rouge&quot;&gt;157.26.77.13&lt;/code&gt; en &lt;strong&gt;community&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt;&lt;/p&gt;
 
@@ -57,7 +61,7 @@ SNMPv2-MIB::sysORID.1 = OID: SNMP-FRAMEWORK-MIB::snmpFrameworkMIBCompliance
 
 &lt;p&gt;Sur la capture Wireshark nous voyons que cette commande est une automatisation de la commande &lt;code class=&quot;highlighter-rouge&quot;&gt;getnext&lt;/code&gt;. Cette commande parcours toute l’arborescence de la &lt;strong&gt;MIB&lt;/strong&gt; accessible à l’adresse ip: &lt;code class=&quot;highlighter-rouge&quot;&gt;157.26.77.13&lt;/code&gt; Nous voyons aussi les &lt;strong&gt;OIDs&lt;/strong&gt; des services correspondant aux prints de la commnde sur la capture Wireshark.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;snmpdf&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;snmpdf&quot;&gt;snmpdf&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-batch&quot;&gt;sol@debian:~$ snmpdf -v 1 -c public 157.26.77.13
 Description                    size (kB)       Used  Available  Used%
@@ -81,6 +85,7 @@ Swap space                      11862012     620592   11241420     5%
 
 &lt;p&gt;Il est interessant de voir que dans un premier temps les requètes visent la description de chaque ligne et une fois les descriptions acquises les valeurs completant les colones &lt;strong&gt;size&lt;/strong&gt;, &lt;strong&gt;used&lt;/strong&gt;, &lt;strong&gt;available&lt;/strong&gt; et &lt;strong&gt;used%&lt;/strong&gt; dont demandées en une fois et reçues en une fois. (commande &lt;code class=&quot;highlighter-rouge&quot;&gt;getbulk&lt;/code&gt;?)&lt;/p&gt;
 
+&lt;h2 id=&quot;4-questions&quot;&gt;4. Questions&lt;/h2&gt;
 </description>
         <pubDate>Mon, 03 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/reseau/reseau-Labo-6-SNMP.html</link>

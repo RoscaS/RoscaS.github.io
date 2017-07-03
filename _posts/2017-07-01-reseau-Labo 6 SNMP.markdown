@@ -9,17 +9,20 @@ tags: reseau
 finished: false
 ---
 
-## 1 Premiers pas avec SNMP
+# Premiers pas avec SNMP
 
-### Objectifs
+## Objectifs
 * interroger un agent `SNMP` avec des outils `UNIX` (modèle PULL **client-serveur** classique)
 * concepts de base de la **MIB**
 * modèle `PUSH`: les traps
 
+## 1. Installation
 
-### question 3
+## 2. ?
 
-**snmpget**
+## 3. Experimentation
+
+### snmpget
 
 ```
 sol@debian:~$ snmpget -v 1 -c public 157.26.77.13 system.sysName.0
@@ -33,7 +36,7 @@ Nous voyons ici que l'information system.sysname.0 est répertoriée par l'**OID
 ![alt](https://makina-corpus.com/blog/metier/2016/pysnmp/snmp_mib.png)
 
 
-**snmpwalk**
+### snmpwalk
 
 Ici nous voyons le **10 premières réponses** à la commande `snmpWalk` avec en argument l'ip `157.26.77.13` en **community** `public`
 
@@ -55,7 +58,7 @@ SNMPv2-MIB::sysORID.1 = OID: SNMP-FRAMEWORK-MIB::snmpFrameworkMIBCompliance
 Sur la capture Wireshark nous voyons que cette commande est une automatisation de la commande `getnext`. Cette commande parcours toute l'arborescence de la **MIB** accessible à l'adresse ip: `157.26.77.13` Nous voyons aussi les **OIDs** des services correspondant aux prints de la commnde sur la capture Wireshark.
 
 
-**snmpdf**
+### snmpdf
 
 ```batch
 sol@debian:~$ snmpdf -v 1 -c public 157.26.77.13
@@ -80,5 +83,4 @@ Swap space                      11862012     620592   11241420     5%
 
 Il est interessant de voir que dans un premier temps les requètes visent la description de chaque ligne et une fois les descriptions acquises les valeurs completant les colones **size**, **used**, **available** et **used%** dont demandées en une fois et reçues en une fois. (commande `getbulk`?)
 
-
-
+## 4. Questions
