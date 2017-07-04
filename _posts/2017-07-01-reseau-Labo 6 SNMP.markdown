@@ -665,6 +665,11 @@ Activer un nom de communauté permettant de modifier la configuration et modifie
 
 L'application interrogera un équipement par protocole **SNMP** et répondra sur le port 80 en **HTTP**. L'application supportera une seule fonction qui retourne un document au format **MIME** (image/svg+xml) qui sera affichée par le navigateur.
 
-### Délivrable
-* Architecture de l'application
-* Diagrammes d'interaction avec le client **HTTP** et l'équipement **SNMP**
+## Délivrable
+
+###Architecture de l'application
+
+
+
+###Diagrammes d'interaction avec le client **HTTP** et l'équipement **SNMP**
+
