@@ -623,7 +623,7 @@ ok
 ## 2. Consulter le fichier /etc/snmp/snmpd.conf
 Chmod à faire !
 
-## 3. Adapter des données dans ce fichier et tester avec `snmpwalk` + questions
+## 3. Adapter des données dans ce fichier et tester avec snmpwalk + questions
 
 ```
 sol@debian:/etc/snmp$ snmpwalk -v 1 -c public localhost .1.3.6.1.2.1.1
