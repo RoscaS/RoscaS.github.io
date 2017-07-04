@@ -397,7 +397,7 @@ IF-MIB::ifNumber.0 = INTEGER: 26
   <li>La description de Tkmib nous dit que l’entrée suivante contient la liste des interfaces:</li>
 </ul>
 
-<p><a href="/00illustrations/labo6/udp.png"><img src="/00illustrations/labo6/udp.png" /></a></p>
+<p><a href="/00illustrations/labo6/tkmib.png"><img src="/00illustrations/labo6/tkmib.png" /></a></p>
 
 <p>Nous pouvons visualiser le nom des interfacea dans la gui avec un display sous forme de tableau.</p>
 
@@ -516,9 +516,12 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">snmpinform</code> attends une réponse du manager alors que <code class="highlighter-rouge">snmptrap</code> envoie juste une notification.</p>
 
 <h1 id="décodage-snmp-asn1ber">Décodage SNMP (ASN.1/BER)</h1>
-<p><a href="http://luca.ntop.org/Teaching/Appunti/asn1.html">tuto</a></p>
 
 <ul>
+  <li><a href="http://luca.ntop.org/Teaching/Appunti/asn1.html">tuto</a></li>
+  <li>
+    <p><a href="https://en.wikipedia.org/wiki/X.690#Encoding_structure">x.690</a></p>
+  </li>
   <li>[type] + [len data] <script type="math/tex">\Rightarrow</script>  1Byte</li>
   <li>[data] <script type="math/tex">\Rightarrow</script> lenght of <code class="highlighter-rouge">len data</code>
 <br />
@@ -535,9 +538,19 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
   </thead>
   <tbody>
     <tr>
+      <td style="text-align: center">End of content</td>
+      <td style="text-align: center">0</td>
+      <td style="text-align: center">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">bool</td>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">1</td>
+    </tr>
+    <tr>
       <td style="text-align: center">int</td>
       <td style="text-align: center">2</td>
-      <td style="text-align: center">01</td>
+      <td style="text-align: center">02</td>
     </tr>
     <tr>
       <td style="text-align: center">bit string</td>
@@ -590,6 +603,11 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
       <td style="text-align: center">17</td>
     </tr>
     <tr>
+      <td style="text-align: center">VisibleString</td>
+      <td style="text-align: center">26</td>
+      <td style="text-align: center">1a</td>
+    </tr>
+    <tr>
       <td style="text-align: center">Struct</td>
       <td style="text-align: center">48</td>
       <td style="text-align: center">30</td>
@@ -609,9 +627,9 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 </div>
 
 <ul>
-  <li><strong>type</strong>: 30 <script type="math/tex">\Rightarrow</script> type construit (plusieurs valeurs)</li>
-  <li><strong>len</strong>: 2d <script type="math/tex">= 45_{10} (+2)</script></li>
-  <li><strong>data</strong>: tout le reste du <strong>PDU</strong><br />
+  <li><strong>type</strong>: 30 <script type="math/tex">\Rightarrow</script> type construit (Sequence aussi ? d’arès ce que je crois comprendre dans votre mail)</li>
+  <li><strong>len</strong>: <script type="math/tex">0x2d = 45_{10} (+2)</script></li>
+  <li><strong>data</strong>: tout le reste
 <br /></li>
 </ul>
 
@@ -621,8 +639,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 
 <ul>
   <li><strong>type</strong>: 02 <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">int</code></li>
-  <li><strong>len</strong>: 01 (+2)</li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">00</code> <script type="math/tex">\Rightarrow</script> 0_{10} $$
+  <li><strong>len</strong>: <script type="math/tex">0x01 (+2) =  1_{10} (+2)</script></li>
+  <li><strong>data</strong>: <code class="highlighter-rouge">00</code> <script type="math/tex">\Rightarrow 0_{10}</script>
 <br /></li>
 </ul>
 
@@ -632,7 +650,7 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 
 <ul>
   <li><strong>type</strong>: 5 <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">octet string</code></li>
-  <li><strong>len</strong>: 06 (+2)</li>
+  <li><strong>len</strong>: <script type="math/tex">0x06 (+2) = 6_{10} (+2)</script></li>
   <li><strong>data</strong>: `` <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">70 75 62 6C 69 63</code></li>
 </ul>
 
@@ -693,64 +711,133 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 
 <hr />
 
-<p><code class="highlighter-rouge">a1 20 02
+<div class="highlighter-rouge"><pre class="highlight"><code>a1 20 02
 04 22 2d 9d d6 02 01 00 02 01 00 30 12 30 10 06
-0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00</code></p>
+0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00
+</code></pre>
+</div>
 
 <ul>
-  <li><strong>type</strong>: A1 <script type="math/tex">\Rightarrow</script> ``</li>
-  <li><strong>len</strong>:  (+2)</li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">$$ \Rightarrow $$</code>
-<br /></li>
-</ul>
-
-<p><span style="color:red"> C’est quoi ça pour un type <code class="highlighter-rouge">20</code> ?</span></p>
-
-<hr />
-
-<p>``</p>
-
-<ul>
-  <li><strong>type</strong>:  <script type="math/tex">\Rightarrow</script> ``</li>
-  <li><strong>len</strong>:  (+2)</li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">$$ \Rightarrow $$</code>
+  <li><strong>type</strong>: <script type="math/tex">0xA1 \Rightarrow</script> Sequence</li>
+  <li><strong>len</strong>: <script type="math/tex">0x20 = 32_{10} (+2)</script></li>
+  <li><strong>data</strong>: tout le reste
 <br /></li>
 </ul>
 
 <hr />
 
-<p>``</p>
+<p><code class="highlighter-rouge">02 04 22 2d 9d d6</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">\Rightarrow</script> ``</li>
-  <li><strong>len</strong>:  (+2)</li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">$$ \Rightarrow $$</code>
+  <li><strong>type</strong>:  <script type="math/tex">0x02 \Rightarrow</script> <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>:  $$ 0x04 (+2) = 4 (+2)</li>
+  <li><strong>data</strong>: <script type="math/tex">0x222d9dd6  \Rightarrow  573414870_{10}</script>
 <br /></li>
 </ul>
 
 <hr />
 
-<p>``</p>
+<p><code class="highlighter-rouge">02 01 00</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">\Rightarrow</script> ``</li>
-  <li><strong>len</strong>:  (+2)</li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">$$ \Rightarrow $$</code>
+  <li><strong>type</strong>: <script type="math/tex">0x02  \Rightarrow</script> <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>: <script type="math/tex">0x01 (+2) = 1 (+2)</script></li>
+  <li><strong>data</strong>: <script type="math/tex">0x00 \Rightarrow 0_{10}</script>
 <br /></li>
 </ul>
 
 <hr />
 
-<p>``</p>
+<p><code class="highlighter-rouge">02 01 00</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">\Rightarrow</script> ``</li>
-  <li><strong>len</strong>:  (+2)</li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">$$ \Rightarrow $$</code>
+  <li><strong>type</strong>: <script type="math/tex">0x02 \Rightarrow</script> <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>: <script type="math/tex">0x01 (+2) = 1 (+2)</script></li>
+  <li><strong>data</strong>: <script type="math/tex">0x00 \Rightarrow 0_{10}</script>
 <br /></li>
 </ul>
 
-<p><span style="color:"> A continuer </span></p>
+<hr />
+
+<p><code class="highlighter-rouge">30 12</code></p>
+
+<ul>
+  <li><strong>type</strong>:  <script type="math/tex">0x30 \Rightarrow</script> type construit</li>
+  <li><strong>len</strong>:  $$ 0x12 (+2) = 18 (+2)</li>
+  <li><strong>data</strong>: tout le reste
+<br /></li>
+</ul>
+
+<hr />
+
+<p><code class="highlighter-rouge">30 10</code></p>
+
+<ul>
+  <li><strong>type</strong>:  <script type="math/tex">0x30 \Rightarrow</script> type construit</li>
+  <li><strong>len</strong>:  $$ 0x10 (+2) = 16 (+2)</li>
+  <li><strong>data</strong>: tout le reste
+<br /></li>
+</ul>
+
+<hr />
+
+<p><code class="highlighter-rouge">06 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01</code></p>
+
+<ul>
+  <li><strong>type</strong>:  <script type="math/tex">0x06 \Rightarrow</script> objet</li>
+  <li><strong>len</strong>:  $$ 0x0c (+2) = 12 (+2)</li>
+  <li><strong>data</strong>: <code class="highlighter-rouge">2b 06 01 02 01 2b 0e 01 01 06 01 01</code></li>
+</ul>
+
+<p>Après avoir regardé quelques trames des captures je reconnais <code class="highlighter-rouge">.6.1.2.1</code> (…DoD.Internet.management.MIB-2.) mais il manque le début <code class="highlighter-rouge">.1.3.</code> qui est remplacé par <code class="highlighter-rouge">2b</code>. Après vérification sur <strong>Tkmib</strong> <code class="highlighter-rouge">.43</code> n’existe pas mais cela ne veur rien dire, nous somme peut être dans une MIB qui possède ce <code class="highlighter-rouge">.43</code>. Sans certitude j’ai envie de dire que ce champ veut dire: <code class="highlighter-rouge">1.3.6.1.2.1.43.14.1.1.6.1.1</code>
+<br /></p>
+
+<hr />
+
+<p><code class="highlighter-rouge">05 00</code></p>
+
+<ul>
+  <li><strong>type</strong>:  <script type="math/tex">0x05 \Rightarrow</script> NULL</li>
+  <li><strong>len</strong>:  <script type="math/tex">0x00 (+2) = 0_{10} (+2)</script></li>
+  <li><strong>data</strong>: NULL
+<br /></li>
+</ul>
+
+<hr />
+
+<h4 id="tentative-de-mise-sous-forme-asn1">Tentative de mise sous forme ASN.1</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TYPE CONSTRUIT {
+    INTEGER {
+        version-1{0}
+    },
+
+    OCTET STRING {
+        community{public}
+    },
+    SEQUENCE {
+        INTEGER {
+            573414870  -- ip? (ça peut être une ip dans un autre format?)
+        },
+        INTEGER {
+            0
+        },
+        INTEGER {
+            0
+        },
+        TYPE CONSTRUIT {
+            TYPE CONSTRUIT {
+                OBJECT IDENTIFIER {
+                    1.3.6.1.2.1.43.14.1.1.6.1.1
+                },
+                NULL
+                }
+            }
+        }
+    }
+}
+</code></pre>
+</div>
 
 <h1 id="configuration-dun-agent-snmp">Configuration d’un agent SNMP</h1>
 
@@ -803,6 +890,26 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 
 <p><span style="color:red"> a finir </span></p>
 
+<h1 id="conception-dune-application-simple-python">Conception d’une application simple Python</h1>
+
+<ul>
+  <li>Faire un petit graph Web de statistiques d’un équipement réseau via SNMP</li>
+  <li>Librairies nécéssaires
+    <ul>
+      <li><code class="highlighter-rouge">PySNMP</code></li>
+      <li><code class="highlighter-rouge">http.server</code></li>
+      <li><code class="highlighter-rouge">matPlotLib</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>L’application interrogera un équipement par protocole <strong>SNMP</strong> et répondra sur le port 80 en <strong>HTTP</strong>. L’application supportera une seule fonction qui retourne un document au format <strong>MIME</strong> (image/svg+xml) qui sera affichée par le navigateur.</p>
+
+<h3 id="délivrable">Délivrable</h3>
+<ul>
+  <li>Architecture de l’application</li>
+  <li>Diagrammes d’interaction avec le client <strong>HTTP</strong> et l’équipement <strong>SNMP</strong></li>
+</ul>
 
 </div>
 

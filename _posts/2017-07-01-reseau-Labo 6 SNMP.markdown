@@ -285,7 +285,7 @@ IF-MIB::ifNumber.0 = INTEGER: 26
 
 * La description de Tkmib nous dit que l'entrée suivante contient la liste des interfaces:
 
-<a href="/00illustrations/labo6/udp.png"><img src="/00illustrations/labo6/udp.png"></a>
+<a href="/00illustrations/labo6/tkmib.png"><img src="/00illustrations/labo6/tkmib.png"></a>
 
 Nous pouvons visualiser le nom des interfacea dans la gui avec un display sous forme de tableau. 
 
@@ -403,7 +403,9 @@ Effectuer les opérations suivantes dans deux shells:
 
 
 # Décodage SNMP (ASN.1/BER)
-[tuto]( http://luca.ntop.org/Teaching/Appunti/asn1.html)  
+
+* [tuto]( http://luca.ntop.org/Teaching/Appunti/asn1.html)
+* [x.690](https://en.wikipedia.org/wiki/X.690#Encoding_structure)
 
 * [type] + [len data] $$ \Rightarrow $$  1Byte
 * [data] $$ \Rightarrow $$ lenght of `len data`
@@ -412,7 +414,9 @@ Effectuer les opérations suivantes dans deux shells:
 
 |type|10|0x|
 |:--:|:--:|:--:|
-|int|2|01|
+|End of content|0|0|
+|bool|1|1|
+|int|2|02|
 |bit string|3|03|
 |octet string|4|04|
 |NULL|5|05|
@@ -423,7 +427,9 @@ Effectuer les opérations suivantes dans deux shells:
 |T61String|20|14|
 |IA5String|22|16|
 |UTCTime|23|17|
+|VisibleString|26|1a|
 |Struct|48|30|
+
 
 <br>
 <br>
@@ -436,9 +442,9 @@ Effectuer les opérations suivantes dans deux shells:
 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00
 ```
 
-* **type**: 30 $$ \Rightarrow $$ type construit (plusieurs valeurs)
-* **len**: 2d $$ = 45_{10} (+2) $$ 
-* **data**: tout le reste du **PDU**  
+* **type**: 30 $$ \Rightarrow $$ type construit (Sequence aussi ? d'arès ce que je crois comprendre dans votre mail)
+* **len**: $$ 0x2d = 45_{10} (+2) $$ 
+* **data**: tout le reste
 <br>
 
 ------
@@ -446,8 +452,8 @@ Effectuer les opérations suivantes dans deux shells:
 `02 01`
 
 * **type**: 02 $$ \Rightarrow $$ `int`
-* **len**: 01 (+2)
-* **data**: `00` $$ \Rightarrow $$ 0_{10} $$
+* **len**: $$ 0x01 (+2) =  1_{10} (+2) $$
+* **data**: `00` $$ \Rightarrow 0_{10} $$
 <br>
 
 ------
@@ -455,7 +461,7 @@ Effectuer les opérations suivantes dans deux shells:
 `04 06 70 75 62 6C 69 63`
 
 * **type**: 5 $$ \Rightarrow $$ `octet string`
-* **len**: 06 (+2)
+* **len**: $$ 0x06 (+2) = 6_{10} (+2) $$
 * **data**: `` $$ \Rightarrow $$ `70 75 62 6C 69 63`
 
 Conversion string $$ \Rightarrow $$  char:
@@ -489,54 +495,120 @@ $$ \Large \Rightarrow  public $$
 
 ------
 
-`a1 20 02
+```
+a1 20 02
 04 22 2d 9d d6 02 01 00 02 01 00 30 12 30 10 06
-0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00`
+0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00
+```
 
-* **type**: A1 $$ \Rightarrow $$ ``
-* **len**:  (+2)
-* **data**: `` $$ \Rightarrow $$ ``
+* **type**: $$ 0xA1 \Rightarrow $$ Sequence
+* **len**: $$ 0x20 = 32_{10} (+2) $$
+* **data**: tout le reste
 <br>
 
-<span style="color:red"> C'est quoi ça pour un type `20` ?</span> 
 
 ------
 
-``
+`02 04 22 2d 9d d6`
 
-* **type**:  $$ \Rightarrow $$ ``
-* **len**:  (+2)
-* **data**: `` $$ \Rightarrow $$ ``
-<br>
-
-------
-
-``
-
-* **type**:  $$ \Rightarrow $$ ``
-* **len**:  (+2)
-* **data**: `` $$ \Rightarrow $$ ``
+* **type**:  $$0x02 \Rightarrow $$ `int`
+* **len**:  $$ 0x04 (+2) = 4 (+2)
+* **data**: $$ 0x222d9dd6  \Rightarrow  573414870_{10} $$
 <br>
 
 ------
 
-``
+`02 01 00`
 
-* **type**:  $$ \Rightarrow $$ ``
-* **len**:  (+2)
-* **data**: `` $$ \Rightarrow $$ ``
+* **type**: $$ 0x02  \Rightarrow $$ `int`
+* **len**: $$0x01 (+2) = 1 (+2) $$
+* **data**: $$ 0x00 \Rightarrow 0_{10} $$
 <br>
 
 ------
 
-``
+`02 01 00`
 
-* **type**:  $$ \Rightarrow $$ ``
-* **len**:  (+2)
-* **data**: `` $$ \Rightarrow $$ ``
+* **type**: $$ 0x02 \Rightarrow $$ `int`
+* **len**: $$0x01 (+2) = 1 (+2) $$
+* **data**: $$ 0x00 \Rightarrow 0_{10} $$
 <br>
 
-<span style="color:"> A continuer </span> 
+------
+
+`30 12`
+
+* **type**:  $$ 0x30 \Rightarrow $$ type construit
+* **len**:  $$ 0x12 (+2) = 18 (+2)
+* **data**: tout le reste
+<br>
+
+------
+
+`30 10`
+
+* **type**:  $$ 0x30 \Rightarrow $$ type construit
+* **len**:  $$ 0x10 (+2) = 16 (+2)
+* **data**: tout le reste
+<br>
+
+-----
+
+`06 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01`
+
+* **type**:  $$ 0x06 \Rightarrow $$ objet
+* **len**:  $$ 0x0c (+2) = 12 (+2)
+* **data**: `2b 06 01 02 01 2b 0e 01 01 06 01 01` 
+
+Après avoir regardé quelques trames des captures je reconnais `.6.1.2.1` (...DoD.Internet.management.MIB-2.) mais il manque le début `.1.3.` qui est remplacé par `2b`. Après vérification sur **Tkmib** `.43` n'existe pas mais cela ne veur rien dire, nous somme peut être dans une MIB qui possède ce `.43`. Sans certitude j'ai envie de dire que ce champ veut dire: `1.3.6.1.2.1.43.14.1.1.6.1.1`
+<br>
+
+------
+
+`05 00`
+
+* **type**:  $$ 0x05 \Rightarrow $$ NULL
+* **len**:  $$ 0x00 (+2) = 0_{10} (+2) $$
+* **data**: NULL
+<br>
+
+-----
+
+#### Tentative de mise sous forme ASN.1
+
+```
+TYPE CONSTRUIT {
+    INTEGER {
+        version-1{0}
+    },
+
+    OCTET STRING {
+        community{public}
+    },
+    SEQUENCE {
+        INTEGER {
+            573414870  -- ip? (ça peut être une ip dans un autre format?)
+        },
+        INTEGER {
+            0
+        },
+        INTEGER {
+            0
+        },
+        TYPE CONSTRUIT {
+            TYPE CONSTRUIT {
+                OBJECT IDENTIFIER {
+                    1.3.6.1.2.1.43.14.1.1.6.1.1
+                },
+                NULL
+                }
+            }
+        }
+    }
+}
+```
+
+
 
 
 
@@ -583,3 +655,16 @@ Activer un nom de communauté permettant de modifier la configuration et modifie
 
 <span style="color:red"> a finir </span> 
 
+# Conception d'une application simple Python
+
+* Faire un petit graph Web de statistiques d'un équipement réseau via SNMP
+* Librairies nécéssaires
+    * `PySNMP`
+    * `http.server`
+    * `matPlotLib`
+
+L'application interrogera un équipement par protocole **SNMP** et répondra sur le port 80 en **HTTP**. L'application supportera une seule fonction qui retourne un document au format **MIME** (image/svg+xml) qui sera affichée par le navigateur.
+
+### Délivrable
+* Architecture de l'application
+* Diagrammes d'interaction avec le client **HTTP** et l'équipement **SNMP**
