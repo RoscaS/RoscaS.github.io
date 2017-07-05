@@ -667,9 +667,175 @@ L'application interrogera un équipement par protocole **SNMP** et répondra sur
 
 ## Délivrable
 
-###Architecture de l'application
+### Architecture de l'application
+
+
+<a href="/00illustrations/labo6/diag2.png"><img src="/00illustrations/labo6/diag2.png"></a>
+<br>
+
+### Diagrammes d'interaction avec le client **HTTP** et l'équipement **SNMP**
+
+<br>
+<a href="/00illustrations/labo6/diag3.png"><img src="/00illustrations/labo6/diag3.png"></a>
+
+# Mise en place de Docker
+
+<a href="/00illustrations/labo6/docker.png"><img src="/00illustrations/labo6/docker.png"></a>
+<br>
+<br>
+<a href="/00illustrations/labo6/docker2.png"><img src="/00illustrations/labo6/docker2.png"></a>
+
+
+# Codage et test de la solution (Programme Python)
+
+Notre programme est composé de 3 fichiers.
+
+## dataGraph.py 
+
+ * `getData()` $$ \Rightarrow $$ pull l'**OID** `1.3.6.1.2.1.25.1.6` de l'agent **SNMP** sur la machine `157.26.77.13`
+
+* `graphPlot()` $$ \Rightarrow $$ traite le fichier `data.txt` et retourne un plot dans un fichier `svg`
+
+```py
+from pysnmp.smi.view import MibViewController
+from pysnmp.hlapi    import *
+
+import matplotlib.pyplot as plt
+
+
+def getData():
+	data = ObjectType(
+				ObjectIdentity('1.3.6.1.2.1.25.1.6')
+			)
+
+	g = nextCmd (
+			SnmpEngine(),
+			CommunityData('public', mpModel=0),
+			UdpTransportTarget(('157.26.77.13', 161)),
+			ContextData(),
+			data
+		)
+	
+	errorIndication, errorStatus, errorIndex, varBinds = next(g)
+	return int(varBinds[0][1])
+
+
+def graphPlot():
+	file = open('data.txt', 'r')
+	tab = [line.strip().split(' ') for line in file]
+
+	fig, ax = plt.subplots(figsize=(12,6), dpi=180)
+	plt.hold(False)
+
+	ax.plot( 
+		[x[0] for x in tab],
+		[y[1] for y in tab],
+		'r', 
+		label=r'$ running \; process \; ({}) $'\
+			.format(tab[len(tab)-1][1])
+	)
+
+	ax.legend(loc=2)
+	ax.set_xlabel(r'$Time (t)$', fontsize=18)
+	ax.set_ylabel(r'$Active Process$', fontsize=18)
+	ax.set_title('activeProcess(t)');
+
+	fig.savefig('graph.svg')
+	plt.close('all')
+	file.close()
+
+```
+
+## httpServ.py 
+Partie réseau du programme
+
+```py
+import http.server  as hs
+import socketserver as ss
+import threading
+
+
+class MyHttpServer(hs.BaseHTTPRequestHandler):
+	def do_GET(self):
+		self.send_response(200)
+		filedir = ""
+
+		if (self.path=="/graph"):
+			self.send_header('Content-type','text-html')
+			filedir = "graph.html"
+
+		elif (self.path=="/graph.svg"):
+			self.send_header('Content-type','image/svg+xml')
+			filedir = "graph.svg"
+		else:
+			self.send_header('Content-type','image/svg+xml')
+			filedir = "error.svg"
+
+		self.end_headers()
+		f = open(filedir)
+
+		while(f == False):
+			time.sleep(0.1)
+			f = open(filedir)
+
+		self.wfile.write(bytes(f.read(), 'UTF-8'))
+		f.close()
+
+
+class ThreadedHTTPServer(ss.ThreadingMixIn, 
+                         hs.HTTPServer):
+	"""#Start HTTPServer in a thread"""
+```
+
+## soft.py
+ le "main" où sont importé les deux autres fichiers (modules) et est lancé le serveur
+
+```py
+import time, threading
+import httpServ  as hs
+import dataGraph as dg
+
+
+def closing(server, file):
+	file.close()
+	server.shutdown()
 
 
 
-###Diagrammes d'interaction avec le client **HTTP** et l'équipement **SNMP**
+PORT = 8000
+f = open('data.txt', 'w')
+f.close()
+
+try:
+	serv = hs.ThreadedHTTPServer(
+				('localhost', PORT), 
+				hs.MyHttpServer
+			)
+
+	print("Serving at port", PORT)
+	
+	serverThread = threading.\
+		Thread(target=serv.serve_forever)
+
+	serverThread.start()
+
+	count = 0
+	while(1):
+		file = open('data.txt', 'a')
+		file.write("{} {}{}".\
+			format(count, dg.getData(), '\n'))
+			
+		file.close()
+		dg.graphPlot()
+		count += 1
+		time.sleep(1)
+
+except KeyboardInterrupt:
+	closing(serv,f)
+
+closing(serv,f)
+```
+
+
+
 
