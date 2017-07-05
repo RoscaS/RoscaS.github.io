@@ -653,12 +653,12 @@ SNMPv3 permet de répondre à ces problèmes.
 ### b.
 Activer un nom de communauté permettant de modifier la configuration et modifiez le nom de la machine.
 
-<span style="color:red"> a finir </span> 
+<span style="color:red"> à finir </span> 
 
 # Conception d'une application simple Python
 
 * Faire un petit graph Web de statistiques d'un équipement réseau via SNMP
-* Librairies nécéssaires
+* Librairies nécéssaires:
     * `PySNMP`
     * `http.server`
     * `matPlotLib`
@@ -688,11 +688,13 @@ L'application interrogera un équipement par protocole **SNMP** et répondra sur
 
 # Codage et test de la solution (Programme Python)
 
-Notre programme est composé de 3 fichiers.
+Notre programme est composé de trois fichiers. Deux modules et un "main". Il affiche un graph qui représente les processus actifs sur la machine à l'adresse `157.26.77.13` en fonction du temps. Ce graph est naj toutes les 3 secondes.
+
+Une fois le serveur lancé il suffit d'ouvir `http://localhost:8000/graph` dans un navigateur
 
 ## dataGraph.py 
 
- * `getData()` $$ \Rightarrow $$ pull l'**OID** `1.3.6.1.2.1.25.1.6` de l'agent **SNMP** sur la machine `157.26.77.13`
+ * `getData()` $$ \Rightarrow $$ pull la donnée pointée par l'**OID** `1.3.6.1.2.1.25.1.6` de l'agent **SNMP** sur la machine `157.26.77.13`.
 
 * `graphPlot()` $$ \Rightarrow $$ traite le fichier `data.txt` et retourne un plot dans un fichier `svg`
 
