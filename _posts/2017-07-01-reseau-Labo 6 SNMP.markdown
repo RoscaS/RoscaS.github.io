@@ -837,8 +837,3 @@ except KeyboardInterrupt:
 
 closing(serv,f)
 ```
-
-
-Test
-encore
-Poule
