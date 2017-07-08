@@ -39,8 +39,6 @@ Git comes with a tool called git config that lets you get and set configuration 
 * `$ git config --global color.ui auto`
 
 
-
-
 # Jekyll
 
 ## links
