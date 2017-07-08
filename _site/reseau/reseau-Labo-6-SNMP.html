@@ -888,13 +888,13 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 <h3 id="b-3">b.</h3>
 <p>Activer un nom de communauté permettant de modifier la configuration et modifiez le nom de la machine.</p>
 
-<p><span style="color:red"> a finir </span></p>
+<p><span style="color:red"> à finir </span></p>
 
 <h1 id="conception-dune-application-simple-python">Conception d’une application simple Python</h1>
 
 <ul>
   <li>Faire un petit graph Web de statistiques d’un équipement réseau via SNMP</li>
-  <li>Librairies nécéssaires
+  <li>Librairies nécéssaires:
     <ul>
       <li><code class="highlighter-rouge">PySNMP</code></li>
       <li><code class="highlighter-rouge">http.server</code></li>
@@ -926,13 +926,15 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 
 <h1 id="codage-et-test-de-la-solution-programme-python">Codage et test de la solution (Programme Python)</h1>
 
-<p>Notre programme est composé de 3 fichiers.</p>
+<p>Notre programme est composé de trois fichiers. Deux modules et un “main”. Il affiche un graph qui représente les processus actifs sur la machine à l’adresse <code class="highlighter-rouge">157.26.77.13</code> en fonction du temps. Ce graph est naj toutes les 3 secondes.</p>
+
+<p>Une fois le serveur lancé il suffit d’ouvir <code class="highlighter-rouge">http://localhost:8000/graph</code> dans un navigateur</p>
 
 <h2 id="datagraphpy">dataGraph.py</h2>
 
 <ul>
   <li>
-    <p><code class="highlighter-rouge">getData()</code> <script type="math/tex">\Rightarrow</script> pull l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.25.1.6</code> de l’agent <strong>SNMP</strong> sur la machine <code class="highlighter-rouge">157.26.77.13</code></p>
+    <p><code class="highlighter-rouge">getData()</code> <script type="math/tex">\Rightarrow</script> pull la donnée pointée par l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.25.1.6</code> de l’agent <strong>SNMP</strong> sur la machine <code class="highlighter-rouge">157.26.77.13</code>.</p>
   </li>
   <li>
     <p><code class="highlighter-rouge">graphPlot()</code> <script type="math/tex">\Rightarrow</script> traite le fichier <code class="highlighter-rouge">data.txt</code> et retourne un plot dans un fichier <code class="highlighter-rouge">svg</code></p>
@@ -1078,7 +1080,6 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 <span class="n">closing</span><span class="p">(</span><span class="n">serv</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
 </code></pre>
 </div>
-
 
 </div>
 

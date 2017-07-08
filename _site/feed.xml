@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 05 Jul 2017 02:09:36 +0200</pubDate>
-    <lastBuildDate>Wed, 05 Jul 2017 02:09:36 +0200</lastBuildDate>
+    <pubDate>Sat, 08 Jul 2017 15:41:19 +0200</pubDate>
+    <lastBuildDate>Sat, 08 Jul 2017 15:41:19 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -801,13 +801,13 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 &lt;h3 id=&quot;b-3&quot;&gt;b.&lt;/h3&gt;
 &lt;p&gt;Activer un nom de communauté permettant de modifier la configuration et modifiez le nom de la machine.&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; a finir &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; à finir &lt;/span&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;conception-dune-application-simple-python&quot;&gt;Conception d’une application simple Python&lt;/h1&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Faire un petit graph Web de statistiques d’un équipement réseau via SNMP&lt;/li&gt;
-  &lt;li&gt;Librairies nécéssaires
+  &lt;li&gt;Librairies nécéssaires:
     &lt;ul&gt;
       &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PySNMP&lt;/code&gt;&lt;/li&gt;
       &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http.server&lt;/code&gt;&lt;/li&gt;
@@ -839,13 +839,15 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 
 &lt;h1 id=&quot;codage-et-test-de-la-solution-programme-python&quot;&gt;Codage et test de la solution (Programme Python)&lt;/h1&gt;
 
-&lt;p&gt;Notre programme est composé de 3 fichiers.&lt;/p&gt;
+&lt;p&gt;Notre programme est composé de trois fichiers. Deux modules et un “main”. Il affiche un graph qui représente les processus actifs sur la machine à l’adresse &lt;code class=&quot;highlighter-rouge&quot;&gt;157.26.77.13&lt;/code&gt; en fonction du temps. Ce graph est naj toutes les 3 secondes.&lt;/p&gt;
+
+&lt;p&gt;Une fois le serveur lancé il suffit d’ouvir &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost:8000/graph&lt;/code&gt; dans un navigateur&lt;/p&gt;
 
 &lt;h2 id=&quot;datagraphpy&quot;&gt;dataGraph.py&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;getData()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; pull l’&lt;strong&gt;OID&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.2.1.25.1.6&lt;/code&gt; de l’agent &lt;strong&gt;SNMP&lt;/strong&gt; sur la machine &lt;code class=&quot;highlighter-rouge&quot;&gt;157.26.77.13&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;getData()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; pull la donnée pointée par l’&lt;strong&gt;OID&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;1.3.6.1.2.1.25.1.6&lt;/code&gt; de l’agent &lt;strong&gt;SNMP&lt;/strong&gt; sur la machine &lt;code class=&quot;highlighter-rouge&quot;&gt;157.26.77.13&lt;/code&gt;.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;graphPlot()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; traite le fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;data.txt&lt;/code&gt; et retourne un plot dans un fichier &lt;code class=&quot;highlighter-rouge&quot;&gt;svg&lt;/code&gt;&lt;/p&gt;
@@ -991,7 +993,6 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 &lt;span class=&quot;n&quot;&gt;closing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;serv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-
 </description>
         <pubDate>Mon, 03 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/reseau/reseau-Labo-6-SNMP.html</link>
@@ -3097,6 +3098,87 @@ Les grandes lignes y sont mais de nombreux points sont vagues et restent à êtr
 &lt;p&gt;Je pense que les éventuelles injustices créées par ce système sont négligeable en comparaison du nombre de situations injustes qu’il permet de normaliser.&lt;/p&gt;
 
 &lt;p&gt;Gardons en tête que les principales personnes lésés par ce système sont les personnes qui abusent à l’heure actuelle d’autres impunément. Ce sont principalement elles qui risquent de se pleindre car leur influance, pouvoir finnancier ou autres status social ne sera pour une fois pas une arme éfficace pour leur permettre de continuer à se livrer à leur comportements litigieux.&lt;/p&gt;
+
+&lt;h1 id=&quot;temp&quot;&gt;TEMP&lt;/h1&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VISUAL STUDIO CODE SETTINGS SYNC 
+Version: 2.8.2
+
+Upload Summary
+
+--------------------
+GITHUB TOKEN: 437580913138ca1fa835c1f6d88b41d0a42b079c
+GITHUB GIST: 23f1e9a909e77fa8876b5cf65abc2187
+GITHUB GIST TYPE: Secret
+
+--------------------
+
+If current theme / file icon extension is not installed. Restart will be Required to Apply Theme and File Icon.
+
+
+Files Upload.
+
+extensions.json
+keybindings.json
+locale.json
+settings.json
+cpp.json &amp;gt; snippets|cpp.json
+latex.json &amp;gt; snippets|latex.json
+markdown.json &amp;gt; snippets|markdown.json
+typescript.json &amp;gt; snippets|typescript.json
+vsicons.settings.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;EXTENSIONS ADDED :&lt;/p&gt;
+
+&lt;p&gt;Align - Version :0.2.0
+another-word-completion - Version :0.0.4
+ayu - Version :0.3.0
+code-gnu-global - Version :0.2.2
+code-runner - Version :0.6.24
+code-settings-sync - Version :2.8.2
+cpptools - Version :0.12.0
+debug - Version :0.20.0
+easy-icons - Version :0.3.1
+easy-snippet-maker - Version :0.0.5
+file-icons - Version :1.0.3
+FlatUI - Version :1.3.2
+fontsize-shortcuts - Version :1.3.0
+git-extension-pack - Version :0.1.2
+githistory - Version :0.2.1
+gitignore - Version :0.5.0
+gitlens - Version :4.3.1
+html-css-class-completion - Version :1.7.0
+html-snippets - Version :0.1.0
+indentation-level-movement - Version :1.1.1
+jupyter - Version :1.1.3
+latex - Version :0.1.3
+MagicPython - Version :1.0.10
+markdown-shortcuts - Version :0.8.1
+mono-debug - Version :0.15.5
+monokai-plusplus - Version :1.6.0
+project-manager - Version :0.18.0
+python - Version :0.6.5
+reloaded-cpp - Version :0.1.5
+reloaded-themes - Version :0.2.1
+rewrap - Version :1.3.0
+sublime-keybindings - Version :2.0.1
+Theme-dimmed-monokai - Version :0.0.2
+theme-glacier - Version :0.0.10
+theme-material-theme - Version :1.0.1
+Theme-Monokai - Version :0.0.2
+theme-monokaisharp - Version :0.2.4
+theme-pack - Version :0.1.1
+theme-sapphire - Version :0.2.1
+theme-tinaciousdesign - Version :0.2.6
+vscode-findinpage - Version :0.2.3
+vscode-great-icons - Version :2.1.7
+vscode-icon-theme - Version :1.5.0
+vscode-icons - Version :7.9.0
+vscode-icontheme-nomo-dark - Version :1.3.0
+vscode-multiclip - Version :0.1.2
+vscode-open-in-github - Version :1.2.7
+vscode-simple-icons - Version :1.3.0&lt;/p&gt;
 </description>
         <pubDate>Tue, 27 Jun 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/idee/</link>
