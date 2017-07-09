@@ -18,28 +18,26 @@ finished: false
 
 # General
 
-* installer:  
-`sudo dpkg -i *.deb`            
-* dld et installe:  
-`apt-get install` _SoftName_      
-* check if a package is installed:  
-`apt-cache policy` _pkg-name_   
-* download:  
-`wget` _"url"_                  
-* switch user:  
-`su` _username_  
-* HD space:  
-`df`                              
-* pause terminal:  
-`sleep` _seconds_                 
-* compile:  
-`gcc -Wall file.c -o file`  
-* user:  
-`whoami`                          
-* fait tout:  
-`ipcalc` `ip` `-s` SR1 SR2 SR3    
-* vérifie présence de make sur la machine:
-`which` _make_ 
+
+* `sudo dpkg -i *.deb` $$ \Rightarrow $$ installer  
+* `apt-get install` _softName_ $$ \Rightarrow $$ dld et installe  
+* `apt-cache policy` _pkg-name_ $$ \Rightarrow $$ check if a package is installed  
+* `wget` _"url"_ $$ \Rightarrow $$ download  
+* `apt-get --purge remove _softName_ $$ \Rightarrow $$ uninstall
+* `sudo apt-get autoremove` $$ \Rightarrow $$ remove unused dependencies
+* `sudo apt-get purge --auto-remove gimp` $$ \Rightarrow $$ combine previous 2
+* `sudo apt-get clean` $$ \Rightarrow $$ remove downloaded archives files
+
+> This command removes the aptitude cache in “/var/cache/apt/archives”. When you install a program, the package file is downloaded and stored in that directory. You don’t need to keep the files in that directory. However, the only drawback of deleting them, is that if you decide to install any of those programs again, the packages would have to be downloaded again.
+
+
+* `su` _username_ $$ \Rightarrow $$ switch user
+* `df` $$ \Rightarrow $$ HD space
+* `sleep` _seconds_ $$ \Rightarrow $$ pause terminal
+* `gcc -Wall file.c -o file` $$ \Rightarrow $$ compile
+* `whoami` $$ \Rightarrow $$ user
+* `ipcalc` `ip` `-s` SR1 SR2 SR3 $$ \Rightarrow $$ subnet calculatord
+* `which` _make_ $$ \Rightarrow $$ vérifie présence de make sur la machine
 
 # Networking
 
