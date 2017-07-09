@@ -31,6 +31,8 @@ finished: false
 > This command removes the aptitude cache in “/var/cache/apt/archives”. When you install a program, the package file is downloaded and stored in that directory. You don’t need to keep the files in that directory. However, the only drawback of deleting them, is that if you decide to install any of those programs again, the packages would have to be downloaded again.
 
 
+* `caja .` $$ \Rightarrow $$ open file browser here
+
 * `su` _username_ $$ \Rightarrow $$ switch user
 * `df` $$ \Rightarrow $$ HD space
 * `sleep` _seconds_ $$ \Rightarrow $$ pause terminal
@@ -38,6 +40,14 @@ finished: false
 * `whoami` $$ \Rightarrow $$ user
 * `ipcalc` `ip` `-s` SR1 SR2 SR3 $$ \Rightarrow $$ subnet calculatord
 * `which` _make_ $$ \Rightarrow $$ vérifie présence de make sur la machine
+
+# If big issue
+
+1. Shutdown 
+2. boot into _Recovery mode_
+3. select _enter root session_
+
+* `mount -o rw,remount /` $$ \Rightarrow $$ gives the ability to modify files
 
 # Networking
 
