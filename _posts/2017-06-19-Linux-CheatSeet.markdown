@@ -15,7 +15,6 @@ finished: false
 `gnome-system-monitor`
 
 
-
 # General
 
 
@@ -48,6 +47,12 @@ finished: false
 3. select _enter root session_
 
 * `mount -o rw,remount /` $$ \Rightarrow $$ gives the ability to modify files
+
+# Foucs issue with conky
+
+[bug.launchpad](https://bugs.launchpad.net/ubuntu/+source/compiz/+bug/934189)
+
+> I recently installed the Compiz Settings Manager and using their Window Rules option I was able to tell Compiz to never focus on my Conky window. I needed to restart for the change to take effect, but that has totally solved the problem on my system.
 
 # Networking
 
