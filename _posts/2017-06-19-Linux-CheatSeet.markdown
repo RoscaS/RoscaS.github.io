@@ -23,7 +23,7 @@ finished: false
 * `apt-get install` _softName_ $$ \Rightarrow $$ dld et installe  
 * `apt-cache policy` _pkg-name_ $$ \Rightarrow $$ check if a package is installed  
 * `wget` _"url"_ $$ \Rightarrow $$ download  
-* `apt-get --purge remove _softName_ $$ \Rightarrow $$ uninstall
+* `apt-get --purge remove` _softName_ $$ \Rightarrow $$ uninstall
 * `sudo apt-get autoremove` $$ \Rightarrow $$ remove unused dependencies
 * `sudo apt-get purge --auto-remove gimp` $$ \Rightarrow $$ combine previous 2
 * `sudo apt-get clean` $$ \Rightarrow $$ remove downloaded archives files
