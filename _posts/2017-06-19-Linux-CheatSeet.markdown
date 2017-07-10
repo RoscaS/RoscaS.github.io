@@ -9,6 +9,13 @@ tags: Linux
 finished: false
 ---
 
+$$ Linux\; users \; have \; one \; thing \; that \; often \; sets $$
+$$them \; apart \; from \; their \; Windows \; and \; Mac $$
+$$using\; colleagues. \; They \; often \; spend \; a \; lot \; more$$ 
+$$time \; fixing \; things \; or \; finding \; out \; how \; to $$
+$$fix \; things. $$
+
+
 
 # i3
 `gnome-tweak-tool`
@@ -39,6 +46,10 @@ finished: false
 * `whoami` $$ \Rightarrow $$ user
 * `ipcalc` `ip` `-s` SR1 SR2 SR3 $$ \Rightarrow $$ subnet calculatord
 * `which` _make_ $$ \Rightarrow $$ vérifie présence de make sur la machine
+
+# Customization
+
+[Heaps of collections](https://github.com/erikdubois/Ultimate-Ubuntu-17.04/blob/master/README.md)
 
 # If big issue
 

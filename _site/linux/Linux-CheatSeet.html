@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Linux: CheatSheet</title>
-  <meta name="description" content="i3gnome-tweak-toolgnome-system-monitor">
+  <meta name="description" content=" ">
 </head>
 
 
@@ -99,36 +99,69 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h1 id="i3">i3</h1>
+    <p><script type="math/tex">Linux\; users \; have \; one \; thing \; that \; often \; sets</script>
+<script type="math/tex">them \; apart \; from \; their \; Windows \; and \; Mac</script>
+<script type="math/tex">using\; colleagues. \; They \; often \; spend \; a \; lot \; more</script> 
+<script type="math/tex">time \; fixing \; things \; or \; finding \; out \; how \; to</script>
+<script type="math/tex">fix \; things.</script></p>
+
+<h1 id="i3">i3</h1>
 <p><code class="highlighter-rouge">gnome-tweak-tool</code>
 <code class="highlighter-rouge">gnome-system-monitor</code></p>
 
 <h1 id="general">General</h1>
 
 <ul>
-  <li>installer:<br />
-<code class="highlighter-rouge">sudo dpkg -i *.deb</code></li>
-  <li>dld et installe:<br />
-<code class="highlighter-rouge">apt-get install</code> <em>SoftName</em></li>
-  <li>check if a package is installed:<br />
-<code class="highlighter-rouge">apt-cache policy</code> <em>pkg-name</em></li>
-  <li>download:<br />
-<code class="highlighter-rouge">wget</code> <em>“url”</em></li>
-  <li>switch user:<br />
-<code class="highlighter-rouge">su</code> <em>username</em></li>
-  <li>HD space:<br />
-<code class="highlighter-rouge">df</code></li>
-  <li>pause terminal:<br />
-<code class="highlighter-rouge">sleep</code> <em>seconds</em></li>
-  <li>compile:<br />
-<code class="highlighter-rouge">gcc -Wall file.c -o file</code></li>
-  <li>user:<br />
-<code class="highlighter-rouge">whoami</code></li>
-  <li>fait tout:<br />
-<code class="highlighter-rouge">ipcalc</code> <code class="highlighter-rouge">ip</code> <code class="highlighter-rouge">-s</code> SR1 SR2 SR3</li>
-  <li>vérifie présence de make sur la machine:
-<code class="highlighter-rouge">which</code> <em>make</em></li>
+  <li><code class="highlighter-rouge">sudo dpkg -i *.deb</code> <script type="math/tex">\Rightarrow</script> installer</li>
+  <li><code class="highlighter-rouge">apt-get install</code> <em>softName</em> <script type="math/tex">\Rightarrow</script> dld et installe</li>
+  <li><code class="highlighter-rouge">apt-cache policy</code> <em>pkg-name</em> <script type="math/tex">\Rightarrow</script> check if a package is installed</li>
+  <li><code class="highlighter-rouge">wget</code> <em>“url”</em> <script type="math/tex">\Rightarrow</script> download</li>
+  <li><code class="highlighter-rouge">apt-get --purge remove</code> <em>softName</em> <script type="math/tex">\Rightarrow</script> uninstall</li>
+  <li><code class="highlighter-rouge">sudo apt-get autoremove</code> <script type="math/tex">\Rightarrow</script> remove unused dependencies</li>
+  <li><code class="highlighter-rouge">sudo apt-get purge --auto-remove gimp</code> <script type="math/tex">\Rightarrow</script> combine previous 2</li>
+  <li><code class="highlighter-rouge">sudo apt-get clean</code> <script type="math/tex">\Rightarrow</script> remove downloaded archives files</li>
 </ul>
+
+<blockquote>
+  <p>This command removes the aptitude cache in “/var/cache/apt/archives”. When you install a program, the package file is downloaded and stored in that directory. You don’t need to keep the files in that directory. However, the only drawback of deleting them, is that if you decide to install any of those programs again, the packages would have to be downloaded again.</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">caja .</code> <script type="math/tex">\Rightarrow</script> open file browser here</p>
+  </li>
+  <li><code class="highlighter-rouge">su</code> <em>username</em> <script type="math/tex">\Rightarrow</script> switch user</li>
+  <li><code class="highlighter-rouge">df</code> <script type="math/tex">\Rightarrow</script> HD space</li>
+  <li><code class="highlighter-rouge">sleep</code> <em>seconds</em> <script type="math/tex">\Rightarrow</script> pause terminal</li>
+  <li><code class="highlighter-rouge">gcc -Wall file.c -o file</code> <script type="math/tex">\Rightarrow</script> compile</li>
+  <li><code class="highlighter-rouge">whoami</code> <script type="math/tex">\Rightarrow</script> user</li>
+  <li><code class="highlighter-rouge">ipcalc</code> <code class="highlighter-rouge">ip</code> <code class="highlighter-rouge">-s</code> SR1 SR2 SR3 <script type="math/tex">\Rightarrow</script> subnet calculatord</li>
+  <li><code class="highlighter-rouge">which</code> <em>make</em> <script type="math/tex">\Rightarrow</script> vérifie présence de make sur la machine</li>
+</ul>
+
+<h1 id="customization">Customization</h1>
+
+<p><a href="https://github.com/erikdubois/Ultimate-Ubuntu-17.04/blob/master/README.md">Heaps of collections</a></p>
+
+<h1 id="if-big-issue">If big issue</h1>
+
+<ol>
+  <li>Shutdown</li>
+  <li>boot into <em>Recovery mode</em></li>
+  <li>select <em>enter root session</em></li>
+</ol>
+
+<ul>
+  <li><code class="highlighter-rouge">mount -o rw,remount /</code> <script type="math/tex">\Rightarrow</script> gives the ability to modify files</li>
+</ul>
+
+<h1 id="foucs-issue-with-conky">Foucs issue with conky</h1>
+
+<p><a href="https://bugs.launchpad.net/ubuntu/+source/compiz/+bug/934189">bug.launchpad</a></p>
+
+<blockquote>
+  <p>I recently installed the Compiz Settings Manager and using their Window Rules option I was able to tell Compiz to never focus on my Conky window. I needed to restart for the change to take effect, but that has totally solved the problem on my system.</p>
+</blockquote>
 
 <h1 id="networking">Networking</h1>
 

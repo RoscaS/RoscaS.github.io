@@ -40,8 +40,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>web: Jekyll </title>
-  <meta name="description" content="linksjekyll websitejekyll docHands on tutorial">
+  <title>web: Git, Jekyll &amp; MD </title>
+  <meta name="description" content="Git">
 </head>
 
 
@@ -51,7 +51,7 @@
 <header class="post-header">
 
     <center>
-		<div class="post-title" itemprop="name headline">web: Jekyll </div>
+		<div class="post-title" itemprop="name headline">web: Git, Jekyll & MD </div>
 
 		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="30 Jun 2017" itemprop="datePublished">Jun 30 2017</time>
 
@@ -96,7 +96,7 @@
 <div class="post-content">
     <center>
 	
-	<p>Jekyll: static site generator</p>
+	<p></p>
 	
     </center>
 	<h2>Directory</h2>
@@ -105,596 +105,70 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="links">links</h2>
+    <h1 id="git">Git</h1>
+
+<h2 id="ssh">SSH</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">ls -al ~/.ssh</code> <script type="math/tex">\Rightarrow</script> check if a key already exist</li>
+  <li><code class="highlighter-rouge">ssh-keygen -t rsa -b 4096 -C "sol.rosca@he-arc.ch"</code> <script type="math/tex">\Rightarrow</script> make new key</li>
+  <li><code class="highlighter-rouge">eval "$(ssh-agent -s)"</code> <script type="math/tex">\Rightarrow</script> check if ssh agent is working</li>
+  <li><code class="highlighter-rouge">ssh-add ~/.ssh/id_rsa</code> <script type="math/tex">\Rightarrow</script> put key in … folder</li>
+  <li><code class="highlighter-rouge">sudo apt-get install xclip</code> <script type="math/tex">\Rightarrow</script> nice tool</li>
+  <li><code class="highlighter-rouge">xclip -sel clip &lt; ~/.ssh/id_rsa.pub </code> <script type="math/tex">\Rightarrow</script>  using the nice tool</li>
+</ul>
+
+<h2 id="git-1">git</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">apt-get install git</code></li>
+</ul>
+
+<p>Git comes with a tool called git config that lets you get and set configuration variables that control all aspects of how Git looks and operates. These variables can be stored in three different places:</p>
+
+<p>.1 <code class="highlighter-rouge">/etc/gitconfig file</code> <script type="math/tex">\Rightarrow</script>  Contains values for every user on the system and all their repositories. If you pass the option <code class="highlighter-rouge">--system</code> to <code class="highlighter-rouge">git config</code>, it reads and writes from this file specifically.</p>
+
+<p>.2 <code class="highlighter-rouge">~/.gitconfig</code> or <code class="highlighter-rouge">~/.config/git/config file</code> <script type="math/tex">\Rightarrow</script>  Specific to your user. You can make Git read and write to this file specifically by passing the –global option.</p>
+
+<p>.3 <code class="highlighter-rouge">config</code> <script type="math/tex">\Rightarrow</script>  file in the Git directory (that is, <code class="highlighter-rouge">.git/config</code>) of whatever repository you’re currently using: Specific to that single repository.</p>
+
+<ul>
+  <li><code class="highlighter-rouge"> $ git config --global user.name "John Doe"</code></li>
+  <li>
+    <p><code class="highlighter-rouge"> $ git config --global user.email johndoe@example.com</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">$ git config --global color.ui auto</code></p>
+  </li>
+  <li><code class="highlighter-rouge">$ git clone https://github.com/RoscaS/RoscaS.github.io</code></li>
+</ul>
+
+<h1 id="jekyll">Jekyll</h1>
+
+<h2 id="links">links</h2>
 <p><a href="https://jekyllrb.com/">jekyll website</a>
 <a href="https://jekyllrb.com/docs/home/">jekyll doc</a>
 <a href="http://jekyllrb.com/tutorials/">Hands on tutorial</a></p>
 
-<h2 id="usefull-cmd">usefull cmd</h2>
+<h2 id="installation">Installation</h2>
+
+<h3 id="ruby">Ruby</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">$apt-get install ruby-full</code></li>
+  <li><code class="highlighter-rouge">gem install jekyll</code></li>
+</ul>
+
+<h3 id="usefull-cmd">usefull cmd</h3>
 
 <ul>
   <li><code class="highlighter-rouge">jekyll --version</code></li>
   <li><code class="highlighter-rouge">gem update jekyll</code></li>
   <li><code class="highlighter-rouge">jekyll serve</code> <script type="math/tex">\Rightarrow</script> http://localhost:4000/</li>
+  <li><code class="highlighter-rouge">gem install jekyll bundler</code> <script type="math/tex">\Rightarrow</script> usefull the first time</li>
+  <li><code class="highlighter-rouge">jekyll new myblog</code> <script type="math/tex">\Rightarrow</script> Create a new blog in <em>myblog</em></li>
 </ul>
 
-<h2 id="1-intro">1. Intro</h2>
-
-<p>Jekyll is  simple, blog aware static site generator.</p>
-
-<blockquote>
-  <p>When in doubt, use the <code class="highlighter-rouge">help</code> command to remind you all available options and usage, it also works with the <code class="highlighter-rouge">new</code>, <code class="highlighter-rouge">build</code> and <code class="highlighter-rouge">serve</code> subcommands, eg <code class="highlighter-rouge">jekyll help new</code> or <code class="highlighter-rouge">jekyll help build</code>.</p>
-</blockquote>
-
-<blockquote>
-  <p><code class="highlighter-rouge">jekyll new --help</code></p>
-</blockquote>
-
-<p>To brows the docs on-the-go, install the <code class="highlighter-rouge">jekyll-docs</code> gem and run jekyll docs in your terminal.</p>
-
-<h3 id="keywords">keywords:</h3>
-<ul>
-  <li>static site generator</li>
-  <li>blog aware</li>
-  <li>template</li>
-  <li>markdown</li>
-  <li>liquid renderer</li>
-  <li>github page</li>
-</ul>
-
-<h2 id="2-quick-start">2. Quick start</h2>
-
-<ul>
-  <li>Install jekyll and Bundler <strong>gems</strong> trough RubyGems
-    <div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span> <span class="n">bundler</span>
-</code></pre>
-    </div>
-    <p>Usefull only the first time.</p>
-  </li>
-  <li>Create a new Jekyll site at ./myblog</li>
-</ul>
-
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">jekyll</span> <span class="kp">new</span> <span class="n">myblog</span>
-</code></pre>
-</div>
-
-<ul>
-  <li>
-    <p><code class="highlighter-rouge">bundler</code> is a gem that manages other Ruby gems. Makes sure your gems and gem versions are compatible, and that you have all necessary dependencies each gem requires.</p>
-  </li>
-  <li>
-    <p>The <code class="highlighter-rouge">Gemfile</code> and <code class="highlighter-rouge">GemFile.lock</code> files informe Bundler about the gem requirements in your site.</p>
-  </li>
-  <li>
-    <p>By default, the jekyll site installed by <code class="highlighter-rouge">jekyll new</code> uses a gem-based theme called <strong>Minima</strong>. With <strong>gem-based-themes</strong>, some of the directories and files are stored in the theme-gem, hidden from your immediate view.</p>
-  </li>
-  <li>
-    <p>To start with a blank slate, use <code class="highlighter-rouge">jekyll new myblog --blank</code></p>
-  </li>
-</ul>
-
-<h2 id="3-install">3. install</h2>
-
-<p>Best way: RubyGems at the terminal prompt.</p>
-<div class="language-ruby highlighter-rouge"><pre class="highlight"><code><span class="n">gem</span> <span class="n">install</span> <span class="n">jekyll</span>
-</code></pre>
-</div>
-<p>Install Jekyll’s gem dependencies</p>
-
-<h2 id="4-basic-usage">4. Basic usage</h2>
-
-<p>The Jekyll gem mages a <code class="highlighter-rouge">jekyll</code> executable vailable to you in your Terminal window.</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>jekyll build
-<span class="c"># =&gt; The current folder will be generated into ./_site</span>
-
-<span class="gp">$ </span>jekyll build --destination &lt;destination&gt;
-<span class="c"># =&gt; The current folder will be generated into &lt;destination&gt;</span>
-
-<span class="gp">$ </span>jekyll build --source &lt;<span class="nb">source</span>&gt; --destination &lt;destination&gt;
-<span class="c"># =&gt; The &lt;source&gt; folder will be generated into &lt;destination&gt;</span>
-
-<span class="gp">$ </span>jekyll build --watch
-<span class="c"># =&gt; The current folder will be generated into ./_site,</span>
-<span class="c">#    watched for changes, and regenerated automatically.</span>
-</code></pre>
-</div>
-
-<blockquote>
-  <p>Changes to <code class="highlighter-rouge">_config.yml</code> are not included during automatic regeneration</p>
-</blockquote>
-
-<h2 id="5-serve">5. serve</h2>
-
-<p>Jekyll comes with a built-in develoment server.</p>
-
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>jekyll serve
-<span class="c"># =&gt; A development server will run at http://localhost:4000/</span>
-<span class="c"># Auto-regeneration: enabled. Use `--no-watch` to disable.</span>
-
-<span class="gp">$ </span>jekyll serve --detach
-<span class="c"># =&gt; Same as `jekyll serve` but will detach from the current terminal.</span>
-<span class="c">#    If you need to kill the server, you can `kill </span>
-<span class="c"># -9 1234` where "1234" is the PID.</span>
-<span class="c">#    If you cannot find the PID, then do, `ps aux | </span>
-<span class="c"># grep jekyll` and kill the instance.</span>
-
-<span class="gp">$ </span>jekyll serve --no-watch
-<span class="c"># =&gt; Same as `jekyll serve` but will not watch for changes.</span>
-</code></pre>
-</div>
-
-<h2 id="6-directories-structure">6. Directories structure</h2>
-
-<p>Jekyll is, at its core, a text transformation engine. The concept behind the system is this: you give it text written in your favorite markup language, be that Markdown, Textile, or just plain HTML, and it churns that through a layout or a series of layout files. Throughout that process you can tweak how you want the site URLs to look, what data gets displayed in the layout, and more. This is all done through editing text files; the static web site is the final product.</p>
-
-<p>A basic Jekyll site usually looks something like this:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>.
-├── _config.yml
-├── _data
-|   └── members.yml
-├── _drafts
-|   ├── begin-with-the-crazy-ideas.md
-|   └── on-simplicity-in-technology.md
-├── _includes
-|   ├── footer.html
-|   └── header.html
-├── _layouts
-|   ├── default.html
-|   └── post.html
-├── _posts
-|   ├── 2007-10-29-why-every-programmer-should-play-nethack.md
-|   └── 2009-04-26-barcamp-boston-4-roundup.md
-├── _sass
-|   ├── _base.scss
-|   └── _layout.scss
-├── _site
-├── .jekyll-metadata
-└── index.html # can also be an 'index.md' with valid YAML Frontmatter
-</code></pre>
-</div>
-
-<ul>
-  <li>
-    <p><strong>_config.yml</strong> <script type="math/tex">\Rightarrow</script> 
-Stores <strong>configuration</strong> data. Many of these options can be specified from the command line executable but it’s easier to specify them here so you don’t have to remember them.</p>
-  </li>
-  <li>
-    <p><strong>_drafts</strong> <script type="math/tex">\Rightarrow</script> 
-Drafts are unpublished posts. The format of these files is without a date: <strong>title.MARKUP</strong>.</p>
-  </li>
-  <li>
-    <p><strong>_includes</strong> <script type="math/tex">\Rightarrow</script> 
-Partials that can be mixed and matched by your layouts and posts to facilitate reuse. The liquid tag <code class="highlighter-rouge"><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">include</span><span class="w"> </span><span class="err">file.ext</span><span class="w"> </span><span class="err">%</span><span class="p">}</span></code> can be used to include the partial in <strong>_includes/file.ext</strong>.</p>
-  </li>
-  <li>
-    <p><strong>_layouts</strong> <script type="math/tex">\Rightarrow</script> 
-These are the templates that wrap posts. Layouts are chosen on a post-by-post basis in the YAML Front Matter, which is described in the next section. The <strong>liquid tag</strong>  <code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="err">content</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code> is used to inject content into the web page.</p>
-  </li>
-  <li>
-    <p><strong>_posts</strong> <script type="math/tex">\Rightarrow</script> 
-Your dynamic content, so to speak. The naming convention of these files is important, and must follow the format: <strong>YEAR-MONTH-DAY-title.MARKUP</strong>. The <em>permalinks</em> can be customized for each post, but the date and markup language are determined solely by the file name.</p>
-  </li>
-  <li>
-    <p><strong>_data</strong> <script type="math/tex">\Rightarrow</script> Well-formatted site data should be placed here. The Jekyll engine will autoload all data files (using either the <code class="highlighter-rouge">.yml</code>,  <code class="highlighter-rouge">.yaml</code>, <code class="highlighter-rouge">.json</code> or <code class="highlighter-rouge">.csv</code> formats and extensions) in this directory, and they will be accessible via <strong>site.data</strong>. If there’s a file <code class="highlighter-rouge">members.yml</code> under the directory, then you can access contents of the file through <code class="highlighter-rouge">site.data.members</code>.</p>
-  </li>
-  <li>
-    <p><strong>_sass</strong> <script type="math/tex">\Rightarrow</script>
-These are sass partials that can be imported into your <code class="highlighter-rouge">main.scss</code> which will then be processed into a single <strong>stylesheet</strong>  <code class="highlighter-rouge">main.css</code> that defines the styles to be used by your site.</p>
-  </li>
-  <li>
-    <p><strong>_site</strong> <script type="math/tex">\Rightarrow</script> 
-This is where the generated site will be placed (by default) once Jekyll is done transforming it. It’s probably a good idea to add this to your <code class="highlighter-rouge">.gitignore</code> file.</p>
-  </li>
-  <li>
-    <p><strong>.jekyll-metadata</strong> <script type="math/tex">\Rightarrow</script>
-This helps Jekyll keep track of which files have not been modified since the site was last built, and which files will need to be regenerated on the next build. This file will not be included in the generated site. It’s probably a good idea to add this to your <code class="highlighter-rouge">.gitignore</code> file.</p>
-  </li>
-  <li>
-    <p><strong>index.html</strong> <script type="math/tex">\Rightarrow</script> 
-Provided that the file has a <strong>YAML Front Matter</strong> section, it will be transformed by Jekyll. The same will happen for any <code class="highlighter-rouge">.html</code>, <code class="highlighter-rouge">.markdown</code>,  <code class="highlighter-rouge">.md</code>, or <code class="highlighter-rouge">.textile</code> file in your site’s root directory or directories not listed above.</p>
-  </li>
-  <li>
-    <p><strong><em>other files/folders</em></strong> <script type="math/tex">\Rightarrow</script> 
-Every other directory and file except for those listed above—such as <code class="highlighter-rouge">css</code> and <code class="highlighter-rouge">images</code> folders,  <code class="highlighter-rouge">favicon.ico</code> files, and so forth—will be copied verbatim to the generated site. There are plenty of <strong>sites already using Jekyll</strong> if you’re curious to see how they’re laid out.</p>
-  </li>
-</ul>
-
-<h4 id="directory-structure-of-jekyll-sites-using-gem-based-themes">Directory structure of Jekyll sites using gem-based themes</h4>
-<p>Starting Jekyll 3.2, a new Jekyll project bootstrapped with <code class="highlighter-rouge">jekyll new</code> uses <strong>gem-based themes</strong> to define the look of the site. This results in a lighter default directory structure : <code class="highlighter-rouge">_layouts</code>, <code class="highlighter-rouge">_includes</code> and <code class="highlighter-rouge">_sass</code> are stored in the theme-gem, by default.</p>
-
-<p><strong>minima</strong> is the current default theme, and <code class="highlighter-rouge">bundle show minima</code> will show you where minima theme’s files are stored on your computer.</p>
-
-<h2 id="7-configuration">7. Configuration</h2>
-<p>These options can either be specified in a <code class="highlighter-rouge">_config.yml</code> file placed in your site’s root directory, or can be specified as flags for the <code class="highlighter-rouge">jekyll</code> executable in the terminal.</p>
-
-<h3 id="configuration-settings">Configuration settings</h3>
-
-<h4 id="global-configuration">Global configuration</h4>
-<p>The table below lists the available settings for Jekyll, and the various <code class="highlighter-rouge">options</code> (specified in the configuration file) <code class="highlighter-rouge">flags</code> (specified on the command-line) that control them.</p>
-
-<p><a href="https://jekyllrb.com/docs/configuration/">Jekyll’s web site</a></p>
-
-<h2 id="8-front-matter">8. Front Matter</h2>
-<p>This is where Jekyll get really cool. Any file that contains a <strong>YAML</strong> front matter block will be processed by Jekyll as a special file. The front matter must be the first thing in the file and must take the form of valid YAML set between triple-dashed lines. Here is a basic example:</p>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="nn">---</span>
-<span class="s">layout</span><span class="pi">:</span> <span class="s">post</span>
-<span class="s">title</span><span class="pi">:</span> <span class="s">Blogging Like a Hacker</span>
-<span class="nn">---</span>
-</code></pre>
-</div>
-
-<p>Between these triple-dashed lines, you can set prdefined varibles or even create custom ones of your own. These variables will then be available to you to access using liquid tags, both further down in the file and also in any layouts or includes that the page or post in relies on.</p>
-
-<blockquote>
-  <p>!! If you use <strong>UTF-8 encoding</strong>, make sure that no <code class="highlighter-rouge">BOM</code> header characters exist in your file or <strong>very, very bad things</strong> will happen to Jekyll. <strong>Especilly on Windows</strong></p>
-</blockquote>
-
-<blockquote>
-  <p>ProTip™: Front Matter Variables Are Optional: If you want to use Liquid tags and variables but don’t need anything in your front matter, just leave it empty! The set of triple-dashed lines with nothing in between will still get Jekyll to process your file. (This is useful for things like CSS and RSS feeds!)</p>
-</blockquote>
-
-<h3 id="predefined-global-variables">Predefined Global Variables</h3>
-
-<p>There are a number of predefined global variables that you can set in the front matter of a page or a post.</p>
-
-<ul>
-  <li>
-    <p><code class="highlighter-rouge">layout</code> <script type="math/tex">\Rightarrow</script> if set, this specifies the layout file to use. Use the layout file name without the file extension. Layout files must be placed in the <code class="highlighter-rouge">_layouts</code> directory.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">permalink</code> <script type="math/tex">\Rightarrow</script> if you need your processed blog post URLs to be something other than the site-wide style (default `/year/month/day/title.html), then you can set this variable and it will be used as the finl URL.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">published</code> <script type="math/tex">\Rightarrow</script> set to false if you don’t want a specific post to show up when the site is generated</p>
-  </li>
-</ul>
-
-<blockquote>
-  <p>ProTip™: Render Posts Marked As Unpublished
-To preview unpublished pages, simply run <code class="highlighter-rouge">jekyll serve</code> or <code class="highlighter-rouge">jekyll build</code> with the <code class="highlighter-rouge">--unpublished</code> switch. Jekyll also has a handy drafts feature tailored specifically for blog posts.</p>
-</blockquote>
-
-<h3 id="custom-variables">Custom Variables</h3>
-
-<p>Any variable in the front matter that are not predefined are mixed into the data that is sent to the <strong>Liquid templating engine</strong> during the conversion. For instance, if you set a title, you can use that in your layout to set the page title:</p>
-
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
-    <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;title&gt;</span> {{ page.title}} <span class="nt">&lt;/title&gt;</span>
-    <span class="nt">&lt;/head&gt;</span>
-    <span class="nt">&lt;body&gt;</span>
-        ...
-</code></pre>
-</div>
-
-<h3 id="predefined-variables-for-posts">Predefined Variables for Posts</h3>
-<p>These are available out-if-the-box to be used in the front matter for a post.</p>
-
-<ul>
-  <li>
-    <p><code class="highlighter-rouge">date</code> <script type="math/tex">\Rightarrow</script> A date here overrides the date from the name of the post. This can be used to ensure correct sorting of posts. A date is specified in the format <code class="highlighter-rouge">YYYY-MM-DD HH:MM:SS +/-TTTT</code>; hours, minutes, seconds, and timezone offset are optional.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">category</code> <script type="math/tex">\Rightarrow</script> Instead of placing posts inside of folders, you can specify one or more categories that the post belongs to. When the site is generated the post will act as though it had been set with these categories normally. Categories (plural key) can be specified as a YAML list or a space-separated string.</p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">tags</code> <script type="math/tex">\Rightarrow</script>  Similar to categories, one or multiple tages can be added to a post. Also like categories, tags can be specified as a <strong>YAML list</strong> or  space-separated string.</p>
-  </li>
-</ul>
-
-<blockquote>
-  <p>Protip: Don’t repeat yourself
-If you don’t want to repeat your frquently used front matter variables over and over, just defines <strong>defaults</strong> for them and only override them when necessary (or not at all). This works both for predefined and custom variables.</p>
-</blockquote>
-
-<h2 id="9-writing-posts">9. Writing posts</h2>
-
-<p>If you write articles and publish them online, you can publish and maintain a blog simply by managing a folder of text-files on your computer. Compared to the hassle of configuring and maintaining databases and web-based CMS systems, this will be a welcome change!</p>
-
-<h3 id="posts-folder">Posts folder</h3>
-
-<p>The <code class="highlighter-rouge">_posts</code> folder is where the blog posts lives. Generally Markdown or HTML, but can be other formats with the proper converter installed. All posts must have YAML Front Matter, and they will be converted from their source format into an HTML page that is part of your static site.</p>
-
-<h3 id="creating-post-files">Creating Post Files</h3>
-
-<p>Create a file in the <code class="highlighter-rouge">_posts</code> directory. <strong>How you name files in this folder is important:</strong></p>
-<div class="highlighter-rouge"><pre class="highlight"><code>YEAR-MONTH-DAY-title.MARKUP
-</code></pre>
-</div>
-<ul>
-  <li><code class="highlighter-rouge">YEAR</code> <script type="math/tex">\Rightarrow</script> is a four-digit number</li>
-  <li><code class="highlighter-rouge">MONTH</code> <script type="math/tex">\Rightarrow</script> two-digit number</li>
-  <li><code class="highlighter-rouge">DAY</code> <script type="math/tex">\Rightarrow</script> two-digit number</li>
-  <li><code class="highlighter-rouge">MARKUP</code> <script type="math/tex">\Rightarrow</script> file extension of the format used</li>
-</ul>
-
-<p>Examples of valid post filenames:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>2011-12-31-new-years-eve-is-awesome.md
-2012-09-12-how-to-write-a-blog.md
-</code></pre>
-</div>
-
-<h3 id="a-typical-post">A typical post</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>---
-layout: post
-title:  "Welcome to Jekyll!"
-date:   2015-11-17 16:16:01 -0600
-categories: jekyll update
----
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `bundle exec jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
-
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-</code></pre>
-</div>
-
-<p>Everything in between the first and second — are part of the YAML Front Matter, and everything after the second — will be rendered with Markdown and show up as “Content.”</p>
-
-<h3 id="displaying-an-index-of-posts">Displaying an index of posts</h3>
-
-<p>Creating an index of posts on another page (or in a template) is easy, thanks to the Liquid template language and its tags. Here’s a basic example of how to create a list of links to your blog posts:</p>
-
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;ul&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-Labo-6-SNMP.html"</span><span class="nt">&gt;</span>Reseau: Labo 6 SNMP <span class="err">&amp;</span> Docker<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-SNMP.html"</span><span class="nt">&gt;</span>Reseau: SNMP<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-PySNMP.html"</span><span class="nt">&gt;</span>Reseau: PySNMP<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/divers/divers-App.html"</span><span class="nt">&gt;</span>Divers: Around an APP...<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/web/web-Jekyll.html"</span><span class="nt">&gt;</span>web: Jekyll <span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-Surcharge.html"</span><span class="nt">&gt;</span>Cpp: Surcharge<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-IO-fichier.html"</span><span class="nt">&gt;</span>Cpp: I/O dans des fichiers<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/idee/"</span><span class="nt">&gt;</span>Idee<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/divers/divers-temp.html"</span><span class="nt">&gt;</span>Divers: Cpp Files<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/divers/divers-ksp.html"</span><span class="nt">&gt;</span>Divers: Kerbal Space Program (en-fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-STL.html"</span><span class="nt">&gt;</span>Cpp: STL<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-SmartPtr.html"</span><span class="nt">&gt;</span>Cpp: unique_ptr <span class="err">&amp;</span> shared_ptr<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-semantiqueCopie.html"</span><span class="nt">&gt;</span>Cpp: Semantique de copie (rappel)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-move&amp;smartP.html"</span><span class="nt">&gt;</span>Cpp: Sémantique de déplacement <span class="err">&amp;</span> intro smart_ptr<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/cpp-R-value-L-value-Copy.html"</span><span class="nt">&gt;</span>Cpp: R-value et L-value<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/prog/prog-hackerRank.html"</span><span class="nt">&gt;</span>Prog: HackerRank<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/linux/Linux-CheatSeet.html"</span><span class="nt">&gt;</span>Linux: CheatSheet<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-client-SMTP.html"</span><span class="nt">&gt;</span>Reseau: Client SMTP<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/py/Py-Regex.html"</span><span class="nt">&gt;</span>Py: Regex<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/Linux-Sockets-CheatSheet.html"</span><span class="nt">&gt;</span>Reseau: Linux socket cheatSheet<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/algo/Algo-resume-cp2.html"</span><span class="nt">&gt;</span>Algo: Résumé CP2<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/presentations/presentation-projet-P1.html"</span><span class="nt">&gt;</span>Présentation projet p1: avancement, juin 2017<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/py/Py-NumPy.html"</span><span class="nt">&gt;</span>Py: NumPy<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/py/Py-MatPlotLib.html"</span><span class="nt">&gt;</span>Py: MatPlotLib<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/Cpp-Divers.html"</span><span class="nt">&gt;</span>Cpp: Divers<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/divers/divers-Randonnee.html"</span><span class="nt">&gt;</span>Divers: Randonnée dans les Dolomites <span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/algo/Algo-recursivite.html"</span><span class="nt">&gt;</span>Algo: Recursivité (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/math/math-notes.html"</span><span class="nt">&gt;</span>Notes<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/presentations/presentation-references.html"</span><span class="nt">&gt;</span>Présentation sur l'IA<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/divers/divers-definitions.html"</span><span class="nt">&gt;</span>Divers: Définitions (en-fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-programmation-sockets.html"</span><span class="nt">&gt;</span>Reseau: Programmation sockets (tuto)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/Cpp-exceptions-Handling.html"</span><span class="nt">&gt;</span>Cpp: Exception handling (en)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/cpp/Cpp-makefile.html"</span><span class="nt">&gt;</span>Cpp: makefile (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-labo5.html"</span><span class="nt">&gt;</span>Reseau: Labo 5 Programmation Sockets<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-cp3.html"</span><span class="nt">&gt;</span>Reseau: CP3 (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/algo/Algo-tri.html"</span><span class="nt">&gt;</span>Algo: Tri (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/algo/Algo-Structures-de-donnees.html"</span><span class="nt">&gt;</span>Algo: Structures de données<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-couche7.html"</span><span class="nt">&gt;</span>Reseau: Couche 7, application (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-analogie-c4-5.html"</span><span class="nt">&gt;</span>Reseau: relation couche 7,4,3 (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/reseau/reseau-couche4.html"</span><span class="nt">&gt;</span>Reseau: Couche 4, transport (fr)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/algo/Algo-TAD-SDC-Complexite.html"</span><span class="nt">&gt;</span>Algo: TAD, SDC et complexité (CP1)<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-    <span class="nt">&lt;li&gt;</span>
-      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"/prog/Prog-Divers.html"</span><span class="nt">&gt;</span>Prog: Divers<span class="nt">&lt;/a&gt;</span>
-    <span class="nt">&lt;/li&gt;</span>
-  
-<span class="nt">&lt;/ul&gt;</span>
-</code></pre>
-</div>
-<p>Note that the <code class="highlighter-rouge">post</code> variable only exists inside the <code class="highlighter-rouge">for</code> loop above. If you wish to access the currently-rendering page/posts’s variables (the variables of the post/page that has the <code class="highlighter-rouge">for</code> loop in it), use the <code class="highlighter-rouge">page</code> variable instead.</p>
-
-<h2 id="10-tags">10. Tags</h2>
-
-<h3 id="includes">Includes</h3>
-
-<p>If you have small page snippets that you want to include in multiple places on your site, save the snippets as include files and insert them where required, by using the <code class="highlighter-rouge">include</code> tag:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">include</span><span class="w"> </span><span class="err">footer.html</span><span class="w"> </span><span class="err">%</span><span class="p">}</span><span class="w"> 
-</span></code></pre>
-</div>
-
-<p>Jekyll expects all include files to be placed in an <code class="highlighter-rouge">_includes</code> directory at the root of your source directory. In the above example, this will embed the contents of <code class="highlighter-rouge">_includes/footer.html</code> into the calling file.</p>
-
-<h3 id="using-variables-names-for-the-include-filepermalink">Using variables names for the include filePermalink</h3>
-
-<p>The name of the file you want to embed can be specified as a variable instead of an actual file name. For example, suppose you defined a variable in your page’s front matter like this:</p>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="nn">---</span>
-<span class="s">title</span><span class="pi">:</span> <span class="s">My page</span>
-<span class="s">my_variable</span><span class="pi">:</span> <span class="s">footer_company_a.html</span>
-<span class="nn">---</span>
-</code></pre>
-</div>
-<p>You could then reference that variable in your include:</p>
-
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="pi">{</span><span class="err">%</span> <span class="nv">include</span> <span class="pi">{{</span> <span class="nv">Page.my_varible</span> <span class="pi">}}</span>
-</code></pre>
-</div>
-
-<h3 id="passing-parameters-to-includes">Passing parameters to includes</h3>
-
-<p>Passing parameters to includes is especially helpful when you want to hide away complex formatting from your Markdown content.</p>
-
-<p>For example, suppose you have a special image syntax with complex formatting, and you don’t want your authors to remember the complex formatting. As a result, you decide to simplify the formatting by using an include with parameters. Here’s an example of the special image syntax you might want to populate with an include:</p>
-
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;figure&gt;</span>
-   <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://jekyllrb.com"</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"logo.png"</span> <span class="na">style=</span><span class="s">"max-width: 200px;"</span>
-      <span class="na">alt=</span><span class="s">"Jekyll logo"</span> <span class="nt">/&gt;</span>
-   <span class="nt">&lt;figcaption&gt;</span>This is the Jekyll logo<span class="nt">&lt;/figcaption&gt;</span>
-<span class="nt">&lt;/figure&gt;</span>
-</code></pre>
-</div>
-
-<p>You could templatize this content in your include and make each value available as a parameter, like this:</p>
-
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;figure&gt;</span>
-   <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">""</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">""</span> <span class="na">style=</span><span class="s">"max-width: ;"</span>
-      <span class="na">alt=</span><span class="s">""</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;figcaption&gt;&lt;/figcaption&gt;</span>
-<span class="nt">&lt;/figure&gt;</span>
-</code></pre>
-</div>
-<p>This include contains 5 parameters:</p>
-
-<ul>
-  <li>url</li>
-  <li>max-width</li>
-  <li>file</li>
-  <li>alt</li>
-  <li>caption</li>
-</ul>
-
-<p>Here’s an example that passes all the parameters to this include (the include file is named <code class="highlighter-rouge">image.html</code>):</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">include</span><span class="w"> </span><span class="err">image.html</span><span class="w"> </span><span class="err">url=</span><span class="nt">"http://jekyllrb.com"</span><span class="w">
-</span><span class="err">max-width=</span><span class="nt">"200px"</span><span class="w"> </span><span class="err">file=</span><span class="nt">"logo.png"</span><span class="w"> </span><span class="err">alt=</span><span class="nt">"Jekyll logo"</span><span class="w">
-</span><span class="err">caption=</span><span class="nt">"This is the Jekyll logo."</span><span class="w"> </span><span class="err">%}</span><span class="w">
-</span></code></pre>
-</div>
-
-<p>Overall, you can create includes that act as templates for a variety of uses — inserting audio or video clips, alerts, special formatting, and more. <strong>However, note that you should avoid using too many includes</strong>, as this will slow down the build time of your site. For example, don’t use includes every time you insert an image. (The above technique shows a use case for special images.)</p>
-
-<p>Passing param</p>
-
-<h1 id="a-classer">A CLASSER</h1>
-
-<p>The <code class="highlighter-rouge">_config.yml</code> master configurtion file contains global configuration and variable destinations that are read once at execution time. Changes made to it during automatic regeneration are not loaded until the next execution.</p>
-
-<blockquote>
-  <p>note: <strong>Data Files</strong> are included and reloaded during automatic regenerations</p>
-</blockquote>
 
 </div>
 
@@ -706,7 +180,7 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=web: Jekyll @&amp;url=http://localhost:4000/web/web-Jekyll.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=web: Git, Jekyll & MD @&amp;url=http://localhost:4000/web/web-Jekyll.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
