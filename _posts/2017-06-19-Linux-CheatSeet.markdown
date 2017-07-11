@@ -66,6 +66,14 @@ $$fix \; things. $$
 
 > I recently installed the Compiz Settings Manager and using their Window Rules option I was able to tell Compiz to never focus on my Conky window. I needed to restart for the change to take effect, but that has totally solved the problem on my system.
 
+
+# Custom keyboard (X11)
+
+* [askubuntu](https://askubuntu.com/questions/510024/what-are-the-steps-needed-to-create-new-keyboard-layout-on-ubuntu)
+* [original](http://people.uleth.ca/~daniel.odonnell/Blog/custom-keyboard-in-linuxx11)
+
+
+
 # Networking
 
 Configuration des adresses IP des interfaces via `ifconfig`
