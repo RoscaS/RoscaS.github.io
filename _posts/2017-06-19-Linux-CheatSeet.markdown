@@ -17,6 +17,7 @@ $$fix \; things. $$
 
 
 
+
 # i3
 `gnome-tweak-tool`
 `gnome-system-monitor`
