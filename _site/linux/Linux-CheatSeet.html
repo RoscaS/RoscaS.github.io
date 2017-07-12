@@ -139,6 +139,177 @@
   <li><code class="highlighter-rouge">which</code> <em>make</em> <script type="math/tex">\Rightarrow</script> vérifie présence de make sur la machine</li>
 </ul>
 
+<h1 id="find">find</h1>
+
+<h3 id="liens">liens</h3>
+
+<ul>
+  <li><a href="https://www.tecmint.com/35-practical-examples-of-linux-find-command/">tecmint.com</a></li>
+</ul>
+
+<p>La commande <code class="highlighter-rouge">find</code> permet de chercher des fichiers, et éventuellement d’éxecuter une action dessus.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>find . -name <span class="s2">"*markdown"</span> | less
+</code></pre>
+</div>
+
+<h3 id="principales-options">Principales options</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Signification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">-name</code></td>
+      <td>Recherche par <strong>nom</strong> de fichier.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-type</code></td>
+      <td>Recherche par <strong>type</strong> de fichier.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-user</code></td>
+      <td>Recherche par <strong>propriétaire</strong>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-group</code></td>
+      <td>Recherche par appartenance à un <strong>groupe</strong>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-size</code></td>
+      <td>Recherche par <strong>taille</strong> de fichier.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-atime</code></td>
+      <td>Recherche par date de <strong>dernier accès</strong>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-mtime</code></td>
+      <td>Recherche par date de <strong>dernière modification</strong>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-ctime</code></td>
+      <td>Recherche par date de <strong>création</strong>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-perm</code></td>
+      <td>Recherche par <strong>autorisation d’accès</strong>.</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">-links</code></td>
+      <td>Recherche par <strong>nombre de liens</strong> au fichier.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="exemples">Exemples</h3>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>touch <span class="o">{</span>cochon,mouton,poule,vache<span class="o">}</span>.txt
+<span class="gp">$ </span>mkdir poule
+<span class="gp">$ </span>ls
+cochon.txt  mouton.txt  poule  poule.txt  vache.txt
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>Trouve tous les fichiers dont le nom est <em>poule.txt</em> à partir du répertoire courant (récursif)</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -name <span class="s2">"poule.txt"</span>
+./poule.txt
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Trouve tous les fichiers qui <strong>contiennent</strong> <em>poule</em> à partir du répertoire courant</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -name <span class="s2">"*poule*"</span>
+./poule.txt
+./poule
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Trouve tous les fichiers dont le nom est <em>Code</em> dans l’user folder uniquement (<strong>pas de récursion</strong>)</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find ~ -maxdepth 1 -name <span class="s2">"Code"</span>
+/home/sol/Code
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Ignorer la <strong>casse</strong></p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -iname POULE.txt
+./poule.txt
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Uniquement les <strong>répertoires</strong> (directory)</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -type d -name poule
+./poule
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Tous les fichiers <em>.txt</em> dans un répertoire</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -type f -name <span class="s2">"*.txt"</span>
+./vache.txt
+./cochon.txt
+./mouton.txt
+./poule.txt
+</code></pre>
+    </div>
+  </li>
+</ul>
+
+<h3 id="avancé">Avancé</h3>
+
+<ul>
+  <li>
+    <p>Trouve et supprime un fichier unique</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -type f -name <span class="s2">"poule.txt"</span> -exec rm -f <span class="o">{}</span> <span class="se">\;</span>
+<span class="gp">$ </span>ls
+cochon.txt  mouton.txt  poule  vache.txt
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Trouve et supprime plusieurs fichiers</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>find . -type f -name <span class="s2">"*.txt"</span> -exec rm -f <span class="o">{}</span> <span class="se">\;</span>
+<span class="gp">$ </span>ls
+poule
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Trouve et déplace plusieurs fichiers</p>
+
+    <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mkdir un deux trois final
+<span class="gp">$ </span>touch un/lala.txt deux/baba.txt trois/gaga.txt
+<span class="gp">$ </span>find . -name <span class="s2">"*.txt"</span>
+./un/lala.txt
+./trois/gaga.txt
+./deux/baba.txt
+<span class="gp">$ </span>find . -type f -name <span class="s2">"*.txt"</span> -exec mv <span class="o">{}</span> final/ <span class="se">\;</span>
+<span class="gp">$ </span>find . -name <span class="s2">"*.txt"</span>                              
+./final/baba.txt
+./final/gaga.txt
+./final/lala.txt
+</code></pre>
+    </div>
+  </li>
+</ul>
+
 <h1 id="customization">Customization</h1>
 
 <p><a href="https://github.com/erikdubois/Ultimate-Ubuntu-17.04/blob/master/README.md">Heaps of collections</a></p>
@@ -162,6 +333,13 @@
 <blockquote>
   <p>I recently installed the Compiz Settings Manager and using their Window Rules option I was able to tell Compiz to never focus on my Conky window. I needed to restart for the change to take effect, but that has totally solved the problem on my system.</p>
 </blockquote>
+
+<h1 id="custom-keyboard-x11">Custom keyboard (X11)</h1>
+
+<ul>
+  <li><a href="https://askubuntu.com/questions/510024/what-are-the-steps-needed-to-create-new-keyboard-layout-on-ubuntu">askubuntu</a></li>
+  <li><a href="http://people.uleth.ca/~daniel.odonnell/Blog/custom-keyboard-in-linuxx11">original</a></li>
+</ul>
 
 <h1 id="networking">Networking</h1>
 

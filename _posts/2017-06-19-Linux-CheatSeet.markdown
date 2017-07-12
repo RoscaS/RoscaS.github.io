@@ -153,6 +153,7 @@ cochon.txt  mouton.txt  poule  poule.txt  vache.txt
   ```
 
 * Trouve et déplace plusieurs fichiers
+
   ```sh
   $ mkdir un deux trois final
   $ touch un/lala.txt deux/baba.txt trois/gaga.txt
@@ -165,7 +166,7 @@ cochon.txt  mouton.txt  poule  poule.txt  vache.txt
   ./final/baba.txt
   ./final/gaga.txt
   ./final/lala.txt
-
+  ```
 
 # Customization
 
