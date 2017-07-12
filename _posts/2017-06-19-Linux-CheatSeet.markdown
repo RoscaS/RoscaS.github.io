@@ -37,8 +37,8 @@ $$fix \; things. $$
 > This command removes the aptitude cache in “/var/cache/apt/archives”. When you install a program, the package file is downloaded and stored in that directory. You don’t need to keep the files in that directory. However, the only drawback of deleting them, is that if you decide to install any of those programs again, the packages would have to be downloaded again.
 
 
-* `caja .` $$ \Rightarrow $$ open file browser here
 
+* `caja .` $$ \Rightarrow $$ open file browser here
 * `su` _username_ $$ \Rightarrow $$ switch user
 * `df` $$ \Rightarrow $$ HD space
 * `sleep` _seconds_ $$ \Rightarrow $$ pause terminal
