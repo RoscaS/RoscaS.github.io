@@ -48,6 +48,114 @@ $$fix \; things. $$
 * `ipcalc` `ip` `-s` SR1 SR2 SR3 $$ \Rightarrow $$ subnet calculatord
 * `which` _make_ $$ \Rightarrow $$ vérifie présence de make sur la machine
 
+
+# find
+
+### liens
+
+* [tecmint.com](https://www.tecmint.com/35-practical-examples-of-linux-find-command/)
+
+La commande `find` permet de chercher des fichiers, et éventuellement d'éxecuter une action dessus. 
+
+```sh
+find . -name "*markdown" | less
+```
+
+### Principales options
+
+| Option   | Signification                            |
+| -------- | ---------------------------------------- |
+| `-name`  | Recherche par **nom** de fichier.        |
+| `-type`  | Recherche par **type** de fichier.       |
+| `-user`  | Recherche par **propriétaire**.          |
+| `-group` | Recherche par appartenance à un **groupe**. |
+| `-size`  | Recherche par **taille** de fichier.     |
+| `-atime` | Recherche par date de **dernier accès**. |
+| `-mtime` | Recherche par date de **dernière modification**. |
+| `-ctime` | Recherche par date de **création**.      |
+| `-perm`  | Recherche par **autorisation d'accès**.  |
+| `-links` | Recherche par **nombre de liens** au fichier. |
+
+### Exemples
+
+```sh
+$ touch {cochon,mouton,poule,vache}.txt
+$ mkdir poule
+$ ls
+cochon.txt  mouton.txt  poule  poule.txt  vache.txt
+```
+
+
+
+* Trouve tous les fichiers dont le nom est _poule.txt_ à partir du répertoire courant (récursif)
+
+  ```sh
+  $ find . -name "poule.txt"
+  ./poule.txt
+  ```
+
+
+* Trouve tous les fichiers qui **contiennent** _poule_ à partir du répertoire courant
+
+  ```sh
+  $ find . -name "*poule*"
+  ./poule.txt
+  ./poule
+  ```
+
+* Trouve tous les fichiers dont le nom est _Code_ dans l'user folder uniquement (**pas de récursion**)
+
+  ```sh
+  $ find ~ -maxdepth 1 -name "Code"
+  /home/sol/Code
+  ```
+
+* Ignorer la **casse**
+
+  ```sh
+  $ find . -iname POULE.txt
+  ./poule.txt
+  ```
+
+* Uniquement les **répertoires** (directory)
+
+  ```sh
+  $ find . -type d -name poule
+  ./poule
+  ```
+
+* Tous les fichiers _.txt_ dans un répertoire
+
+  ```sh
+  $ find . -type f -name "*.txt"
+  ./vache.txt
+  ./cochon.txt
+  ./mouton.txt
+  ./poule.txt
+  ```
+
+### Avancé
+
+* Trouve et supprime un fichier unique
+
+  ```sh
+  $ find . -type f -name "poule.txt" -exec rm -f {} \;
+  $ ls
+  cochon.txt  mouton.txt  poule  vache.txt
+  ```
+
+* Trouve et supprime plusieurs fichiers
+
+  ```sh
+  $ find . -type f -name "*.txt" -exec rm -f {} \;
+  $ ls
+  poule
+  ```
+
+  ​
+
+
+
 # Customization
 
 [Heaps of collections](https://github.com/erikdubois/Ultimate-Ubuntu-17.04/blob/master/README.md)
