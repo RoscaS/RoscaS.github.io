@@ -26,6 +26,7 @@ $$fix \; things. $$
 # General
 
 
+
 * `sudo dpkg -i *.deb` $$ \Rightarrow $$ installer  
 * `apt-get install` _softName_ $$ \Rightarrow $$ dld et installe  
 * `apt-cache policy` _pkg-name_ $$ \Rightarrow $$ check if a package is installed  
