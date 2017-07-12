@@ -152,8 +152,19 @@ cochon.txt  mouton.txt  poule  poule.txt  vache.txt
   poule
   ```
 
-  ​
-
+* Trouve et déplace plusieurs fichiers
+  ```sh
+  $ mkdir un deux trois final
+  $ touch un/lala.txt deux/baba.txt trois/gaga.txt
+  $ find . -name "*.txt"
+  ./un/lala.txt
+  ./trois/gaga.txt
+  ./deux/baba.txt
+  $ find . -type f -name "*.txt" -exec mv {} final/ \;
+  $ find . -name "*.txt"                              
+  ./final/baba.txt
+  ./final/gaga.txt
+  ./final/lala.txt
 
 
 # Customization
