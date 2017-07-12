@@ -17,10 +17,8 @@ $$fix \; things. $$
 
 
 
-
-
-
 # i3
+
 `gnome-tweak-tool`
 `gnome-system-monitor`
 
@@ -208,48 +206,48 @@ chaque interface est identifiée par un nom:
 ## fourre tout
 
 * ICMP echo:  
-`ping`
+  `ping`
 * traceroute (/usr/sbin):  
-`traceroute`
+  `traceroute`
 * super traceroute:  
-`mtr`
+  `mtr`
 * sniffer:  
-`tcpdump -i eth0` `protocol`
+  `tcpdump -i eth0` `protocol`
 * infos sur l'ip:  
-`whois` `url/ip`
+  `whois` `url/ip`
 * check ARP cache:  
-`arp`
+  `arp`
 * flush entry found:  
-`arp -d`
+  `arp -d`
 * better tool to clear arp:  
-`ip (-s) (-s) neigh flush all`
+  `ip (-s) (-s) neigh flush all`
 
 ## ifconfig
 
 * Liste des interfaces réseau configurées:  
-`ifconfig`
+  `ifconfig`
 * Configurer une interface réseau:  
-`ifconfig ethX` _ip_ `netmask` _msk_ `up`
+  `ifconfig ethX` _ip_ `netmask` _msk_ `up`
 * fonctionne aussi:  
-`ifconfig` `ethX` _CIDR_ `up` 
+  `ifconfig` `ethX` _CIDR_ `up` 
 * ajouter carte reseau:  
-`ifconfig` `eth0:0` _ip_ `netmask` _msk_  
+  `ifconfig` `eth0:0` _ip_ `netmask` _msk_  
 
 
 
 ## route
 * affiche table de routage:  
-`route` `-n`
+  `route` `-n`
 * ajoute route (dev est utile pour les routeurs?):  
-`route` `add` `-net` _ip_ `netmask` _msk_ `gw` _routeur_ `[dev ethX]`
+  `route` `add` `-net` _ip_ `netmask` _msk_ `gw` _routeur_ `[dev ethX]`
 * supprime route:  
-`route` `del` `-net` _ip_ `netmask` _msk_ `gw` _routeur_ `[dev ethX]`
+  `route` `del` `-net` _ip_ `netmask` _msk_ `gw` _routeur_ `[dev ethX]`
 * supprime route: (par defau)  
-`route` `del` `-net` 0.0.0.0/24
+  `route` `del` `-net` 0.0.0.0/24
 * ajoute default gw:  
-`route` `add` `default gw` _ip\_gw_ `netmask` _msk_ `[dev ethX]`
+  `route` `add` `default gw` _ip\_gw_ `netmask` _msk_ `[dev ethX]`
 * ajoute default gw:  
-`route` `add` `default gw` _ip\_gw_ **SANS MASK**
+  `route` `add` `default gw` _ip\_gw_ **SANS MASK**
 
  Exemple de route valable: (gw = 192.168.50.2)
 
@@ -263,7 +261,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 
 |Destination  |Passerelle |Genmask        |Indic|Metric|Ref|Use|Iface|
-|-------------+-----------+---------------+-----+------+---+---+-----| 
+|-------------|-----------|---------------|-----|------|---|---|-----| 
 |139.124.187.4|0.0.0.0    |255.255.255.255|UH   |0     |0  |0  |eth0 |   
 |139.124.187.0|0.0.0.0    |255.255.255.0  |U    |10    |0  |0  |eth0 |   
 |127.0.0.0    |0.0.0.0    |255.0.0.0      |U    |0     |0  |0  |lo   |   
@@ -276,7 +274,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 * **D**: route a été créée par une redirection (message ICMP).
 * **M**: route a été modifiée par une redirection (message ICMP).
 * **!**: route est rejetée (option reject).
-   
+
 
 ## Serveur DHCP
 
@@ -317,13 +315,13 @@ nameserver ipv  (pc1: 192.168.43.1)
 ```
 
 * defini le nom de la machine:
-`hostname` nom 
+  `hostname` nom 
 * requete DHCP:
-sudo `dhclient` eth0 
+  sudo `dhclient` eth0 
 * ports:
-`/etc/services`
+  `/etc/services`
 * config ip (Obsolet?):
-`/etc/hosts`
+  `/etc/hosts`
 
 #### config IP data:
 Dans **/etc/network/interfaces**
@@ -359,17 +357,17 @@ cat /proc/sys/net/ipv4/neigh/default/gc_stale_time
 Utile pour tout ce qui concerne les **sockets** et les **ports**
 
 * voir tous les sockets:  
-`netstat -an`
+  `netstat -an`
 * sockets ipv4:  
-`netstat -an --inet`
+  `netstat -an --inet`
 * sockets ipv6:  
-`netstat -an --inet6`
+  `netstat -an --inet6`
 * socket en écoute:  
-`netstat --inet --listen -NNNN`
+  `netstat --inet --listen -NNNN`
 * socket en écoute:  
-`netstat --inet6 --listen -NNNN`
+  `netstat --inet6 --listen -NNNN`
 * identification du process lié (PID/prgrm name):  
-`sudo netstat -p`
+  `sudo netstat -p`
 
 >* `-a` display all sockets
 >* `-n` ne résoud pas les noms
@@ -417,40 +415,40 @@ Création de serveurs/clients ? (tcp only?)
 ## oneLiners
 
 * entrées uniques:  
-`cat log.txt | uniq -u | wc -l`  
+  `cat log.txt | uniq -u | wc -l`  
 * 2 entrées les plus fréquentes:  
-`cat log.txt | uniq -c | sort -n | tail -2`  
+  `cat log.txt | uniq -c | sort -n | tail -2`  
 * find recursive and move:  
-`find ./ -type f -name '*.ttf' -exec mv -i {} ./  \;`  
+  `find ./ -type f -name '*.ttf' -exec mv -i {} ./  \;`  
 
 ## process:
 * current shell process:  
-`ps`          
+  `ps`          
 * nice display:  
-`pstree`      
+  `pstree`      
 * all actifs process:  
-`ps -u`       
+  `ps -u`       
 * processus actifs + PID current shell:  
-`jobs -l`     
+  `jobs -l`     
 * suspend le process:  
-`CTRL + Z`    
+  `CTRL + Z`    
 * bring a bg process to fg:  
-`fg` _[PID]_
+  `fg` _[PID]_
 * put process into back ground:  
-`bg`          
+  `bg`          
 * kill processkill:  
-`kill` _pid_  
+  `kill` _pid_  
 * kill signals:  
-`kill -l` 
+  `kill -l` 
 
 ## tee
 
 * Envoie en même temps stdout vers un fichier et vers l'écran:  
-`tee [-a] file`  
+  `tee [-a] file`  
     `-a`: append [CTRL]+c to exit  
 
 * Lance make et stocke sa sortie dans build.log:
-`make` | `tee` _build.log_
+  `make` | `tee` _build.log_
 
 Lance la commande make install et rajoute sa sortie à la fin du fichier build.log:
 `make` _install_ | `tee` `-a` 
@@ -497,11 +495,11 @@ help       ?             silence    _
 
 ## users
 * add user:    
-`sudo adduser username`    
+  `sudo adduser username`    
 * add sudo:  
-`sudo usermod -aG sudo username` 	  
-* delete all from user:	  
-`userdel -r username`			  
+  `sudo usermod -aG sudo username`   
+  * delete all from user:  
+    `userdel -r username`	  
 
 
 ## shell log
@@ -531,9 +529,9 @@ tar -xvf <ar­chi­ve> <fi­chiers ou rép.> : ext seulement quelques fichiers d
 ## zip
 
 * Compresser:  
-`zip` `-r` _nom\_fichier.zip_ _repertoire\_ou\_ fichier_  
+  `zip` `-r` _nom\_fichier.zip_ _repertoire\_ou\_ fichier_  
 * decompresser:    
-`unzip` _nom\_fichier.zip_ `-d` _destination_  
+  `unzip` _nom\_fichier.zip_ `-d` _destination_  
 
 
 ## scripts:
@@ -600,12 +598,12 @@ t comm
  comma
  comma
 ```
- 
+
 #### Cool stuff
- 
+
 `-f`: FIELD-LIST (Print only the fields listed in FIELD-LIST.)
 `-d`: specifies what is the field delimiter
- 
+
 ```
 $ cat /etc/passwd | tail -5
 hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
@@ -663,9 +661,9 @@ If the directory have the sticky bit set, a file can be deleted
 only by the owner of the file, the owner of the directory or root.
 
 * set the sticky bit:
-`chmod` `+t` file: 
+  `chmod` `+t` file: 
 * unset it:
-`chmod` `-t` file: 
+  `chmod` `-t` file: 
 
 ## guest extension
 
@@ -686,15 +684,15 @@ Affiche chaque ligne des file contenant le motif. Le motif est une expression r�
 `-E`: extended regex  
 
 * parcourt les f et affiche les lignes qui corresp au motif:  
-`grep` _mo­tif_ _fi­chi­ers­_    
+  `grep` _mo­tif_ _fi­chi­ers­_    
 * affiche les lignes contenant erreur dans les fichiers *.log:  
-`grep` _erreur_ \*.log   
+  `grep` _erreur_ \*.log   
 * idem + osef casse:  
-`grep` -i erreur \*.log 
+  `grep` -i erreur \*.log 
 * idem + récursif:  
-`grep` `-ri` _erreur_ 
+  `grep` `-ri` _erreur_ 
 * affiche toutes les lignes des fichiers sauf celles qui contie­nnent info:  
-`grep` `-v` _info_ \*.log 
+  `grep` `-v` _info_ \*.log 
 
 ex:
 ```sh
