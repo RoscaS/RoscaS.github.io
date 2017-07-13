@@ -167,6 +167,30 @@ cochon.txt  mouton.txt  poule  poule.txt  vache.txt
   ./final/lala.txt
   ```
 
+# Power tweak
+
+## tools
+
+* i-Nex $$ \Rightarrow $$ gui monitor
+* tlp $$ \Rightarrow $$ power management
+* powertop $$ \Rightarrow $$ stats
+
+## usefull commands
+* `lcpu | grep MHz` $$ \Rightarrow $$ real time cores freq
+* `tlp-stat` $$ \Rightarrow $$ show various info on power consuption
+* `powertop` $$ \Rightarrow $$ various info on power consuption
+* `sudo powertop --time=60 --html=power_report.html` $$ \Rightarrow $$ stats
+
+## disable touche screen
+
+
+1. `xinput --list`
+2. `find touchscreen system id
+3. disable it with `xinput disable xx`
+
+* turn it back on with `xinput enable xx`
+
+
 # Customization
 
 [Heaps of collections](https://github.com/erikdubois/Ultimate-Ubuntu-17.04/blob/master/README.md)
