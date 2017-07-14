@@ -1,0 +1,79 @@
+---
+layout: post
+title: "Python: classes"
+subtitle: "classes "
+date: 2017-07-14
+author: Sol
+category: py
+tags:  
+finished: false
+---
+
+Un objet en Python est défini par sa structure (les attributs qu'il contient et les méthodes qu'il lui sont applicables) plutôt que par son type.
+
+Ainsi, pour faire simple, un fichier sera un objet possédant des méthodes `read`, `write` et `close` Tout objet respectant cette définition sera considéré parPython comme un fichier.
+
+```python
+class FakeFile:
+    def read(self, size=0):
+        return ''
+    def write(self, s):
+        return 0
+    def close(self):
+        pass
+
+f = FakeFile()
+print('foo', file=f)
+```
+
+Python est entièrement construit autour de cette idée appelée **duck-typing**: 
+
+> "Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j'appelle cet oiseau un cannard" (James Whitcomb Riley)
+
+
+
+## Association 
+
+```python
+import crypt, datetime
+
+class User:
+    def __init__(self, id, name, password):
+        self.id        = id
+        self.name      = name
+        self._salt     = crypt.mksalt()
+        self._passowrd = self._crypt_pwd(password)
+    
+    def _crypt_pwd(self, password):
+        return crypt.crypt(password, self._salt)
+
+    def check_pwd(self, password):
+        return self._passowrd == self._crypt_pwd(password)
+
+    def post(self, message):
+        return Post(self, message)
+
+class Post:
+    def __init__(self, author, message):
+        self.author  = author
+        self.message = message
+        self.date    = datetime.datetime.now()
+    
+    def format(self):
+        date = self.date.strftime('le %d/%m/%y à %H:%M:%S')
+        return '<div><span>Par {} {}</span><p>{}</p></div>'\
+            .format(self.author.name, date, self.message)
+
+if __name__ == '__main__':
+    user = User(1, 'john', '12345')
+    p    = user.post('Salut à tous')
+    print(p.format())
+
+```
+
+output:
+
+```
+<div><span>Par john le 14/07/17 à 04:40:11</span><p>Salut à tous</p></div>
+```
+
