@@ -1,0 +1,152 @@
+---
+layout: post
+title: "Screeps: intro"
+subtitle: "Introduction au jeu Screeps "
+date: 2017-07-13
+author: Sol
+category: js
+tags:  
+finished: false
+---
+
+# Liens
+
+* [doc](http://docs.screeps.com/)
+* ​
+
+# Spawn
+
+* Create new units (**creeps**) with method `createCreep`
+    * **creep** 
+      * name
+      * body parts $ \Rightarrow $ gives skills
+      * life cycle = 1500 games ticks
+* "Talk" to spawn with `Game.spawns['Spawn1']`
+
+Example: Create a worker creep (console):
+
+```js
+Game.spawns['Spawn1'].createCreep( [WORK, CARRY, MOVE], 'Harvester1' );
+```
+
+* If not enough energy units to create a creep, `createCreep` returns error code `ERR_NOT_ENOUGH_ENERGY` `(-6)`
+
+# Harvesting
+
+Commands passed each game tick.
+
+* `harvest` method needs that the energy source is adjacent to the creep.
+
+
+* `Game.creeps['Harvester1']` give orders to a creeps
+* `FIND_SOURCES` $ \Rightarrow $ constant 
+* `Room.find` $ \Rightarrow $ method
+
+Example: Sending a creep to harvest (Script tab):
+
+```js
+module.exports.loop = function () {
+    var creep   = Game.creeps['Harvester1'];
+    var sources = creep.room.find(FIND_SOURCES);
+    if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(sources[0]);
+    }
+}
+```
+
+## Transfer engergy back to the spawn
+
+* `Creep.transfer` methode (should be done when the creep is next to the spawn)
+
+Example:
+
+```js
+module.exports.loop = function () {
+    var creep = Game.creeps['Harvester1'];
+
+    if (creep.carry.energy < creep.carryCapacity) {
+        var sources = creep.room.find(FIND_SOURCES);
+        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(sources[0]);
+        }
+    }
+    else {
+        if (creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(Game.spawns['Spawn1']);
+        }
+    }
+}
+```
+
+## Duplicating behavior
+
+Could duplicate the code but `for` loop against all the screeps in `Game.creeps` is a better choice.
+
+Example:
+
+```js
+module.exports.loop = function () {
+    for (var name in Game.creeps) {
+        var creep = Game.creeps[name];
+        
+        if (creep.carry.energy < creep.carryCapacity) {
+            var sources = creep.room.find(FIND_SOURCES);
+            if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(sources[0]);
+            }
+        }
+        else {
+            if (creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(Game.spawns['Spawn1']);
+            }
+        }
+    }
+}
+```
+
+# Modules
+
+Creating a module called `role.harvester`  $ \Rightarrow $ **module section** 
+
+* defining a `run` function inside the `module.exports` object
+  * `module.exports` contain creeps behaviors
+
+`role.harvester` module:
+
+```js
+var roleHarvester = {
+
+    // @param {creep} creep
+    run: function(creep) {
+        if (creep.carry.energy < creep.carryCapacity) {
+            var sources = creep.room.find(FIND_SOURCES);
+            if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(sources[0]);
+            }
+        }
+        else {
+            if (creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(Game.spawns['Spawn1']);
+            }
+        }
+    }
+};
+
+module.exports = roleHarvester;
+```
+
+`main` module:
+
+```js
+var roleHarvester = require('role.harvester');
+
+module.exports.loop = function () {
+    for (var name in Game.creeps) {
+        var creep = Game.creeps[name];
+        roleHarvester.run(creep);
+    }
+}
+```
+
+We only keep the `for` loop and a call to our new module by the method `require('role.harvester')`.
+
