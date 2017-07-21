@@ -9,24 +9,20 @@ tags: divers, fr, en
 finished: false
 ---
 
-## test
+[todo](https://zestedesavoir.com/tutoriels/409/outils-pour-lecriture-des-mathematiques-en-latex/rappels-et-premiere-regles/#1-le-mode-mathematique)
 
 $$
-    \left\{\frac{1}{x}\middle|x\neq0\right\}
+\left\{
+   \begin{aligned}
+       2x + 5y &= 24 \\
+       23x + y &= 25
+   \end{aligned}
+\right.
 $$
 
-
 $$
-    \frac{x}{2} \text{ est un entier s'il existe un entier }q \text{ tel que }x=2q
+    \begin{align*}
+    a &= 34 + x & b &= 2 + a & c &= a + b \\
+    d &= 22 + a & d &= 22x   & d - c &= 0
+    \end{align*}
 $$
-
-$$ \frac{x}{2} \text{ est un entier s'il existe un entier }q \text{ tel que }x=2q $$
-
-test en plein milieux $$\sqrt[3]{2}$$ ca marche?
-
-petit $\frac{3\pi}{2}$ et grand $$\frac{3\pi}{2}$$
-
-$$
-    \frac{3\pi}{2}
-$$
-
