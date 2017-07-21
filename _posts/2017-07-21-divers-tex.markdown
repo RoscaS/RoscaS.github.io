@@ -17,4 +17,6 @@ finished: false
 
 ## Sympy
 
-[tuto fr](http://www.slabbe.org/Enseignements/MATH2010/notesdecours/)
+[tuto fr](http://www.slabbe.org/Enseignements/MATH2010/notesdecours/)  
+
+Checker sympy vs wolframAlpha
