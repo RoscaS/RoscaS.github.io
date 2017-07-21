@@ -11,18 +11,4 @@ finished: false
 
 [todo](https://zestedesavoir.com/tutoriels/409/outils-pour-lecriture-des-mathematiques-en-latex/rappels-et-premiere-regles/#1-le-mode-mathematique)
 
-$$
-\left\{
-   \begin{aligned}
-       2x + 5y &= 24 \\
-       23x + y &= 25
-   \end{aligned}
-\right.
-$$
-
-$$
-    \begin{align*}
-    a &= 34 + x & b &= 2 + a & c &= a + b \\
-    d &= 22 + a & d &= 22x   & d - c &= 0
-    \end{align*}
-$$
+[recap](https://zestedesavoir.com/tutoriels/244/comment-rediger-des-maths-sur-zeste-de-savoir/)
