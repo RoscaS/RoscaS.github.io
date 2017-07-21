@@ -24,9 +24,9 @@ $$ \frac{x}{2} \text{ est un entier s'il existe un entier }q \text{ tel que }x=2
 
 test en plein milieux $$\sqrt[3]{2}$$ ca marche?
 
-petit $\sqrt[3]{2}$ et grand $$\sqrt[3]{2}$$
+petit $\frac{3\pi}{2}$ et grand $$\frac{3\pi}{2}$$
 
 $$
-    \sqrt[3]{2\pi}
+    \frac{3\pi}{2}
 $$
 
