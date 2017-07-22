@@ -19,4 +19,38 @@ finished: false
 
 [tuto fr](http://www.slabbe.org/Enseignements/MATH2010/notesdecours/)  
 
-Checker sympy vs wolframAlpha
+Checker sympy VS wolframAlpha
+
+-----
+$$
+\left\{\frac{1}{x} \middle| x \neq 0 \right\}
+$$
+
+$$
+\begin{align*}
+        a &= 34 + x & b &= 2 + a & c &= a + b \\
+        d &= 22 + a & d &= 22x   & d - c &= 0
+\end{align*}
+$$
+
+```
+\begin{align*}
+        a &= 34 + x & b &= 2 + a & c &= a + b \\
+        d &= 22 + a & d &= 22x   & d - c &= 0
+\end{align*}
+```
+
+
+$$
+\begin{align*}
+	12+4x^2&=6 \\
+	4x^2 &= 12 + 6 \\
+	x^2 &= \frac{18}{4} \\
+	x&= \sqrt{\frac{18}{4}} = \textstyle \sqrt{4.5} \\
+\end{align*}
+$$
+
+$$
+\bbox[20px,border:2px solid red]{x = \sqrt{4.5}}
+$$
+
