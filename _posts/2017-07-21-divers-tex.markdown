@@ -21,6 +21,10 @@ finished: false
 
 Checker sympy VS wolframAlpha
 
+## Ocr math
+
+[myScript](https://webdemo.myscript.com/views/math.html)
+
 -----
 $$
 \left\{\frac{1}{x} \middle| x \neq 0 \right\}
