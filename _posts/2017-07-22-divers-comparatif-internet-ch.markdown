@@ -29,3 +29,5 @@ finished: false
 
 [article](https://www.xavierstuder.com/2017/04/11/fibre-optique-carte-interactive-3d-voir-plus-clair/)
 
+### @ Cure Copin 2 2340 Noiremont
+![alt](/00illustrations/cureCopin.png)
