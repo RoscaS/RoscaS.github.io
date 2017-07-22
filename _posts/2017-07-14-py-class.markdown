@@ -1,12 +1,12 @@
 * Objet ---
-layout: post
-title: "Py: classes"
-subtitle: "Python: Programmation orientée objet "
-date: 2017-07-14
-author: Sol
-category: Py
-tags:  
-finished: false
+  layout: post
+  title: "Py: classes"
+  subtitle: "Python: Programmation orientée objet "
+  date: 2017-07-14
+  author: Sol
+  category: Py
+  tags:  
+  finished: false
 ---
 
 ## Introduction
@@ -25,6 +25,111 @@ Un objet est constitué de 3 caractéristiques:
 1. Un **type** qui identifie le **rôle** de l'objet.
 2. Des **attributs** qui sont les **propriétés** de l'objet.
 3. Des **méthodes**, les **opérations** (actions) qui s'appliquent sur l'objet.
+
+
+#### Exemples
+
+* On instancie un variable **number** de type `int` 
+
+```python
+>>> number = 5
+```
+
+* `numerator` est un attribut de **number**
+
+```python
+>>> number.numerator
+5
+```
+
+* Variable **values** de type `list`
+
+```python
+>>> values = []
+```
+
+* `append` est une méthode de **values**
+
+```python
+>>> values.append(number)
+>>> values
+[5]
+```
+
+* Toute valeur en Python est donc un objet
+* Tout objet est associé à un type
+
+Un type définit la sémantique d'un objet. On sait par exemple que les objets de type `int` sont des nombres entiers, que l'on peut additionner, soustraire, etc...
+
+Pour créer un nouveau type en Python nous utilisons le mot clé `class` :
+
+```python
+class User:
+    pass
+```
+
+Nous avons maintenant à notre disposition un type `User`. Pour créer un objet de ce type, il nous suffit de procéder comme suit:
+
+```python
+john = User()
+```
+
+On dit alors que **john** est une instance de `User`.
+
+
+
+## Attributs
+
+Ils représentent des valeurs propres à l'objet. Nos objets de type `User` pourraient par exemple contenir un identifiant `id`, un nom `name` et un mot de passe `passeword`. 
+
+En python, nous pouvons facilement associer des valeurs à nos objets:
+
+```python
+class User:
+    pass
+
+john = User()
+john.id = 1
+john.name = 'john'
+john.password = '12345'
+
+print(john.id)
+print(john.name)
+print(john.password)
+```
+
+output:
+
+```
+1
+john
+12345
+```
+
+Nous avons instancié un objet nommé john, de type `User`, auquel nous avons attribué trois attributs puis nous avons affiché les valeurs de ces attributs.
+
+À noter que l'on peut redéfinir la valeur d'un attribut, et qu'un attribut peut aussi être supprimé à l'aide de l'opérateur `del` 
+
+```python
+del john.password
+print(john.password)
+```
+
+output:
+
+```python
+Traceback (most recent call last):
+  File "/home/sol/Code/Python/Tuto/Class/00tests/00.py", line 14, in <module>
+    print(john.password)
+AttributeError: 'User' object has no attribute 'password'
+```
+
+> Il est déconseillé de nommer une valeur de la même manière qu'une fonction _built-in_ 
+
+
+
+
+
 
 
 
