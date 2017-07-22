@@ -25,7 +25,7 @@ finished: false
 
 ### Carte couverture fibre en Suisse 
 
-<iframe src='https://map.geo.admin.ch/embed.html?topic=nga&lang=fr&bgLayer=ch.swisstopo.pixelkarte-grau&catalogNodes=317,320,327,334,338&layers=ch.bakom.anschlussart-glasfaser,ch.bakom.anschlussart-koaxialkabel,ch.bakom.anschlussart-kupferdraht,ch.bakom.downlink100,ch.bakom.anbieter-eigenes_festnetz&layers_opacity=1,0.75,0.75,0,0.75&layers_visibility=true,false,false,false,false&X=192192.17&Y=589030.06&zoom=2.2597216404290026' width='max' height='max' frameborder='0' style='border:0'></iframe>
+<iframe src='https://map.geo.admin.ch/embed.html?topic=nga&lang=fr&bgLayer=ch.swisstopo.pixelkarte-grau&catalogNodes=317,320,327,334,338&layers=ch.bakom.anschlussart-glasfaser,ch.bakom.anschlussart-koaxialkabel,ch.bakom.anschlussart-kupferdraht,ch.bakom.downlink100,ch.bakom.anbieter-eigenes_festnetz&layers_opacity=1,0.75,0.75,0,0.75&layers_visibility=true,false,false,false,false&X=192192.17&Y=589030.06&zoom=2.2597216404290026' width='1000' height='1000' frameborder='0' style='border:0'></iframe>
 
 [article](https://www.xavierstuder.com/2017/04/11/fibre-optique-carte-interactive-3d-voir-plus-clair/)
 
