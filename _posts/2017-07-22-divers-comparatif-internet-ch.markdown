@@ -31,3 +31,5 @@ finished: false
 
 ### @ Cure Copin 2 2340 Noiremont
 ![alt](/00illustrations/cureCopin.png)
+
+[test](http://www.worldcom.ch/test-disponibilite.php)
