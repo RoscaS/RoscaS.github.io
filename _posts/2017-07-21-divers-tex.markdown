@@ -19,7 +19,7 @@ finished: false
 
 [tuto fr](http://www.slabbe.org/Enseignements/MATH2010/notesdecours/)  
 
-Checker sympy VS wolframAlpha
+Checker sympy VS wolframAlpha           
 
 ## Ocr math
 
