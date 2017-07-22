@@ -23,13 +23,17 @@ finished: false
 | [green.ch](http://www.green.ch/en-us/internet,telephonytv/greeninternet.aspx) | $$\downarrow$$ 12.5 @ .59 (dsl) | $$\downarrow$$ 62.5 @ .69 (dsl/fib) | $$\downarrow$$ 125 @ .74 (fib) | free                      | 62.5 possible  5.5probable |
 
 
+### @ Cure Copin 2 2340 Noiremont
+![alt](/00illustrations/cureCopin.png)
+
+44000 Kbps = 5.5MBps
+
+[test](http://www.worldcom.ch/test-disponibilite.php)
+
+
+
 ### Carte couverture fibre en Suisse 
 
 <iframe src='https://map.geo.admin.ch/embed.html?topic=nga&lang=fr&bgLayer=ch.swisstopo.pixelkarte-grau&catalogNodes=317,320,327,334,338&layers=ch.bakom.anschlussart-glasfaser,ch.bakom.anschlussart-koaxialkabel,ch.bakom.anschlussart-kupferdraht,ch.bakom.downlink100,ch.bakom.anbieter-eigenes_festnetz&layers_opacity=1,0.75,0.75,0,0.75&layers_visibility=true,false,false,false,false&X=192192.17&Y=589030.06&zoom=2.2597216404290026' width='800' height='800' frameborder='0' style='border:0'></iframe>
 
 [article](https://www.xavierstuder.com/2017/04/11/fibre-optique-carte-interactive-3d-voir-plus-clair/)
-
-### @ Cure Copin 2 2340 Noiremont
-![alt](/00illustrations/cureCopin.png)
-
-[test](http://www.worldcom.ch/test-disponibilite.php)
