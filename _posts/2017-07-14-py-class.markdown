@@ -9,11 +9,7 @@
   finished: false
 ---
 
-# Objets
-
-> Cette introduction omet volontairement le terme "class" et se concentre sur la notion d'objet.
-
-## Introduction
+# Introduction
 
 **Un objet en Python est défini par sa structure (les attributs qu'il contient et les méthodes qu'il lui sont applicables) plutôt que par son type.**
 
@@ -22,6 +18,10 @@ Python est entièrement construit autour de cette idée appelée _**duck-typing*
 > "Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j'appelle cet oiseau un cannard" (James Whitcomb Riley)
 
 La **programmation orientée objet** est le _**paradigme**_ qui nous permet de définir nos propres types d'objets, avec leurs propriétés et opérations.
+
+# Objets
+
+> Cette introduction omet volontairement le terme "class" et se concentre sur la notion d'objet.
 
 ## Objet et caractéristiques
 
@@ -258,7 +258,9 @@ Dans le cas contraire, le mdp et l'évaluation ne seraient plus corrélés, et l
 
 En Python il n'existe pas de visibilité tel que **public** ou **private** en C++. Il existe à la place des conventions qui indiquent aux développeurs quels attributs/méthodes sont publics ou privés. Quand un nom d'attribut ou de méthode débute par un `_` au sein d'un objet, il indique quelque chose d'interne à l'objet (privé), dont la modification peut avoir des conséquences graves sur la stabilité.
 
-> Pour empécher l'acces depuis l'extérieur de à l'attribut **password** nous allons le crypter à l'aide du module `crypt`.
+> Pour empécher l'acces depuis l'extérieur à l'attribut **password** nous allons ajouter une méthode pour le *hasher¹* (à l'aide du module **crypt**). Ce condensat du mot de passe ne devrait pas être accessible de l'extérieur, et encore moins modifié (ce qui en altérerait la sécurité).
+>
+> > 1. Le *hashage* d'un mot de pass correspond à une opération **non-reversible** qui permet de calculer un **condensat** (hash) du mot de passe. Ce condesnat peut-être utilisé pour vérifier la validité d'un mot de passe, mais ne permet pas de retrouver le mot de passe d'origine.
 
 ```python
 import crypt
@@ -300,15 +302,15 @@ output:
 $6$fMWbLcsayCnTWdxH$6DTBPKy2.tGfboVLpJX0m7NBxAhtQOnf2.KOBIJl/3Gcll.5dI2qrLa1dB3.eWwZlJQSGWjC5XniYZIBnGraS0
 ```
 
-On peut masquer un peu plus l'attribut à l'aide du préfix `__`. Ce préfix a pour effet de renommer l'attribut en y insérant le nom de la classe courante:
+On peut masquer un peu plus l'attribut à l'aide du préfix `__`. Ce préfix a pour effet de **renommer l'attribut en y insérant le nom de la classe** courante:
 
 ```python
 import crypt
 
 class User:
     def __init__(self, id, name, password):
-        self.id        = id
-        self.name      = name
+        self.id         = id
+        self.name       = name
         self.__salt     = crypt.mksalt()
         self.__password = self.__crypt_pwd(password)
     
@@ -343,4 +345,6 @@ $6$g1WE7ILuFXf5d5hE$xOIa5QQa5FOH9zqtvgQJmYAgVeeYhhcEH./2r2LwKucztP2Dlo5zrLY/JQ8K
 ```
 
 > Ce comportement est principalement utilisé pour éviter des conflits de noms entre attributs internes de plusieurs classes sur un même objet.
+
+
 
