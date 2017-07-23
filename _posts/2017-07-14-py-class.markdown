@@ -1,6 +1,6 @@
-* Objet ---
+---
   layout: post
-  title: "Py: classes"
+  title: "Py: objets et classes"
   subtitle: "Python: Programmation orientée objet "
   date: 2017-07-14
   author: Sol
@@ -8,6 +8,10 @@
   tags:  
   finished: false
 ---
+
+# Objets
+
+> Cette introduction omet volontairement le terme "class" et se concentre sur la notion d'objet.
 
 ## Introduction
 
@@ -124,57 +128,219 @@ Traceback (most recent call last):
 AttributeError: 'User' object has no attribute 'password'
 ```
 
-> Il est déconseillé de nommer une valeur de la même manière qu'une fonction _built-in_ 
+> Il est déconseillé de nommer une valeur de la même manière qu'une fonction _built-in_. Dans le cas d'un **attribut** ce n'est pas gênant car il ne fait pas partie du même **namespace**. `john.id` ne rentre pas en conflit avec `id`.
 
+## Méthodes
 
+Opérations applicables sur les objets. Ce sont des **fonctions** qui reçoivent notre objet en premier paramètre.
 
+```Python
+class User:
+    pass
 
+john = User()
+john.id = 1
+john.name = 'john'
+john.password = '12345'
 
+def user_check_pwd(user, password):
+    return user.password == password
+```
 
+output:
 
+```
+False
+True
+```
 
-## Association 
+Les méthodes recevant l'objet en paramètre, elles peuvent en lire et modifier les attributs. Par exemple, la méthode `append` des listes permet d'insérer un nouvel élément $$ \Rightarrow $$ elle modifie bien la liste en question. 
+
+# Classes
+
+Une classe est la **définition d'un type**. `int`, `str` ou `list` sont des exemples de classes. `User` en est une autre.
+
+Une classe **décrit la structure des objets** du type qu'elle définit $$ \Rightarrow $$ quelles méthodes vont être applicatbles sur ces objets.
+
+## Introduction
+
+On définit une classe à l'aide du mot-clé `class`:
 
 ```python
-import crypt, datetime
+class User:
+    pass
+```
+
+> Le mot-clé `pass` indique à Python que le corp de la classe est vide.
+
+> Convention: nom en **CamelCase** 
+
+On instancie une classe de la même façon qu'on appelle une fonction: On suffixe son nom d'une paire de parenthèses. C'est valable pour les classes perso mais aussi pour les types primitifs:
+
+```python
+>>> User()
+<__main__.User object at 0x7f89fd767588>
+>>> int()
+0
+>>> str()
+''
+>>> list()
+[]
+```
+
+Pour définir une méthode dans une classe, on procède comme pour la définition d'une fonction mais dans le corp de la classe en question:
+
+```python
+class User:
+    def check_pwd(self, password):
+        return self.password == password
+```
+
+La classe `User` possède maintenant une méthode `check_pwd` applicable sur tous ses objets.
+
+```python
+>>> john = User()
+>>> john.id = 1
+>>> john.name = 'john'
+>>> john.password = '12345'
+>>> john.check_pwd('toto')
+False
+>>> john.check_pwd('12345')
+True
+```
+
+Le `self` reçu en premier paramètre par `check_pwd` désigne l'objet sur lequel on applique la méthode. Les autres parmètres arrivent après.
+
+La méthode étant définie au niveau de la classe, elle n'a que ce moyen pour savoir quel objet est utilisé. C'est un comportement particulier de Python. Appeler `john.check_pwd('12345')` équivaut à l'appel `User.check_pwd('john', '12345')`. C'est pourquoi `john` correspond ici au paramètre `self` de notre méthode.
+
+> `self` n'est pas un mot clé mais une convention qu'il faut respecter !
+
+Dans le corps de la méthode, `check_pwd`, `password` et `self.password` sont deux valeurs distinctes. La première est le paramètre reçu par la méthode et la seconde est l'attribut de l'objet.
+
+## Initialisation et attributs
+
+Quand on appelle une classe, un nouvel objet de ce type est construit en mémoire, **puis initialisé**. Cette initialisation permet d'assigner des valeurs à ses attributs.
+
+L'objet est initialisé à l'aide d'une méthode spéciale de sa classe, la méthode `__init__`. Cette dernière recevera les arguments passés lors de l'instanciation.
+
+```python
+class User:
+    def __init__(self, id, name, password):
+        self.id       = id
+        self.name     = name
+        self.password = password
+
+    def check_pwd(self, password):
+        return self.password == password
+```
+
+Dans cette méthode se trouve le paramètre `self` qui est donc utilisé pour modifier les attributs de l'objet.
+
+```python
+>>> john = User(1, 'john' '12345')
+>>> john.check_pwd('toto')
+False
+>>> john.check_pwd('12345')
+True
+```
+
+# Encapsulation
+
+## Invariants
+
+Les différents attributs de nos objets forment un état de cet objet, normalement stable. Les attributs sont liés les uns aux autre, la modification d'un d'eux peut avoir des conséquences sur les autres. Les invariants correspondent aux relations qui lient ces différents attributs.
+
+Si les objets `User` étaient dotés d'un attribut contenant une évaluation du mot de passe (savoir si le mot de pass est sécurisé ou non), il doit devrait alors être mis à jour chaque fois que nous modifions l'attribut `password` d'un objet `User`. 
+
+Dans le cas contraire, le mdp et l'évaluation ne seraient plus corrélés, et l'objet `User` ne serait alors plus dans un état stable. il est donc important de veiller à ces invariants pour assurer la stabilité de nos objets.
+
+## Visibilité
+
+En Python il n'existe pas de visibilité tel que **public** ou **private** en C++. Il existe à la place des conventions qui indiquent aux développeurs quels attributs/méthodes sont publics ou privés. Quand un nom d'attribut ou de méthode débute par un `_` au sein d'un objet, il indique quelque chose d'interne à l'objet (privé), dont la modification peut avoir des conséquences graves sur la stabilité.
+
+> Pour empécher l'acces depuis l'extérieur de à l'attribut **password** nous allons le crypter à l'aide du module `crypt`.
+
+```python
+import crypt
 
 class User:
     def __init__(self, id, name, password):
         self.id        = id
         self.name      = name
         self._salt     = crypt.mksalt()
-        self._passowrd = self._crypt_pwd(password)
+        self._password = self._crypt_pwd(password)
     
     def _crypt_pwd(self, password):
         return crypt.crypt(password, self._salt)
 
     def check_pwd(self, password):
-        return self._passowrd == self._crypt_pwd(password)
+        return self._password == self._crypt_pwd(password)
+```
 
-    def post(self, message):
-        return Post(self, message)
-
-class Post:
-    def __init__(self, author, message):
-        self.author  = author
-        self.message = message
-        self.date    = datetime.datetime.now()
-    
-    def format(self):
-        date = self.date.strftime('le %d/%m/%y à %H:%M:%S')
-        return '<div><span>Par {} {}</span><p>{}</p></div>'\
-            .format(self.author.name, date, self.message)
-
-if __name__ == '__main__':
-    user = User(1, 'john', '12345')
-    p    = user.post('Salut à tous')
-    print(p.format())
-
+```python
+john = User(1, 'john', '12345')
+print(john.check_pwd('12345'))
 ```
 
 output:
 
+```python
+True
 ```
-<div><span>Par john le 14/07/17 à 04:40:11</span><p>Salut à tous</p></div>
+
+> A remarquer qu'il ne s'agit que d'une convention, l'attribut `_password` étant tout à fait visible depuis l'extétieur.
+
+```python
+print(john._password)
 ```
+
+output:
+
+```python
+$6$fMWbLcsayCnTWdxH$6DTBPKy2.tGfboVLpJX0m7NBxAhtQOnf2.KOBIJl/3Gcll.5dI2qrLa1dB3.eWwZlJQSGWjC5XniYZIBnGraS0
+```
+
+On peut masquer un peu plus l'attribut à l'aide du préfix `__`. Ce préfix a pour effet de renommer l'attribut en y insérant le nom de la classe courante:
+
+```python
+import crypt
+
+class User:
+    def __init__(self, id, name, password):
+        self.id        = id
+        self.name      = name
+        self.__salt     = crypt.mksalt()
+        self.__password = self.__crypt_pwd(password)
+    
+    def __crypt_pwd(self, password):
+        return crypt.crypt(password, self.__salt)
+
+    def check_pwd(self, password):
+        return self.__password == self.__crypt_pwd(password)
+```
+
+```python
+john = User(1, 'john', '12345')
+print(john.__password)
+```
+
+output:
+
+```python
+Traceback (most recent call last):
+  File "/home/sol/Code/Python/Tuto/Class/00tests/00.py", line 17, in <module>
+    print(john.__password)
+```
+
+```python
+print(john._User__password)
+```
+
+output:
+
+```python
+$6$g1WE7ILuFXf5d5hE$xOIa5QQa5FOH9zqtvgQJmYAgVeeYhhcEH./2r2LwKucztP2Dlo5zrLY/JQ8KBkJ5hNrcyv6EhW06vNX1qDs4h0
+```
+
+> Ce comportement est principalement utilisé pour éviter des conflits de noms entre attributs internes de plusieurs classes sur un même objet.
 
