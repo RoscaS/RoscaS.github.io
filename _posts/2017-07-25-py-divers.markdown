@@ -27,11 +27,13 @@ poule()
 Suite à:
 
 * `./poule.py` dans un terminal la fonction `poule()` sera lancée
-* `import poule.py` **dans un autre script** la fonction `poule()` sera lancée aussi
+* `import poule **dans un autre script** la fonction `poule()` sera lancée aussi
 
 Ce n'est pas forcément ce qu'on veut et le code suivant permet d'éviter ça.
 
 ```python
+# fichier poule.py
+
 def poule():
     print("cotCot")
 
@@ -40,3 +42,35 @@ if __name__ == '__main__':
 ```
 
 De cette façon si on fait `./poule.py` va lancer `poule()` mais pas `import poule` dans un autre scripte.
+
+#### Explication
+
+La variable `__name__` est une variable automatiquement créée par Python, toujours disponible, dans tous les scripts. Elle **contient le nom du script courant** si on importe le script. 
+
+Si le script est le script principal, alors `__name__` ne content pas le nom du script mais une string qui contient `__main__`.
+
+```python
+# fichier fichier_poule.py
+
+print(__name__)
+```
+
+output:
+
+```python
+__main__
+```
+
+
+
+```python
+# fichier fichier_cochon.py
+
+import poule
+```
+
+output:
+
+```python
+fichier_poule
+```
