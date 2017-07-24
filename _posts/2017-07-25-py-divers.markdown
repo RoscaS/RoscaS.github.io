@@ -1,0 +1,42 @@
+---
+layout: post
+title: "Py: Divers"
+subtitle: "En vrac..."
+date: 2017-07-25
+author: Sol
+category: Py
+tags: divers, fr, en
+finished: false
+---
+
+
+
+## if \_\_name\_\_ == '_\_main\_\_'
+
+C'est une expression idiomatique qu'on utilise en Python pour éviter de lancer une partie de code si on importe ce script dans un autre.
+
+```python
+# fichier poule.py
+
+def poule():
+    print("cotCot")
+
+poule()
+```
+
+Suite à:
+
+* `./poule.py` dans un terminal la fonction `poule()` sera lancée
+* `import poule.py` **dans un autre script** la fonction `poule()` sera lancée aussi
+
+Ce n'est pas forcément ce qu'on veut et le code suivant permet d'éviter ça.
+
+```python
+def poule():
+    print("cotCot")
+
+if __name__ == '__main__':
+    poule()
+```
+
+De cette façon si on fait `./poule.py` va lancer `poule()` mais pas `import poule` dans un autre scripte.
