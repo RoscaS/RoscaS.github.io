@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-class.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: objets et classes</title>
+  <meta name="description" content="Introduction">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: objets et classes</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="14 Jul 2017" itemprop="datePublished">Jul 14 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Python: Programmation orientée objet </p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="introduction">Introduction</h1>
+
+<p><strong>Un objet en Python est défini par sa structure (les attributs qu’il contient et les méthodes qu’il lui sont applicables) plutôt que par son type.</strong></p>
+
+<p>Python est entièrement construit autour de cette idée appelée <em><strong>duck-typing</strong></em>:</p>
+
+<blockquote>
+  <p>“Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j’appelle cet oiseau un cannard” (James Whitcomb Riley)</p>
+</blockquote>
+
+<p>La <strong>programmation orientée objet</strong> est le <em><strong>paradigme</strong></em> qui nous permet de définir nos propres types d’objets, avec leurs propriétés et opérations.</p>
+
+<h1 id="objets">Objets</h1>
+
+<blockquote>
+  <p>Cette introduction omet volontairement le terme “class” et se concentre sur la notion d’objet.</p>
+</blockquote>
+
+<h2 id="objet-et-caractéristiques">Objet et caractéristiques</h2>
+
+<p>Un objet est constitué de 3 caractéristiques:</p>
+<ol>
+  <li>Un <strong>type</strong> qui identifie le <strong>rôle</strong> de l’objet.</li>
+  <li>Des <strong>attributs</strong> qui sont les <strong>propriétés</strong> de l’objet.</li>
+  <li>Des <strong>méthodes</strong>, les <strong>opérations</strong> (actions) qui s’appliquent sur l’objet.</li>
+</ol>
+
+<h4 id="exemples">Exemples</h4>
+
+<ul>
+  <li>On instancie un variable <strong>number</strong> de type <code class="highlighter-rouge">int</code></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">5</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">numerator</code> est un attribut de <strong>number</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">number</span><span class="o">.</span><span class="n">numerator</span>
+<span class="mi">5</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>Variable <strong>values</strong> de type <code class="highlighter-rouge">list</code></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">append</code> est une méthode de <strong>values</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">values</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>Toute valeur en Python est donc un objet</li>
+  <li>Tout objet est associé à un type</li>
+</ul>
+
+<p>Un type définit la sémantique d’un objet. On sait par exemple que les objets de type <code class="highlighter-rouge">int</code> sont des nombres entiers, que l’on peut additionner, soustraire, etc…</p>
+
+<p>Pour créer un nouveau type en Python nous utilisons le mot clé <code class="highlighter-rouge">class</code> :</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre>
+</div>
+
+<p>Nous avons maintenant à notre disposition un type <code class="highlighter-rouge">User</code>. Pour créer un objet de ce type, il nous suffit de procéder comme suit:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">john</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>On dit alors que <strong>john</strong> est une instance de <code class="highlighter-rouge">User</code>.</p>
+
+<h2 id="attributs">Attributs</h2>
+
+<p>Ils représentent des valeurs propres à l’objet. Nos objets de type <code class="highlighter-rouge">User</code> pourraient par exemple contenir un identifiant <code class="highlighter-rouge">id</code>, un nom <code class="highlighter-rouge">name</code> et un mot de passe <code class="highlighter-rouge">passeword</code>.</p>
+
+<p>En python, nous pouvons facilement associer des valeurs à nos objets:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">john</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+<span class="n">john</span><span class="o">.</span><span class="nb">id</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">john</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'john'</span>
+<span class="n">john</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">'12345'</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="nb">id</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+john
+12345
+</code></pre>
+</div>
+
+<p>Nous avons instancié un objet nommé john, de type <code class="highlighter-rouge">User</code>, auquel nous avons attribué trois attributs puis nous avons affiché les valeurs de ces attributs.</p>
+
+<p>À noter que l’on peut redéfinir la valeur d’un attribut, et qu’un attribut peut aussi être supprimé à l’aide de l’opérateur <code class="highlighter-rouge">del</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">del</span> <span class="n">john</span><span class="o">.</span><span class="n">password</span>
+<span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/00tests/00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">14</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="s">'User'</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'password'</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Il est déconseillé de nommer une valeur de la même manière qu’une fonction <em>built-in</em>. Dans le cas d’un <strong>attribut</strong> ce n’est pas gênant car il ne fait pas partie du même <strong>namespace</strong>. <code class="highlighter-rouge">john.id</code> ne rentre pas en conflit avec <code class="highlighter-rouge">id</code>.</p>
+</blockquote>
+
+<h2 id="méthodes">Méthodes</h2>
+
+<p>Opérations applicables sur les objets. Ce sont des <strong>fonctions</strong> qui reçoivent notre objet en premier paramètre.</p>
+
+<pre><code class="language-Python">class User:
+    pass
+
+john = User()
+john.id = 1
+john.name = 'john'
+john.password = '12345'
+
+def user_check_pwd(user, password):
+    return user.password == password
+</code></pre>
+
+<p>output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>False
+True
+</code></pre>
+</div>
+
+<p>Les méthodes recevant l’objet en paramètre, elles peuvent en lire et modifier les attributs. Par exemple, la méthode <code class="highlighter-rouge">append</code> des listes permet d’insérer un nouvel élément <script type="math/tex">\Rightarrow</script> elle modifie bien la liste en question.</p>
+
+<h1 id="classes">Classes</h1>
+
+<p>Une classe est la <strong>définition d’un type</strong>. <code class="highlighter-rouge">int</code>, <code class="highlighter-rouge">str</code> ou <code class="highlighter-rouge">list</code> sont des exemples de classes. <code class="highlighter-rouge">User</code> en est une autre.</p>
+
+<p>Une classe <strong>décrit la structure des objets</strong> du type qu’elle définit <script type="math/tex">\Rightarrow</script> quelles méthodes vont être applicatbles sur ces objets.</p>
+
+<h2 id="introduction-1">Introduction</h2>
+
+<p>On définit une classe à l’aide du mot-clé <code class="highlighter-rouge">class</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Le mot-clé <code class="highlighter-rouge">pass</code> indique à Python que le corp de la classe est vide.</p>
+</blockquote>
+
+<blockquote>
+  <p>Convention: nom en <strong>CamelCase</strong></p>
+</blockquote>
+
+<p>On instancie une classe de la même façon qu’on appelle une fonction: On suffixe son nom d’une paire de parenthèses. C’est valable pour les classes perso mais aussi pour les types primitifs:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">User</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">User</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f89fd767588</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">int</span><span class="p">()</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">str</span><span class="p">()</span>
+<span class="s">''</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">()</span>
+<span class="p">[]</span>
+</code></pre>
+</div>
+
+<p>Pour définir une méthode dans une classe, on procède comme pour la définition d’une fonction mais dans le corp de la classe en question:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">check_pwd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">password</span>
+</code></pre>
+</div>
+
+<p>La classe <code class="highlighter-rouge">User</code> possède maintenant une méthode <code class="highlighter-rouge">check_pwd</code> applicable sur tous ses objets.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">john</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="nb">id</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">'john'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">'12345'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="n">check_pwd</span><span class="p">(</span><span class="s">'toto'</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="n">check_pwd</span><span class="p">(</span><span class="s">'12345'</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre>
+</div>
+
+<p>Le <code class="highlighter-rouge">self</code> reçu en premier paramètre par <code class="highlighter-rouge">check_pwd</code> désigne l’objet sur lequel on applique la méthode. Les autres parmètres arrivent après.</p>
+
+<p>La méthode étant définie au niveau de la classe, elle n’a que ce moyen pour savoir quel objet est utilisé. C’est un comportement particulier de Python. Appeler <code class="highlighter-rouge">john.check_pwd('12345')</code> équivaut à l’appel <code class="highlighter-rouge">User.check_pwd('john', '12345')</code>. C’est pourquoi <code class="highlighter-rouge">john</code> correspond ici au paramètre <code class="highlighter-rouge">self</code> de notre méthode.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">self</code> n’est pas un mot clé mais une convention qu’il faut respecter !</p>
+</blockquote>
+
+<p>Dans le corps de la méthode, <code class="highlighter-rouge">check_pwd</code>, <code class="highlighter-rouge">password</code> et <code class="highlighter-rouge">self.password</code> sont deux valeurs distinctes. La première est le paramètre reçu par la méthode et la seconde est l’attribut de l’objet.</p>
+
+<h2 id="initialisation-et-attributs">Initialisation et attributs</h2>
+
+<p>Quand on appelle une classe, un nouvel objet de ce type est construit en mémoire, <strong>puis initialisé</strong>. Cette initialisation permet d’assigner des valeurs à ses attributs.</p>
+
+<p>L’objet est initialisé à l’aide d’une méthode spéciale de sa classe, la méthode <code class="highlighter-rouge">__init__</code>. Cette dernière recevera les arguments passés lors de l’instanciation.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="nb">id</span>       <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span>     <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+
+    <span class="k">def</span> <span class="nf">check_pwd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">==</span> <span class="n">password</span>
+</code></pre>
+</div>
+
+<p>Dans cette méthode se trouve le paramètre <code class="highlighter-rouge">self</code> qui est donc utilisé pour modifier les attributs de l’objet.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">john</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'john'</span> <span class="s">'12345'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="n">check_pwd</span><span class="p">(</span><span class="s">'toto'</span><span class="p">)</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">john</span><span class="o">.</span><span class="n">check_pwd</span><span class="p">(</span><span class="s">'12345'</span><span class="p">)</span>
+<span class="bp">True</span>
+</code></pre>
+</div>
+
+<h1 id="encapsulation">Encapsulation</h1>
+
+<h2 id="invariants">Invariants</h2>
+
+<p>Les différents attributs de nos objets forment un état de cet objet, normalement stable. Les attributs sont liés les uns aux autre, la modification d’un d’eux peut avoir des conséquences sur les autres. Les invariants correspondent aux relations qui lient ces différents attributs.</p>
+
+<p>Si les objets <code class="highlighter-rouge">User</code> étaient dotés d’un attribut contenant une évaluation du mot de passe (savoir si le mot de pass est sécurisé ou non), il doit devrait alors être mis à jour chaque fois que nous modifions l’attribut <code class="highlighter-rouge">password</code> d’un objet <code class="highlighter-rouge">User</code>.</p>
+
+<p>Dans le cas contraire, le mdp et l’évaluation ne seraient plus corrélés, et l’objet <code class="highlighter-rouge">User</code> ne serait alors plus dans un état stable. il est donc important de veiller à ces invariants pour assurer la stabilité de nos objets.</p>
+
+<h2 id="visibilité">Visibilité</h2>
+
+<p>En Python il n’existe pas de visibilité tel que <strong>public</strong> ou <strong>private</strong> en C++. Il existe à la place des conventions qui indiquent aux développeurs quels attributs/méthodes sont publics ou privés. Quand un nom d’attribut ou de méthode débute par un <code class="highlighter-rouge">_</code> au sein d’un objet, il indique quelque chose d’interne à l’objet (privé), dont la modification peut avoir des conséquences graves sur la stabilité.</p>
+
+<blockquote>
+  <p>Pour empécher l’acces depuis l’extérieur à l’attribut <strong>password</strong> nous allons ajouter une méthode pour le <em>hasher¹</em> (à l’aide du module <strong>crypt</strong>). Ce condensat du mot de passe ne devrait pas être accessible de l’extérieur, et encore moins modifié (ce qui en altérerait la sécurité).</p>
+
+  <blockquote>
+    <ol>
+      <li>Le <em>hashage</em> d’un mot de pass correspond à une opération <strong>non-reversible</strong> qui permet de calculer un <strong>condensat</strong> (hash) du mot de passe. Ce condesnat peut-être utilisé pour vérifier la validité d’un mot de passe, mais ne permet pas de retrouver le mot de passe d’origine.</li>
+    </ol>
+  </blockquote>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">crypt</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="nb">id</span>        <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span>      <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_salt</span>     <span class="o">=</span> <span class="n">crypt</span><span class="o">.</span><span class="n">mksalt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crypt_pwd</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_crypt_pwd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">crypt</span><span class="o">.</span><span class="n">crypt</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_salt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">check_pwd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crypt_pwd</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">john</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'john'</span><span class="p">,</span> <span class="s">'12345'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">check_pwd</span><span class="p">(</span><span class="s">'12345'</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="bp">True</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>A remarquer qu’il ne s’agit que d’une convention, l’attribut <code class="highlighter-rouge">_password</code> étant tout à fait visible depuis l’extétieur.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">_password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="err">$</span><span class="mi">6</span><span class="err">$</span><span class="n">fMWbLcsayCnTWdxH</span><span class="err">$</span><span class="mi">6</span><span class="n">DTBPKy2</span><span class="o">.</span><span class="n">tGfboVLpJX0m7NBxAhtQOnf2</span><span class="o">.</span><span class="n">KOBIJl</span><span class="o">/</span><span class="mi">3</span><span class="n">Gcll</span><span class="o">.</span><span class="mi">5</span><span class="n">dI2qrLa1dB3</span><span class="o">.</span><span class="n">eWwZlJQSGWjC5XniYZIBnGraS0</span>
+</code></pre>
+</div>
+
+<p>On peut masquer un peu plus l’attribut à l’aide du préfix <code class="highlighter-rouge">__</code>. Ce préfix a pour effet de <strong>renommer l’attribut en y insérant le nom de la classe</strong> courante:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">crypt</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="nb">id</span>         <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span>       <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__salt</span>     <span class="o">=</span> <span class="n">crypt</span><span class="o">.</span><span class="n">mksalt</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__password</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__crypt_pwd</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__crypt_pwd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">crypt</span><span class="o">.</span><span class="n">crypt</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__salt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">check_pwd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__password</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__crypt_pwd</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">john</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'john'</span><span class="p">,</span> <span class="s">'12345'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">__password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/00tests/00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">17</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">__password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">john</span><span class="o">.</span><span class="n">_User__password</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="err">$</span><span class="mi">6</span><span class="err">$</span><span class="n">g1WE7ILuFXf5d5hE</span><span class="err">$</span><span class="n">xOIa5QQa5FOH9zqtvgQJmYAgVeeYhhcEH</span><span class="o">./</span><span class="mi">2</span><span class="n">r2LwKucztP2Dlo5zrLY</span><span class="o">/</span><span class="n">JQ8KBkJ5hNrcyv6EhW06vNX1qDs4h0</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Ce comportement est principalement utilisé pour éviter des conflits de noms entre attributs internes de plusieurs classes sur un même objet.</p>
+</blockquote>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: objets et classes@&amp;url=http://localhost:4000/py/py-class.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-class.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-class.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
