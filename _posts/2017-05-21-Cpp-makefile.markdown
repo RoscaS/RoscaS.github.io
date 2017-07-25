@@ -10,7 +10,6 @@ finished: false
 ---
 
 [developpez.com](http://gl.developpez.com/tutoriel/outil/makefile/)
-
 [learn X in Y](https://learnxinyminutes.com/docs/fr-fr/make-fr/)
 
 

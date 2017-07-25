@@ -8,6 +8,7 @@ category: Py
 tags: divers, fr, en
 finished: false
 ---
+
 #### sources
 * [larousse.fr](http://www.larousse.fr/dictionnaires/anglais-francais/yield/625276)
 * [sam&max](http://sametmax.com/comment-utiliser-yield-et-les-generateurs-en-python/)
@@ -143,7 +144,14 @@ Ce qu'**il est important de comprendre** dans cet exemple c'est que comme nous u
 
 * Une fois dans la variable `contient_generateur`, tant qu'on ne l'utilise pas, il ne se passe rien ce n'est qu'une fois qu'on commence à itérer sur l'objet de type **generator object** que le code de la fonction s'exécute.
 
-* La première fois que le code s'éxécute (cad une fois qu'on commence à itérer sur `contient_generateur`), il va partir du début de la fonction, arriver jusqu'à `yield` et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s'est arrêté. (**Python sauvegarde l'état du code du générateur entre chaque appel**), et exécute le code à nouveau jusqu'à ce qu'il rencontre `yield`. Donc dans notre cas il va faire un tour de boucle.
+* La première fois que le code s'éxécute (cad une fois qu'on commence à itérer sur `contient_generateur`), il va partir du début de la fonction, arriver jusqu'à `yield` et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s'est arrêté (**Python sauvegarde l'état du code du générateur entre chaque appel**), et exécute le code à nouveau jusqu'à ce qu'il rencontre `yield`. Donc dans notre cas il va faire un tour de boucle.
+
+* Il continue de cette façon jusqu'à ce que le code ne recontre plus de `yield`, et donc qu'il n'y a plus de valeur à retourner. Le générateur est alors considéré comme définitivement vide. Il ne peut pas être "rembobiné", il faut en créer un autre.
+
+* La raison pour laquelle le code ne rencontre plus de `yield` est a déterminer nous même:
+    * condition
+    * boucle
+    * recursion... voir yield à l'infini
 
 ##### Complément d'info sur `l = range(x)`:
 
@@ -162,4 +170,146 @@ range(0, 3)
 1
 2
 ```
+## En pratique
+`yield` permet **d'économiser** de la mémoire mais aussi de **masquer la complexité d'un algo** derrnière une API classique d'itération.
 
+> Une API est une interface de programmation qui permet de se « brancher » sur une application pour échanger des données.
+
+Une fonction qui extrait les mots de plus de 3 caractères de tous les fichiers d'un dossier pourrait ressembler à ça:
+
+```python
+import os
+
+def extraire_mots(dossier):
+    for fichier in os.listdir(dossier):
+        with open(os.path.join(dossier, fichier)) as f:
+            for ligne in f:
+                for mot in ligne.split():
+                    if len(mot) > 3:
+                        yield mot
+```
+La complexité de cet algorithme est complèment masquée du point de vue de l'utilisateur qui peut l'utiliser de la façon suivante:
+
+```python
+for mot in extraire_mots("/home/sol/Code/Python/Tuto/yield"):
+    print(mot)
+```
+
+De plus, l'utilisateur peut utiliser tous les outils qu'on utlise sur les itérables. Toutes les fonctions qui acceptent les itérables acceptent donc le résultat de la fonction en pramètre grâce au **Duck Typing**. On crée ainsi une sorte de boite à outils.
+
+## Controller yield
+
+```python
+class DistributeurDeCapote():
+    stock = True
+
+    def allumer(self):
+        while self.stock:
+            yield "capote"
+```
+
+Tant qu'il y a du stock on peut récupérer autant de capotes que l'on veut.
+
+```python
+>>> distributeur_en_bas_de_la_rue = DistributeurDeCapote()
+>>> distribuer = distributeur_en_bas_de_la_rue.allumer()
+>>> print(next(distribuer))
+capote
+>>> print(next(distribuer))
+capote
+>>> print([next(distribuer) for c in range(4)])
+['capote', 'capote', 'capote', 'capote']
+```
+
+Dès qu'il n'y a plus de stock...
+
+```python
+>>> distributeur_en_bas_de_la_rue.stock = False
+>>> print(next(distribuer))
+Traceback (most recent call last):
+  File "/home/sol/Code/Python/Tuto/Class/04SamEtMax/yield/capotes.py", line 16, in <module>
+    print(next(distribuer))
+StopIteration
+```
+
+Et c'est vrai pour tout nouveau générateur:
+
+```python
+>>> distribuer2 = distributeur_en_bas_de_la_rue.allumer()
+>>> print(next(distribuer2))
+Traceback (most recent call last):
+  File "/home/sol/Code/Python/Tuto/Class/04SamEtMax/yield/capotes.py", line 19, in <module>
+    print(next(distribuer2))
+StopIteration
+```
+
+Allumer une machine vide n'a jamais permis de remplir le stock. Mais il suffit de remplir le stock pour que ça refonctionne:
+
+```python
+>>> distributeur_en_bas_de_la_rue.stock = True
+>>> print(next(distribuer))
+capote
+>>> print(next(distribuer2))
+capote
+```
+
+## Des détails
+
+En interne, tous les itérables utilisent un **générateur** appelé **itérteur** qu'on peut récupérer en utilisant la fonction `iter()`.
+
+```python
+>>> iter([1,2,3])
+<list_iterator object at 0x7fca097fcba8>
+>>> iter((1,2,3))
+<tuple_iterator object at 0x7fca097fcbe0>
+>>> iter(x for x in (1,2,3))
+<generator object <genexpr> at 0x7fca097f3ca8>
+```
+
+La methode `next()` avec l'iterable en argument retourne une valeur pour chaque appel de la méthode. Quand il n'y a plus de valeur, ils lèvent l'exception `StopIteration`:
+
+```python
+>>> gen = iter([1,2,3])
+>>> next(gen)
+1
+>>> next(gen)
+2
+>>> next(gen)
+3
+>>> next(gen)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+```
+
+C'est de cette façon que les boucles `for` fonctionnent. Elles utilisent `iter()` pour créer un générateur, puis attrapent une exception pour s'arrêter. 
+
+> À chaque boucle `for`, nous levons une exception sans le savoir !
+
+L'implémentation actuelle est que `iter()` appelle la méthode `__iter__()` sur l'objet passé en paramètre. Donc ça veut dire qu'on peut créér nos propres itérables:
+
+```python
+>>> class MonIterable(object):
+...     def __iter__(self):
+...             yield 'une'
+...             yield 'petite'
+...             yield 'poule'
+... 
+>>> generateur = iter(MonIterable())
+>>> print(next(generateur))
+une
+>>> print(next(generateur))
+petite
+>>> print(next(generateur))
+poule
+>>> print(next(generateur))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+>>> for generateur2 in MonIterable():
+...     print(generateur2)
+... 
+une
+petite
+poule
+```

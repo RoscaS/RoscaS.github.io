@@ -265,7 +265,19 @@ an 8% <strong>yield</strong> on investments <script type="math/tex">\Rightarrow<
   <li>
     <p>Une fois dans la variable <code class="highlighter-rouge">contient_generateur</code>, tant qu’on ne l’utilise pas, il ne se passe rien ce n’est qu’une fois qu’on commence à itérer sur l’objet de type <strong>generator object</strong> que le code de la fonction s’exécute.</p>
   </li>
-  <li>La première fois que le code s’éxécute (cad une fois qu’on commence à itérer sur <code class="highlighter-rouge">contient_generateur</code>), il va partir du début de la fonction, arriver jusqu’à <code class="highlighter-rouge">yield</code> et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s’est arrêté. (<strong>Python sauvegarde l’état du code du générateur entre chaque appel</strong>), et exécute le code à nouveau jusqu’à ce qu’il rencontre <code class="highlighter-rouge">yield</code>. Donc dans notre cas il va faire un tour de boucle.</li>
+  <li>
+    <p>La première fois que le code s’éxécute (cad une fois qu’on commence à itérer sur <code class="highlighter-rouge">contient_generateur</code>), il va partir du début de la fonction, arriver jusqu’à <code class="highlighter-rouge">yield</code> et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s’est arrêté (<strong>Python sauvegarde l’état du code du générateur entre chaque appel</strong>), et exécute le code à nouveau jusqu’à ce qu’il rencontre <code class="highlighter-rouge">yield</code>. Donc dans notre cas il va faire un tour de boucle.</p>
+  </li>
+  <li>
+    <p>Il continue de cette façon jusqu’à ce que le code ne recontre plus de <code class="highlighter-rouge">yield</code>, et donc qu’il n’y a plus de valeur à retourner. Le générateur est alors considéré comme définitivement vide. Il ne peut pas être “rembobiné”, il faut en créer un autre.</p>
+  </li>
+  <li>La raison pour laquelle le code ne rencontre plus de <code class="highlighter-rouge">yield</code> est a déterminer nous même:
+    <ul>
+      <li>condition</li>
+      <li>boucle</li>
+      <li>recursion… voir yield à l’infini</li>
+    </ul>
+  </li>
 </ul>
 
 <h5 id="complément-dinfo-sur-l--rangex">Complément d’info sur <code class="highlighter-rouge">l = range(x)</code>:</h5>
@@ -285,7 +297,153 @@ an 8% <strong>yield</strong> on investments <script type="math/tex">\Rightarrow<
 </span><span class="s">2</span><span class="err">
 </span></code></pre>
 </div>
+<h2 id="en-pratique">En pratique</h2>
+<p><code class="highlighter-rouge">yield</code> permet <strong>d’économiser</strong> de la mémoire mais aussi de <strong>masquer la complexité d’un algo</strong> derrnière une API classique d’itération.</p>
 
+<blockquote>
+  <p>Une API est une interface de programmation qui permet de se « brancher » sur une application pour échanger des données.</p>
+</blockquote>
+
+<p>Une fonction qui extrait les mots de plus de 3 caractères de tous les fichiers d’un dossier pourrait ressembler à ça:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">extraire_mots</span><span class="p">(</span><span class="n">dossier</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">fichier</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dossier</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dossier</span><span class="p">,</span> <span class="n">fichier</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ligne</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">mot</span> <span class="ow">in</span> <span class="n">ligne</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mot</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                        <span class="k">yield</span> <span class="n">mot</span>
+</code></pre>
+</div>
+<p>La complexité de cet algorithme est complèment masquée du point de vue de l’utilisateur qui peut l’utiliser de la façon suivante:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">mot</span> <span class="ow">in</span> <span class="n">extraire_mots</span><span class="p">(</span><span class="s">"/home/sol/Code/Python/Tuto/yield"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">mot</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>De plus, l’utilisateur peut utiliser tous les outils qu’on utlise sur les itérables. Toutes les fonctions qui acceptent les itérables acceptent donc le résultat de la fonction en pramètre grâce au <strong>Duck Typing</strong>. On crée ainsi une sorte de boite à outils.</p>
+
+<h2 id="controller-yield">Controller yield</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DistributeurDeCapote</span><span class="p">():</span>
+    <span class="n">stock</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">allumer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">stock</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="s">"capote"</span>
+</code></pre>
+</div>
+
+<p>Tant qu’il y a du stock on peut récupérer autant de capotes que l’on veut.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">distributeur_en_bas_de_la_rue</span> <span class="o">=</span> <span class="n">DistributeurDeCapote</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">distribuer</span> <span class="o">=</span> <span class="n">distributeur_en_bas_de_la_rue</span><span class="o">.</span><span class="n">allumer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer</span><span class="p">))</span>
+<span class="n">capote</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer</span><span class="p">))</span>
+<span class="n">capote</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">([</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
+<span class="p">[</span><span class="s">'capote'</span><span class="p">,</span> <span class="s">'capote'</span><span class="p">,</span> <span class="s">'capote'</span><span class="p">,</span> <span class="s">'capote'</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Dès qu’il n’y a plus de stock…</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">distributeur_en_bas_de_la_rue</span><span class="o">.</span><span class="n">stock</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/04SamEtMax/yield/capotes.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">16</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer</span><span class="p">))</span>
+<span class="nb">StopIteration</span>
+</code></pre>
+</div>
+
+<p>Et c’est vrai pour tout nouveau générateur:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">distribuer2</span> <span class="o">=</span> <span class="n">distributeur_en_bas_de_la_rue</span><span class="o">.</span><span class="n">allumer</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer2</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/04SamEtMax/yield/capotes.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">19</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer2</span><span class="p">))</span>
+<span class="nb">StopIteration</span>
+</code></pre>
+</div>
+
+<p>Allumer une machine vide n’a jamais permis de remplir le stock. Mais il suffit de remplir le stock pour que ça refonctionne:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">distributeur_en_bas_de_la_rue</span><span class="o">.</span><span class="n">stock</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer</span><span class="p">))</span>
+<span class="n">capote</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">distribuer2</span><span class="p">))</span>
+<span class="n">capote</span>
+</code></pre>
+</div>
+
+<h2 id="des-détails">Des détails</h2>
+
+<p>En interne, tous les itérables utilisent un <strong>générateur</strong> appelé <strong>itérteur</strong> qu’on peut récupérer en utilisant la fonction <code class="highlighter-rouge">iter()</code>.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="o">&lt;</span><span class="n">list_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fca097fcba8</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">iter</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">tuple_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7fca097fcbe0</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">iter</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="o">&lt;</span><span class="n">genexpr</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x7fca097f3ca8</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+<p>La methode <code class="highlighter-rouge">next()</code> avec l’iterable en argument retourne une valeur pour chaque appel de la méthode. Quand il n’y a plus de valeur, ils lèvent l’exception <code class="highlighter-rouge">StopIteration</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">gen</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nb">StopIteration</span>
+</code></pre>
+</div>
+
+<p>C’est de cette façon que les boucles <code class="highlighter-rouge">for</code> fonctionnent. Elles utilisent <code class="highlighter-rouge">iter()</code> pour créer un générateur, puis attrapent une exception pour s’arrêter.</p>
+
+<blockquote>
+  <p>À chaque boucle <code class="highlighter-rouge">for</code>, nous levons une exception sans le savoir !</p>
+</blockquote>
+
+<p>L’implémentation actuelle est que <code class="highlighter-rouge">iter()</code> appelle la méthode <code class="highlighter-rouge">__iter__()</code> sur l’objet passé en paramètre. Donc ça veut dire qu’on peut créér nos propres itérables:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">MonIterable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">...</span>             <span class="k">yield</span> <span class="s">'une'</span>
+<span class="o">...</span>             <span class="k">yield</span> <span class="s">'petite'</span>
+<span class="o">...</span>             <span class="k">yield</span> <span class="s">'poule'</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">generateur</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">MonIterable</span><span class="p">())</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">generateur</span><span class="p">))</span>
+<span class="n">une</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">generateur</span><span class="p">))</span>
+<span class="n">petite</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">generateur</span><span class="p">))</span>
+<span class="n">poule</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">generateur</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nb">StopIteration</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">generateur2</span> <span class="ow">in</span> <span class="n">MonIterable</span><span class="p">():</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">generateur2</span><span class="p">)</span>
+<span class="o">...</span> 
+<span class="n">une</span>
+<span class="n">petite</span>
+<span class="n">poule</span>
+</code></pre>
+</div>
 
 </div>
 
