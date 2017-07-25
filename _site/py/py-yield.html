@@ -170,6 +170,7 @@ an 8% <strong>yield</strong> on investments <script type="math/tex">\Rightarrow<
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
 <span class="o">...</span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="o">...</span>
 <span class="mi">1</span>
 <span class="mi">2</span>
 <span class="mi">3</span>
@@ -181,6 +182,7 @@ an 8% <strong>yield</strong> on investments <script type="math/tex">\Rightarrow<
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
 <span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="o">...</span>
 <span class="mi">0</span>
 <span class="mi">1</span>
 <span class="mi">2</span>
@@ -232,6 +234,57 @@ an 8% <strong>yield</strong> on investments <script type="math/tex">\Rightarrow<
 <p>On constate dans cet exemple qu’une fois que le générateur est utilisé une première fois, il ne contient plus rien pour le second appel.</p>
 
 <h2 id="mot-clé-yield">Mot clé yield</h2>
+
+<p>Le mot clé <code class="highlighter-rouge">yield</code> est utilisé en lieu et place de <code class="highlighter-rouge">return</code> à la différence près qu’on va récupérer un générateur.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">creerGenerateur</span><span class="p">():</span>
+<span class="o">...</span>    <span class="n">mylist</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">...</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mylist</span><span class="p">:</span>
+<span class="o">...</span>        <span class="k">yield</span> <span class="n">i</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">contient_generateur</span> <span class="o">=</span> <span class="n">creerGenerateur</span><span class="p">()</span> <span class="c"># crée un générateur</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">contient_generateur</span><span class="p">)</span> <span class="c"># generateur est un objet</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">creerGenerateur</span> <span class="n">at</span> <span class="mh">0x7f69a52b3308</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">contient_generateur</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+</code></pre>
+</div>
+
+<p><span style="color:red"> <strong>TRES IMPORTANT !</strong> </span></p>
+
+<p>Ce qu’<strong>il est important de comprendre</strong> dans cet exemple c’est que comme nous utilisons <code class="highlighter-rouge">yield</code> et non pas <code class="highlighter-rouge">return</code>, <span style="color:red"> <strong>lors de l’appel de la fonction, le code de la fonction n’est pas exécuté</strong> </span> et a la place, la fonction retourne un objet générateur.</p>
+
+<ul>
+  <li>L’appel <code class="highlighter-rouge">creerGenerateur()</code> n’exécute pas le code dans le corp de sa définition (<code class="highlighter-rouge">def creerGenerateur()</code>)</li>
+  <li>
+    <p><code class="highlighter-rouge">creerGenerateur()</code> retourne un objet de type <strong>generator object</strong></p>
+  </li>
+  <li>
+    <p>Une fois dans la variable <code class="highlighter-rouge">contient_generateur</code>, tant qu’on ne l’utilise pas, il ne se passe rien ce n’est qu’une fois qu’on commence à itérer sur l’objet de type <strong>generator object</strong> que le code de la fonction s’exécute.</p>
+  </li>
+  <li>La première fois que le code s’éxécute (cad une fois qu’on commence à itérer sur <code class="highlighter-rouge">contient_generateur</code>), il va partir du début de la fonction, arriver jusqu’à <code class="highlighter-rouge">yield</code> et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s’est arrêté. (<strong>Python sauvegarde l’état du code du générateur entre chaque appel</strong>), et exécute le code à nouveau jusqu’à ce qu’il rencontre <code class="highlighter-rouge">yield</code>. Donc dans notre cas il va faire un tour de boucle.</li>
+</ul>
+
+<h5 id="complément-dinfo-sur-l--rangex">Complément d’info sur <code class="highlighter-rouge">l = range(x)</code>:</h5>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">range</span><span class="s">'&gt;</span><span class="err">
+</span><span class="s">&gt;&gt;&gt;</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; for i in l:</span><span class="err">
+</span><span class="s">...    print(i)</span><span class="err">
+</span><span class="s">...</span><span class="err">
+</span><span class="s">0</span><span class="err">
+</span><span class="s">1</span><span class="err">
+</span><span class="s">2</span><span class="err">
+</span></code></pre>
+</div>
 
 
 </div>

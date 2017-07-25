@@ -54,6 +54,7 @@ Lister un par un les éléments d'une liste $$ \Rightarrow $$ **Itérer** sur le
 >>> l = [1, 2, 3]
 >>> for i in l:
 ...    print(i)
+...
 1
 2
 3
@@ -65,6 +66,7 @@ Avec une list comprehension, on crée une liste, donc un **itérable**. Avec une
 >>> l = [x for x in range(3)]
 >>> for i in l:
 ...     print(i)
+...
 0
 1
 2
@@ -113,4 +115,51 @@ end
 On constate dans cet exemple qu'une fois que le générateur est utilisé une première fois, il ne contient plus rien pour le second appel.
 
 ## Mot clé yield
+
+Le mot clé `yield` est utilisé en lieu et place de `return` à la différence près qu'on va récupérer un générateur.
+
+```python
+>>> def creerGenerateur():
+...    mylist = range(3)
+...    for i in mylist:
+...        yield i
+...
+>>> contient_generateur = creerGenerateur() # crée un générateur
+>>> print(contient_generateur) # generateur est un objet
+<generator object creerGenerateur at 0x7f69a52b3308>
+>>> for i in contient_generateur:
+...     print(i)
+0
+1
+2
+```
+
+<span style="color:red"> **TRES IMPORTANT !** </span> 
+
+Ce qu'**il est important de comprendre** dans cet exemple c'est que comme nous utilisons `yield` et non pas `return`, <span style="color:red"> **lors de l'appel de la fonction, le code de la fonction n'est pas exécuté** </span> et a la place, la fonction retourne un objet générateur.
+
+* L'appel `creerGenerateur()` n'exécute pas le code dans le corp de sa définition (`def creerGenerateur()`)
+* `creerGenerateur()` retourne un objet de type **generator object**
+
+* Une fois dans la variable `contient_generateur`, tant qu'on ne l'utilise pas, il ne se passe rien ce n'est qu'une fois qu'on commence à itérer sur l'objet de type **generator object** que le code de la fonction s'exécute.
+
+* La première fois que le code s'éxécute (cad une fois qu'on commence à itérer sur `contient_generateur`), il va partir du début de la fonction, arriver jusqu'à `yield` et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s'est arrêté. (**Python sauvegarde l'état du code du générateur entre chaque appel**), et exécute le code à nouveau jusqu'à ce qu'il rencontre `yield`. Donc dans notre cas il va faire un tour de boucle.
+
+##### Complément d'info sur `l = range(x)`:
+
+```python
+>>> l = range(3)
+>>> print(l)
+range(0, 3)
+>>>
+>>> print(type(l))
+<class 'range'>
+>>>
+>>> for i in l:
+...    print(i)
+...
+0
+1
+2
+```
 
