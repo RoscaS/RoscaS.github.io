@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-yield.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: yield &amp; générateurs</title>
+  <meta name="description" content="sources  larousse.fr  sam&amp;max">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: yield & générateurs</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="25 Jul 2017" itemprop="datePublished">Jul 25 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Mot clé yield et les générateurs en Python</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h4 id="sources">sources</h4>
+<ul>
+  <li><a href="http://www.larousse.fr/dictionnaires/anglais-francais/yield/625276">larousse.fr</a></li>
+  <li><a href="http://sametmax.com/comment-utiliser-yield-et-les-generateurs-en-python/">sam&amp;max</a></li>
+</ul>
+
+<h2 id="traduction">Traduction</h2>
+
+<h4 id="yield-rightarrow-transitive-verb-conjugaison">yield <script type="math/tex">\Rightarrow</script> transitive verb (<em>conjugaison</em>)</h4>
+<ol>
+  <li><code class="highlighter-rouge">produce, bring in</code>
+    <ul>
+      <li><em>conjugaison</em> produire</li>
+      <li><em>conjugaison</em> rapporter<br />
+<code class="highlighter-rouge">- land, crops</code> produire, rapporter, donner<br />
+<code class="highlighter-rouge">- results</code> donner</li>
+      <li>the investment bond will <strong>yield</strong> 11% <script type="math/tex">\Rightarrow</script>  le bon d’épargne <strong>rapportera</strong> 11 %</li>
+      <li>their research has <strong>yielded</strong> some interesting results <script type="math/tex">\Rightarrow</script>  leur recherche a <strong>fourni</strong> OR <strong>donné</strong> quelques résultats intéressants</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">relinquish, give up</code>
+    <ul>
+      <li>céder,</li>
+      <li>abandonner<br />
+to <strong>yield</strong> ground military (figurative) <script type="math/tex">\Rightarrow</script>  <strong>céder</strong> du terrain</li>
+    </ul>
+  </li>
+  <li>(US) cars<br />
+ to <strong>yield</strong> right of way <script type="math/tex">\Rightarrow</script> <strong>céder</strong> la priorité</li>
+</ol>
+
+<h4 id="yield-rightarrow-noun">yield <script type="math/tex">\Rightarrow</script> noun</h4>
+<ol>
+  <li>agriculture &amp; industry
+    <ul>
+      <li><code class="highlighter-rouge">output</code> rendement m,</li>
+      <li>rapport m * <code class="highlighter-rouge">of crops</code> récolte f</li>
+    </ul>
+    <ul>
+      <li>high-<strong>yield</strong> crops <script type="math/tex">\Rightarrow</script> récoltes à <strong>rendement</strong> élevé</li>
+      <li>yield per acre <script type="math/tex">\Rightarrow</script>  <strong>rendement</strong> à l’hectare</li>
+    </ul>
+  </li>
+  <li>finance
+    <ul>
+      <li><code class="highlighter-rouge">from investments</code> rapport m, rendement m</li>
+      <li><code class="highlighter-rouge">profit</code>   bénéfice m, bénéfices mpl</li>
+      <li><code class="highlighter-rouge">from tax</code>   recette f, rapport m<br />
+an 8% <strong>yield</strong> on investments <script type="math/tex">\Rightarrow</script>  des investissements qui <strong>rapportent</strong> 8 %</li>
+    </ul>
+  </li>
+</ol>
+
+<h4 id="autres">Autres</h4>
+<ul>
+  <li><strong>yield</strong> sign <script type="math/tex">\Rightarrow</script> panneau de priorité</li>
+  <li>he <strong>yield</strong> himself up to the police <script type="math/tex">\Rightarrow</script> il s’est <strong>livré</strong> à la police</li>
+  <li>to <strong>yield</strong> a secret <script type="math/tex">\Rightarrow</script> <strong>révéler</strong> un secret</li>
+</ul>
+
+<h2 id="itérables">Itérables</h2>
+
+<p>Lister un par un les éléments d’une liste <script type="math/tex">\Rightarrow</script> <strong>Itérer</strong> sur les éléments d’une liste</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+<span class="o">...</span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+</code></pre>
+</div>
+
+<p>Avec une list comprehension, on crée une liste, donc un <strong>itérable</strong>. Avec une boucle <code class="highlighter-rouge">for</code>, on opère sur ses élèments un par un <script type="math/tex">\Rightarrow</script> on <strong>itère</strong> dessus.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+</code></pre>
+</div>
+
+<p><strong>À chaque fois qu’on peut utiliser <code class="highlighter-rouge">for</code>…<code class="highlighter-rouge">in</code> sur quelque chose, c’est un itérable: list, str, queue…</strong></p>
+<ul>
+  <li>pratique <script type="math/tex">\Rightarrow</script> on peut les lire autant qu’on veut</li>
+  <li>tous les élèments sont stockés en mémoire <script type="math/tex">\Rightarrow</script> peut être un problème</li>
+</ul>
+
+<h2 id="générateurs">Générateurs</h2>
+
+<p>La syntaxe d’une <strong>expression génératrice</strong> ressemble à une list comprehension à la différence qu’on utilise <code class="highlighter-rouge">()</code> à la place de <code class="highlighter-rouge">[]</code>. La grosse différence est qu’<strong>on ne peut pas lire un générateur plus d’une fois</strong>.</p>
+
+<p><span style="color:red"> Le principe des générateurs c’est qu’ils génèrent tout à la volée et ne stock pas cette donnée en mémoire </span></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">generateur</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"start"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">generateur</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"end"</span><span class="p">)</span>
+
+<span class="n">generateur</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Premier appel de la fonction:"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">generateur</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Second appel de la fonction:"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">generateur</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Premier</span> <span class="n">appel</span> <span class="n">de</span> <span class="n">la</span> <span class="n">fonction</span><span class="p">:</span>
+<span class="n">start</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="n">end</span>
+<span class="n">Second</span> <span class="n">appel</span> <span class="n">de</span> <span class="n">la</span> <span class="n">fonction</span><span class="p">:</span>
+<span class="n">start</span>
+<span class="n">end</span>
+</code></pre>
+</div>
+
+<p>On constate dans cet exemple qu’une fois que le générateur est utilisé une première fois, il ne contient plus rien pour le second appel.</p>
+
+<h2 id="mot-clé-yield">Mot clé yield</h2>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: yield & générateurs@&amp;url=http://localhost:4000/py/py-yield.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-yield.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-yield.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

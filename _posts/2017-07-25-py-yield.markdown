@@ -1,0 +1,116 @@
+---
+layout: post
+title: "Py: yield & générateurs"
+subtitle: "Mot clé yield et les générateurs en Python"
+date: 2017-07-25
+author: Sol
+category: Py
+tags: divers, fr, en
+finished: false
+---
+#### sources
+* [larousse.fr](http://www.larousse.fr/dictionnaires/anglais-francais/yield/625276)
+* [sam&max](http://sametmax.com/comment-utiliser-yield-et-les-generateurs-en-python/)
+
+## Traduction
+
+#### yield $$ \Rightarrow $$ transitive verb (_conjugaison_)
+1.	`produce, bring in`   
+    * _conjugaison_ produire
+    * _conjugaison_ rapporter  
+`- land, crops` produire, rapporter, donner  
+`- results` donner 
+    * the investment bond will **yield** 11% $$ \Rightarrow $$  le bon d'épargne **rapportera** 11 %  
+    * their research has **yielded** some interesting results $$ \Rightarrow $$  leur recherche a **fourni** OR **donné** quelques résultats intéressants
+2.	`relinquish, give up` 
+    *  céder, 
+    *  abandonner  
+    to **yield** ground military (figurative) $$ \Rightarrow $$  **céder** du terrain
+3.	(US) cars  
+ to **yield** right of way $$ \Rightarrow $$ **céder** la priorité
+
+#### yield $$ \Rightarrow $$ noun
+1. agriculture & industry 
+* `output` rendement m, 
+* rapport m * `of crops` récolte f
+    * high-**yield** crops $$ \Rightarrow $$ récoltes à **rendement** élevé 
+    * yield per acre $$ \Rightarrow $$  **rendement** à l'hectare
+2.	finance 
+* `from investments` rapport m, rendement m 
+* `profit`   bénéfice m, bénéfices mpl 
+* `from tax`   recette f, rapport m  
+an 8% **yield** on investments $$ \Rightarrow $$  des investissements qui **rapportent** 8 %
+
+#### Autres
+* **yield** sign $$ \Rightarrow $$ panneau de priorité
+* he **yield** himself up to the police $$ \Rightarrow $$ il s'est **livré** à la police
+* to **yield** a secret $$ \Rightarrow $$ **révéler** un secret
+
+## Itérables
+
+Lister un par un les éléments d'une liste $$ \Rightarrow $$ **Itérer** sur les éléments d'une liste
+
+```python
+>>> l = [1, 2, 3]
+>>> for i in l:
+...    print(i)
+1
+2
+3
+```
+
+Avec une list comprehension, on crée une liste, donc un **itérable**. Avec une boucle `for`, on opère sur ses élèments un par un $$ \Rightarrow $$ on **itère** dessus.
+
+```python
+>>> l = [x for x in range(3)]
+>>> for i in l:
+...     print(i)
+0
+1
+2
+```
+
+**À chaque fois qu'on peut utiliser `for`...`in` sur quelque chose, c'est un itérable: list, str, queue...**
+* pratique $$ \Rightarrow $$ on peut les lire autant qu'on veut
+* tous les élèments sont stockés en mémoire $$ \Rightarrow $$ peut être un problème
+
+## Générateurs
+
+La syntaxe d'une **expression génératrice** ressemble à une list comprehension à la différence qu'on utilise `()` à la place de `[]`. La grosse différence est qu'**on ne peut pas lire un générateur plus d'une fois**.
+
+<span style="color:red"> Le principe des générateurs c'est qu'ils génèrent tout à la volée et ne stock pas cette donnée en mémoire </span> 
+
+```python
+def display(generateur):
+    print("start")
+    for i in generateur:
+        print(i)
+    print("end")
+
+generateur = (x for x in range(3))
+
+print("Premier appel de la fonction:")
+display(generateur)
+
+print("Second appel de la fonction:")
+display(generateur)
+```
+
+output:
+
+```python
+Premier appel de la fonction:
+start
+0
+1
+2
+end
+Second appel de la fonction:
+start
+end
+```
+
+On constate dans cet exemple qu'une fois que le générateur est utilisé une première fois, il ne contient plus rien pour le second appel.
+
+## Mot clé yield
+
