@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-divers.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Divers</title>
+  <meta name="description" content="if __name__ == ‘__main__’">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Divers</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="25 Jul 2017" itemprop="datePublished">Jul 25 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>En vrac...</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="if-__name__--__main__">if __name__ == ‘__main__’</h2>
+
+<p>C’est une expression idiomatique qu’on utilise en Python pour éviter de lancer une partie de code si on importe ce script dans un autre.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># fichier poule.py</span>
+
+<span class="k">def</span> <span class="nf">poule</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"cotCot"</span><span class="p">)</span>
+
+<span class="n">poule</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Suite à:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">./poule.py</code> dans un terminal la fonction <code class="highlighter-rouge">poule()</code> sera lancée</li>
+  <li><code class="highlighter-rouge">import poule **dans un autre script** la fonction </code>poule()` sera lancée aussi</li>
+</ul>
+
+<p>Ce n’est pas forcément ce qu’on veut et le code suivant permet d’éviter ça.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># fichier poule.py</span>
+
+<span class="k">def</span> <span class="nf">poule</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"cotCot"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">poule</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>De cette façon si on fait <code class="highlighter-rouge">./poule.py</code> va lancer <code class="highlighter-rouge">poule()</code> mais pas <code class="highlighter-rouge">import poule</code> dans un autre scripte.</p>
+
+<h4 id="explication">Explication</h4>
+
+<p>La variable <code class="highlighter-rouge">__name__</code> est une variable automatiquement créée par Python, toujours disponible, dans tous les scripts. Elle <strong>contient le nom du script courant</strong> si on importe le script.</p>
+
+<p>Si le script est le script principal, alors <code class="highlighter-rouge">__name__</code> ne content pas le nom du script mais une string qui contient <code class="highlighter-rouge">__main__</code>.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># fichier fichier_poule.py</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">__main__</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># fichier fichier_cochon.py</span>
+
+<span class="kn">import</span> <span class="nn">poule</span>
+</code></pre>
+</div>
+
+<p>output:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">fichier_poule</span>
+</code></pre>
+</div>
+
+<h4 id="sources">Sources</h4>
+<p><a href="http://sametmax.com/pourquoi-if-__name__-__main__-en-python/">samEtMax</a></p>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Divers@&amp;url=http://localhost:4000/py/py-divers.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-divers.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-divers.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
