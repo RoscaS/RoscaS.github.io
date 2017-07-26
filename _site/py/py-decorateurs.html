@@ -40,7 +40,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Py: yield &amp; générateurs</title>
+  <title>Py: Décorateurs</title>
   <meta name="description" content="sources">
 </head>
 
@@ -51,7 +51,7 @@
 <header class="post-header">
 
     <center>
-		<div class="post-title" itemprop="name headline">Py: yield & générateurs</div>
+		<div class="post-title" itemprop="name headline">Py: Décorateurs</div>
 
 		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="25 Jul 2017" itemprop="datePublished">Jul 25 2017</time>
 
@@ -94,7 +94,7 @@
 <div class="post-content">
     <center>
 	
-	<p>Mot clé yield et les générateurs en Python</p>
+	<p>introduction aux décorateurs Python</p>
 	
     </center>
 	<h2>Directory</h2>
@@ -109,6 +109,300 @@
   <li><a href="http://sametmax.com/comment-utiliser-yield-et-les-generateurs-en-python/">sam&amp;max</a></li>
 </ul>
 
+<h2 id="introduction">Introduction</h2>
+
+<p>Les décorateurs sont des <strong>wrappers</strong>, c’est à dire qu’ils permettent d’exécuter du code avant et après la fonction qu’ils décorent, <strong>sans modifier la fonction elle-même</strong>.
+Pour comprendre cela il faut prendre conscience de ce qu’implique le fait qu’une fonction soit un objet.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">crier</span><span class="p">(</span><span class="n">mot</span><span class="o">=</span><span class="s">"yes"</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">return</span> <span class="n">mot</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s">"!"</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">crier</span><span class="p">())</span>
+<span class="n">Yes</span><span class="err">!</span>
+</code></pre>
+</div>
+
+<p>Les fonctions sont des <strong>objets</strong> et peuvent être assignées à une variable:</p>
+<blockquote>
+  <p>À noter qu’on utilise <strong>pas les parenthèses</strong>. La fonction n’est pas applée. Ici nous mettons la fonction <code class="highlighter-rouge">crier</code> dans la vriable <code class="highlighter-rouge">hurler</code> afin de pouvoir appeler <code class="highlighter-rouge">crier</code> avec <code class="highlighter-rouge">hurler</code></p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">hurler</span> <span class="o">=</span> <span class="n">crier</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">hurler</span><span class="p">())</span>
+<span class="n">Yes</span><span class="err">!</span>
+</code></pre>
+</div>
+
+<p>On peut également supprimer l’ancien nom <code class="highlighter-rouge">crier</code>, la fonction reste accessible avec <code class="highlighter-rouge">hurler</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">crier</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">crier</span><span class="p">())</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">except</span> <span class="nb">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">name</span> <span class="s">'crier'</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+<span class="o">&gt;&gt;&gt;</span><span class="k">print</span><span class="p">(</span><span class="n">hurler</span><span class="p">())</span>
+<span class="n">Yes</span><span class="err">!</span>
+</code></pre>
+</div>
+
+<p>Une fonctions peut être définie dans une autre fonction.
+Ici, on appelle <code class="highlighter-rouge">parler</code>, qui définit <code class="highlighter-rouge">chuchoter</code> à chaque appel, puis <code class="highlighter-rouge">chuchoter</code> est appelé à l’intérieur de <code class="highlighter-rouge">parler</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">parler</span><span class="p">():</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">chuchoter</span><span class="p">(</span><span class="n">mot</span><span class="o">=</span><span class="s">"yes"</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">return</span> <span class="n">mot</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s">"..."</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">chuchoter</span><span class="p">())</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">parler</span><span class="p">()</span>
+<span class="n">yes</span><span class="o">...</span>
+</code></pre>
+</div>
+
+<p>Mais <code class="highlighter-rouge">chuchoter</code> n’existe pas endehors de <code class="highlighter-rouge">parler</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">chuchoter</span><span class="p">())</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">except</span> <span class="nb">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="n">name</span> <span class="s">'chuchoter'</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</code></pre>
+</div>
+
+<h2 id="retour-et-passage-de-fonctions-par-référence">Retour et Passage de fonctions par référence</h2>
+
+<p>Le fait que les fonctions peuvent être…</p>
+<ul>
+  <li>assignées à une variable</li>
+  <li>définies dans une autre fonction…</li>
+</ul>
+
+<p>… implique qu’une fonctoin peut retourner une autre fonction:</p>
+
+<blockquote>
+  <p>noter l’absence de <code class="highlighter-rouge">()</code> pour le retour. On appelle pas la fonction, on retourne <strong>l’objet fonction</strong>.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">creerParler</span><span class="p">(</span><span class="n">specification</span><span class="o">=</span><span class="s">"crier"</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">crier</span><span class="p">(</span><span class="n">mot</span><span class="o">=</span><span class="s">"yes"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mot</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s">"!"</span>
+
+    <span class="k">def</span> <span class="nf">chuchoter</span><span class="p">(</span><span class="n">mot</span><span class="o">=</span><span class="s">"yes"</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mot</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s">"..."</span>
+
+    <span class="k">if</span> <span class="n">specification</span> <span class="o">==</span> <span class="s">"crier"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">crier</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">chuchoter</span>
+</code></pre>
+</div>
+
+<p>Obtenir la fonction et l’assigner à une variable:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">parler</span> <span class="o">=</span> <span class="n">creerParler</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">parler</code> est une variable qui contient la fonction <code class="highlighter-rouge">crier</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">parler</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">function</span> <span class="n">creerParler</span><span class="o">.&lt;</span><span class="nb">locals</span><span class="o">&gt;.</span><span class="n">crier</span> <span class="n">at</span> <span class="mh">0x7f073ea62b70</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+<p>On peut appeler <code class="highlighter-rouge">crier</code> depuis <code class="highlighter-rouge">parler</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">parler</span><span class="p">())</span>
+<span class="n">Yes</span><span class="err">!</span>
+</code></pre>
+</div>
+
+<p>Même chose avec la fonction <code class="highlighter-rouge">chuchoter</code> et sans utiliser de variable:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">creerParler</span><span class="p">(</span><span class="s">"chuchoter"</span><span class="p">))</span>
+<span class="o">&lt;</span><span class="n">function</span> <span class="n">creerParler</span><span class="o">.&lt;</span><span class="nb">locals</span><span class="o">&gt;.</span><span class="n">chuchoter</span> <span class="n">at</span> <span class="mh">0x7f9e743a4ea0</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">creerParler</span><span class="p">(</span><span class="s">"chuchoter"</span><span class="p">)())</span>
+<span class="n">yes</span><span class="o">...</span>
+</code></pre>
+</div>
+
+<p>Si on peut retourner une fonction, on peut églement en passer une en argument:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">faireQqchAvant</span><span class="p">(</span><span class="n">fonction</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="s">"avant l'appel de la fonction"</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">fonction</span><span class="p">())</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">faireQqchAvant</span><span class="p">(</span><span class="n">hurler</span><span class="p">)</span>
+<span class="n">avant</span> <span class="n">l</span><span class="s">'appel de la fonction</span><span class="err">
+</span><span class="s">Yes!</span><span class="err">
+</span></code></pre>
+</div>
+
+<h2 id="décorateur-fait-maison">Décorateur fait maison</h2>
+
+<p>Un decorateur est une fonction qui attend une autre fonction en parametre:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">decorateur_perso</span><span class="p">(</span><span class="n">fonction_a_decorer</span><span class="p">):</span>
+
+    <span class="c"># En interne, decorateur_perso definit une</span>
+    <span class="c"># fonction a la volee: le wrapper.</span>
+    <span class="c"># Ce dernier va enrober la fonction originale</span>
+    <span class="c"># de telle sorte qu'il puisse executer du</span>
+    <span class="c"># code avant et pres celle-ci</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+
+        <span class="c"># Code qui s'execute AVANT que la </span>
+        <span class="c"># fonction a decorer ne s'execute</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Avant que la fonction ne s'execute"</span><span class="p">)</span>
+
+        <span class="c"># Appel de la fonction (avec les parentheses donc)</span>
+        <span class="n">fonction_a_decorer</span><span class="p">()</span>
+
+        <span class="c"># Code qui s'execute APRES que la</span>
+        <span class="c"># fonction a decorer se soit executee</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Apres l'execution"</span><span class="p">)</span>
+    
+    <span class="c"># Ici, la fonction a decorer N'A JAMAIS ETE EXECUTEE.</span>
+    <span class="c"># On retourne le wrapper (sans les parentheses donc) </span>
+    <span class="c"># que l'on vient de creer.</span>
+    <span class="c"># Le wrapper contient la fonction originale et le code</span>
+    <span class="c"># a executer avant et apres, pret a etre utilise.</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre>
+</div>
+
+<p>Maintenant nous creons une fonction que l’on ne souhaite pas modifier.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fonction_intouchable</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Je suis une fonction intouchable !"</span><span class="p">)</span>
+
+<span class="n">fonction_intouchable</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Je suis une fonction intouchable !
+</code></pre>
+</div>
+
+<p>Grace a <code class="highlighter-rouge">decorateur_perso</code>, nous pouvons étendre le comportement de la <code class="highlighter-rouge">fonction_intouchable</code>. Il suffit de la passer en argument au <code class="highlighter-rouge">décorateur_perso</code> qui va alors l’enrober dans le code que l’on souhaite, pour ensuite retourner une nouvelle fonction:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">fonction_intouchable_decoree</span> <span class="o">=</span> <span class="n">decorateur_perso</span><span class="p">(</span><span class="n">fonction_intouchable</span><span class="p">)</span>
+<span class="n">fonction_intouchable_decoree</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Avant que la fonction ne s'execute
+Je suis une fonction intouchable !
+Apres l'execution
+</code></pre>
+</div>
+
+<p>Nous pouvons également faire en sorte qu’à chaque fois qu’on appelle <code class="highlighter-rouge">fonction_intouchable</code>, ce soit <code class="highlighter-rouge">fonction_intouchable_decoree</code> qui soit appelée. Il suffit d’écraser la fonction originale par celle retournée par le <code class="highlighter-rouge">décorateur_perso</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">fonction_intouchable</span> <span class="o">=</span> <span class="n">decorateur_perso</span><span class="p">(</span><span class="n">fonction_intouchable</span><span class="p">)</span>
+<span class="n">fonction_intouchable</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Avant que la fonction ne s'execute
+Je suis une fonction intouchable !
+Apres l'execution
+</code></pre>
+</div>
+
+<p>Voila ce que font les décorateurs.</p>
+
+<h2 id="décorateur-built-in">Décorateur built-in</h2>
+
+<p>En reprenant l’exemple précédent, en utilisant la syntaxe précédente:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="nd">@decorateur_perso</span>
+<span class="k">def</span> <span class="nf">fonction_intouchable</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Me touche pas !"</span><span class="p">)</span>
+
+<span class="n">fonction_intouchable</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Avant que la fonction ne s'execute
+Je suis une fonction intouchable !
+Apres l'execution
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">@decorateur_perso</code> est simplement un raccourcis pour<br />
+<code class="highlighter-rouge">fonction_intouchable = decorateur_perso(fonction_intouchable)</code></p>
+
+<p>Les décorateurs sont juste une <strong>variante pythonique</strong> du classique <em>patern design</em> <strong>décorateur</strong>.</p>
+
+<p>Nous pouvon cumuler ces derniers (syntaxe nulle):</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pain</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"&lt;/''''''</span><span class="err">\</span><span class="s">&gt;"</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"&lt;</span><span class="err">\</span><span class="s">______/&gt;"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">def</span> <span class="nf">ingredients</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"0tomates0"</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"~salade~"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@pain</span>
+<span class="nd">@ingredients</span>
+<span class="k">def</span> <span class="nf">sandwitch</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">"--jambon--"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">food</span><span class="p">)</span>
+
+<span class="n">sandwitch</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;/''''''\&gt;
+0tomates0
+--jambon--
+~salade~
+&lt;\______/&gt;
+</code></pre>
+</div>
+
+<p>L’ordre d’application des décorateurs est important:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="nd">@ingredients</span>
+<span class="nd">@pain</span>
+<span class="k">def</span> <span class="nf">sandwitch_nul</span><span class="p">(</span><span class="n">food</span><span class="o">=</span><span class="s">"--jambon--"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">food</span><span class="p">)</span>
+
+<span class="n">sandwitch_nul</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0tomates0
+&lt;/''''''\&gt;
+--jambon--
+&lt;\______/&gt;
+~salade~
+</code></pre>
+</div>
+
 </div>
 
 <div>
@@ -119,7 +413,7 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Py: yield & générateurs@&amp;url=http://localhost:4000/py/py-decorateurs.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Py: Décorateurs@&amp;url=http://localhost:4000/py/py-decorateurs.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
