@@ -108,7 +108,7 @@
   <li><a href="http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/">sam&amp;max</a></li>
 </ul>
 
-<h2 id="introduction">Introduction</h2>
+<h1 id="base">Base</h1>
 
 <p>La programmation orienté objet est un style (<em>paradigme</em>) de programmation qui permet de <strong>regrouper au même endroit</strong> le comportement (fonctions) et les données (structures) qui sont faites pour aller ensemble.</p>
 
@@ -394,6 +394,52 @@ Cette methode est appelee automatiquement
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">carburent</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">couleur</span><span class="o">=</span><span class="s">"noire"</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">carburent</span> <span class="o">=</span> <span class="n">carburent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">couleur</span>   <span class="o">=</span> <span class="n">couleur</span>
+</code></pre>
+</div>
+
+<h1 id="recapitulatif">Recapitulatif</h1>
+
+<ul>
+  <li>Un objet se crée en instanciant une classe</li>
+  <li>Une classe est un plan décrivant un objet et est composé de
+    <ul>
+      <li>méthodes (comportement)</li>
+      <li>attributs (données)</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Article</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">Article</span><span class="p">(</span><span class="s">"J'aime la viande"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>Les méthodes nommées <code class="highlighter-rouge">__methode__</code> (avec deux underscores) sont appelées automatiquement dans certaines conditions. <code class="highlighter-rouge">__init__</code> est appelée automatiquement après la création de l’objet, et on s’en sert pour créer l’état de départ de l’objet (initialiser).</li>
+</ul>
+
+<h1 id="dans-le-vif">Dans le vif</h1>
+
+<h2 id="self">Self</h2>
+
+<p>Pour mieux comprendre <code class="highlighter-rouge">self</code> nous allons utiliser la fonction <code class="highlighter-rouge">id()</code> qui retourne l’adresse en mémoire de l’objet passé en argument.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">id()</code> retourne un int, <code class="highlighter-rouge">hex()</code> nous permet de l’avoir sous format hexadecimal</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Article</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
+    
+    <span class="k">def</span> <span class="nf">print_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
 </code></pre>
 </div>
 

@@ -12,7 +12,7 @@ finished: false
 #### sources
 * [sam&max](http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/)
 
-## Introduction
+# Base
 
 La programmation orienté objet est un style (*paradigme*) de programmation qui permet de **regrouper au même endroit** le comportement (fonctions) et les données (structures) qui sont faites pour aller ensemble.
 
@@ -288,5 +288,42 @@ class Voiture:
     def __init__(self, carburent=100, couleur="noire"):
         self.carburent = carburent
         self.couleur   = couleur
+```
+
+# Recapitulatif
+
+* Un objet se crée en instanciant une classe
+* Une classe est un plan décrivant un objet et est composé de
+    * méthodes (comportement)
+    * attributs (données)
+
+```python
+class Article:
+    def __init__(self, titre):
+        self.titre = titre
+
+a1 = Article("J'aime la viande")
+print(a1.titre)
+```
+
+* Les méthodes nommées `__methode__` (avec deux underscores) sont appelées automatiquement dans certaines conditions. `__init__` est appelée automatiquement après la création de l'objet, et on s'en sert pour créer l'état de départ de l'objet (initialiser).
+
+# Dans le vif
+
+## Self
+
+Pour mieux comprendre `self` nous allons utiliser la fonction `id()` qui retourne l'adresse en mémoire de l'objet passé en argument.
+
+> `id()` retourne un int, `hex()` nous permet de l'avoir sous format hexadecimal
+
+```python
+class Article:
+    def __init__(self, titre):
+        self.titre = titre
+    
+    def print_self(self):
+        print(self.titre)
+        print(self)
+        print(hex(id(self)))
 ```
 
