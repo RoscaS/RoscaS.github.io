@@ -79,6 +79,210 @@ rouge
 
 Il permet également de forcer l'Unpacking dans le cas où c'est ambigu. La fonction qui suit ne fait qu'afficher chacun de ses paramètres:
 
+```python
+def afficher(elem1, elem2=None, elem3=None):
+    print(elem1)
+    print(elem2)
+    print(elem3)
+```
+
+```python
+>>> drapeau = ("noir", "jaune", "rouge")
+>>> afficher(drapeau)
+('noir', 'jaune', 'rouge')
+None
+None
+```
+
+Sans surprises pour ce premier snippet. Le prochain, nous montre l'utilisation de `*` pour forcer l'unpacking de façon à ce que les valeurs du tuple **soient passées individuellement comme autant de paramètres**.
+
+```python
+>>> afficher(*drapeau)
+noir
+jaune
+rouge
+```
+
+Ce qui s'utilise dans le cas où nous utilisons une collection tout au long d'un programme pour ne pas trainer des variables intermédiaires.
+
+Cette façcon de faire fonctionne aussi pour les slices:
+
+```python
+>>> l = [1, 2, 3, "element qu'on ne veut pas"]
+>>> afficher(*l[:-1])
+1
+2
+3
+```
+
+## Opérateur `**`
+
+Cet opérateur est utilisé pour forcer l'Unpacking des **dictionnaires**. Les valeurs du dictionnaire deviennent les valeurs des paramètres, mais cette association se fait par nom: **Chaque clé du dictionnaire doit correspondre à un nom de paramètre**:
+
+```python
+>>> elements = {"elem1": "eau", "elem2": "feu", "elem3": "air"}
+>>> afficher(**elements)
+eau
+feu
+air
+```
+
+Si une clé ne possède pas le nom adéquat, Python retournera une erreur:
+
+```python
+>>> elements = {"elem1": "eau", "elem2": "feu", "poule": "air"}
+>>> afficher(**elements)
+TypeError: afficher() got an unexpected keyword argument 'poule'
+```
+
+Une autre erreur est d'utiliser `*` avec un dictionnaire qui nous retournera les clés:
+
+> Les dictionnaires ne sont pas ordonnés, l'ordre des clés est aléatoire
+
+```python
+>>> elements = {"elem1": "eau", "elem2": "feu", "elem3": "air"}
+>>> afficher(*elements)
+elem2
+elem3
+elem1
+>>> afficher(*elements)
+elem3
+elem1
+elem2
+```
+
+Si on donne moins de valeurs qu'il n'y a de paramètres, Python remplit tout ce qu'il peut:
+
+```python
+>>> drapeau = ("noir", "jaune", "rouge")
+>>> afficher(*drapeau[:-1])
+noir
+jaune
+None
+```
+
+Dans le cas inverse, si il y a plus d'éléments que de paramètres, Python renvoie une erreur:
+
+```python
+>>> drapeau = ("noir", "jaune", "rouge", "gris")
+>>> afficher(*drapeau)
+TypeError: afficher() takes from 1 to 3 positional arguments but 4 were given
+```
+
+# Paramétrage dynamique
+
+<span style="color:red"> Attention, cet usage est souvent confondu avec le précédent. </span> 
+
+Dans certain cas, la définition d'un fonction qui accepte un nombre infini de paramètres est utile. L'exemple innutile suivant en est un exemple:
+
+```python
+def mul(a, b):
+    return a * b
+
+>>> print(mul(2, 3))
+6
+```
+
+Si on veut rajouter un 3e paramètre, il faut redéfinir la fonction, pareil pour un 4e... Finalement on finit par demander de passer une liste pour permettre un nombre arbitraire de paramètres:
+
+```python
+def mul(tab):
+    res = 1
+    for i in tab:
+        res = res *i
+    return res
+
+>>> print(mul([2, 3, 4, 5]))
+120
+```
+
+`*` autorise le passage d'une infinité de paramètres ce qui nous permet de ne pas utiliser de liste pour stocker les arguments:
+
+```python
+def mul(*elems):
+    res = 1
+    for i in elems:
+        res = res * i
+    return res
+
+>>> print(mul(2, 3, 4, 5))
+120
+```
+
+Tous les arguments sont automatiquement stockés dans une liste quiest le paramètre qu'on désigne par `*`.
+
+Cette façon de faire peut être utilisée conjointement avec des paramètres normaux:
+
+```python
+def display(elem1, elem2, *elemX):
+    print(elem1)
+    print(elem2)
+    for e in elemX:
+        print("(*) {}".format(e))
+
+>>> display("poule", "cochon", "vache", "poney", "mouton")
+poule
+cochon
+(*) vache
+(*) poney
+(*) mouton
+```
+Le paramètre flanqué de `*` est **toujours le dernier** et il ne doit y en avoir qu'un. 
+
+<span style="color:red"> **Par convention cet argument se nome** </span> `*args`.
+
+Nous pouvons utiliser de la même façon `**` pour les dictionnaires:
+
+```python
+def display_recette(recette, **ingredients):
+    print(recette)
+    for ingredient in ingredients.items():
+        print(" - %s: %s" % ingredient)
+
+display_recette(
+    "moules frites",
+    creme="une chie",
+    moules="deux trois",
+    frites="une chie aussi"
+)
+```
+
+**output**:
+
+```
+moules frites
+ - frites: une chie aussi
+ - moules: deux trois
+ - creme: une chie
+```
+
+De la même façon il faut mettre `**` en dernier. 
+<span style="color:red"> **Par convention cet argument se nome** </span> `**kwargs` (keyword arguments).
+
+Il est également possible de tout mélanger:
+
+```python
+def display_hybride(param_normal,
+                    param_defau="default value",
+                    *argsm,
+                    **kwargs):
+    print(param_normal)
+    print(param_defau)
+    print(argsm)
+    print(kwargs)
 
 
+display_hybride(
+    "param1", "param2", "infini1",
+    "infini2", kwinfini1=1, kwinfini2=2
+)
+```
 
+**output:**
+
+```
+param1
+param2
+('infini1', 'infini2')
+{'kwinfini2': 2, 'kwinfini1': 1}
+```
