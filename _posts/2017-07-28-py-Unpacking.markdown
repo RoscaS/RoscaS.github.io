@@ -45,6 +45,39 @@ rouge
 
 Il n'y a rien de particulier à faire. **L'Unpacking est automatique**. Il suffit de mettre à guche du signe`=` le même nombre de variables qu'il y a d'éléments dans la séquence à droite du signe `=`. Si ce n'est pas le cas, Python retournera une erreur explicite.
 
+```python
+>>> un, deux = drapeau
+ValueError: too many values to unpack (expected 2)
+```
+
+```python
+>>> un, deux, trois, quatre = drapeau
+ValueError: not enough values to unpack (expected 4, got 3)
+```
+
+## Opérateur `*`
+
+Il nous permet de gérer le cas où il y a plus d'éléments que de variables en disant "je veux que cette variable contienne le reste":
+
+```python
+>>> couleur1 , *autres_couleurs = drapeau
+>>> print(couleur1)
+noir
+>>> print(autres_couleurs)
+['jaune', 'rouge']
+```
+
+Et en plus c'est intelligent:
+
+```python
+>>> *autres_couleurs, derniere_couleur = drapeau
+>>> print(autres_couleurs)
+['noir', 'jaune']
+>>> print(derniere_couleur)
+rouge
+```
+
+Il permet également de forcer l'Unpacking dans le cas où c'est ambigu. La fonction qui suit ne fait qu'afficher chacun de ses paramètres:
 
 
 

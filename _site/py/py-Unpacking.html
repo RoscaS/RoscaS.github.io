@@ -141,6 +141,40 @@
 
 <p>Il n’y a rien de particulier à faire. <strong>L’Unpacking est automatique</strong>. Il suffit de mettre à guche du signe<code class="highlighter-rouge">=</code> le même nombre de variables qu’il y a d’éléments dans la séquence à droite du signe <code class="highlighter-rouge">=</code>. Si ce n’est pas le cas, Python retournera une erreur explicite.</p>
 
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">un</span><span class="p">,</span> <span class="n">deux</span> <span class="o">=</span> <span class="n">drapeau</span>
+<span class="nb">ValueError</span><span class="p">:</span> <span class="n">too</span> <span class="n">many</span> <span class="n">values</span> <span class="n">to</span> <span class="n">unpack</span> <span class="p">(</span><span class="n">expected</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">un</span><span class="p">,</span> <span class="n">deux</span><span class="p">,</span> <span class="n">trois</span><span class="p">,</span> <span class="n">quatre</span> <span class="o">=</span> <span class="n">drapeau</span>
+<span class="nb">ValueError</span><span class="p">:</span> <span class="ow">not</span> <span class="n">enough</span> <span class="n">values</span> <span class="n">to</span> <span class="n">unpack</span> <span class="p">(</span><span class="n">expected</span> <span class="mi">4</span><span class="p">,</span> <span class="n">got</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="opérateur-">Opérateur <code class="highlighter-rouge">*</code></h2>
+
+<p>Il nous permet de gérer le cas où il y a plus d’éléments que de variables en disant “je veux que cette variable contienne le reste”:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">couleur1</span> <span class="p">,</span> <span class="o">*</span><span class="n">autres_couleurs</span> <span class="o">=</span> <span class="n">drapeau</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">couleur1</span><span class="p">)</span>
+<span class="n">noir</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">autres_couleurs</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'jaune'</span><span class="p">,</span> <span class="s">'rouge'</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Et en plus c’est intelligent:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="o">*</span><span class="n">autres_couleurs</span><span class="p">,</span> <span class="n">derniere_couleur</span> <span class="o">=</span> <span class="n">drapeau</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">autres_couleurs</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'noir'</span><span class="p">,</span> <span class="s">'jaune'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">derniere_couleur</span><span class="p">)</span>
+<span class="n">rouge</span>
+</code></pre>
+</div>
+
+<p>Il permet également de forcer l’Unpacking dans le cas où c’est ambigu. La fonction qui suit ne fait qu’afficher chacun de ses paramètres:</p>
+
 
 </div>
 
