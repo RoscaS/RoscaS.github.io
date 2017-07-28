@@ -456,3 +456,53 @@ Extrais de l'**output**:
 Ce n'est pas un mauvaise façon de faire, **On peut égallement faire des interfaces en programmation fonctionnelle**.
 
 ## Façon POO
+
+```python
+import csv
+import json
+import urllib.request as urllib
+
+from io import StringIO
+from datetime import datetime
+
+DATA_SOURCE_URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+class Question(object):
+    def __init__(self, id, creation_date):
+        self.id            = id
+        self.creation_date = creation_date
+    
+    # On génère ces valeurs à la lecture:
+    def get_creation_date(self):
+        return datetime.strptime(self.creation_date,
+                                 '%Y-%m-%d %H:%M:%S')
+    
+    def get_url(self):
+        return QUESTION_URL.format(id=self.id)
+
+# Maintenant, notre fonction retourne des objets Question
+def download_question(url=DATA_SOURCE_URL):
+    csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+
+    for question in csv.DictReader(csv_data):
+        question['Post Link'] = json.loads(question['Post Link'])
+
+        # à la place de retourner des dictionnaires, on
+        # retourne des objets Question
+        yield Question(creation_date=question['CreationDate'],
+                       id=question['Post Link'])
+```
+
+A première vue, ça ne semble pas très interessant, Ça fait la même chose mais c'est plus long.
+
+Par contre on a un petit changement côté utilisation et c'est ça qu'on vise:
+
+```python
+for question in download_questions():
+    # affiche le titre et l'url
+    print("{}: {}".format(question.creation_date,
+                          question.get_url()))
+```
+
+À la place d'avoir un dictionnaire qui pourrait contenir n'importe quoi, on a un objet `question`, avec un titre et la possibilité de consulter l'URL.
