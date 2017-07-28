@@ -361,20 +361,9 @@ print(a1.titre)
 
 # TP-1
 
+## Façon procédurale
+
 Imaginons que nous voulons proposer une _bibliothèque_ permettant de récupérer les 100 dernières questions concernant Python sur [Stackoverflow](https://stackoverflow.com/).
-
-Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.
-
-```export
-SELECT TOP 100 p.CreationDate, p.id as [Post Link]
-FROM Post p
-JOIN PostTypes ty ON ty.Id = p.PostTypeId
-JOIN PostTags pt ON p.Id   = pt.PostId
-JOIN Tags t ON t.Id        = pt.TagId
-WHERE t.TagName            = 'python'
-  AND ty.Name              = 'Question'
-ORDER BY p.CreationDate DESC
-```
 
 Pour lire les données et les récupérer, pas besoin de POO, un scripte procédural fait l'affaire:
 
@@ -416,7 +405,54 @@ Le fichier _CSV_ issu de data.stackexchange.com n'est pas facile à parser. À l
 {'nom_decolonne': 'valeur_pour_cette_ligne', ...}
 ```
 
-Cette façon de faire n'est vraiment pas pratique (réutilisable). On peut commencer à en faire une fonction réutilisable.
+Cette façon de faire n'est vraiment pas pratique (réutilisable). On peut en faire une fonction réutilisable qui sera utilisable de l'extérieur.
 
+```python
+import csv
+import json
+import urllib.request as urllib
 
+from datetime import datetime
+from io import StringIO
 
+DATA_SOURCE_URL =   "http://data.stackexchange.com/StackOverflow/csv/109782"
+QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+def download_question(url=DATA_SOURCE_URL):
+    csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+    for question in csv.DictReader(csv_data):
+        # On transforme la string date en objet datetime
+        question['CreationDate'] = datetime.strptime(
+            question['CreationDate'],
+            '%Y-%m-%d %H:%M:%S'
+        )
+
+        # Le second champ est au format JSON. On le
+        # transforme donc en objet Python
+        question['Post Link'] = QUESTION_URL.format(id=question['Post Link'])
+
+        yield question
+```
+
+On pourrait l'importer et faire:
+
+```python
+for question in download_question():
+    # affiche le titre et l'url
+    print("{CreationDate} : {Post Link}".format(**question))
+```
+
+Extrais de l'**output**:
+
+```
+...
+2017-07-22 22:09:35 : http://stackoverflow.com/question/45259674
+2017-07-22 22:07:42 : http://stackoverflow.com/question/45259663
+2017-07-22 21:58:30 : http://stackoverflow.com/question/45259595
+2017-07-22 21:56:16 : http://stackoverflow.com/question/45259582
+...
+```
+
+Ce n'est pas un mauvaise façon de faire, **On peut égallement faire des interfaces en programmation fonctionnelle**.
+
+## Façon POO
