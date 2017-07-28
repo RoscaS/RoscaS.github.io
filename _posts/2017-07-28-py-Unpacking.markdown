@@ -286,3 +286,67 @@ param2
 ('infini1', 'infini2')
 {'kwinfini2': 2, 'kwinfini1': 1}
 ```
+
+<span style="color:red"> Nous devons absolument mettre les paramètresdans l'ordre suivant: </span> 
+
+1. paramètres normaux et obligatoires;
+2. paramètres normaux facultatifs (default;)
+3. paramètres dynamiques;
+4. paramètres dynamiques nommés.
+
+Cela permet de faire jouer les valeurs par défaut de façon très souple:
+
+```python
+>>> display_hybride("rien qu'un param")
+rien qu'un param
+default value
+()
+{}
+```
+
+On peut définir des paramètres qui ne peuvent être passés qu'en spécifiant leur nom ("keyword only parameters"). Pour ce faire, il faut mettre au moins un `*`, et tout ce qui suit et qui n'est pas flanqué de `*` ne peut plus être passé comme argument positionnel:
+
+```python
+def poule(normal, *args, keyword_only):
+    print(normal, args, keyword_only)
+
+>>> poule("yeah", "cool", "wesh")
+TypeError: poule() missing 1 required keyword-only argument: 'keyword_only'
+>>>
+>>> poule("yeah", "cool", keyword_only="man")
+yeah ('cool',) man
+```
+
+Si nous n'avons pas de `*args` à placer, on peut mettre `*` toute seule:
+
+```python
+def poule(normal, *, keyword_only):
+    print(normal, keyword_only)
+
+>>> poule("yeah", "cool")
+TypeError: poule() takes 1 positional argument but 2 were given
+>>>
+>>> poule("yeah", keyword_only="cool")
+yeah cool
+```
+
+# Bonus (python 3.5)
+
+On peut faire de l'unpacking directement dans les littéraux:
+
+```python
+>>> l = ["poule", "cochon", *range(3)]
+>>> print(l)
+['poule', 'cochon', 0, 1, 2]
+```
+
+On peut utiliser plusieurs fois l'unpacking des arguments dans un même appel et dans ce cas nous utilisons plusieurs `*` dans les paramètres:
+
+```python
+def poule(a, b, c, d):
+    print(a, b, c, d)
+
+>>> couleurs = ('vert', 'rouge')
+>>> poule(*couleurs, *range(2))
+vert rouge 0 1
+```

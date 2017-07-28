@@ -385,6 +385,72 @@ param2
 </code></pre>
 </div>
 
+<p><span style="color:red"> Nous devons absolument mettre les paramètresdans l’ordre suivant: </span></p>
+
+<ol>
+  <li>paramètres normaux et obligatoires;</li>
+  <li>paramètres normaux facultatifs (default;)</li>
+  <li>paramètres dynamiques;</li>
+  <li>paramètres dynamiques nommés.</li>
+</ol>
+
+<p>Cela permet de faire jouer les valeurs par défaut de façon très souple:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">display_hybride</span><span class="p">(</span><span class="s">"rien qu'un param"</span><span class="p">)</span>
+<span class="n">rien</span> <span class="n">qu</span><span class="s">'un param</span><span class="err">
+</span><span class="s">default value</span><span class="err">
+</span><span class="s">()</span><span class="err">
+</span><span class="s">{}</span><span class="err">
+</span></code></pre>
+</div>
+
+<p>On peut définir des paramètres qui ne peuvent être passés qu’en spécifiant leur nom (“keyword only parameters”). Pour ce faire, il faut mettre au moins un <code class="highlighter-rouge">*</code>, et tout ce qui suit et qui n’est pas flanqué de <code class="highlighter-rouge">*</code> ne peut plus être passé comme argument positionnel:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">poule</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">keyword_only</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">keyword_only</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">poule</span><span class="p">(</span><span class="s">"yeah"</span><span class="p">,</span> <span class="s">"cool"</span><span class="p">,</span> <span class="s">"wesh"</span><span class="p">)</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="n">poule</span><span class="p">()</span> <span class="n">missing</span> <span class="mi">1</span> <span class="n">required</span> <span class="n">keyword</span><span class="o">-</span><span class="n">only</span> <span class="n">argument</span><span class="p">:</span> <span class="s">'keyword_only'</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">poule</span><span class="p">(</span><span class="s">"yeah"</span><span class="p">,</span> <span class="s">"cool"</span><span class="p">,</span> <span class="n">keyword_only</span><span class="o">=</span><span class="s">"man"</span><span class="p">)</span>
+<span class="n">yeah</span> <span class="p">(</span><span class="s">'cool'</span><span class="p">,)</span> <span class="n">man</span>
+</code></pre>
+</div>
+
+<p>Si nous n’avons pas de <code class="highlighter-rouge">*args</code> à placer, on peut mettre <code class="highlighter-rouge">*</code> toute seule:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">poule</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">keyword_only</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">keyword_only</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">poule</span><span class="p">(</span><span class="s">"yeah"</span><span class="p">,</span> <span class="s">"cool"</span><span class="p">)</span>
+<span class="nb">TypeError</span><span class="p">:</span> <span class="n">poule</span><span class="p">()</span> <span class="n">takes</span> <span class="mi">1</span> <span class="n">positional</span> <span class="n">argument</span> <span class="n">but</span> <span class="mi">2</span> <span class="n">were</span> <span class="n">given</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">poule</span><span class="p">(</span><span class="s">"yeah"</span><span class="p">,</span> <span class="n">keyword_only</span><span class="o">=</span><span class="s">"cool"</span><span class="p">)</span>
+<span class="n">yeah</span> <span class="n">cool</span>
+</code></pre>
+</div>
+
+<h1 id="bonus-python-35">Bonus (python 3.5)</h1>
+
+<p>On peut faire de l’unpacking directement dans les littéraux:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">"poule"</span><span class="p">,</span> <span class="s">"cochon"</span><span class="p">,</span> <span class="o">*</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'poule'</span><span class="p">,</span> <span class="s">'cochon'</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>On peut utiliser plusieurs fois l’unpacking des arguments dans un même appel et dans ce cas nous utilisons plusieurs <code class="highlighter-rouge">*</code> dans les paramètres:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">poule</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">couleurs</span> <span class="o">=</span> <span class="p">(</span><span class="s">'vert'</span><span class="p">,</span> <span class="s">'rouge'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">poule</span><span class="p">(</span><span class="o">*</span><span class="n">couleurs</span><span class="p">,</span> <span class="o">*</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">vert</span> <span class="n">rouge</span> <span class="mi">0</span> <span class="mi">1</span>
+</code></pre>
+</div>
+
 </div>
 
 <div>
