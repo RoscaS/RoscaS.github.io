@@ -530,6 +530,15 @@ ORDER BY p.CreationDate DESC
 </code></pre>
 </div>
 
+<p>Le fichier <em>CSV</em> issu de data.stackexchange.com n’est pas facile à parser. À la place de bourriner à coup de <code class="highlighter-rouge">split()</code>, nous utilisons le module <code class="highlighter-rouge">csv</code> qui comme expliqué en commentaire du code, récupère chaque entrée du fichier comme un dictionnaire qui aura la structure:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="s">'nom_decolonne'</span><span class="p">:</span> <span class="s">'valeur_pour_cette_ligne'</span><span class="p">,</span> <span class="o">...</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Cette façon de faire n’est vraiment pas pratique (réutilisable). On peut commencer à en faire une fonction réutilisable.</p>
+
+
 </div>
 
 <div>

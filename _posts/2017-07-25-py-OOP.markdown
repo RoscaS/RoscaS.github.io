@@ -409,3 +409,14 @@ Extrais de l'**output**:
 45259726
 ...
 ```
+
+Le fichier _CSV_ issu de data.stackexchange.com n'est pas facile à parser. À la place de bourriner à coup de `split()`, nous utilisons le module `csv` qui comme expliqué en commentaire du code, récupère chaque entrée du fichier comme un dictionnaire qui aura la structure:
+
+```python
+{'nom_decolonne': 'valeur_pour_cette_ligne', ...}
+```
+
+Cette façon de faire n'est vraiment pas pratique (réutilisable). On peut commencer à en faire une fonction réutilisable.
+
+
+

@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 28 Jul 2017 19:09:35 +0200</pubDate>
-    <lastBuildDate>Fri, 28 Jul 2017 19:09:35 +0200</lastBuildDate>
+    <pubDate>Fri, 28 Jul 2017 19:16:05 +0200</pubDate>
+    <lastBuildDate>Fri, 28 Jul 2017 19:16:05 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -1204,6 +1204,15 @@ ORDER BY p.CreationDate DESC
 ...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;p&gt;Le fichier &lt;em&gt;CSV&lt;/em&gt; issu de data.stackexchange.com n’est pas facile à parser. À la place de bourriner à coup de &lt;code class=&quot;highlighter-rouge&quot;&gt;split()&lt;/code&gt;, nous utilisons le module &lt;code class=&quot;highlighter-rouge&quot;&gt;csv&lt;/code&gt; qui comme expliqué en commentaire du code, récupère chaque entrée du fichier comme un dictionnaire qui aura la structure:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'nom_decolonne'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'valeur_pour_cette_ligne'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Cette façon de faire n’est vraiment pas pratique (réutilisable). On peut commencer à en faire une fonction réutilisable.&lt;/p&gt;
+
 </description>
         <pubDate>Tue, 25 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-OOP.html</link>
