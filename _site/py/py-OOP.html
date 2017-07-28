@@ -486,6 +486,49 @@ Cette methode est appelee automatiquement
 
 <p>Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.</p>
 
+<pre><code class="language-export">SELECT TOP 100 p.CreationDate, p.id as [Post Link]
+FROM Post p
+JOIN PostTypes ty ON ty.Id = p.PostTypeId
+JOIN PostTags pt ON p.Id   = pt.PostId
+JOIN Tags t ON t.Id        = pt.TagId
+WHERE t.TagName            = 'python'
+  AND ty.Name              = 'Question'
+ORDER BY p.CreationDate DESC
+</code></pre>
+
+<p>Pour lire les données et les récupérer, pas besoin de POO, un scripte procédural fait l’affaire:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span> <span class="kn">as</span> <span class="nn">urllib</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="c"># URL du CSV</span>
+<span class="n">URL</span> <span class="o">=</span> <span class="s">"http://data.stackexchange.com/StackOverflow/csv/109782"</span>
+
+<span class="c"># On télécharge les données, on les décode et on les enrobe dans </span>
+<span class="c"># StringIO pour qu'elles soient lisible de la même façon qu'un</span>
+<span class="c"># fichier malgré le fait qu'elles soient juste en mémoire.</span>
+<span class="n">csv_data</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">100000</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf8'</span><span class="p">))</span>
+
+<span class="c"># On utilise le module CSV pour lire notre "fichier" CSV.</span>
+<span class="c"># DictReader retourne une liste de dictionnaires, un par</span>
+<span class="c"># entrée du "fichier".</span>
+<span class="k">for</span> <span class="n">question</span> <span class="ow">in</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csv_data</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">question</span><span class="p">[</span><span class="s">'CreationDate'</span><span class="p">])</span> <span class="c"># date de création</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">question</span><span class="p">[</span><span class="s">'Post Link'</span><span class="p">])</span>    <span class="c"># id question</span>
+</code></pre>
+</div>
+
+<p>Extrais de l’<strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>...
+2017-07-22 22:17:54
+45259736
+2017-07-22 22:16:27
+45259726
+...
+</code></pre>
+</div>
 
 </div>
 

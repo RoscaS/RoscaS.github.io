@@ -365,4 +365,47 @@ Imaginons que nous voulons proposer une _bibliothèque_ permettant de récupére
 
 Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.
 
+```export
+SELECT TOP 100 p.CreationDate, p.id as [Post Link]
+FROM Post p
+JOIN PostTypes ty ON ty.Id = p.PostTypeId
+JOIN PostTags pt ON p.Id   = pt.PostId
+JOIN Tags t ON t.Id        = pt.TagId
+WHERE t.TagName            = 'python'
+  AND ty.Name              = 'Question'
+ORDER BY p.CreationDate DESC
+```
 
+Pour lire les données et les récupérer, pas besoin de POO, un scripte procédural fait l'affaire:
+
+```python
+import csv
+import urllib.request as urllib
+from io import StringIO
+
+# URL du CSV
+URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+
+# On télécharge les données, on les décode et on les enrobe dans 
+# StringIO pour qu'elles soient lisible de la même façon qu'un
+# fichier malgré le fait qu'elles soient juste en mémoire.
+csv_data = StringIO(urllib.urlopen(URL).read(100000).decode('utf8'))
+
+# On utilise le module CSV pour lire notre "fichier" CSV.
+# DictReader retourne une liste de dictionnaires, un par
+# entrée du "fichier".
+for question in csv.DictReader(csv_data):
+    print(question['CreationDate']) # date de création
+    print(question['Post Link'])    # id question
+```
+
+Extrais de l'**output**:
+
+```
+...
+2017-07-22 22:17:54
+45259736
+2017-07-22 22:16:27
+45259726
+...
+```

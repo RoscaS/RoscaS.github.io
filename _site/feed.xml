@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 28 Jul 2017 18:44:13 +0200</pubDate>
-    <lastBuildDate>Fri, 28 Jul 2017 18:44:13 +0200</lastBuildDate>
+    <pubDate>Fri, 28 Jul 2017 19:09:35 +0200</pubDate>
+    <lastBuildDate>Fri, 28 Jul 2017 19:09:35 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -1161,6 +1161,49 @@ Cette methode est appelee automatiquement
 
 &lt;p&gt;Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.&lt;/p&gt;
 
+&lt;pre&gt;&lt;code class=&quot;language-export&quot;&gt;SELECT TOP 100 p.CreationDate, p.id as [Post Link]
+FROM Post p
+JOIN PostTypes ty ON ty.Id = p.PostTypeId
+JOIN PostTags pt ON p.Id   = pt.PostId
+JOIN Tags t ON t.Id        = pt.TagId
+WHERE t.TagName            = 'python'
+  AND ty.Name              = 'Question'
+ORDER BY p.CreationDate DESC
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Pour lire les données et les récupérer, pas besoin de POO, un scripte procédural fait l’affaire:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;csv&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib.request&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;io&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# URL du CSV&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://data.stackexchange.com/StackOverflow/csv/109782&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# On télécharge les données, on les décode et on les enrobe dans &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# StringIO pour qu'elles soient lisible de la même façon qu'un&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# fichier malgré le fait qu'elles soient juste en mémoire.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;csv_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urllib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# On utilise le module CSV pour lire notre &quot;fichier&quot; CSV.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# DictReader retourne une liste de dictionnaires, un par&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# entrée du &quot;fichier&quot;.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;question&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;csv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DictReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;csv_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;question&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'CreationDate'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# date de création&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;question&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Post Link'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;# id question&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Extrais de l’&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;...
+2017-07-22 22:17:54
+45259736
+2017-07-22 22:16:27
+45259726
+...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Tue, 25 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-OOP.html</link>
