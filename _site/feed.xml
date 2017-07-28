@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 27 Jul 2017 20:00:33 +0200</pubDate>
-    <lastBuildDate>Thu, 27 Jul 2017 20:00:33 +0200</lastBuildDate>
+    <pubDate>Fri, 28 Jul 2017 18:44:13 +0200</pubDate>
+    <lastBuildDate>Fri, 28 Jul 2017 18:44:13 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -787,6 +787,14 @@ an 8% &lt;strong&gt;yield&lt;/strong&gt; on investments &lt;script type=&quot;ma
 
 &lt;p&gt;La programmation orienté objet est un style (&lt;em&gt;paradigme&lt;/em&gt;) de programmation qui permet de &lt;strong&gt;regrouper au même endroit&lt;/strong&gt; le comportement (fonctions) et les données (structures) qui sont faites pour aller ensemble.&lt;/p&gt;
 
+&lt;p&gt;La &lt;strong&gt;POO&lt;/strong&gt; a pour principal attrait de permettre de proposer une belle &lt;strong&gt;API&lt;/strong&gt;, c’est à dire de créer du code réutilisable et facile à manipuler.&lt;/p&gt;
+
+&lt;p&gt;Il n’y a rien qu’on puisse faire en POO qu’on ne puisse faire autrement. &lt;strong&gt;On l’utilise principalement pour donner un style au code&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;En réalité, on fait de la POO principalement pour faciliter la vie de ceux qui vont utiliser notre code plus tard.&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;h2 id=&quot;objet&quot;&gt;Objet&lt;/h2&gt;
 
 &lt;p&gt;Un objet est un moyen de dire à la machine : “Ce &lt;code class=&quot;highlighter-rouge&quot;&gt;random nom&lt;/code&gt; possède telle donnée, et fait telle chose avec”.&lt;/p&gt;
@@ -1072,6 +1080,51 @@ Cette methode est appelee automatiquement
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
+&lt;h2 id=&quot;self&quot;&gt;Self&lt;/h2&gt;
+
+&lt;p&gt;Pour mieux comprendre &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; nous allons utiliser la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;id()&lt;/code&gt; qui retourne l’&lt;strong&gt;adresse en mémoire&lt;/strong&gt; de l’objet passé en argument.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;id()&lt;/code&gt; retourne un int, &lt;code class=&quot;highlighter-rouge&quot;&gt;hex()&lt;/code&gt; nous permet de l’avoir sous format hexadecimal&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;La méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;print_self()&lt;/code&gt; de la classe suivante nous permet d’identidier &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;article&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Poules et cochons&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Affichage du titre et des adresses de l’&lt;code class=&quot;highlighter-rouge&quot;&gt;article&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Poules&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;et&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cochons&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__main__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Article&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x7f502be38c88&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;mh&quot;&gt;0x7f502be38c88&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Utilisation de la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;self_print()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articl1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print_self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Poules&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;et&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cochons&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__main__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Article&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x7f502be38c88&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;mh&quot;&gt;0x7f502be38c88&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Nous constatons que c’est exactement la même chose. &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; &lt;strong&gt;est&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;article&lt;/code&gt;. C’est ça que veut dire être l’objet en cours.&lt;/p&gt;
+
 &lt;h1 id=&quot;recapitulatif&quot;&gt;Recapitulatif&lt;/h1&gt;
 
 &lt;ul&gt;
@@ -1094,29 +1147,19 @@ Cette methode est appelee automatiquement
 &lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Les méthodes nommées &lt;code class=&quot;highlighter-rouge&quot;&gt;__methode__&lt;/code&gt; (avec deux underscores) sont appelées automatiquement dans certaines conditions. &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; est appelée automatiquement après la création de l’objet, et on s’en sert pour créer l’état de départ de l’objet (initialiser).&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Les méthodes nommées &lt;code class=&quot;highlighter-rouge&quot;&gt;__methode__&lt;/code&gt; (avec deux underscores) sont appelées automatiquement dans certaines conditions. &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; est appelée automatiquement après la création de l’objet, et on s’en sert pour créer l’état de départ de l’objet (initialiser).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; est le premier paramètre qu’on passe à une méthode et représente l’objet en cours.&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&quot;dans-le-vif&quot;&gt;Dans le vif&lt;/h1&gt;
+&lt;h1 id=&quot;tp-1&quot;&gt;TP-1&lt;/h1&gt;
 
-&lt;h2 id=&quot;self&quot;&gt;Self&lt;/h2&gt;
+&lt;p&gt;Imaginons que nous voulons proposer une &lt;em&gt;bibliothèque&lt;/em&gt; permettant de récupérer les 100 dernières questions concernant Python sur &lt;a href=&quot;https://stackoverflow.com/&quot;&gt;Stackoverflow&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Pour mieux comprendre &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; nous allons utiliser la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;id()&lt;/code&gt; qui retourne l’adresse en mémoire de l’objet passé en argument.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;id()&lt;/code&gt; retourne un int, &lt;code class=&quot;highlighter-rouge&quot;&gt;hex()&lt;/code&gt; nous permet de l’avoir sous format hexadecimal&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Article&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;
-    
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;titre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 25 Jul 2017 00:00:00 +0200</pubDate>

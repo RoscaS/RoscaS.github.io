@@ -112,6 +112,14 @@
 
 <p>La programmation orienté objet est un style (<em>paradigme</em>) de programmation qui permet de <strong>regrouper au même endroit</strong> le comportement (fonctions) et les données (structures) qui sont faites pour aller ensemble.</p>
 
+<p>La <strong>POO</strong> a pour principal attrait de permettre de proposer une belle <strong>API</strong>, c’est à dire de créer du code réutilisable et facile à manipuler.</p>
+
+<p>Il n’y a rien qu’on puisse faire en POO qu’on ne puisse faire autrement. <strong>On l’utilise principalement pour donner un style au code</strong>.</p>
+
+<blockquote>
+  <p>En réalité, on fait de la POO principalement pour faciliter la vie de ceux qui vont utiliser notre code plus tard.</p>
+</blockquote>
+
 <h2 id="objet">Objet</h2>
 
 <p>Un objet est un moyen de dire à la machine : “Ce <code class="highlighter-rouge">random nom</code> possède telle donnée, et fait telle chose avec”.</p>
@@ -397,6 +405,51 @@ Cette methode est appelee automatiquement
 </code></pre>
 </div>
 
+<h2 id="self">Self</h2>
+
+<p>Pour mieux comprendre <code class="highlighter-rouge">self</code> nous allons utiliser la fonction <code class="highlighter-rouge">id()</code> qui retourne l’<strong>adresse en mémoire</strong> de l’objet passé en argument.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">id()</code> retourne un int, <code class="highlighter-rouge">hex()</code> nous permet de l’avoir sous format hexadecimal</p>
+</blockquote>
+
+<p>La méthode <code class="highlighter-rouge">print_self()</code> de la classe suivante nous permet d’identidier <code class="highlighter-rouge">self</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Article</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
+    
+    <span class="k">def</span> <span class="nf">print_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+
+<span class="n">article</span> <span class="o">=</span> <span class="n">Article</span><span class="p">(</span><span class="s">"Poules et cochons"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Affichage du titre et des adresses de l’<code class="highlighter-rouge">article</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">article</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+<span class="n">Poules</span> <span class="n">et</span> <span class="n">cochons</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">article</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Article</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f502be38c88</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">article</span><span class="p">)))</span>
+<span class="mh">0x7f502be38c88</span>
+</code></pre>
+</div>
+
+<p>Utilisation de la méthode <code class="highlighter-rouge">self_print()</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">articl1</span><span class="o">.</span><span class="n">print_self</span><span class="p">()</span>
+<span class="n">Poules</span> <span class="n">et</span> <span class="n">cochons</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Article</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f502be38c88</span><span class="o">&gt;</span>
+<span class="mh">0x7f502be38c88</span>
+</code></pre>
+</div>
+
+<p>Nous constatons que c’est exactement la même chose. <code class="highlighter-rouge">self</code> <strong>est</strong> <code class="highlighter-rouge">article</code>. C’est ça que veut dire être l’objet en cours.</p>
+
 <h1 id="recapitulatif">Recapitulatif</h1>
 
 <ul>
@@ -419,29 +472,19 @@ Cette methode est appelee automatiquement
 </div>
 
 <ul>
-  <li>Les méthodes nommées <code class="highlighter-rouge">__methode__</code> (avec deux underscores) sont appelées automatiquement dans certaines conditions. <code class="highlighter-rouge">__init__</code> est appelée automatiquement après la création de l’objet, et on s’en sert pour créer l’état de départ de l’objet (initialiser).</li>
+  <li>
+    <p>Les méthodes nommées <code class="highlighter-rouge">__methode__</code> (avec deux underscores) sont appelées automatiquement dans certaines conditions. <code class="highlighter-rouge">__init__</code> est appelée automatiquement après la création de l’objet, et on s’en sert pour créer l’état de départ de l’objet (initialiser).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">self</code> est le premier paramètre qu’on passe à une méthode et représente l’objet en cours.</p>
+  </li>
 </ul>
 
-<h1 id="dans-le-vif">Dans le vif</h1>
+<h1 id="tp-1">TP-1</h1>
 
-<h2 id="self">Self</h2>
+<p>Imaginons que nous voulons proposer une <em>bibliothèque</em> permettant de récupérer les 100 dernières questions concernant Python sur <a href="https://stackoverflow.com/">Stackoverflow</a>.</p>
 
-<p>Pour mieux comprendre <code class="highlighter-rouge">self</code> nous allons utiliser la fonction <code class="highlighter-rouge">id()</code> qui retourne l’adresse en mémoire de l’objet passé en argument.</p>
-
-<blockquote>
-  <p><code class="highlighter-rouge">id()</code> retourne un int, <code class="highlighter-rouge">hex()</code> nous permet de l’avoir sous format hexadecimal</p>
-</blockquote>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Article</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
-    
-    <span class="k">def</span> <span class="nf">print_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
-</code></pre>
-</div>
+<p>Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.</p>
 
 
 </div>

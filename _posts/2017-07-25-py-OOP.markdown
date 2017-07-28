@@ -16,6 +16,12 @@ finished: false
 
 La programmation orienté objet est un style (*paradigme*) de programmation qui permet de **regrouper au même endroit** le comportement (fonctions) et les données (structures) qui sont faites pour aller ensemble.
 
+La **POO** a pour principal attrait de permettre de proposer une belle **API**, c'est à dire de créer du code réutilisable et facile à manipuler. 
+
+Il n'y a rien qu'on puisse faire en POO qu'on ne puisse faire autrement. **On l'utilise principalement pour donner un style au code**.
+
+> En réalité, on fait de la POO principalement pour faciliter la vie de ceux qui vont utiliser notre code plus tard.
+
 ## Objet
 
 Un objet est un moyen de dire à la machine : "Ce `random nom` possède telle donnée, et fait telle chose avec".
@@ -290,6 +296,49 @@ class Voiture:
         self.couleur   = couleur
 ```
 
+## Self
+
+Pour mieux comprendre `self` nous allons utiliser la fonction `id()` qui retourne l'**adresse en mémoire** de l'objet passé en argument.
+
+> `id()` retourne un int, `hex()` nous permet de l'avoir sous format hexadecimal
+
+La méthode `print_self()` de la classe suivante nous permet d'identidier `self`:
+
+```python
+class Article:
+    def __init__(self, titre):
+        self.titre = titre
+    
+    def print_self(self):
+        print(self.titre)
+        print(self)
+        print(hex(id(self)))
+
+article = Article("Poules et cochons")
+```
+
+Affichage du titre et des adresses de l'`article`:
+
+```python
+>>> print(article.titre)
+Poules et cochons
+>>> print(article)
+<__main__.Article object at 0x7f502be38c88>
+>>> print(hex(id(article)))
+0x7f502be38c88
+```
+
+Utilisation de la méthode `self_print()`:
+
+```python
+>>> articl1.print_self()
+Poules et cochons
+<__main__.Article object at 0x7f502be38c88>
+0x7f502be38c88
+```
+
+Nous constatons que c'est exactement la même chose. `self` **est** `article`. C'est ça que veut dire être l'objet en cours.
+
 # Recapitulatif
 
 * Un objet se crée en instanciant une classe
@@ -308,22 +357,12 @@ print(a1.titre)
 
 * Les méthodes nommées `__methode__` (avec deux underscores) sont appelées automatiquement dans certaines conditions. `__init__` est appelée automatiquement après la création de l'objet, et on s'en sert pour créer l'état de départ de l'objet (initialiser).
 
-# Dans le vif
+* `self` est le premier paramètre qu'on passe à une méthode et représente l'objet en cours.
 
-## Self
+# TP-1
 
-Pour mieux comprendre `self` nous allons utiliser la fonction `id()` qui retourne l'adresse en mémoire de l'objet passé en argument.
+Imaginons que nous voulons proposer une _bibliothèque_ permettant de récupérer les 100 dernières questions concernant Python sur [Stackoverflow](https://stackoverflow.com/).
 
-> `id()` retourne un int, `hex()` nous permet de l'avoir sous format hexadecimal
+Il nous faut dans un premier temps créer un export de la base de données de Stackoverflow.
 
-```python
-class Article:
-    def __init__(self, titre):
-        self.titre = titre
-    
-    def print_self(self):
-        print(self.titre)
-        print(self)
-        print(hex(id(self)))
-```
 
