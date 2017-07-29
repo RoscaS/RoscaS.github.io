@@ -1,0 +1,386 @@
+---
+layout: post
+title: "Py: OOP 2 En pratique"
+subtitle: "Programmation orienté objet"
+date: 2017-07-25
+author: Sol
+category: Py
+tags: divers, fr, en
+finished: false
+---
+
+#### sources
+* [sam&max](http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/)
+
+# TP-1
+
+## Façon procédurale
+
+Imaginons que nous voulons proposer une _bibliothèque_ permettant de récupérer les 100 dernières questions concernant Python sur [Stackoverflow](https://stackoverflow.com/).
+
+Pour lire les données et les récupérer, pas besoin de POO, un scripte procédural fait l'affaire:
+
+```python
+import csv
+import urllib.request as urllib
+from io import StringIO
+
+# URL du CSV
+URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+
+# On télécharge les données, on les décode et on les enrobe dans 
+# StringIO pour qu'elles soient lisible de la même façon qu'un
+# fichier malgré le fait qu'elles soient juste en mémoire.
+csv_data = StringIO(urllib.urlopen(URL).read(100000).decode('utf8'))
+
+# On utilise le module CSV pour lire notre "fichier" CSV.
+# DictReader retourne une liste de dictionnaires, un par
+# entrée du "fichier".
+for question in csv.DictReader(csv_data):
+    print(question['CreationDate']) # date de création
+    print(question['Post Link'])    # id question
+```
+
+Extrais de l'**output**:
+
+```
+...
+2017-07-22 22:17:54
+45259736
+2017-07-22 22:16:27
+45259726
+...
+```
+
+Le fichier _CSV_ issu de data.stackexchange.com n'est pas facile à parser. À la place de bourriner à coup de `split()`, nous utilisons le module `csv` qui comme expliqué en commentaire du code, récupère chaque entrée du fichier comme un dictionnaire qui aura la structure:
+
+```python
+{'nom_decolonne': 'valeur_pour_cette_ligne', ...}
+```
+
+Cette façon de faire n'est vraiment pas pratique (réutilisable). On peut en faire une fonction réutilisable qui sera utilisable de l'extérieur.
+
+```python
+import csv
+import json
+import urllib.request as urllib
+
+from datetime import datetime
+from io import StringIO
+
+DATA_SOURCE_URL =   "http://data.stackexchange.com/StackOverflow/csv/109782"
+QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+def download_question(url=DATA_SOURCE_URL):
+    csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+    for question in csv.DictReader(csv_data):
+        # On transforme la string date en objet datetime
+        question['CreationDate'] = datetime.strptime(
+            question['CreationDate'],
+            '%Y-%m-%d %H:%M:%S'
+        )
+
+        # Le second champ est au format JSON. On le
+        # transforme donc en objet Python
+        question['Post Link'] = QUESTION_URL.format(id=question['Post Link'])
+
+        yield question
+```
+
+On pourrait l'importer et faire:
+
+```python
+for question in download_question():
+    # affiche le titre et l'url
+    print("{CreationDate} : {Post Link}".format(**question))
+```
+
+Extrais de l'**output**:
+
+```
+...
+2017-07-22 22:09:35 : http://stackoverflow.com/question/45259674
+2017-07-22 22:07:42 : http://stackoverflow.com/question/45259663
+2017-07-22 21:58:30 : http://stackoverflow.com/question/45259595
+2017-07-22 21:56:16 : http://stackoverflow.com/question/45259582
+...
+```
+
+Ce n'est pas un mauvaise façon de faire, **On peut égallement faire des interfaces en programmation fonctionnelle**.
+
+## Façon POO
+
+```python
+import csv
+import json
+import urllib.request as urllib
+
+from io import StringIO
+from datetime import datetime
+
+DATA_SOURCE_URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+class Question(object):
+    def __init__(self, id, creation_date):
+        self.id            = id
+        self.creation_date = creation_date
+    
+    # On génère ces valeurs à la lecture:
+    def get_creation_date(self):
+        return datetime.strptime(self.creation_date,
+                                 '%Y-%m-%d %H:%M:%S')
+    
+    def get_url(self):
+        return QUESTION_URL.format(id=self.id)
+
+# Maintenant, notre fonction retourne des objets Question
+def download_question(url=DATA_SOURCE_URL):
+    csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+
+    for question in csv.DictReader(csv_data):
+        question['Post Link'] = json.loads(question['Post Link'])
+
+        # à la place de retourner des dictionnaires, on
+        # retourne des objets Question
+        yield Question(creation_date=question['CreationDate'],
+                       id=question['Post Link'])
+```
+
+A première vue, ça ne semble pas très interessant, Ça fait la même chose mais c'est plus long.
+
+Par contre on a un petit changement côté utilisation et c'est ça qu'on vise:
+
+```python
+for question in download_questions():
+    # affiche le titre et l'url
+    print("{}: {}".format(question.creation_date,
+                          question.get_url()))
+```
+
+À la place d'avoir un dictionnaire qui pourrait contenir n'importe quoi, on a un objet `question`, avec un titre et la possibilité de construire l'URL.
+
+## Attributs et méthodes de classe
+
+La POO, ce n'est pas juste faire des objets, c'est aussi les habiller. Un attribut de classe est un attribut qui appartient, **non pas à l'objet mais à l classe.**
+
+```python
+class RandomObjet(object):
+    attribut_de_classe = "meme val pour tous"
+    
+    def __init__(self):
+        self.attribut_d_objet = "valable pour objet en cours"
+```
+
+`attribut_de_classe` est accessible depuis `RandomObjet` sans créer d'instance, donc sans avoir à faire `RandomObjet()`. Parcontre `attribut_d_objet` n'est pas accessible si on a pas d'instance.
+
+```python
+>>> print(RandomObjet.attribut_de_classe)
+meme val pour tous
+>>> print(RandomObjet.attribut_d_objet)
+AttributeError: type object 'RandomObjet' has no attribute 'attribut_d_objet'
+```
+
+Une instance a donc accès aux deux:
+
+```python
+>>> instance = RandomObjet()
+>>> print(instance.attribut_de_classe)
+meme val pour tous
+>>> print(instance.attribut_d_objet)
+valable pour objet en cours
+```
+
+Les attributs de classe sont donc partagés par toutes les instances d'une classe. Cela permet par exemple de faire des compteurs d'objets...
+
+De la même façon on peut faire des méthodes de classe:
+
+```python
+class RandomObjet(object):
+    
+    @classmethod
+    def methode_de_classe(cls):
+        print("poule")
+
+>>> RandomObjet.methode_de_classe()
+poule
+```
+
+On utilise ici un **décorateur** qui dit que la méthode est une éthode de classe $$ \Rightarrow $$ **accessible sans créer aucune instance**
+
+<span style="color:red"> A noter que la convention de nommage change. Le premier argument n'est plus nommé `self` mais `cls`. </span> Le premier argument sera "la classe en cours" et no plus l'objet en cours.
+
+## Encapsulation
+
+Maintenant nous pouvons regrouper tout ce qui a un rapport avec notre objet `Question` dans la classe:
+
+```python
+import csv
+import json
+import urllib.request as urllib
+
+from io import StringIO
+from datetime import datetime
+
+class Question(object):
+
+    #Les constantes sont maintenant des attributs de classe
+    DATA_SOURCE_URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+    QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+    def __init__(self, id, creation_date):
+        self.id            = id
+        self.creation_date = creation_date
+    
+    def get_creation_date(self):
+        return datetime.strptime(self.creation_date, 
+                                 '%Y-%m-%d %H:%M:%S')
+    
+    def get_url(self):
+        return self.QUESTION_URL.format(id=self.id)
+
+    # la fonction qui fabrique tous les objets Question est maintenant
+    # dans la classe Question, en tant que méthode de classe
+    @classmethod
+    def query(cls, url=DATA_SOURCE_URL):
+        csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+
+        for quetion in csv.DictReader(csv_data):
+            question['Post Link'] = json.loads(question['Post Link'])
+
+            yield Question(creation_date=question['CreationDate'],
+                           id=question['Post Link'])
+```
+
+C'est ce qu'on appelle l'**encapsulation**. On met tout les _trucs_ qui ont un rapport entre eux dans la même boîte et on laisse la boîte s'occuper de comment ça fonctionne en interne.
+
+Et là, on commence à avoir une API très chou:
+
+```python
+print("Questions from: {}".format(Question.DATA_SOURCE_URL))
+for question in Question.query():
+    # affiche titre et url
+    print("{creation_date}: {url}".format(
+        creation_date=question.creation_date,
+        url=question.get_url))
+```
+
+Tout part de l'objet `Question`. Si on cherche quelque chose liée à l'objet `Question`, on doit faire `Question.<un_truc>`. On peut expérimenter dans le shell avec la complétion du code. En regardant ce boutde code pas besoin de savoir comment `Question` marche pour savoir ce que ça fait. C'est assez explicite.
+
+On peut encore faire un peu mieux...
+
+## Les propriétés
+
+Ce sont des outils qui déguisent des méthodes pour les faire passer pour des attributs. Voici un simple exemple:
+
+```python
+class RandomObjet(object):
+    def __init__(self, valeur):
+        self.valeur = valeur
+
+    def get_sq_val(self):
+        return self.valeur ** 2
+
+>>> objet = RandomObjet(2)
+>>> print(objet.get_sq_val())
+4
+```
+
+La méthode `get_sq_val()` ne prend aucun paramètre (autre que `self`), pour éviter de devoir la flanquer de parenthèses à chaque appel, on peut la convertir en propery en ajoutant `@property` avant sa définition. Avec une property, on dit à Python "fait comme si cette méthode était un banal attribut":
+
+```python
+class RandomObjet(object):
+    def __init__(self, valeur):
+        self.valeur = valeur
+
+    @property
+    def sq_val(self):
+        return self.valeur ** 2
+
+>>> objet = RandomObjet(2)
+>>> print(objet.get_sq_val)
+4
+```
+
+Si nous appliquons ça à notre classe Question, ça donne:
+
+```python
+import csv
+import json
+import urllib.request as urllib
+
+from io import StringIO
+from datetime import datetime
+
+class Question(object):
+
+    #Les constantes sont maintenant des attributs de classe
+    DATA_SOURCE_URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+    QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+    def __init__(self, id, creation_date):
+        self.id            = id
+        self.creation_date = creation_date
+    
+    @property
+    def created(self):
+        return datetime.strptime(self.creation_date, 
+                                 '%Y-%m-%d %H:%M:%S')
+
+    @property
+    def url(self):
+        return self.QUESTION_URL.format(id=self.id)
+
+    # la fonction qui fabrique tous les objets Question est maintenant
+    # dans la classe Question, en tant que méthode de classe
+    @classmethod
+    def query(cls, url=DATA_SOURCE_URL):
+        csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+
+        for question in csv.DictReader(csv_data):
+            question['Post Link'] = json.loads(question['Post Link'])
+
+            yield Question(creation_date=question['CreationDate'],
+                           id=question['Post Link'])
+```
+
+Ce qui clean un peu le code et l'interface également:
+
+```python
+print("Questions from: {}".format(Question.DATA_SOURCE_URL))
+for question in Question.query():
+    # affiche titre et url
+    print("{creation_date}: {url}".format(
+        creation_date=question.creation_date,
+        url=question.url))
+```
+
+## Conclusion (Pour le moment)
+
+Ceci était un premier aperçu de l'usage de la POO dans le monde réel. Le code s'est complexifié côté bibliothèque mais du côté utilisateur, on pass de ça:
+
+```python
+from question_lib import download_questions, DATA_SOURCE_URL
+ 
+print "Questions from : {}".format(DATA_SOURCE_URL)
+ 
+for question in download_questions():
+    print "{creationDate} : {url}".format(**question['Post Link'])
+```
+
+À ça:
+
+```python
+from question_lib import Question
+
+print("Questions from: {}".format(Question.DATA_SOURCE_URL))
+
+for question in Question.query():
+    print("{creation_date}: {url}".format(
+        creation_date=question.creation_date,
+        url=question.url))
+```
+
+Le style change, la façon dont sont exposées les données n'est pas la même non plus. Sur cette exemple simple, la complexité ajoutée pour le resultat fait que le jeu peut ne pas en valoir la chandelle **mais sur des plus gros codes, c'est un game changer**.
+
+Un autre gros avantage de l'encapsulation, c'est que même si Stackoverflow change son format de données (de CSV à XML, par exemple), on a juste à adapter la classe. **Le code qui utilise la classe, lui, n'aura pas besoin de changer**.

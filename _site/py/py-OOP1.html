@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-OOP1.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: OOP 1 intro</title>
+  <meta name="description" content="sources  sam&amp;max">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: OOP 1 intro</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="25 Jul 2017" itemprop="datePublished">Jul 25 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Programmation orienté objet: introduction</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h4 id="sources">sources</h4>
+<ul>
+  <li><a href="http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/">sam&amp;max</a></li>
+</ul>
+
+<h1 id="recapitulatif">Recapitulatif</h1>
+
+<ul>
+  <li>Un objet se crée en instanciant une classe</li>
+  <li>Une classe est un plan décrivant un objet et est composé de
+    <ul>
+      <li>méthodes (comportement)</li>
+      <li>attributs (données)</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Article</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">Article</span><span class="p">(</span><span class="s">"J'aime la viande"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>Les méthodes nommées <code class="highlighter-rouge">__methode__</code> (avec deux underscores) sont appelées automatiquement dans certaines conditions. <code class="highlighter-rouge">__init__</code> est appelée automatiquement après la création de l’objet, et on s’en sert pour créer l’état de départ de l’objet (initialiser).</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">self</code> est le premier paramètre qu’on passe à une méthode et représente l’objet en cours.</p>
+  </li>
+</ul>
+
+<h1 id="base">Base</h1>
+
+<p>La programmation orienté objet est un style (<em>paradigme</em>) de programmation qui permet de <strong>regrouper au même endroit</strong> le comportement (fonctions) et les données (structures) qui sont faites pour aller ensemble.</p>
+
+<p>La <strong>POO</strong> a pour principal attrait de permettre de proposer une belle <strong>API</strong>, c’est à dire de créer du code réutilisable et facile à manipuler.</p>
+
+<p>Il n’y a rien qu’on puisse faire en POO qu’on ne puisse faire autrement. <strong>On l’utilise principalement pour donner un style au code</strong>.</p>
+
+<blockquote>
+  <p>En réalité, on fait de la POO principalement pour faciliter la vie de ceux qui vont utiliser notre code plus tard.</p>
+</blockquote>
+
+<h2 id="objet">Objet</h2>
+
+<p>Un objet est un moyen de dire à la machine : “Ce <code class="highlighter-rouge">random nom</code> possède telle donnée, et fait telle chose avec”.</p>
+
+<p>En Python <strong>absolument tout</strong> est un objet.</p>
+
+<p>Créer des objets se fait en deux étapes:</p>
+
+<ul>
+  <li>Décrire à quoi ressemble l’objet <script type="math/tex">\Rightarrow</script> classe</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>Création de l’objet</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">nouvel_objet</span> <span class="o">=</span> <span class="n">DescriptionObjet</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">nouvel_objet</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">DescriptionObjet</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f3d96b8a898</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+<p>La variable <code class="highlighter-rouge">nouvel_objet</code> contient un objet issu de la classe <code class="highlighter-rouge">DescriptionObjet</code>.</p>
+
+<p>La variable <code class="highlighter-rouge">nouvel_objet</code> contient une <strong>instance</strong> de <code class="highlighter-rouge">DescriptionObjet</code> <script type="math/tex">\Rightarrow</script> L’action de créer un objet à partir d’une classe est appelée <strong>instanciation</strong>.</p>
+
+<p>Python ne connait pour le moment que le nom et l’adresse en mémoire de l’objet et c’est ce qu’il affiche suite à un <code class="highlighter-rouge">print()</code>.</p>
+
+<p>On peut créer autant d’objets que l’on veut à partir d’une classe.</p>
+
+<h2 id="méthodes">Méthodes</h2>
+
+<p>Fonctions déclarées à l’intérieur d’une classe.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">methode</span><span class="p">(</span><span class="n">objet_en_cours</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"poule"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Cette <del>fonction</del> méthode n’existe pas en dehors de la classe.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">methode</span><span class="p">()</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/04SamEtMax/00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="n">methode</span><span class="p">()</span>
+<span class="nb">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s">'methode'</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</code></pre>
+</div>
+
+<p>Mais elle est attachée à chaque objet. On peut l’utiliser via la <strong>notation par point</strong>. Il nous faut donc automatiquement l’instance d’une classe pour appeler une méthode:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">nouvel_objet</span> <span class="o">=</span> <span class="n">DescriptionObjet</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">nouvel_objet</span><span class="o">.</span><span class="n">methode</span><span class="p">()</span>
+<span class="n">poule</span>
+</code></pre>
+</div>
+
+<h3 id="objet-en-cours-self">Objet en cours (self)</h3>
+
+<p>Quand on appel une méthode depuis un objet, l’objet est  passé en premier paramètre par Python. C’est automatique et invisible.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">methode</span><span class="p">(</span><span class="n">objet_en_cours</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">objet_en_cours</span>
+
+<span class="n">nouvel_objet</span> <span class="o">=</span> <span class="n">DescriptionObjet</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nouvel_objet</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nouvel_objet</span><span class="o">.</span><span class="n">methode</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">DescriptionObjet</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f48f271e940</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">DescriptionObjet</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f48f271e940</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">nouvel_objet</code> et <code class="highlighter-rouge">objet_en_cours</code> contiennent la même chose : <strong>l’objet en cours</strong>.
+<code class="highlighter-rouge">objet_en_cours</code> est le nom que nous avons donné à notre premier argument, mais Python passe toujours automatiquement en premier argument l’objet en cours afin que nous puissions modifier cet objet à l’intérieur d’une méthode.</p>
+
+<p>Paramètre <code class="highlighter-rouge">objet_en_cours</code> <script type="math/tex">\Rightarrow</script> <strong>instance courante</strong></p>
+
+<p><span style="color:red"> Une méthode doit toujours déclarer au moins un paramètre pour accueillir la référence à l’objet en cours ! </span></p>
+
+<h2 id="conventions">Conventions</h2>
+
+<ul>
+  <li>On nomme les classes en CamelCase</li>
+  <li>On nomme le reste en minuscules avec des underscores:
+    <ul>
+      <li><code class="highlighter-rouge">nom_de_methode</code></li>
+      <li><code class="highlighter-rouge">nom_d_attribut</code></li>
+    </ul>
+  </li>
+  <li>Le premier paramètre (<code class="highlighter-rouge">objet_en_cours</code>) se nome <code class="highlighter-rouge">self</code></li>
+  <li>Les méthodes appelées automatiquement sont appelées <code class="highlighter-rouge">__nom_de_methode__</code> (avec deux underscores)</li>
+</ul>
+
+<h2 id="attributs">Attributs</h2>
+<p>Tout comme les méthodes sont des fonctions attachées à un objet, les attributs sont des variables attachées à un objet.</p>
+
+<blockquote>
+  <p>En réalité les méthodes sont aussi des attributs</p>
+</blockquote>
+
+<p>Python est un langage dynamique et permet d’ajouter n’importe quel attribut à n’importe quel objet via la notation par point:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">nouvel_objet</span><span class="o">.</span><span class="n">attribut</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/04SamEtMax/00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">nouvel_objet</span><span class="o">.</span><span class="n">attribut</span><span class="p">)</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="s">'DescriptionObjet'</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'attribut'</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">nouvel_objet</span><span class="o">.</span><span class="n">nouvel_attribut</span> <span class="o">=</span> <span class="s">"poule"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">nouvel_objet</span><span class="o">.</span><span class="n">nouvel_attribut</span><span class="p">)</span>
+<span class="n">poule</span>
+</code></pre>
+</div>
+
+<p>Intéret de <code class="highlighter-rouge">self</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">afficher</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribut</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">modifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attribut</span> <span class="o">=</span> <span class="s">"autre valeur"</span>
+</code></pre>
+</div>
+
+<p>On peut accéder aux attributs depuis l’intérieur et l’extérieur d’un objet:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span> <span class="o">=</span> <span class="n">DescriptionObjet</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">afficher</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Comme l’attribut n’existe pas encore Python renvoie:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/04SamEtMax/00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="n">un_objet</span><span class="o">.</span><span class="n">afficher</span><span class="p">()</span>
+  <span class="n">File</span> <span class="s">"/home/sol/Code/Python/Tuto/Class/04SamEtMax/00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="n">afficher</span>
+    <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attribut</span><span class="p">)</span>
+<span class="nb">AttributeError</span><span class="p">:</span> <span class="s">'DescriptionObjet'</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s">'attribut'</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">attribut</span> <span class="o">=</span> <span class="s">"maintenant il existe !"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">afficher</span><span class="p">()</span>
+<span class="n">maintenant</span> <span class="n">il</span> <span class="n">existe</span> <span class="err">!</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">modifier</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">attribut</span>
+<span class="s">'autre valeur'</span>
+</code></pre>
+</div>
+
+<p>Une méthode peut modifier l’objet en cours en fonction des paramètres passés:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">afficher</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"valeur actuelle:"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">attribut</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">modifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valeur</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attribut</span> <span class="o">=</span> <span class="n">valeur</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span> <span class="o">=</span> <span class="n">DescriptionObjet</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">attribut</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">afficher</span><span class="p">()</span>
+<span class="n">valeur</span> <span class="n">actuelle</span><span class="p">:</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">modifier</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">un_objet</span><span class="o">.</span><span class="n">afficher</span><span class="p">()</span>
+<span class="n">valeur</span> <span class="n">actuelle</span><span class="p">:</span> <span class="mi">4</span>
+</code></pre>
+</div>
+<p><strong>Les méthodes servent à retourner les valeurs à l’intérieur de l’objet, ou à les modifier.</strong></p>
+
+<h2 id="initialisation-dun-objet">Initialisation d’un objet</h2>
+
+<p>On utilise une méthode appelée automatiquement (<code class="highlighter-rouge">__methode__</code>) après la création de l’objet pour initialiser des attributs sans devoir les créer à chaque fois. Cette méthode est <code class="highlighter-rouge">__init__</code>.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"L'objet a ete cree !"</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Cette methode est appelee automatiquement"</span><span class="p">)</span>
+
+<span class="n">un_objet</span> <span class="o">=</span> <span class="n">DescriptionObjet</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>L'objet a ete cree !
+Cette methode est appelee automatiquement
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">__init__</code> est une méthode tout à fait ordinaire. Seul le nom est important car il est detecté par Python qui l’appelle au bon moment.</p>
+
+<p>C’est principalement utile pour fournir un état de départ:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Voiture</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carburent</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">couleur</span>   <span class="o">=</span> <span class="s">"noire"</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">Voiture</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">couleur</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">carburent</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">noire</span>
+<span class="mi">100</span>
+</code></pre>
+</div>
+
+<p>Si on passe des paramètres à l’instanciation, ils sont passés automatiquement à <code class="highlighter-rouge">__init__</code> qui comme toutes les <del>fonctions</del> méthodes peut avoir des paramètres par défaut.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Voiture</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb_de_carburent</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">quelle_couleur</span><span class="o">=</span><span class="s">"noire"</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carburent</span> <span class="o">=</span> <span class="n">cb_de_carburent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">couleur</span>   <span class="o">=</span> <span class="n">quelle_couleur</span>
+
+<span class="n">v1</span> <span class="o">=</span> <span class="n">Voiture</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">v1:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v1</span><span class="o">.</span><span class="n">couleur</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v1</span><span class="o">.</span><span class="n">carburent</span><span class="p">)</span>
+
+<span class="n">v2</span> <span class="o">=</span> <span class="n">Voiture</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s">'rouge'</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">v2:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v2</span><span class="o">.</span><span class="n">couleur</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v2</span><span class="o">.</span><span class="n">carburent</span><span class="p">)</span>
+
+<span class="n">v3</span> <span class="o">=</span> <span class="n">Voiture</span><span class="p">(</span><span class="n">quelle_couleur</span><span class="o">=</span><span class="s">"gris"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">v3:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v3</span><span class="o">.</span><span class="n">couleur</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v3</span><span class="o">.</span><span class="n">carburent</span><span class="p">)</span>
+
+<span class="n">v4</span> <span class="o">=</span> <span class="n">Voiture</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">v4:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v4</span><span class="o">.</span><span class="n">couleur</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">v4</span><span class="o">.</span><span class="n">carburent</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">v1</span><span class="p">:</span>
+<span class="n">noire</span>
+<span class="mi">100</span>
+
+<span class="n">v2</span><span class="p">:</span>
+<span class="n">rouge</span>
+<span class="mi">50</span>
+
+<span class="n">v3</span><span class="p">:</span>
+<span class="n">gris</span>
+<span class="mi">100</span>
+
+<span class="n">v4</span><span class="p">:</span>
+<span class="n">noire</span>
+<span class="mi">12</span>
+</code></pre>
+</div>
+
+<p><span style="color:red"> <strong>Par convention</strong> les noms de paramètres sont les mêmes que ceux des attributs: </span></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Voiture</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">carburent</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">couleur</span><span class="o">=</span><span class="s">"noire"</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carburent</span> <span class="o">=</span> <span class="n">carburent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">couleur</span>   <span class="o">=</span> <span class="n">couleur</span>
+</code></pre>
+</div>
+
+<h2 id="self">Self</h2>
+
+<p>Pour mieux comprendre <code class="highlighter-rouge">self</code> nous allons utiliser la fonction <code class="highlighter-rouge">id()</code> qui retourne l’<strong>adresse en mémoire</strong> de l’objet passé en argument.</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">id()</code> retourne un int, <code class="highlighter-rouge">hex()</code> nous permet de l’avoir sous format hexadecimal</p>
+</blockquote>
+
+<p>La méthode <code class="highlighter-rouge">print_self()</code> de la classe suivante nous permet d’identidier <code class="highlighter-rouge">self</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Article</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">titre</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titre</span> <span class="o">=</span> <span class="n">titre</span>
+    
+    <span class="k">def</span> <span class="nf">print_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+
+<span class="n">article</span> <span class="o">=</span> <span class="n">Article</span><span class="p">(</span><span class="s">"Poules et cochons"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Affichage du titre et des adresses de l’<code class="highlighter-rouge">article</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">article</span><span class="o">.</span><span class="n">titre</span><span class="p">)</span>
+<span class="n">Poules</span> <span class="n">et</span> <span class="n">cochons</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">article</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Article</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f502be38c88</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">article</span><span class="p">)))</span>
+<span class="mh">0x7f502be38c88</span>
+</code></pre>
+</div>
+
+<p>Utilisation de la méthode <code class="highlighter-rouge">self_print()</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">articl1</span><span class="o">.</span><span class="n">print_self</span><span class="p">()</span>
+<span class="n">Poules</span> <span class="n">et</span> <span class="n">cochons</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Article</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f502be38c88</span><span class="o">&gt;</span>
+<span class="mh">0x7f502be38c88</span>
+</code></pre>
+</div>
+
+<p>Nous constatons que c’est exactement la même chose. <code class="highlighter-rouge">self</code> <strong>est</strong> <code class="highlighter-rouge">article</code>. C’est ça que veut dire être l’objet en cours.</p>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: OOP 1 intro@&amp;url=http://localhost:4000/py/py-OOP1.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-OOP1.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-OOP1.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
