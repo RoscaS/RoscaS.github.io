@@ -507,7 +507,7 @@ for question in download_questions():
 
 À la place d'avoir un dictionnaire qui pourrait contenir n'importe quoi, on a un objet `question`, avec un titre et la possibilité de construire l'URL.
 
-## Attributs de classe
+## Attributs et méthodes de classe
 
 La POO, ce n'est pas juste faire des objets, c'est aussi les habiller. Un attribut de classe est un attribut qui appartient, **non pas à l'objet mais à l classe.**
 
@@ -556,3 +556,62 @@ poule
 On utilise ici un **décorateur** qui dit que la méthode est une éthode de classe $$ \Rightarrow $$ **accessible sans créer aucune instance**
 
 <span style="color:red"> A noter que la convention de nommage change. Le premier argument n'est plus nommé `self` mais `cls`. </span> Le premier argument sera "la classe en cours" et no plus l'objet en cours.
+
+## Encapsulation
+
+Maintenant nous pouvons regrouper tout ce qui a un rapport avec notre objet `Question` dans la classe:
+
+```python
+import csv
+import json
+import urllib.request as urllib
+
+from io import StringIO
+from datetime import datetime
+
+class Question(object):
+
+    #Les constantes sont maintenant des attributs de classe
+    DATA_SOURCE_URL = "http://data.stackexchange.com/StackOverflow/csv/109782"
+    QUESTION_URL = "http://stackoverflow.com/question/{id}"
+
+    def __init__(self, id, creation_date):
+        self.id            = id
+        self.creation_date = creation_date
+    
+    def get_creation_date(self):
+        return datetime.strptime(self.creation_date, 
+                                 '%Y-%m-%d %H:%M:%S')
+    
+    def get_url(self):
+        return self.QUESTION_URL.format(id=self.id)
+
+    # la fonction qui fabrique tous les objets Question est maintenant
+    # dans la classe Question, en tant que méthode de classe
+    @classmethod
+    def query(cls, url=DATA_SOURCE_URL):
+        csv_data = StringIO(urllib.urlopen(url).read(100000).decode('utf8'))
+
+        for quetion in csv.DictReader(csv_data):
+            question['Post Link'] = json.loads(question['Post Link'])
+
+            yield Question(creation_date=question['CreationDate'],
+                           id=question['Post Link'])
+```
+
+C'est ce qu'on appelle l'**encapsulation**. On met tout les _trucs_ qui ont un rapport entre eux dans la même boîte et on laisse la boîte s'occuper de comment ça fonctionne en interne.
+
+Et là, on commence à avoir une API très chou:
+
+```python
+print("Questions from: {}".format(Question.DATA_SOURCE_URL))
+for question in Question.query():
+    # affiche titre et url
+    print("{creation_date}: {url}".format(
+        creation_date=question.creation_date,
+        url=question.get_url))
+```
+
+Tout part de l'objet `Question`. Si on cherche quelque chose liée à l'objet `Question`, on doit faire `Question.<un_truc>`. On peut expérimenter dans le shell avec la complétion du code. En regardant ce boutde code pas besoin de savoir comment `Question` marche pour savoir ce que ça fait. C'est assez explicite.
+
+On peut encore faire un peu mieux...
