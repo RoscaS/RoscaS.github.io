@@ -505,4 +505,54 @@ for question in download_questions():
                           question.get_url()))
 ```
 
-À la place d'avoir un dictionnaire qui pourrait contenir n'importe quoi, on a un objet `question`, avec un titre et la possibilité de consulter l'URL.
+À la place d'avoir un dictionnaire qui pourrait contenir n'importe quoi, on a un objet `question`, avec un titre et la possibilité de construire l'URL.
+
+## Attributs de classe
+
+La POO, ce n'est pas juste faire des objets, c'est aussi les habiller. Un attribut de classe est un attribut qui appartient, **non pas à l'objet mais à l classe.**
+
+```python
+class RandomObjet(object):
+    attribut_de_classe = "meme val pour tous"
+    
+    def __init__(self):
+        self.attribut_d_objet = "valable pour objet en cours"
+```
+
+`attribut_de_classe` est accessible depuis `RandomObjet` sans créer d'instance, donc sans avoir à faire `RandomObjet()`. Parcontre `attribut_d_objet` n'est pas accessible si on a pas d'instance.
+
+```python
+>>> print(RandomObjet.attribut_de_classe)
+meme val pour tous
+>>> print(RandomObjet.attribut_d_objet)
+AttributeError: type object 'RandomObjet' has no attribute 'attribut_d_objet'
+```
+
+Une instance a donc accès aux deux:
+
+```python
+>>> instance = RandomObjet()
+>>> print(instance.attribut_de_classe)
+meme val pour tous
+>>> print(instance.attribut_d_objet)
+valable pour objet en cours
+```
+
+Les attributs de classe sont donc partagés par toutes les instances d'une classe. Cela permet par exemple de faire des compteurs d'objets...
+
+De la même façon on peut faire des méthodes de classe:
+
+```python
+class RandomObjet(object):
+    
+    @classmethod
+    def methode_de_classe(cls):
+        print("poule")
+
+>>> RandomObjet.methode_de_classe()
+poule
+```
+
+On utilise ici un **décorateur** qui dit que la méthode est une éthode de classe $$ \Rightarrow $$ **accessible sans créer aucune instance**
+
+<span style="color:red"> A noter que la convention de nommage change. Le premier argument n'est plus nommé `self` mais `cls`. </span> Le premier argument sera "la classe en cours" et no plus l'objet en cours.
