@@ -15,9 +15,9 @@ finished: false
 # Recapitulatif
 
 * Un **attribut de classe** est accessible sans avoir à créer d'instance (`NomClasse.attribut_de_classe = "poule"`) et est partagé entre tous les objets de cette classe.
-* Un **attribut d'objet** est uniquement accessible à travers une instance.
-* Une instance peut accéder aux deux.
-* Une **méthode de classe** est accessible sans avoir à créer d'instance. On utilise le décorateur `@classmethod` avant la définition de la méthode. <span style="color:red"> premier argument n'est plus `self` mais `cls` </span> 
+* Un **attribut d'objet** est uniquement accessible à travers une instance et est propre à l'instance.
+* Une instance peut accéder aux attributs de classe et d'objet.
+* Une **méthode de classe** est accessible sans avoir à créer d'instance. On utilise le décorateur `@classmethod` avant la définition de la méthode. <span style="color:red"> **Le premier argument n'est plus `self` mais `cls`** </span> 
 * Les méthodes sans autres paramètres que `self` peuvent être décorées par `@property` pour ne plus avoir à les flanquer de parenthèses lors de l'appel.
 
 

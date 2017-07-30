@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Py: OOP 2 En pratique"
+title: "Py: OOP 3 Attributs"
 subtitle: "Programmation orienté objet"
 date: 2017-07-29
 author: Sol
@@ -11,4 +11,148 @@ finished: false
 
 #### sources
 * [sam&max](http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/)
+
+# Attributs de classe
+
+Un attribut de classe est accessible par la classe (sans instance):
+
+```python
+class Poule(object):
+    attribut_de_classe = 'valeur'
+
+>>> print(Poule.attribut_de_classe)
+valeur
+```
+
+Mais également par une instance:
+
+```python
+>>> poupoule = Poule()
+>>> print(poupoule.attribut_de_classe)
+valeur
+>>> print(Poule().attribut_de_classe)
+valeur
+```
+
+# Attributs mutables et non-mutables
+
+<span style="color:red"> **En attendant une meilleur explication:** </span> 
+
+
+Il semble que Python aie un comportement différent pour les attributs de classe mutables et non-mutables.
+
+## Mutables
+
+Les attributs de classe **mutables** sont l'équivalent les **variables statiques** en C++. Une modification d'un attribut de classe dans une instance ou directement de la classe modifie l'attribut de tous les objets de la classe et de la classe elle-même:
+
+```python
+class Cl(object):
+    l = []
+
+def display():
+    print("i1: {} @ {}".format(i1.l, hex(id(i1.l))))
+    print("i2: {} @ {}".format(i2.l, hex(id(i2.l))))
+    print("Cl: {} @ {}\n".format(Cl.l, hex(id(Cl.l))))
+
+i1 = Cl()
+i2 = Cl()
+
+display()
+i1.l.append(1)
+display()
+i2.l.append(7)
+display()
+Cl.l.append(4)
+display()
+
+i3 = Cl()
+print("i3: {} @ {}".format(i3.l, hex(id(i1.l))))
+```
+
+**output**:
+```
+i1: [] @ 0x7f2f4a693988
+i2: [] @ 0x7f2f4a693988
+Cl: [] @ 0x7f2f4a693988
+
+i1: [1] @ 0x7f2f4a693988
+i2: [1] @ 0x7f2f4a693988
+Cl: [1] @ 0x7f2f4a693988
+
+i1: [1, 7] @ 0x7f2f4a693988
+i2: [1, 7] @ 0x7f2f4a693988
+Cl: [1, 7] @ 0x7f2f4a693988
+
+i1: [1, 7, 4] @ 0x7f2f4a693988
+i2: [1, 7, 4] @ 0x7f2f4a693988
+Cl: [1, 7, 4] @ 0x7f2f4a693988
+
+i3: [1, 7, 4] @ 0x7f2f4a693988
+```
+
+## Non-mutables
+
+Les attributs de classe **non-mutable** obéissent à une rêgle:
+
+* Si nous modifions l'attribut au niveau de l'instance, seul l'instance voit les modifications.
+* Si nous modifions l'attribut au niveau de la classe, la classe et toutes les instances <span style="color:red">**créées après**</span> ont la nouvelle valeur.
+
+```python
+class Cl(object):
+    s = "poule"
+
+def display():
+    print("i1: {} @ {}".format(i1.s, hex(id(i1.s))))
+    print("i2: {} @ {}".format(i2.s, hex(id(i2.s))))
+    print("Cl: {} @ {}\n".format(Cl.s, hex(id(Cl.s))))
+
+i1 = Cl()
+i2 = Cl()
+
+display()
+i1.s = "cochon"
+display()
+i2.s = "vache"
+display()
+Cl.s = "poney"
+display()
+
+i3 = Cl()
+print("i3: {} @ {}".format(i3.s, hex(id(i1.s))))
+```
+
+**output**:
+
+```
+i1: poule @ 0x7fc524f02928
+i2: poule @ 0x7fc524f02928
+Cl: poule @ 0x7fc524f02928
+
+i1: cochon @ 0x7fc52396a6f8
+i2: poule @ 0x7fc524f02928
+Cl: poule @ 0x7fc524f02928
+
+i1: cochon @ 0x7fc52396a6f8
+i2: vache @ 0x7fc52396a6c0
+Cl: poule @ 0x7fc524f02928
+
+i1: cochon @ 0x7fc52396a6f8
+i2: vache @ 0x7fc52396a6c0
+Cl: poney @ 0x7fc52396a7a0
+
+i3: poney @ 0x7fc52396a6f8
+```
+
+# Utilisation
+
+* Stocker les _pseudo_ **constantes**: <span style="color:red"> Il n'y a pas de vrai constantes en Python! </span> On parle de constante quand une variable est écrite toute en majuscules (**convention**) et qu'elle est sensé ne jamais changer.
+
+```python
+class Poule:
+    NOMBRE_DE_PATTES = 2
+```
+
+On met `NOMBRE_DE_PATTES` comme attribut de classe et c'est essentiellement à titre informatif. Pour nous ça ne change rien mais pour quelqu'un qui va utiliser le code, il sait qu'il peut chercher toutes les constantes liées à `Poule` en faisant `Poule.VARIABLE_EN_MAJUSCULE`.
+
+* Partager des données entre les instances:
 

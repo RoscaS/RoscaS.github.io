@@ -40,7 +40,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Py: OOP 2 En pratique</title>
+  <title>Py: OOP 3 Attributs</title>
   <meta name="description" content="sources  sam&amp;max">
 </head>
 
@@ -51,7 +51,7 @@
 <header class="post-header">
 
     <center>
-		<div class="post-title" itemprop="name headline">Py: OOP 2 En pratique</div>
+		<div class="post-title" itemprop="name headline">Py: OOP 3 Attributs</div>
 
 		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="29 Jul 2017" itemprop="datePublished">Jul 29 2017</time>
 
@@ -108,6 +108,155 @@
   <li><a href="http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/">sam&amp;max</a></li>
 </ul>
 
+<h1 id="attributs-de-classe">Attributs de classe</h1>
+
+<p>Un attribut de classe est accessible par la classe (sans instance):</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Poule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">attribut_de_classe</span> <span class="o">=</span> <span class="s">'valeur'</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Poule</span><span class="o">.</span><span class="n">attribut_de_classe</span><span class="p">)</span>
+<span class="n">valeur</span>
+</code></pre>
+</div>
+
+<p>Mais également par une instance:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">poupoule</span> <span class="o">=</span> <span class="n">Poule</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">poupoule</span><span class="o">.</span><span class="n">attribut_de_classe</span><span class="p">)</span>
+<span class="n">valeur</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Poule</span><span class="p">()</span><span class="o">.</span><span class="n">attribut_de_classe</span><span class="p">)</span>
+<span class="n">valeur</span>
+</code></pre>
+</div>
+
+<h1 id="attributs-mutables-et-non-mutables">Attributs mutables et non-mutables</h1>
+
+<p><span style="color:red"> <strong>En attendant une meilleur explication:</strong> </span></p>
+
+<p>Il semble que Python aie un comportement différent pour les attributs de classe mutables et non-mutables.</p>
+
+<h2 id="mutables">Mutables</h2>
+
+<p>Les attributs de classe <strong>mutables</strong> sont l’équivalent les <strong>variables statiques</strong> en C++. Une modification d’un attribut de classe dans une instance ou directement de la classe modifie l’attribut de tous les objets de la classe et de la classe elle-même:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Cl</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"i1: {} @ {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i1</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">i1</span><span class="o">.</span><span class="n">l</span><span class="p">))))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"i2: {} @ {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="n">l</span><span class="p">))))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Cl: {} @ {}</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Cl</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">Cl</span><span class="o">.</span><span class="n">l</span><span class="p">))))</span>
+
+<span class="n">i1</span> <span class="o">=</span> <span class="n">Cl</span><span class="p">()</span>
+<span class="n">i2</span> <span class="o">=</span> <span class="n">Cl</span><span class="p">()</span>
+
+<span class="n">display</span><span class="p">()</span>
+<span class="n">i1</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">()</span>
+<span class="n">i2</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">display</span><span class="p">()</span>
+<span class="n">Cl</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">display</span><span class="p">()</span>
+
+<span class="n">i3</span> <span class="o">=</span> <span class="n">Cl</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"i3: {} @ {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i3</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">i1</span><span class="o">.</span><span class="n">l</span><span class="p">))))</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>i1: [] @ 0x7f2f4a693988
+i2: [] @ 0x7f2f4a693988
+Cl: [] @ 0x7f2f4a693988
+
+i1: [1] @ 0x7f2f4a693988
+i2: [1] @ 0x7f2f4a693988
+Cl: [1] @ 0x7f2f4a693988
+
+i1: [1, 7] @ 0x7f2f4a693988
+i2: [1, 7] @ 0x7f2f4a693988
+Cl: [1, 7] @ 0x7f2f4a693988
+
+i1: [1, 7, 4] @ 0x7f2f4a693988
+i2: [1, 7, 4] @ 0x7f2f4a693988
+Cl: [1, 7, 4] @ 0x7f2f4a693988
+
+i3: [1, 7, 4] @ 0x7f2f4a693988
+</code></pre>
+</div>
+
+<h2 id="non-mutables">Non-mutables</h2>
+
+<p>Les attributs de classe <strong>non-mutable</strong> obéissent à une rêgle:</p>
+
+<ul>
+  <li>Si nous modifions l’attribut au niveau de l’instance, seul l’instance voit les modifications.</li>
+  <li>Si nous modifions l’attribut au niveau de la classe, la classe et toutes les instances <span style="color:red"><strong>créées après</strong></span> ont la nouvelle valeur.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Cl</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s">"poule"</span>
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"i1: {} @ {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i1</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">i1</span><span class="o">.</span><span class="n">s</span><span class="p">))))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"i2: {} @ {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="n">s</span><span class="p">))))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Cl: {} @ {}</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Cl</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">Cl</span><span class="o">.</span><span class="n">s</span><span class="p">))))</span>
+
+<span class="n">i1</span> <span class="o">=</span> <span class="n">Cl</span><span class="p">()</span>
+<span class="n">i2</span> <span class="o">=</span> <span class="n">Cl</span><span class="p">()</span>
+
+<span class="n">display</span><span class="p">()</span>
+<span class="n">i1</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="s">"cochon"</span>
+<span class="n">display</span><span class="p">()</span>
+<span class="n">i2</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="s">"vache"</span>
+<span class="n">display</span><span class="p">()</span>
+<span class="n">Cl</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="s">"poney"</span>
+<span class="n">display</span><span class="p">()</span>
+
+<span class="n">i3</span> <span class="o">=</span> <span class="n">Cl</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"i3: {} @ {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i3</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">i1</span><span class="o">.</span><span class="n">s</span><span class="p">))))</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>i1: poule @ 0x7fc524f02928
+i2: poule @ 0x7fc524f02928
+Cl: poule @ 0x7fc524f02928
+
+i1: cochon @ 0x7fc52396a6f8
+i2: poule @ 0x7fc524f02928
+Cl: poule @ 0x7fc524f02928
+
+i1: cochon @ 0x7fc52396a6f8
+i2: vache @ 0x7fc52396a6c0
+Cl: poule @ 0x7fc524f02928
+
+i1: cochon @ 0x7fc52396a6f8
+i2: vache @ 0x7fc52396a6c0
+Cl: poney @ 0x7fc52396a7a0
+
+i3: poney @ 0x7fc52396a6f8
+</code></pre>
+</div>
+
+<h1 id="utilisation">Utilisation</h1>
+
+<ul>
+  <li>Stocker les <em>pseudo</em> <strong>constantes</strong>: <span style="color:red"> Il n’y a pas de vrai constantes en Python! </span> On parle de constante quand une variable est écrite toute en majuscules (<strong>convention</strong>) et qu’elle est sensé ne jamais changer.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Poule</span><span class="p">:</span>
+    <span class="n">NOMBRE_DE_PATTES</span> <span class="o">=</span> <span class="mi">2</span>
+</code></pre>
+</div>
+
+<p>On met <code class="highlighter-rouge">NOMBRE_DE_PATTES</code> comme attribut de classe et c’est essentiellement à titre informatif. Pour nous ça ne change rien mais pour quelqu’un qui va utiliser le code, il sait qu’il peut chercher toutes les constantes liées à <code class="highlighter-rouge">Poule</code> en faisant <code class="highlighter-rouge">Poule.VARIABLE_EN_MAJUSCULE</code>.</p>
+
+<ul>
+  <li>Partager des données entre les instances:</li>
+</ul>
+
 
 </div>
 
@@ -119,7 +268,7 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Py: OOP 2 En pratique@&amp;url=http://localhost:4000/py/py-OOP3.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Py: OOP 3 Attributs@&amp;url=http://localhost:4000/py/py-OOP3.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
