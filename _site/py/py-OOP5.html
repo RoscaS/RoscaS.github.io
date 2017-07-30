@@ -203,6 +203,126 @@
   <li><code class="highlighter-rouge">ClasseParente.methode(self, args...)</code> <script type="math/tex">\Rightarrow</script> On hard code le nom de la classe parente.</li>
 </ul>
 
+<h2 id="exemple-récapitulatif">Exemple récapitulatif</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">val_a</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span>  <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_a</span> <span class="o">=</span> <span class="n">val_a</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">methodA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">"name: {}</span><span class="se">\t</span><span class="s">val_a: {}"</span>
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_a</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">methodForE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">E don't know that A exist..."</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">val_b</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span>  <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_b</span> <span class="o">=</span> <span class="n">val_b</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">methodB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">"name: {}</span><span class="se">\t</span><span class="s">val_b: {}"</span>
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_b</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">val_a</span><span class="p">,</span> <span class="n">val_b</span><span class="p">):</span>
+        <span class="n">A</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">val_a</span><span class="p">)</span>
+        <span class="n">B</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">val_b</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">methodC</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">"name: {}</span><span class="se">\t</span><span class="s">val_a: {}</span><span class="se">\t</span><span class="s">val_b: {}"</span>
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_b</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">E</span><span class="p">(</span><span class="n">D</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">methodForE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">methodForE</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s">"{}</span><span class="se">\n</span><span class="s">...but still can override a method from it."</span>
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">objectA</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="s">"objectA"</span><span class="p">,</span> <span class="s">"a"</span><span class="p">)</span>
+<span class="n">objectB</span> <span class="o">=</span> <span class="n">B</span><span class="p">(</span><span class="s">"objectB"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">)</span>
+<span class="n">objectC</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="s">"objectC"</span><span class="p">,</span> <span class="s">"a(C)"</span><span class="p">,</span> <span class="s">"b(C)"</span><span class="p">)</span>
+<span class="n">objectD</span> <span class="o">=</span> <span class="n">D</span><span class="p">(</span><span class="s">"objectD"</span><span class="p">,</span> <span class="s">"a(D)"</span><span class="p">,</span> <span class="s">"b(D)"</span><span class="p">)</span>
+<span class="n">objectE</span> <span class="o">=</span> <span class="n">E</span><span class="p">(</span><span class="s">"objectE"</span><span class="p">,</span> <span class="s">"a(E)"</span><span class="p">,</span> <span class="s">"b(E)"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">objectA</span><span class="o">.</span><span class="n">methodA</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectB</span><span class="o">.</span><span class="n">methodB</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectC</span><span class="o">.</span><span class="n">methodC</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectC also have acces to both methodA and methodB:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectC</span><span class="o">.</span><span class="n">methodA</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectC</span><span class="o">.</span><span class="n">methodB</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>name: objectA   val_a: a
+name: objectB   val_b: b
+name: objectC   val_a: a(C)     val_b: b(C)
+
+objectC also have acces to both methodA and methodB:
+name: objectC   val_a: a(C)
+name: objectC   val_b: b(C)
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectD have acces to methodC:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectD</span><span class="o">.</span><span class="n">methodC</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectD also have acces to both methodA and methodB:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectD</span><span class="o">.</span><span class="n">methodA</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectD</span><span class="o">.</span><span class="n">methodB</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>objectD have acces to methodC:
+name: objectD   val_a: a(D)     val_b: b(D)
+
+objectD also have acces to both methodA and methodB:
+name: objectD   val_a: a(D)
+name: objectD   val_b: b(D)
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectE have acces to methodC:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectE</span><span class="o">.</span><span class="n">methodC</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectE also have acces to both methodA and methodB:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectE</span><span class="o">.</span><span class="n">methodA</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">objectE</span><span class="o">.</span><span class="n">methodB</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">objectE</span><span class="o">.</span><span class="n">methodForE</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>objectE have acces to methodC:
+name: objectE   val_a: a(E)     val_b: b(E)
+
+objectE also have acces to both methodA and methodB:
+name: objectE   val_a: a(E)
+name: objectE   val_b: b(E)
+
+E don't know that A exist...
+...but still can override a method from it.
+</code></pre>
+</div>
 
 </div>
 

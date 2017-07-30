@@ -103,5 +103,123 @@ Le `self` n'est pas au même endroit dans les cas suivants:
 * `super(ClasseCourante, self).methode(args...)` $$ \Rightarrow $$ On passe la classe courante (que `super()` va analyser pour trouver les parents automatiquement)
 * `ClasseParente.methode(self, args...)` $$ \Rightarrow $$ On hard code le nom de la classe parente.
 
+## Exemple récapitulatif
+
+```python
+class A(object):
+    def __init__(self, name, val_a):
+        self.name  = name
+        self.val_a = val_a
+    
+    @property
+    def methodA(self):
+        return ("name: {}\tval_a: {}"
+            .format(self.name, self.val_a))
+    
+    def methodForE(self):
+        return ("\nE don't know that A exist...")
+
+class B(object):
+    def __init__(self, name, val_b):
+        self.name  = name
+        self.val_b = val_b
+    
+    @property
+    def methodB(self):
+        return ("name: {}\tval_b: {}"
+            .format(self.name, self.val_b))
+
+class C(A,B):
+    def __init__(self, nom, val_a, val_b):
+        A.__init__(self, nom, val_a)
+        B.__init__(self, nom, val_b)
+    
+    @property
+    def methodC(self):
+        return ("name: {}\tval_a: {}\tval_b: {}"
+            .format(self.name, self.val_a, self.val_b))
 
 
+class D(C):
+    pass
+
+class E(D):
+    @property
+    def methodForE(self):
+        first = super(E, self).methodForE()
+        return ("{}\n...but still can override a method from it."
+            .format(first))
+```
+
+```python
+objectA = A("objectA", "a")
+objectB = B("objectB", "b")
+objectC = C("objectC", "a(C)", "b(C)")
+objectD = D("objectD", "a(D)", "b(D)")
+objectE = E("objectE", "a(E)", "b(E)")
+
+print(objectA.methodA)
+print(objectB.methodB)
+print(objectC.methodC)
+
+print("\nobjectC also have acces to both methodA and methodB:")
+print(objectC.methodA)
+print(objectC.methodB)
+```
+
+**output**:
+
+```
+name: objectA   val_a: a
+name: objectB   val_b: b
+name: objectC   val_a: a(C)     val_b: b(C)
+
+objectC also have acces to both methodA and methodB:
+name: objectC   val_a: a(C)
+name: objectC   val_b: b(C)
+```
+
+```python
+print("\nobjectD have acces to methodC:")
+print(objectD.methodC)
+
+print("\nobjectD also have acces to both methodA and methodB:")
+print(objectD.methodA)
+print(objectD.methodB)
+```
+
+**output**:
+
+```
+objectD have acces to methodC:
+name: objectD   val_a: a(D)     val_b: b(D)
+
+objectD also have acces to both methodA and methodB:
+name: objectD   val_a: a(D)
+name: objectD   val_b: b(D)
+```
+
+```python
+print("\nobjectE have acces to methodC:")
+print(objectE.methodC)
+
+print("\nobjectE also have acces to both methodA and methodB:")
+print(objectE.methodA)
+print(objectE.methodB)
+
+print(objectE.methodForE)
+```
+
+**output**:
+
+```
+objectE have acces to methodC:
+name: objectE   val_a: a(E)     val_b: b(E)
+
+objectE also have acces to both methodA and methodB:
+name: objectE   val_a: a(E)
+name: objectE   val_b: b(E)
+
+E don't know that A exist...
+...but still can override a method from it.
+```
