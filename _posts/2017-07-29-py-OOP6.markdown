@@ -214,3 +214,128 @@ class Array(object):
     def __getitem__(self, key):
         return self._lst[key]
 ```
+
+* [liste complète des opérateurs](https://docs.python.org/2/reference/datamodel.html?highlight=__mul__#emulating-numeric-types)
+
+## Cast
+
+```python
+class Degre(object):
+    def __init__(self, valeur, degre='C'):
+        self.valeur = valeur
+        self.degre  = degre
+
+    def __str__(self):
+        return "{}°{}".format(self.valeur, self.degre)
+
+    # Comportement quand on converti en int
+    def __int__(self):
+        return int(self.valeur)
+
+    # Comportement quand on converti en float
+    def __float__(self):
+        return float(self.valeur)
+
+    # Comportement quand on converti en str
+    def __str__(self):
+        return str(self.valeur)
+
+    # etc...
+```
+
+## Programmation dynamique
+
+```python
+class Test(object):
+
+    # Est appelée quand on demande un attribut
+    # appelé "name" et qui n'existe pas.
+    def __getattr__(self, name):
+        return None
+
+    # Est appelée quand on assigne une valeur "value" à
+    # un attribut appelé "name", qu'il existe ou non.
+    # L'inverse se fait avec __delattr__ qui réagit à
+    # del obj.attr
+    def __setattr__(self, name, value):
+        print("Merci")
+        super(Test, self).__setattr__(name, value)
+
+>>> ob = Test()
+>>> print(ob.poule) # pas d'erreur !!
+None
+>>> print(ob.cochon)
+None
+>>> ob.vache = "meuh"
+Merci
+>>> print(ob.vache)
+meuh
+```
+
+## Conteneurs
+
+```python
+class Main(object):
+    
+    def __init__(self, *args):
+        self.cartes = args
+    
+    def ajouter(self, carte):
+        assert hasattr(carte, upper), "Carte doit être une str"
+        self.carte.append(carte.upper())
+    
+    def __str__(self):
+        return str(''.join(self.cartes).encode('utf8'))
+
+    # len(objet)
+    def __len__(self):
+        return len(self.cartes)
+
+    # operateur []
+    def __getitem__(self, key):
+        return self.cartes[key]
+
+    # objet[key] = value
+    def __setitem__(self, key, value):
+        self.cartes[key] = value
+    
+    # del objet[index]
+    def __delitem__(self, key):
+        raise TypeError("lalala")
+    
+    # Appelé quand on fait un iter(objet), en 
+    # particulier cela arrive à chaque boucle for
+    # La valeur retournée doit être un iterateur.
+    # En général on retourne une valeur retournée
+    # par iter()
+    def __iter__(self):
+        return iter(self.cartes)
+
+    # Appelé quand on fait reversed(objet)
+    def __reversed__(self):
+        return reversed(self.cartes)
+
+    # Appelé quand "in objet"
+    def __contains__(self, item):
+        return item in self.cartes
+        
+        
+>>> main = Main(u'1Coeur', u'7Pique')
+>>> print(main)
+1Coeur
+>>> for carte in main:  # parce qu'on a défini __iter__ 
+...     print(carte)
+>>>
+b'1Coeur7Pique'
+7Pique
+>>>
+>>> print(main[0])  # __getitem__ 
+1Coeur
+>>> print('fdjsklfd' in main)  # __contains__ 
+False
+>>> print(len(main))
+2
+```
+
+        
+        

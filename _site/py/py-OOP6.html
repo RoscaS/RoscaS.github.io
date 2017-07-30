@@ -309,6 +309,131 @@
 </code></pre>
 </div>
 
+<ul>
+  <li><a href="https://docs.python.org/2/reference/datamodel.html?highlight=__mul__#emulating-numeric-types">liste complète des opérateurs</a></li>
+</ul>
+
+<h2 id="cast">Cast</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Degre</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valeur</span><span class="p">,</span> <span class="n">degre</span><span class="o">=</span><span class="s">'C'</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valeur</span> <span class="o">=</span> <span class="n">valeur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degre</span>  <span class="o">=</span> <span class="n">degre</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"{}°{}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valeur</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">degre</span><span class="p">)</span>
+
+    <span class="c"># Comportement quand on converti en int</span>
+    <span class="k">def</span> <span class="nf">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valeur</span><span class="p">)</span>
+
+    <span class="c"># Comportement quand on converti en float</span>
+    <span class="k">def</span> <span class="nf">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valeur</span><span class="p">)</span>
+
+    <span class="c"># Comportement quand on converti en str</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valeur</span><span class="p">)</span>
+
+    <span class="c"># etc...</span>
+</code></pre>
+</div>
+
+<h2 id="programmation-dynamique">Programmation dynamique</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="c"># Est appelée quand on demande un attribut</span>
+    <span class="c"># appelé "name" et qui n'existe pas.</span>
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="c"># Est appelée quand on assigne une valeur "value" à</span>
+    <span class="c"># un attribut appelé "name", qu'il existe ou non.</span>
+    <span class="c"># L'inverse se fait avec __delattr__ qui réagit à</span>
+    <span class="c"># del obj.attr</span>
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Merci"</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Test</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ob</span> <span class="o">=</span> <span class="n">Test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">poule</span><span class="p">)</span> <span class="c"># pas d'erreur !!</span>
+<span class="bp">None</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">cochon</span><span class="p">)</span>
+<span class="bp">None</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">ob</span><span class="o">.</span><span class="n">vache</span> <span class="o">=</span> <span class="s">"meuh"</span>
+<span class="n">Merci</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">ob</span><span class="o">.</span><span class="n">vache</span><span class="p">)</span>
+<span class="n">meuh</span>
+</code></pre>
+</div>
+
+<h2 id="conteneurs">Conteneurs</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Main</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cartes</span> <span class="o">=</span> <span class="n">args</span>
+    
+    <span class="k">def</span> <span class="nf">ajouter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">carte</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">carte</span><span class="p">,</span> <span class="n">upper</span><span class="p">),</span> <span class="s">"Carte doit être une str"</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">carte</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartes</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf8'</span><span class="p">))</span>
+
+    <span class="c"># len(objet)</span>
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartes</span><span class="p">)</span>
+
+    <span class="c"># operateur []</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="c"># objet[key] = value</span>
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cartes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="c"># del objet[index]</span>
+    <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="nb">TypeError</span><span class="p">(</span><span class="s">"lalala"</span><span class="p">)</span>
+    
+    <span class="c"># Appelé quand on fait un iter(objet), en </span>
+    <span class="c"># particulier cela arrive à chaque boucle for</span>
+    <span class="c"># La valeur retournée doit être un iterateur.</span>
+    <span class="c"># En général on retourne une valeur retournée</span>
+    <span class="c"># par iter()</span>
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartes</span><span class="p">)</span>
+
+    <span class="c"># Appelé quand on fait reversed(objet)</span>
+    <span class="k">def</span> <span class="nf">__reversed__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cartes</span><span class="p">)</span>
+
+    <span class="c"># Appelé quand "in objet"</span>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartes</span>
+        
+        
+<span class="o">&gt;&gt;&gt;</span> <span class="n">main</span> <span class="o">=</span> <span class="n">Main</span><span class="p">(</span><span class="s">u'1Coeur'</span><span class="p">,</span> <span class="s">u'7Pique'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+<span class="mi">1</span><span class="n">Coeur</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">carte</span> <span class="ow">in</span> <span class="n">main</span><span class="p">:</span>  <span class="c"># parce qu'on a défini __iter__ </span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">carte</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="n">b</span><span class="s">'1Coeur7Pique'</span>
+<span class="mi">7</span><span class="n">Pique</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">main</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c"># __getitem__ </span>
+<span class="mi">1</span><span class="n">Coeur</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'fdjsklfd'</span> <span class="ow">in</span> <span class="n">main</span><span class="p">)</span>  <span class="c"># __contains__ </span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">main</span><span class="p">))</span>
+<span class="mi">2</span>
+</code></pre>
+</div>
+
+
 </div>
 
 <div>
