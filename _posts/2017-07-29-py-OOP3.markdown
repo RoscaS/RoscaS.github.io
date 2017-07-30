@@ -156,3 +156,179 @@ On met `NOMBRE_DE_PATTES` comme attribut de classe et c'est essentiellement à t
 
 * Partager des données entre les instances:
 
+Pour faire un compteur d'objets ou éviter des calcules innutiles comme dans l'exemple suivant qui est un terrible exemple par manque d'inspiration:
+
+```python
+class Rectangle(object):
+    _cache = {}
+
+    def __init__(self, l, L):
+        self.id = str(l)+str(L)
+        self.l  = l
+        self.L  = L
+        self.calculer_aire()
+
+    def calculer_aire(self):
+        # si l'id n'est pas dans le cache, 
+        # on fait le calcule et ajoute au cache.
+        if self.id not in self._cache:
+            self._cache[self.id] = self.l * self.L
+    
+>>> r1 = Rectangle(2,3)
+calcule necessaire pour r1
+>>> r2 = Rectangle(6,4)
+calcule necessaire pour r2
+>>> r3 = Rectangle(6,4)
+>>> r4 = Rectangle(7,2)
+calcule necessaire pour r4
+>>> print(Rectangle._cache)
+{'23': 6, '64': 24, '72': 14}
+```
+
+À noter qu'on appele la variable `_cache` et non pas `cache`. <span style="color:red"> **C'est encore une convention**</span>. Ça signale à celui qui utilise la classe que cette variable est utilisée en interne et qu'il n'a pas à savoir ce qu'elle fait (comparable a private en C++ en beaucoup moins bien) et qu'il ne faut pas la toucher.
+
+# Méthodes de classe
+
+Pour rappel, les **méthodes de classe** sont comme les attributs de classe, des méthodes qui n'ont pas besoin d'instance pour être appelées:
+
+```python
+class Rectangle(object):
+    _cache = {}
+
+    def __init__(self, nom, l, L):
+        self.id  = str(l)+str(L)
+        self.nom = nom
+        self.l   = l
+        self.L   = L
+        self.calculer_aire()
+
+    def calculer_aire(self):
+        if self.id not in self._cache:
+            print("calcule necessaire pour", self.nom)
+            self._cache[self.id] = self.l * self.L
+    
+    @classmethod
+    def cache(cls):         # ajout d'une methode pour acceder "proprement"
+        return cls._cache   # à l'attribut de classe "privé"
+    
+>>> r1 = Rectangle(2,3)
+calcule necessaire pour r1
+>>> r2 = Rectangle(6,4)
+calcule necessaire pour r2
+>>> r3 = Rectangle(6,4)
+>>> r4 = Rectangle(7,2)
+calcule necessaire pour r4
+>>> print(Rectangle.cache())
+{'23': 6, '64': 24, '72': 14}
+```
+
+**Le premier paramètre n'est pas l'objet en cours mais la classe en cours** et c'est tout ce dont nous avons besoin ici pour accéder à `POULES` comme c'est un attribut de classe.
+
+# Méthodes statiques
+
+Le décorateur `@staticmethod` nous permet de rendre une méthode statique. C'est une méthode de classe sans aucun paramètre qui lui est passé automatiquement (self ou cls).
+
+``` python
+class Osef(object):
+
+    @staticmethod
+    def quoi(): # pas de cls, pas de self
+        print("rien")
+
+>>> print(Osef.quoi())
+rien
+```
+
+Avantage: Un peu plus rapide que la méthode de classe. _On peut totalement négliger son utilisation_.
+
+# Retour sur les propriétés
+
+Encore un rappel: Une property est simplement _un déguisement_ qu'on met sur une méthode pour qu'elle ressemble à un attribut.
+
+```python
+class Poule(object):
+
+    @property
+    def cri(self):
+        return "Cot cot"
+
+>>> maggy = Poule()
+>>> print(maggy.cri)
+Cot cot
+```
+
+Mais on peut aller plus loin que la lecture. On peut décorer l'écriture et la suppression!
+
+```python
+class Poule(object):
+    def __init__(self):
+        self._cri = "Cot cot"   # privé ! underscore !
+
+    @property
+    def cri(self):
+        print('(get)cri')
+        return self._cri
+
+    @cri.setter # le décorateur a la meme nom que la méthode
+    def cri(self, value): # value est la valeur à droite du `=` quand on set (rValue)
+        print('set to {}'.format(value))
+        self._cri = value
+    
+    @cri.deleter
+    def cri(self):
+        print('delete')
+        self._cri = None
+
+>>> maggy = Poule()
+>>> print(maggy.cri)
+(get)cri
+Cot cot
+>>> maggy.cri = 'Coty Cota'
+set to Coty Cota
+>>> print(maggy.cri)
+Coty Cota
+>>> print(maggy._cri)
+Coty Cota
+>>> del maggy.cri
+delete
+>>> print(maggy.cri)
+None
+```
+
+Autre exemple:
+
+```python
+class Poule(object):
+    def __init__(self):
+        self._cri = 'COT COT'
+
+    @property
+    def cri(self):
+        return self._cri
+
+    @cri.setter
+    def cri(self, value):
+        self._cri = value.upper()
+
+>>> maggy = Poule()
+>>> print(maggy.cri)
+COT COT
+>>> maggy.cri = "coty cota"
+>>> print(maggy.cri)
+COTY COTA
+```
+
+On peut donc "intercepter" la récupération, la suppression et la modification d'un attribut facilement. Cela permet d'exposer une belle API à base d'attributs mais deière faire des traitements complexes.
+
+Il suffit de transformer un attribut normal en méthode et de la décorer avec `@property`
+
+C'est pour cette raison qu'on a jamais de getter et de setter en Python: on utilise les attributs tels quel et si le besoin se présente, on en fait des propriétés.
+
+
+<span style="color:red"> Sans le paramètre `object` de la classe les **setter** et **deleter** ne fonctionnent pas!</span> 
+
+
+
+# Suite
+
+* [partie 4](/py/py-OOP4.html)

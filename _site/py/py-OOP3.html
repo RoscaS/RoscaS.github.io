@@ -257,6 +257,181 @@ i3: poney @ 0x7fc52396a6f8
   <li>Partager des données entre les instances:</li>
 </ul>
 
+<p>Pour faire un compteur d’objets ou éviter des calcules innutiles comme dans l’exemple suivant qui est un terrible exemple par manque d’inspiration:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="nb">id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span>  <span class="o">=</span> <span class="n">l</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span>  <span class="o">=</span> <span class="n">L</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculer_aire</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">calculer_aire</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># si l'id n'est pas dans le cache, </span>
+        <span class="c"># on fait le calcule et ajoute au cache.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="nb">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+    
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">calcule</span> <span class="n">necessaire</span> <span class="n">pour</span> <span class="n">r1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">calcule</span> <span class="n">necessaire</span> <span class="n">pour</span> <span class="n">r2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r3</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r4</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">calcule</span> <span class="n">necessaire</span> <span class="n">pour</span> <span class="n">r4</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">_cache</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'23'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">'64'</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="s">'72'</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>À noter qu’on appele la variable <code class="highlighter-rouge">_cache</code> et non pas <code class="highlighter-rouge">cache</code>. <span style="color:red"> <strong>C’est encore une convention</strong></span>. Ça signale à celui qui utilise la classe que cette variable est utilisée en interne et qu’il n’a pas à savoir ce qu’elle fait (comparable a private en C++ en beaucoup moins bien) et qu’il ne faut pas la toucher.</p>
+
+<h1 id="méthodes-de-classe">Méthodes de classe</h1>
+
+<p>Pour rappel, les <strong>méthodes de classe</strong> sont comme les attributs de classe, des méthodes qui n’ont pas besoin d’instance pour être appelées:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="nb">id</span>  <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom</span> <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l</span>   <span class="o">=</span> <span class="n">l</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">L</span>   <span class="o">=</span> <span class="n">L</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculer_aire</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">calculer_aire</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="nb">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"calcule necessaire pour"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>         <span class="c"># ajout d'une methode pour acceder "proprement"</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_cache</span>   <span class="c"># à l'attribut de classe "privé"</span>
+    
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">calcule</span> <span class="n">necessaire</span> <span class="n">pour</span> <span class="n">r1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">calcule</span> <span class="n">necessaire</span> <span class="n">pour</span> <span class="n">r2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r3</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">r4</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">calcule</span> <span class="n">necessaire</span> <span class="n">pour</span> <span class="n">r4</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Rectangle</span><span class="o">.</span><span class="n">cache</span><span class="p">())</span>
+<span class="p">{</span><span class="s">'23'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">'64'</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="s">'72'</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p><strong>Le premier paramètre n’est pas l’objet en cours mais la classe en cours</strong> et c’est tout ce dont nous avons besoin ici pour accéder à <code class="highlighter-rouge">POULES</code> comme c’est un attribut de classe.</p>
+
+<h1 id="méthodes-statiques">Méthodes statiques</h1>
+
+<p>Le décorateur <code class="highlighter-rouge">@staticmethod</code> nous permet de rendre une méthode statique. C’est une méthode de classe sans aucun paramètre qui lui est passé automatiquement (self ou cls).</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Osef</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">quoi</span><span class="p">():</span> <span class="c"># pas de cls, pas de self</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"rien"</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Osef</span><span class="o">.</span><span class="n">quoi</span><span class="p">())</span>
+<span class="n">rien</span>
+</code></pre>
+</div>
+
+<p>Avantage: Un peu plus rapide que la méthode de classe. <em>On peut totalement négliger son utilisation</em>.</p>
+
+<h1 id="retour-sur-les-propriétés">Retour sur les propriétés</h1>
+
+<p>Encore un rappel: Une property est simplement <em>un déguisement</em> qu’on met sur une méthode pour qu’elle ressemble à un attribut.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Poule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"Cot cot"</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">maggy</span> <span class="o">=</span> <span class="n">Poule</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">cri</span><span class="p">)</span>
+<span class="n">Cot</span> <span class="n">cot</span>
+</code></pre>
+</div>
+
+<p>Mais on peut aller plus loin que la lecture. On peut décorer l’écriture et la suppression!</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Poule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span> <span class="o">=</span> <span class="s">"Cot cot"</span>   <span class="c"># privé ! underscore !</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'(get)cri'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span>
+
+    <span class="nd">@cri.setter</span> <span class="c"># le décorateur a la meme nom que la méthode</span>
+    <span class="k">def</span> <span class="nf">cri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span> <span class="c"># value est la valeur à droite du `=` quand on set (rValue)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'set to {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span> <span class="o">=</span> <span class="n">value</span>
+    
+    <span class="nd">@cri.deleter</span>
+    <span class="k">def</span> <span class="nf">cri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'delete'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">maggy</span> <span class="o">=</span> <span class="n">Poule</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">cri</span><span class="p">)</span>
+<span class="p">(</span><span class="n">get</span><span class="p">)</span><span class="n">cri</span>
+<span class="n">Cot</span> <span class="n">cot</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">maggy</span><span class="o">.</span><span class="n">cri</span> <span class="o">=</span> <span class="s">'Coty Cota'</span>
+<span class="nb">set</span> <span class="n">to</span> <span class="n">Coty</span> <span class="n">Cota</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">cri</span><span class="p">)</span>
+<span class="n">Coty</span> <span class="n">Cota</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">_cri</span><span class="p">)</span>
+<span class="n">Coty</span> <span class="n">Cota</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">maggy</span><span class="o">.</span><span class="n">cri</span>
+<span class="n">delete</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">cri</span><span class="p">)</span>
+<span class="bp">None</span>
+</code></pre>
+</div>
+
+<p>Autre exemple:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Poule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span> <span class="o">=</span> <span class="s">'COT COT'</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span>
+
+    <span class="nd">@cri.setter</span>
+    <span class="k">def</span> <span class="nf">cri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cri</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">maggy</span> <span class="o">=</span> <span class="n">Poule</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">cri</span><span class="p">)</span>
+<span class="n">COT</span> <span class="n">COT</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">maggy</span><span class="o">.</span><span class="n">cri</span> <span class="o">=</span> <span class="s">"coty cota"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">maggy</span><span class="o">.</span><span class="n">cri</span><span class="p">)</span>
+<span class="n">COTY</span> <span class="n">COTA</span>
+</code></pre>
+</div>
+
+<p>On peut donc “intercepter” la récupération, la suppression et la modification d’un attribut facilement. Cela permet d’exposer une belle API à base d’attributs mais deière faire des traitements complexes.</p>
+
+<p>Il suffit de transformer un attribut normal en méthode et de la décorer avec <code class="highlighter-rouge"><span class="k">@property</span></code></p>
+
+<p>C’est pour cette raison qu’on a jamais de getter et de setter en Python: on utilise les attributs tels quel et si le besoin se présente, on en fait des propriétés.</p>
+
+<p><span style="color:red"> Sans le paramètre <code class="highlighter-rouge">object</code> de la classe les <strong>setter</strong> et <strong>deleter</strong> ne fonctionnent pas!</span></p>
+
+<h1 id="suite">Suite</h1>
+
+<ul>
+  <li><a href="/py/py-OOP4.html">partie 4</a></li>
+</ul>
 
 </div>
 
