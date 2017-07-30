@@ -179,6 +179,8 @@ name: objectC   val_a: a(C)
 name: objectC   val_b: b(C)
 ```
 
+------------------
+
 ```python
 print("\nobjectD have acces to methodC:")
 print(objectD.methodC)
@@ -198,6 +200,8 @@ objectD also have acces to both methodA and methodB:
 name: objectD   val_a: a(D)
 name: objectD   val_b: b(D)
 ```
+
+------------------
 
 ```python
 print("\nobjectE have acces to methodC:")
@@ -223,3 +227,261 @@ name: objectE   val_b: b(E)
 E don't know that A exist...
 ...but still can override a method from it.
 ```
+
+# La composition ou...
+
+... comment faire interagire plusieurs objets entre eux.
+
+Revenons à notre exemple de jeu vidéo et ajoutons une classe:
+
+```python
+class Heros(object):
+    def __init__(self, nom, vie, arme=None, protection=None):
+        self.nom        = nom
+        self.vie        = vie
+        self.arme       = arme
+        self.protection = protection
+
+    def combattre(self, ennemi):
+        print("{} attaque {}".format(self.nom, ennemi.nom))
+        while True:
+            if self.arme:
+                self.arme.attaque(ennemi)
+            
+            if ennemi.vie <= 0:
+                break
+
+            if enemi.arme:
+                ennemi.arme.attaque(self)
+            
+            if self.vie <= 0:
+                break
+        
+        if self.vie > 0:
+            print("Victoire de {}".format(self.nom))
+        else:
+            print("{} est mort".format(self.nom))
+```
+
+Notons que nous n'avons pas de méthode `attaque()` sur notre héros. **Nous utilisons la méthode attaque d'un objet `Arme`** qui est un attribut de la classe `Heros`.
+
+La composition c'est ça, un objet qui en fait est composé de plusieurs sous-objets. Dans notre cas, notre objet de type `Hero` est aussi composé d'une arme et d'une protection, qui sont ses attributs. Il peut ainsi utiliser le comportement de ces onjets pour faire le boulot à sa place: **c'est ce qu'on appelle la délégation.
+
+Reprenons notre code des armes un peu adapté:
+
+```python
+# On change le code de l'arme, si la cible a une protection
+# cela diminue les dégâts pris
+class Arme(object):
+    def __init__(self, nom, degat):
+        self.nom   = nom
+        self.degat = degat
+    
+    def attaque(self, cible):
+        if cible.protection:
+            degat = cible.protection.defend(self.degat)
+            print("{} - {} = {}"
+                .format(cible.vie, degat, cible.vie - degat))
+            cible.vie -= degat
+        else:
+            print("{} - {} = {}"
+                .format(cible.vie, self.degat, cible.vie - self.degat))
+            cible.vie -= self.degat
+
+
+# Le code de l'armure ne bouge pas
+class Protection(object):
+    def __init__(self, nom, armure):
+        self.nom = nom
+        self.armure = armure
+
+    def defend(self, degat):
+        degat = degat - self.armure
+        if degat < 0:
+            return 0
+        
+        return degat
+```
+
+Et maintenant créons deux héros, armons les et faisons-les combattre:
+
+```python
+gnark            = Hero("Gnark", 2000)
+gnark.arme       = Arme("Lame T-Rex", 10)
+gnark.protection = Protection("Plastron dur", 10)
+
+kaco            = Hero("Kaco", 50)
+kaco.arme       = Arme("fourchette", 1)
+kaco.protection = Protection("Slip", 1)
+
+kaco.combattre(gnark)
+```
+
+**output**:
+
+```
+Kaco attaque Gnark!
+2000 - 0 = 2000
+50 - 9 = 41
+2000 - 0 = 2000
+41 - 9 = 32
+2000 - 0 = 2000
+32 - 9 = 23
+2000 - 0 = 2000
+23 - 9 = 14
+2000 - 0 = 2000
+14 - 9 = 5
+2000 - 0 = 2000
+5 - 9 = -4
+Kaco est mort comme un noob.
+```
+
+## Dans le détail
+
+Analysons la méthode combattre:
+
+```python
+# ...
+
+# Elle attend un ennemi en paramètrem donc un objet Hero
+# self est l'objet en cours, donc aussi un objet Hero
+def combattre(self, ennemi):
+    print("{} attaque {}".format(self.nom, ennemi.nom))
+
+    # Une boucle infinie. Cette boucle loop pour 
+    # toujours si il n'y a pas d'attribut arme !
+    while True:
+
+        # On donne le premier coup à la personne qui attaque
+        # (l'objet en cours). On vérifie qu'il a une arme. 
+        # Si c'est le cas, on appelle la méthode de l'arme
+        # "attaque()", et on lui passe en paramètre l'ennemi.
+        if self.arme:
+            self.arme.attaque(ennemi)
+        
+        # Condition de sortie de la boucle sur
+        # la vie du héro qui pris le coup.
+        if ennemi.vie <= 0:
+            break
+        
+        # Ensuite on fait pareil à l'envers pour donner une
+        # change à l'adversaire de répliquer: on vérifie que 
+        # l'ennemi a une arme, et si c'est le cas, on applique
+        # la méthode "attaque()" de l'arme à l'objet en cours
+        if ennemi.arme:
+            ennemi.arme.attaque(self)
+        
+        # Condition de sortie de la boucle sur
+        # la vie du héro qui a pris le coup.
+        if self.vie <= 0:
+            break
+        
+    # Une fois sorti de la boucle, on vérifie le 
+    # niveau de vie pour désigner le vainqueur.
+    if self.vie > 0:
+        print("Victoire de {}!".format(self.nom))
+    else:
+        print("{} est mort!".format(self.nom))
+
+# ...
+```
+
+Donc `combattre()` utilise un objet `Arme`, et appelle la méthode `attaque()` d'`Arme` sur un objet `Heros`:
+
+```python
+# ...
+
+# self est l'objet en cours, donc l'arme.
+# cible est un objet de la classe Hero qu'on passe en paramètre.
+def attaque(self, cible):
+
+    # Si la cible (objet Hero) a un attribut protection, les dégâts
+    # retirés sont diminués (ce calcul est fait par la protection).
+    if cible.protection:
+        cible.vie -= cible.protection.defend(self.degat)
+    
+    # Sinon, on retire les dégâts à la vie de la cible (Hero) directement.
+    else:
+        cible.vie -= self.degat
+
+# ...
+```
+
+La méthode attaquer utilise elle-même la méthode `defend()` de l'objet de type `Protection`:
+
+```python
+# ...
+
+# self est l'objet en cours, donc protection.
+# degat est un simple int.
+def defend(self, degat):
+
+    # On retourne les degâts infligés, moins la protection
+    return degat - self.armure
+
+# ...
+```
+
+Il y a deux choses a bien comprendre ici:
+
+* Il y a **6 objets**. Deux de type `Hero` qui possèdent chacun un objet de type `Arme` et un objet de type `Protection` **en attributs**.
+
+* On se sert des méthodes des objets de type `Armes` pour attaquer. On passe les objets de type `Hero` en paramètre de ces méthodes. Les objets de type `Arme` se servent des objets de type `Protection` que porte les objets de type `Hero` pour calculer les dégats.
+
+<span style="color:red">**Ce dernier point est le plus important et la clé de voute de la compréhension de la POO.**</span> On le reprend:
+
+1. Les objets de type `Hero` ont une référence aux objets de type `Arme`
+2. On passe une référence des objets de type `Hero` aux objets de type `Arme`
+3. Les objets de type `Arme` retirent de la vie à ces objets de type `Hero` mais calculent avant les dégats en fonction des objets de type `Protection` que les objets de type `Hero` portent.
+
+<span style="color:red"> Les objets ont tous des références les uns vers les autres. **Ils se manipulent tous les uns les autres.** </span> <br>
+
+> Cela fait bizarre car dans la vie une épée ne manipule pas un héros. On comprend facilement qu'un héros ait un attribut épée mais il est difficile de comprendre qu'une épée ait une méthode, et que le paramètre de cette méthode soit un héros.
+
+C'est un concepte purement informatique: **La logique des dégâts est codée dans l'arme**, pas dans le héros. L'avantage de cette architecture, c'est que si on change d'arme, on peut changer la logique des dégâts. Par exemple, on peut rajouter une arme empoisonnée:
+
+```python
+class ArmeEmpoisonee(Arme):
+    def __init__(self, nom, degat, poison=10000):
+        super(ArmeEmpoisonee, self).__init__(nom, degat)
+        self.poison = poison
+    
+    def attaque(self, cible):
+        # degats de l'arme normale
+        super(ArmeEmpoisonee, self).attaque(cible)
+        # defats ajoutés du poison
+        cible.vie -= self.poison
+```
+
+Le mécanisme pour faire des dégâts de cette arme est différent. Il suffit d'équiper un héros avec une instance de cette arme (en changeant l'attribut) pour que ce nouveau calcul de dégats soit pris en compte:
+
+```python
+kaco             = Hero("Kaco", 50)
+kaco.arme        = ArmeEmpoisonee("Cheat", 1)
+kaco.protection  = Protection("Slip", 1)
+
+kaco.combattre(gnark) # Vengeance !
+```
+
+**output**:
+
+```
+Kaco attaque Gnark!
+2000 - 0 = 2000
+Victoire de Kaco!
+```
+
+Ce qu'il faut retenir: On peut mettre des objets en tant qu'attributs d'autres objets. Il n'y a pas de limite dans le nombres d'objets, leur mélange, les niveau d'imbrication, etc... On peut mettre des objets, dans des objets, dans des objets,... **C'est la composition**.
+
+Les objets peuvent utiliser les méthodes des autres objets. Et on peut passer des objets comme paramètres à des méthodes. **C'est la délégation**.
+
+On peut biensur mettre des objets dans des sets, des dicos, des listes, ... ps juste dans des attributs. Il y a un tas de chose à faire avec eux...
+
+# Choisir entre l'héritage et la composition
+
+
+
+
+
+    
+        

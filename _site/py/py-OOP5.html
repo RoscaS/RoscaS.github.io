@@ -279,6 +279,8 @@ name: objectC   val_b: b(C)
 </code></pre>
 </div>
 
+<hr />
+
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectD have acces to methodC:"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">objectD</span><span class="o">.</span><span class="n">methodC</span><span class="p">)</span>
 
@@ -298,6 +300,8 @@ name: objectD   val_a: a(D)
 name: objectD   val_b: b(D)
 </code></pre>
 </div>
+
+<hr />
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">objectE have acces to methodC:"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">objectE</span><span class="o">.</span><span class="n">methodC</span><span class="p">)</span>
@@ -323,6 +327,267 @@ E don't know that A exist...
 ...but still can override a method from it.
 </code></pre>
 </div>
+
+<h1 id="la-composition-ou">La composition ou…</h1>
+
+<p>… comment faire interagire plusieurs objets entre eux.</p>
+
+<p>Revenons à notre exemple de jeu vidéo et ajoutons une classe:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Heros</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">vie</span><span class="p">,</span> <span class="n">arme</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">protection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom</span>        <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vie</span>        <span class="o">=</span> <span class="n">vie</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arme</span>       <span class="o">=</span> <span class="n">arme</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protection</span> <span class="o">=</span> <span class="n">protection</span>
+
+    <span class="k">def</span> <span class="nf">combattre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ennemi</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"{} attaque {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">,</span> <span class="n">ennemi</span><span class="o">.</span><span class="n">nom</span><span class="p">))</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arme</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arme</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="n">ennemi</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">ennemi</span><span class="o">.</span><span class="n">vie</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">enemi</span><span class="o">.</span><span class="n">arme</span><span class="p">:</span>
+                <span class="n">ennemi</span><span class="o">.</span><span class="n">arme</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vie</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vie</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Victoire de {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"{} est mort"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>Notons que nous n’avons pas de méthode <code class="highlighter-rouge">attaque()</code> sur notre héros. <strong>Nous utilisons la méthode attaque d’un objet <code class="highlighter-rouge">Arme</code></strong> qui est un attribut de la classe <code class="highlighter-rouge">Heros</code>.</p>
+
+<p>La composition c’est ça, un objet qui en fait est composé de plusieurs sous-objets. Dans notre cas, notre objet de type <code class="highlighter-rouge">Hero</code> est aussi composé d’une arme et d’une protection, qui sont ses attributs. Il peut ainsi utiliser le comportement de ces onjets pour faire le boulot à sa place: **c’est ce qu’on appelle la délégation.</p>
+
+<p>Reprenons notre code des armes un peu adapté:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># On change le code de l'arme, si la cible a une protection</span>
+<span class="c"># cela diminue les dégâts pris</span>
+<span class="k">class</span> <span class="nc">Arme</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">degat</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom</span>   <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degat</span> <span class="o">=</span> <span class="n">degat</span>
+    
+    <span class="k">def</span> <span class="nf">attaque</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cible</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cible</span><span class="o">.</span><span class="n">protection</span><span class="p">:</span>
+            <span class="n">degat</span> <span class="o">=</span> <span class="n">cible</span><span class="o">.</span><span class="n">protection</span><span class="o">.</span><span class="n">defend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degat</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"{} - {} = {}"</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cible</span><span class="o">.</span><span class="n">vie</span><span class="p">,</span> <span class="n">degat</span><span class="p">,</span> <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-</span> <span class="n">degat</span><span class="p">))</span>
+            <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-=</span> <span class="n">degat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"{} - {} = {}"</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cible</span><span class="o">.</span><span class="n">vie</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">degat</span><span class="p">,</span> <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">degat</span><span class="p">))</span>
+            <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degat</span>
+
+
+<span class="c"># Le code de l'armure ne bouge pas</span>
+<span class="k">class</span> <span class="nc">Protection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">armure</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nom</span> <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">armure</span> <span class="o">=</span> <span class="n">armure</span>
+
+    <span class="k">def</span> <span class="nf">defend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degat</span><span class="p">):</span>
+        <span class="n">degat</span> <span class="o">=</span> <span class="n">degat</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">armure</span>
+        <span class="k">if</span> <span class="n">degat</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        
+        <span class="k">return</span> <span class="n">degat</span>
+</code></pre>
+</div>
+
+<p>Et maintenant créons deux héros, armons les et faisons-les combattre:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">gnark</span>            <span class="o">=</span> <span class="n">Hero</span><span class="p">(</span><span class="s">"Gnark"</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">gnark</span><span class="o">.</span><span class="n">arme</span>       <span class="o">=</span> <span class="n">Arme</span><span class="p">(</span><span class="s">"Lame T-Rex"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">gnark</span><span class="o">.</span><span class="n">protection</span> <span class="o">=</span> <span class="n">Protection</span><span class="p">(</span><span class="s">"Plastron dur"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">kaco</span>            <span class="o">=</span> <span class="n">Hero</span><span class="p">(</span><span class="s">"Kaco"</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">kaco</span><span class="o">.</span><span class="n">arme</span>       <span class="o">=</span> <span class="n">Arme</span><span class="p">(</span><span class="s">"fourchette"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">kaco</span><span class="o">.</span><span class="n">protection</span> <span class="o">=</span> <span class="n">Protection</span><span class="p">(</span><span class="s">"Slip"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">kaco</span><span class="o">.</span><span class="n">combattre</span><span class="p">(</span><span class="n">gnark</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Kaco attaque Gnark!
+2000 - 0 = 2000
+50 - 9 = 41
+2000 - 0 = 2000
+41 - 9 = 32
+2000 - 0 = 2000
+32 - 9 = 23
+2000 - 0 = 2000
+23 - 9 = 14
+2000 - 0 = 2000
+14 - 9 = 5
+2000 - 0 = 2000
+5 - 9 = -4
+Kaco est mort comme un noob.
+</code></pre>
+</div>
+
+<h2 id="dans-le-détail">Dans le détail</h2>
+
+<p>Analysons la méthode combattre:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># ...</span>
+
+<span class="c"># Elle attend un ennemi en paramètrem donc un objet Hero</span>
+<span class="c"># self est l'objet en cours, donc aussi un objet Hero</span>
+<span class="k">def</span> <span class="nf">combattre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ennemi</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{} attaque {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">,</span> <span class="n">ennemi</span><span class="o">.</span><span class="n">nom</span><span class="p">))</span>
+
+    <span class="c"># Une boucle infinie. Cette boucle loop pour </span>
+    <span class="c"># toujours si il n'y a pas d'attribut arme !</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+
+        <span class="c"># On donne le premier coup à la personne qui attaque</span>
+        <span class="c"># (l'objet en cours). On vérifie qu'il a une arme. </span>
+        <span class="c"># Si c'est le cas, on appelle la méthode de l'arme</span>
+        <span class="c"># "attaque()", et on lui passe en paramètre l'ennemi.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arme</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arme</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="n">ennemi</span><span class="p">)</span>
+        
+        <span class="c"># Condition de sortie de la boucle sur</span>
+        <span class="c"># la vie du héro qui pris le coup.</span>
+        <span class="k">if</span> <span class="n">ennemi</span><span class="o">.</span><span class="n">vie</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        
+        <span class="c"># Ensuite on fait pareil à l'envers pour donner une</span>
+        <span class="c"># change à l'adversaire de répliquer: on vérifie que </span>
+        <span class="c"># l'ennemi a une arme, et si c'est le cas, on applique</span>
+        <span class="c"># la méthode "attaque()" de l'arme à l'objet en cours</span>
+        <span class="k">if</span> <span class="n">ennemi</span><span class="o">.</span><span class="n">arme</span><span class="p">:</span>
+            <span class="n">ennemi</span><span class="o">.</span><span class="n">arme</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="c"># Condition de sortie de la boucle sur</span>
+        <span class="c"># la vie du héro qui a pris le coup.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vie</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        
+    <span class="c"># Une fois sorti de la boucle, on vérifie le </span>
+    <span class="c"># niveau de vie pour désigner le vainqueur.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vie</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Victoire de {}!"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"{} est mort!"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nom</span><span class="p">))</span>
+
+<span class="c"># ...</span>
+</code></pre>
+</div>
+
+<p>Donc <code class="highlighter-rouge">combattre()</code> utilise un objet <code class="highlighter-rouge">Arme</code>, et appelle la méthode <code class="highlighter-rouge">attaque()</code> d’<code class="highlighter-rouge">Arme</code> sur un objet <code class="highlighter-rouge">Heros</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># ...</span>
+
+<span class="c"># self est l'objet en cours, donc l'arme.</span>
+<span class="c"># cible est un objet de la classe Hero qu'on passe en paramètre.</span>
+<span class="k">def</span> <span class="nf">attaque</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cible</span><span class="p">):</span>
+
+    <span class="c"># Si la cible (objet Hero) a un attribut protection, les dégâts</span>
+    <span class="c"># retirés sont diminués (ce calcul est fait par la protection).</span>
+    <span class="k">if</span> <span class="n">cible</span><span class="o">.</span><span class="n">protection</span><span class="p">:</span>
+        <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-=</span> <span class="n">cible</span><span class="o">.</span><span class="n">protection</span><span class="o">.</span><span class="n">defend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degat</span><span class="p">)</span>
+    
+    <span class="c"># Sinon, on retire les dégâts à la vie de la cible (Hero) directement.</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degat</span>
+
+<span class="c"># ...</span>
+</code></pre>
+</div>
+
+<p>La méthode attaquer utilise elle-même la méthode <code class="highlighter-rouge">defend()</code> de l’objet de type <code class="highlighter-rouge">Protection</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># ...</span>
+
+<span class="c"># self est l'objet en cours, donc protection.</span>
+<span class="c"># degat est un simple int.</span>
+<span class="k">def</span> <span class="nf">defend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degat</span><span class="p">):</span>
+
+    <span class="c"># On retourne les degâts infligés, moins la protection</span>
+    <span class="k">return</span> <span class="n">degat</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">armure</span>
+
+<span class="c"># ...</span>
+</code></pre>
+</div>
+
+<p>Il y a deux choses a bien comprendre ici:</p>
+
+<ul>
+  <li>
+    <p>Il y a <strong>6 objets</strong>. Deux de type <code class="highlighter-rouge">Hero</code> qui possèdent chacun un objet de type <code class="highlighter-rouge">Arme</code> et un objet de type <code class="highlighter-rouge">Protection</code> <strong>en attributs</strong>.</p>
+  </li>
+  <li>
+    <p>On se sert des méthodes des objets de type <code class="highlighter-rouge">Armes</code> pour attaquer. On passe les objets de type <code class="highlighter-rouge">Hero</code> en paramètre de ces méthodes. Les objets de type <code class="highlighter-rouge">Arme</code> se servent des objets de type <code class="highlighter-rouge">Protection</code> que porte les objets de type <code class="highlighter-rouge">Hero</code> pour calculer les dégats.</p>
+  </li>
+</ul>
+
+<p><span style="color:red"><strong>Ce dernier point est le plus important et la clé de voute de la compréhension de la POO.</strong></span> On le reprend:</p>
+
+<ol>
+  <li>Les objets de type <code class="highlighter-rouge">Hero</code> ont une référence aux objets de type <code class="highlighter-rouge">Arme</code></li>
+  <li>On passe une référence des objets de type <code class="highlighter-rouge">Hero</code> aux objets de type <code class="highlighter-rouge">Arme</code></li>
+  <li>Les objets de type <code class="highlighter-rouge">Arme</code> retirent de la vie à ces objets de type <code class="highlighter-rouge">Hero</code> mais calculent avant les dégats en fonction des objets de type <code class="highlighter-rouge">Protection</code> que les objets de type <code class="highlighter-rouge">Hero</code> portent.</li>
+</ol>
+
+<p><span style="color:red"> Les objets ont tous des références les uns vers les autres. <strong>Ils se manipulent tous les uns les autres.</strong> </span> <br /></p>
+
+<blockquote>
+  <p>Cela fait bizarre car dans la vie une épée ne manipule pas un héros. On comprend facilement qu’un héros ait un attribut épée mais il est difficile de comprendre qu’une épée ait une méthode, et que le paramètre de cette méthode soit un héros.</p>
+</blockquote>
+
+<p>C’est un concepte purement informatique: <strong>La logique des dégâts est codée dans l’arme</strong>, pas dans le héros. L’avantage de cette architecture, c’est que si on change d’arme, on peut changer la logique des dégâts. Par exemple, on peut rajouter une arme empoisonnée:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ArmeEmpoisonee</span><span class="p">(</span><span class="n">Arme</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">degat</span><span class="p">,</span> <span class="n">poison</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArmeEmpoisonee</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">nom</span><span class="p">,</span> <span class="n">degat</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poison</span> <span class="o">=</span> <span class="n">poison</span>
+    
+    <span class="k">def</span> <span class="nf">attaque</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cible</span><span class="p">):</span>
+        <span class="c"># degats de l'arme normale</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArmeEmpoisonee</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="n">cible</span><span class="p">)</span>
+        <span class="c"># defats ajoutés du poison</span>
+        <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">poison</span>
+</code></pre>
+</div>
+
+<p>Le mécanisme pour faire des dégâts de cette arme est différent. Il suffit d’équiper un héros avec une instance de cette arme (en changeant l’attribut) pour que ce nouveau calcul de dégats soit pris en compte:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">kaco</span>             <span class="o">=</span> <span class="n">Hero</span><span class="p">(</span><span class="s">"Kaco"</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">kaco</span><span class="o">.</span><span class="n">arme</span>        <span class="o">=</span> <span class="n">ArmeEmpoisonee</span><span class="p">(</span><span class="s">"Cheat"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">kaco</span><span class="o">.</span><span class="n">protection</span>  <span class="o">=</span> <span class="n">Protection</span><span class="p">(</span><span class="s">"Slip"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">kaco</span><span class="o">.</span><span class="n">combattre</span><span class="p">(</span><span class="n">gnark</span><span class="p">)</span> <span class="c"># Vengeance !</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Kaco attaque Gnark!
+2000 - 0 = 2000
+Victoire de Kaco!
+</code></pre>
+</div>
+
+<p>Ce qu’il faut retenir: On peut mettre des objets en tant qu’attributs d’autres objets. Il n’y a pas de limite dans le nombres d’objets, leur mélange, les niveau d’imbrication, etc… On peut mettre des objets, dans des objets, dans des objets,… <strong>C’est la composition</strong>.</p>
+
+<p>Les objets peuvent utiliser les méthodes des autres objets. Et on peut passer des objets comme paramètres à des méthodes. <strong>C’est la délégation</strong>.</p>
+
+<p>On peut biensur mettre des objets dans des sets, des dicos, des listes, … ps juste dans des attributs. Il y a un tas de chose à faire avec eux…</p>
+
+<h1 id="choisir-entre-lhéritage-et-la-composition">Choisir entre l’héritage et la composition</h1>
+
 
 </div>
 
