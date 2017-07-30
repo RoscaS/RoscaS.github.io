@@ -479,9 +479,81 @@ On peut biensur mettre des objets dans des sets, des dicos, des listes, ... ps j
 
 # Choisir entre l'héritage et la composition
 
+Les deux techniques permettent de réutiliser du code, mis pas de la même façon. Aucune règle générale ne tient la route dans tous les cas, mais un bon poinr de départ est de se dire que:
 
+* Si nous avons deux objets de même nature, et qu'un est une spécialisation de lautre (Garçon est une spécialisation de Personne, Voiture une spécialisation de Véhicule, Clio une spécialisation de voiture,...) **alors on préfèrera l'héritage**.
 
+* Si nous avons deux objets qui échangent des données, qui sont associés ou qui dans la vie réelle sont des "parts de" (Un article est une partie d'un blog, Un coeur est une partie d'un corp,...) **alors on préfèrera la composition**.
 
+<span style="color:red"> Ne pas oublier la différence entre **aggrégation** et **composition** vue en C++.</span> Mais on vivra très bien sans pour le moment.
 
+# Deign pattern "stratégie"
+
+Le motif de conception (design pattern) "stratégie", et une mise en application abstraite de la composition.
+
+Normalement, la composition s'utilise avec des "part de" **concrètes**. Une voiture est composée d'objets pneus, d'un objet moteur, etc ...
+
+Le defign pattern stratégie est l'extraction d'un part du comportement d'un objet pour le mettre dans un autre objet. Mais la nature de l'objet importe peu. Ceci est fait purement pour découpler le comportement de l'objet.
+
+On a vu plus haut que changer l'arme permet de changer le calcul des dégâts. C'est ce type de résultat qu'on vise avec le design pattern strategy.
+
+```python
+import os
+
+class ParseurXml(object):
+    # ...
+    pass
+
+class ParseurJson(object):
+    # ...
+    pass
+
+class ParseurDeFichier(object):
+    _strategy = {   # les stratégies par défaut
+        'json': ParseurXml,
+        'xml' : ParseurJson
+    }
+
+    def __init__(self, fichier, strategy=None):
+        self.fichier = fichier
+
+        # On récupère l'extension du fichier
+        path, ext = os.path.splitext(fichier)
+
+        # Strategy est une classe de parseur
+        # on la récupère depuis les paraètres 
+        # ou selon l'extension.
+        Strategy = strategy or self._strategy[ext.lstrip('.')]
+
+        # On instancie notre classe de strategie
+        self.strategy = Strategy(fichier)
     
-        
+    def parse(self):
+
+        # On délègue le boulot à la stratégie
+        self.strategy.parse()
+```
+
+La ligne la plus importante est:
+
+
+```python
+Strategy = strategy or self._strategy[ext]
+```
+
+Ici on dit récupère la stratégie de parsing en paramètre, ou si non, la bonne en fonction de l'extention du fichier. On charge donc une classe dynamiquement, on va créer un objet à partir de cette classe. Et c'est cet objet à qui on va déléguer le comportement du parseur:
+
+
+```python
+def parse(self):
+    self.strategy.parse()
+```
+
+On utilise l'objet dynamiquement pour gérer tout le parsing. On peut ainsi choisir un parseur à la volée.
+
+La pattern strategy mélange donc composition (l'objet strategy est une part de l'objet général), délégation (l'objet général utilise le comportement de l'objet strategy) et d'injection de dépendance (on peut changer l'algorithme à la volée, il suffit de changer de stratégie).
+
+
+# Suite
+
+* [partie 6](/py/py-OOP5.html)

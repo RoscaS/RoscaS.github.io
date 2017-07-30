@@ -6,9 +6,31 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 30 Jul 2017 22:26:20 +0200</pubDate>
-    <lastBuildDate>Sun, 30 Jul 2017 22:26:20 +0200</lastBuildDate>
+    <pubDate>Sun, 30 Jul 2017 23:08:41 +0200</pubDate>
+    <lastBuildDate>Sun, 30 Jul 2017 23:08:41 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
+    
+      <item>
+        <title>Py: OOP 5 Méthodes magiques</title>
+        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 29 Jul 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/py/py-OOP56.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/py-OOP56.html</guid>
+        
+        <category>divers,</category>
+        
+        <category>fr,</category>
+        
+        <category>en</category>
+        
+        
+        <category>Py</category>
+        
+      </item>
     
       <item>
         <title>Py: OOP 5 Héritage multiple, composition, délégation</title>
@@ -497,6 +519,88 @@ Victoire de Kaco!
 
 &lt;h1 id=&quot;choisir-entre-lhéritage-et-la-composition&quot;&gt;Choisir entre l’héritage et la composition&lt;/h1&gt;
 
+&lt;p&gt;Les deux techniques permettent de réutiliser du code, mis pas de la même façon. Aucune règle générale ne tient la route dans tous les cas, mais un bon poinr de départ est de se dire que:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Si nous avons deux objets de même nature, et qu’un est une spécialisation de lautre (Garçon est une spécialisation de Personne, Voiture une spécialisation de Véhicule, Clio une spécialisation de voiture,…) &lt;strong&gt;alors on préfèrera l’héritage&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Si nous avons deux objets qui échangent des données, qui sont associés ou qui dans la vie réelle sont des “parts de” (Un article est une partie d’un blog, Un coeur est une partie d’un corp,…) &lt;strong&gt;alors on préfèrera la composition&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; Ne pas oublier la différence entre &lt;strong&gt;aggrégation&lt;/strong&gt; et &lt;strong&gt;composition&lt;/strong&gt; vue en C++.&lt;/span&gt; Mais on vivra très bien sans pour le moment.&lt;/p&gt;
+
+&lt;h1 id=&quot;deign-pattern-stratégie&quot;&gt;Deign pattern “stratégie”&lt;/h1&gt;
+
+&lt;p&gt;Le motif de conception (design pattern) “stratégie”, et une mise en application abstraite de la composition.&lt;/p&gt;
+
+&lt;p&gt;Normalement, la composition s’utilise avec des “part de” &lt;strong&gt;concrètes&lt;/strong&gt;. Une voiture est composée d’objets pneus, d’un objet moteur, etc …&lt;/p&gt;
+
+&lt;p&gt;Le defign pattern stratégie est l’extraction d’un part du comportement d’un objet pour le mettre dans un autre objet. Mais la nature de l’objet importe peu. Ceci est fait purement pour découpler le comportement de l’objet.&lt;/p&gt;
+
+&lt;p&gt;On a vu plus haut que changer l’arme permet de changer le calcul des dégâts. C’est ce type de résultat qu’on vise avec le design pattern strategy.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ParseurXml&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# ...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ParseurJson&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# ...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ParseurDeFichier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;_strategy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;   &lt;span class=&quot;c&quot;&gt;# les stratégies par défaut&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'json'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ParseurXml&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'xml'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ParseurJson&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt;
+
+        &lt;span class=&quot;c&quot;&gt;# On récupère l'extension du fichier&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;c&quot;&gt;# Strategy est une classe de parseur&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# on la récupère depuis les paraètres &lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# ou selon l'extension.&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Strategy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lstrip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+
+        &lt;span class=&quot;c&quot;&gt;# On instancie notre classe de strategie&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+        &lt;span class=&quot;c&quot;&gt;# On délègue le boulot à la stratégie&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;La ligne la plus importante est:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Strategy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ici on dit récupère la stratégie de parsing en paramètre, ou si non, la bonne en fonction de l’extention du fichier. On charge donc une classe dynamiquement, on va créer un objet à partir de cette classe. Et c’est cet objet à qui on va déléguer le comportement du parseur:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;On utilise l’objet dynamiquement pour gérer tout le parsing. On peut ainsi choisir un parseur à la volée.&lt;/p&gt;
+
+&lt;p&gt;La pattern strategy mélange donc composition (l’objet strategy est une part de l’objet général), délégation (l’objet général utilise le comportement de l’objet strategy) et d’injection de dépendance (on peut changer l’algorithme à la volée, il suffit de changer de stratégie).&lt;/p&gt;
+
+&lt;h1 id=&quot;suite&quot;&gt;Suite&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Sat, 29 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-OOP5.html</link>
@@ -3312,99 +3416,6 @@ En bref, c’est une interface.&lt;/p&gt;
         
         
         <category>Py</category>
-        
-      </item>
-    
-      <item>
-        <title>Divers: internet ch</title>
-        <description>&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Opérateur&lt;/th&gt;
-      &lt;th&gt;offre 1 (MB/sec)&lt;/th&gt;
-      &lt;th&gt;offre2 (MB/sec)&lt;/th&gt;
-      &lt;th&gt;offre3 (MB/sec)&lt;/th&gt;
-      &lt;th&gt;modem / co&lt;/th&gt;
-      &lt;th&gt;dispo (Noirmont)&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;https://www.upc.ch/fr/internet/abonnements/&quot;&gt;UPC Cablecom&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 6.25 @ 59.&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 20 @ 79.&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 62 @ 99.&lt;/td&gt;
-      &lt;td&gt;free&lt;/td&gt;
-      &lt;td&gt;6.25MB Max&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;https://www.sunrise.ch/fr/clients-prives/pour-la-maison/internet.html&quot;&gt;Sunrise&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 5 @ 45.&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 12 @ 65.&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 125 @ 105.&lt;/td&gt;
-      &lt;td&gt;59. (Si pas de connexion)&lt;/td&gt;
-      &lt;td&gt;5MB Max&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;https://www.swisscom.ch/fr/clients-prives/internet-television-reseaufixe/internet.html&quot;&gt;Swisscom&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 5 @ 60.&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 12 @ 80.&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 125 @ 90.&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt;5MB Max&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;https://www.vtx.ch/fr/residential/internet&quot;&gt;VTX&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 1.2 @ .60&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 3.75 @ .70&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 12.5 @ .100&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt;12.5MB Max&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;http://www.tele4u.ch/Privat/Internet/ADSL-Tarife.aspx&quot;&gt;tele4u&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 5 @ .60&lt;/td&gt;
-      &lt;td&gt;/&lt;/td&gt;
-      &lt;td&gt;/&lt;/td&gt;
-      &lt;td&gt; &lt;/td&gt;
-      &lt;td&gt;ok&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;a href=&quot;http://www.green.ch/en-us/internet,telephonytv/greeninternet.aspx&quot;&gt;green.ch&lt;/a&gt;&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 12.5 @ .59 (dsl)&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 62.5 @ .69 (dsl/fib)&lt;/td&gt;
-      &lt;td&gt;&lt;script type=&quot;math/tex&quot;&gt;\downarrow&lt;/script&gt; 125 @ .74 (fib)&lt;/td&gt;
-      &lt;td&gt;free&lt;/td&gt;
-      &lt;td&gt;62.5 possible  5.5probable&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h3 id=&quot;-cure-copin-2-2340-noiremont&quot;&gt;@ Cure Copin 2 2340 Noiremont&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&quot;/00illustrations/cureCopin.png&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;44000 Kbps = 5.5MBps&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.worldcom.ch/test-disponibilite.php&quot;&gt;test&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;carte-couverture-fibre-en-suisse&quot;&gt;Carte couverture fibre en Suisse&lt;/h3&gt;
-
-&lt;iframe src=&quot;https://map.geo.admin.ch/embed.html?topic=nga&amp;amp;lang=fr&amp;amp;bgLayer=ch.swisstopo.pixelkarte-grau&amp;amp;catalogNodes=317,320,327,334,338&amp;amp;layers=ch.bakom.anschlussart-glasfaser,ch.bakom.anschlussart-koaxialkabel,ch.bakom.anschlussart-kupferdraht,ch.bakom.downlink100,ch.bakom.anbieter-eigenes_festnetz&amp;amp;layers_opacity=1,0.75,0.75,0,0.75&amp;amp;layers_visibility=true,false,false,false,false&amp;amp;X=192192.17&amp;amp;Y=589030.06&amp;amp;zoom=2.2597216404290026&quot; width=&quot;800&quot; height=&quot;800&quot; frameborder=&quot;0&quot; style=&quot;border:0&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.xavierstuder.com/2017/04/11/fibre-optique-carte-interactive-3d-voir-plus-clair/&quot;&gt;article&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 21 Jul 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/divers/divers-comparatif-internet-ch.html</link>
-        <guid isPermaLink="true">http://localhost:4000/divers/divers-comparatif-internet-ch.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Divers</category>
         
       </item>
     

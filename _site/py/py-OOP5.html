@@ -588,6 +588,88 @@ Victoire de Kaco!
 
 <h1 id="choisir-entre-lhéritage-et-la-composition">Choisir entre l’héritage et la composition</h1>
 
+<p>Les deux techniques permettent de réutiliser du code, mis pas de la même façon. Aucune règle générale ne tient la route dans tous les cas, mais un bon poinr de départ est de se dire que:</p>
+
+<ul>
+  <li>
+    <p>Si nous avons deux objets de même nature, et qu’un est une spécialisation de lautre (Garçon est une spécialisation de Personne, Voiture une spécialisation de Véhicule, Clio une spécialisation de voiture,…) <strong>alors on préfèrera l’héritage</strong>.</p>
+  </li>
+  <li>
+    <p>Si nous avons deux objets qui échangent des données, qui sont associés ou qui dans la vie réelle sont des “parts de” (Un article est une partie d’un blog, Un coeur est une partie d’un corp,…) <strong>alors on préfèrera la composition</strong>.</p>
+  </li>
+</ul>
+
+<p><span style="color:red"> Ne pas oublier la différence entre <strong>aggrégation</strong> et <strong>composition</strong> vue en C++.</span> Mais on vivra très bien sans pour le moment.</p>
+
+<h1 id="deign-pattern-stratégie">Deign pattern “stratégie”</h1>
+
+<p>Le motif de conception (design pattern) “stratégie”, et une mise en application abstraite de la composition.</p>
+
+<p>Normalement, la composition s’utilise avec des “part de” <strong>concrètes</strong>. Une voiture est composée d’objets pneus, d’un objet moteur, etc …</p>
+
+<p>Le defign pattern stratégie est l’extraction d’un part du comportement d’un objet pour le mettre dans un autre objet. Mais la nature de l’objet importe peu. Ceci est fait purement pour découpler le comportement de l’objet.</p>
+
+<p>On a vu plus haut que changer l’arme permet de changer le calcul des dégâts. C’est ce type de résultat qu’on vise avec le design pattern strategy.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">class</span> <span class="nc">ParseurXml</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># ...</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ParseurJson</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># ...</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">ParseurDeFichier</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">_strategy</span> <span class="o">=</span> <span class="p">{</span>   <span class="c"># les stratégies par défaut</span>
+        <span class="s">'json'</span><span class="p">:</span> <span class="n">ParseurXml</span><span class="p">,</span>
+        <span class="s">'xml'</span> <span class="p">:</span> <span class="n">ParseurJson</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fichier</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fichier</span> <span class="o">=</span> <span class="n">fichier</span>
+
+        <span class="c"># On récupère l'extension du fichier</span>
+        <span class="n">path</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fichier</span><span class="p">)</span>
+
+        <span class="c"># Strategy est une classe de parseur</span>
+        <span class="c"># on la récupère depuis les paraètres </span>
+        <span class="c"># ou selon l'extension.</span>
+        <span class="n">Strategy</span> <span class="o">=</span> <span class="n">strategy</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strategy</span><span class="p">[</span><span class="n">ext</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s">'.'</span><span class="p">)]</span>
+
+        <span class="c"># On instancie notre classe de strategie</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">Strategy</span><span class="p">(</span><span class="n">fichier</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c"># On délègue le boulot à la stratégie</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>La ligne la plus importante est:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Strategy</span> <span class="o">=</span> <span class="n">strategy</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_strategy</span><span class="p">[</span><span class="n">ext</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Ici on dit récupère la stratégie de parsing en paramètre, ou si non, la bonne en fonction de l’extention du fichier. On charge donc une classe dynamiquement, on va créer un objet à partir de cette classe. Et c’est cet objet à qui on va déléguer le comportement du parseur:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>On utilise l’objet dynamiquement pour gérer tout le parsing. On peut ainsi choisir un parseur à la volée.</p>
+
+<p>La pattern strategy mélange donc composition (l’objet strategy est une part de l’objet général), délégation (l’objet général utilise le comportement de l’objet strategy) et d’injection de dépendance (on peut changer l’algorithme à la volée, il suffit de changer de stratégie).</p>
+
+<h1 id="suite">Suite</h1>
+
+<ul>
+  <li><a href="/py/py-OOP5.html">partie 6</a></li>
+</ul>
 
 </div>
 
