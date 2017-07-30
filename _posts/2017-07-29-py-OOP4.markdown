@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Py: OOP 3 Attributs"
+title: "Py: OOP 4 Héritage"
 subtitle: "Programmation orienté objet"
 date: 2017-07-29
 author: Sol
@@ -11,4 +11,312 @@ finished: false
 
 #### sources
 * [sam&max](http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/)
+
+# Héritage
+
+L'héritage peut simplement être vu comme une façon de factoriser du code. On peut très bien factoriser du code uniquement avec des fonctions mais l'héritage a des caractéristiques qui rendent cette factorisation très efficace.
+
+```python
+class Exemple(object):
+    texte = (
+        "Titre: attribut classe Exemple",
+        "Ligne 1: lalala.",
+        "Ligne 2 qui continue sur la prochaine",
+        "ligne pour en finir ici.\n"
+    )
+
+    def display(self, nombre_de_fois=1):
+        for x in range(nombre_de_fois):
+            for ligne in self.texte:
+                print(ligne)
+
+
+class PasTop(object):
+    texte = (
+        "Titre: attribut classe PasTop",
+        "Ligne 1: autre chose que lalala.",
+        "Ligne 2 qui continue aussi sur la prochaine",
+        "ligne pour en finir egalement ici.\n"
+    )
+
+    def display(self, nombre_de_fois=1):
+        for x in range(nombre_de_fois):
+            for ligne in self.texte:
+                print(ligne)
+```
+
+Dans ce premier cas, la méthode `afficher()` est dupliquée alors que c'est exactement la même dans les deux classes. Il n'y a pas de raison de l'écrire deux fois, nous pouvons utiliser l'héritage en créant une classe `Afficher` qui contiendra le code commun aux autres classes:
+
+```python
+class Parent(object):
+    def display(self, nombre_de_fois=1):
+        for x in range(nombre_de_fois):
+            for ligne in self.:
+                print(ligne)
+```
+
+Ensuite, nous allons faire hériter les classes `Enfant1` et `Enfant2` de cette classe commune
+
+```python
+class Enfant1(Parent):
+    texte = (
+        "Titre: attribut classe Enfant1",
+        "Ligne 1: lalala.",
+        "Ligne 2 qui continue sur la prochaine",
+        "ligne pour en finir ici.\n"
+    )
+
+
+class Enfant2(Parent):
+    texte = (
+        "Titre: attribut classe Enfant2",
+        "Ligne 1: autre chose que lalala.",
+        "Ligne 2 qui continue aussi sur la prochaine",
+        "ligne pour en finir egalement ici.\n"
+    )
+
+un = Enfant1()
+un.display()
+
+deux = Enfant2()
+deux.display()
+```
+
+**Output**:
+
+```
+Titre: attribut classe Enfant1
+Ligne 1: lalala.
+Ligne 2 qui continue sur la prochaine
+ligne pour en finir ici.
+
+Titre: attribut classe Enfant2
+Ligne 1: autre chose que lalala.
+Ligne 2 qui continue aussi sur la prochaine
+ligne pour en finir egalement ici.
+```
+
+Le code de la classe `Parent` est copié dans les classes `Enfants` ainsi `display()` est automatiquement copiée de `Parent` vers `Enfant1` et `Enfant2`. Cela fonctionne pour toutes les méthodes, même celles appelées automatiquement. C'est particulièrement utile avec la méthode `__init__`:
+
+```python
+class Parent(object):
+    def __init__(self, upp=False):
+        self.upp = upp
+
+    def display(self, nombre_de_fois=1):
+        for x in range(nombre_de_fois):
+            for ligne in self.texte:
+                if self.upp:
+                    print(ligne.upper())
+                else:
+                    print(ligne)
+```
+
+On ajoute ici un attribut qui se retrouve dans les classes enfant:
+
+```python
+>>> un = Enfant1(True)
+>>> un.display()
+TITRE: ATTRIBUT CLASSE ENFANT1
+LIGNE 1: LALALA.
+LIGNE 2 QUI CONTINUE SUR LA PROCHAINE
+LIGNE POUR EN FINIR ICI.
+```
+
+Voilà en deux mots pour l'héritage. Pas la peine de chercher beaucoup plus loin. **Le code du parent se retrouve dans celui de l'enfant**. Cela fonctionne pour les méthodes et les attributs.
+
+# Classe object
+
+```python
+class MaClass(object): # what's that??
+    # code
+```
+
+C'est un héritage, `object` est un type primitif de Python au même titre que `str` ou `int`:
+
+```python
+>>> print(type(object)
+<class 'type'>
+```
+
+> La raison de cet héritage est qu'à partir de Python 2.2, une nouvelle architecture pour les classes a été introduit qui corrige les problèmes de l'ancienne. Mais pour garder le code compatible, ces nouvlles classes n'ont pas été activées par défaut.
+
+Les classes "à l'ancienne" s'écrivent sans l'héritage d'`object`:
+
+```python
+class Maclass:
+    # code
+```
+
+**Il n'y a AUCUN intérêt à utiliser les classes "à l'ancienne".**
+<span style="color:red"> **Quand nous créons une nouvelle classe qui n'a pas de parent, il faut toujours la faire hériter d'`object` ! </span> 
+
+Des tas de fonctions (par exemple les properties) fonctionnent beaucoup mieux avec la nouvelle syntaxe.
+
+** À partir de Python 3x, elles sont activées par défaut !
+
+# Overriding
+
+Parfois on veut tout le code du parent dans l'enfant et d'autres fois uniquement une prtie. L'héritage nous permet de réécrire certaines méthodes du parent dans l'enfant. **C'est ce qu'on appelle l'overriding**.
+
+Quand on fait:
+
+```python
+class Parent(object):
+    def truc(self)):
+        print("poule")
+
+class Enfant(Parent):
+    pass
+```
+
+En réalité on fait en quelques sortes:
+
+```python
+class Enfant(object):
+    def truc(self):
+        print("poule")
+```
+
+Si on fait:
+
+```python
+class Enfant(object):
+    def truc(self):
+        print("poule")
+    
+    def truc(self):
+        print("cochon")
+
+>>> Enfant().truc()
+cochon
+```
+
+On écrase la première méthode avec la seconde car elles portent toutes deux le même nom.
+
+<span style="color:red"> **En Python la surcharge n'existe pas même si les signatures sont différentes!** </span> 
+
+Ce qu'on vient de voir s'écrit comme ça dans le cadre de l'héritage:
+
+```python
+class Parent(object):
+    def truc(self):
+        print("poule")
+
+class Enfant(Parent):
+    pass # pas d'overriding
+
+class Enfant2(Parent):
+    def truc(self):
+        print("cochon")
+
+>>> Enfant1().truc()
+poule
+>>> Enfant2().truc()
+cochon
+```
+
+`Enfant1` a tout le code du parent qui est copié. `Enfant2` aussi, mais il réécrit la méthode, donc sa version de la méthode écrase celle du parent.
+
+Reprenons la classe de plus haut pour voir ce que ça donne dans un exemple concret:
+
+```python
+class Parent(object):
+    def __init__(self, upp=False):
+        self.upp = upp
+
+    def display(self, nombre_de_fois=1):
+        for x in range(nombre_de_fois):
+            for ligne in self.texte:
+                if self.upp:
+                    print(ligne.upper())
+                else:
+                    print(ligne)
+
+
+class Enfant1(Parent):
+    texte = (
+        "Titre: attribut classe Enfant1",
+        "Ligne 1: lalala.",
+        "Ligne 2 qui continue sur la prochaine",
+        "ligne pour en finir ici.\n"
+    )
+
+# Dans Enfant2, on veut mettre en avant la version anglaise
+# du texte:
+class Enfant2(Parent):
+    vo = (
+        "Title: Child2 class attribut",
+        "Line 1: something else than lalala",
+        "Line 2 that expand on the next one",
+        "and also ends here.\n"
+    )
+
+    vf = (
+        "Titre attribut classe Enfant2",
+        "Ligne 1: autre chose que lalala.",
+        "Ligne 2 qui continue aussi sur la prochaine",
+        "ligne pour en finir egalement ici.\n"
+    )
+
+    def display(self, nombre_de_fois=1, version='vo'):
+        for x in range(nombre_de_fois):
+            for ligne in getattr(self, version, 'vo'): # getattr -> built-in
+                if self.upp:
+                    print(ligne.upper())
+                else:
+                    print(ligne)
+
+>>> un = Enfant1()
+>>> un.display()
+Titre: attribut classe Enfant1
+Ligne 1: lalala.
+Ligne 2 qui continue sur la prochaine
+ligne pour en finir ici.
+>>> deux = Enfant2()
+>>> deux.display()
+Title: Child2 class attribut
+Line 1: something else than lalala
+Line 2 that expand on the next one
+and also ends here.
+```
+
+La classe `Enfant2` hérite de la classe `Parent`. Deux méthodes sont copiées de `Parent` vers `Enfant2`:
+
+* `__ini__` 
+* `display()`
+
+`__init__` ne change pas, donc `Enfant2` a toujours le `__init__` de `Parent`. Par contre, on a overridé `display()` dans `Enfant2`, qui est maintenant du code personnalisé.
+
+Ceci nous permet de bénéficier d'une part du code commun (`__init__`), et de choisir un comportement différent pour d'autres bouts du code (`display()`).
+
+La classe `Enfant1` n'est pas affectée, elle n'override rien et sa méthode `display()` est la même que celle de `display()`
+
+# Polymorphisme
+
+<span style="color:red"> À creuser </span> <br>
+Compliqué dans certains langages comme C++, en Python le polymorphisme est très simple et permet d'avoir une API (interface) commune qui fair des choses différentes.
+
+Nous deux classes `Enfant1` et `Enfant2` sont toutes les deux filles de la même classe parente. Elles se ressemblent beaucoup: Elles ont des attributs et des méthodes en commun:
+
+```python
+>>> o1 = Enfant2()
+>>> o2 = Enfant1()
+>>> print(o1.upp)
+False
+>>> print(o2.upp)
+False
+>>> print(o1.display)
+<bound method Enfant2.display of <__main__.Enfant2 object at 0x7fe2118e24e0>>
+>>> print(o2.display)
+<bound method Parent.display of <__main__.Enfant1 object at 0x7fe2118e2518>>
+>> print(o1.__init__)
+<bound method Parent.__init__ of <__main__.Enfant2 object at 0x7fe2118e24e0>>
+>> print(o2.__init__)
+<bound method Parent.__init__ of <__main__.Enfant1 object at 0x7fe2118e2518>>
+```
+
+Ce sont des classes différentes (et display() ne fait pas du tout la même chose) mais nous voyons ici que'elles partagent une API (interface), c'est à dire une façon des les utiliser.
+
+Cette capacité à être utilisé de la même façon tout en produisant un résultat différent est ce qu'on appelle le **polymorphisme** (<span style="color:red"> **c'est la base du Duck typing** </span>). Concrètement ça veut dire qu'on peut utiliser les deux classes dans le même contexte, sans se soucier si c'est l'une ou l'autre.
 
