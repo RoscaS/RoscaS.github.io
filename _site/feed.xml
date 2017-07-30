@@ -6,16 +6,49 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 30 Jul 2017 23:08:41 +0200</pubDate>
-    <lastBuildDate>Sun, 30 Jul 2017 23:08:41 +0200</lastBuildDate>
+    <pubDate>Sun, 30 Jul 2017 23:22:22 +0200</pubDate>
+    <lastBuildDate>Sun, 30 Jul 2017 23:22:22 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
-        <title>Py: OOP 5 Méthodes magiques</title>
+        <title>Py: OOP 6 Méthodes magiques</title>
         <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;h1 id=&quot;méthodes-magiques&quot;&gt;Méthodes magiques&lt;/h1&gt;
+
+&lt;p&gt;Les méthodes automatiques (ou magiques) sont les méthodes nommées avec deux doubles underscore (&lt;code class=&quot;highlighter-rouge&quot;&gt;def __methode__(self)&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h2 id=&quot;del&quot;&gt;&lt;strong&gt;del&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;C’est la sémantique inverse d’&lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt;, c’est une méthode appelée quand l’objet est &lt;strong&gt;détruit&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__del__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Destruction&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Destruction&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# laisse le temps au GC de faire son travail&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;On l’utilise pour nettoyer une fois qu’un objet n’est plus utile (fermer les sockets, les fichiers,…).&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;ATTENTION&lt;/strong&gt; &lt;/span&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Le mot clé &lt;code class=&quot;highlighter-rouge&quot;&gt;del&lt;/code&gt; en Python ne détruit pas un objet. &lt;strong&gt;Il détruit la référence&lt;/strong&gt;. C’est l’interpreteur Python qui compte les références des objets, et quand un objet n’a plus de référence pointant vers lui, il est marqué pour suppression.&lt;/p&gt;
+
+&lt;p&gt;Ensuite, le &lt;strong&gt;garbage collector&lt;/strong&gt; (GB) arrive. &lt;span style=&quot;color:red&quot;&gt; Ceci n’est pas prédictible &lt;/span&gt;. Il peut arriver tout de suite après, ou mille opérations plus tard. Et une fois qu’il est là, il supprime tous les objets marqués pour suppression.&lt;/p&gt;
+
+&lt;p&gt;Alors seulement &lt;code class=&quot;highlighter-rouge&quot;&gt;__del__&lt;/code&gt; est appelée.&lt;/p&gt;
+
+&lt;p&gt;En gros, &lt;code class=&quot;highlighter-rouge&quot;&gt;__del__&lt;/code&gt;peut être appelée &lt;strong&gt;beaucoup plus tard&lt;/strong&gt; que ce qu’on ne pense, voir même pas dutout (si le scripte s’arrête avant). D’où le `time.sleep(1) dans le code pour donner de grandes chances à la méthode d’être appelée.&lt;/p&gt;
 </description>
         <pubDate>Sat, 29 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-OOP56.html</link>
@@ -3318,7 +3351,7 @@ an 8% &lt;strong&gt;yield&lt;/strong&gt; on investments &lt;script type=&quot;ma
 
 &lt;ul&gt;
   &lt;li&gt;Toute valeur en Python est un objet&lt;/li&gt;
-  &lt;li&gt;En Python toutes les variables sont des références&lt;/li&gt;
+  &lt;li&gt;En Python toutes les variables sont des références vers des objets&lt;/li&gt;
   &lt;li&gt;Il n’y a pas de &lt;strong&gt;vrai&lt;/strong&gt; constantes en Python! &amp;lt;/span&amp;gt; On parle de constante quand une variable est écrite toute en majuscules (&lt;strong&gt;convention&lt;/strong&gt;) et qu’elle est sensé ne jamais changer.&lt;/li&gt;
 &lt;/ul&gt;
 

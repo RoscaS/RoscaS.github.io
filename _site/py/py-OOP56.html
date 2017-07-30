@@ -40,7 +40,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Py: OOP 5 Méthodes magiques</title>
+  <title>Py: OOP 6 Méthodes magiques</title>
   <meta name="description" content="sources  sam&amp;max">
 </head>
 
@@ -51,7 +51,7 @@
 <header class="post-header">
 
     <center>
-		<div class="post-title" itemprop="name headline">Py: OOP 5 Méthodes magiques</div>
+		<div class="post-title" itemprop="name headline">Py: OOP 6 Méthodes magiques</div>
 
 		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="29 Jul 2017" itemprop="datePublished">Jul 29 2017</time>
 
@@ -108,6 +108,39 @@
   <li><a href="http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/">sam&amp;max</a></li>
 </ul>
 
+<h1 id="méthodes-magiques">Méthodes magiques</h1>
+
+<p>Les méthodes automatiques (ou magiques) sont les méthodes nommées avec deux doubles underscore (<code class="highlighter-rouge">def __methode__(self)</code>).</p>
+
+<h2 id="del"><strong>del</strong></h2>
+
+<p>C’est la sémantique inverse d’<code class="highlighter-rouge">__init__</code>, c’est une méthode appelée quand l’objet est <strong>détruit</strong>.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">Action</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Destruction"</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Action</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">a</span>
+<span class="n">Destruction</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c"># laisse le temps au GC de faire son travail</span>
+</code></pre>
+</div>
+
+<p>On l’utilise pour nettoyer une fois qu’un objet n’est plus utile (fermer les sockets, les fichiers,…).</p>
+
+<p><span style="color:red"> <strong>ATTENTION</strong> </span> <br /></p>
+
+<p>Le mot clé <code class="highlighter-rouge">del</code> en Python ne détruit pas un objet. <strong>Il détruit la référence</strong>. C’est l’interpreteur Python qui compte les références des objets, et quand un objet n’a plus de référence pointant vers lui, il est marqué pour suppression.</p>
+
+<p>Ensuite, le <strong>garbage collector</strong> (GB) arrive. <span style="color:red"> Ceci n’est pas prédictible </span>. Il peut arriver tout de suite après, ou mille opérations plus tard. Et une fois qu’il est là, il supprime tous les objets marqués pour suppression.</p>
+
+<p>Alors seulement <code class="highlighter-rouge">__del__</code> est appelée.</p>
+
+<p>En gros, <code class="highlighter-rouge">__del__</code>peut être appelée <strong>beaucoup plus tard</strong> que ce qu’on ne pense, voir même pas dutout (si le scripte s’arrête avant). D’où le `time.sleep(1) dans le code pour donner de grandes chances à la méthode d’être appelée.</p>
+
 </div>
 
 <div>
@@ -118,7 +151,7 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Py: OOP 5 Méthodes magiques@&amp;url=http://localhost:4000/py/py-OOP56.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Py: OOP 6 Méthodes magiques@&amp;url=http://localhost:4000/py/py-OOP56.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
