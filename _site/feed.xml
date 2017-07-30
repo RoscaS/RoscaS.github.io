@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 30 Jul 2017 14:57:01 +0200</pubDate>
-    <lastBuildDate>Sun, 30 Jul 2017 14:57:01 +0200</lastBuildDate>
+    <pubDate>Sun, 30 Jul 2017 15:49:45 +0200</pubDate>
+    <lastBuildDate>Sun, 30 Jul 2017 15:49:45 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -70,7 +70,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Les deux classes parentes ont une méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; mais &lt;strong&gt;Python ne peut en “copier” qu’une seule&lt;/strong&gt; dans l’enfant. Il copie donc la première qu’il trouve. Il va prendre la liste des parents (ici: Arme, Protection) et la lire de gauche à droite. Il va regarder chaque parent, et si la méthode existe, il va la “copier” dans l’enfant. Si il retrouve une méthode de même nom dans un des parents suivant, il l’ignore.&lt;/p&gt;
+&lt;p&gt;Les deux classes parentes ont une méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; mais &lt;strong&gt;Python ne peut en “copier” qu’une seule&lt;/strong&gt; dans l’enfant. Il copie donc la première qu’il trouve. Il va prendre la liste des parents (class C&lt;strong&gt;(A, B)&lt;/strong&gt;:) et la lire de gauche à droite. Il va regarder chaque parent, et si la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; existe la &lt;strong&gt;“&lt;/strong&gt;copier&lt;strong&gt;“&lt;/strong&gt; dans l’enfant. Si il retrouve une méthode de même nom dans un des parents suivant, &lt;strong&gt;il l’ignore&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Dans notre exemple, si on fait:&lt;/p&gt;
 
@@ -79,11 +79,20 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ProtectionOffensive&lt;/code&gt; n’aura que la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;Arme&lt;/code&gt;. Or ce n’est pas ce qu’on veut. On va donc override la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt;, et dedans appeler la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;Arme&lt;/code&gt; &lt;strong&gt;et&lt;/strong&gt; celle de &lt;code class=&quot;highlighter-rouge&quot;&gt;Protection&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ProtectionOffensive&lt;/code&gt; n’aura que la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;Arme&lt;/code&gt; &lt;strong&gt;et ce n’est pas ce qu’on veut&lt;/strong&gt;. On va donc override la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;ProtectionOffensive&lt;/code&gt;, et dedans appeler la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;Arme&lt;/code&gt; &lt;strong&gt;et&lt;/strong&gt; de &lt;code class=&quot;highlighter-rouge&quot;&gt;Protection&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Cette syntaxe: &lt;code class=&quot;highlighter-rouge&quot;&gt;Classe.methode(self, args...)&lt;/code&gt; que l’on retrouve dans &lt;code class=&quot;highlighter-rouge&quot;&gt;Arme.__init__(self, nom, degat)&lt;/code&gt; est juste un moyen d’appeler spécifiquement la méthode du parent.&lt;/p&gt;
+&lt;p&gt;Cette syntaxe: &lt;code class=&quot;highlighter-rouge&quot;&gt;Classe.methode(self, args...)&lt;/code&gt; que l’on retrouve dans &lt;code class=&quot;highlighter-rouge&quot;&gt;Arme.__init__(self, nom, degat)&lt;/code&gt; est juste un moyen d’&lt;strong&gt;appeler spécifiquement la méthode du parent&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Dans la partie précédente nous avons vu qu’on pouvait faire cela avec &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt;. Mais &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt; nous retournera la première méthode du premier parent qu’elle trouve: c’est le but de &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt;, de faire ça automatiquement sans se soucier de savoir qui est le premier parent à avoir une méthode du bon nom.&lt;/p&gt;
+&lt;p&gt;Dans la partie précédente nous avons vu qu’on pouvait faire cela avec &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt;. Mais &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt; &lt;strong&gt;nous retournera la première méthode du premier parent qu’elle trouve&lt;/strong&gt;. C’est le but de &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt;, de faire ça automatiquement sans se soucier de savoir qui est le premier parent à avoir une méthode du bon nom.&lt;/p&gt;
+
+&lt;p&gt;rappel syntaxe &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Enfant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calcule_complique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;liste&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ristourne&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;prix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Enfant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;calcule_complique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;liste&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ristourne&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;C’est utile car parfois c’est le parent du parent du parent qui a la méthode qu’on veut appeler, on ne connaît pas forcément son nom, ou alors on ne veut pas l’hard coder. Dans notre cas, on veut spécifiquement une méthode d’un parent en particulier, il faut donc l’écrire à la main.&lt;/p&gt;
 
@@ -91,12 +100,18 @@
 
 &lt;ul&gt;
   &lt;li&gt;On utilise &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt; quand on fait de l’héritage simple où qu’on veut juste appeler la méthode du premier parent venu sans se soucier de son nom (car il peut être très haut dans la chaîne d’héritage).&lt;/li&gt;
-  &lt;li&gt;On utilise `Classe.methode(self, args…) quand on veut spécifiquement appeler la méthode d’un parent en particulier.&lt;/li&gt;
+  &lt;li&gt;On utilise &lt;code class=&quot;highlighter-rouge&quot;&gt;Classe.methode(self, args...)&lt;/code&gt; quand on veut spécifiquement appeler la méthode d’un parent en particulier.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;ATTENTION&lt;/strong&gt; &lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;Le &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; n’est pas au même endroit dans &lt;code class=&quot;highlighter-rouge&quot;&gt;super(ClasseCourante, self).methode(args...)&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;ClasseParente.methode(self, args...)&lt;/code&gt;. Dans le premier cas, on passe la classe courante (que &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt; va analyser pour trouver les parents automatiquement) et dans le second, on hard code le nom de la classe parente.&lt;/p&gt;
+&lt;p&gt;Le &lt;code class=&quot;highlighter-rouge&quot;&gt;self&lt;/code&gt; n’est pas au même endroit dans les cas suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;super(ClasseCourante, self).methode(args...)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; On passe la classe courante (que &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt; va analyser pour trouver les parents automatiquement)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ClasseParente.methode(self, args...)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; On hard code le nom de la classe parente.&lt;/li&gt;
+&lt;/ul&gt;
+
 </description>
         <pubDate>Sat, 29 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-OOP5.html</link>
