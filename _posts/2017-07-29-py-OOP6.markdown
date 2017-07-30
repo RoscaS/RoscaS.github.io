@@ -1,0 +1,216 @@
+---
+layout: post
+title: "Py: OOP 6 Méthodes magiques et surcharge Op"
+subtitle: "Programmation orienté objet"
+date: 2017-07-29
+author: Sol
+category: Py
+tags: divers, fr, en
+finished: false
+---
+
+#### sources
+* [sam&max](http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/)
+
+
+# Méthodes magiques
+
+Les méthodes automatiques (ou magiques) sont les méthodes nommées avec deux doubles underscore (`def __methode__(self)`).
+
+## __del__
+
+C'est la sémantique inverse d'`__init__`, c'est une méthode appelée quand l'objet est **détruit**.
+
+```python
+import time
+
+class Action(object):
+    def __del__(self):
+        print("Destruction")
+
+>>> a = Action()
+>>> del a
+Destruction
+>>> time.sleep(1) # laisse le temps au GC de faire son travail
+```
+
+On l'utilise pour nettoyer une fois qu'un objet n'est plus utile (fermer les sockets, les fichiers,...).
+
+<span style="color:red"> **ATTENTION** </span> <br>
+
+Le mot clé `del` en Python ne détruit pas un objet. **Il détruit la référence**. C'est l'interpreteur Python qui compte les références des objets, et quand un objet n'a plus de référence pointant vers lui, il est marqué pour suppression.
+
+Ensuite, le **garbage collector** (GB) arrive. <span style="color:red"> Ceci n'est pas prédictible </span>. Il peut arriver tout de suite après, ou mille opérations plus tard. Et une fois qu'il est là, il supprime tous les objets marqués pour suppression.
+
+Alors seulement `__del__` est appelée.
+
+En gros, `__del__`peut être appelée **beaucoup plus tard** que ce qu'on ne pense, voir même pas dutout (si le scripte s'arrête avant). D'où le `time.sleep(1) dans le code pour donner de grandes chances à la méthode d'être appelée.
+
+## __str__ et __repr__
+
+Représentation interne d'un objet pour la machine:
+
+```python
+class Chanson(object):
+    def __init__(self, titre, auteur):
+        self.titre = titre
+        self.auteur = auteur
+
+>>> morceau = Chanson("Taro", "Alt-j")
+>>> print(morceau)
+<__main__.Chanson object at 0x7feb534296a0>
+```
+
+La classe de laquelle l'objet est issu et son adresse en mémoire.
+
+**Quand nous faisons `print()`, la méthode `__str__` récupère la valeur à afficher**. C'est le même comportement que d'appeler `str()` sur un objet:
+
+```python
+>>> dico = {'a':1, 'b':2}
+>>> print(dico)
+{'b': 2, 'a': 1}
+>>> str(dico)
+"{'b': 2, 'a': 1}"
+```
+
+On peut donc coder la méthode `__str__` pour obtenir ce résultat:
+
+```python
+class Chanson(object):
+    def __init__(self, titre, auteur):
+        self.titre = titre
+        self.auteur = auteur
+
+    def __str__(self):
+        return "{} de {}".format(self.titre, self.auteur)
+
+>>> morceau = Chanson("Taro", "Alt-j")
+>>> print(morceau)
+Taro de Alt-j
+```
+
+`__repr__` est ce que Python va utiliser quand on entre un objet dans un terminal sans faire `print()`:
+
+```python
+class Chanson(object):
+    def __init__(self, titre, auteur):
+        self.titre = titre
+        self.auteur = auteur
+
+    def __repr__(self):
+        return ("Chanson({}, {})"
+            .format(repr(self.titre), repr(self.auteur)))
+
+
+>>> morceau = Chanson("Taro", "Alt-j")
+>>> print(repr(morceau))
+Chanson('Taro', 'Alt-j')
+>>> print(Chanson("Animus Vox", "Glitch Mob"))
+Chanson('Animus Vox', 'Glitch Mob')
+```
+
+## Surcharge des opérateurs
+
+**En Python on ne peut pas surcharger les opérateurs comme en C++**. Mais comme les opérateurs ne font qu'appeler des méthodes nagiques, on peut simplement overrider ces méthodes magiques.
+
+### Base
+
+```python
+class Test(object):
+    def __init__(self, nom):
+        self.nom = nom
+    
+    def __str__(self):
+        return self.nom
+```
+
+### Mathématique
+
+```python
+# Override opérateur +
+def __add__(self, other):        
+    return Test(str(self) + ' et ' + str(other))
+
+# Override opérateur -
+def __sub__(self, other):        
+    return Test(str(self) + ' sans ' + str(other))
+
+# Override opérateur *
+def __mul__(self, other):        
+    return Test(str(self) + ' fois ' + str(other))
+
+# Override opérateur /
+def __div__(self, other):        
+    return Test(str(self) + ' divise par ' + str(other))
+
+# Override opérateur %
+def __mod__(self, other):        
+    return Test(str(self) + ' % ' + str(other))
+
+# Override opérateur **
+def __pow__(self, other):        
+    return Test(str(self) + ' ** ' + str(other))
+```
+
+### Logique bit à bit
+
+
+```python
+# Override opérateur <<
+def __lshift__(self, other):        
+    return Test(str(self) + ' lshift ' + str(other))
+
+# Override opérateur >>
+def __rshift__(self, other):        
+    return Test(str(self) + ' lshift ' + str(other))
+
+# Override opérateur &
+def __and__(self, other):        
+    return Test(str(self) + ' & ' + str(other))
+
+# Override opérateur |
+def __or__(self, other):        
+    return Test(str(self) + ' | ' + str(other))
+```
+
+### Logique
+
+```python
+# Override opérateur <
+def __lt__(self, other):        
+    return Test(str(self) + ' <= ' + str(other))
+
+# Override opérateur <=
+def __le__(self, other):        
+    return Test(str(self) + ' <= ' + str(other))
+
+# Override opérateur ==
+def __eq__(self, other):        
+    return Test(str(self) + ' == ' + str(other))
+
+# Override opérateur !=
+def __ne__(self, other):        
+    return Test(str(self) + ' != ' + str(other))
+
+# Override opérateur >
+def __gt__(self, other):        
+    return Test(str(self) + ' > ' + str(other))
+
+# Override opérateur >=
+def __ge__(self, other):        
+    return Test(str(self) + ' >= ' + str(other))
+```
+
+### Autres
+
+```python
+class Array(object):
+    def __init__(self, lenght):
+        self._lst = [0] * (lenght)
+
+    def __setitem__(self, key, other):
+        self._lst[key] = other
+
+    def __getitem__(self, key):
+        return self._lst[key]
+```
