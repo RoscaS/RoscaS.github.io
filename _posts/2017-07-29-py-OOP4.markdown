@@ -320,3 +320,154 @@ Ce sont des classes différentes (et display() ne fait pas du tout la même chos
 
 Cette capacité à être utilisé de la même façon tout en produisant un résultat différent est ce qu'on appelle le **polymorphisme** (<span style="color:red"> **c'est la base du Duck typing** </span>). Concrètement ça veut dire qu'on peut utiliser les deux classes dans le même contexte, sans se soucier si c'est l'une ou l'autre.
 
+```python
+>>> a_afficher = [Enfant2(), Enfant2(), Enfant1(), Enfant2(), Enfant1()]
+>>> print(a_afficher)
+[<__main__.Enfant2 object at 0x7f634af90470>, <__main__.Enfant2 object at 0x7f634af904a8>, <__main__.Enfant1 object at 0x7f634af904e0>, <__main__.Enfant2 object at 0x7f634af90518>, <__main__.Enfant1 object at 0x7f634af90550>]
+>>>
+>>> for i in a_afficher:
+...     i.display()
+
+Title: Child2 class attribut
+Line 1: something else than lalala
+Line 2 that expand on the next one
+and also ends here.
+
+Title: Child2 class attribut
+Line 1: something else than lalala
+Line 2 that expand on the next one
+and also ends here.
+
+Titre: attribut classe Enfant1
+Ligne 1: lalala.
+Ligne 2 qui continue sur la prochaine
+ligne pour en finir ici.
+
+Title: Child2 class attribut
+Line 1: something else than lalala
+Line 2 that expand on the next one
+and also ends here.
+
+Titre: attribut classe Enfant1
+Ligne 1: lalala.
+Ligne 2 qui continue sur la prochaine
+ligne pour en finir ici.
+```
+
+Le polymorphisme c'est donc l'**utilisation de l'héritage pour faire des choses différentes, mais en proposant la même interface** (ensemble de méthodes et d'attributs) **pour le faire**. Le polymorhisme s'étend aussi à la réaction aux opérateurs (+, -, /, or, and, ...). En Python le nom de ces méthodes (opérateurs) sont flanquées de double underscore (`__oprateur__`).
+
+# Surcharge (overload)
+
+<span style="color:red"> En Python la **surcharge** n'existe pas. Même si les signatures sont différentes, la méthode la plus "récente" écrasera la précédente portant le même nom! </span> 
+
+# Types
+
+Avec l'héritage vient la notion de **type**. Quand on crée une classe, on crée un nouveau type. Quand on fait hériter une classe d'une autre, on crée un **sous-type**.
+
+**Une classe enfant est de son propre type** <span style="color:red"> **ET** </span> **du type de son parent** <span style="color:red"> **Mais l'inverse n'est pas vrai!** </span>
+
+On peut vérifier ça avec la fonction `isinstance()`:
+
+`isinstance(object, class-or-type) -> bool` 
+* Avec une classe comme second argument, retourne `True` si l'objet est de la même classe ou sous-classe.
+* Avec un type comme second argument, retourne `True` si c'est le type de l'objet
+
+Si on reprend notre code de plus haut:
+
+```python
+>>> objet_parent  = Parent()
+>>> objet_enfant1 = Enfant1()
+>>> objet_enfant2 = Enfant2()
+>>> 
+>>> print(isinstance(objet_parent, Parent))   # instance de sa propre classe      
+True
+>>> print(isinstance(objet_parent, str))      # pas l'instance d'une classe primitive
+False
+>>> print(isinstance(objet_parent, Enfant2))  # pas l'instance d'un enfant           
+False
+>>> print(isinstance(objet_enfant2, Enfant2)) # instance de sa propre classe          
+True
+>>> print(isinstance(objet_enfant2, Parent))  # instance de sa classe parente
+True
+```
+
+Certains comportements comme les exceptions sont basées sur le type. Un `try`/`except` arrêtera l'exception demandée, **ou du même type**.
+
+```python
+class A(Exception):
+    pass
+
+class B(A):
+    pass
+
+try:
+    raise A('Alerte! Alerte! (cas1)')
+except A:
+    print('Exception arretee (cas1)')
+
+try:
+    raise B('Alerte! Alerte! (cas2)')
+except B:
+    print('Exception arretee (cas2)')
+
+try:
+    raise B('Alerte! Alerte! (cas3)')
+except A:
+    print('Exception arretee (cas3)')
+
+try:
+    raise A('Alerte! Alerte! (cas4)')
+except B:
+    print('Exception arretee (cas4)')
+```
+
+**output**:
+
+```
+Exception arretee (cas1)
+Exception arretee (cas2)
+Exception arretee (cas3)
+Traceback (most recent call last):
+  File "/home/sol/Code/Python/Tuto/03TryExcept.py", line 23, in <module>
+    raise A('Alerte! Alerte! (cas4)')
+__main__.A: Alerte! Alerte! (cas4)
+```
+
+`A` est de type `A`, donc l'exception est arrêtée. `B` est de type `B`, donc l'exception est également arrêtée. `B`, qui hérite de `A`, et donc de type `A` est arrếtée. En revanche `A` n'est **pas** de type `B`. Donc elle n'est pas arrêtée.
+
+> Il est très courant de faire des enfants de `ValueError`, `IOError`, `IndexError`, `KeyError`, etc... Cela permet à l'utilisateur du code de pouvoir attraper soit toutes les erreurs de son code en faisant un `except` sur l'enfant, soit attraper toutes les erreurs de type `ValueError`, `IOError`, `IndexError`, `KeyError` en faisant `except` sur le parent. On laisse de cette façon une marge de manoeuvre dans la gestion des erreurs.
+
+# Appeler la méthode de la classe parent (`super()`)
+
+Pour éviter ça:
+
+```python
+class Parent(object):
+    TAXE = 21
+    def calcule_complique(self, liste):
+        prix = 0
+        for i in liste:
+            prix += i
+        return prix + (prix * TAXE / 100)
+
+
+class Enfant(Parent):
+
+    def calcule_complique(self, liste, ristourne):
+        prix = 0
+        for i in liste:
+            prix += i
+        prix += (prix * TAXE / 100)
+        return prix - (prix * ristourne / 100)
+```
+
+On peut appeler la méthode du parent dans l'enfant, en utilisant `super()`:
+
+```python
+class Enfant2(Parent):
+    def calcule_complique(self, liste, ristourne):
+        prix = super(Enfant2, self).calcule_complique(liste)
+        return prix - (prix * ristourne / 100)
+```
+
+C'est exactement la même chose mis à part qu'à la place de copier coller le code, on l'appelle directement.

@@ -420,6 +420,161 @@ Compliqué dans certains langages comme C++, en Python le polymorphisme est trè
 
 <p>Cette capacité à être utilisé de la même façon tout en produisant un résultat différent est ce qu’on appelle le <strong>polymorphisme</strong> (<span style="color:red"> <strong>c’est la base du Duck typing</strong> </span>). Concrètement ça veut dire qu’on peut utiliser les deux classes dans le même contexte, sans se soucier si c’est l’une ou l’autre.</p>
 
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a_afficher</span> <span class="o">=</span> <span class="p">[</span><span class="n">Enfant2</span><span class="p">(),</span> <span class="n">Enfant2</span><span class="p">(),</span> <span class="n">Enfant1</span><span class="p">(),</span> <span class="n">Enfant2</span><span class="p">(),</span> <span class="n">Enfant1</span><span class="p">()]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">a_afficher</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Enfant2</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f634af90470</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Enfant2</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f634af904a8</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Enfant1</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f634af904e0</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Enfant2</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f634af90518</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Enfant1</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f634af90550</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a_afficher</span><span class="p">:</span>
+<span class="o">...</span>     <span class="n">i</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+
+<span class="n">Title</span><span class="p">:</span> <span class="n">Child2</span> <span class="k">class</span> <span class="nc">attribut</span>
+<span class="n">Line</span> <span class="mi">1</span><span class="p">:</span> <span class="n">something</span> <span class="k">else</span> <span class="n">than</span> <span class="n">lalala</span>
+<span class="n">Line</span> <span class="mi">2</span> <span class="n">that</span> <span class="n">expand</span> <span class="n">on</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">one</span>
+<span class="ow">and</span> <span class="n">also</span> <span class="n">ends</span> <span class="n">here</span><span class="o">.</span>
+
+<span class="n">Title</span><span class="p">:</span> <span class="n">Child2</span> <span class="k">class</span> <span class="nc">attribut</span>
+<span class="n">Line</span> <span class="mi">1</span><span class="p">:</span> <span class="n">something</span> <span class="k">else</span> <span class="n">than</span> <span class="n">lalala</span>
+<span class="n">Line</span> <span class="mi">2</span> <span class="n">that</span> <span class="n">expand</span> <span class="n">on</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">one</span>
+<span class="ow">and</span> <span class="n">also</span> <span class="n">ends</span> <span class="n">here</span><span class="o">.</span>
+
+<span class="n">Titre</span><span class="p">:</span> <span class="n">attribut</span> <span class="n">classe</span> <span class="n">Enfant1</span>
+<span class="n">Ligne</span> <span class="mi">1</span><span class="p">:</span> <span class="n">lalala</span><span class="o">.</span>
+<span class="n">Ligne</span> <span class="mi">2</span> <span class="n">qui</span> <span class="k">continue</span> <span class="n">sur</span> <span class="n">la</span> <span class="n">prochaine</span>
+<span class="n">ligne</span> <span class="n">pour</span> <span class="n">en</span> <span class="n">finir</span> <span class="n">ici</span><span class="o">.</span>
+
+<span class="n">Title</span><span class="p">:</span> <span class="n">Child2</span> <span class="k">class</span> <span class="nc">attribut</span>
+<span class="n">Line</span> <span class="mi">1</span><span class="p">:</span> <span class="n">something</span> <span class="k">else</span> <span class="n">than</span> <span class="n">lalala</span>
+<span class="n">Line</span> <span class="mi">2</span> <span class="n">that</span> <span class="n">expand</span> <span class="n">on</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">one</span>
+<span class="ow">and</span> <span class="n">also</span> <span class="n">ends</span> <span class="n">here</span><span class="o">.</span>
+
+<span class="n">Titre</span><span class="p">:</span> <span class="n">attribut</span> <span class="n">classe</span> <span class="n">Enfant1</span>
+<span class="n">Ligne</span> <span class="mi">1</span><span class="p">:</span> <span class="n">lalala</span><span class="o">.</span>
+<span class="n">Ligne</span> <span class="mi">2</span> <span class="n">qui</span> <span class="k">continue</span> <span class="n">sur</span> <span class="n">la</span> <span class="n">prochaine</span>
+<span class="n">ligne</span> <span class="n">pour</span> <span class="n">en</span> <span class="n">finir</span> <span class="n">ici</span><span class="o">.</span>
+</code></pre>
+</div>
+
+<p>Le polymorphisme c’est donc l’<strong>utilisation de l’héritage pour faire des choses différentes, mais en proposant la même interface</strong> (ensemble de méthodes et d’attributs) <strong>pour le faire</strong>. Le polymorhisme s’étend aussi à la réaction aux opérateurs (+, -, /, or, and, …). En Python le nom de ces méthodes (opérateurs) sont flanquées de double underscore (<code class="highlighter-rouge">__oprateur__</code>).</p>
+
+<h1 id="surcharge-overload">Surcharge (overload)</h1>
+
+<p><span style="color:red"> En Python la <strong>surcharge</strong> n’existe pas. Même si les signatures sont différentes, la méthode la plus “récente” écrasera la précédente portant le même nom! </span></p>
+
+<h1 id="types">Types</h1>
+
+<p>Avec l’héritage vient la notion de <strong>type</strong>. Quand on crée une classe, on crée un nouveau type. Quand on fait hériter une classe d’une autre, on crée un <strong>sous-type</strong>.</p>
+
+<p><strong>Une classe enfant est de son propre type</strong> <span style="color:red"> <strong>ET</strong> </span> <strong>du type de son parent</strong> <span style="color:red"> <strong>Mais l’inverse n’est pas vrai!</strong> </span></p>
+
+<p>On peut vérifier ça avec la fonction <code class="highlighter-rouge">isinstance()</code>:</p>
+
+<p><code class="highlighter-rouge">isinstance(object, class-or-type) -&gt; bool</code></p>
+<ul>
+  <li>Avec une classe comme second argument, retourne <code class="highlighter-rouge">True</code> si l’objet est de la même classe ou sous-classe.</li>
+  <li>Avec un type comme second argument, retourne <code class="highlighter-rouge">True</code> si c’est le type de l’objet</li>
+</ul>
+
+<p>Si on reprend notre code de plus haut:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">objet_parent</span>  <span class="o">=</span> <span class="n">Parent</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">objet_enfant1</span> <span class="o">=</span> <span class="n">Enfant1</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">objet_enfant2</span> <span class="o">=</span> <span class="n">Enfant2</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">objet_parent</span><span class="p">,</span> <span class="n">Parent</span><span class="p">))</span>   <span class="c"># instance de sa propre classe      </span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">objet_parent</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>      <span class="c"># pas l'instance d'une classe primitive</span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">objet_parent</span><span class="p">,</span> <span class="n">Enfant2</span><span class="p">))</span>  <span class="c"># pas l'instance d'un enfant           </span>
+<span class="bp">False</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">objet_enfant2</span><span class="p">,</span> <span class="n">Enfant2</span><span class="p">))</span> <span class="c"># instance de sa propre classe          </span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">objet_enfant2</span><span class="p">,</span> <span class="n">Parent</span><span class="p">))</span>  <span class="c"># instance de sa classe parente</span>
+<span class="bp">True</span>
+</code></pre>
+</div>
+
+<p>Certains comportements comme les exceptions sont basées sur le type. Un <code class="highlighter-rouge">try</code>/<code class="highlighter-rouge">except</code> arrêtera l’exception demandée, <strong>ou du même type</strong>.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">A</span><span class="p">(</span><span class="s">'Alerte! Alerte! (cas1)'</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">A</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Exception arretee (cas1)'</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">B</span><span class="p">(</span><span class="s">'Alerte! Alerte! (cas2)'</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">B</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Exception arretee (cas2)'</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">B</span><span class="p">(</span><span class="s">'Alerte! Alerte! (cas3)'</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">A</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Exception arretee (cas3)'</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">A</span><span class="p">(</span><span class="s">'Alerte! Alerte! (cas4)'</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">B</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Exception arretee (cas4)'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Exception arretee (cas1)
+Exception arretee (cas2)
+Exception arretee (cas3)
+Traceback (most recent call last):
+  File "/home/sol/Code/Python/Tuto/03TryExcept.py", line 23, in &lt;module&gt;
+    raise A('Alerte! Alerte! (cas4)')
+__main__.A: Alerte! Alerte! (cas4)
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">A</code> est de type <code class="highlighter-rouge">A</code>, donc l’exception est arrêtée. <code class="highlighter-rouge">B</code> est de type <code class="highlighter-rouge">B</code>, donc l’exception est également arrêtée. <code class="highlighter-rouge">B</code>, qui hérite de <code class="highlighter-rouge">A</code>, et donc de type <code class="highlighter-rouge">A</code> est arrếtée. En revanche <code class="highlighter-rouge">A</code> n’est <strong>pas</strong> de type <code class="highlighter-rouge">B</code>. Donc elle n’est pas arrêtée.</p>
+
+<blockquote>
+  <p>Il est très courant de faire des enfants de <code class="highlighter-rouge">ValueError</code>, <code class="highlighter-rouge">IOError</code>, <code class="highlighter-rouge">IndexError</code>, <code class="highlighter-rouge">KeyError</code>, etc… Cela permet à l’utilisateur du code de pouvoir attraper soit toutes les erreurs de son code en faisant un <code class="highlighter-rouge">except</code> sur l’enfant, soit attraper toutes les erreurs de type <code class="highlighter-rouge">ValueError</code>, <code class="highlighter-rouge">IOError</code>, <code class="highlighter-rouge">IndexError</code>, <code class="highlighter-rouge">KeyError</code> en faisant <code class="highlighter-rouge">except</code> sur le parent. On laisse de cette façon une marge de manoeuvre dans la gestion des erreurs.</p>
+</blockquote>
+
+<h1 id="appeler-la-méthode-de-la-classe-parent-super">Appeler la méthode de la classe parent (<code class="highlighter-rouge">super()</code>)</h1>
+
+<p>Pour éviter ça:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">TAXE</span> <span class="o">=</span> <span class="mi">21</span>
+    <span class="k">def</span> <span class="nf">calcule_complique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">liste</span><span class="p">):</span>
+        <span class="n">prix</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">liste</span><span class="p">:</span>
+            <span class="n">prix</span> <span class="o">+=</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="n">prix</span> <span class="o">+</span> <span class="p">(</span><span class="n">prix</span> <span class="o">*</span> <span class="n">TAXE</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Enfant</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">calcule_complique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="n">ristourne</span><span class="p">):</span>
+        <span class="n">prix</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">liste</span><span class="p">:</span>
+            <span class="n">prix</span> <span class="o">+=</span> <span class="n">i</span>
+        <span class="n">prix</span> <span class="o">+=</span> <span class="p">(</span><span class="n">prix</span> <span class="o">*</span> <span class="n">TAXE</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prix</span> <span class="o">-</span> <span class="p">(</span><span class="n">prix</span> <span class="o">*</span> <span class="n">ristourne</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>On peut appeler la méthode du parent dans l’enfant, en utilisant <code class="highlighter-rouge">super()</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Enfant2</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">calcule_complique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="n">ristourne</span><span class="p">):</span>
+        <span class="n">prix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Enfant2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">calcule_complique</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prix</span> <span class="o">-</span> <span class="p">(</span><span class="n">prix</span> <span class="o">*</span> <span class="n">ristourne</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>C’est exactement la même chose mis à part qu’à la place de copier coller le code, on l’appelle directement.</p>
 
 </div>
 
