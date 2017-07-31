@@ -34,10 +34,6 @@ Python est entièrement construit autour de cette idée appelée _**duck-typing*
 
 > "Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j'appelle cet oiseau un cannard" (James Whitcomb Riley)
 
-## API
-
-<span style="color:red"> A étoffer! </span> <br>
-En bref, c'est une interface.
 
 ## Operateur ternaire 
 
@@ -47,6 +43,35 @@ En bref, c'est une interface.
 result = x if a > b else y
 
 ```
+
+
+## Shallow and deep copy
+
+Assignment statements in Python do not copy objects, they create bindings between a target and an object. For collections that are mutable or contain mutable items, a copy is sometimes needed so one can change one copy without changing the other. This module provides generic shallow and deep copy operations.
+
+```python
+import copy
+```
+
+Return a shallow copy of x:
+
+```python
+copy.copy(x)
+```
+
+Return a deep copy of x:
+
+```python
+copy.deepcopy(x)
+```
+
+* A shallow copy constructs a new compound object and then (to the extent possible) inserts references into it to the objects found in the original.
+
+* A deep copy constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original.
+
+In order for a class to define its own copy implementation, it can define special methods `__copy__()` and `__deepcopy__()`. The former is called to implement the shallow copy operation; no additional arguments are passed. The latter is called to implement the deep copy operation; it is passed one argument, the memo dictionary. If the `__deepcopy__()` implementation needs to make a deep copy of a component, it should call the deepcopy() function with the component as first argument and the memo dictionary as second argument.
+
+
 
 ## if \_\_name\_\_ == '_\_main\_\_'
 
@@ -114,3 +139,9 @@ fichier_poule
 
 #### Sources
 [samEtMax](http://sametmax.com/pourquoi-if-__name__-__main__-en-python/)
+
+
+## API
+
+<span style="color:red"> A étoffer! </span> <br>
+En bref, c'est une interface.
