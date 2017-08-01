@@ -33,6 +33,7 @@ $$fix \; things. $$
 * `sudo apt-get autoremove` $$ \Rightarrow $$ remove unused dependencies
 * `sudo apt-get purge --auto-remove gimp` $$ \Rightarrow $$ combine previous 2
 * `sudo apt-get clean` $$ \Rightarrow $$ remove downloaded archives files
+* `sudo apt-get purge --auto-remove` _softName_ $$ \Rightarrow $$ COMPLETE REMOVE
 
 > This command removes the aptitude cache in “/var/cache/apt/archives”. When you install a program, the package file is downloaded and stored in that directory. You don’t need to keep the files in that directory. However, the only drawback of deleting them, is that if you decide to install any of those programs again, the packages would have to be downloaded again.
 

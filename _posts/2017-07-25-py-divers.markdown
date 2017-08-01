@@ -42,15 +42,6 @@ Python est entièrement construit autour de cette idée appelée _**duck-typing*
 > "Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j'appelle cet oiseau un cannard" (James Whitcomb Riley)
 
 
-## Operateur ternaire 
-
-```python
-<expression> if <condition> else <expression2>
-
-result = x if a > b else y
-
-```
-
 
 ## Shallow and deep copy
 
@@ -152,3 +143,42 @@ fichier_poule
 
 <span style="color:red"> A étoffer! </span> <br>
 En bref, c'est une interface.
+
+
+# Tricks
+
+
+## Enumerate
+
+Bad way:
+
+```python
+ferme = ["vache", "poule", "cochon", "mouton"]
+
+c = 0
+for i in ferme:
+    print(c, i)
+    i += 1
+```
+
+`enumerate`'s way:
+
+```python
+ferme = ["vache", "poule", "cochon", "mouton"]
+
+for c, i in enumerate(ferme):
+    print(c, i)
+```
+
+## Inline if-else statement (Operateur ternaire)
+
+
+```python
+<expression> if <condition> else <expression2>
+
+result = x if a > b else y
+
+x = 2
+print("yep") if (x == 2) else print("nop")
+
+```

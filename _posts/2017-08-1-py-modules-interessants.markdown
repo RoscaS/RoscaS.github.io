@@ -9,7 +9,7 @@ tags: divers, fr, en
 finished: false
 ---
 
-## inspect
+## inspect et introspection
 
 ```
 import inspect
@@ -54,5 +54,38 @@ La première valeur entre `[]` définit le niveau d'introspection. 0 est la fonc
 * `[x][4]` $$ \Rightarrow $$ string contenant le text de la ligne
 
 ** Le module comporte plein d'autres fonctions interessantes !**
+
+Nous pouvons retourner le nom de la classe courante avec `self.__class__.__name__`.
+
+Dans le cadre d'un héritage, cela retourne le nom de la classe qui hérite:
+
+```python
+import inspect
+
+class Parent(object):
+    def __init__(self, a=0):
+        self.a = a
+    
+    def debug(self):
+        print(inspect.stack()[1][3])
+        print(self.__class__.__name__)
+
+
+class Enfant(Parent):
+    
+    def poule(self):
+        self.debug()
+
+
+e1 = Enfant()
+e1.poule()
+```
+
+**output**:
+
+```
+poule
+Enfant
+```
 
 
