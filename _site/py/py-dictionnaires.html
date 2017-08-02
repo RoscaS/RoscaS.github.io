@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Py: Dictionnaires</title>
-  <meta name="description" content="Introduction">
+  <meta name="description" content="Méthodes">
 </head>
 
 
@@ -103,14 +103,258 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="introduction">Introduction</h2>
-
-<p>Les Dictionnaires de Python sont une structure de donnée de type <strong>non-linéaire</strong> à acces <strong>direct</strong> qui est dite <em>associative</em>. Elle stock des paires clé-valeur. Ce type de structure de données porte plusieurs noms: Keyed list, associative array, hash table.</p>
+    <h2 id="méthodes">Méthodes</h2>
 
 <ul>
-  <li>La clé associée à une valeur est obligatoirement de type <strong>string</strong>.</li>
+  <li><code class="highlighter-rouge">len(d)</code> <script type="math/tex">\Rightarrow</script> retourne le nombre d’objets dans le dico <code class="highlighter-rouge">d</code></li>
+</ul>
+
+<h4 id="get-set-delete">Get, Set, Delete</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">d[k]</code> <script type="math/tex">\Rightarrow</script> retourne la valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, <em>else</em> <span style="color:red"> KeyError</span></li>
+  <li><code class="highlighter-rouge">d.get(k)</code> <script type="math/tex">\Rightarrow</script> <em>return</em> la valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, <em>else</em> return <code class="highlighter-rouge">None</code></li>
+  <li><code class="highlighter-rouge">d.get(k, v)</code> <script type="math/tex">\Rightarrow</script> <em>return</em> la valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, <em>else</em> return <script type="math/tex">v</script></li>
+  <li><code class="highlighter-rouge">d[k] = v</code> <script type="math/tex">\Rightarrow</script> <em>if</em> <script type="math/tex">k</script> existe, remplace la valeur à la <strong>clé</strong> <script type="math/tex">k</script> <em>else</em> crée nouvelle entré</li>
+  <li><code class="highlighter-rouge">del d[k]</code> <script type="math/tex">\Rightarrow</script> supprime la clé/valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, else <span style="color:red"> KeyError </span></li>
+</ul>
+
+<h4 id="check-existence">Check existence</h4>
+<ul>
+  <li><code class="highlighter-rouge">k in d</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">True</code> <em>if</em> <script type="math/tex">d</script> a une clé <script type="math/tex">k</script> <em>else</em> <code class="highlighter-rouge">False</code></li>
+  <li><code class="highlighter-rouge">k not in d</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">True</code> <em>if</em> <script type="math/tex">d</script> n’a pas une clé <script type="math/tex">k</script> <em>else</em> <code class="highlighter-rouge">False</code></li>
+</ul>
+
+<h4 id="get-all-keys-values-keysvalues">Get all keys, values, keys/values</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">d.keys()</code> <script type="math/tex">\Rightarrow</script> repr de toutes les clés</li>
+  <li><code class="highlighter-rouge">d.values()</code> <script type="math/tex">\Rightarrow</script> repr de toutes les valeurs</li>
+  <li><code class="highlighter-rouge">d.items()</code> <script type="math/tex">\Rightarrow</script> repr (tuples) de toutes les clé/valeurs</li>
+</ul>
+
+<h4 id="pop">Pop</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">d.pop(k)</code> <script type="math/tex">\Rightarrow</script> supprime et <em>return</em> la valeur <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> exist, <em>else</em> <span style="color:red">KeyError</span>.</li>
+  <li><code class="highlighter-rouge">d.pop(k,v)</code> <script type="math/tex">\Rightarrow</script> supprime et <em>return</em> la valeur <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> <em>else</em> <em>return</em> <script type="math/tex">v</script></li>
+  <li><code class="highlighter-rouge">d.popitem()</code> <script type="math/tex">\Rightarrow</script> supprime et <em>return</em> une random clé/valeur <em>if</em> <script type="math/tex">d</script> vide <span style="color:red"> KeyError </span></li>
+</ul>
+
+<h4 id="set-value">Set value</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">d.setdefault(k)</code> <script type="math/tex">\Rightarrow</script> <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> existe <em>return _ valuem _else</em> ajoute la clé <script type="math/tex">k</script> avec valeur <code class="highlighter-rouge">None</code></li>
+  <li><code class="highlighter-rouge">d.setdefault(k, v)</code> <script type="math/tex">\Rightarrow</script> <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> existe <em>return _ valuem _else</em> ajoute clé <script type="math/tex">k</script> avec valeur <script type="math/tex">v</script></li>
+</ul>
+
+<h4 id="clear-copy">Clear, copy</h4>
+
+<ul>
+  <li><code class="highlighter-rouge">d.clear()</code> <script type="math/tex">\Rightarrow</script> supprime tout</li>
+  <li><code class="highlighter-rouge">d.copy()</code> <script type="math/tex">\Rightarrow</script> <em>return</em> shallow copy de <script type="math/tex">d</script></li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Les structures de données comme les listes sont indexées à l’aide d’un nombre, dans certains cas il peut être interessant d’accéder à une valeur par un indexe qui est une string par exemple. Les routes portent souvent des noms comme “n23” ou “e17”. Une structure de données qui donne des informations sur ces dernières devrait pouvoir nous retourner ces informations si on recherche le nom (clé) de ces routes.</p>
+
+<p>Les Dictionnaires de Python sont une structure de donnée de type <strong>non-linéaire</strong> à acces <strong>direct</strong> qui est dite <em>associative</em>. Elle stock des paires clé-valeur. Ce type de structure de données porte plusieurs noms: Keyed list, associative array, hash table. En Python cette structure de données s’appelle <code class="highlighter-rouge">dict</code>. Cette structure de données est <strong>dynamique</strong>.</p>
+
+<ul>
+  <li>La clé associée à une valeur est obligatoirement être <strong>immutable</strong> (int, float, string, tuples).</li>
   <li>La valeur peut être de n’importe quel type.</li>
 </ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">dico</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">dico</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>        <span class="o">=</span> <span class="s">'cochon'</span>
+<span class="n">dico</span><span class="p">[</span><span class="s">"poule"</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">dico</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>    <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">30</span><span class="p">}</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">[</span><span class="s">"poule"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)])</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cochon
+[1, 2, 3]
+{1: 10, 2: 20, 3: 30}
+</code></pre>
+</div>
+
+<p>Exemple simple de fonctionnement d’un dictionnaire:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">capitales</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">capitales</span><span class="p">[</span><span class="s">'Belgique'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Bruxelles'</span>
+<span class="n">capitales</span><span class="p">[</span><span class="s">'France'</span><span class="p">]</span>   <span class="o">=</span> <span class="s">'Paris'</span>
+<span class="n">capitales</span><span class="p">[</span><span class="s">'Russie'</span><span class="p">]</span>   <span class="o">=</span> <span class="s">'Moscou'</span>
+<span class="n">capitales</span><span class="p">[</span><span class="s">'Roumanie'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Bucarest'</span>
+
+<span class="n">pays</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Russie'</span><span class="p">,</span> <span class="s">'Suisse'</span><span class="p">,</span> <span class="s">'Belgique'</span><span class="p">,</span> <span class="s">'Hollande'</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pays</span><span class="p">:</span>
+    <span class="c"># check si le pays est dans le dico</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">capitales</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"La capitale de la {} est {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">capitales</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"La capitale de la"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">"est inconnue"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">La</span> <span class="n">capitale</span> <span class="n">de</span> <span class="n">la</span> <span class="n">Russie</span> <span class="n">est</span> <span class="n">Moscou</span>
+<span class="n">La</span> <span class="n">capitale</span> <span class="n">de</span> <span class="n">la</span> <span class="n">Suisse</span> <span class="n">est</span> <span class="n">inconnue</span>
+<span class="n">La</span> <span class="n">capitale</span> <span class="n">de</span> <span class="n">la</span> <span class="n">Belgique</span> <span class="n">est</span> <span class="n">Bruxelles</span>
+<span class="n">La</span> <span class="n">capitale</span> <span class="n">de</span> <span class="n">la</span> <span class="n">Hollande</span> <span class="n">est</span> <span class="n">inconnue</span>
+</code></pre>
+</div>
+
+<p>Chaque élément du dictionnaire est composé de deux objets, une <strong>clé</strong> et une <strong>valeur</strong> (key/value). Dans cet exemple la clé est le pays et la valeur la capitale.
+<span style="color:red">Les clés identifient les éléments d’un dictionnaire.</span> On peut voir la clé comme l’indexe de la valeur associée à cette clé. Un même dictionnaire ne peut pas comporter deux clés identiques. De la même façon qu’un dictionnaire papier ou d’un annuaire téléphonique, qui identifie une valeur par un identifiant unique.</p>
+
+<h2 id="quand-utiliser-un-dictionnaire">Quand utiliser un dictionnaire</h2>
+
+<ul>
+  <li>Pour compter des choses. Dans ce cas, il nous faut un dictionnaire où les clés sont des objets et les valeurs des quantités.</li>
+  <li>Stocker une donnée <strong>associée</strong> à un objet. Les clés sont des objets et la valeur est la donnée associée à ces objets.</li>
+</ul>
+
+<p>Exemple d’utilisation d’une clé qui est un objet autre que les types primitifs:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Point</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"({},{})"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+
+
+<span class="n">pixels</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">pixels</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'rouge'</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">pixels</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'vert'</span><span class="p">,</span>  <span class="mi">1</span><span class="p">]</span>
+<span class="n">pixels</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'noir'</span><span class="p">,</span>  <span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pixels</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Position: {}</span><span class="se">\n</span><span class="s">Couleur: {}</span><span class="se">\n</span><span class="s">Status: {}</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">pos</span><span class="p">(),</span> <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pixels</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">))</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Position: (5,6)
+Couleur: noir
+Status: 0
+
+Position: (1,2)
+Couleur: rouge
+Status: 1
+
+Position: (3,4)
+Couleur: vert
+Status: 1
+</code></pre>
+</div>
+
+<h2 id="différente-façons-de-créer-un-dictionnaire">Différente façons de créer un dictionnaire</h2>
+
+<p>Utile uniquement dans le cas de petits dictionnaires:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Capitals</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Russia'</span><span class="p">:</span> <span class="s">'Moscow'</span><span class="p">,</span> <span class="s">'Ukraine'</span><span class="p">:</span> <span class="s">'Kiev'</span><span class="p">,</span> <span class="s">'USA'</span><span class="p">:</span> <span class="s">'Washington'</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Pareil mais dans ce cas nous passons les clés sont passées comme des paramètres nominatifs de <code class="highlighter-rouge">dict</code>. Dans ce cas, <strong>les clés ne peuvent être que des strings</strong>!</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Capitals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Russia</span> <span class="o">=</span> <span class="s">'Moscow'</span><span class="p">,</span> <span class="n">Ukraine</span> <span class="o">=</span> <span class="s">'Kiev'</span><span class="p">,</span> <span class="n">USA</span> <span class="o">=</span> <span class="s">'Washington'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Ici nous passons une liste de tuples de deux éléments <code class="highlighter-rouge">(clé, valeur)</code>:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Capitals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s">"Russia"</span><span class="p">,</span> <span class="s">"Moscow"</span><span class="p">),</span> <span class="p">(</span><span class="s">"Ukraine"</span><span class="p">,</span> <span class="s">"Kiev"</span><span class="p">),</span> <span class="p">(</span><span class="s">"USA"</span><span class="p">,</span> <span class="s">"Washington"</span><span class="p">)])</span>
+</code></pre>
+</div>
+
+<p>Finalement, via la fonctoin zip qui prend en paramètres deux listes de taille identique: Une liste de clés et une liste de valeurs.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Capitals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s">"Russia"</span><span class="p">,</span> <span class="s">"Ukraine"</span><span class="p">,</span> <span class="s">"USA"</span><span class="p">],</span> <span class="p">[</span><span class="s">"Moscow"</span><span class="p">,</span> <span class="s">"Kiev"</span><span class="p">,</span> <span class="s">"Washington"</span><span class="p">]))</span>
+</code></pre>
+</div>
+
+<h2 id="supression-dun-élément">Supression d’un élément</h2>
+
+<p>Pour supprimer un élément, nous pouvons utiliser <code class="highlighter-rouge">del dico[clé]</code>. <span style="color:red"> Cette façon de faire lève une exception <code class="highlighter-rouge">KeyError</code> si la clé n’existe pas.</span></p>
+
+<p>Une autre façon de faire est avec la méthode <code class="highlighter-rouge">pop</code>: <code class="highlighter-rouge">dico.pop(clé)</code>. Cela retourne la valeur de l’élément retiré et <span style="color:red">si l’élément n’existe pas, une exception est également levée </span>. Si nous fournissons un second paramètres, si l’élément à supprimer n’existe pas, à la place de lever une exception, la méthode retourne le second paramètre:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'z'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">1</span>
+</code></pre>
+</div>
+
+<h2 id="itérer-sur-tous-les-éléments">Itérer sur tous les éléments</h2>
+
+<p>On peut simplement itérer sur tous les éléments de cette façon:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="s">'abcdef'</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))))</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+<span class="n">a</span> <span class="mi">0</span>
+<span class="n">d</span> <span class="mi">3</span>
+<span class="n">e</span> <span class="mi">4</span>
+<span class="n">c</span> <span class="mi">2</span>
+<span class="n">b</span> <span class="mi">1</span>
+<span class="n">f</span> <span class="mi">5</span>
+</code></pre>
+</div>
+
+<h2 id="représentation-interne">Représentation interne:</h2>
+
+<p>Les méthodes <code class="highlighter-rouge">keys()</code>, <code class="highlighter-rouge">values()</code> et <code class="highlighter-rouge">items()</code> retourne la représentation (<strong>repr</strong>) du dictionnaire. Ce sont des objets similaires au sets mais mutables (si on change une valeur associée à une clé, la valeur change).</p>
+
+<ul>
+  <li><code class="highlighter-rouge">keys()</code> retourne la représentation de toutes les clés</li>
+  <li><code class="highlighter-rouge">value()</code> retourn la représentation de toutes les valeurs</li>
+  <li><code class="highlighter-rouge">items()</code> retourn la représentation de toutes les paires clé-valeur (des tuples).</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">dico</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="s">'abcdef'</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dict_keys(['e', 'b', 'd', 'c', 'f', 'a'])
+dict_values([4, 1, 3, 2, 5, 0])
+dict_items([('e', 4), ('b', 1), ('d', 3), ('c', 2), ('f', 5), ('a', 0)])
+</code></pre>
+</div>
+
+<h2 id="exemples-dutilisation">Exemples d’utilisation</h2>
 
 <h3 id="création">Création</h3>
 
@@ -124,7 +368,7 @@
 
 <h3 id="ajout">Ajout</h3>
 
-<p><code class="highlighter-rouge">dico['nouvelle_clé'] = nouvelle_valeur</code></p>
+<p><code class="highlighter-rouge">dico[nouvelle_clé] = nouvelle_valeur</code></p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span><span class="p">[</span><span class="s">'d'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span><span class="p">[</span><span class="s">'e'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
@@ -135,20 +379,47 @@
 
 <h3 id="valeur-dune-clé-spécifique">Valeur d’une clé spécifique</h3>
 
-<p><code class="highlighter-rouge">dico['clé']</code></p>
+<p><code class="highlighter-rouge">dico[clé]</code></p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">[</span><span class="s">'b'</span><span class="p">])</span>
 <span class="mi">2</span>
 </code></pre>
 </div>
 
+<p><code class="highlighter-rouge">dico.get(clé)</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'a'</span><span class="p">))</span>
+<span class="mi">1</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">dico.get(clé, value)</code>
+Retourne <code class="highlighter-rouge">value</code> si la clé n’existe pas. Utile pour retourner un code erreur par exemple.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'z'</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">1</span>
+</code></pre>
+</div>
+
 <h3 id="supprimer-une-entrée">Supprimer une entrée</h3>
 
-<p><code class="highlighter-rouge">del dico['clé']</code></p>
+<p><code class="highlighter-rouge">del dico[clé]</code></p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">dico</span><span class="p">[</span><span class="s">'b'</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">)</span>
 <span class="p">{</span><span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="supprimer-safe">Supprimer (safe)</h3>
+
+<p><code class="highlighter-rouge">dico.pop(clé)</code>. Retourne la valeur de l’élément retiré ou lève une exception si l’élément n’existe pas.</p>
+
+<p>Si nous fournissons un second paramètres, si l’élément à supprimer n’existe pas, à la place de lever une exception, la méthode retourne le second paramètre:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'z'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">-</span><span class="mi">1</span>
 </code></pre>
 </div>
 
@@ -182,12 +453,8 @@
 <span class="bp">True</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'z'</span> <span class="ow">in</span> <span class="n">dico</span><span class="p">)</span>
 <span class="bp">False</span>
-</code></pre>
-</div>
-
-<p>###</p>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'a'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dico</span><span class="p">)</span>
+<span class="bp">False</span>
 </code></pre>
 </div>
 

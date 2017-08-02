@@ -191,7 +191,7 @@
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Enfant</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">calcule_complique</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">liste</span><span class="p">,</span> <span class="n">ristourne</span><span class="p">):</span>
-        <span class="n">prix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Enfant</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">calcule_complique</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span>
+        <span class="n">prix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">calcule_complique</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">prix</span> <span class="o">-</span> <span class="p">(</span><span class="n">prix</span> <span class="o">*</span> <span class="n">ristourne</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </code></pre>
 </div>
@@ -210,7 +210,7 @@
 <p>Le <code class="highlighter-rouge">self</code> n’est pas au même endroit dans les cas suivants:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">super(ClasseCourante, self).methode(args...)</code> <script type="math/tex">\Rightarrow</script> On passe la classe courante (que <code class="highlighter-rouge">super()</code> va analyser pour trouver les parents automatiquement)</li>
+  <li><code class="highlighter-rouge">super().methode(args...)</code> <script type="math/tex">\Rightarrow</script> On passe la classe courante (que <code class="highlighter-rouge">super()</code> va analyser pour trouver les parents automatiquement)</li>
   <li><code class="highlighter-rouge">ClasseParente.methode(self, args...)</code> <script type="math/tex">\Rightarrow</script> On hard code le nom de la classe parente.</li>
 </ul>
 
@@ -256,7 +256,7 @@
 <span class="k">class</span> <span class="nc">E</span><span class="p">(</span><span class="n">D</span><span class="p">):</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">methodForE</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">first</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">methodForE</span><span class="p">()</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">methodForE</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">(</span><span class="s">"{}</span><span class="se">\n</span><span class="s">...but still can override a method from it."</span>
             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first</span><span class="p">))</span>
 </code></pre>
@@ -562,12 +562,12 @@ Kaco est mort comme un noob.
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ArmeEmpoisonee</span><span class="p">(</span><span class="n">Arme</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="n">degat</span><span class="p">,</span> <span class="n">poison</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ArmeEmpoisonee</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">nom</span><span class="p">,</span> <span class="n">degat</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">nom</span><span class="p">,</span> <span class="n">degat</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">poison</span> <span class="o">=</span> <span class="n">poison</span>
     
     <span class="k">def</span> <span class="nf">attaque</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cible</span><span class="p">):</span>
         <span class="c"># degats de l'arme normale</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ArmeEmpoisonee</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="n">cible</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">attaque</span><span class="p">(</span><span class="n">cible</span><span class="p">)</span>
         <span class="c"># defats ajoutés du poison</span>
         <span class="n">cible</span><span class="o">.</span><span class="n">vie</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">poison</span>
 </code></pre>
