@@ -96,7 +96,7 @@ rappel syntaxe `super()`:
 ```python
 class Enfant(Parent):
     def calcule_complique(self, liste, ristourne):
-        prix = super(Enfant, self).calcule_complique(liste)
+        prix = super().calcule_complique(liste)
         return prix - (prix * ristourne / 100)
 ```
 
@@ -111,7 +111,7 @@ De façon générale:
 
 Le `self` n'est pas au même endroit dans les cas suivants:
 
-* `super(ClasseCourante, self).methode(args...)` $$ \Rightarrow $$ On passe la classe courante (que `super()` va analyser pour trouver les parents automatiquement)
+* `super().methode(args...)` $$ \Rightarrow $$ On passe la classe courante (que `super()` va analyser pour trouver les parents automatiquement)
 * `ClasseParente.methode(self, args...)` $$ \Rightarrow $$ On hard code le nom de la classe parente.
 
 ## Exemple récapitulatif
@@ -157,7 +157,7 @@ class D(C):
 class E(D):
     @property
     def methodForE(self):
-        first = super(E, self).methodForE()
+        first = super().methodForE()
         return ("{}\n...but still can override a method from it."
             .format(first))
 ```
@@ -454,12 +454,12 @@ C'est un concepte purement informatique: **La logique des dégâts est codée da
 ```python
 class ArmeEmpoisonee(Arme):
     def __init__(self, nom, degat, poison=10000):
-        super(ArmeEmpoisonee, self).__init__(nom, degat)
+        super().__init__(nom, degat)
         self.poison = poison
     
     def attaque(self, cible):
         # degats de l'arme normale
-        super(ArmeEmpoisonee, self).attaque(cible)
+        super().attaque(cible)
         # defats ajoutés du poison
         cible.vie -= self.poison
 ```
