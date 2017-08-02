@@ -350,23 +350,3 @@ False
 >>> print('a' not in dico)
 False
 ```
-
-
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
-
-### 
-
-```python
-
-```
