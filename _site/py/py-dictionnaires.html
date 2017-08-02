@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Py: Dictionnaires</title>
-  <meta name="description" content="">
+  <meta name="description" content="Introduction">
 </head>
 
 
@@ -103,7 +103,111 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    
+    <h2 id="introduction">Introduction</h2>
+
+<p>Les Dictionnaires de Python sont une structure de donnée de type <strong>non-linéaire</strong> à acces <strong>direct</strong> qui est dite <em>associative</em>. Elle stock des paires clé-valeur. Ce type de structure de données porte plusieurs noms: Keyed list, associative array, hash table.</p>
+
+<ul>
+  <li>La clé associée à une valeur est obligatoirement de type <strong>string</strong>.</li>
+  <li>La valeur peut être de n’importe quel type.</li>
+</ul>
+
+<h3 id="création">Création</h3>
+
+<p><code class="highlighter-rouge">dico = {'clé1': val1, 'clé2': val2, 'clé3': val3}</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="ajout">Ajout</h3>
+
+<p><code class="highlighter-rouge">dico['nouvelle_clé'] = nouvelle_valeur</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span><span class="p">[</span><span class="s">'d'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">dico</span><span class="p">[</span><span class="s">'e'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'d'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="valeur-dune-clé-spécifique">Valeur d’une clé spécifique</h3>
+
+<p><code class="highlighter-rouge">dico['clé']</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">[</span><span class="s">'b'</span><span class="p">])</span>
+<span class="mi">2</span>
+</code></pre>
+</div>
+
+<h3 id="supprimer-une-entrée">Supprimer une entrée</h3>
+
+<p><code class="highlighter-rouge">del dico['clé']</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">dico</span><span class="p">[</span><span class="s">'b'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="p">)</span>
+<span class="p">{</span><span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="retourner-toutes-les-clés">Retourner toutes les clés</h3>
+
+<p><code class="highlighter-rouge">dico.keys()</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">dict_keys</span><span class="p">([</span><span class="s">'d'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'e'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">dict_keys</span><span class="s">'&gt;</span><span class="err">
+</span></code></pre>
+</div>
+
+<h3 id="retourner-toutes-les-valeurs">Retourner toutes les valeurs</h3>
+
+<p><code class="highlighter-rouge">dico.values()</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">dict_values</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dico</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">dict_values</span><span class="s">'&gt;</span><span class="err">
+</span></code></pre>
+</div>
+
+<h3 id="vérifier-si-une-clé-existe">Vérifier si une clé existe:</h3>
+
+<p><code class="highlighter-rouge">clé in dico</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'a'</span> <span class="ow">in</span> <span class="n">dico</span><span class="p">)</span>
+<span class="bp">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">'z'</span> <span class="ow">in</span> <span class="n">dico</span><span class="p">)</span>
+<span class="bp">False</span>
+</code></pre>
+</div>
+
+<p>###</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<p>###</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<p>###</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+<p>###</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
 
 </div>
 
