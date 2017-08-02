@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-modules-interessants.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Modules interessants</title>
+  <meta name="description" content="inspect et introspection">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Modules interessants</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="01 Aug 2017" itemprop="datePublished">Aug 1 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p></p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="inspect-et-introspection">inspect et introspection</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import inspect
+</code></pre>
+</div>
+
+<p>Permet de retourner sous forme de string des infos d’introspection. Par exemple pour tracer les appels d’une fonction:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="k">def</span> <span class="nf">cochon</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="c"># cochon</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="c"># poule</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="c"># vache</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span> <span class="c"># &lt;module&gt;</span>
+
+<span class="k">def</span> <span class="nf">poule</span><span class="p">():</span>
+    <span class="n">cochon</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">vache</span><span class="p">():</span>
+    <span class="n">poule</span><span class="p">()</span>
+
+
+<span class="n">vache</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cochon
+poule
+vache
+&lt;module&gt;
+</code></pre>
+</div>
+
+<p>La première valeur entre <code class="highlighter-rouge">[]</code> définit le niveau d’introspection. 0 est la fonction actuelle, 1, celle qui apelle,… La seconde valeur entre <code class="highlighter-rouge">[]</code>, le type d’information.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">[0][0]</code> <script type="math/tex">\Rightarrow</script> path du fichier</li>
+  <li><code class="highlighter-rouge">[x][1]</code> <script type="math/tex">\Rightarrow</script> adresse en mémoire du l’objet</li>
+  <li><code class="highlighter-rouge">[x][2]</code> <script type="math/tex">\Rightarrow</script> numéro de la ligne du call</li>
+  <li><code class="highlighter-rouge">[x][3]</code> <script type="math/tex">\Rightarrow</script> nom de la fonction</li>
+  <li><code class="highlighter-rouge">[x][4]</code> <script type="math/tex">\Rightarrow</script> string contenant le text de la ligne</li>
+</ul>
+
+<p>** Le module comporte plein d’autres fonctions interessantes !**</p>
+
+<p>Nous pouvons retourner le nom de la classe courante avec <code class="highlighter-rouge">self.__class__.__name__</code>.</p>
+
+<p>Dans le cadre d’un héritage, cela retourne le nom de la classe qui hérite:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+    
+    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Enfant</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">poule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">()</span>
+
+
+<span class="n">e1</span> <span class="o">=</span> <span class="n">Enfant</span><span class="p">()</span>
+<span class="n">e1</span><span class="o">.</span><span class="n">poule</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>poule
+Enfant
+</code></pre>
+</div>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Modules interessants@&amp;url=http://localhost:4000/py/py-modules-interessants.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-modules-interessants.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-modules-interessants.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

@@ -6,13 +6,142 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 31 Jul 2017 01:34:48 +0200</pubDate>
-    <lastBuildDate>Mon, 31 Jul 2017 01:34:48 +0200</lastBuildDate>
+    <pubDate>Wed, 02 Aug 2017 19:51:02 +0200</pubDate>
+    <lastBuildDate>Wed, 02 Aug 2017 19:51:02 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
+        <title>Py: Dictionnaires</title>
+        <description>
+</description>
+        <pubDate>Tue, 01 Aug 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/py/py-dictionnaires.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/py-dictionnaires.html</guid>
+        
+        <category>divers,</category>
+        
+        <category>fr,</category>
+        
+        <category>en</category>
+        
+        
+        <category>Py</category>
+        
+      </item>
+    
+      <item>
+        <title>Py: Modules interessants</title>
+        <description>&lt;h2 id=&quot;inspect-et-introspection&quot;&gt;inspect et introspection&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import inspect
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Permet de retourner sous forme de string des infos d’introspection. Par exemple pour tracer les appels d’une fonction:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;inspect&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cochon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# cochon&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# poule&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# vache&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# &amp;lt;module&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cochon&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;vache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;vache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cochon
+poule
+vache
+&amp;lt;module&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;La première valeur entre &lt;code class=&quot;highlighter-rouge&quot;&gt;[]&lt;/code&gt; définit le niveau d’introspection. 0 est la fonction actuelle, 1, celle qui apelle,… La seconde valeur entre &lt;code class=&quot;highlighter-rouge&quot;&gt;[]&lt;/code&gt;, le type d’information.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[0][0]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; path du fichier&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[x][1]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; adresse en mémoire du l’objet&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[x][2]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; numéro de la ligne du call&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[x][3]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; nom de la fonction&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;[x][4]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; string contenant le text de la ligne&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;** Le module comporte plein d’autres fonctions interessantes !**&lt;/p&gt;
+
+&lt;p&gt;Nous pouvons retourner le nom de la classe courante avec &lt;code class=&quot;highlighter-rouge&quot;&gt;self.__class__.__name__&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dans le cadre d’un héritage, cela retourne le nom de la classe qui hérite:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;inspect&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__class__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Enfant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;e1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Enfant&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;poule
+Enfant
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 01 Aug 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/py/py-modules-interessants.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/py-modules-interessants.html</guid>
+        
+        <category>divers,</category>
+        
+        <category>fr,</category>
+        
+        <category>en</category>
+        
+        
+        <category>Py</category>
+        
+      </item>
+    
+      <item>
         <title>Py: OOP 6 Méthodes magiques et surcharge Op</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;serie&quot;&gt;serie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP1.html&quot;&gt;partie 1: Introduction &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP2.html&quot;&gt;partie 2: En pratique&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP3.html&quot;&gt;partie 3: Attributs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP4.html&quot;&gt;partie 4: Héritage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 5: Héritage multiple et composition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP6.html&quot;&gt;partie 6: Méthodes magiques&lt;/a&gt; &lt;script type=&quot;math/tex&quot;&gt;\Leftarrow&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -360,7 +489,18 @@
     
       <item>
         <title>Py: OOP 5 Héritage multiple, composition, délégation</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;serie&quot;&gt;serie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP1.html&quot;&gt;partie 1: Introduction &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP2.html&quot;&gt;partie 2: En pratique&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP3.html&quot;&gt;partie 3: Attributs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP4.html&quot;&gt;partie 4: Héritage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 5: Héritage multiple et composition&lt;/a&gt;&lt;script type=&quot;math/tex&quot;&gt;\Leftarrow&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP6.html&quot;&gt;partie 6: Méthodes magiques&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -945,7 +1085,18 @@ Victoire de Kaco!
     
       <item>
         <title>Py: OOP 4 Héritage</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;serie&quot;&gt;serie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP1.html&quot;&gt;partie 1: Introduction &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP2.html&quot;&gt;partie 2: En pratique&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP3.html&quot;&gt;partie 3: Attributs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP4.html&quot;&gt;partie 4: Héritage&lt;/a&gt;&lt;script type=&quot;math/tex&quot;&gt;\Leftarrow&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 5: Héritage multiple et composition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP6.html&quot;&gt;partie 6: Méthodes magiques&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -1441,7 +1592,18 @@ __main__.A: Alerte! Alerte! (cas4)
     
       <item>
         <title>Py: OOP 3 Attributs</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;serie&quot;&gt;serie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP1.html&quot;&gt;partie 1: Introduction &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP2.html&quot;&gt;partie 2: En pratique&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP3.html&quot;&gt;partie 3: Attributs&lt;/a&gt;&lt;script type=&quot;math/tex&quot;&gt;\Leftarrow&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP4.html&quot;&gt;partie 4: Héritage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 5: Héritage multiple et composition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP6.html&quot;&gt;partie 6: Méthodes magiques&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -1472,7 +1634,7 @@ __main__.A: Alerte! Alerte! (cas4)
 
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;En attendant une meilleur explication:&lt;/strong&gt; &lt;/span&gt;&lt;/p&gt;
 
-&lt;p&gt;Il semble que Python aie un comportement différent pour les attributs de classe mutables et non-mutables.&lt;/p&gt;
+&lt;p&gt;Il semble que Python a un comportement différent pour les attributs de classe mutables et non-mutables.&lt;/p&gt;
 
 &lt;h2 id=&quot;mutables&quot;&gt;Mutables&lt;/h2&gt;
 
@@ -1798,7 +1960,19 @@ i3: poney @ 0x7fc52396a6f8
     
       <item>
         <title>Py: OOP 2 En pratique</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;serie&quot;&gt;serie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP1.html&quot;&gt;partie 1: Introduction &lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP2.html&quot;&gt;partie 2: En pratique&lt;/a&gt;&lt;script type=&quot;math/tex&quot;&gt;\Leftarrow&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP3.html&quot;&gt;partie 3: Attributs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP4.html&quot;&gt;partie 4: Héritage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 5: Héritage multiple et composition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP6.html&quot;&gt;partie 6: Méthodes magiques&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
+
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -2209,7 +2383,18 @@ i3: poney @ 0x7fc52396a6f8
     
       <item>
         <title>Py: OOP 1 intro</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;Sources&lt;/h4&gt;
+        <description>&lt;h4 id=&quot;serie&quot;&gt;serie&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP1.html&quot;&gt;partie 1: Introduction &lt;/a&gt; &lt;script type=&quot;math/tex&quot;&gt;\Leftarrow&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP2.html&quot;&gt;partie 2: En pratique&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP3.html&quot;&gt;partie 3: Attributs&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP4.html&quot;&gt;partie 4: Héritage&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP5.html&quot;&gt;partie 5: Héritage multiple et composition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/py/py-OOP6.html&quot;&gt;partie 6: Méthodes magiques&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;sources&quot;&gt;Sources&lt;/h4&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;http://sametmax.com/le-guide-ultime-et-definitif-sur-la-programmation-orientee-objet-en-python-a-lusage-des-debutants-qui-sont-rassures-par-les-textes-detailles-qui-prennent-le-temps-de-tout-expliquer-partie-1/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -3277,472 +3462,6 @@ Apres l'execution
         <pubDate>Tue, 25 Jul 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-decorateurs.html</link>
         <guid isPermaLink="true">http://localhost:4000/py/py-decorateurs.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Py</category>
-        
-      </item>
-    
-      <item>
-        <title>Py: yield &amp; générateurs</title>
-        <description>&lt;h4 id=&quot;sources&quot;&gt;sources&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.larousse.fr/dictionnaires/anglais-francais/yield/625276&quot;&gt;larousse.fr&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://sametmax.com/comment-utiliser-yield-et-les-generateurs-en-python/&quot;&gt;sam&amp;amp;max&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;traduction&quot;&gt;Traduction&lt;/h2&gt;
-
-&lt;h4 id=&quot;yield-rightarrow-transitive-verb-conjugaison&quot;&gt;yield &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; transitive verb (&lt;em&gt;conjugaison&lt;/em&gt;)&lt;/h4&gt;
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;produce, bring in&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;em&gt;conjugaison&lt;/em&gt; produire&lt;/li&gt;
-      &lt;li&gt;&lt;em&gt;conjugaison&lt;/em&gt; rapporter&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;- land, crops&lt;/code&gt; produire, rapporter, donner&lt;br /&gt;
-&lt;code class=&quot;highlighter-rouge&quot;&gt;- results&lt;/code&gt; donner&lt;/li&gt;
-      &lt;li&gt;the investment bond will &lt;strong&gt;yield&lt;/strong&gt; 11% &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  le bon d’épargne &lt;strong&gt;rapportera&lt;/strong&gt; 11 %&lt;/li&gt;
-      &lt;li&gt;their research has &lt;strong&gt;yielded&lt;/strong&gt; some interesting results &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  leur recherche a &lt;strong&gt;fourni&lt;/strong&gt; OR &lt;strong&gt;donné&lt;/strong&gt; quelques résultats intéressants&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;relinquish, give up&lt;/code&gt;
-    &lt;ul&gt;
-      &lt;li&gt;céder,&lt;/li&gt;
-      &lt;li&gt;abandonner&lt;br /&gt;
-to &lt;strong&gt;yield&lt;/strong&gt; ground military (figurative) &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  &lt;strong&gt;céder&lt;/strong&gt; du terrain&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;(US) cars&lt;br /&gt;
- to &lt;strong&gt;yield&lt;/strong&gt; right of way &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;strong&gt;céder&lt;/strong&gt; la priorité&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;yield-rightarrow-noun&quot;&gt;yield &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; noun&lt;/h4&gt;
-&lt;ol&gt;
-  &lt;li&gt;agriculture &amp;amp; industry
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;output&lt;/code&gt; rendement m,&lt;/li&gt;
-      &lt;li&gt;rapport m * &lt;code class=&quot;highlighter-rouge&quot;&gt;of crops&lt;/code&gt; récolte f&lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;ul&gt;
-      &lt;li&gt;high-&lt;strong&gt;yield&lt;/strong&gt; crops &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; récoltes à &lt;strong&gt;rendement&lt;/strong&gt; élevé&lt;/li&gt;
-      &lt;li&gt;yield per acre &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  &lt;strong&gt;rendement&lt;/strong&gt; à l’hectare&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;finance
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;from investments&lt;/code&gt; rapport m, rendement m&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;profit&lt;/code&gt;   bénéfice m, bénéfices mpl&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;from tax&lt;/code&gt;   recette f, rapport m&lt;br /&gt;
-an 8% &lt;strong&gt;yield&lt;/strong&gt; on investments &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  des investissements qui &lt;strong&gt;rapportent&lt;/strong&gt; 8 %&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&quot;autres&quot;&gt;Autres&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;yield&lt;/strong&gt; sign &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; panneau de priorité&lt;/li&gt;
-  &lt;li&gt;he &lt;strong&gt;yield&lt;/strong&gt; himself up to the police &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; il s’est &lt;strong&gt;livré&lt;/strong&gt; à la police&lt;/li&gt;
-  &lt;li&gt;to &lt;strong&gt;yield&lt;/strong&gt; a secret &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;strong&gt;révéler&lt;/strong&gt; un secret&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;itérables&quot;&gt;Itérables&lt;/h2&gt;
-
-&lt;p&gt;Lister un par un les éléments d’une liste &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;strong&gt;Itérer&lt;/strong&gt; sur les éléments d’une liste&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Avec une list comprehension, on crée une liste, donc un &lt;strong&gt;itérable&lt;/strong&gt;. Avec une boucle &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt;, on opère sur ses élèments un par un &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; on &lt;strong&gt;itère&lt;/strong&gt; dessus.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;À chaque fois qu’on peut utiliser &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt;…&lt;code class=&quot;highlighter-rouge&quot;&gt;in&lt;/code&gt; sur quelque chose, c’est un itérable: list, str, queue…&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;pratique &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; on peut les lire autant qu’on veut&lt;/li&gt;
-  &lt;li&gt;tous les élèments sont stockés en mémoire &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; peut être un problème&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;générateurs&quot;&gt;Générateurs&lt;/h2&gt;
-
-&lt;p&gt;La syntaxe d’une &lt;strong&gt;expression génératrice&lt;/strong&gt; ressemble à une list comprehension à la différence qu’on utilise &lt;code class=&quot;highlighter-rouge&quot;&gt;()&lt;/code&gt; à la place de &lt;code class=&quot;highlighter-rouge&quot;&gt;[]&lt;/code&gt;. La grosse différence est qu’&lt;strong&gt;on ne peut pas lire un générateur plus d’une fois&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; Le principe des générateurs c’est qu’ils génèrent tout à la volée et ne stock pas cette donnée en mémoire &lt;/span&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;start&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;end&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Premier appel de la fonction:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Second appel de la fonction:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Premier&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;appel&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fonction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;On constate dans cet exemple qu’une fois que le générateur est utilisé une première fois, il ne contient plus rien pour le second appel.&lt;/p&gt;
-
-&lt;h2 id=&quot;mot-clé-yield&quot;&gt;Mot clé yield&lt;/h2&gt;
-
-&lt;p&gt;Le mot clé &lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt; est utilisé en lieu et place de &lt;code class=&quot;highlighter-rouge&quot;&gt;return&lt;/code&gt; à la différence près qu’on va récupérer un générateur.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;creerGenerateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mylist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contient_generateur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;creerGenerateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# crée un générateur&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contient_generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# generateur est un objet&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generator&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;creerGenerateur&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x7f69a52b3308&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contient_generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;TRES IMPORTANT !&lt;/strong&gt; &lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Ce qu’&lt;strong&gt;il est important de comprendre&lt;/strong&gt; dans cet exemple c’est que comme nous utilisons &lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt; et non pas &lt;code class=&quot;highlighter-rouge&quot;&gt;return&lt;/code&gt;, &lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;lors de l’appel de la fonction, le code de la fonction n’est pas exécuté&lt;/strong&gt; &lt;/span&gt; et a la place, la fonction retourne un objet générateur.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;L’appel &lt;code class=&quot;highlighter-rouge&quot;&gt;creerGenerateur()&lt;/code&gt; n’exécute pas le code dans le corp de sa définition (&lt;code class=&quot;highlighter-rouge&quot;&gt;def creerGenerateur()&lt;/code&gt;)&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;creerGenerateur()&lt;/code&gt; retourne un objet de type &lt;strong&gt;generator object&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Une fois dans la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;contient_generateur&lt;/code&gt;, tant qu’on ne l’utilise pas, il ne se passe rien ce n’est qu’une fois qu’on commence à itérer sur l’objet de type &lt;strong&gt;generator object&lt;/strong&gt; que le code de la fonction s’exécute.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;La première fois que le code s’éxécute (cad une fois qu’on commence à itérer sur &lt;code class=&quot;highlighter-rouge&quot;&gt;contient_generateur&lt;/code&gt;), il va partir du début de la fonction, arriver jusqu’à &lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt; et retrouner la première valeur. Ensuite, à chaque nouveau tour de boucle, le code va reprendre la où il s’est arrêté (&lt;strong&gt;Python sauvegarde l’état du code du générateur entre chaque appel&lt;/strong&gt;), et exécute le code à nouveau jusqu’à ce qu’il rencontre &lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt;. Donc dans notre cas il va faire un tour de boucle.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Il continue de cette façon jusqu’à ce que le code ne recontre plus de &lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt;, et donc qu’il n’y a plus de valeur à retourner. Le générateur est alors considéré comme définitivement vide. Il ne peut pas être “rembobiné”, il faut en créer un autre.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;La raison pour laquelle le code ne rencontre plus de &lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt; est a déterminer nous même:
-    &lt;ul&gt;
-      &lt;li&gt;condition&lt;/li&gt;
-      &lt;li&gt;boucle&lt;/li&gt;
-      &lt;li&gt;recursion… voir yield à l’infini&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&quot;complément-dinfo-sur-l--rangex&quot;&gt;Complément d’info sur &lt;code class=&quot;highlighter-rouge&quot;&gt;l = range(x)&lt;/code&gt;:&lt;/h5&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;gt;&amp;gt;&amp;gt; for i in l:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;...    print(i)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;h2 id=&quot;en-pratique&quot;&gt;En pratique&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;yield&lt;/code&gt; permet &lt;strong&gt;d’économiser&lt;/strong&gt; de la mémoire mais aussi de &lt;strong&gt;masquer la complexité d’un algo&lt;/strong&gt; derrnière une API classique d’itération.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Une API est une interface de programmation qui permet de se « brancher » sur une application pour échanger des données.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Une fonction qui extrait les mots de plus de 3 caractères de tous les fichiers d’un dossier pourrait ressembler à ça:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;extraire_mots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dossier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dossier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dossier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fichier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ligne&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mot&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ligne&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-                        &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mot&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;La complexité de cet algorithme est complèment masquée du point de vue de l’utilisateur qui peut l’utiliser de la façon suivante:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mot&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extraire_mots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/home/sol/Code/Python/Tuto/yield&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;De plus, l’utilisateur peut utiliser tous les outils qu’on utlise sur les itérables. Toutes les fonctions qui acceptent les itérables acceptent donc le résultat de la fonction en pramètre grâce au &lt;strong&gt;Duck Typing&lt;/strong&gt;. On crée ainsi une sorte de boite à outils.&lt;/p&gt;
-
-&lt;h2 id=&quot;controller-yield&quot;&gt;Controller yield&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;DistributeurDeCapote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;stock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;allumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-            &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;capote&quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Tant qu’il y a du stock on peut récupérer autant de capotes que l’on veut.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distributeur_en_bas_de_la_rue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DistributeurDeCapote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distributeur_en_bas_de_la_rue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;allumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capote&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capote&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'capote'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'capote'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'capote'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'capote'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Dès qu’il n’y a plus de stock…&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distributeur_en_bas_de_la_rue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/home/sol/Code/Python/Tuto/Class/04SamEtMax/yield/capotes.py&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;StopIteration&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Et c’est vrai pour tout nouveau générateur:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distribuer2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distributeur_en_bas_de_la_rue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;allumer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/home/sol/Code/Python/Tuto/Class/04SamEtMax/yield/capotes.py&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;StopIteration&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Allumer une machine vide n’a jamais permis de remplir le stock. Mais il suffit de remplir le stock pour que ça refonctionne:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;distributeur_en_bas_de_la_rue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capote&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;distribuer2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capote&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;des-détails&quot;&gt;Des détails&lt;/h2&gt;
-
-&lt;p&gt;En interne, tous les itérables utilisent un &lt;strong&gt;générateur&lt;/strong&gt; appelé &lt;strong&gt;itérteur&lt;/strong&gt; qu’on peut récupérer en utilisant la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;iter()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_iterator&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x7fca097fcba8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tuple_iterator&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x7fca097fcbe0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generator&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;genexpr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x7fca097f3ca8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;La methode &lt;code class=&quot;highlighter-rouge&quot;&gt;next()&lt;/code&gt; avec l’iterable en argument retourne une valeur pour chaque appel de la méthode. Quand il n’y a plus de valeur, ils lèvent l’exception &lt;code class=&quot;highlighter-rouge&quot;&gt;StopIteration&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gen&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;StopIteration&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;C’est de cette façon que les boucles &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; fonctionnent. Elles utilisent &lt;code class=&quot;highlighter-rouge&quot;&gt;iter()&lt;/code&gt; pour créer un générateur, puis attrapent une exception pour s’arrêter.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;À chaque boucle &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt;, nous levons une exception sans le savoir !&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;L’implémentation actuelle est que &lt;code class=&quot;highlighter-rouge&quot;&gt;iter()&lt;/code&gt; appelle la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__iter__()&lt;/code&gt; sur l’objet passé en paramètre. Donc ça veut dire qu’on peut créér nos propres itérables:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MonIterable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__iter__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'une'&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'petite'&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'poule'&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; 
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MonIterable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;une&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;petite&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;poule&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Traceback&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;most&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recent&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;stdin&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;StopIteration&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generateur2&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MonIterable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generateur2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;une&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;petite&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;poule&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Tue, 25 Jul 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/py/py-yield.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/py-yield.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Py</category>
-        
-      </item>
-    
-      <item>
-        <title>Py: Divers</title>
-        <description>&lt;h2 id=&quot;divers&quot;&gt;Divers&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Toute valeur en Python est un objet&lt;/li&gt;
-  &lt;li&gt;En Python toutes les variables sont des références vers des objets&lt;/li&gt;
-  &lt;li&gt;Il n’y a pas de &lt;strong&gt;vrai&lt;/strong&gt; constantes en Python! &amp;lt;/span&amp;gt; On parle de constante quand une variable est écrite toute en majuscules (&lt;strong&gt;convention&lt;/strong&gt;) et qu’elle est sensé ne jamais changer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;duck-typing&quot;&gt;Duck typing&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Un objet en Python est défini par sa structure (les attributs qu’il contient et les méthodes qu’il lui sont applicables) plutôt que par son type.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Python est entièrement construit autour de cette idée appelée &lt;em&gt;&lt;strong&gt;duck-typing&lt;/strong&gt;&lt;/em&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j’appelle cet oiseau un cannard” (James Whitcomb Riley)&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;api&quot;&gt;API&lt;/h2&gt;
-
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; A étoffer! &lt;/span&gt; &lt;br /&gt;
-En bref, c’est une interface.&lt;/p&gt;
-
-&lt;h2 id=&quot;if-__name__--__main__&quot;&gt;if __name__ == ‘__main__’&lt;/h2&gt;
-
-&lt;p&gt;C’est une expression idiomatique qu’on utilise en Python pour éviter de lancer une partie de code si on importe ce script dans un autre.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# fichier poule.py&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cotCot&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Suite à:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;./poule.py&lt;/code&gt; dans un terminal la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;poule()&lt;/code&gt; sera lancée&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;import poule **dans un autre script** la fonction &lt;/code&gt;poule()` sera lancée aussi&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Ce n’est pas forcément ce qu’on veut et le code suivant permet d’éviter ça.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# fichier poule.py&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cotCot&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;poule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;De cette façon si on fait &lt;code class=&quot;highlighter-rouge&quot;&gt;./poule.py&lt;/code&gt; va lancer &lt;code class=&quot;highlighter-rouge&quot;&gt;poule()&lt;/code&gt; mais pas &lt;code class=&quot;highlighter-rouge&quot;&gt;import poule&lt;/code&gt; dans un autre scripte.&lt;/p&gt;
-
-&lt;h4 id=&quot;explication&quot;&gt;Explication&lt;/h4&gt;
-
-&lt;p&gt;La variable &lt;code class=&quot;highlighter-rouge&quot;&gt;__name__&lt;/code&gt; est une variable automatiquement créée par Python, toujours disponible, dans tous les scripts. Elle &lt;strong&gt;contient le nom du script courant&lt;/strong&gt; si on importe le script.&lt;/p&gt;
-
-&lt;p&gt;Si le script est le script principal, alors &lt;code class=&quot;highlighter-rouge&quot;&gt;__name__&lt;/code&gt; ne content pas le nom du script mais une string qui contient &lt;code class=&quot;highlighter-rouge&quot;&gt;__main__&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# fichier fichier_poule.py&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;output:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;__main__&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# fichier fichier_cochon.py&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;poule&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;output:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fichier_poule&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h4 id=&quot;sources&quot;&gt;Sources&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://sametmax.com/pourquoi-if-__name__-__main__-en-python/&quot;&gt;samEtMax&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 25 Jul 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/py/py-divers.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/py-divers.html</guid>
         
         <category>divers,</category>
         
