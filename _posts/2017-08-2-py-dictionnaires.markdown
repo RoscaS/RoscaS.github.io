@@ -40,8 +40,8 @@ finished: false
 
 #### Set value
 
-* `d.setdefault(k)` $$ \Rightarrow $$ _if_ **clé** $$k$$ existe _return _ valuem _else_ ajoute la clé $$k$$ avec valeur `None`
-* `d.setdefault(k, v)` $$ \Rightarrow $$ _if_ **clé** $$k$$ existe _return _ valuem _else_ ajoute clé $$k$$ avec valeur $$v$$
+* `d.setdefault(k)` $$ \Rightarrow $$ _if_ **clé** $$k$$ existe _return_ value _else_ ajoute la clé $$k$$ avec valeur `None`
+* `d.setdefault(k, v)` $$ \Rightarrow $$ _if_ **clé** $$k$$ existe _return_ value _else_ ajoute clé $$k$$ avec valeur $$v$$
 
 #### Clear, copy
 
