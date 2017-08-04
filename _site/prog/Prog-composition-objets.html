@@ -142,6 +142,8 @@
   </ul>
 </blockquote>
 
+<p><strong>Quand on parle d’une composition, on fait référence à une classe qui est une composition d’objets plus simples.</strong></p>
+
 <h1 id="composition">Composition</h1>
 
 <p><strong>Relation de type:</strong></p>
@@ -347,6 +349,26 @@ George est localisé en (12,5)
         [instance de Point2D détruite]
 </code></pre>
 </div>
+
+<h2 id="variantes-de-composition">Variantes de composition</h2>
+
+<p>La majorité des compositions crées elles-même leurs parties (attributs) quand la composition est créé et les détruisent quand la composition est détruite mais il existe certaines variations possible:</p>
+
+<p>Les compositions peuvent:</p>
+
+<ul>
+  <li>
+    <p>Temporiser la création de certaines parties jusqu’à ce qu’on en ai besoin (eg. une classe <code class="highlighter-rouge">string</code> en C++ ne cré pas un tableau dynamique de <code class="highlighter-rouge">chars</code> avant que l’utilisateur ne lui assigne une chaîne de caractères)</p>
+  </li>
+  <li>
+    <p>Préférer utiliser une partie qui leur est donné via <em>user input</em> que d’en créer une elle meme.</p>
+  </li>
+  <li>
+    <p>Déléguer la destruction de ses parties à un autre objet.</p>
+  </li>
+</ul>
+
+<p>Le point important à garder en tête est que la composition doit gérer ses parties sans que l’utilisateur (peut être un objet) n’ai à faire quoi que se soit.</p>
 
 </div>
 

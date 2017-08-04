@@ -38,6 +38,8 @@ Il existe deux sous types de composition:
 > * "composition d'objets" quand je fais référence à la composition en général
 > * "composition" quand je parle du sous type
 
+**Quand on parle d'une composition, on fait référence à une classe qui est une composition d'objets plus simples.**
+
 
 # Composition
 
@@ -235,3 +237,17 @@ George est localisé en (12,5)
         [instance de Creature détruite]
         [instance de Point2D détruite]
 ```
+
+## Variantes de composition
+
+La majorité des compositions crées elles-même leurs parties (attributs) quand la composition est créé et les détruisent quand la composition est détruite mais il existe certaines variations possible:
+
+Les compositions peuvent:
+
+* Temporiser la création de certaines parties jusqu'à ce qu'on en ai besoin (eg. une classe `string` en C++ ne cré pas un tableau dynamique de `chars` avant que l'utilisateur ne lui assigne une chaîne de caractères)
+
+* Préférer utiliser une partie qui leur est donné via _user input_ que d'en créer une elle meme.
+
+* Déléguer la destruction de ses parties à un autre objet.
+
+Le point important à garder en tête est que la composition doit gérer ses parties sans que l'utilisateur (peut être un objet) n'ai à faire quoi que se soit.
