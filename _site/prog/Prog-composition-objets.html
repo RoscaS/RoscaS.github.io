@@ -231,9 +231,10 @@
 
 <h3 id="c">C++</h3>
 
-<p><strong>Point2D</strong></p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Point2D</span> <span class="p">{</span>
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;string&gt;
+</span>
+<span class="k">class</span> <span class="nc">Point2D</span> <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">_x</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">_y</span><span class="p">;</span>
@@ -247,13 +248,8 @@
         <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">"("</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">_x</span> <span class="o">&lt;&lt;</span> <span class="s">","</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">_y</span> <span class="o">&lt;&lt;</span> <span class="s">")"</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
-</code></pre>
-</div>
 
-<p>La classe <code class="highlighter-rouge">Point2D</code> est elle-même une composition des parties qui la compose. 
-Les <strong>valeurs</strong> de <code class="highlighter-rouge">_x</code> et _y<code class="highlighter-rouge"> sont des **parties** (attributs) du **tout** (classe) </code>Point2D`. Leur cycle de vie (construction, destruction) est lié à l’existance d’une instance Point2D.</p>
-
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Creature</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">Creature</span> <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
     <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">_name</span><span class="p">;</span>
     <span class="n">Point2D</span> <span class="n">_location</span><span class="p">;</span>
@@ -269,19 +265,15 @@ Les <strong>valeurs</strong> de <code class="highlighter-rouge">_x</code> et _y<
         <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="p">.</span><span class="n">_name</span> <span class="o">&lt;&lt;</span> <span class="s">" est localisé en "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="p">.</span><span class="n">_location</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
-</code></pre>
-</div>
 
-<p>De la même façon, la clase <code class="highlighter-rouge">Creature</code> est aussi une composition des parties qui la compose.
-Une fois la classe <code class="highlighter-rouge">Creature instanciée, les **valeurs** de </code>_name<code class="highlighter-rouge"> et </code>_location<code class="highlighter-rouge"> appartiendront à un objet en particulier de type </code>Creature` et leur cycle de vie dépendra de cet objet.</p>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 
-<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">Creature</span> <span class="n">c1</span><span class="p">{</span><span class="s">"George"</span><span class="p">,</span> <span class="n">Point2D</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)};</span>
 
     <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
     <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[c1.move_to(5,6);]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">c1.move_to(5,6);</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
     <span class="n">c1</span><span class="p">.</span><span class="n">move_to</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
 
     <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
@@ -291,6 +283,12 @@ Une fois la classe <code class="highlighter-rouge">Creature instanciée, les **v
 <span class="p">}</span>
 </code></pre>
 </div>
+
+<p>La classe <code class="highlighter-rouge">Point2D</code> est elle-même une composition des parties qui la compose. 
+Les <strong>valeurs</strong> de <code class="highlighter-rouge">_x</code> et _y<code class="highlighter-rouge"> sont des **parties** (attributs) du **tout** (classe) </code>Point2D`. Leur cycle de vie (construction, destruction) est lié à l’existance d’une instance Point2D.</p>
+
+<p>De la même façon, la clase <code class="highlighter-rouge">Creature</code> est aussi une composition des parties qui la compose.
+Une fois la classe <code class="highlighter-rouge">Creature instanciée, les **valeurs** de </code>_name<code class="highlighter-rouge"> et </code>_location<code class="highlighter-rouge"> appartiendront à un objet en particulier de type </code>Creature` et leur cycle de vie dépendra de cet objet.</p>
 
 <p><strong>output</strong>:</p>
 

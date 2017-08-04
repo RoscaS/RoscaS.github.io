@@ -119,9 +119,10 @@ Nous allons créer une classe Creature qui utilise une classe Point2D qui stock 
 
 ### C++
 
-**Point2D**
-
 ```cpp
+#include<iostream>
+#include<string>
+
 class Point2D {
 private:
     int _x;
@@ -136,12 +137,7 @@ public:
         return out << "(" << p._x << "," << p._y << ")";
     }
 };
-```
 
-La classe `Point2D` est elle-même une composition des parties qui la compose. 
-Les **valeurs** de `_x` et _y` sont des **parties** (attributs) du **tout** (classe) `Point2D`. Leur cycle de vie (construction, destruction) est lié à l'existance d'une instance Point2D.
-
-```cpp
 class Creature {
 private:
     std::string _name;
@@ -158,19 +154,15 @@ public:
         return out << c._name << " est localisé en " << c._location;
     }
 };
-```
 
-De la même façon, la clase `Creature` est aussi une composition des parties qui la compose.
-Une fois la classe `Creature instanciée, les **valeurs** de `\_name` et `\_location` appartiendront à un objet en particulier de type `Creature` et leur cycle de vie dépendra de cet objet.
-
-```cpp
 int main() {
+
     Creature c1{"George", Point2D(4, 6)};
 
     std::cout << "\n";
     std::cout << c1 << std::endl;
 
-    std::cout << "\t[c1.move_to(5,6);]\n";
+    std::cout << "\tc1.move_to(5,6);\n";
     c1.move_to(5,6);
 
     std::cout << c1 << std::endl;
@@ -179,6 +171,12 @@ int main() {
     return 0;
 }
 ```
+
+La classe `Point2D` est elle-même une composition des parties qui la compose. 
+Les **valeurs** de `_x` et _y` sont des **parties** (attributs) du **tout** (classe) `Point2D`. Leur cycle de vie (construction, destruction) est lié à l'existance d'une instance Point2D.
+
+De la même façon, la clase `Creature` est aussi une composition des parties qui la compose.
+Une fois la classe `Creature instanciée, les **valeurs** de `\_name` et `\_location` appartiendront à un objet en particulier de type `Creature` et leur cycle de vie dépendra de cet objet.
 
 **output**:
 
