@@ -9,6 +9,27 @@ tags: divers, fr, en
 finished: false
 ---
 
+## Liens utiles
+
+*[interne: Composition d'objets](/prog/prog-composition.html)
+
+## Objets
+
+* Board
+
+* Part
+* Ship
+* Cruiser 
+
+
+### Relations entre les objets
+
+* Board
+
+
+* 
+
+
 ## En vrac
 
 

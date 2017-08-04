@@ -123,6 +123,12 @@
   <li><a href="http://snakify.org/">gross collection d’exercices</a></li>
 </ul>
 
+<h2 id="livres">Livres</h2>
+
+<ul>
+  <li><a href="http://python101.pythonlibrary.org/g">Python 101, livre complet en ligne</a></li>
+</ul>
+
 <h2 id="divers">Divers</h2>
 
 <ul>
@@ -283,6 +289,66 @@ En bref, c’est une interface.</p>
 <h2 id="lettre-de-lalphabet-dans-une-liste">Lettre de l’alphabet dans une liste</h2>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">letters</span> <span class="o">=</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">'a'</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'j'</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+</code></pre>
+</div>
+
+<h2 id="being-pythonic">Being pythonic</h2>
+
+<h4 id="regular-way-c-like">Regular way (C like):</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">alph</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">'A'</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'Z'</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">alph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">alph</span><span class="p">)</span>
+<span class="p">[</span><span class="s">'A'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">,</span> <span class="s">'C'</span><span class="p">,</span> <span class="s">'D'</span><span class="p">,</span> <span class="s">'E'</span><span class="p">,</span> <span class="s">'F'</span><span class="p">,</span> <span class="s">'G'</span><span class="p">,</span> <span class="s">'H'</span><span class="p">,</span> <span class="s">'I'</span><span class="p">,</span> <span class="s">'J'</span><span class="p">,</span> <span class="s">'K'</span><span class="p">,</span> <span class="s">'L'</span><span class="p">,</span> <span class="s">'M'</span><span class="p">,</span> <span class="s">'N'</span><span class="p">,</span> <span class="s">'O'</span><span class="p">,</span> <span class="s">'P'</span><span class="p">,</span> 
+<span class="s">'Q'</span><span class="p">,</span> <span class="s">'R'</span><span class="p">,</span> <span class="s">'S'</span><span class="p">,</span> <span class="s">'T'</span><span class="p">,</span> <span class="s">'U'</span><span class="p">,</span> <span class="s">'V'</span><span class="p">,</span> <span class="s">'W'</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">,</span> <span class="s">'Z'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">alph</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+<span class="o">...</span>         <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">print</span><span class="p">()</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">A0</span> <span class="n">B0</span> <span class="n">C0</span> <span class="n">D0</span> <span class="n">E0</span> <span class="n">F0</span> <span class="n">G0</span> <span class="n">H0</span> <span class="n">I0</span> <span class="n">J0</span>
+<span class="n">A1</span> <span class="n">B1</span> <span class="n">C1</span> <span class="n">D1</span> <span class="n">E1</span> <span class="n">F1</span> <span class="n">G1</span> <span class="n">H1</span> <span class="n">I1</span> <span class="n">J1</span>
+<span class="n">A2</span> <span class="n">B2</span> <span class="n">C2</span> <span class="n">D2</span> <span class="n">E2</span> <span class="n">F2</span> <span class="n">G2</span> <span class="n">H2</span> <span class="n">I2</span> <span class="n">J2</span>
+<span class="n">A3</span> <span class="n">B3</span> <span class="n">C3</span> <span class="n">D3</span> <span class="n">E3</span> <span class="n">F3</span> <span class="n">G3</span> <span class="n">H3</span> <span class="n">I3</span> <span class="n">J3</span>
+<span class="n">A4</span> <span class="n">B4</span> <span class="n">C4</span> <span class="n">D4</span> <span class="n">E4</span> <span class="n">F4</span> <span class="n">G4</span> <span class="n">H4</span> <span class="n">I4</span> <span class="n">J4</span>
+<span class="n">A5</span> <span class="n">B5</span> <span class="n">C5</span> <span class="n">D5</span> <span class="n">E5</span> <span class="n">F5</span> <span class="n">G5</span> <span class="n">H5</span> <span class="n">I5</span> <span class="n">J5</span>
+<span class="n">A6</span> <span class="n">B6</span> <span class="n">C6</span> <span class="n">D6</span> <span class="n">E6</span> <span class="n">F6</span> <span class="n">G6</span> <span class="n">H6</span> <span class="n">I6</span> <span class="n">J6</span>
+<span class="n">A7</span> <span class="n">B7</span> <span class="n">C7</span> <span class="n">D7</span> <span class="n">E7</span> <span class="n">F7</span> <span class="n">G7</span> <span class="n">H7</span> <span class="n">I7</span> <span class="n">J7</span>
+<span class="n">A8</span> <span class="n">B8</span> <span class="n">C8</span> <span class="n">D8</span> <span class="n">E8</span> <span class="n">F8</span> <span class="n">G8</span> <span class="n">H8</span> <span class="n">I8</span> <span class="n">J8</span>
+<span class="n">A9</span> <span class="n">B9</span> <span class="n">C9</span> <span class="n">D9</span> <span class="n">E9</span> <span class="n">F9</span> <span class="n">G9</span> <span class="n">H9</span> <span class="n">I9</span> <span class="n">J9</span>
+</code></pre>
+</div>
+
+<h4 id="pythonic-way">Pythonic way:</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">'A'</span><span class="p">),</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'J'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s">' '</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">10</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s">' '</span> 
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))))</span>
+
+<span class="n">A0</span> <span class="n">B0</span> <span class="n">C0</span> <span class="n">D0</span> <span class="n">E0</span> <span class="n">F0</span> <span class="n">G0</span> <span class="n">H0</span> <span class="n">I0</span> <span class="n">J0</span>
+<span class="n">A1</span> <span class="n">B1</span> <span class="n">C1</span> <span class="n">D1</span> <span class="n">E1</span> <span class="n">F1</span> <span class="n">G1</span> <span class="n">H1</span> <span class="n">I1</span> <span class="n">J1</span>
+<span class="n">A2</span> <span class="n">B2</span> <span class="n">C2</span> <span class="n">D2</span> <span class="n">E2</span> <span class="n">F2</span> <span class="n">G2</span> <span class="n">H2</span> <span class="n">I2</span> <span class="n">J2</span>
+<span class="n">A3</span> <span class="n">B3</span> <span class="n">C3</span> <span class="n">D3</span> <span class="n">E3</span> <span class="n">F3</span> <span class="n">G3</span> <span class="n">H3</span> <span class="n">I3</span> <span class="n">J3</span>
+<span class="n">A4</span> <span class="n">B4</span> <span class="n">C4</span> <span class="n">D4</span> <span class="n">E4</span> <span class="n">F4</span> <span class="n">G4</span> <span class="n">H4</span> <span class="n">I4</span> <span class="n">J4</span>
+<span class="n">A5</span> <span class="n">B5</span> <span class="n">C5</span> <span class="n">D5</span> <span class="n">E5</span> <span class="n">F5</span> <span class="n">G5</span> <span class="n">H5</span> <span class="n">I5</span> <span class="n">J5</span>
+<span class="n">A6</span> <span class="n">B6</span> <span class="n">C6</span> <span class="n">D6</span> <span class="n">E6</span> <span class="n">F6</span> <span class="n">G6</span> <span class="n">H6</span> <span class="n">I6</span> <span class="n">J6</span>
+<span class="n">A7</span> <span class="n">B7</span> <span class="n">C7</span> <span class="n">D7</span> <span class="n">E7</span> <span class="n">F7</span> <span class="n">G7</span> <span class="n">H7</span> <span class="n">I7</span> <span class="n">J7</span>
+<span class="n">A8</span> <span class="n">B8</span> <span class="n">C8</span> <span class="n">D8</span> <span class="n">E8</span> <span class="n">F8</span> <span class="n">G8</span> <span class="n">H8</span> <span class="n">I8</span> <span class="n">J8</span>
+<span class="n">A9</span> <span class="n">B9</span> <span class="n">C9</span> <span class="n">D9</span> <span class="n">E9</span> <span class="n">F9</span> <span class="n">G9</span> <span class="n">H9</span> <span class="n">I9</span> <span class="n">J9</span>
 </code></pre>
 </div>
 
