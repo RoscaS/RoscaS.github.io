@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Prog: Relations entre objets"
-subtitle: "Composition, aggregation et association"
+subtitle: "Composition, aggregation, association, dépendance"
 date: 2017-04-04
 author: Sol
 category: Prog
@@ -42,6 +42,14 @@ finished: false
 * Un objet `B` est membre d'un objet `A` mais <span style="color:red">n'est pas une **partie**</span> de `A`.
 * L'objet `B` n'a pas son existance gérée par la classe `A`.
 * L'objet `B` peut être au courant de l'existance de l'objet `A` mais pas obligatoirement,
+
+#### Dépendance
+**"pas reliés"**, ($$x \textstyle \color{red}{\;dépend\;de\;} y $$), **unidirectionnel**
+
+* Un objet `A` est dépendant **d'une classe** `B` quand l'objet `A` utilise une fonctionnalité de la classe `B` pour accomplir une certaine tache. 
+* Relation plus faible que les précédentes mais un changement dans la classe `B` peut entrainer un dysfonctionnement de l'objet `A`.
+
+
 
 #### (Héritage)
 **"lien de parenté**, ($$x \textstyle \color{red}{\;est\;un\;} y $$), 
@@ -662,3 +670,60 @@ Prerequis: aucun
 ```
 
 Ici nous avons donc créé une chaîne d'associations entre objets du même type. Un cours a un prérequis, qui a lui même un prérequis, qui a lui même un prérequis...
+
+# Dépendance
+
+Un objet `A` est dépendant **d'une classe** `B` quand l'objet `A` utilise une fonctionnalité de la classe `B` pour accomplir une certaine tache. Cette relation est plus faible que les précédentes mais malgré ça, un petit changement dans la classe `B` peut entrainer un dysfonctionnement du l'objet `A`. Une dépendance est **toujours** unidirectionelle.
+
+Un bon exemple de dépendance autre que l'import d'un module est le suivant:
+
+```python
+class Tools(object):
+    @property
+    def alp(self):
+        return ''.join(chr(i) for i in range(ord('A'), ord('Z') + 1))
+
+    def coords(self, size):
+        return [i + str(j) for j in range(size) for i in self.alp[:size]]
+
+
+class Board(object):
+    def __init__(self, size):
+        self.size = size
+        self._board = {}
+
+    def __str__(self, s='   '):
+        top = s + '  '.join(Tools().alp[:10]) + '\n' + s + '  '.join(
+            str(i) for i in range(10)) + '\n' + s + '-' * (10 * 3)
+
+        cells = ''.join('\n{:2}|{} '.format(
+            str(i // self.size), Tools().coords(self.size)[i])
+                        if i % 10 == 0 else Tools().coords(self.size)[i] + ' '
+                        for i in range(len(Tools().coords(self.size))))
+
+        return top + cells
+
+
+board = Board(10)
+print(board)
+```
+
+Dans cet exemple la classe `Board` utilise des fonctionnalités de la classe `Tools` et en est donc dépendante.
+
+**output:**
+
+```
+   A  B  C  D  E  F  G  H  I  J
+   0  1  2  3  4  5  6  7  8  9
+   ------------------------------
+0 |A0 B0 C0 D0 E0 F0 G0 H0 I0 J0
+1 |A1 B1 C1 D1 E1 F1 G1 H1 I1 J1
+2 |A2 B2 C2 D2 E2 F2 G2 H2 I2 J2
+3 |A3 B3 C3 D3 E3 F3 G3 H3 I3 J3
+4 |A4 B4 C4 D4 E4 F4 G4 H4 I4 J4
+5 |A5 B5 C5 D5 E5 F5 G5 H5 I5 J5
+6 |A6 B6 C6 D6 E6 F6 G6 H6 I6 J6
+7 |A7 B7 C7 D7 E7 F7 G7 H7 I7 J7
+8 |A8 B8 C8 D8 E8 F8 G8 H8 I8 J8
+9 |A9 B9 C9 D9 E9 F9 G9 H9 I9 J9
+```
