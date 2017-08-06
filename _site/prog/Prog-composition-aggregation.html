@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/prog/Prog-composition-aggregation.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Prog: Relations entre objets</title>
+  <meta name="description" content="Outils">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Prog: Relations entre objets</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="04 Apr 2017" itemprop="datePublished">Apr 4 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">prog</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Composition, aggregation et association</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h3 id="outils">Outils</h3>
+
+<ul>
+  <li><a href="https://marketplace.visualstudio.com/items?itemName=JaimeOlivares.yuml">uml in vscode</a></li>
+  <li><a href="https://umbrello.kde.org/">Umbrello for linux</a></li>
+  <li><a href="http://staruml.io/">starUML (high-dpi support)</a></li>
+</ul>
+
+<h2 id="résumé">Résumé</h2>
+
+<h4 id="composition">Composition</h4>
+<p><strong>“partie/tout”</strong>, (<script type="math/tex">\textstyle x \color{red}{\;a\;un\;} y</script>), <strong>unidirectionnel</strong> (<strong>partie</strong> ne sait pas qu’elle fait partie de <strong>tout</strong>)</p>
+
+<ul>
+  <li>Les <strong>parties</strong> du <strong>tout</strong> sont des variables membres (attributs).</li>
+  <li>Une <strong>partie</strong> ne peut pas appartenir à plusieurs classes.</li>
+  <li>Le <strong>tout</strong> est en charge de la construction et destruction des <strong>parties</strong>.</li>
+  <li>peut utiliser des pointeurs si le <strong>tout</strong> gere lui même l’allocation de la mémoire (construction et destruction).</li>
+</ul>
+
+<p><span style="color:red"> Si il est possible d’implémenter une classe comme une composition, il faut le faire ! </span></p>
+
+<h4 id="aggregation">Aggregation</h4>
+<p><strong>“partie/tout”</strong>, (<script type="math/tex">\textstyle x \color{red}{\;a\;un\;} y</script>), <strong>unidirectionnel</strong></p>
+
+<ul>
+  <li>Les <strong>parties</strong> du <strong>tout</strong> sont des variables membres (attributs) qui sont des pointeurs ou des références sur des objets qui vivent en dehors du contexte du <strong>tout</strong>.</li>
+  <li>Une <strong>partie</strong> peut appartenir à plusieurs classes.</li>
+  <li>Le <strong>tout</strong> n’est pas responsable de la construction et de la destruction des <strong>parties</strong>.</li>
+</ul>
+
+<h4 id="association">Association</h4>
+<p><strong>“pas reliés”</strong>, (<script type="math/tex">x \textstyle \color{red}{\;utilise\;un\;} y</script>), <strong>unidirectionnel</strong> &amp; <strong>bidirectionnel</strong></p>
+
+<ul>
+  <li>Un objet <code class="highlighter-rouge">B</code> est membre d’un objet <code class="highlighter-rouge">A</code> mais <span style="color:red">n’est pas une <strong>partie</strong></span> de <code class="highlighter-rouge">A</code>.</li>
+  <li>L’objet <code class="highlighter-rouge">B</code> n’a pas son existance gérée par la classe <code class="highlighter-rouge">A</code>.</li>
+  <li>L’objet <code class="highlighter-rouge">B</code> peut être au courant de l’existance de l’objet <code class="highlighter-rouge">A</code> mais pas obligatoirement,</li>
+</ul>
+
+<h4 id="héritage">(Héritage)</h4>
+<p><strong>“lien de parenté</strong>, (<script type="math/tex">x \textstyle \color{red}{\;est\;un\;} y</script>),</p>
+
+<ul>
+  <li>Un objet <code class="highlighter-rouge">B</code> qui hérite d’un objet <code class="highlighter-rouge">A</code> est un objet <code class="highlighter-rouge">A</code> plus spécialisé.</li>
+</ul>
+
+<h1 id="composition-et-association">Composition et association</h1>
+
+<p>La composition d’objets permet de créer des objets <strong>complexes</strong> en combinant des objets <strong>simples</strong>.</p>
+
+<p><strong>Relation de type:</strong></p>
+
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    \large x \color{red}{\;a\;un\;} y
+}</script>
+
+<p><strong>ou:</strong></p>
+
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    \large y \color{red}{\;fait\;partie\;\;de\;} x
+}</script>
+
+<ul>
+  <li>Un ordinateur a un processeur
+    <ul>
+      <li>objet (plus) <strong>complexe</strong> <script type="math/tex">\Rightarrow</script> ordinateur</li>
+      <li>objet (plus) <strong>simple</strong> <script type="math/tex">\Rightarrow</script> processeur</li>
+    </ul>
+  </li>
+  <li>Une voiture a une transmission
+    <ul>
+      <li>objet (plus) <strong>complexe</strong> <script type="math/tex">\Rightarrow</script> voiture</li>
+      <li>objet (plus) <strong>simple</strong> <script type="math/tex">\Rightarrow</script> transmission</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Il existe deux sous types de composition:</p>
+<ul>
+  <li><strong>Composition</strong></li>
+  <li><strong>Aggregation</strong></li>
+</ul>
+
+<blockquote>
+  <p>Le mot “Composition” est souvent utilisé pour faire référence aux deux. Dans cet article je vais faire référence à:</p>
+  <ul>
+    <li>“composition d’objets” quand je fais référence à la composition en général</li>
+    <li>“composition” quand je parle du sous type</li>
+  </ul>
+</blockquote>
+
+<p><strong>Quand on parle d’une composition, on fait référence à une classe qui est une composition d’objets plus simples.</strong></p>
+
+<h2 id="composition-1">Composition</h2>
+
+<p>Une composition est une relation <strong>unidirectionelle</strong> entre une <code class="highlighter-rouge">partie</code> et un <code class="highlighter-rouge">tout</code> où la partie est <strong>contenue</strong> dans le tout.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">tout</code>   = objet (plus) <strong>complexe</strong> (eg. classe que nous définissons)</li>
+  <li><code class="highlighter-rouge">partie</code> = objet (plus) <strong>simple</strong> (eg. objet membre (attribut) qui sert a construire (fait partie de) la classe)</li>
+</ul>
+
+<p>Pour être qualifiée de composition, un objet et une partie de cet objet doivent avoir les relation suivante:</p>
+
+<ol>
+  <li>La <strong>partie</strong> est une partie du <strong>tout</strong>.</li>
+  <li>La <strong>partie</strong> ne peut appartenir qu’à un <strong>tout</strong> à la fois.</li>
+  <li>L’existance de la <strong>partie</strong> est gérée par le <strong>tout</strong>.</li>
+  <li>la <strong>partie</strong> n’est pas “consciente” de l’existance du <strong>tout</strong>.</li>
+</ol>
+
+<p><strong>Exemple concret:</strong> La relation entre un <code class="highlighter-rouge">coeur</code> et un <code class="highlighter-rouge">corp</code>.</p>
+
+<ol>
+  <li>Un <strong>coeur</strong> est une partie du <strong>corp</strong> d’une personne.</li>
+  <li>Ce <strong>coeur</strong> ne peut pas faire partie d’un autre <strong>corp</strong> en même temps.</li>
+  <li>Quand un <strong>corp</strong> est créé le <strong>coeur</strong> est créé en même temps. Quand un <strong>corp</strong> est “détruit” le <strong>coeur</strong> qui en fait partie l’est aussi.</li>
+  <li>Le <strong>coeur</strong> fonctionne sans être conscient qu’il fait partie d’une structure plus large (<strong>corp</strong>).</li>
+</ol>
+
+<blockquote>
+  <p>La composition n’a rien à dire à propos de la transférabilité des parties. Un coeur peut être transplanté d’un corp à un autre. Après la transplantation, le nouveau corp et le coeur satisfont toujours les critères pour ếtre qualifiés de composition.</p>
+</blockquote>
+
+<p>Exemple d’implémentation (c++)</p>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Fraction</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">_num</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_den</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Fraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="n">_num</span><span class="p">(</span><span class="n">num</span><span class="p">),</span> <span class="n">_den</span><span class="p">(</span><span class="n">den</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>  
+</code></pre>
+</div>
+
+<p>Cette classe (<strong>tout</strong>) possède deux attributs (<strong>partie</strong>) membres:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">_num</code> <script type="math/tex">\Rightarrow</script>  un numérateur</li>
+  <li><code class="highlighter-rouge">_den</code> <script type="math/tex">\Rightarrow</script>  un dénominateur</li>
+</ul>
+
+<ol>
+  <li>Les deux sont des <strong>parties</strong> du <strong>tout</strong> (classe) <code class="highlighter-rouge">Fraction</code> (Elles sont contenues dans…).</li>
+  <li>Elle ne peuvent faire partie de plusieurs instances du <strong>tout</strong> (classe) <code class="highlighter-rouge">Fraction</code> à la fois.</li>
+  <li>Quand la classe <code class="highlighter-rouge">Fraction</code> est instanciée, <code class="highlighter-rouge">_num</code> et <code class="highlighter-rouge">_den</code> sont créées et quand l’instance est détruite, ce <code class="highlighter-rouge">_num</code> et ce <code class="highlighter-rouge">_den</code> le sont aussi.</li>
+  <li><code class="highlighter-rouge">_num</code> et <code class="highlighter-rouge">_den</code> ne savent pas qu’elles font partie d’un objet <code class="highlighter-rouge">Fraction</code>, elles stockent juste un entier.</li>
+</ol>
+
+<p><strong>Les parties d’une composition peuvent être unitaires ou multiples. Un coeur est une partie unique d’un corp mais un corp contient également 10 doigts (qu’on peut implémenter avec une liste par exemple).</strong></p>
+
+<h3 id="détails-dimplémentation">Détails d’implémentation</h3>
+
+<p>Les composition qui font usage d’allocation dynamique devraient être implémentées en utilisant des attributs qui sont des pointeurs sur les objets qui composent la classe.</p>
+
+<p>La composition devrait gérer elle-même la construction et la désallocation de la mémoire.</p>
+
+<p><span style="color:red"> Si ile design permet une relation de composition, il faut la faire.</span></p>
+
+<p>Les classes qui sont des compositions sont “simples” (évidentes à comprendre), flexibles et robustes (elles nettoient derrière elles après utilisation)</p>
+
+<h3 id="exemple-dimplémentation">Exemple d’implémentation</h3>
+
+<p>Nous allons créer une classe Creature qui utilise une classe Point2D qui stock sa position.</p>
+
+<h4 id="c">C++</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+#include&lt;string&gt;
+</span>
+<span class="k">class</span> <span class="nc">Point2D</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">_x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_y</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Point2D</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:</span> <span class="n">_x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">_y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[instance de Point2D créé]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Point2D</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[instance de Point2D détruite]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">set_point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="n">_x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="n">_y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point2D</span><span class="o">&amp;</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">"("</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">_x</span> <span class="o">&lt;&lt;</span> <span class="s">","</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">_y</span> <span class="o">&lt;&lt;</span> <span class="s">")"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Creature</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">_name</span><span class="p">;</span>
+    <span class="n">Point2D</span> <span class="n">_location</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Creature</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point2D</span><span class="o">&amp;</span> <span class="n">location</span><span class="p">)</span><span class="o">:</span> <span class="n">_name</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">_location</span><span class="p">(</span><span class="n">location</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[instance de Creature créé]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="o">~</span><span class="n">Creature</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[instance de Creature détruite]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">move_to</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="n">_location</span><span class="p">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span> <span class="p">}</span>
+    
+    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Creature</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="p">.</span><span class="n">_name</span> <span class="o">&lt;&lt;</span> <span class="s">" est localisé en "</span> <span class="o">&lt;&lt;</span> <span class="n">c</span><span class="p">.</span><span class="n">_location</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">Creature</span> <span class="n">c1</span><span class="p">{</span><span class="s">"George"</span><span class="p">,</span> <span class="n">Point2D</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)};</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">c1.move_to(5,6);</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">c1</span><span class="p">.</span><span class="n">move_to</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>La classe <code class="highlighter-rouge">Point2D</code> est elle-même une composition des parties qui la compose. 
+Les <strong>valeurs</strong> de <code class="highlighter-rouge">_x</code> et _y<code class="highlighter-rouge"> sont des **parties** (attributs) du **tout** (classe) </code>Point2D`. Leur cycle de vie (construction, destruction) est lié à l’existance d’une instance Point2D.</p>
+
+<p>De la même façon, la clase <code class="highlighter-rouge">Creature</code> est aussi une composition des parties qui la compose.
+Une fois la classe <code class="highlighter-rouge">Creature instanciée, les **valeurs** de </code>_name<code class="highlighter-rouge"> et </code>_location<code class="highlighter-rouge"> appartiendront à un objet en particulier de type </code>Creature` et leur cycle de vie dépendra de cet objet.</p>
+
+<p><strong>output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>        [instance de Point2D créé]
+        [instance de Creature créé]
+        [instance de Point2D détruite]
+
+George est localisé en (4,6)
+        [c1.move_to(5,6);]
+George est localisé en (5,6)
+
+        [instance de Creature détruite]
+        [instance de Point2D détruite]
+</code></pre>
+</div>
+
+<h4 id="même-exemple-en-python">Même exemple en Python</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Point2D</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[instance de Point2D créé]"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[instance de Point2D détruite]"</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="s">"({},{})"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">set_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span> <span class="p">;</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+
+<span class="k">class</span> <span class="nc">Creature</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_location</span> <span class="o">=</span> <span class="n">location</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[instance de Creature créé]"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[instance de Creature détruite]"</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="s">"{} est localisé en {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_location</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">_location</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">Creature</span><span class="p">(</span><span class="s">'George'</span><span class="p">,</span> <span class="n">Point2D</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[c.move_to(12, 5)]"</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>        [instance de Point2D créé]
+        [instance de Creature créé]
+George est localisé en (3,8)
+        [c.move_to(12, 5)]
+George est localisé en (12,5)
+        [instance de Creature détruite]
+        [instance de Point2D détruite]
+</code></pre>
+</div>
+
+<h3 id="variantes-de-composition">Variantes de composition</h3>
+
+<p>La majorité des compositions crées elles-même leurs parties (attributs) quand la composition est créé et les détruisent quand la composition est détruite mais il existe certaines variations possible:</p>
+
+<p>Les compositions peuvent:</p>
+
+<ul>
+  <li>
+    <p>Temporiser la création de certaines parties jusqu’à ce qu’on en ai besoin (eg. une classe <code class="highlighter-rouge">string</code> en C++ ne cré pas un tableau dynamique de <code class="highlighter-rouge">chars</code> avant que l’utilisateur ne lui assigne une chaîne de caractères)</p>
+  </li>
+  <li>
+    <p>Préférer utiliser une partie qui leur est donné via <em>user input</em> que d’en créer une elle meme.</p>
+  </li>
+  <li>
+    <p>Déléguer la destruction de ses parties à un autre objet.</p>
+  </li>
+</ul>
+
+<p>Le point important à garder en tête est que <strong>la composition doit gérer ses parties</strong> sans que l’utilisateur (peut être un objet) n’ai à faire quoi que se soit.</p>
+
+<h3 id="rule-of-thumb">Rule of thumb</h3>
+
+<ul>
+  <li><span style="color:red"> <strong>Chaque classe devrait être construite dans le but d’accomplir une des fonction suivante, idéalement pas les deux:</strong> </span>
+    <ul>
+      <li><span style="color:red"> <strong>Gestion et manipulation de données</strong> </span></li>
+      <li><span style="color:red"> <strong>Coordination de sous-classe</strong> </span></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Dans l’exemple plus haut, les objets de type <code class="highlighter-rouge">Creature</code> n’ont pas à se soucier de comment sont implémenté les objets de types <code class="highlighter-rouge">Point2D</code> ou de comment les objets de type <code class="highlighter-rouge">string</code> alloue de la mémoire. Le job de la classe <code class="highlighter-rouge">Creature</code> est de <strong>veiller à comment coordiner les données</strong> venant des sous classes qui executent des tâches pour elle et le job de ces sous classes de s’inquiéter de <strong>comment elles le font</strong> !</p>
+
+<h2 id="aggregation-1">Aggregation</h2>
+
+<p>De la même façon qu’une composition, une aggregation est une relation <strong>unidirectionelle</strong> entre une <strong>partie</strong> et un <strong>tout</strong> où la <strong>partie</strong> est contenue dans le <strong>tout</strong>.</p>
+
+<p>Contrairement à une composition, dans une aggregation:</p>
+<ul>
+  <li>une <strong>partie</strong> peut faire partie de plusieurs <strong>touts</strong> en même temps</li>
+  <li>Le <strong>tout</strong> n’est pas responsable du cycle de vie de ses <strong>parties</strong></li>
+</ul>
+
+<p>Pour être qualifiée d’aggregation, un objet et une partie de cet objet doivent avoir les relation suivante:</p>
+
+<ol>
+  <li>La <strong>partie</strong> est une partie du <strong>tout</strong>.</li>
+  <li>La <strong>partie</strong> peut appartenir à plusieurs <strong>touts</strong> à la fois</li>
+  <li>L’existance de la <strong>partie</strong> n’est pas gérée par un <strong>tout</strong>.</li>
+  <li>la <strong>partie</strong> n’est pas “consciente” de l’existance du <strong>tout</strong>.</li>
+</ol>
+
+<p><strong>Exemples concrets:</strong> <br />
+La relation entre une adresse et une personne:</p>
+
+<ol>
+  <li>Chaque personne a une adresse,</li>
+  <li>Pourtant, cette adresse peut appartenir à plusieurs personnes à la fois.</li>
+  <li>Cette adresse n’est pas gérée par la personne qui y vit. L’adresse existait probablement avant que la personne y habite et existera toujours apès le départ de la personne.</li>
+  <li>Une personne sait à quelle adresse elle habite mais l’adresse ne sait pas qu’elle est habitée.</li>
+</ol>
+
+<p>La relation entre un moteur et une voiture:</p>
+
+<ol>
+  <li>Un moteur fait partie d’une voiture.</li>
+  <li>Même si le moteur appartient à une voiture, il appartient également à d’autres entités, comme la personne à qui appartient la voiture par exemple.</li>
+  <li>La voiture n’est pas ressponsable de la création ou de la destruction du moteur. Une fois la voiture détruite, on peut imaginer que le moteur soit ajusté sur une autre voiture.</li>
+  <li>La voiture a besoin de savoir qu’elle a un moteur pour fonctionner. Le moteur quand à lui a juste besoin de faire ce que fait un moteur pour fonctionner, il n’a pas besoin de savoir qu’il fait partie d’une voiture… ou d’un avion…</li>
+</ol>
+
+<p><strong>De la même façon qu’une composition, les parties d’une compositions peuvent être multiplicatives.</strong></p>
+
+<h3 id="détails-dimplémentation-1">Détails d’implémentation</h3>
+
+<p>Une aggregation est similaire à une composition dans le sens où les deux sont une relation de type <strong>partie/tout</strong> et s’implémentent donc presque de la même façon. La différence est principalement semantique:</p>
+
+<p>Dans une <strong>composition</strong>, on ajoute généralement les <strong>parties</strong> via des variables membres (attributs), ou en fonction du langage utilisé, des pointeurs avec une gestion de la mémoire dans le <strong>tout</strong>.</p>
+
+<p>Dans une <strong>aggregation</strong>, on ajoute également les <strong>parties</strong> via des variables membres. Parcontre, <strong>ces variables membre sont soit des références ou des pointeurs</strong> utilisés pour pointer vers des objets créés en dehors du contexte du <strong>tout</strong>.</p>
+
+<p><span style="color:red"> <strong>Une aggregation prend ses parties soit en argument lors de sa construction, soit débute sa vie sans parties et les parties sont ajoutées par la suite via des fonctions d’acces.</strong> </span></p>
+
+<p>Comme ces <strong>parties</strong> existent en dehors du contexte du <strong>tout</strong>, quand l’instance issue de ce <strong>tout</strong> est détruit, les pointeurs ou les références à ses <strong>parties</strong> le sont aussi. <span style="color:red"> Les <strong>parties</strong> en elles-mêmes existent toujours! </span></p>
+
+<h3 id="exemples-dimplémentation">Exemples d’implémentation</h3>
+
+<p>Relation entre une école et un professeur.</p>
+
+<p>Dans cette exemple nous allons simplifier la situation en assumant que l’école n’a qu’un professeur et que ce dernier n’est pas au courant de l’école dans laquelle il est.</p>
+
+<h4 id="c-1">C++</h4>
+
+<div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
+</span>
+<span class="k">class</span> <span class="nc">Professeur</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">_name</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Professeur</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span><span class="o">:</span> <span class="n">_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[Professeur construit]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> 
+    <span class="p">}</span>
+    <span class="o">~</span><span class="n">Professeur</span><span class="p">(){</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[Professeur detruit]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span> 
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">get_name</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_name</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Ecole</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Professeur</span> <span class="o">*</span><span class="n">_professeur</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">Ecole</span><span class="p">(</span><span class="n">Professeur</span> <span class="o">*</span><span class="n">professeur</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">)</span> <span class="o">:</span> <span class="n">_professeur</span><span class="p">(</span><span class="n">professeur</span><span class="p">)</span> <span class="p">{</span> 
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[Ecole construite]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> 
+    <span class="p">}</span>
+  <span class="o">~</span><span class="n">Ecole</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\t</span><span class="s">[Ecole detruite]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Creation d'un professeur en dehors du contexte de l'école
+</span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[professeur *professeur = new professeur(</span><span class="se">\"</span><span class="s">Bob</span><span class="se">\"</span><span class="s">);]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="n">Professeur</span> <span class="o">*</span><span class="n">professeur</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Professeur</span><span class="p">(</span><span class="s">"Bob"</span><span class="p">);</span>
+
+    <span class="c1">// Creation d'une école et passage d'un professeur 
+</span>    <span class="c1">// en parametre de son constructeur.
+</span>    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[Ecole ecole(professeur);]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+        <span class="n">Ecole</span> <span class="n">ecole</span><span class="p">(</span><span class="n">professeur</span><span class="p">);</span>
+        
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[L'école sort de contexte ici et est détruite]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Le professeur existe toujours ici car l'école n'est
+</span>    <span class="c1">// pas en charge de sa destruction.
+</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">professeur</span><span class="o">-&gt;</span><span class="n">get_name</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">" existe toujours!</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[delete professeur;]</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+    <span class="k">delete</span> <span class="n">professeur</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[professeur *professeur = new professeur("Bob");]
+        [Professeur construit]
+[Ecole ecole(professeur);]
+        [Ecole construite]
+[L'école sort de contexte ici et est détruite]
+        [Ecole detruite]
+Bob existe toujours!
+[delete professeur;]
+        [Professeur detruit]
+</code></pre>
+</div>
+
+<p>Le professeur est créé indépendament de l’école et est passé au constructeur de l’école. Quand l’école est détruite, le pointeur sur <code class="highlighter-rouge">_teacher</code> est détruit mais pas l’instance. Elle ne sera détruite qu’au moment ou nous le demanderons explicitement via <code class="highlighter-rouge">delete</code>.</p>
+
+<p>Même si dans le cadre de cet exemple cela semble improbable que le professeur ne sache pas dans quelle école il travail, dans un contexte programmatique différent c’est une situation commune.</p>
+
+<h4 id="python">Python</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Professeur</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[Professeur construit]</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[Professeur detruit]</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+<span class="k">class</span> <span class="nc">Ecole</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">professeur</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_professeur</span> <span class="o">=</span> <span class="n">professeur</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[Ecole construite]</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">[Ecole detruite]</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+
+<span class="c"># Creation d'un professeur en dehors du contexte de l'école.</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'[professeur = Professeur("Bob")]'</span><span class="p">)</span>
+<span class="n">professeur</span> <span class="o">=</span> <span class="n">Professeur</span><span class="p">(</span><span class="s">"Bob"</span><span class="p">)</span>
+
+
+<span class="c"># Creation d'une école et passage d'un professeur</span>
+<span class="c"># en parametre de son constructeur.</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[ecole = Ecole(teacher)]"</span><span class="p">)</span>
+<span class="n">ecole</span> <span class="o">=</span> <span class="n">Ecole</span><span class="p">(</span><span class="n">professeur</span><span class="p">)</span>
+
+<span class="c"># Destruction de l'instance dept.</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[del ecole]"</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">ecole</span>
+
+<span class="c"># Le professeur existe toujour ici car l'école n'est</span>
+<span class="c"># pas en charge de sa destruction.</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"{} existe toujours"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">professeur</span><span class="o">.</span><span class="n">get_name</span><span class="p">()))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"[del professeur]"</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">professeur</span>
+
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[professeur = Professeur("Bob")]
+        [Professeur construit]
+
+[ecole = Ecole(teacher)]
+        [Ecole construite]
+
+[del ecole]
+        [Ecole detruite]
+
+Bob existe toujours
+[del professeur]
+        [Professeur detruit]
+</code></pre>
+</div>
+
+<h2 id="choisir-la-bonne-relation">Choisir la bonne relation</h2>
+
+<p>Quand on chercher a déterminer le type de relation à utiliser pour une implémentation, il faut utiliser la plus simple qui correspond à nos besoins et non pas celle qui correspond à la réalité des objets physiques.</p>
+
+<p>Si nous écrivons un programme qui simule un garrage, on pourrait utiliser une aggregation pour avoir un moteur qui peut être retiré d’une voiture et ajusté dans un autre. Parcontre, si nous codons un jeu de courses, il peut être préférable d’implémenter une voiture et un moteur comme une composition car le moteur n’existera jamais séparé de la voiture.</p>
+
+<h3 id="rule-of-thumb-1">Rule of thumb</h3>
+
+<p><span style="color:red"> Toujours implémenter la relation la plus simple qui correspond à nos besoins et non pas ce qui semble jute IRL. </span></p>
+
+<h2 id="combo">Combo</h2>
+
+<p>Nous pouvons mélenger dans un même <strong>tout</strong> (classe) composition et aggregation. C’est à dire avoir certaines <strong>parties</strong> (attributs) de ce <strong>tout</strong> dont la construction/destruction est géré par le <strong>tout</strong> et d’autres <strong>parties</strong> qui vivent en dehors du contexte du <strong>tout</strong>.</p>
+
+<p><strong>Exemple</strong>:
+La classe <code class="highlighter-rouge">Ecole</code> pourrait avoir comme attributs un nom et un professeur.</p>
+<ul>
+  <li><code class="highlighter-rouge">_nom</code> pourrait être implémenté sous forme de <strong>composition</strong> et cet attribut serait construit et détruit en même temps que les instances d’<code class="highlighter-rouge">Ecole</code>.</li>
+  <li><code class="highlighter-rouge">_professeur</code> pourrait être implémenté sous forme d’<strong>aggregation</strong> et être construit et détruit indépendament des instances d’<code class="highlighter-rouge">Ecole</code>.</li>
+</ul>
+
+<h1 id="association-1">Association</h1>
+
+<p>Contrairement à la composition où une <strong>partie</strong> fait partie d’un <strong>tout</strong>, dans une association, un objet de type <code class="highlighter-rouge">B</code> qu’on associe à un objet de type <code class="highlighter-rouge">A</code> ne fait pas forcément partie de ce dernier. Tout comme dans une aggregation, l’objet associé (<code class="highlighter-rouge">B</code>) peut appartenir simultanément à plusieurs objets et son existance n’est pas géré par ‘A’. Parcontre, dans une association, la relation peut être unidirectionelle <strong>ou</strong> bidirectionelle (Les deux objets sont au courant de leur existance reciproquement).</p>
+
+<p>Pour être qualifié d’association la relation entre un objet de type <code class="highlighter-rouge">B</code> qu’on associe à un objet de type <code class="highlighter-rouge">A</code> doit être la suivante:</p>
+
+<ol>
+  <li>L’objet <code class="highlighter-rouge">B</code> membre de <code class="highlighter-rouge">A</code> n’est pas une partie de <code class="highlighter-rouge">A</code> (il a sa vie à lui et peut faire plein de choses) mais il a une relation avec l’objet <code class="highlighter-rouge">B</code>.</li>
+  <li>L’objet <code class="highlighter-rouge">B</code> et l’objet <code class="highlighter-rouge">A</code> peuvent appartenir à plusieurs classes à la fois.</li>
+  <li>L’objet <code class="highlighter-rouge">B</code> n’a pas son existance gérée par une autre classe.</li>
+  <li>L’objet <code class="highlighter-rouge">B</code> peut être au courant de l’existance de l’objet <code class="highlighter-rouge">A</code> mais pas obligatoirement</li>
+</ol>
+
+<p><strong>Exemple concret:</strong>: La relation entre un <strong>avocat</strong> et son <strong>client</strong>:</p>
+
+<ol>
+  <li>L’<strong>avocat</strong> a une relation avec son <strong>client</strong> mais ne fait pas partie du <strong>client</strong>.</li>
+  <li>Un <strong>avocat</strong> peut voir plusieurs clients différents et le <strong>client</strong> peut voir plusieurs avocats différents.</li>
+  <li>Le clycle de vie du <strong>client</strong> n’est pas géré par le <strong>client</strong> et vice versa.</li>
+  <li>Un <strong>client</strong> et un <strong>avocat</strong> peuvent ne pas se connaitre (Avant de se recontrer par exemple).</li>
+</ol>
+
+<p><strong>Relation de type:</strong></p>
+
+<script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
+{
+    \large x \color{red}{\;utilise\;un\;} y
+}</script>
+
+<p>Dans notre exemple, l’<strong>avocat</strong> “utilise” le <strong>client</strong> (pour gagner de l’argent) et le <strong>client</strong> “utilise” l’<strong>avocat</strong> (pour ses soucis juridiques).</p>
+
+<h2 id="implémentation-sous-forme-dassociation">Implémentation sous forme d’association</h2>
+
+<p>Les associations sont une forme de relation très vaste et il existe de nombreuses façons de les implémenter. Nous allons implémenter la relation avocat/client sous forme d’une relation <strong>bidirectionelle</strong> car cela semble évident que l’avocat sache qui est son client et vice-versa.</p>
+
+<blockquote>
+  <p>Ce type de relation bidirectionelle pose problème en C++ à cause de la dépendance circulaire. En Python nous n’avons pas ce problème grace à son typage (Duck-typing), ce qui me permet de présenter un exemple propre et parlant.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span> <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_avocats</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_avocats</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">"{} n'a pas d'avocats pour le moment."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nom</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"{} voit les avocats suivants: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span><span class="p">,</span> <span class="s">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_avocats</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">add_avocat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Avocat</span><span class="p">):</span>
+
+        <span class="c"># Le client ajoute un avocat si ce dernier n'est </span>
+        <span class="c"># pas déja dans sa liste d'avocats...</span>
+        <span class="k">if</span> <span class="n">Avocat</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_avocats</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_avocats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Avocat</span><span class="p">)</span>
+
+            <span class="c"># ... ce qui veut dire que l'avocat ajoute</span>
+            <span class="c"># également ce Client à sa liste de clients !</span>
+            <span class="n">Avocat</span><span class="o">.</span><span class="n">add_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span>
+
+
+<span class="k">class</span> <span class="nc">Avocat</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span> <span class="o">=</span> <span class="n">nom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clients</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s">"{} n'a pas de clients pour le moment"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nom</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"{} a les clients suivants: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span><span class="p">,</span> <span class="s">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">add_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Client</span><span class="p">):</span>
+
+        <span class="c"># L'avocat ajoute un client si ce dernier n'est </span>
+        <span class="c"># pas déja dans sa liste de clients...</span>
+        <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+
+            <span class="c"># ... ce qui veut dire que le client ajoute </span>
+            <span class="c"># également cet avocat à sa liste d'avocats.</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">add_avocat</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span>
+
+<span class="n">bob</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">"Bob"</span><span class="p">)</span>
+<span class="n">jon</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">"Jon"</span><span class="p">)</span>
+<span class="n">pol</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">"Pol"</span><span class="p">)</span>
+
+<span class="n">claude</span> <span class="o">=</span> <span class="n">Avocat</span><span class="p">(</span><span class="s">"Claude"</span><span class="p">)</span>
+<span class="n">robert</span> <span class="o">=</span> <span class="n">Avocat</span><span class="p">(</span><span class="s">"Robert"</span><span class="p">)</span>
+
+<span class="n">claude</span><span class="o">.</span><span class="n">add_client</span><span class="p">(</span><span class="n">bob</span><span class="p">)</span>
+
+<span class="n">robert</span><span class="o">.</span><span class="n">add_client</span><span class="p">(</span><span class="n">jon</span><span class="p">)</span>
+<span class="n">robert</span><span class="o">.</span><span class="n">add_client</span><span class="p">(</span><span class="n">pol</span><span class="p">)</span>
+
+<span class="n">bob</span><span class="o">.</span><span class="n">add_avocat</span><span class="p">(</span><span class="n">robert</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">claude</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">robert</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">bob</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">jon</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pol</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Bob n'a pas d'avocats pour le moment.
+Robert n'a pas de clients pour le moment
+Claude a les clients suivants: Bob
+Robert a les clients suivants: Jon, Pol, Bob
+Bob voit les avocats suivants: Claude, Robert
+Jon voit les avocats suivants: Robert
+Pol voit les avocats suivants: Robert
+</code></pre>
+</div>
+
+<h2 id="association-reflexive-objets-différents-mais-du-même-type">Association reflexive (objets différents mais du même type)</h2>
+
+<p>C’est une relation entre <strong>objets différents mais du même type</strong>. Un exemple qui illustre ce cas est celui d’un cours et les prérequis pour ces cours (qui sont eux même des cours). Voici un cas simplifié de cet exemple:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Cours</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nom</span><span class="p">,</span> <span class="o">*</span><span class="n">prerequis</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prerequis</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prerequis</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nom</span> <span class="o">=</span> <span class="n">nom</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="s">"Nom du cours: {}</span><span class="se">\n</span><span class="s">Prerequis: {}</span><span class="se">\n</span><span class="s">"</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prerequis</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nom</span><span class="p">,</span> <span class="s">"aucun"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nom</span><span class="p">,</span> <span class="s">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">_nom</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prerequis</span><span class="p">))</span>
+
+
+<span class="n">arithmetique</span> <span class="o">=</span> <span class="n">Cours</span><span class="p">(</span><span class="s">"arithmetique"</span><span class="p">)</span>
+
+<span class="n">algebre1</span> <span class="o">=</span> <span class="n">Cours</span><span class="p">(</span><span class="s">"algebre1"</span><span class="p">,</span> <span class="n">arithmetique</span><span class="p">)</span>
+<span class="n">algebre2</span> <span class="o">=</span> <span class="n">Cours</span><span class="p">(</span><span class="s">"algebre2"</span><span class="p">,</span> <span class="n">algebre1</span><span class="p">)</span>
+<span class="n">trigo</span>    <span class="o">=</span> <span class="n">Cours</span><span class="p">(</span><span class="s">"trigo"</span><span class="p">,</span> <span class="n">algebre1</span><span class="p">)</span>
+
+<span class="n">analyse1</span> <span class="o">=</span> <span class="n">Cours</span><span class="p">(</span><span class="s">"analyse1"</span><span class="p">,</span> <span class="n">algebre2</span><span class="p">,</span> <span class="n">trigo</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">analyse1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">trigo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">algebre1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">arithmetique</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Nom du cours: analyse1
+Prerequis: algebre2, trigo
+
+Nom du cours: trigo
+Prerequis: algebre1
+
+Nom du cours: algebre1
+Prerequis: arithmetique
+
+Nom du cours: arithmetique
+Prerequis: aucun
+</code></pre>
+</div>
+
+<p>Ici nous avons donc créé une chaîne d’associations entre objets du même type. Un cours a un prérequis, qui a lui même un prérequis, qui a lui même un prérequis…</p>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Prog: Relations entre objets@&amp;url=http://localhost:4000/prog/Prog-composition-aggregation.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/prog/Prog-composition-aggregation.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/prog/Prog-composition-aggregation.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
