@@ -11,7 +11,8 @@ finished: false
 
 ## Liens utiles
 
-*[interne: Composition d'objets](/prog/prog-composition.html)
+*[interne: Composition d'objets](/prog/composition-aggregation.html)
+*[Battleship game: rules](https://www.thespruce.com/the-basic-rules-of-battleship-411069)
 
 ## Objets
 
@@ -19,15 +20,11 @@ finished: false
 
 * Part
 * Ship
-* Cruiser 
+* specific ship
 
 
-### Relations entre les objets
-
-* Board
 
 
-* 
 
 
 ## En vrac
