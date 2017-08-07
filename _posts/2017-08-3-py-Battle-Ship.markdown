@@ -16,10 +16,11 @@ finished: false
 
 ## Rêgles
 
-* 2 joueurs
-* 2 grilles par joueur
+* 2 Joueurs
+* 2 Grilles par joueur
     * Une contient ses propres navires
     * L'autre contient un historique des coups faits par le joueur
+* Grille de 10x10
 * 5 navires par joueur
     * Carrier (5)
     * Battleship (4)
