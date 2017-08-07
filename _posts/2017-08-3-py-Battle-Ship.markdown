@@ -14,6 +14,34 @@ finished: false
 *[interne: Composition d'objets](/prog/composition-aggregation.html)
 *[Battleship game: rules](https://www.thespruce.com/the-basic-rules-of-battleship-411069)
 
+## Rêgles
+
+* 2 joueurs
+* 2 grilles par joueur
+    * Une contient ses propres navires
+    * L'autre contient un historique des coups faits par le joueur
+* 5 navires par joueur
+    * Carrier (5)
+    * Battleship (4)
+    * Cruiser (3)
+    * Submarine (3)
+    * Destroyer (2)
+
+
+* Placements des navires
+    * Horizontal
+    * Vertical
+* Les navires peuvent se toucher mais pas se chevaucher
+
+### Advanced gameplay: Salvo variation
+
+* On the first round of the game, you call out five shots (guesses) and mark each shot with a white peg in your target grid.
+* After you've called out all five shots (a salvo), your opponent announces which ones were hits and which ships they hit.
+* For hits, change the white pegs on your target grid to red pegs. Your opponent places red pegs in the holes of any ships that you hit.
+* Continue in this manner until one of your ships is sunk. At that point, you lose one shot from your salvo. If one of your ships sinks, your salvo is reduced to four shots. When two ships sink, the salvo is three shots, and so on.
+* Continue game play until one player sinks all the opposing ships and wins the game.
+
+
 ## Objets
 
 * Board
@@ -22,9 +50,7 @@ finished: false
 * Ship
 * specific ship
 
-
-
-
+* Tools
 
 
 ## En vrac
