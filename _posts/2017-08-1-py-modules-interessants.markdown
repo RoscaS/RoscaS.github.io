@@ -9,6 +9,11 @@ tags: divers, fr, en
 finished: false
 ---
 
+## logging
+
+* [Color output (print)](https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output)
+
+
 ## inspect et introspection
 
 ```
