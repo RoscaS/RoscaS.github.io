@@ -16,11 +16,14 @@ $$time \; fixing \; things \; or \; finding \; out \; how \; to $$
 $$fix \; things. $$
 
 
+# CCSM (CompizConfig)
 
-# i3
+Undecorate window:
+In **Window Decoration**, in **Decoration Windows** add for example (undecorate Terminals):
 
-`gnome-tweak-tool`
-`gnome-system-monitor`
+```
+(any) & !(class=Mate-terminal) & !(class=Terminator)
+```
 
 
 # General
