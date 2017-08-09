@@ -42,6 +42,8 @@ finished: false
 * Continue in this manner until one of your ships is sunk. At that point, you lose one shot from your salvo. If one of your ships sinks, your salvo is reduced to four shots. When two ships sink, the salvo is three shots, and so on.
 * Continue game play until one player sinks all the opposing ships and wins the game.
 
+### UML
+
 <img src="/00illustrations/battleShips/battleShipsULM.png" height="auto">
 
 ```
