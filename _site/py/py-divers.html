@@ -129,6 +129,31 @@
   <li><a href="http://python101.pythonlibrary.org/g">Python 101, livre complet en ligne</a></li>
 </ul>
 
+<h2 id="color-trackback">Color trackBack</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/37081116/how-to-get-pythons-terminal-error-to-be-in-color">ultratb.ColorTB() (IPython)</a></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">IPython.core.ultratb</span>
+<span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
+    <span class="c"># No IPython. Use default exception printing.</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">ultratb</span><span class="o">.</span><span class="n">ColorTB</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><a href="https://pypi.python.org/pypi/colored-traceback/0.3.0">colored-traceback</a></li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo pip3 install colored-traceback
+</code></pre>
+</div>
+
 <h2 id="divers">Divers</h2>
 
 <ul>
@@ -349,6 +374,58 @@ En bref, c’est une interface.</p>
 <span class="n">A7</span> <span class="n">B7</span> <span class="n">C7</span> <span class="n">D7</span> <span class="n">E7</span> <span class="n">F7</span> <span class="n">G7</span> <span class="n">H7</span> <span class="n">I7</span> <span class="n">J7</span>
 <span class="n">A8</span> <span class="n">B8</span> <span class="n">C8</span> <span class="n">D8</span> <span class="n">E8</span> <span class="n">F8</span> <span class="n">G8</span> <span class="n">H8</span> <span class="n">I8</span> <span class="n">J8</span>
 <span class="n">A9</span> <span class="n">B9</span> <span class="n">C9</span> <span class="n">D9</span> <span class="n">E9</span> <span class="n">F9</span> <span class="n">G9</span> <span class="n">H9</span> <span class="n">I9</span> <span class="n">J9</span>
+</code></pre>
+</div>
+
+<h2 id="read-char-from-the-input">Read char from the input</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/510357/python-read-a-single-character-from-the-user">getch, readchar</a></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">_Getch</span><span class="p">:</span>
+    <span class="s">''' Gets a single char grom stdin. 
+    Does not echo to the screen '''</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">impl</span> <span class="o">=</span> <span class="n">_GetchWindows</span><span class="p">()</span>
+        <span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">impl</span> <span class="o">=</span> <span class="n">_GetchUnix</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">impl</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">_GetchUnix</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tty</span><span class="o">,</span> <span class="nn">sys</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">tty</span><span class="o">,</span> <span class="nn">termios</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+        <span class="n">old_settings</span> <span class="o">=</span> <span class="n">termios</span><span class="o">.</span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tty</span><span class="o">.</span><span class="n">setraw</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+            <span class="n">ch</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSADRAIN</span><span class="p">,</span> <span class="n">old_settings</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ch</span>
+
+
+<span class="k">class</span> <span class="nc">_GetchWindows</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">msvcrt</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">msvcrt</span>
+        <span class="k">return</span> <span class="n">msvcrt</span><span class="o">.</span><span class="n">getch</span><span class="p">()</span>
+
+<span class="c"># getch = _Getch()</span>
+<span class="c"># key   = getch.__call__()</span>
+
+<span class="c"># print("Pressed key is: ", key)</span>
 </code></pre>
 </div>
 
