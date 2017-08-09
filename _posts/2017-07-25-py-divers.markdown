@@ -30,6 +30,29 @@ finished: false
 * [Python 101, livre complet en ligne](http://python101.pythonlibrary.org/g)
 
 
+## Color trackBack
+
+* [ultratb.ColorTB() (IPython)](https://stackoverflow.com/questions/37081116/how-to-get-pythons-terminal-error-to-be-in-color)
+
+```python
+try:
+    import IPython.core.ultratb
+except ImportError:
+    # No IPython. Use default exception printing.
+    pass
+else:
+    import sys
+    sys.excepthook = IPython.core.ultratb.ColorTB()
+```
+
+
+* [colored-traceback](https://pypi.python.org/pypi/colored-traceback/0.3.0)
+
+```
+sudo pip3 install colored-traceback
+```
+
+
 
 
 ## Divers
