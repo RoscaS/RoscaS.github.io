@@ -160,4 +160,3 @@ randrange(start, stop=None, step=1, _int=int)
 
 Sort un element au hasard dans `range(start, stop[, step])`
 ** A la différence de `randint()` nous pouvons ici définir une borne de départ uniquement.**
-
