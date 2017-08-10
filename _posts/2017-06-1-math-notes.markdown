@@ -10,21 +10,23 @@ finished: false
 ---
 
 ## Notes
-[Reddit post 1](https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/)
+* [Reddit post 1](https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/)
 
 > Something that really helped me was learning basic group theory and ring theory, it gave me much needed knowledge of and understanding about how (for example) arithmetic actually works on a more fundamental level. I cannot recommend it enough. 
 
 `basic groupe theory`
 `ring theory`
 
+* [Common core standards](https://www.khanacademy.org/commoncore/map)
+
 
 
 ## Links
-[Reddit post 1](https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/)
+* [Reddit post 1](https://www.reddit.com/r/math/comments/38tcj3/would_it_be_beneficial_to_relearn_math_from_the/)
 
 
 ## Latex
-[wikibooks](https://fr.wikibooks.org/wiki/LaTeX/%C3%89crire_des_math%C3%A9matiques)
+* [wikibooks](https://fr.wikibooks.org/wiki/LaTeX/%C3%89crire_des_math%C3%A9matiques)
 
  $$ \frac{n!}{k!(n - k)!} $$
 
