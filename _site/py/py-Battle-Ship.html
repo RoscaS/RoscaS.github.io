@@ -147,133 +147,60 @@
   <li>Continue game play until one player sinks all the opposing ships and wins the game.</li>
 </ul>
 
-<h2 id="objets">Objets</h2>
+<h3 id="uml">UML</h3>
 
-<ul>
-  <li>
-    <p>Board</p>
-  </li>
-  <li>Part</li>
-  <li>Ship</li>
-  <li>
-    <p>specific ship</p>
-  </li>
-  <li>Tools</li>
-</ul>
+<p><img src="/00illustrations/battleShips/battleShipsULM.png" height="auto" /></p>
 
-<h2 id="en-vrac">En vrac</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>#font: operator mono light
+#fontSize: 14
+#spacing: 50
+#padding: 10
 
-<h3 id="dictionnaire-board">Dictionnaire (Board)</h3>
 
-<p>Toutes les postions qui se trouvent dans le dictionnaire sont des cases interdites</p>
+[&lt;abstract&gt;Ship]+-..*[Part]
+[Cruiser]-:&gt;[Ship]
+[Board]o-5[Ship]
+[Player]&lt;-2[Board]
+[Player]--&gt;[Board]
+[Computer]-:&gt;[Player]
+[Computer]-&gt;[AutoSet]
 
-<p>Exemple de ce à quoi la logique doit arriver suite à l’appel de <code class="highlighter-rouge">set_ship('D3)</code>:</p>
+[&lt;abstract&gt;ShipsSetup]&lt;-[Player]
+[ShipsSetup]&lt;-[Ship]
+[ShipsSetup]-&gt;[Board]
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">_board</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c"># occupé par le bateau</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'D3'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="s">"state-str"</span><span class="p">,</span> <span class="s">"part-objet_Part"</span><span class="p">]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'E3'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="s">"state-str"</span><span class="p">,</span> <span class="s">"part-objet_Part"</span><span class="p">]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'F3'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="s">"state-str"</span><span class="p">,</span> <span class="s">"part-objet_Part"</span><span class="p">]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'G3'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="s">"state-str"</span><span class="p">,</span> <span class="s">"part-objet_Part"</span><span class="p">]</span>
-<span class="c"># autour du bateau</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'C2'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'D2'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'E2'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'F2'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'G2'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'H2'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
+[AutoSet]-:&gt;[ShipsSetup]
+[ManualSet]-:&gt;[ShipsSetup]
 
-<span class="n">_board</span><span class="p">[</span><span class="s">'C3'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'H3'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
+[Aim]&lt;--[ManualSet]
+[Aim]&lt;--[Player]
 
-<span class="n">_board</span><span class="p">[</span><span class="s">'C4'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'D4'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'E4'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'F4'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span> 
-<span class="n">_board</span><span class="p">[</span><span class="s">'G4'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
-<span class="n">_board</span><span class="p">[</span><span class="s">'H4'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">)]</span>
 
+[Cruiser|SIZE: int; TAG: str]
+
+[Part
+	|x: int; y: int; state: str
+	|get_repr(): str
+]
+
+[Ship
+	|parts: Part\[Part\]; orien: str; life: dict
+    |build_parts(); push(Board); set_base(Part)
+]
+
+[Board
+	|size: int; grid: dict
+    |grid_generator(): generator; 
+    	display(): str; display_data(): str
+]
+
+[Player
+	|name: str; ship_grid: Board;
+    	target_grid: Board; ships: {Ship*5}
+    |auto_set(); manual_set(); targetting()
+]
 </code></pre>
 </div>
-
-<p>Types de valeurs dans le dico:</p>
-
-<h4 id="occupée-par-ship">Occupée par ship</h4>
-
-<ul>
-  <li>Key <script type="math/tex">\Rightarrow</script>  <code class="highlighter-rouge">str</code> ID case (<code class="highlighter-rouge">str(xy)</code> du bateau)</li>
-  <li>Value <script type="math/tex">\Rightarrow</script>  <code class="highlighter-rouge">Forbiden</code> objet contenant:
-    <ul>
-      <li>_pos <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">tuple</code> x,y version int de l’ID de la case.</li>
-      <li>_tag <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">str</code> etat à afficher (string du tag du ship)</li>
-      <li>_part <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">Part</code> objet partie de bateau
-        <ul>
-          <li>garde trace de l’etat du ship, interragit avec Ship en f(etat)</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h4 id="interdite-toutes-les-cases-autour-du-bateau">Interdite (toutes les cases autour du bateau)</h4>
-
-<ul>
-  <li>Key <script type="math/tex">\Rightarrow</script>  <code class="highlighter-rouge">str</code> ID case</li>
-  <li>Value <script type="math/tex">\Rightarrow</script>  <code class="highlighter-rouge">list</code> liste
-    <ul>
-      <li>_pos <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">tuple</code> x,y version int de l’ID de la case.</li>
-      <li>_tag <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">None</code></li>
-      <li>_part <script type="math/tex">\Rightarrow</script> None</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="cases-interdides">Cases interdides</h3>
-
-<p>La logique doit vérifier la viabilité d’un placement:</p>
-
-<h4 id="empecher-la-supperposition-de-ships">Empecher la supperposition de Ships</h4>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="n">liste_coords_ship</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">board</span><span class="o">.</span><span class="n">_board</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-    <span class="k">break</span>
-    <span class="n">msg</span> <span class="n">erreur</span>
-</code></pre>
-</div>
-
-<ol>
-  <li>En fonction de l’orientation du Ship et de sa taille, on crée dynamiquement une liste contenant les coordonnées des cases composant le Ship.</li>
-  <li>On compare cette liste avec [ x for x in board._board.values[0]]. Je pense qu’il y a une built-in qui fait exactement ça.</li>
-  <li>2 cas:
-    <ul>
-      <li>Si aucune case du nouveau Ship à placer n’est dedans, on place le Ship</li>
-      <li>Dés qu’une case est commune aux deux listes on break et retourne un message d’erreur.</li>
-    </ul>
-  </li>
-</ol>
-
-<h4 id="empecher-le-placement-hors-map">Empecher le placement hors-map</h4>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">liste_coords_ship</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">liste_coords_ship</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">liste_coords_ship</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">:</span>
-        <span class="k">break</span>
-        <span class="n">msg</span> <span class="n">erreur</span>
-</code></pre>
-</div>
-
-<ul>
-  <li><span style="color:red">Suggestion: toujours commencer par le point le plus éloigné du point initial du bateau !!  </span></li>
-</ul>
-
-<h3 id="ships">Ships</h3>
-
-<ul>
-  <li>orientation:
-    <ul>
-      <li>‘h’ <script type="math/tex">\Rightarrow</script> horizontal, de gauche à droite</li>
-      <li>‘v’ <script type="math/tex">\Rightarrow</script> vertical, de haut en bas</li>
-    </ul>
-  </li>
-</ul>
 
 </div>
 
