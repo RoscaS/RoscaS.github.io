@@ -11,7 +11,7 @@ finished: false
 
 ## Best mods
 
-[Galileo + mods](https://youtu.be/D5iY8cc3Ko)
+[Galileo + mods](https://www.youtube.com/watch?v=D5iYj8cc3Ko&t=695s)
 
 
 ## Moteurs
