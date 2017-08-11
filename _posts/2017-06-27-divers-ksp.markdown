@@ -9,6 +9,11 @@ tags: divers, fr, en
 finished: false
 ---
 
+## Best mods
+
+[Galileo + mods](https://youtu.be/D5iY8cc3Ko)
+
+
 ## Moteurs
 
 ![alt](/00illustrations/ksp/engines1.png)
