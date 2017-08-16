@@ -12,6 +12,70 @@ finished: false
 ## Sources
 
 * [apprendre-python.com](http://apprendre-python.com/page-tkinter-interface-graphique-python-tutoriel)
+* [tutorialspoint](https://www.tutorialspoint.com/python/python_gui_programming.htm)
+
+# En bref
+
+1. Import Tkinter module
+2. Creation de la main window de notre GUI
+3. Ajouter des widgets à la GUI
+4. Ajouter le main event loop
+
+<!-- ```python
+import tkinter
+top = tkinter.Tk()
+
+# Widgets
+
+top.mainloop()
+```
+
+## Widgets
+
+### Buttons
+
+```python
+a = tkinter.Button(master, option=value)
+```
+
+* **master**: parent window
+* **options**: options séparées par une virgule
+
+
+| Option           | Description                              |
+| ---------------- | ---------------------------------------- |
+| activebackground | Background color when the button is under the cursor. |
+| activeforground  | Foreground color when the button is under the cursor. |
+| bd               | Border width in pixels. Default is 2.    |
+| bg               | Normal background color.                 |
+| command          | Function or method to be called when the button is clicked |
+| fg               | Normal foreground (text) color.          |
+| font             | Text font to be used for the button's label |
+| height           | Height of the button in text lines (textual buttons) or pixels (images). |
+| highlightcolor   | The color of the focus highlight when the widget has focus. |
+| image            | Image to be displayed on the button (instead of text) |
+| justify          | How to show multiple text lines: `LEFT` to left-justify each line; `CENTER` to center them;`RIGHT` to right-justify. |
+| padx             | Additional padding left and right of the text |
+| pady             | Additional padding left and right of the text |
+| relief           | Relief specifies the type of the border. `SUNKEN`, `RAISED`, `GROOVE`, `RIGIDE`. |
+| state            | Set this option to `DISABLED` to gray out the button and make it unresponsive. Has the value `ACTIVE` when the mouse is over it. Default is `NORMAL` |
+| underline        | Default is -1, meaning that no character of the text on the button will be underlined. If nonnegative, the corresponding text character will be underlined. |
+| width            | Width of the button in letters (id text) or pixels (if displaying and image). |
+| wraplenght       | if this value is set to a positive number, the text lines will be wrapped to fit within this lenght. |
+
+#### Methodes
+
+| Methode    | Description                              |
+| ---------- | ---------------------------------------- |
+| `flash()`  | Causes the button to flash several times between active and normal colors. Leaves the button in the state it was in originally. Ignore if the button is disabled. |
+| `invoke()` | Calls the button's callback, and returns what that function returns. Has no effect if the button is disabled or there is no callback. |
+
+
+### Canvas -->
+
+
+
+
 
 
 ## Hello world
@@ -486,3 +550,46 @@ win.mainloop()
 
 Nécéssite l'import de `tkinter.filedialog`
 
+```python
+import tkinter as tk
+import tkinter.filedialog as fd
+
+win = tk.Tk()
+
+filepath = fd.askopenfilenames(
+    title="Ouvrir une image",
+    filetypes=[('png files', 'png'), ('all files', '.*')])
+
+photo = tk.PhotoImage(file=filepath)
+canvas = tk.Canvas(
+    win, width=photo.width(), height=photo.height(), bg='light gray')
+
+canvas.create_image(0, 0, anchor="NW", image=photo)
+canvas.pack()
+
+
+win.mainloop()
+```
+
+## Récupérer un fichier text et l'afficher
+
+```python
+import tkinter as tk
+import tkinter.filedialog as fd
+
+win = tk.Tk()
+
+filename = fd.askopenfilename(
+    title="Ouvrir votre document",
+    filetypes=[('txt files', '.txt'), ('all files', '.*')])
+fichier = open(filename, "r")
+content = fichier.read()
+fichier.close()
+
+tk.Label(fenetre, text=content).pack(padx=10, pady=10)
+
+
+win.mainloop()
+```
+
+## Events
