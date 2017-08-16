@@ -13,6 +13,7 @@ finished: false
 
 * [apprendre-python.com](http://apprendre-python.com/page-tkinter-interface-graphique-python-tutoriel)
 * [tutorialspoint](https://www.tutorialspoint.com/python/python_gui_programming.htm)
+* [python-course.eu](http://www.python-course.eu/python_tkinter.php)
 
 # En bref
 
