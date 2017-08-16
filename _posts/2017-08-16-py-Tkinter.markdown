@@ -21,6 +21,55 @@ finished: false
 3. Ajouter des widgets à la GUI
 4. Ajouter le main event loop
 
+## Widgets
+
+* button
+* canvas
+* checkbutton
+* combobox
+* entry
+* frame
+* label
+* labelframe
+* listbox
+* menu
+* menubutton
+* message
+* notebook
+* tk_optionMenu
+* panedwindow
+* progressbar
+* radiobutton
+* scale
+* scrollbar
+* separator
+* sizegrip
+* spinbox
+* text
+* treeview
+
+## top-level windows
+
+* `tk_chooseColor` $$ \Rightarrow $$  pops up a dialog box for the user to select a color.
+* `tk_chooseDirectory` $$ \Rightarrow $$  pops up a dialog box for the user to select a directory.
+* `tk_dialog` $$ \Rightarrow $$  creates a modal dialog and waits for a response.
+* `tk_getOpenFile` $$ \Rightarrow $$  pops up a dialog box for the user to select a file to open.
+* `tk_getSaveFile` $$ \Rightarrow $$  pops up a dialog box for the user to select a file to save.
+* `tk_messageBox` $$ \Rightarrow $$  pops up a message window and waits for a user response.
+* `tk_popup` $$ \Rightarrow $$  posts a popup menu.
+* `toplevel` $$ \Rightarrow $$  creates and manipulates toplevel widgets.
+
+## geometry managers
+
+* **place** $$ \Rightarrow $$  which positions widgets at absolute locations
+* **grid** $$ \Rightarrow $$  which arranges widgets in a grid
+* **pack** $$ \Rightarrow $$  which packs widgets into a cavity
+
+
+
+
+
+
 <!-- ```python
 import tkinter
 top = tkinter.Tk()
