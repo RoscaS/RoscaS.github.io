@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-openCV-install.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: openCV install(linux)</title>
+  <meta name="description" content="links">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: openCV install(linux)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="17 Aug 2017" itemprop="datePublished">Aug 17 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Computer Vision</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="links">links</h2>
+
+<ul>
+  <li><a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/">learn openCV</a></li>
+</ul>
+
+<h1 id="step-by-step-install-opencv--python3-virtualenv-virtualenvwrapper">Step by step Install OpenCV + Python3 virtualenv virtualenvwrapper</h1>
+
+<h2 id="1-update-packages">1 Update packages</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get update
+sudo apt-get upgrade
+</code></pre>
+</div>
+
+<h2 id="2-install-os-libraries">2 Install OS libraries</h2>
+
+<h3 id="21-remove-any-previous-installation-of-x264">2.1 Remove any previous installation of x264</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get remove x264 libx264-dev
+</code></pre>
+</div>
+
+<h3 id="22-install-dependencies">2.2 Install dependencies</h3>
+
+<blockquote>
+  <p>Ne pas hésiter à s’aider de <code class="highlighter-rouge">Synaptic Package Manager</code> si il ne trouve pas certaines libraires à la ligne de commande.</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install build-essential checkinstall cmake pkg-config yasm gfortran git
+sudo apt-get install libjpeg8-dev libjasper-dev libpng12-dev
+# If you are using Ubuntu 14.04
+sudo apt-get install libtiff4-dev
+# If you are using Ubuntu 16.04
+sudo apt-get install libtiff5-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev
+sudo apt-get install libxine2-dev libv4l-dev
+sudo apt-get install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+sudo apt-get install libqt4-dev libgtk2.0-dev libtbb-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install libfaac-dev libmp3lame-dev libtheora-dev
+sudo apt-get install libvorbis-dev libxvidcore-dev
+sudo apt-get install libopencore-amrnb-dev libopencore-amrwb-dev
+sudo apt-get install x264 v4l-utils
+</code></pre>
+</div>
+
+<h3 id="23-optional-dependencies">2.3 Optional dependencies</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install libprotobuf-dev protobuf-compiler
+sudo apt-get install libgoogle-glog-dev libgflags-dev
+sudo apt-get install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
+</code></pre>
+</div>
+
+<h2 id="3-install-python-libraries">3 Install Python libraries</h2>
+
+<blockquote>
+  <p>Très probablement déja là</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo apt-get install python-dev python-pip python3-dev python3-pip
+sudo -H pip3 install -U pip numpy
+</code></pre>
+</div>
+
+<h3 id="31-python-virtualenv-bash">3.1 Python virtualenv (bash)</h3>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="c"># Install virtual environment</span>
+<span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="n">virtualenv</span> <span class="n">virtualenvwrapper</span>
+
+<span class="c"># si bash: (normalement la plus part du monde)</span>
+<span class="n">echo</span> <span class="s">"# Virtual Environment Wrapper"</span>  <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span>
+<span class="n">echo</span> <span class="s">"source /usr/local/bin/virtualenvwrapper.sh"</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="n">bashrc</span>
+<span class="n">source</span> <span class="o">~/.</span><span class="n">bashrc</span>
+
+<span class="c"># create virtual environment</span>
+<span class="n">mkvirtualenv</span> <span class="n">test</span><span class="o">-</span><span class="n">py3</span>
+<span class="n">workon</span> <span class="n">test</span><span class="o">-</span><span class="n">py3</span>
+  
+<span class="c"># install python libraries within this virtual environment</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">matplotlib</span> <span class="n">scikit</span><span class="o">-</span><span class="n">image</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span> <span class="n">ipython</span>
+  
+<span class="c"># quit virtual environment</span>
+<span class="n">deactivate</span>
+</code></pre>
+</div>
+
+<h4 id="311-virtualenv-avec-zsh">3.1.1 virtualenv avec ZSH</h4>
+
+<p>Si <code class="highlighter-rouge">ZSH</code> est utilisé à la place de <code class="highlighter-rouge">bash</code>, ouvrir le fichier <code class="highlighter-rouge">~/.zshrc</code> et y ajouter:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="c"># virtualenv and virtualenvwrapper</span>
+<span class="n">export</span> <span class="n">WORKON_HOME</span><span class="o">=~/.</span><span class="n">venvs</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">virtualenvwrapper</span><span class="o">/</span><span class="n">virtualenvwrapper</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">export</span> <span class="n">PIP_VIRTUALENV_BASE</span><span class="o">=~/.</span><span class="n">venvs</span>
+</code></pre>
+</div>
+<p>Pour ajouter le nom du venv courant au prompt, on ajoute <code class="highlighter-rouge">virtualenv</code> dans un des prompts dans le même fichier. Exemple:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv dir_joined dir_writable_joined status context_joined)
+</code></pre>
+</div>
+
+<p>Pour changer les couleurs:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>POWERLEVEL9K_VIRTUALENV_BACKGROUND='clear'
+POWERLEVEL9K_VIRTUALENV_FOREGROUND='green'
+</code></pre>
+</div>
+
+<h4 id="python-virtualenv-with-zsh-cheatsheet">Python virtualenv (with zsh) CheatSheet</h4>
+<ul>
+  <li><a href="http://bicofino.io/2015/02/10/install-virtualenv-and-virtualenvwrapper-on-ubuntu-14-dot-04-2/">install(linux)</a></li>
+  <li>
+    <p><a href="https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/">virtualenv doc</a></p>
+  </li>
+  <li><code class="highlighter-rouge">mkvirtualenv</code> <em>name</em> <script type="math/tex">\Rightarrow</script> new virtualenv</li>
+  <li><code class="highlighter-rouge">workon</code> <em>name</em> <script type="math/tex">\Rightarrow</script> switch to “name” virtualenv</li>
+  <li><code class="highlighter-rouge">workon</code> <script type="math/tex">\Rightarrow</script> list virtualenvs</li>
+  <li><code class="highlighter-rouge">lsvirtualenv</code> <script type="math/tex">\Rightarrow</script> same</li>
+  <li><code class="highlighter-rouge">deactivate</code> <script type="math/tex">\Rightarrow</script> leave current virtualenv</li>
+  <li>
+    <p><code class="highlighter-rouge">virtualenv --version</code> <script type="math/tex">\Rightarrow</script> check version</p>
+  </li>
+  <li><code class="highlighter-rouge">mkproject</code> <em>name</em> <script type="math/tex">\Rightarrow</script> creates a project <strong>directory</strong></li>
+  <li>
+    <p><code class="highlighter-rouge">deactivate</code> <script type="math/tex">\Rightarrow</script> leave current project</p>
+  </li>
+  <li><code class="highlighter-rouge">rmvirtualenv</code> <em>name</em> <script type="math/tex">\Rightarrow</script> delete project</li>
+  <li><code class="highlighter-rouge">cdvirtualenv</code> <script type="math/tex">\Rightarrow</script> navigate into the directory of the currently activated venv.</li>
+  <li><code class="highlighter-rouge">lssitepackages</code> <script type="math/tex">\Rightarrow</script> show content of <code class="highlighter-rouge">site-packages</code> directory</li>
+</ul>
+
+<h2 id="4-download-opencv--opencv_contrib">4 Download OpenCV &amp; OpenCV_contrib</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/opencv/opencv.git
+cd opencv 
+git checkout 2b44c0b6493726c465152e1db82cd8e65944d0db 
+cd ..
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone https://github.com/opencv/opencv_contrib.git
+cd opencv_contrib
+git checkout abf44fcccfe2f281b7442dac243e37b7f436d961
+cd ..
+</code></pre>
+</div>
+
+<h2 id="5-compile-and-install-opencv-with-contrib-modules">5 Compile and install OpenCV with contrib modules</h2>
+
+<h3 id="51-create-build-directory-inside-opencv-dir">5.1 Create build directory inside OpenCV dir</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd opencv
+mkdir build
+cd build
+</code></pre>
+</div>
+
+<h3 id="52-run-cmake">5.2 Run CMake</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>cmake -D CMAKE_BUILD_TYPE=RELEASE \
+      -D CMAKE_INSTALL_PREFIX=/usr/local \
+      -D INSTALL_C_EXAMPLES=ON \
+      -D INSTALL_PYTHON_EXAMPLES=ON \
+      -D WITH_TBB=ON \
+      -D WITH_V4L=ON \
+      -D WITH_QT=ON \
+      -D WITH_OPENGL=ON \
+      -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
+      -D BUILD_EXAMPLES=ON ..
+</code></pre>
+</div>
+
+<h3 id="53-compile-and-install">5.3 Compile and install</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo make install
+sudo sh -c 'echo "/usr/local/lib" &gt;&gt; /etc/ld.so.conf.d/opencv.conf'
+sudo ldconfig
+</code></pre>
+</div>
+
+<h3 id="54-create-symlink-in-virtual-environment">5.4 Create symlink in virtual environment</h3>
+
+<p>Les binaires de OpenCV (cv2.so) penvent ếtre installés soit dans le fichier <code class="highlighter-rouge">site-packages</code> soit <code class="highlighter-rouge">dist-packages</code>. La commande suivante nous permet de connaitre le bon endroit:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>find /usr/local/lib/ -type f -name "cv2*.so"
+</code></pre>
+</div>
+
+<p>Cela devrait retourner des chemins d’acces similaires à un des suivants:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="c"># dist-packages:</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cv2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">35</span><span class="n">m</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">.</span><span class="n">so</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cv2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">.</span><span class="n">so</span>
+<span class="c"># site-packages:</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cv2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">35</span><span class="n">m</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">.</span><span class="n">so</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">cv2</span><span class="o">.</span><span class="n">cpython</span><span class="o">-</span><span class="mi">36</span><span class="n">m</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">.</span><span class="n">so</span>
+</code></pre>
+</div>
+
+<p><span style="color:red"> Bien vérifier le chemin de <strong>notre machine</strong> avant de lancer la commande suivante: </span></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd ~/.virtualenvs/facecourse-py3/lib/python3.6/site-packages
+ln -s /usr/local/lib/python3.6/dist-packages/cv2.cpython-36m-x86_64-linux-gnu.so cv2.so
+</code></pre>
+</div>
+
+<h2 id="6-test-opencv3">6 Test OpenCV3</h2>
+
+<p>Télécharger <a href="http://www.learnopencv.com/wp-content/uploads/2017/06/RedEyeRemover.zip">RedEyeRemover.zip</a> et l’extraire.</p>
+
+<h3 id="61-test-c-code">6.1 Test C++ code</h3>
+<p>Dans le fichier extrait, compiler et lancer:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="c"># compile</span>
+<span class="c"># There are backticks ( ` ) around pkg-config command not single quotes</span>
+<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">11</span> <span class="n">removeRedEyes</span><span class="o">.</span><span class="n">cpp</span> <span class="sb">`pkg-config --libs --cflags opencv`</span> <span class="o">-</span><span class="n">o</span> <span class="n">removeRedEyes</span>
+<span class="c"># run</span>
+<span class="o">./</span><span class="n">removeRedEyes</span>
+</code></pre>
+</div>
+
+<h3 id="62-test-python-code">6.2 Test Python code</h3>
+
+<h4 id="activate-python-venv">Activate Python venv</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>workon facecourse-py3
+</code></pre>
+</div>
+
+<h4 id="quick-check">Quick check</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code># open ipython (run this command on terminal)
+ipython
+# import cv2 and print version (run following commands in ipython)
+import cv2
+print cv2.__version__
+# If OpenCV3 is installed correctly, the above command should give output 3.2.0
+# Press CTRL+D to exit ipython
+</code></pre>
+</div>
+
+<h4 id="demo-redeyeremover">Demo RedEyeRemover</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python removeRedEyes.py
+deactivate
+</code></pre>
+</div>
+
+<p><span style="color:red"> A chaque fois qu’on veut travailler avec des scripts Python qui utilisent OpenCV, on devrait le faire à partir du venv créé ici. </span></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<h2 id="lire-une-image">Lire une image:</h2>
+
+<p><code class="highlighter-rouge">cv2.imread('image', flag)</code></p>
+
+<ul>
+  <li><code class="highlighter-rouge">image</code> doit soit être dans le working directory, soit on utilise un full path</li>
+  <li><code class="highlighter-rouge">flag</code> spécifie la façon dont <code class="highlighter-rouge">image</code> doit être lue:
+    <ul>
+      <li><code class="highlighter-rouge">1</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">cv2.IMREAD_COLOR</code> <script type="math/tex">\Rightarrow</script> img couleur, toute transarence est négligée (flag par défaut)</li>
+      <li><code class="highlighter-rouge">0</code> <script type="math/tex">\Rightarrow</script> cv2.IMREAD_GRAYSCALE <script type="math/tex">\Rightarrow</script> grayscale mode</li>
+      <li><code class="highlighter-rouge">-1</code> <script type="math/tex">\Rightarrow</script> cv2.IMREAD_UNCHANGED <script type="math/tex">\Rightarrow</script> image originale</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="c"># Load an color image in grayscale</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">'messi.jpg'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><span style="color:red"> Si le path est erroné, aucune erreur n’apparait mais print(img) retourne <code class="highlighter-rouge">None</code> </span></p>
+
+<h2 id="afficher-une-image">Afficher une image:</h2>
+
+<p><code class="highlighter-rouge">cv2.imshow('window_name', image)</code> <script type="math/tex">\Rightarrow</script> affiche l’image dans une nouvelle fenêtre (fit to the image size).</p>
+
+<ul>
+  <li><code class="highlighter-rouge">'window_name'</code> <script type="math/tex">\Rightarrow</script> une string avec le nom de la nouvelle fenêtre</li>
+  <li><code class="highlighter-rouge">image</code> <script type="math/tex">\Rightarrow</script> image à afficher</li>
+</ul>
+
+<blockquote>
+  <p>Nous pouvons afficher autant d’images qu’on veut mais les fenêtres doivent porter des noms différents</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="c"># Load an color image in grayscale</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">'messi.jpg'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s">'image'</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://opencv-python-tutroals.readthedocs.io/en/latest/_images/opencv_screenshot.jpg" alt="alt" /></p>
+
+<ul>
+  <li><code class="highlighter-rouge">cv2.waitKey()</code> <script type="math/tex">\Rightarrow</script> permet de binder une touche (plus de détails suivent)</li>
+  <li><code class="highlighter-rouge">cv2.destroyAllWindows()</code> <script type="math/tex">\Rightarrow</script> détruit toutes les fenếtres créés</li>
+  <li>
+    <p><code class="highlighter-rouge">cv2.destroyWindow()</code> <script type="math/tex">\Rightarrow</script> détruit une fenêtre spécifique passée en argument</p>
+  </li>
+  <li><code class="highlighter-rouge">cv2.namedWindow('image', flag)</code> <script type="math/tex">\Rightarrow</script> permet de set la taille de la fenêtre via l’argument <code class="highlighter-rouge">flag</code>:
+    <ul>
+      <li><code class="highlighter-rouge">cv2.WINDOW_AUTOSIZE</code> <script type="math/tex">\Rightarrow</script> valeur par défaut</li>
+      <li><code class="highlighter-rouge">cv2.WINDOW_NORMAL</code> <script type="math/tex">\Rightarrow</script> fenêtre redimensionnable</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">q</code> pour quitter la lecture d’image</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="c"># Load an color image in grayscale</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s">'hills.jpg'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s">'image'</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_NORMAL</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s">'image'</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</code></pre>
+</div>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: openCV install(linux)@&amp;url=http://localhost:4000/py/py-openCV-install.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-openCV-install.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-openCV-install.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
