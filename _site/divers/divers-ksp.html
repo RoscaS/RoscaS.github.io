@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Divers: Kerbal Space Program (en-fr)</title>
-  <meta name="description" content="Moteurs">
+  <meta name="description" content="Orbite">
 </head>
 
 
@@ -103,7 +103,181 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="moteurs">Moteurs</h2>
+    <h1 id="orbite">Orbite</h1>
+
+<p><a href="https://coeleveld.com/kerbal-space-program-how-to-get-into-orbit-and-back/">coeleve</a></p>
+
+<h2 id="notions">Notions</h2>
+
+<ul>
+  <li>Prograde <script type="math/tex">\Rightarrow</script> avant</li>
+  <li>Retrograde <script type="math/tex">\Rightarrow</script> arrière</li>
+  <li>Radial <script type="math/tex">\Rightarrow</script> vers le centre de la sphère</li>
+  <li>Anti-radial <script type="math/tex">\Rightarrow</script> vers l’extérieur de la sphère</li>
+  <li>Normal <script type="math/tex">\Rightarrow</script> monter (inclinaison positive)</li>
+  <li>Anti-normal <script type="math/tex">\Rightarrow</script> descendre (inclinaison négative)</li>
+</ul>
+
+<h3 id="gravity-turn">Gravity turn</h3>
+
+<ul>
+  <li>Sortie dans l’espace: tout droit pendant 70km.</li>
+  <li>Mise en orbite: implique de commencer son ascension avec une trajectoire en arc de cercle en tentant de gagner suffisament de<strong>vitesse verticale</strong> et de<strong>vitesse latérale</strong> pour contrer la force de pesanteur.</li>
+</ul>
+
+<p>Une mise en orbite dans le sens de rotation de la planete (est pour Kerbin) permet d’ajouter la vitesse de rotation planétaire à notre vitesse orbitale.</p>
+
+<p>Pour un gravity turn réussit, il faut faire en sorte de toujours garder l’indicateur de niveau de la Navball proche du marqueur prograde en incrémentant doucement vers les 90 degrés.</p>
+
+<p><img src="https://coeleveld.com/wp-content/uploads/2016/09/Kerbal_Navball_Gravity_Turn.png" alt="alt" /></p>
+
+<ul>
+  <li>Marqueur jaune prograde <script type="math/tex">\Rightarrow</script> vecteur accélération</li>
+  <li>Le marqueur orange <script type="math/tex">\Rightarrow</script> vers où pointe la fusée</li>
+  <li>…, 45, 90, 135, … <script type="math/tex">\Rightarrow</script> compas</li>
+  <li>les autres traits <script type="math/tex">\Rightarrow</script> inclinaison</li>
+</ul>
+
+<h3 id="vitesse-terminale">Vitesse terminale</h3>
+
+<p>On saute d’un avion. Dans un premier temps notre chute accélère mais de moins en moins plus le frotement de l’air s’intensifie (à cause de l’accélération). À un moment donné, nous n’accélérons plus et notre vitesse est constante. C’est ce qui s’appelle la vitesse terminale. <strong>Le moment où le frotement de l’air égalise la force de pesanteur.</strong></p>
+
+<p>Dans le cas d’une fusée, à la place de la gravité c’est la poussée et elle va de bas en haut mais le principe est le même. Pour une ascension éfficace, <strong>il ne faut pas qu’elle dépasse la vitesse terminale</strong> sous peine de générer des turbulences et de la chaleur.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>m</td>
+      <td>m/s</td>
+    </tr>
+    <tr>
+      <td>500</td>
+      <td>105</td>
+    </tr>
+    <tr>
+      <td>1000</td>
+      <td>110</td>
+    </tr>
+    <tr>
+      <td>2000</td>
+      <td>120</td>
+    </tr>
+    <tr>
+      <td>3000</td>
+      <td>130</td>
+    </tr>
+    <tr>
+      <td>5000</td>
+      <td>160</td>
+    </tr>
+    <tr>
+      <td>6000</td>
+      <td>180</td>
+    </tr>
+    <tr>
+      <td>7000</td>
+      <td>200</td>
+    </tr>
+    <tr>
+      <td>8000</td>
+      <td>220</td>
+    </tr>
+    <tr>
+      <td>10 000</td>
+      <td>260 <script type="math/tex">\Rightarrow</script> gravity turn</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><span style="color:red"> Garder en tête que si on subit des turbulences où que les pièces s’échauffent <strong>il faut baisser la poussée!</strong> </span></p>
+
+<h3 id="orbite-1">Orbite</h3>
+
+<ul>
+  <li><strong>Apoapsis(AP):</strong> Point le plus haut dans notre orbite.</li>
+  <li><strong>Periapsis(PE):</strong> Poinr le plus bas de notre orbite.</li>
+</ul>
+
+<h4 id="circularizing-a-parabolic-orbit">Circularizing a parabolic orbit</h4>
+<p>Le point le plus efficace pour augmenter l’hauteur de la Periapsis et l’Apoapsis. C’est là qu’on donne de la poussée en pointant <strong>Prograde</strong> pour lever la Periapsis jusque à ce qu’elle soit entre 70 et 80km. Plus la poussée nécéssaire est longue plus il faut anticiper le moment où nous allons arriver à l’Apoapsis.</p>
+
+<h3 id="entrée">Entrée</h3>
+<p>Poussée <strong>Retrograde</strong> (à l’Apoapsis pour une efficacité optimale) jusqu’à ce que la Periapsis soit à 20km (ou moins).</p>
+
+<h2 id="en-détails">En détails</h2>
+
+<h3 id="0m---1000m-décolage">0m - 1000m décolage</h3>
+
+<ul>
+  <li>Poussée maximum <code class="highlighter-rouge">Z</code></li>
+  <li>SAS on <code class="highlighter-rouge">T</code></li>
+  <li>Décolage</li>
+  <li><strong>Atteindre 100m/s à 1000m</strong></li>
+</ul>
+
+<h3 id="1000m---10-000m-vitesse-terminale--initiation-du-gravity-turn">1000m - 10 000m Vitesse terminale &amp; initiation du gravity turn</h3>
+
+<ul>
+  <li>Incliner de 10 degrés vers l’est
+    <ul>
+      <li>SAS off si il faut pour aider</li>
+    </ul>
+  </li>
+  <li>Faire attention à ne pas dépasser les vitesses terminales</li>
+</ul>
+
+<h3 id="10-000m---18-000m-basse-atmosphère">10 000m - 18 000m Basse atmosphère</h3>
+
+<blockquote>
+  <p>S’attendre à des turbulences et de la chaleur vers les 500 m/s. C’est causé par la vitesse et non pas l’altitude. Ici l’atmosphère est plus fine et ce n’est pas un problème.</p>
+</blockquote>
+
+<ul>
+  <li>Poussée maximum</li>
+  <li>Incliner de 45 degrés vers l’est</li>
+  <li>Découplage si nécéssaire</li>
+</ul>
+
+<h3 id="18-000m---69-000m-partie-haute-de-latmosphère">18 000m - 69 000m Partie haute de l’atmosphère</h3>
+
+<blockquote>
+  <p>À partir d’ici il y a peut de choses qu’on puisse faire pour changer de trajectoire et toute tentative sera très peu rentable</p>
+</blockquote>
+
+<ul>
+  <li>Inclinaison de 90 degrés vers l’est
+    <ul>
+      <li>SAS off si il faut pour aider mais le minimum possible</li>
+    </ul>
+  </li>
+  <li>Découplage si nécéssaire</li>
+  <li>On coupe les moteurs à 70km</li>
+</ul>
+
+<h3 id="70-000m-espace-autour-de-kerbin">70 000m Espace autour de Kerbin</h3>
+<ul>
+  <li>Rejoindre l’Apoapsis</li>
+  <li>Pleine poussée pour lever la Periapsis (longue poussée, anticiper avant point AP)</li>
+  <li>On coupe les moteurs quand la Periapsis est à 70km</li>
+</ul>
+
+<h3 id="70-000m-0m-entrée">70 000m 0m Entrée</h3>
+
+<ul>
+  <li>Rejoindre l’Apoapsis</li>
+  <li>Pleine poussée Retrograde</li>
+  <li>On coupe une fois la Periapsis sous les 20km</li>
+  <li>Découplage de ce qu’il reste</li>
+  <li>Orientation Retrograde des boucliers thermiques</li>
+  <li>Si la chaleur change en turbulences et que la vitesse tombe sous 500m/s c’est réussit</li>
+  <li>Déploiement des parachutes à 250m/s</li>
+</ul>
+
+<h2 id="best-mods">Best mods</h2>
+
+<p><a href="https://www.youtube.com/watch?v=D5iYj8cc3Ko&amp;t=695s">Galileo + mods</a></p>
+
+<h2 id="moteurs">Moteurs</h2>
 
 <p><img src="/00illustrations/ksp/engines1.png" alt="alt" /></p>
 

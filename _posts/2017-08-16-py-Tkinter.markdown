@@ -2,7 +2,7 @@
 layout: post
 title: "Py: Tkinter"
 subtitle: "Interface graphique Tkinter Python"
-date: 2017-16-08
+date: 2017-08-16
 author: Sol
 category: Py
 tags: divers, fr, en

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-Tkinter.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Tkinter</title>
+  <meta name="description" content="Sources">
+</head>
+
+
+        <div class="wrapper">
+            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<header class="post-header">
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Tkinter</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="16 Aug 2017" itemprop="datePublished">Aug 16 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Interface graphique Tkinter Python</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="sources">Sources</h2>
+
+<ul>
+  <li><a href="http://apprendre-python.com/page-tkinter-interface-graphique-python-tutoriel">apprendre-python.com</a></li>
+  <li><a href="https://www.tutorialspoint.com/python/python_gui_programming.htm">tutorialspoint</a></li>
+  <li><a href="http://www.python-course.eu/python_tkinter.phpg">python-course.eu</a></li>
+</ul>
+
+<h1 id="en-bref">En bref</h1>
+
+<ol>
+  <li>Import Tkinter module</li>
+  <li>Creation de la main window de notre GUI</li>
+  <li>Ajouter des widgets à la GUI</li>
+  <li>Ajouter le main event loop</li>
+</ol>
+
+<h2 id="widgets">Widgets</h2>
+
+<ul>
+  <li>button</li>
+  <li>canvas</li>
+  <li>checkbutton</li>
+  <li>combobox</li>
+  <li>entry</li>
+  <li>frame</li>
+  <li>label</li>
+  <li>labelframe</li>
+  <li>listbox</li>
+  <li>menu</li>
+  <li>menubutton</li>
+  <li>message</li>
+  <li>notebook</li>
+  <li>tk_optionMenu</li>
+  <li>panedwindow</li>
+  <li>progressbar</li>
+  <li>radiobutton</li>
+  <li>scale</li>
+  <li>scrollbar</li>
+  <li>separator</li>
+  <li>sizegrip</li>
+  <li>spinbox</li>
+  <li>text</li>
+  <li>treeview</li>
+</ul>
+
+<h2 id="top-level-windows">top-level windows</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">tk_chooseColor</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a color.</li>
+  <li><code class="highlighter-rouge">tk_chooseDirectory</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a directory.</li>
+  <li><code class="highlighter-rouge">tk_dialog</code> <script type="math/tex">\Rightarrow</script>  creates a modal dialog and waits for a response.</li>
+  <li><code class="highlighter-rouge">tk_getOpenFile</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a file to open.</li>
+  <li><code class="highlighter-rouge">tk_getSaveFile</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a file to save.</li>
+  <li><code class="highlighter-rouge">tk_messageBox</code> <script type="math/tex">\Rightarrow</script>  pops up a message window and waits for a user response.</li>
+  <li><code class="highlighter-rouge">tk_popup</code> <script type="math/tex">\Rightarrow</script>  posts a popup menu.</li>
+  <li><code class="highlighter-rouge">toplevel</code> <script type="math/tex">\Rightarrow</script>  creates and manipulates toplevel widgets.</li>
+</ul>
+
+<h2 id="geometry-managers">geometry managers</h2>
+
+<ul>
+  <li><strong>place</strong> <script type="math/tex">\Rightarrow</script>  which positions widgets at absolute locations</li>
+  <li><strong>grid</strong> <script type="math/tex">\Rightarrow</script>  which arranges widgets in a grid</li>
+  <li><strong>pack</strong> <script type="math/tex">\Rightarrow</script>  which packs widgets into a cavity</li>
+</ul>
+
+<!-- ```python
+import tkinter
+top = tkinter.Tk()
+
+# Widgets
+
+top.mainloop()
+```
+
+## Widgets
+
+### Buttons
+
+```python
+a = tkinter.Button(master, option=value)
+```
+
+* **master**: parent window
+* **options**: options séparées par une virgule
+
+
+| Option           | Description                              |
+| ---------------- | ---------------------------------------- |
+| activebackground | Background color when the button is under the cursor. |
+| activeforground  | Foreground color when the button is under the cursor. |
+| bd               | Border width in pixels. Default is 2.    |
+| bg               | Normal background color.                 |
+| command          | Function or method to be called when the button is clicked |
+| fg               | Normal foreground (text) color.          |
+| font             | Text font to be used for the button's label |
+| height           | Height of the button in text lines (textual buttons) or pixels (images). |
+| highlightcolor   | The color of the focus highlight when the widget has focus. |
+| image            | Image to be displayed on the button (instead of text) |
+| justify          | How to show multiple text lines: `LEFT` to left-justify each line; `CENTER` to center them;`RIGHT` to right-justify. |
+| padx             | Additional padding left and right of the text |
+| pady             | Additional padding left and right of the text |
+| relief           | Relief specifies the type of the border. `SUNKEN`, `RAISED`, `GROOVE`, `RIGIDE`. |
+| state            | Set this option to `DISABLED` to gray out the button and make it unresponsive. Has the value `ACTIVE` when the mouse is over it. Default is `NORMAL` |
+| underline        | Default is -1, meaning that no character of the text on the button will be underlined. If nonnegative, the corresponding text character will be underlined. |
+| width            | Width of the button in letters (id text) or pixels (if displaying and image). |
+| wraplenght       | if this value is set to a positive number, the text lines will be wrapped to fit within this lenght. |
+
+#### Methodes
+
+| Methode    | Description                              |
+| ---------- | ---------------------------------------- |
+| `flash()`  | Causes the button to flash several times between active and normal colors. Leaves the button in the state it was in originally. Ignore if the button is disabled. |
+| `invoke()` | Calls the button's callback, and returns what that function returns. Has no effect if the button is disabled or there is no callback. |
+
+
+### Canvas -->
+
+<h2 id="hello-world">Hello world</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Hello World"</span><span class="p">)</span>
+<span class="n">label</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h1 id="widgets-1">Widgets</h1>
+<p>Pour créer un logiciel graphique, on ajoute dans une fenêtre des éléments graphiques que l’on nomme <strong>widget</strong>. Ce widget peut être tout aussi bien une liste déroulante que du texte.</p>
+
+<h2 id="boutons">Boutons</h2>
+<p>Ils permettent de proposer une action à l’utilisateur. Dans l’exemple qui suit, on lui propose de fermer la fenêtre.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Close"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">win</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="labels">Labels</h2>
+<p>Ce sont des espacess prévus pour écrire du texte. Les labels servent souvent à décrire un widget comme un input.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">lab</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Texte par defaut"</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">"yellow"</span><span class="p">)</span>
+<span class="n">lab</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="user-input">User input</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">value</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">value</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"Texte par defaut"</span><span class="p">)</span>
+<span class="n">entree</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">entree</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="check-button">Check button</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Checkbutton</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Nouveau?"</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="button-radio">Button radio</h2>
+<p>Ce sont des cases à cocher qui sont dans un groupe et dans ce groupe seul un élément peut être sélectionné.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">value</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Oui"</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Non"</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">b3</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Radiobutton</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Poule"</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">b1</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">b2</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+<span class="n">b3</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="listes">Listes</h2>
+<p>Permettent de récupérer une valeur sélectionnée par l’utilisateur</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">liste</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Listbox</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"Python"</span><span class="p">)</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">"PHP"</span><span class="p">)</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">"jQuery"</span><span class="p">)</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">"CSS"</span><span class="p">)</span>
+<span class="n">liste</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">"Javascript"</span><span class="p">)</span>
+
+<span class="n">liste</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="canvas">Canvas</h2>
+<p>Espace dans lequel on peut dessiner ou écrire</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">canvas</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s">"yellow"</span><span class="p">)</span>
+<span class="n">ligne1</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">ligne2</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="n">txt</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Poule"</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s">"Arial 16 italic"</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">"blue"</span><span class="p">)</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h3 id="autre-éléments-graphiques">Autre éléments graphiques</h3>
+
+<p><code class="highlighter-rouge">create_arc()</code>        <script type="math/tex">\Rightarrow</script>   arc de cercle
+<code class="highlighter-rouge">create_bitmap()</code>     <script type="math/tex">\Rightarrow</script>   bitmap
+<code class="highlighter-rouge">create_image()</code>      <script type="math/tex">\Rightarrow</script>   image
+<code class="highlighter-rouge">create_line()</code>       <script type="math/tex">\Rightarrow</script>   ligne
+<code class="highlighter-rouge">create_oval()</code>       <script type="math/tex">\Rightarrow</script>   ovale
+<code class="highlighter-rouge">create_polygon()</code>    <script type="math/tex">\Rightarrow</script>   polygone
+<code class="highlighter-rouge">create_rectangle()</code>  <script type="math/tex">\Rightarrow</script>   rectangle 
+<code class="highlighter-rouge">create_text()</code>       <script type="math/tex">\Rightarrow</script>   texte
+<code class="highlighter-rouge">create_window()</code>     <script type="math/tex">\Rightarrow</script>   fenetre</p>
+
+<h3 id="changer-les-coordonnées-dun-élement-crée-dans-le-canvas">Changer les coordonnées d’un élement crée dans le canvas</h3>
+<p>Via la méthode <code class="highlighter-rouge">coords</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="err">é</span><span class="n">l</span><span class="err">é</span><span class="n">ment</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="supprimer-un-élément">Supprimer un élément</h3>
+<p>Via méthode <code class="highlighter-rouge">delete</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">canvas</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="err">é</span><span class="n">l</span><span class="err">é</span><span class="n">ment</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="scale">Scale</h2>
+
+<p>Ce widget permet de récupérer une valeur numérique via un scroll</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">value</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">DoubleVar</span><span class="p">()</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">scale</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="frames">Frames</h2>
+<p>Ce sont des conteneurs qui permettent de séparer les éléments</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">win</span><span class="p">[</span><span class="s">'bg'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'white'</span>
+
+<span class="c"># frame 1</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s">"groove"</span><span class="p">)</span>
+<span class="n">f1</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">"left"</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c"># frame 2</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s">"groove"</span><span class="p">)</span>
+<span class="n">f2</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">"right"</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c"># frame 3</span>
+<span class="n">f3</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Frame</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">"white"</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s">"groove"</span><span class="p">)</span>
+<span class="n">f3</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">"right"</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c"># ajout de labels</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Frame 1"</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Frame 2"</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">f3</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">"Frame 3"</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">"white"</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://apprendre-python.com/images/tkinter-frame.png" alt="alt" /></p>
+
+<h2 id="panedwindow">PanedWindow</h2>
+
+<p>C’est un conteneur qui peut contenir autant de panneaux que nécessaire disposé horizontalement ou verticalement</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">p</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PanedWindow</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s">'horizontal'</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">'top'</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="s">'y'</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s">'both'</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Volet1'</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">'center'</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Volet2'</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">'center'</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Volet3'</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">'center'</span><span class="p">))</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="spinbox">Spinbox</h2>
+<p>Propose a l’utilisateur de choisir un nombre</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Spinbox</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://apprendre-python.com/images/tkinter-spinbox.png" alt="alt" /></p>
+
+<h2 id="labelframe">LabelFrame</h2>
+<p>Cadre avec un label</p>
+
+<pre><code class="language-pyhon">l = tk.LabelFrame(win, text="Titre frame", padx=20, pady=20)
+l.pack(fill='both', expand='yes')
+
+tk.Label(l, text="A l'interieur de la frame").pack()
+</code></pre>
+
+<p><img src="http://apprendre-python.com/images/tkinter-labelframe.png" alt="alt" /></p>
+
+<h2 id="alertes">Alertes</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tkinter.messagebox</span> <span class="kn">as</span> <span class="nn">mb</span>
+
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">mb</span><span class="o">.</span><span class="n">askyesno</span><span class="p">(</span><span class="s">'Titre 1'</span><span class="p">,</span> <span class="s">'Êtes-vous sûr de vouloir faire ça?'</span><span class="p">):</span>
+        <span class="n">mb</span><span class="o">.</span><span class="n">showwarning</span><span class="p">(</span><span class="s">'Titre 2'</span><span class="p">,</span> <span class="s">'Ok...'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mb</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Titre 3'</span><span class="p">,</span> <span class="s">'Bouh!'</span><span class="p">)</span>
+        <span class="n">mb</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s">'Titre 4'</span><span class="p">,</span> <span class="s">'Aha'</span><span class="p">)</span>
+
+
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s">'Action'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+<h3 id="autres-alertes">Autres alertes</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">showinfo()</code></li>
+  <li><code class="highlighter-rouge">showwarning()</code></li>
+  <li><code class="highlighter-rouge">showerror()</code></li>
+  <li><code class="highlighter-rouge">askquestion()</code></li>
+  <li><code class="highlighter-rouge">askokcancel()</code></li>
+  <li><code class="highlighter-rouge">askyesno()</code></li>
+  <li><code class="highlighter-rouge">askretrycancel()</code></li>
+</ul>
+
+<h2 id="barre-de-menu">Barre de menu</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tkinter.messagebox</span> <span class="kn">as</span> <span class="nn">mb</span>
+
+
+<span class="k">def</span> <span class="nf">alert</span><span class="p">():</span>
+    <span class="n">mb</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">"Alerte"</span><span class="p">,</span> <span class="s">"Bravo!"</span><span class="p">)</span>
+
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+<span class="n">menubar</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+
+<span class="n">menu1</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">menu1</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Créer"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">alert</span><span class="p">)</span>
+<span class="n">menu1</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Editer"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">alert</span><span class="p">)</span>
+<span class="n">menu1</span><span class="o">.</span><span class="n">add_separator</span><span class="p">()</span>
+<span class="n">menu1</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Quitter"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">win</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+<span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Fichier"</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menu1</span><span class="p">)</span>
+
+<span class="n">menu2</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">menu2</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Couper"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">alert</span><span class="p">)</span>
+<span class="n">menu2</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Copier"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">alert</span><span class="p">)</span>
+<span class="n">menu2</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Coller"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">alert</span><span class="p">)</span>
+<span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Editer"</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menu2</span><span class="p">)</span>
+
+<span class="n">menu3</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">menu3</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"A propos"</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">alert</span><span class="p">)</span>
+<span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">"Aide"</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menu3</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">menubar</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+<p><img src="http://apprendre-python.com/images/tkinter-menu.png" alt="alt" /></p>
+
+<h2 id="toutes-les-méthodesoptions-dun-widget">Toutes les méthodes/options d’un widget</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">()))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">()):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="placer-des-widget">Placer des widget</h2>
+<p>Via le paramètre <code class="highlighter-rouge">side</code>:</p>
+
+<p><strong>Exemple 1:</strong></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span>
+    <span class="n">win</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">'ivory'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
+        <span class="n">side</span><span class="o">=</span><span class="s">'top'</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Button 1'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">'left'</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Button 2'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">'right'</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://apprendre-python.com/images/tkinter-side.png" alt="alt" /></p>
+
+<p><strong>Exemple 2:</strong></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span>
+    <span class="n">win</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="s">'ivory'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
+        <span class="n">side</span><span class="o">=</span><span class="s">'left'</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Button 1'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">'top'</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'Button 2'</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s">'bottom'</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://apprendre-python.com/images/tkinter-side-bottom.png" alt="alt" /></p>
+
+<h1 id="paramètres">Paramètres</h1>
+
+<h2 id="unités-de-dimensions">Unités de dimensions</h2>
+<p>Si on indique une unité via un <code class="highlighter-rouge">int</code> l’unité par défaut est <strong>pixel</strong>. Il existe d’autres unités:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">i</code> <script type="math/tex">\Rightarrow</script> pouces</li>
+  <li><code class="highlighter-rouge">m</code> <script type="math/tex">\Rightarrow</script> millimètres</li>
+  <li><code class="highlighter-rouge">c</code> <script type="math/tex">\Rightarrow</script> centimètres</li>
+</ul>
+
+<h2 id="options-de-dimension">Options de dimension</h2>
+
+<p><code class="highlighter-rouge">height</code>             <script type="math/tex">\Rightarrow</script>  Hauteur du widget.
+<code class="highlighter-rouge">width</code>              <script type="math/tex">\Rightarrow</script>  Largeur du widget.
+<code class="highlighter-rouge">padx</code>, <code class="highlighter-rouge">pady</code>       <script type="math/tex">\Rightarrow</script>  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
+<code class="highlighter-rouge">borderwidth</code>        <script type="math/tex">\Rightarrow</script>  Taille de la bordure.
+<code class="highlighter-rouge">highlightthickness</code> <script type="math/tex">\Rightarrow</script>  Largeur du rectangle lorsque le widget a le focus.
+<code class="highlighter-rouge">selectborderwidth</code>  <script type="math/tex">\Rightarrow</script>  Largeur de la bordure tridimensionnel autour du widget sélectionné.
+<code class="highlighter-rouge">wraplength</code>         <script type="math/tex">\Rightarrow</script>  Nombre de ligne maximum pour les widget en mode “word wrapping”.</p>
+
+<h2 id="options-de-couleurs">Options de couleurs</h2>
+<p>Il est possible d’indiquer une valeur de couleur par son nom en anglais:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">"white"</code></li>
+  <li><code class="highlighter-rouge">"black"</code></li>
+  <li><code class="highlighter-rouge">"yellow"</code></li>
+  <li>…</li>
+</ul>
+
+<p>Ou par son code hexadécimal.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">background (ou bg)</code>   <script type="math/tex">\Rightarrow</script>  couleur de fond du widget.</li>
+  <li><code class="highlighter-rouge">foreground (ou fg)</code>   <script type="math/tex">\Rightarrow</script>  couleur de premier plan du widget.</li>
+  <li><code class="highlighter-rouge">activebackground</code>     <script type="math/tex">\Rightarrow</script>  couleur de fond du widget lorsque celui-ci est actif.</li>
+  <li><code class="highlighter-rouge">activeForeground</code>     <script type="math/tex">\Rightarrow</script>  couleur de premier plan du widget lorsque le widget est actif.</li>
+  <li><code class="highlighter-rouge">disabledForeground</code>   <script type="math/tex">\Rightarrow</script>  couleur de premier plan du widget lorsque le widget est désactivé.</li>
+  <li><code class="highlighter-rouge">highlightbackground</code>  <script type="math/tex">\Rightarrow</script>  Couleur de fond de la région de surbrillance lorsque le widget a le focus.</li>
+  <li><code class="highlighter-rouge">highlightcolor</code>       <script type="math/tex">\Rightarrow</script>  couleur de premier plan de la région en surbrillance lorsque le widget a le focus.</li>
+  <li><code class="highlighter-rouge">selectbackground</code>     <script type="math/tex">\Rightarrow</script>  Couleur de fond pour les éléments sélectionnés.</li>
+  <li><code class="highlighter-rouge">selectforeground</code>     <script type="math/tex">\Rightarrow</script>  couleur de premier plan pour les éléments sélectionnés.</li>
+</ul>
+
+<h2 id="curseur">Curseur</h2>
+<p>Il est possible de changer l’apparance du curseur:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="arrow", relief="raised", cursor="arrow").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="circle", relief="raised", cursor="circle").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="clock", relief="raised", cursor="clock").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="cross", relief="raised", cursor="cross").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="dotbox", relief="raised", cursor="dotbox").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="exchange", relief="raised", cursor="exchange").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="fleur", relief="raised", cursor="fleur").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="heart", relief="raised", cursor="heart").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="man", relief="raised", cursor="man").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="mouse", relief="raised", cursor="mouse").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="pirate", relief="raised", cursor="pirate").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="plus", relief="raised", cursor="plus").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="shuttle", relief="raised", cursor="shuttle").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="sizing", relief="raised", cursor="sizing").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="spider", relief="raised", cursor="spider").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="spraycan", relief="raised", cursor="spraycan").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="star", relief="raised", cursor="star").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="target", relief="raised", cursor="target").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="tcross", relief="raised", cursor="tcross").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="trek", relief="raised", cursor="trek").pack()</code></li>
+  <li><code class="highlighter-rouge">Button(fenetre, text ="watch", relief="raised", cursor="watch").pack()</code></li>
+</ul>
+
+<h2 id="relief">Relief</h2>
+
+<p>b1 = Button(fenetre, text =”FLAT”, relief=’flat’).pack()
+b2 = Button(fenetre, text =”RAISED”, relief=’raised’).pack()
+b3 = Button(fenetre, text =”SUNKEN”, relief=’sunken’).pack()
+b4 = Button(fenetre, text =”GROOVE”, relief=’groove’).pack()
+b5 = Button(fenetre, text =”RIDGE”, relief=’ridge’).pack()</p>
+
+<h1 id="grid">Grid</h1>
+
+<p>Placement des éléments sous forme de grille</p>
+
+<p><strong>Exemple1:</strong></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">ligne</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">colonne</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'L{}-C{}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ligne</span><span class="p">,</span> <span class="n">colonne</span><span class="p">),</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+                <span class="n">row</span><span class="o">=</span><span class="n">ligne</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">colonne</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://apprendre-python.com/images/tkinter-grid.png" alt="alt" /></p>
+
+<p><strong>Exemple2:</strong></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'L1-c1'</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'L1-c2'</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'L2-c3'</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'L2-c4'</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'L3-c3'</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="http://apprendre-python.com/images/tkinter-grid-2.png" alt="alt" /></p>
+
+<h1 id="exemples">Exemples</h1>
+
+<h2 id="intégrer-une-image">Intégrer une image</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">photo</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span>
+    <span class="nb">file</span><span class="o">=</span><span class="s">'test.png'</span><span class="p">)</span>
+
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">'NW'</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">photo</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="récuperer-la-valeur-dun-user-input">Récuperer la valeur d’un user input</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tkinter.messagebox</span> <span class="kn">as</span> <span class="nn">mb</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">user_input</span><span class="p">():</span>
+    <span class="n">mb</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">"Alerte!"</span><span class="p">,</span> <span class="n">entree</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+<span class="n">value</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">StringVar</span><span class="p">()</span>
+<span class="n">value</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="s">"valeur"</span><span class="p">)</span>
+
+<span class="n">entree</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Entry</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">entree</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s">'valider'</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">user_input</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="récuperer-une-image-et-lafficher">Récuperer une image et l’afficher</h2>
+
+<p>Nécéssite l’import de <code class="highlighter-rouge">tkinter.filedialog</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tkinter.filedialog</span> <span class="kn">as</span> <span class="nn">fd</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">filepath</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">askopenfilenames</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s">"Ouvrir une image"</span><span class="p">,</span>
+    <span class="n">filetypes</span><span class="o">=</span><span class="p">[(</span><span class="s">'png files'</span><span class="p">,</span> <span class="s">'png'</span><span class="p">),</span> <span class="p">(</span><span class="s">'all files'</span><span class="p">,</span> <span class="s">'.*'</span><span class="p">)])</span>
+
+<span class="n">photo</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span>
+<span class="n">canvas</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span>
+    <span class="n">win</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">photo</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">height</span><span class="o">=</span><span class="n">photo</span><span class="o">.</span><span class="n">height</span><span class="p">(),</span> <span class="n">bg</span><span class="o">=</span><span class="s">'light gray'</span><span class="p">)</span>
+
+<span class="n">canvas</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">"NW"</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">photo</span><span class="p">)</span>
+<span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="récupérer-un-fichier-text-et-lafficher">Récupérer un fichier text et l’afficher</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
+<span class="kn">import</span> <span class="nn">tkinter.filedialog</span> <span class="kn">as</span> <span class="nn">fd</span>
+
+<span class="n">win</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">askopenfilename</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s">"Ouvrir votre document"</span><span class="p">,</span>
+    <span class="n">filetypes</span><span class="o">=</span><span class="p">[(</span><span class="s">'txt files'</span><span class="p">,</span> <span class="s">'.txt'</span><span class="p">),</span> <span class="p">(</span><span class="s">'all files'</span><span class="p">,</span> <span class="s">'.*'</span><span class="p">)])</span>
+<span class="n">fichier</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">fichier</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">fichier</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">tk</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="n">fenetre</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">content</span><span class="p">)</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="n">win</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="events">Events</h2>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Tkinter@&amp;url=http://localhost:4000/py/py-Tkinter.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-Tkinter.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-Tkinter.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
