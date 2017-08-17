@@ -2,7 +2,7 @@
 layout: post
 title: "Py: Tkinter"
 subtitle: "Interface graphique Tkinter Python"
-date: 2017-16-29
+date: 2017-16-08
 author: Sol
 category: Py
 tags: divers, fr, en
@@ -13,7 +13,7 @@ finished: false
 
 * [apprendre-python.com](http://apprendre-python.com/page-tkinter-interface-graphique-python-tutoriel)
 * [tutorialspoint](https://www.tutorialspoint.com/python/python_gui_programming.htm)
-* [python-course.eu](http://www.python-course.eu/python_tkinter.php)
+* [python-course.eu](http://www.python-course.eu/python_tkinter.phpg)
 
 # En bref
 

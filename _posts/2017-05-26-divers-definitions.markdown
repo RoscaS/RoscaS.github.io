@@ -21,6 +21,9 @@ En **logique mathématique**, le mot « tautologie » désigne une proposition t
 
 En **logique**, une tautologie est une formule valide pour toutes les assignations possibles et appartient au métalangage.
 
+### Non-free
+Contraire d'open-source. Pas forcément payant!
+
 ---------------------------------------------------------------------------
 
 # IA (types)
@@ -51,7 +54,6 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 
 ---------------------------------------------------------------------------
-
 
 
 

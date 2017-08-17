@@ -1,0 +1,43 @@
+---
+layout: post
+title: "Py: OpenCV"
+subtitle: "Computer Vision"
+date: 2017-17-08
+author: Sol
+category: Py
+tags: divers, fr, en
+finished: false
+---
+
+## Sources
+
+* [openCV-python](https://opencv-python-tutroals.readthedocs.io)
+* [install open cv (linux)](http://www.pyimagesearch.com/2016/10/24/ubuntu-16-04-how-to-install-opencv/)
+
+
+
+## En vrac
+
+> An important feature of Python is that it can be easily **extended with C/C++**. This feature helps us to write computationally intensive codes in C/C++ and create a Python wrapper for it so that we can use these wrappers as Python modules. So our code is as fast as original C/C++ code (since it is the actual C++ code working in background). **This is how OpenCV-Python works, it is a Python wrapper around original C++ implementation.**
+
+**A good knowledge on Numpy is must to write optimized codes in OpenCV-Python.**
+
+## Install (linux)
+
+### problemes:
+
+#### `libjasper-dev`
+[stackoverflow](https://stackoverflow.com/questions/43484357/opencv-in-ubuntu-17-04)
+
+`echo "deb http://us.archive.ubuntu.com/ubuntu/ yakkety universe" | sudo tee -a /etc/apt/sources.list`
+
+```
+sudo apt-get update
+sudo apt-get install libjasper-dev
+```
+
+#### `libpng12-dev`
+
+[askubuntu](https://askubuntu.com/questions/840257/e-package-libpng12-0-has-no-installation-candidate-ubuntu-16-10-gnome/840268)
+
+>You can download the libpng12-0 from here. http://packages.ubuntu.com/xenial/i386/libpng12-0/download for 386 architecture and http://packages.ubuntu.com/xenial/amd64/libpng12-0/download for 64 bits. I had the same dependences problem. But downloading and installing fix the error. Ubuntu 16.10 kill these libs jeje.
