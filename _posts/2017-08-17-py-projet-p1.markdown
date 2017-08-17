@@ -1,0 +1,80 @@
+---
+layout: post
+title: "Py: remake du projet p1"
+subtitle: "Interface graphique Tkinter Python"
+date: 2017-16-08
+author: Sol
+category: Py
+tags: divers, fr, en
+finished: false
+---
+
+## Conversion image
+
+### Liste de points
+
+```python
+from PIL import Image
+import tkinter as tk
+
+i = Image.open("aa.png")
+
+pixels = i.load()
+width, height = i.size
+
+coords = []
+
+for x in range(width):
+    for y in range(height):
+        cpixel = pixels[x, y]
+        bw_value = int(round(sum(cpixel) / float(len(cpixel))))
+        if bw_value != 255:
+            # (x, y, (r,g,b))
+            coords.append((x, y, cpixel))
+
+canvas_width  = width
+canvas_height = height
+
+master = tk.Tk()
+
+w = tk.Canvas(master, width=canvas_width, height=canvas_height)
+
+w.pack()
+
+for i in coords:
+    x1, y1 = i[0] - 1, i[1] - 1
+    x2, y2 = i[0] + 1, i[1] + 1
+    w.create_oval(x1, y1, x2, y2, fill="black")
+    
+
+tk.mainloop()
+```
+
+### Variantes
+
+#### monochrome
+
+```python
+cpixel = pixels[x, y]
+bw_value = int(round(sum(cpixel) / float(len(cpixel))))
+# the above could probably be bw_value = sum(cpixel)/len(cpixel)
+all_pixels.append(bw_value)
+```
+
+#### luminance (weighted average)
+
+```python
+cpixel = pixels[x, y]
+luma = (0.3 * cpixel[0]) + (0.59 * cpixel[1]) + (0.11 * cpixel[2])
+all_pixels.append(luma)
+```
+
+#### pure 1-bit black and white
+
+```python
+cpixel = pixels[x, y]
+if round(sum(cpixel)) / float(len(cpixel)) > 127:
+    all_pixels.append(255)
+else:
+    all_pixels.append(0)
+```
