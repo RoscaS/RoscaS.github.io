@@ -9,9 +9,36 @@ tags: divers, fr, en
 finished: false
 ---
 
+## Repo
+
+* [py_projet_p1](https://github.com/RoscaS/py_projet_p1)
+
+## Traitement liste de points
+
+En sortie de la méthode `coords()` de la classe `ProcessImg` les points sont classés ligne par ligne dans une liste. Chaque ligne est référencée par un pixel de l'axe y de notre image. 
+
+Il faut faire en sorte que le dessin soit fluide et ressemble à la façon de dessiner d'un humain et non pas à celle d'une imprimante.
+En gros, il nous faut **Trouver une ligne qui connecte tous les points de la liste**.
+
+[Shortest path problem in a graph, where](https://stackoverflow.com/questions/37742358/sorting-points-to-form-a-continuous-line):
+1. the graph nodes are the points in the space, 
+2. each node is connected to its 2 nearest neighbors, and 
+3. the shortest path passes through each of the nodes only once. That last constrain is a very important (and quite hard one to optimize). 
+
+
 ## Conversion image
 
-### Liste de points
+## Trouver les points d'intersection de deux cercles (angle du bras)
+
+![alt](http://www.vb-helper.com/howto_circle_circle_intersection1.png)
+
+* [text](https://stackoverflow.com/questions/3349125/circle-circle-intersection-points)
+
+
+
+
+
+### Liste de points (solution obsolete, openCV is the go!)
 
 ```python
 from PIL import Image

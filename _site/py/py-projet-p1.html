@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Py: remake projet p1</title>
-  <meta name="description" content="Conversion image">
+  <meta name="description" content="Repo">
 </head>
 
 
@@ -103,9 +103,37 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="conversion-image">Conversion image</h2>
+    <h2 id="repo">Repo</h2>
 
-<h3 id="liste-de-points">Liste de points</h3>
+<ul>
+  <li><a href="https://github.com/RoscaS/py_projet_p1">py_projet_p1</a></li>
+</ul>
+
+<h2 id="traitement-liste-de-points">Traitement liste de points</h2>
+
+<p>En sortie de la méthode <code class="highlighter-rouge">coords()</code> de la classe <code class="highlighter-rouge">ProcessImg</code> les points sont classés ligne par ligne dans une liste. Chaque ligne est référencée par un pixel de l’axe y de notre image.</p>
+
+<p>Il faut faire en sorte que le dessin soit fluide et ressemble à la façon de dessiner d’un humain et non pas à celle d’une imprimante.
+En gros, il nous faut <strong>Trouver une ligne qui connecte tous les points de la liste</strong>.</p>
+
+<p><a href="https://stackoverflow.com/questions/37742358/sorting-points-to-form-a-continuous-line">Shortest path problem in a graph, where</a>:</p>
+<ol>
+  <li>the graph nodes are the points in the space,</li>
+  <li>each node is connected to its 2 nearest neighbors, and</li>
+  <li>the shortest path passes through each of the nodes only once. That last constrain is a very important (and quite hard one to optimize).</li>
+</ol>
+
+<h2 id="conversion-image">Conversion image</h2>
+
+<h2 id="trouver-les-points-dintersection-de-deux-cercles-angle-du-bras">Trouver les points d’intersection de deux cercles (angle du bras)</h2>
+
+<p><img src="http://www.vb-helper.com/howto_circle_circle_intersection1.png" alt="alt" /></p>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/3349125/circle-circle-intersection-points">text</a></li>
+</ul>
+
+<h3 id="liste-de-points-solution-obsolete-opencv-is-the-go">Liste de points (solution obsolete, openCV is the go!)</h3>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">tkinter</span> <span class="kn">as</span> <span class="nn">tk</span>
