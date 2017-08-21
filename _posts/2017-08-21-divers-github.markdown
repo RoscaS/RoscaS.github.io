@@ -33,4 +33,12 @@ finished: false
 4. Coller la clé dans le champ field
 5. **Add SSH key**
 
-<span style="color:red">Maintenant envoyez moi votre nom de compte sur Whatsapp que je vous invite sur le projet. </span>
+<span style="color:red">Maintenant envoyez moi votre nom de compte sur Whatsapp que je vous invite sur le projet. g</span>
+
+## Telecharger le projet
+
+1. Crééz un folder ou vous voulez.
+2. Accedez à ce folder avec **git bash**
+3. `git pull https://github.com/RoscaS/P1_2017`
+
+# C'est bon !
