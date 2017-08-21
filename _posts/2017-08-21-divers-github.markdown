@@ -4,7 +4,7 @@ title: "Divers: github"
 subtitle: "premier connexion + ssh"
 date: 2017-08-21
 author: Sol
-category: Py
+category: Divers
 tags: divers, fr, en
 finished: false
 ---
@@ -42,3 +42,10 @@ finished: false
 3. `git pull https://github.com/RoscaS/P1_2017`
 
 # C'est bon !
+
+## Mises à jour
+
+Une fois que vous avez fait des modifications:
+* `git add .`
+* `git commit -a -m"petit message qui explique vos modifs"
+* `git push`
