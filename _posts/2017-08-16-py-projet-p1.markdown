@@ -10,11 +10,71 @@ finished: false
 ---
 
 ## Repo
-
 * [py_projet_p1](https://github.com/RoscaS/py_projet_p1)
+
+## Classe ProcessImg
+
+### Traitement de l'image
+
+Dans le fichier **processIng.py**, la classe `ProcessImg` se charge de traiter l'image à l'aide d'**openCV**.
+
+* Assignation de l'attribut `self.original` qui contient l'image originale sous forme de liste **numpy**. Chaque elément contient une liste contenant un $$x$$ un $$y$$ et une valeur référence de la couleur.
+
+* Les attributs `self.height` et `self.width` contiennent repectivement la largeur et la longueur totale de l'image originiale calculés à partir de la methode `shape` de l'objet `self.original`
+
+* `self.processed` contient un appel de la methode `self.__process()` qui se charge d'appliquer le traitement à l'image.
+
+```python
+def __process(self):
+    img    = cv2.cvtColor(self.original, cv2.COLOR_BGR2GRAY)
+    img    = cv2.GaussianBlur(img, (3, 3), 0)
+    # img  = cv2.Canny(img, 50, 220)
+    img    = cv2.Canny(img, 100, 200)
+    # kernel = np.ones((2, 2), np.uint8)
+    # img  = cv2.dilate(img, kernel, iterations = 1)
+    # img  = cv2.erode(img, kernel, iterations  = 1)
+    img  = self.resize(img)
+```
+
+1. Transformations des couleurs en dégradé de gris.
+2. Application d'un flou gaussien pour adoussir les bords.
+3. Application de l'algorithme `Canny edges` qui detecte les bords et ne garde que ces derniers. **Hyrestesis set sur 100/200**
+4. Un resize pour les images plus grandes que 640px <span style="color:red"> (déterminer une valeur optimale) </span>
+    ```python
+    def resize(self, img, width=640):
+        if self.width > 640:
+            img_scale = width / self.width
+            xx = int(self.original.shape[1] * img_scale)
+            yy = int(self.original.shape[0] * img_scale)
+            self.height, self.width = yy, xx
+            resized = cv2.resize(img, (xx, yy))
+            return resized
+    ``` 
+5. Est retourné à l'attribut `self.processed` la detection de bords redimensionnée et à laquelle on ajoute un padding pour éviter les overflow lors de la recherche de points par la suite.
+    ```python
+        def padding(self, canny):
+        return cv2.copyMakeBorder(
+            canny, 100, 100, 100, 100, 
+            cv2.BORDER_CONSTANT, value=0000)
+    ```
+
+
+> Optionnel: les lignes commentées dans `__process()` permettent d'appliquer un traitement qui vise a fermer les bords incomplets de certaines images. Très efficace pour certaines images, induit cependant une perte de qualité massive dans d'autres.
+
+### Affichage
+La methode `self.display()` permet d'afficher l'image après process. Elle fait appel à plusieurs methodes d'**openCV** pour controler la fenêtre d'affichage.
+
+
+
+
+
+## A CONTINUER, CETTE METHODE NE MARCHE PLUS POUR CETTE CLASSE
+`self.coords_file([nom de fichier])` retourne un fichier contenant une liste des points de
+
 
 ## Traitement liste de points
 
+### Solution 1 (depreciated)
 En sortie de la méthode `coords()` de la classe `ProcessImg` les points sont classés ligne par ligne dans une liste. Chaque ligne est référencée par un pixel de l'axe y de notre image. 
 
 Il faut faire en sorte que le dessin soit fluide et ressemble à la façon de dessiner d'un humain et non pas à celle d'une imprimante.
@@ -24,6 +84,8 @@ En gros, il nous faut **Trouver une ligne qui connecte tous les points de la lis
 1. the graph nodes are the points in the space, 
 2. each node is connected to its 2 nearest neighbors, and 
 3. the shortest path passes through each of the nodes only once. That last constrain is a very important (and quite hard one to optimize). 
+
+## Solution 2
 
 
 ## Conversion image

@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 21 Aug 2017 13:04:23 +0200</pubDate>
-    <lastBuildDate>Mon, 21 Aug 2017 13:04:23 +0200</lastBuildDate>
+    <pubDate>Tue, 22 Aug 2017 08:00:28 +0200</pubDate>
+    <lastBuildDate>Tue, 22 Aug 2017 08:00:28 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -55,6 +55,15 @@
 &lt;/ol&gt;
 
 &lt;h1 id=&quot;cest-bon-&quot;&gt;C’est bon !&lt;/h1&gt;
+
+&lt;h2 id=&quot;mises-à-jour&quot;&gt;Mises à jour&lt;/h2&gt;
+
+&lt;p&gt;Une fois que vous avez fait des modifications:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git add .&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;`git commit -a -m”petit message qui explique vos modifs”&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Mon, 21 Aug 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/divers/divers-github.html</link>
@@ -902,13 +911,79 @@ deactivate
       <item>
         <title>Py: remake projet p1</title>
         <description>&lt;h2 id=&quot;repo&quot;&gt;Repo&lt;/h2&gt;
-
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/RoscaS/py_projet_p1&quot;&gt;py_projet_p1&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;h2 id=&quot;classe-processimg&quot;&gt;Classe ProcessImg&lt;/h2&gt;
+
+&lt;h3 id=&quot;traitement-de-limage&quot;&gt;Traitement de l’image&lt;/h3&gt;
+
+&lt;p&gt;Dans le fichier &lt;strong&gt;processIng.py&lt;/strong&gt;, la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;ProcessImg&lt;/code&gt; se charge de traiter l’image à l’aide d’&lt;strong&gt;openCV&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Assignation de l’attribut &lt;code class=&quot;highlighter-rouge&quot;&gt;self.original&lt;/code&gt; qui contient l’image originale sous forme de liste &lt;strong&gt;numpy&lt;/strong&gt;. Chaque elément contient une liste contenant un &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; un &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; et une valeur référence de la couleur.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Les attributs &lt;code class=&quot;highlighter-rouge&quot;&gt;self.height&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;self.width&lt;/code&gt; contiennent repectivement la largeur et la longueur totale de l’image originiale calculés à partir de la methode &lt;code class=&quot;highlighter-rouge&quot;&gt;shape&lt;/code&gt; de l’objet &lt;code class=&quot;highlighter-rouge&quot;&gt;self.original&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;self.processed&lt;/code&gt; contient un appel de la methode &lt;code class=&quot;highlighter-rouge&quot;&gt;self.__process()&lt;/code&gt; qui se charge d’appliquer le traitement à l’image.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__process&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cvtColor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;original&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COLOR_BGR2GRAY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GaussianBlur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# img  = cv2.Canny(img, 50, 220)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Canny&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# kernel = np.ones((2, 2), np.uint8)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# img  = cv2.dilate(img, kernel, iterations = 1)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# img  = cv2.erode(img, kernel, iterations  = 1)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Transformations des couleurs en dégradé de gris.&lt;/li&gt;
+  &lt;li&gt;Application d’un flou gaussien pour adoussir les bords.&lt;/li&gt;
+  &lt;li&gt;Application de l’algorithme &lt;code class=&quot;highlighter-rouge&quot;&gt;Canny edges&lt;/code&gt; qui detecte les bords et ne garde que ces derniers. &lt;strong&gt;Hyrestesis set sur 100/200&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Un resize pour les images plus grandes que 640px &lt;span style=&quot;color:red&quot;&gt; (déterminer une valeur optimale) &lt;/span&gt;
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;640&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;640&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;img_scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;xx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;original&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;img_scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;yy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;original&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;img_scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+         &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xx&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;resized&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resized&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Est retourné à l’attribut &lt;code class=&quot;highlighter-rouge&quot;&gt;self.processed&lt;/code&gt; la detection de bords redimensionnée et à laquelle on ajoute un padding pour éviter les overflow lors de la recherche de points par la suite.
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;canny&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;copyMakeBorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+         &lt;span class=&quot;n&quot;&gt;canny&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+         &lt;span class=&quot;n&quot;&gt;cv2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BORDER_CONSTANT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;0000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Optionnel: les lignes commentées dans &lt;code class=&quot;highlighter-rouge&quot;&gt;__process()&lt;/code&gt; permettent d’appliquer un traitement qui vise a fermer les bords incomplets de certaines images. Très efficace pour certaines images, induit cependant une perte de qualité massive dans d’autres.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;affichage&quot;&gt;Affichage&lt;/h3&gt;
+&lt;p&gt;La methode &lt;code class=&quot;highlighter-rouge&quot;&gt;self.display()&lt;/code&gt; permet d’afficher l’image après process. Elle fait appel à plusieurs methodes d’&lt;strong&gt;openCV&lt;/strong&gt; pour controler la fenêtre d’affichage.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-continuer-cette-methode-ne-marche-plus-pour-cette-classe&quot;&gt;A CONTINUER, CETTE METHODE NE MARCHE PLUS POUR CETTE CLASSE&lt;/h2&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;self.coords_file([nom de fichier])&lt;/code&gt; retourne un fichier contenant une liste des points de&lt;/p&gt;
+
 &lt;h2 id=&quot;traitement-liste-de-points&quot;&gt;Traitement liste de points&lt;/h2&gt;
 
+&lt;h3 id=&quot;solution-1-depreciated&quot;&gt;Solution 1 (depreciated)&lt;/h3&gt;
 &lt;p&gt;En sortie de la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;coords()&lt;/code&gt; de la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;ProcessImg&lt;/code&gt; les points sont classés ligne par ligne dans une liste. Chaque ligne est référencée par un pixel de l’axe y de notre image.&lt;/p&gt;
 
 &lt;p&gt;Il faut faire en sorte que le dessin soit fluide et ressemble à la façon de dessiner d’un humain et non pas à celle d’une imprimante.
@@ -920,6 +995,8 @@ En gros, il nous faut &lt;strong&gt;Trouver une ligne qui connecte tous les poin
   &lt;li&gt;each node is connected to its 2 nearest neighbors, and&lt;/li&gt;
   &lt;li&gt;the shortest path passes through each of the nodes only once. That last constrain is a very important (and quite hard one to optimize).&lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;h2 id=&quot;solution-2&quot;&gt;Solution 2&lt;/h2&gt;
 
 &lt;h2 id=&quot;conversion-image&quot;&gt;Conversion image&lt;/h2&gt;
 

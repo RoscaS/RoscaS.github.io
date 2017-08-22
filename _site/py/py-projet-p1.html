@@ -41,7 +41,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Py: remake projet p1</title>
-  <meta name="description" content="Repo">
+  <meta name="description" content="Repo  py_projet_p1">
 </head>
 
 
@@ -104,13 +104,79 @@
 
 <div class="post-content" itemprop="articleBody">
     <h2 id="repo">Repo</h2>
-
 <ul>
   <li><a href="https://github.com/RoscaS/py_projet_p1">py_projet_p1</a></li>
 </ul>
 
+<h2 id="classe-processimg">Classe ProcessImg</h2>
+
+<h3 id="traitement-de-limage">Traitement de l’image</h3>
+
+<p>Dans le fichier <strong>processIng.py</strong>, la classe <code class="highlighter-rouge">ProcessImg</code> se charge de traiter l’image à l’aide d’<strong>openCV</strong>.</p>
+
+<ul>
+  <li>
+    <p>Assignation de l’attribut <code class="highlighter-rouge">self.original</code> qui contient l’image originale sous forme de liste <strong>numpy</strong>. Chaque elément contient une liste contenant un <script type="math/tex">x</script> un <script type="math/tex">y</script> et une valeur référence de la couleur.</p>
+  </li>
+  <li>
+    <p>Les attributs <code class="highlighter-rouge">self.height</code> et <code class="highlighter-rouge">self.width</code> contiennent repectivement la largeur et la longueur totale de l’image originiale calculés à partir de la methode <code class="highlighter-rouge">shape</code> de l’objet <code class="highlighter-rouge">self.original</code></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">self.processed</code> contient un appel de la methode <code class="highlighter-rouge">self.__process()</code> qui se charge d’appliquer le traitement à l’image.</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">__process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">img</span>    <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+    <span class="n">img</span>    <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c"># img  = cv2.Canny(img, 50, 220)</span>
+    <span class="n">img</span>    <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="c"># kernel = np.ones((2, 2), np.uint8)</span>
+    <span class="c"># img  = cv2.dilate(img, kernel, iterations = 1)</span>
+    <span class="c"># img  = cv2.erode(img, kernel, iterations  = 1)</span>
+    <span class="n">img</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ol>
+  <li>Transformations des couleurs en dégradé de gris.</li>
+  <li>Application d’un flou gaussien pour adoussir les bords.</li>
+  <li>Application de l’algorithme <code class="highlighter-rouge">Canny edges</code> qui detecte les bords et ne garde que ces derniers. <strong>Hyrestesis set sur 100/200</strong></li>
+  <li>Un resize pour les images plus grandes que 640px <span style="color:red"> (déterminer une valeur optimale) </span>
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">640</span><span class="p">):</span>
+     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">&gt;</span> <span class="mi">640</span><span class="p">:</span>
+         <span class="n">img_scale</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+         <span class="n">xx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">img_scale</span><span class="p">)</span>
+         <span class="n">yy</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">img_scale</span><span class="p">)</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">yy</span><span class="p">,</span> <span class="n">xx</span>
+         <span class="n">resized</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
+         <span class="k">return</span> <span class="n">resized</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Est retourné à l’attribut <code class="highlighter-rouge">self.processed</code> la detection de bords redimensionnée et à laquelle on ajoute un padding pour éviter les overflow lors de la recherche de points par la suite.
+    <div class="language-python highlighter-rouge"><pre class="highlight"><code>     <span class="k">def</span> <span class="nf">padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canny</span><span class="p">):</span>
+     <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">copyMakeBorder</span><span class="p">(</span>
+         <span class="n">canny</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> 
+         <span class="n">cv2</span><span class="o">.</span><span class="n">BORDER_CONSTANT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mo">0000</span><span class="p">)</span>
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<blockquote>
+  <p>Optionnel: les lignes commentées dans <code class="highlighter-rouge">__process()</code> permettent d’appliquer un traitement qui vise a fermer les bords incomplets de certaines images. Très efficace pour certaines images, induit cependant une perte de qualité massive dans d’autres.</p>
+</blockquote>
+
+<h3 id="affichage">Affichage</h3>
+<p>La methode <code class="highlighter-rouge">self.display()</code> permet d’afficher l’image après process. Elle fait appel à plusieurs methodes d’<strong>openCV</strong> pour controler la fenêtre d’affichage.</p>
+
+<h2 id="a-continuer-cette-methode-ne-marche-plus-pour-cette-classe">A CONTINUER, CETTE METHODE NE MARCHE PLUS POUR CETTE CLASSE</h2>
+<p><code class="highlighter-rouge">self.coords_file([nom de fichier])</code> retourne un fichier contenant une liste des points de</p>
+
 <h2 id="traitement-liste-de-points">Traitement liste de points</h2>
 
+<h3 id="solution-1-depreciated">Solution 1 (depreciated)</h3>
 <p>En sortie de la méthode <code class="highlighter-rouge">coords()</code> de la classe <code class="highlighter-rouge">ProcessImg</code> les points sont classés ligne par ligne dans une liste. Chaque ligne est référencée par un pixel de l’axe y de notre image.</p>
 
 <p>Il faut faire en sorte que le dessin soit fluide et ressemble à la façon de dessiner d’un humain et non pas à celle d’une imprimante.
@@ -122,6 +188,8 @@ En gros, il nous faut <strong>Trouver une ligne qui connecte tous les points de 
   <li>each node is connected to its 2 nearest neighbors, and</li>
   <li>the shortest path passes through each of the nodes only once. That last constrain is a very important (and quite hard one to optimize).</li>
 </ol>
+
+<h2 id="solution-2">Solution 2</h2>
 
 <h2 id="conversion-image">Conversion image</h2>
 
