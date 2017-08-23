@@ -122,7 +122,7 @@
     <p>Les attributs <code class="highlighter-rouge">self.height</code> et <code class="highlighter-rouge">self.width</code> contiennent repectivement la largeur et la longueur totale de l’image originiale calculés à partir de la methode <code class="highlighter-rouge">shape</code> de l’objet <code class="highlighter-rouge">self.original</code></p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">self.processed</code> contient un appel de la methode <code class="highlighter-rouge">self.__process()</code> qui se charge d’appliquer le traitement à l’image.</p>
+    <p><code class="highlighter-rouge">self.processed</code> contient un appel de la methode <code class="highlighter-rouge">__process()</code> qui se charge d’appliquer le traitement à l’image.</p>
   </li>
 </ul>
 
@@ -154,7 +154,7 @@
 </code></pre>
     </div>
   </li>
-  <li>Est retourné à l’attribut <code class="highlighter-rouge">self.processed</code> la detection de bords redimensionnée et à laquelle on ajoute un padding pour éviter les overflow lors de la recherche de points par la suite.
+  <li>Est retourné à l’attribut <code class="highlighter-rouge">self.processed</code> la detection de bords redimensionnée et à laquelle on ajoute un padding via la méthode <code class="highlighter-rouge">padding()</code> pour éviter les overflow lors de la recherche de points par la suite.
     <div class="language-python highlighter-rouge"><pre class="highlight"><code>     <span class="k">def</span> <span class="nf">padding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canny</span><span class="p">):</span>
      <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">copyMakeBorder</span><span class="p">(</span>
          <span class="n">canny</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> 
@@ -171,8 +171,23 @@
 <h3 id="affichage">Affichage</h3>
 <p>La methode <code class="highlighter-rouge">self.display()</code> permet d’afficher l’image après process. Elle fait appel à plusieurs methodes d’<strong>openCV</strong> pour controler la fenêtre d’affichage.</p>
 
-<h2 id="a-continuer-cette-methode-ne-marche-plus-pour-cette-classe">A CONTINUER, CETTE METHODE NE MARCHE PLUS POUR CETTE CLASSE</h2>
-<p><code class="highlighter-rouge">self.coords_file([nom de fichier])</code> retourne un fichier contenant une liste des points de</p>
+<h2 id="classe-grid">classe Grid</h2>
+<p>Dans le fichier <strong>processImg.py</strong>, la class <code class="highlighter-rouge">Grid</code> se charge de traiter une liste 2d qui sort de la classe <code class="highlighter-rouge">ProcessImg</code> pour la mettre sous forme de liste 1d.</p>
+
+<blockquote>
+  <p>Elle devrait également gérer toute la logique pour permettre d’utiliser cette liste comme si l’image était sous forme d’une liste 2d. <span style="color: red"> A réfléchir </span></p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">self.img</code> contient un objet de type <code class="highlighter-rouge">ProcessImg</code> auquel est passé l’image reçu en argument lors de l’instanciation d’un objet de type <code class="highlighter-rouge">Grid</code></li>
+  <li><code class="highlighter-rouge">self.canny</code> contient un <strong>numpy array</strong> des points composant les bords de l’image contenue dans <code class="highlighter-rouge">self.img</code>.</li>
+  <li><code class="highlighter-rouge">self.len</code> contient le nombre de points composant <code class="highlighter-rouge">self.canny</code></li>
+  <li><code class="highlighter-rouge">self.height</code>, <code class="highlighter-rouge">self.width</code> contiennent une vision logique du format des points contenu dans <code class="highlighter-rouge">self.canny</code></li>
+</ul>
+
+<h3 id="bin_list">bin_list</h3>
+
+<p>Cette methode retourne un <code class="highlighter-rouge">bytearray</code> contenant les points de l’image après traitement par la methode <code class="highlighter-rouge">__process()</code> de la classe <code class="highlighter-rouge">ProcessImg</code>.</p>
 
 <h2 id="traitement-liste-de-points">Traitement liste de points</h2>
 
