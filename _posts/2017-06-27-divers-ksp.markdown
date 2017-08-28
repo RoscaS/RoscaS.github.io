@@ -9,6 +9,44 @@ tags: divers, fr, en
 finished: false
 ---
 
+# Préambule
+
+## Friction
+
+> Si une voiture roule à 120km/h et que nous la mettons au point mort et entamons un virrage, après un certain temps cette voiture se retrouverait à l'arrêt. Notre intuition nous pousse à accélérer pour compenser cette perte de vitesse.
+
+La raison pour laquelle on pense est que toutes nos expériences sur terre implique la **friction** (frottement). Dans l'exemple précédent, il y a un frottement avec l'air sur la carosserie de la voiture ainsi que le contact des pneuds avec la route.
+
+La **friction** peut être vue comme une **force qui tire** alors que la pédale d'**accélération** nous **pousse**. Si nous coupons le moteur, la friction continue à nous tirer ce pourquoi nous perdons de la vitesse, jusqu'à l'arrêt.
+
+Dans l'espace, il n'y a pas de friction, un corp en déplacement se déplace tant que quelque chose ne l'arrête pas.
+
+> Une des loi de Newton spécifie qu'un objet en déplacement ou au repos le reste à moins qu'une force ne s'applique sur eux.
+
+Une force peut être vue comme une poussée (dans un sens ou dans un autre).
+
+## Velocité, vitesse, direction et accélération
+
+Quand on parle de vélocité, on parle de la **vitesse** à laquelle un objet se déplace ainsi que la **direction** dans laquelle il le fait.
+
+* Si la vitesse d'un objet est stable et qu'il tourne, cet objet subit un changement de vélocité.
+> Si nous sommes dans une voiture et que nous effectuons un virage à 90 degrés, nous devons accélérer pour compenser la perte de vitesse
+
+**L'accélération n'est rien d'autre qu'un changment de vélocité.** En physique quand quelque chose accélère, c'est soit que sa **vitesse change** soit que sa **direction change**, soit **les deux**.
+
+### Complément d'informations
+La relation mathématique entre **position**, **vélocité** et **accélération** et leur exploration est ce qui à donné naissance à la branche des maths appellée annalyse.
+
+
+
+![alt](https://wiki.kerbalspaceprogram.com/images/thumb/c/cd/Simple_orbit_diagram.svg/900px-Simple_orbit_diagram.svg.pngk)
+
+
+
+
+
+
+
 # Orbite
 
 [coeleve](https://coeleveld.com/kerbal-space-program-how-to-get-into-orbit-and-back/)
