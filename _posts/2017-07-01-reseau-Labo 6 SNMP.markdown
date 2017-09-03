@@ -686,6 +686,7 @@ L'application interrogera un équipement par protocole **SNMP** et répondra sur
 <a href="/00illustrations/labo6/docker2.png"><img src="/00illustrations/labo6/docker2.png"></a>
 
 
+
 # Codage et test de la solution (Programme Python)
 
 Notre programme est composé de trois fichiers. Deux modules et un "main". Il affiche un graph qui représente les processus actifs sur la machine à l'adresse `157.26.77.13` en fonction du temps. Ce graph est naj toutes les 3 secondes.
