@@ -26,10 +26,13 @@ Telecharger le driver via le gestionnaire de package synaptic.
 
 ## Carte son
 Si le driver saute lors de switchs entre OSs:
-
 ```
 pulseaudio -k && sudo alsa force-reload
 ```
+
+## Edit keyboard layout
+* [people.uleth.ca](http://people.uleth.ca/~daniel.odonnell/Blog/custom-keyboard-in-linuxx11#e)
+
 
 
 # CCSM (CompizConfig)
