@@ -32,6 +32,7 @@ pulseaudio -k && sudo alsa force-reload
 
 ## Edit keyboard layout
 * [people.uleth.ca](http://people.uleth.ca/~daniel.odonnell/Blog/custom-keyboard-in-linuxx11#e)
+* [unicode char list](https://en.wikipedia.org/wiki/List_of_Unicode_characters)
 
 
 
