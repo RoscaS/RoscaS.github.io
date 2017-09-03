@@ -16,6 +16,22 @@ $$time \; fixing \; things \; or \; finding \; out \; how \; to $$
 $$fix \; things. $$
 
 
+# Specifique au Dell xps 13 9343
+
+## Carte reseau
+Telecharger le driver via le gestionnaire de package synaptic.
+```
+ Network controller: Broadcom Limited BCM4352 802.11ac
+```
+
+## Carte son
+Si le driver saute lors de switchs entre OSs:
+
+```
+pulseaudio -k && sudo alsa force-reload
+```
+
+
 # CCSM (CompizConfig)
 
 Undecorate window:
