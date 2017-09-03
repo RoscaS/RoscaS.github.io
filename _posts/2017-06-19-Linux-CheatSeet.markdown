@@ -813,3 +813,4 @@ $ find /home/bruno/old-friends -type f -exec sed -i 's/ugly/beautiful/g' {} \;
 Sure in combination with the find command you can do all 
 kind of nice tricks, even if you don't remember where 
 the files are located !
+
