@@ -45,6 +45,17 @@ In **Window Decoration**, in **Decoration Windows** add for example (undecorate 
 (any) & !(class=Mate-terminal) & !(class=Terminator)
 ```
 
+# TLP (power mangement)
+* `sudo tlp start`
+* `sudo tlp-stat -s`
+
+To disable:
+```
+sudo nano /etc/default/tlp
+```
+Change
+`TLP_ENABLE=1` to `TLP_ENABLE=0`
+
 
 # General
 

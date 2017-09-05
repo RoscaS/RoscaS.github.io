@@ -20,17 +20,16 @@ finished: false
 
 ## Traitement d'image
 * Choix de l'algorithme de traitement de l'image:
-    * a: **Vanessa**: transformations des couleurs en différentes teintes de gris, application d'un flou gaussien et detection des bords via filtre Canny.
-    * b. **Janette**: algorithme non basé sur la detection de bords qui transforme les couleurs de l'image en différentes teintes de gris et tente de reproduire ces derniêres.
+    * a: **Vanessa**: transformations des couleurs en différentes teintes de gris, application d'un flou gaussien et detection des bords via Canny.
+    * b. **Janette**: algorithme non basé sur la detection de bords qui transforme les couleurs de l'image en différentes teintes de gris et tente de reproduire ces derniêres sous forme de tramage.
 
-* Par défaut le logiciel adaptate automatique les seuils d'hyrestesis du filtre Canny en fonction d'une moyenne faite
+* Par défaut le logiciel adaptate automatiquement et dynamiquement les seuils de l'hyrestesis de la detection des bords.
 
-* Un mode "expert" permet a l'utilisateur plusieurs options avancées lors tu traitement de l'image:
-
-* Plusieurs options possibles pour le traitement de l'image avec prévisualisation:
+* Un mode "expert" permet a l'utilisateur plusieurs options avancées lors tu traitement de l'image avec une prévisualisation du resultat:
     * Intensité du flou Gaussien
     * Valeur haute et basse de l'hyrestesis du filtre Canny
     * Transformation morphologique de l'image:
         * Erosion suivie de dilatation ce qui permet de réduire le bruit
         * Diltation suivie d'érosion ce qui permet d'amincire les traits et de boucher les trous dans certaines contours.
+
 
