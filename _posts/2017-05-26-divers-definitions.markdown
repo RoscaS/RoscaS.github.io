@@ -27,6 +27,8 @@ Contraire d'open-source. Pas forcément payant!
 ### UTC time
 Universal Coordinated Time. "Temps global": Echelle de temps adoptée comme base du temps civil international par la majorité des pays du globe. UTC est une échelle de temps comprise entre le temps atomoique international (**TAI**) qui est stable mais déconnectée de la rotation de la terre et le temps universel (**UT**),  à la rotation de la Terre et donc lentement variable.
 
+Il y a un besoin prgmatique pour un temps global qui aide à éviter la confusion entre fuseaux horaires et heures d'été et d'hiver. UTC est le standard qui répond à ce besoin.
+
 ---------------------------------------------------------------------------
 
 # IA (types)
