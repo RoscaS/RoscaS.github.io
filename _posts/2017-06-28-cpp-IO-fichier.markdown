@@ -7,6 +7,7 @@ author: Sol
 category: Cpp
 tags: cpp 
 finished: false
+mathjax: true
 ---
 
 
@@ -14,9 +15,9 @@ finished: false
 
 ### 3 classes
 
-* `ifstream` $$ \Rightarrow $$ lecture
-* `ofstream` $$ \Rightarrow $$ ecriture
-* `fstream` $$ \Rightarrow $$ les deux
+* `ifstream` $ \Rightarrow $ lecture
+* `ofstream` $ \Rightarrow $ ecriture
+* `fstream` $ \Rightarrow $ les deux
 
 ### Ouvrir un fichier
 
@@ -24,18 +25,18 @@ finished: false
 open(filename, mode)
 ```
 
-* `filename` $$ \Rightarrow $$ string qui représente le nom du fichier
-* `mode` $$ \Rightarrow $$ pramètre optionnel qui est une combinaison des flags suivants:
+* `filename` $ \Rightarrow $ string qui représente le nom du fichier
+* `mode` $ \Rightarrow $ pramètre optionnel qui est une combinaison des flags suivants:
 
 <br>
 <br>
 
-*  `ios::in` $$ \Rightarrow $$ open for input operations 
- * `ios::out` $$ \Rightarrow $$ open for output operations 
- * `ios::binary` $$ \Rightarrow $$ open in binary mode 
- * `ios::ate` $$ \Rightarrow $$ set the initial position at the end of file if not set pos=beginning of the file 
- * `ios::app` $$ \Rightarrow $$ all output operations are performed at the end of the file, **APPENDING** the content to the current content of the file 
- * `ios::trunc` $$ \Rightarrow $$ override the content of the file
+*  `ios::in` $ \Rightarrow $ open for input operations 
+ * `ios::out` $ \Rightarrow $ open for output operations 
+ * `ios::binary` $ \Rightarrow $ open in binary mode 
+ * `ios::ate` $ \Rightarrow $ set the initial position at the end of file if not set pos=beginning of the file 
+ * `ios::app` $ \Rightarrow $ all output operations are performed at the end of the file, **APPENDING** the content to the current content of the file 
+ * `ios::trunc` $ \Rightarrow $ override the content of the file
 
 Tous ces flags peuvent être combinés avec l'opérteur `|` (or bitwise).
 
@@ -55,9 +56,9 @@ ostream myfile("example.bin", ios::out | ios::app | ios::binary);
 
 Chacune des méthodes `open()` des classes `ofstream`, `ifstream`, `fstream` a un mode par défaut qui est utilisé si le fichier est ouver sans argument:
 
-* ofstream $$ \Rightarrow $$ `ios::out`
-* ifstream $$ \Rightarrow $$ `ios::in`
-* fstream $$ \Rightarrow $$ `ios::in | ios::out`
+* ofstream $ \Rightarrow $ `ios::out`
+* ifstream $ \Rightarrow $ `ios::in`
+* fstream $ \Rightarrow $ `ios::in | ios::out`
 
 Les modes par défaut de `ifstream` et `ofstream` sont combiné avec les éventuelles paramètres.
 
@@ -152,15 +153,15 @@ We have created a while loop that reads the file line by line, using getline. Th
 
 Les méthodes suivantes servent à vérifier des états spécifiques d'un flux (ils retourne tous un bool)
 
-* `bad()` $$ \Rightarrow $$ Returns true if a reading or writing operation fails. For example, in the case that we try to write to a file that is not open for writing or if the device where we try to write has no space left.
+* `bad()` $ \Rightarrow $ Returns true if a reading or writing operation fails. For example, in the case that we try to write to a file that is not open for writing or if the device where we try to write has no space left.
 
-* `fail()` $$ \Rightarrow $$ Returns true in the same cases as bad(), but also in the case that a format error happens, like when an alphabetical character is extracted when we are trying to read an integer number.
+* `fail()` $ \Rightarrow $ Returns true in the same cases as bad(), but also in the case that a format error happens, like when an alphabetical character is extracted when we are trying to read an integer number.
 
-* `eof()` $$ \Rightarrow $$ Returns true if a file open for reading has reached the end.
+* `eof()` $ \Rightarrow $ Returns true if a file open for reading has reached the end.
 
-* `good()` $$ \Rightarrow $$ It is the most generic state flag: it returns false in the same cases in which calling any of the previous functions would return true. Note that good and bad are not exact opposites (good checks more state flags at once).
+* `good()` $ \Rightarrow $ It is the most generic state flag: it returns false in the same cases in which calling any of the previous functions would return true. Note that good and bad are not exact opposites (good checks more state flags at once).
 
-* `clear()` $$ \Rightarrow $$  can be used to reset the state flags.
+* `clear()` $ \Rightarrow $  can be used to reset the state flags.
 
 ## Position
 
@@ -197,9 +198,9 @@ seekp ( offset, direction );
 Using this prototype, the get or put position is set to an offset value relative to some specific point determined by the parameter direction. offset is of type streamoff. And direction is of type seekdir, which is an enumerated type that determines the point from where offset is counted from,and that can take any of the following values:
 
 
-`ios::beg` $$ \Rightarrow $$ 	offset counted from the beginning of the stream
-`ios::cur` $$ \Rightarrow $$	offset counted from the current position
-`ios::end` $$ \Rightarrow $$	offset counted from the end of the stream
+`ios::beg` $ \Rightarrow $ 	offset counted from the beginning of the stream
+`ios::cur` $ \Rightarrow $	offset counted from the current position
+`ios::end` $ \Rightarrow $	offset counted from the end of the stream
 
 ### Calculer la taille d'un fichier
 

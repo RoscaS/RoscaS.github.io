@@ -7,6 +7,7 @@ author: Sol
 category: Divers
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 ## Préambule
@@ -23,9 +24,9 @@ On le fait avec la technique de _Viète_
 
 $$ \displaystyle{x_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}} $$
 
-avec $$ \Delta = b^2 - 4ac $$
+avec $ \Delta = b^2 - 4ac $
 
-Et je ne sais pas si te souviens mais il y a trois cas de figure dans $$\pmb{\mathbb{R}}$$ qui en fonction de si $$ {\Delta} $$ est positif, négatif ou $$ = 0 $$ donne 3 autres formules. 
+Et je ne sais pas si te souviens mais il y a trois cas de figure dans $\pmb{\mathbb{R}}$ qui en fonction de si $ {\Delta} $ est positif, négatif ou $ = 0 $ donne 3 autres formules. 
 
 Simple efficace mais au final sauf que tu comprends pas ce que tu fais. Et puis c'est quoi factoriser? Pourquoi on fait ça?
 
@@ -51,11 +52,11 @@ Une chose après l'autre, le site va te suggérer sur quoi enchainer en fonction
 
 Pour te donner du courrage, dans deux semaines, j'ai une semaine off avant de reprendre les cours, je vais faire exactement la même chose. Cliquer sur [Bases en calcul](https://fr.khanacademy.org/math/early-math), et commencer par là, défoncer tout ce qui est facile, et prendre note de ce qui me pose problème pour le renforcer.
 
-Si tu trouve que c'est trop facile, pour te calmer, voilà ce que les profs de première année trouvent [trop facile](/01documents/max/musculation.pdf). Si t'es alaise avec ce PDF, félicitation, tu vas être tranquille pour les premières semaines de cours et tu peux direct enchainer avec [ce pdf](/01/documents/max/ch1_bases_algebre.pdf). C'est le premier chapitre de mon cours de math B. Si t'as un soucis avec un concept $$ \Rightarrow $$ Khan Academy.
+Si tu trouve que c'est trop facile, pour te calmer, voilà ce que les profs de première année trouvent [trop facile](/01documents/max/musculation.pdf). Si t'es alaise avec ce PDF, félicitation, tu vas être tranquille pour les premières semaines de cours et tu peux direct enchainer avec [ce pdf](/01/documents/max/ch1_bases_algebre.pdf). C'est le premier chapitre de mon cours de math B. Si t'as un soucis avec un concept $ \Rightarrow $ Khan Academy.
 
->Gros conseil, faut absolument que tu gère à mort le concept de valeur absolue, c'est bcp plus tricky que $$\lvert-1\rvert=1$$. C'est expliqué en détail dans le dernier pdf que je t'ai linké
+>Gros conseil, faut absolument que tu gère à mort le concept de valeur absolue, c'est bcp plus tricky que $\lvert-1\rvert=1$. C'est expliqué en détail dans le dernier pdf que je t'ai linké
 
-Si d'ici la rentrée t'as le temps, plonge toi dans les fonctions aussi. Le contepte de base, faut absolument que tu sache ce qu'est une fonction sans la moindre hésitation. Si t'as le temps de comprendre les concepts _d'injectivité_, _surjectivité_, _bijectivité_ c'est vraiment tout bon car c'est pas super évident au début et t'as vite fait de te laisser noyer quand vous en arriverez là. Aussi si tu peux revois bien _domaine de définition_, _ensemble de départ_, _ensemble d'arrivée_. [Ce pdf](/01/documents/max/ch1_bases_algebre.pdf) explique tout ça et si t'as du mal, encore une fois $$ \Rightarrow $$ Khan Academy.
+Si d'ici la rentrée t'as le temps, plonge toi dans les fonctions aussi. Le contepte de base, faut absolument que tu sache ce qu'est une fonction sans la moindre hésitation. Si t'as le temps de comprendre les concepts _d'injectivité_, _surjectivité_, _bijectivité_ c'est vraiment tout bon car c'est pas super évident au début et t'as vite fait de te laisser noyer quand vous en arriverez là. Aussi si tu peux revois bien _domaine de définition_, _ensemble de départ_, _ensemble d'arrivée_. [Ce pdf](/01/documents/max/ch1_bases_algebre.pdf) explique tout ça et si t'as du mal, encore une fois $ \Rightarrow $ Khan Academy.
 
 
 

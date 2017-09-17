@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -49,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Prog: Relations entre objets</div>
@@ -113,7 +134,7 @@
 <h2 id="résumé">Résumé</h2>
 
 <h4 id="composition">Composition</h4>
-<p><strong>“partie/tout”</strong>, (<script type="math/tex">\textstyle x \color{red}{\;a\;un\;} y</script>), <strong>unidirectionnel</strong> (<strong>partie</strong> ne sait pas qu’elle fait partie de <strong>tout</strong>)</p>
+<p><strong>“partie/tout”</strong>, ($ \textstyle x \color{red}{\;a\;un\;} y $), <strong>unidirectionnel</strong> (<strong>partie</strong> ne sait pas qu’elle fait partie de <strong>tout</strong>)</p>
 
 <ul>
   <li>Les <strong>parties</strong> du <strong>tout</strong> sont des variables membres (attributs).</li>
@@ -125,7 +146,7 @@
 <p><span style="color:red"> Si il est possible d’implémenter une classe comme une composition, il faut le faire ! </span></p>
 
 <h4 id="aggregation">Aggregation</h4>
-<p><strong>“partie/tout”</strong>, (<script type="math/tex">\textstyle x \color{red}{\;a\;un\;} y</script>), <strong>unidirectionnel</strong></p>
+<p><strong>“partie/tout”</strong>, ($ \textstyle x \color{red}{\;a\;un\;} y $), <strong>unidirectionnel</strong></p>
 
 <ul>
   <li>Les <strong>parties</strong> du <strong>tout</strong> sont des variables membres (attributs) qui sont des pointeurs ou des références sur des objets qui vivent en dehors du contexte du <strong>tout</strong>.</li>
@@ -134,7 +155,7 @@
 </ul>
 
 <h4 id="association">Association</h4>
-<p><strong>“pas reliés”</strong>, (<script type="math/tex">x \textstyle \color{red}{\;utilise\;un\;} y</script>), <strong>unidirectionnel</strong> &amp; <strong>bidirectionnel</strong></p>
+<p><strong>“pas reliés”</strong>, ($x \textstyle \color{red}{\;utilise\;un\;} y $), <strong>unidirectionnel</strong> &amp; <strong>bidirectionnel</strong></p>
 
 <ul>
   <li>Un objet <code class="highlighter-rouge">B</code> est membre d’un objet <code class="highlighter-rouge">A</code> mais <span style="color:red">n’est pas une <strong>partie</strong></span> de <code class="highlighter-rouge">A</code>.</li>
@@ -143,7 +164,7 @@
 </ul>
 
 <h4 id="dépendance">Dépendance</h4>
-<p><strong>“pas reliés”</strong>, (<script type="math/tex">x \textstyle \color{red}{\;dépend\;de\;} y</script>), <strong>unidirectionnel</strong></p>
+<p><strong>“pas reliés”</strong>, ($x \textstyle \color{red}{\;dépend\;de\;} y $), <strong>unidirectionnel</strong></p>
 
 <ul>
   <li>Un objet <code class="highlighter-rouge">A</code> est dépendant <strong>d’une classe</strong> <code class="highlighter-rouge">B</code> quand l’objet <code class="highlighter-rouge">A</code> utilise une fonctionnalité de la classe <code class="highlighter-rouge">B</code> pour accomplir une certaine tache.</li>
@@ -151,7 +172,7 @@
 </ul>
 
 <h4 id="héritage">(Héritage)</h4>
-<p><strong>“lien de parenté</strong>, (<script type="math/tex">x \textstyle \color{red}{\;est\;un\;} y</script>),</p>
+<p><strong>“lien de parenté</strong>, ($x \textstyle \color{red}{\;est\;un\;} y $),</p>
 
 <ul>
   <li>Un objet <code class="highlighter-rouge">B</code> qui hérite d’un objet <code class="highlighter-rouge">A</code> est un objet <code class="highlighter-rouge">A</code> plus spécialisé.</li>
@@ -178,14 +199,14 @@
 <ul>
   <li>Un ordinateur a un processeur
     <ul>
-      <li>objet (plus) <strong>complexe</strong> <script type="math/tex">\Rightarrow</script> ordinateur</li>
-      <li>objet (plus) <strong>simple</strong> <script type="math/tex">\Rightarrow</script> processeur</li>
+      <li>objet (plus) <strong>complexe</strong> $ \Rightarrow $ ordinateur</li>
+      <li>objet (plus) <strong>simple</strong> $ \Rightarrow $ processeur</li>
     </ul>
   </li>
   <li>Une voiture a une transmission
     <ul>
-      <li>objet (plus) <strong>complexe</strong> <script type="math/tex">\Rightarrow</script> voiture</li>
-      <li>objet (plus) <strong>simple</strong> <script type="math/tex">\Rightarrow</script> transmission</li>
+      <li>objet (plus) <strong>complexe</strong> $ \Rightarrow $ voiture</li>
+      <li>objet (plus) <strong>simple</strong> $ \Rightarrow $ transmission</li>
     </ul>
   </li>
 </ul>
@@ -252,8 +273,8 @@
 <p>Cette classe (<strong>tout</strong>) possède deux attributs (<strong>partie</strong>) membres:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">_num</code> <script type="math/tex">\Rightarrow</script>  un numérateur</li>
-  <li><code class="highlighter-rouge">_den</code> <script type="math/tex">\Rightarrow</script>  un dénominateur</li>
+  <li><code class="highlighter-rouge">_num</code> $ \Rightarrow $  un numérateur</li>
+  <li><code class="highlighter-rouge">_den</code> $ \Rightarrow $  un dénominateur</li>
 </ul>
 
 <ol>

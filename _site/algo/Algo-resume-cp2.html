@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -49,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Algo: Résumé CP2</div>
@@ -124,8 +145,7 @@
 
 <h2 id="1-tri">1. Tri</h2>
 
-<h3 id="tri-bulle">Tri Bulle</h3>
-<p><script type="math/tex">O(n^2)</script></p>
+<h3 id="tri-bulle--on2-">Tri Bulle $ O(n^2) $</h3>
 <ul>
   <li><strong>stable</strong></li>
   <li><strong>Sait détecter si un tableau est trié</strong> (amélioration flag)</li>
@@ -134,8 +154,7 @@
   <li>À chaque parcours les autres éléments se déplacent vers leurs position définitive d’une case.</li>
 </ul>
 
-<h3 id="tri-extract">Tri Extract</h3>
-<p><script type="math/tex">O(n^2)</script></p>
+<h3 id="tri-extract--on2-">Tri Extract $ O(n^2) $</h3>
 <ul>
   <li><span style="color:red"><strong>pas stable</strong></span></li>
   <li><strong>Innéfficace pour les tableau déjà trié</strong></li>
@@ -144,8 +163,7 @@
   <li>Incrémentation de “gauche”</li>
 </ul>
 
-<h3 id="tri-insert">Tri Insert</h3>
-<p><script type="math/tex">O(n^2)</script></p>
+<h3 id="tri-insert--on2-">Tri Insert $ O(n^2) $</h3>
 <ul>
   <li><strong>stable</strong></li>
   <li><strong>Utile pour insérer une valeur dans un tableau déjà trié ou partiellement trié</strong></li>
@@ -157,8 +175,7 @@
   </li>
 </ul>
 
-<h3 id="tri-par-base">Tri par Base</h3>
-<p><span style="color:green"><script type="math/tex">O(n)</script></span></p>
+<h3 id="tri-par-base--on-">Tri par Base <span style="color:green">$ O(n) $</span></h3>
 <ul>
   <li><strong>stable</strong></li>
   <li><strong>Efficace en temps mais pas en mémoire</strong></li>
@@ -187,7 +204,7 @@ ensuite, caractère à l'indice -1 (4 et l), ...
 <p>note: <span style="color:red"> <em>refaire ces algo de façon générique</em> </span></p>
 
 <p>Nombre de distributions =  <strong>nombre de chiffres qui compose le plus grand nombre</strong>.
-l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’un nombre (<script type="math/tex">\large n</script>) sera égal au nombre de chiffre qui le composent <script type="math/tex">\large -1</script> (d’où le <script type="math/tex">\large+1</script>).</p>
+l’entier renvoyé par $\large \log_{10} n$ d’un nombre ($\large n$) sera égal au nombre de chiffre qui le composent $\large -1$ (d’où le $\large+1$).</p>
 
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">nbParcours</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">log10</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">d</span><span class="p">))</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
@@ -222,28 +239,28 @@ l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’
   <tbody>
     <tr>
       <td>Bulles et améliorations</td>
-      <td><script type="math/tex">O(n^2)</script></td>
+      <td>$ O(n^2) $</td>
       <td>oui</td>
       <td>Echange</td>
       <td>Sait détecter un tableau trié</td>
     </tr>
     <tr>
       <td>Extraction</td>
-      <td><script type="math/tex">O(n^2)</script></td>
+      <td>$ O(n^2) $</td>
       <td><span style="color:red">non</span></td>
       <td>Sélection</td>
       <td>Inefficace sur un tableau déja trié (le pire)</td>
     </tr>
     <tr>
       <td>Insertion</td>
-      <td><script type="math/tex">O(n^2)</script></td>
+      <td>$ O(n^2) $</td>
       <td>oui</td>
       <td>Insertion</td>
       <td>Intéressant pour insérer des vlaeurs dans un tableau déjà trié*</td>
     </tr>
     <tr>
       <td>Base</td>
-      <td><span style="color:green"><script type="math/tex">O(n)</script></span></td>
+      <td><span style="color:green">$ O(n) $</span></td>
       <td>oui</td>
       <td>Distribution</td>
       <td>Intéressant pour les petites valeurs (“petit” nombre de chiffres)</td>
@@ -271,12 +288,12 @@ l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’
   <p>la récursivité c’est quand le sous-problème est de la <strong>même nature</strong> que le problème initial mais à un rang inférieur</p>
 </blockquote>
 
-<p>Chaque appel de la fonction récursive est une nouvelle <strong>instance de la fonction</strong> (<script type="math/tex">\neq</script> même fonction car les paramètres sont différents).</p>
+<p>Chaque appel de la fonction récursive est une nouvelle <strong>instance de la fonction</strong> ($ \neq $ même fonction car les paramètres sont différents).</p>
 
 <ul>
   <li>nouvelle instance à chaque appel</li>
   <li>chaque appel est différent du précédent, il n’y a pas <em>duplication</em> du contexte, c’est un <strong>contexte différent</strong> à chaque appel.</li>
-  <li>paramètres différents <script type="math/tex">\Rightarrow</script> fonction différente</li>
+  <li>paramètres différents $ \Rightarrow $ fonction différente</li>
 </ul>
 
 <p>Dire  <em>“une fonction récursive est une fonction qui se rappelle elle-même”</em> est donc <span style="color:red"> <strong>FAUX</strong></span> (à moitié faux mais faux quand même).</p>
@@ -299,11 +316,11 @@ l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’
 <ul>
   <li>
     <p><strong>Terminal</strong>: aucune opération ne suit l’appel récursif<br />
-<script type="math/tex">\quad \Rightarrow</script> la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.</p>
+$ \quad \Rightarrow $ la phase de remontée est inutile, elle ne fait aucun traitement, hormis le réajustement de la pile.</p>
   </li>
   <li>
     <p><strong>Non-terminal</strong>: des opérations suivent l’appel récursif. (On a besoin du résultat du rang inférieur avant de pouvoir traiter le problème dans l’instance courante et renvoyer le résultat).<br />
-<script type="math/tex">\quad \Rightarrow</script> la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.</p>
+$ \quad \Rightarrow $ la phase de remontée fait une partie du traitement, elle contient des(/la majorité) des opérations.</p>
   </li>
 </ul>
 
@@ -312,8 +329,8 @@ l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’
 <blockquote>
   <p><span style="color:green"> <strong>Est-ce qu’un return précède un appel de la fonction-elle même ?</strong> </span></p>
   <ul>
-    <li>oui <script type="math/tex">\Rightarrow</script> récursivité ** non-terminale**</li>
-    <li>non <script type="math/tex">\Rightarrow</script> récursivité ** terminale**</li>
+    <li>oui $ \Rightarrow $ récursivité ** non-terminale**</li>
+    <li>non $ \Rightarrow $ récursivité ** terminale**</li>
   </ul>
 </blockquote>
 
@@ -326,14 +343,14 @@ l’entier renvoyé par <script type="math/tex">\large \log_{10} n</script> d’
 
 <h3 id="eviter-la-récursivité-quand">Eviter la récursivité quand…</h3>
 <ul>
-  <li>la récurence est d’ordre plus grand que 1 (c’est à dire que la valeur au rang <script type="math/tex">n</script> ne dépend pas seulement du rang <script type="math/tex">n-1</script> mais aussi de <script type="math/tex">n-2</script>, voir <script type="math/tex">n-3</script>, …)</li>
+  <li>la récurence est d’ordre plus grand que 1 (c’est à dire que la valeur au rang $ n $ ne dépend pas seulement du rang $n-1$ mais aussi de $n-2$, voir $n-3$, …)</li>
 </ul>
 
 <h3 id="récursivité-vs-itération">Récursivité vs itération</h3>
 
 <p>La récursivité est toujours plus lente que l’itération sauf pour la récursivité terminale. Cependant, la majorité des compilateurs détectent et supprime la phase de remonté. Une fonction récursive terminale est donc aussi rapide qu’une fonction itérative.</p>
 
-<p><script type="math/tex">\Rightarrow</script> De part sa lisibilité accrue, la <strong>récursivité terminale</strong> est à privilégier sur l’itération.</p>
+<p>$\Rightarrow $ De part sa lisibilité accrue, la <strong>récursivité terminale</strong> est à privilégier sur l’itération.</p>
 
 <h4 id="a-retenir">A retenir</h4>
 

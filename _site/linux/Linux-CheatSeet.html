@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -44,14 +45,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Linux: CheatSheet</title>
-  <meta name="description" content=" ">
+  <meta name="description" content="$ Linux\; users \; have \; one \; thing \; that \; often \; sets $$them \; apart \; from \; their \; Windows \; and \; Mac $$using\; colleagues. \; They \; o...">
 </head>
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Linux: CheatSheet</div>
@@ -102,11 +123,11 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <p><script type="math/tex">Linux\; users \; have \; one \; thing \; that \; often \; sets</script>
-<script type="math/tex">them \; apart \; from \; their \; Windows \; and \; Mac</script>
-<script type="math/tex">using\; colleagues. \; They \; often \; spend \; a \; lot \; more</script> 
-<script type="math/tex">time \; fixing \; things \; or \; finding \; out \; how \; to</script>
-<script type="math/tex">fix \; things.</script></p>
+    <p>$ Linux\; users \; have \; one \; thing \; that \; often \; sets $
+$them \; apart \; from \; their \; Windows \; and \; Mac $
+$using\; colleagues. \; They \; often \; spend \; a \; lot \; more$ 
+$time \; fixing \; things \; or \; finding \; out \; how \; to $
+$fix \; things. $</p>
 
 <h1 id="specifique-au-dell-xps-13-9343">Specifique au Dell xps 13 9343</h1>
 
@@ -153,15 +174,15 @@ In <strong>Window Decoration</strong>, in <strong>Decoration Windows</strong> ad
 <h1 id="general">General</h1>
 
 <ul>
-  <li><code class="highlighter-rouge">sudo dpkg -i *.deb</code> <script type="math/tex">\Rightarrow</script> installer</li>
-  <li><code class="highlighter-rouge">apt-get install</code> <em>softName</em> <script type="math/tex">\Rightarrow</script> dld et installe</li>
-  <li><code class="highlighter-rouge">apt-cache policy</code> <em>pkg-name</em> <script type="math/tex">\Rightarrow</script> check if a package is installed</li>
-  <li><code class="highlighter-rouge">wget</code> <em>“url”</em> <script type="math/tex">\Rightarrow</script> download</li>
-  <li><code class="highlighter-rouge">apt-get --purge remove</code> <em>softName</em> <script type="math/tex">\Rightarrow</script> uninstall</li>
-  <li><code class="highlighter-rouge">sudo apt-get autoremove</code> <script type="math/tex">\Rightarrow</script> remove unused dependencies</li>
-  <li><code class="highlighter-rouge">sudo apt-get purge --auto-remove gimp</code> <script type="math/tex">\Rightarrow</script> combine previous 2</li>
-  <li><code class="highlighter-rouge">sudo apt-get clean</code> <script type="math/tex">\Rightarrow</script> remove downloaded archives files</li>
-  <li><code class="highlighter-rouge">sudo apt-get purge --auto-remove</code> <em>softName</em> <script type="math/tex">\Rightarrow</script> COMPLETE REMOVE</li>
+  <li><code class="highlighter-rouge">sudo dpkg -i *.deb</code> $ \Rightarrow $ installer</li>
+  <li><code class="highlighter-rouge">apt-get install</code> <em>softName</em> $ \Rightarrow $ dld et installe</li>
+  <li><code class="highlighter-rouge">apt-cache policy</code> <em>pkg-name</em> $ \Rightarrow $ check if a package is installed</li>
+  <li><code class="highlighter-rouge">wget</code> <em>“url”</em> $ \Rightarrow $ download</li>
+  <li><code class="highlighter-rouge">apt-get --purge remove</code> <em>softName</em> $ \Rightarrow $ uninstall</li>
+  <li><code class="highlighter-rouge">sudo apt-get autoremove</code> $ \Rightarrow $ remove unused dependencies</li>
+  <li><code class="highlighter-rouge">sudo apt-get purge --auto-remove gimp</code> $ \Rightarrow $ combine previous 2</li>
+  <li><code class="highlighter-rouge">sudo apt-get clean</code> $ \Rightarrow $ remove downloaded archives files</li>
+  <li><code class="highlighter-rouge">sudo apt-get purge --auto-remove</code> <em>softName</em> $ \Rightarrow $ COMPLETE REMOVE</li>
 </ul>
 
 <blockquote>
@@ -169,14 +190,14 @@ In <strong>Window Decoration</strong>, in <strong>Decoration Windows</strong> ad
 </blockquote>
 
 <ul>
-  <li><code class="highlighter-rouge">caja .</code> <script type="math/tex">\Rightarrow</script> open file browser here</li>
-  <li><code class="highlighter-rouge">su</code> <em>username</em> <script type="math/tex">\Rightarrow</script> switch user</li>
-  <li><code class="highlighter-rouge">df</code> <script type="math/tex">\Rightarrow</script> HD space</li>
-  <li><code class="highlighter-rouge">sleep</code> <em>seconds</em> <script type="math/tex">\Rightarrow</script> pause terminal</li>
-  <li><code class="highlighter-rouge">gcc -Wall file.c -o file</code> <script type="math/tex">\Rightarrow</script> compile</li>
-  <li><code class="highlighter-rouge">whoami</code> <script type="math/tex">\Rightarrow</script> user</li>
-  <li><code class="highlighter-rouge">ipcalc</code> <code class="highlighter-rouge">ip</code> <code class="highlighter-rouge">-s</code> SR1 SR2 SR3 <script type="math/tex">\Rightarrow</script> subnet calculatord</li>
-  <li><code class="highlighter-rouge">which</code> <em>make</em> <script type="math/tex">\Rightarrow</script> vérifie présence de make sur la machine</li>
+  <li><code class="highlighter-rouge">caja .</code> $ \Rightarrow $ open file browser here</li>
+  <li><code class="highlighter-rouge">su</code> <em>username</em> $ \Rightarrow $ switch user</li>
+  <li><code class="highlighter-rouge">df</code> $ \Rightarrow $ HD space</li>
+  <li><code class="highlighter-rouge">sleep</code> <em>seconds</em> $ \Rightarrow $ pause terminal</li>
+  <li><code class="highlighter-rouge">gcc -Wall file.c -o file</code> $ \Rightarrow $ compile</li>
+  <li><code class="highlighter-rouge">whoami</code> $ \Rightarrow $ user</li>
+  <li><code class="highlighter-rouge">ipcalc</code> <code class="highlighter-rouge">ip</code> <code class="highlighter-rouge">-s</code> SR1 SR2 SR3 $ \Rightarrow $ subnet calculatord</li>
+  <li><code class="highlighter-rouge">which</code> <em>make</em> $ \Rightarrow $ vérifie présence de make sur la machine</li>
 </ul>
 
 <h1 id="find">find</h1>
@@ -355,17 +376,17 @@ poule
 <h2 id="tools">tools</h2>
 
 <ul>
-  <li>i-Nex <script type="math/tex">\Rightarrow</script> gui monitor</li>
-  <li>tlp <script type="math/tex">\Rightarrow</script> power management</li>
-  <li>powertop <script type="math/tex">\Rightarrow</script> stats</li>
+  <li>i-Nex $ \Rightarrow $ gui monitor</li>
+  <li>tlp $ \Rightarrow $ power management</li>
+  <li>powertop $ \Rightarrow $ stats</li>
 </ul>
 
 <h2 id="usefull-commands">usefull commands</h2>
 <ul>
-  <li><code class="highlighter-rouge">lcpu | grep MHz</code> <script type="math/tex">\Rightarrow</script> real time cores freq</li>
-  <li><code class="highlighter-rouge">tlp-stat</code> <script type="math/tex">\Rightarrow</script> show various info on power consuption</li>
-  <li><code class="highlighter-rouge">powertop</code> <script type="math/tex">\Rightarrow</script> various info on power consuption</li>
-  <li><code class="highlighter-rouge">sudo powertop --time=60 --html=power_report.html</code> <script type="math/tex">\Rightarrow</script> stats</li>
+  <li><code class="highlighter-rouge">lcpu | grep MHz</code> $ \Rightarrow $ real time cores freq</li>
+  <li><code class="highlighter-rouge">tlp-stat</code> $ \Rightarrow $ show various info on power consuption</li>
+  <li><code class="highlighter-rouge">powertop</code> $ \Rightarrow $ various info on power consuption</li>
+  <li><code class="highlighter-rouge">sudo powertop --time=60 --html=power_report.html</code> $ \Rightarrow $ stats</li>
 </ul>
 
 <h2 id="disable-touche-screen">disable touche screen</h2>
@@ -393,7 +414,7 @@ poule
 </ol>
 
 <ul>
-  <li><code class="highlighter-rouge">mount -o rw,remount /</code> <script type="math/tex">\Rightarrow</script> gives the ability to modify files</li>
+  <li><code class="highlighter-rouge">mount -o rw,remount /</code> $ \Rightarrow $ gives the ability to modify files</li>
 </ul>
 
 <h1 id="foucs-issue-with-conky">Foucs issue with conky</h1>

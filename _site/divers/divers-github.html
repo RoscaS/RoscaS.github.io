@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -44,14 +45,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Divers: github</title>
-  <meta name="description" content="Downloads &amp; Install  github.com  Nouveau compte si pas existant  installer Git Bash">
+  <meta name="description" content="Downloads &amp; Install  github.com $ \Rightarrow $ Nouveau compte si pas existant  installer Git Bash">
 </head>
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Divers: github</div>
@@ -108,15 +129,15 @@
 <div class="post-content" itemprop="articleBody">
     <h2 id="downloads--install">Downloads &amp; Install</h2>
 <ol>
-  <li><a href="https://github.com/">github.com</a> <script type="math/tex">\Rightarrow</script> Nouveau compte si pas existant</li>
+  <li><a href="https://github.com/">github.com</a> $ \Rightarrow $ Nouveau compte si pas existant</li>
   <li>installer <a href="https://git-for-windows.github.io/">Git Bash</a></li>
 </ol>
 
 <h2 id="ssh">SSH</h2>
 <ol>
   <li>Ouvrir <strong>Git Bash</strong></li>
-  <li><code class="highlighter-rouge">ssh-keygen -t rsa -b 4096 -C "adresse@email.com"</code> <script type="math/tex">\Rightarrow</script> Crée une clé ssh</li>
-  <li>Quand le texte suivant s’affiche <code class="highlighter-rouge">Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">Enter</code></li>
+  <li><code class="highlighter-rouge">ssh-keygen -t rsa -b 4096 -C "adresse@email.com"</code> $ \Rightarrow $ Crée une clé ssh</li>
+  <li>Quand le texte suivant s’affiche <code class="highlighter-rouge">Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]</code> $ \Rightarrow $ <code class="highlighter-rouge">Enter</code></li>
   <li>Entrez un mot de passe</li>
   <li>Encore…</li>
 </ol>
@@ -124,7 +145,7 @@
 <h2 id="ajouter-la-clé-ssh-à-lagent-ssh">Ajouter la clé SSH à l’agent ssh</h2>
 
 <ol>
-  <li>Vérifier si l’agent ssh tourne: <code class="highlighter-rouge">eval $(ssh-agent -s)</code> <script type="math/tex">\Rightarrow</script> devrait retourner un PID</li>
+  <li>Vérifier si l’agent ssh tourne: <code class="highlighter-rouge">eval $(ssh-agent -s)</code> $ \Rightarrow $ devrait retourner un PID</li>
   <li>Ajouter la clé SSH: `ssh-add ~/.ssh/id_rsa</li>
 </ol>
 
@@ -132,8 +153,8 @@
 
 <ol>
   <li><code class="highlighter-rouge">clip &lt; ~/.ssh/id_rsa.pub</code></li>
-  <li>Sur le site github, cliquez en haut à droite sur la photo de profil <script type="math/tex">\Rightarrow</script> <strong>Settings</strong> <script type="math/tex">\Rightarrow</script> <strong>New SSH key</strong> ou <strong>Add SSH key</strong></li>
-  <li>Dans le champ <strong>title</strong> <script type="math/tex">\Rightarrow</script> nom du pc (osef pas le nom officiel)</li>
+  <li>Sur le site github, cliquez en haut à droite sur la photo de profil $ \Rightarrow $ <strong>Settings</strong> $ \Rightarrow $ <strong>New SSH key</strong> ou <strong>Add SSH key</strong></li>
+  <li>Dans le champ <strong>title</strong> $ \Rightarrow $ nom du pc (osef pas le nom officiel)</li>
   <li>Coller la clé dans le champ field</li>
   <li><strong>Add SSH key</strong></li>
 </ol>

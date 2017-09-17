@@ -7,6 +7,7 @@ author: Sol
 category: Py
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 ## Sources
@@ -51,20 +52,20 @@ finished: false
 
 ## top-level windows
 
-* `tk_chooseColor` $$ \Rightarrow $$  pops up a dialog box for the user to select a color.
-* `tk_chooseDirectory` $$ \Rightarrow $$  pops up a dialog box for the user to select a directory.
-* `tk_dialog` $$ \Rightarrow $$  creates a modal dialog and waits for a response.
-* `tk_getOpenFile` $$ \Rightarrow $$  pops up a dialog box for the user to select a file to open.
-* `tk_getSaveFile` $$ \Rightarrow $$  pops up a dialog box for the user to select a file to save.
-* `tk_messageBox` $$ \Rightarrow $$  pops up a message window and waits for a user response.
-* `tk_popup` $$ \Rightarrow $$  posts a popup menu.
-* `toplevel` $$ \Rightarrow $$  creates and manipulates toplevel widgets.
+* `tk_chooseColor` $ \Rightarrow $  pops up a dialog box for the user to select a color.
+* `tk_chooseDirectory` $ \Rightarrow $  pops up a dialog box for the user to select a directory.
+* `tk_dialog` $ \Rightarrow $  creates a modal dialog and waits for a response.
+* `tk_getOpenFile` $ \Rightarrow $  pops up a dialog box for the user to select a file to open.
+* `tk_getSaveFile` $ \Rightarrow $  pops up a dialog box for the user to select a file to save.
+* `tk_messageBox` $ \Rightarrow $  pops up a message window and waits for a user response.
+* `tk_popup` $ \Rightarrow $  posts a popup menu.
+* `toplevel` $ \Rightarrow $  creates and manipulates toplevel widgets.
 
 ## geometry managers
 
-* **place** $$ \Rightarrow $$  which positions widgets at absolute locations
-* **grid** $$ \Rightarrow $$  which arranges widgets in a grid
-* **pack** $$ \Rightarrow $$  which packs widgets into a cavity
+* **place** $ \Rightarrow $  which positions widgets at absolute locations
+* **grid** $ \Rightarrow $  which arranges widgets in a grid
+* **pack** $ \Rightarrow $  which packs widgets into a cavity
 
 
 
@@ -220,15 +221,15 @@ canvas.pack()
 
 ### Autre éléments graphiques
 
-`create_arc()`        $$ \Rightarrow $$   arc de cercle
-`create_bitmap()`     $$ \Rightarrow $$   bitmap
-`create_image()`      $$ \Rightarrow $$   image
-`create_line()`       $$ \Rightarrow $$   ligne
-`create_oval()`       $$ \Rightarrow $$   ovale
-`create_polygon()`    $$ \Rightarrow $$   polygone
-`create_rectangle()`  $$ \Rightarrow $$   rectangle 
-`create_text()`       $$ \Rightarrow $$   texte
-`create_window()`     $$ \Rightarrow $$   fenetre
+`create_arc()`        $ \Rightarrow $   arc de cercle
+`create_bitmap()`     $ \Rightarrow $   bitmap
+`create_image()`      $ \Rightarrow $   image
+`create_line()`       $ \Rightarrow $   ligne
+`create_oval()`       $ \Rightarrow $   ovale
+`create_polygon()`    $ \Rightarrow $   polygone
+`create_rectangle()`  $ \Rightarrow $   rectangle 
+`create_text()`       $ \Rightarrow $   texte
+`create_window()`     $ \Rightarrow $   fenetre
 
 ### Changer les coordonnées d'un élement crée dans le canvas
 Via la méthode `coords`
@@ -447,19 +448,19 @@ win.mainloop()
 ## Unités de dimensions
 Si on indique une unité via un `int` l'unité par défaut est **pixel**. Il existe d'autres unités:
 
-* `i` $$ \Rightarrow $$ pouces
-* `m` $$ \Rightarrow $$ millimètres
-* `c` $$ \Rightarrow $$ centimètres
+* `i` $ \Rightarrow $ pouces
+* `m` $ \Rightarrow $ millimètres
+* `c` $ \Rightarrow $ centimètres
 
 ## Options de dimension
 
-`height`             $$ \Rightarrow $$  Hauteur du widget.
-`width`              $$ \Rightarrow $$  Largeur du widget.
-`padx`, `pady`       $$ \Rightarrow $$  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
-`borderwidth`        $$ \Rightarrow $$  Taille de la bordure.
-`highlightthickness` $$ \Rightarrow $$  Largeur du rectangle lorsque le widget a le focus.
-`selectborderwidth`  $$ \Rightarrow $$  Largeur de la bordure tridimensionnel autour du widget sélectionné.
-`wraplength`         $$ \Rightarrow $$  Nombre de ligne maximum pour les widget en mode "word wrapping".
+`height`             $ \Rightarrow $  Hauteur du widget.
+`width`              $ \Rightarrow $  Largeur du widget.
+`padx`, `pady`       $ \Rightarrow $  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
+`borderwidth`        $ \Rightarrow $  Taille de la bordure.
+`highlightthickness` $ \Rightarrow $  Largeur du rectangle lorsque le widget a le focus.
+`selectborderwidth`  $ \Rightarrow $  Largeur de la bordure tridimensionnel autour du widget sélectionné.
+`wraplength`         $ \Rightarrow $  Nombre de ligne maximum pour les widget en mode "word wrapping".
 
 ## Options de couleurs
 Il est possible d'indiquer une valeur de couleur par son nom en anglais:
@@ -471,15 +472,15 @@ Il est possible d'indiquer une valeur de couleur par son nom en anglais:
 
 Ou par son code hexadécimal.
 
-* `background (ou bg)`   $$ \Rightarrow $$  couleur de fond du widget.
-* `foreground (ou fg)`   $$ \Rightarrow $$  couleur de premier plan du widget.
-* `activebackground`     $$ \Rightarrow $$  couleur de fond du widget lorsque celui-ci est actif. 
-* `activeForeground`     $$ \Rightarrow $$  couleur de premier plan du widget lorsque le widget est actif. 
-* `disabledForeground`   $$ \Rightarrow $$  couleur de premier plan du widget lorsque le widget est désactivé. 
-* `highlightbackground`  $$ \Rightarrow $$  Couleur de fond de la région de surbrillance lorsque le widget a le focus. 
-* `highlightcolor`       $$ \Rightarrow $$  couleur de premier plan de la région en surbrillance lorsque le widget a le focus. 
-* `selectbackground`     $$ \Rightarrow $$  Couleur de fond pour les éléments sélectionnés. 
-* `selectforeground`     $$ \Rightarrow $$  couleur de premier plan pour les éléments sélectionnés.
+* `background (ou bg)`   $ \Rightarrow $  couleur de fond du widget.
+* `foreground (ou fg)`   $ \Rightarrow $  couleur de premier plan du widget.
+* `activebackground`     $ \Rightarrow $  couleur de fond du widget lorsque celui-ci est actif. 
+* `activeForeground`     $ \Rightarrow $  couleur de premier plan du widget lorsque le widget est actif. 
+* `disabledForeground`   $ \Rightarrow $  couleur de premier plan du widget lorsque le widget est désactivé. 
+* `highlightbackground`  $ \Rightarrow $  Couleur de fond de la région de surbrillance lorsque le widget a le focus. 
+* `highlightcolor`       $ \Rightarrow $  couleur de premier plan de la région en surbrillance lorsque le widget a le focus. 
+* `selectbackground`     $ \Rightarrow $  Couleur de fond pour les éléments sélectionnés. 
+* `selectforeground`     $ \Rightarrow $  couleur de premier plan pour les éléments sélectionnés.
 
 ## Curseur
 Il est possible de changer l'apparance du curseur:

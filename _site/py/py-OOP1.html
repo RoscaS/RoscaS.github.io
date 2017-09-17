@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -49,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: OOP 1 intro</div>
@@ -109,7 +130,7 @@
     <h4 id="serie">serie</h4>
 
 <ul>
-  <li><a href="/py/py-OOP1.html">partie 1: Introduction </a> <script type="math/tex">\Leftarrow</script></li>
+  <li><a href="/py/py-OOP1.html">partie 1: Introduction </a> $ \Leftarrow $</li>
   <li><a href="/py/py-OOP2.html">partie 2: En pratique</a></li>
   <li><a href="/py/py-OOP3.html">partie 3: Attributs</a></li>
   <li><a href="/py/py-OOP4.html">partie 4: Héritage</a></li>
@@ -173,7 +194,7 @@
 <p>Créer des objets se fait en deux étapes:</p>
 
 <ul>
-  <li>Décrire à quoi ressemble l’objet <script type="math/tex">\Rightarrow</script> classe</li>
+  <li>Décrire à quoi ressemble l’objet $ \Rightarrow $ classe</li>
 </ul>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DescriptionObjet</span><span class="p">:</span>
@@ -193,7 +214,7 @@
 
 <p>La variable <code class="highlighter-rouge">nouvel_objet</code> contient un objet issu de la classe <code class="highlighter-rouge">DescriptionObjet</code>.</p>
 
-<p>La variable <code class="highlighter-rouge">nouvel_objet</code> contient une <strong>instance</strong> de <code class="highlighter-rouge">DescriptionObjet</code> <script type="math/tex">\Rightarrow</script> L’action de créer un objet à partir d’une classe est appelée <strong>instanciation</strong>.</p>
+<p>La variable <code class="highlighter-rouge">nouvel_objet</code> contient une <strong>instance</strong> de <code class="highlighter-rouge">DescriptionObjet</code> $ \Rightarrow $ L’action de créer un objet à partir d’une classe est appelée <strong>instanciation</strong>.</p>
 
 <p>Python ne connait pour le moment que le nom et l’adresse en mémoire de l’objet et c’est ce qu’il affiche suite à un <code class="highlighter-rouge">print()</code>.</p>
 
@@ -250,7 +271,7 @@
 <p><code class="highlighter-rouge">nouvel_objet</code> et <code class="highlighter-rouge">objet_en_cours</code> contiennent la même chose : <strong>l’objet en cours</strong>.
 <code class="highlighter-rouge">objet_en_cours</code> est le nom que nous avons donné à notre premier argument, mais Python passe toujours automatiquement en premier argument l’objet en cours afin que nous puissions modifier cet objet à l’intérieur d’une méthode.</p>
 
-<p>Paramètre <code class="highlighter-rouge">objet_en_cours</code> <script type="math/tex">\Rightarrow</script> <strong>instance courante</strong></p>
+<p>Paramètre <code class="highlighter-rouge">objet_en_cours</code> $ \Rightarrow $ <strong>instance courante</strong></p>
 
 <p><span style="color:red"> Une méthode doit toujours déclarer au moins un paramètre pour accueillir la référence à l’objet en cours ! </span></p>
 

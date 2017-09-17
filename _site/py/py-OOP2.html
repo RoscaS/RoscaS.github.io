@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -49,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: OOP 2 En pratique</div>
@@ -110,7 +131,7 @@
 
 <ul>
   <li><a href="/py/py-OOP1.html">partie 1: Introduction </a></li>
-  <li><a href="/py/py-OOP2.html">partie 2: En pratique</a><script type="math/tex">\Leftarrow</script></li>
+  <li><a href="/py/py-OOP2.html">partie 2: En pratique</a>$ \Leftarrow $</li>
   <li><a href="/py/py-OOP3.html">partie 3: Attributs</a></li>
   <li><a href="/py/py-OOP4.html">partie 4: Héritage</a></li>
   <li><a href="/py/py-OOP5.html">partie 5: Héritage multiple et composition</a></li>
@@ -327,7 +348,7 @@
 </code></pre>
 </div>
 
-<p>On utilise ici un <strong>décorateur</strong> qui dit que la méthode est une éthode de classe <script type="math/tex">\Rightarrow</script> <strong>accessible sans créer aucune instance</strong></p>
+<p>On utilise ici un <strong>décorateur</strong> qui dit que la méthode est une éthode de classe $ \Rightarrow $ <strong>accessible sans créer aucune instance</strong></p>
 
 <p><span style="color:red"> A noter que la convention de nommage change. Le premier argument n’est plus nommé <code class="highlighter-rouge">self</code> mais <code class="highlighter-rouge">cls</code>. </span> Le premier argument sera “la classe en cours” et no plus l’objet en cours.</p>
 

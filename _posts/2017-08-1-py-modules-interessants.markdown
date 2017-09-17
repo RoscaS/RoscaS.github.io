@@ -7,6 +7,7 @@ author: Sol
 category: Py
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 ## logging
@@ -52,11 +53,11 @@ vache
 
 La première valeur entre `[]` définit le niveau d'introspection. 0 est la fonction actuelle, 1, celle qui apelle,... La seconde valeur entre `[]`, le type d'information.
 
-* `[0][0]` $$ \Rightarrow $$ path du fichier
-* `[x][1]` $$ \Rightarrow $$ adresse en mémoire du l'objet
-* `[x][2]` $$ \Rightarrow $$ numéro de la ligne du call
-* `[x][3]` $$ \Rightarrow $$ nom de la fonction
-* `[x][4]` $$ \Rightarrow $$ string contenant le text de la ligne
+* `[0][0]` $ \Rightarrow $ path du fichier
+* `[x][1]` $ \Rightarrow $ adresse en mémoire du l'objet
+* `[x][2]` $ \Rightarrow $ numéro de la ligne du call
+* `[x][3]` $ \Rightarrow $ nom de la fonction
+* `[x][4]` $ \Rightarrow $ string contenant le text de la ligne
 
 ** Le module comporte plein d'autres fonctions interessantes !**
 

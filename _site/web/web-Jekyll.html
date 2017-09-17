@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -49,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">web: Git, Jekyll & MD </div>
@@ -113,12 +134,12 @@
 <h2 id="ssh">SSH</h2>
 
 <ul>
-  <li><code class="highlighter-rouge">ls -al ~/.ssh</code> <script type="math/tex">\Rightarrow</script> check if a key already exist</li>
-  <li><code class="highlighter-rouge">ssh-keygen -t rsa -b 4096 -C "sol.rosca@he-arc.ch"</code> <script type="math/tex">\Rightarrow</script> make new key</li>
-  <li><code class="highlighter-rouge">eval "$(ssh-agent -s)"</code> <script type="math/tex">\Rightarrow</script> check if ssh agent is working</li>
-  <li><code class="highlighter-rouge">ssh-add ~/.ssh/id_rsa</code> <script type="math/tex">\Rightarrow</script> put key in … folder</li>
-  <li><code class="highlighter-rouge">sudo apt-get install xclip</code> <script type="math/tex">\Rightarrow</script> nice tool</li>
-  <li><code class="highlighter-rouge">xclip -sel clip &lt; ~/.ssh/id_rsa.pub </code> <script type="math/tex">\Rightarrow</script>  using the nice tool</li>
+  <li><code class="highlighter-rouge">ls -al ~/.ssh</code> $ \Rightarrow $ check if a key already exist</li>
+  <li><code class="highlighter-rouge">ssh-keygen -t rsa -b 4096 -C "sol.rosca@he-arc.ch"</code> $ \Rightarrow $ make new key</li>
+  <li><code class="highlighter-rouge">eval "$(ssh-agent -s)"</code> $ \Rightarrow $ check if ssh agent is working</li>
+  <li><code class="highlighter-rouge">ssh-add ~/.ssh/id_rsa</code> $ \Rightarrow $ put key in … folder</li>
+  <li><code class="highlighter-rouge">sudo apt-get install xclip</code> $ \Rightarrow $ nice tool</li>
+  <li><code class="highlighter-rouge">xclip -sel clip &lt; ~/.ssh/id_rsa.pub </code> $ \Rightarrow $  using the nice tool</li>
 </ul>
 
 <h2 id="git-1">git</h2>
@@ -129,11 +150,11 @@
 
 <p>Git comes with a tool called git config that lets you get and set configuration variables that control all aspects of how Git looks and operates. These variables can be stored in three different places:</p>
 
-<p>.1 <code class="highlighter-rouge">/etc/gitconfig file</code> <script type="math/tex">\Rightarrow</script>  Contains values for every user on the system and all their repositories. If you pass the option <code class="highlighter-rouge">--system</code> to <code class="highlighter-rouge">git config</code>, it reads and writes from this file specifically.</p>
+<p>.1 <code class="highlighter-rouge">/etc/gitconfig file</code> $ \Rightarrow $  Contains values for every user on the system and all their repositories. If you pass the option <code class="highlighter-rouge">--system</code> to <code class="highlighter-rouge">git config</code>, it reads and writes from this file specifically.</p>
 
-<p>.2 <code class="highlighter-rouge">~/.gitconfig</code> or <code class="highlighter-rouge">~/.config/git/config file</code> <script type="math/tex">\Rightarrow</script>  Specific to your user. You can make Git read and write to this file specifically by passing the –global option.</p>
+<p>.2 <code class="highlighter-rouge">~/.gitconfig</code> or <code class="highlighter-rouge">~/.config/git/config file</code> $ \Rightarrow $  Specific to your user. You can make Git read and write to this file specifically by passing the –global option.</p>
 
-<p>.3 <code class="highlighter-rouge">config</code> <script type="math/tex">\Rightarrow</script>  file in the Git directory (that is, <code class="highlighter-rouge">.git/config</code>) of whatever repository you’re currently using: Specific to that single repository.</p>
+<p>.3 <code class="highlighter-rouge">config</code> $ \Rightarrow $  file in the Git directory (that is, <code class="highlighter-rouge">.git/config</code>) of whatever repository you’re currently using: Specific to that single repository.</p>
 
 <ul>
   <li><code class="highlighter-rouge"> $ git config --global user.name "John Doe"</code></li>
@@ -167,9 +188,9 @@
 <ul>
   <li><code class="highlighter-rouge">jekyll --version</code></li>
   <li><code class="highlighter-rouge">gem update jekyll</code></li>
-  <li><code class="highlighter-rouge">jekyll serve</code> <script type="math/tex">\Rightarrow</script> http://localhost:4000/</li>
-  <li><code class="highlighter-rouge">gem install jekyll bundler</code> <script type="math/tex">\Rightarrow</script> usefull the first time</li>
-  <li><code class="highlighter-rouge">jekyll new myblog</code> <script type="math/tex">\Rightarrow</script> Create a new blog in <em>myblog</em></li>
+  <li><code class="highlighter-rouge">jekyll serve</code> $ \Rightarrow $ http://localhost:4000/</li>
+  <li><code class="highlighter-rouge">gem install jekyll bundler</code> $ \Rightarrow $ usefull the first time</li>
+  <li><code class="highlighter-rouge">jekyll new myblog</code> $ \Rightarrow $ Create a new blog in <em>myblog</em></li>
 </ul>
 
 <h2 id="mermaid">Mermaid</h2>
@@ -178,8 +199,8 @@
 </ul>
 
 <ol>
-  <li>Download js code of mermaid: <a href="https://github.com/knsv/mermaid">mermaid</a>. ATM, the file is hosted <a href="https://unpkg.com/mermaid@7.1.0/dist/">here</a> but it might chnge after update. We want the file named <code class="highlighter-rouge">mermaid.min.js</code>.</li>
-  <li>Put this file into a file named <code class="highlighter-rouge">js</code> in the root of the website.</li>
+  <li>Download js code of mermaid: <a href="https://github.com/knsv/mermaid">mermaid</a>. ATM, the file is hosted <a href="https://unpkg.com/mermaid@7.1.0/dist/">here</a> but it might change after update. We want the file named <code class="highlighter-rouge">mermaid.min.js</code>.</li>
+  <li>Put this file into a folder named <code class="highlighter-rouge">js</code> in the root of the website.</li>
   <li>Open <code class="highlighter-rouge">/_includes/head.html</code> and add this line:
     <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/js/mermaid.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre>

@@ -7,6 +7,7 @@ author: Sol
 category: Math
 tags: 
 finished: false
+mathjax: true
 ---
 
 ## Notes
@@ -32,10 +33,6 @@ finished: false
 
  $$ \frac{n}{k} $$
 
- \begin{equation} 
-    c^2 = a^2 + b^2.
-    \label{eq:pythagoras}
-\end{equation}
 
 $$ x_{1,2} = \frac{- b \pm \sqrt{\Delta}}{2a} $$
 
@@ -62,8 +59,9 @@ $$  \tilde{a} $$
 * Bmatrix : matrice entre accolades {…}.
 
 
-
+$$
 \begin{pmatrix}
    a_1 & b_1 \\
    a_2 & b_2 
 \end{pmatrix}
+$$

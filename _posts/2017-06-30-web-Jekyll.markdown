@@ -7,18 +7,19 @@ author: Sol
 category: Web
 tags: web jekyll static generator
 finished: false
+mathjax: true
 ---
 
 # Git
 
 ## SSH
 
-* `ls -al ~/.ssh` $$ \Rightarrow $$ check if a key already exist
-* `ssh-keygen -t rsa -b 4096 -C "sol.rosca@he-arc.ch"` $$ \Rightarrow $$ make new key
-* `eval "$(ssh-agent -s)"` $$ \Rightarrow $$ check if ssh agent is working
-* `ssh-add ~/.ssh/id_rsa` $$ \Rightarrow $$ put key in ... folder
-* `sudo apt-get install xclip` $$ \Rightarrow $$ nice tool
-* `xclip -sel clip < ~/.ssh/id_rsa.pub ` $$ \Rightarrow $$  using the nice tool
+* `ls -al ~/.ssh` $ \Rightarrow $ check if a key already exist
+* `ssh-keygen -t rsa -b 4096 -C "sol.rosca@he-arc.ch"` $ \Rightarrow $ make new key
+* `eval "$(ssh-agent -s)"` $ \Rightarrow $ check if ssh agent is working
+* `ssh-add ~/.ssh/id_rsa` $ \Rightarrow $ put key in ... folder
+* `sudo apt-get install xclip` $ \Rightarrow $ nice tool
+* `xclip -sel clip < ~/.ssh/id_rsa.pub ` $ \Rightarrow $  using the nice tool
 
 ## git
 
@@ -26,11 +27,11 @@ finished: false
 
 Git comes with a tool called git config that lets you get and set configuration variables that control all aspects of how Git looks and operates. These variables can be stored in three different places:
 
-.1 `/etc/gitconfig file` $$ \Rightarrow $$  Contains values for every user on the system and all their repositories. If you pass the option `--system` to `git config`, it reads and writes from this file specifically.
+.1 `/etc/gitconfig file` $ \Rightarrow $  Contains values for every user on the system and all their repositories. If you pass the option `--system` to `git config`, it reads and writes from this file specifically.
 
-.2 `~/.gitconfig` or `~/.config/git/config file` $$ \Rightarrow $$  Specific to your user. You can make Git read and write to this file specifically by passing the --global option.
+.2 `~/.gitconfig` or `~/.config/git/config file` $ \Rightarrow $  Specific to your user. You can make Git read and write to this file specifically by passing the --global option.
 
-.3 `config` $$ \Rightarrow $$  file in the Git directory (that is, `.git/config`) of whatever repository you’re currently using: Specific to that single repository.
+.3 `config` $ \Rightarrow $  file in the Git directory (that is, `.git/config`) of whatever repository you’re currently using: Specific to that single repository.
 
 
 * ` $ git config --global user.name "John Doe"`
@@ -60,15 +61,15 @@ Git comes with a tool called git config that lets you get and set configuration 
 
 * `jekyll --version`
 * `gem update jekyll`
-* `jekyll serve` $$ \Rightarrow $$ http://localhost:4000/
-* `gem install jekyll bundler` $$ \Rightarrow $$ usefull the first time
-* `jekyll new myblog` $$ \Rightarrow $$ Create a new blog in _myblog_
+* `jekyll serve` $ \Rightarrow $ http://localhost:4000/
+* `gem install jekyll bundler` $ \Rightarrow $ usefull the first time
+* `jekyll new myblog` $ \Rightarrow $ Create a new blog in _myblog_
 
 ## Mermaid
 * [Embed charts in jekyll](http://kkpattern.github.io/2015/05/15/Embed-Chart-in-Jekyll.html)
 
-1. Download js code of mermaid: [mermaid](https://github.com/knsv/mermaid). ATM, the file is hosted [here](https://unpkg.com/mermaid@7.1.0/dist/) but it might chnge after update. We want the file named `mermaid.min.js`.
-2. Put this file into a file named `js` in the root of the website.
+1. Download js code of mermaid: [mermaid](https://github.com/knsv/mermaid). ATM, the file is hosted [here](https://unpkg.com/mermaid@7.1.0/dist/) but it might change after update. We want the file named `mermaid.min.js`.
+2. Put this file into a folder named `js` in the root of the website.
 3. Open `/_includes/head.html` and add this line: 
 ```html
 <script src="/js/mermaid.min.js"></script>

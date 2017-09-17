@@ -14,6 +14,7 @@
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
   <script src="/js/mermaid.min.js"></script>
 
 </head>
@@ -49,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Algo: Recursivité (fr)</div>
@@ -143,7 +164,7 @@
 
 <p>En informatique, un programme est dit <strong>récursif</strong> s’il s’appelle lui même. Il s’agit donc <strong>forcément d’une fonction</strong>.</p>
 
-<p><em>Exemple:</em> <script type="math/tex">\large factorielle</script> <script type="math/tex">\large n! = 1 \cdot 2 \cdot \ldots \cdot n \Rightarrow n! = n \cdot (n-1)!</script></p>
+<p><em>Exemple:</em> $\large factorielle:\quad $ $ n! = 1 \cdot 2 \cdot \ldots \cdot n \Rightarrow n! = n \cdot (n-1)! $</p>
 
 <p><img src="/00illustrations/algo-recur/facto1-def.png" height="250" /></p>
 
@@ -164,7 +185,7 @@
   </li>
 </ul>
 
-<p><em>Exemple de la factorielle:</em> <span style="color:red"> <script type="math/tex">\large si</script> </span> <script type="math/tex">\large n \neq 1, \quad n \cdot (n-1)!</script> <span style="color:red"> <script type="math/tex">\large sinon</script></span><script type="math/tex">\large, \quad n! =1</script></p>
+<p><em>Exemple de la factorielle:</em> <span style="color:red"> $ si $ </span> $ n \neq 1, \quad n \cdot (n-1)! $ <span style="color:red"> $ sinon$</span>$, \quad n! =1 $</p>
 
 <p><img src="/00illustrations/algo-recur/facto2-def.png" height="250" /></p>
 
@@ -211,7 +232,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 
 <p><em>Exemple:</em> la suite de Fibonacci</p>
 
-<h3 id="suite-de-fibbonacci-large-n--45">Suite de Fibbonacci (<script type="math/tex">\large n = 45</script>)</h3>
+<h3 id="suite-de-fibbonacci--n--45-">Suite de Fibbonacci ($ n = 45 $)</h3>
 
 <blockquote>
   <p>Par définition, les deux premiers nombres de la suite de Fibonacci sont 1 et 1 <a href="https://fr.wikipedia.org/wiki/Suite_de_Fibonacci">ou</a> 0 et 1. Nous devons en tenir compte pour l’implémentation.</p>
@@ -237,7 +258,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </span></code></pre>
 </div>
 
-<p>Temps d’execution: <script type="math/tex">\large \color{red}{10.859} \; secondes</script></p>
+<p>Temps d’execution: $ \color{red}{10.859} \; secondes $</p>
 
 <p><em>version plus compacte:</em></p>
 
@@ -256,7 +277,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </span></code></pre>
 </div>
 
-<p>Temps d’execution: <script type="math/tex">\large \color{red}{10.738} \; secondes</script></p>
+<p>Temps d’execution: $ \color{red}{10.738} \; secondes $</p>
 
 <p><em>version très compacte:</em></p>
 
@@ -268,7 +289,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </span></code></pre>
 </div>
 
-<p>Temps d’execution: <script type="math/tex">\large \color{red}{9.752} \; secondes</script></p>
+<p>Temps d’execution: $ \color{red}{9.752} \; secondes $</p>
 
 <h4 id="itératif">itératif:</h4>
 
@@ -290,7 +311,7 @@ L’appel d’une fonction se fait dans un  <span style="color:red"> contexte d�
 </span></code></pre>
 </div>
 
-<p>Temps d’execution: <script type="math/tex">\large \color{green}{0.389} \; secondes</script></p>
+<p>Temps d’execution: $ \color{green}{0.389} \; secondes $</p>
 
 <p>Les différences de temps d’éxecution parlent pour elles mêmes et cette animation nous aide à en comprendre la raison:</p>
 
@@ -335,7 +356,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 
 <ul>
   <li>
-    <p>Lorsque la récurence est d’ordre plus grande que 1 (c’est à dire que l valeur au rang <script type="math/tex">\large n</script> ne dépend pas seulement du rang <script type="math/tex">\large n-1</script>, mais aussi de <script type="math/tex">\large n-2</script>, voir <script type="math/tex">\large n-3</script>,… )</p>
+    <p>Lorsque la récurence est d’ordre plus grande que 1 (c’est à dire que l valeur au rang $ n $ ne dépend pas seulement du rang $ n-1 $, mais aussi de $ n-2 $, voir $ n-3 $,… )</p>
   </li>
   <li>
     <p>Une utilisation “aveugle” de la récursivité impliquera une redondance de calculs. Dans ce cas, il peut être utile de dérouler l’algorithme avant de l’implémenter pour s’assurer qu’il ne génère pas d’opeerations inutiles.</p>
@@ -495,7 +516,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <h2 id="exemples-dalgorithmes-récursifs">Exemples d’algorithmes récursifs</h2>
 
 <h4 id="factorielle">Factorielle</h4>
-<p>Retourne la factorielle d’un nombre (<script type="math/tex">\large !n</script>)</p>
+<p>Retourne la factorielle d’un nombre ($ !n $)</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">facto</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;}</span>
     <span class="k">return</span> <span class="n">facto</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">;</span>  
@@ -505,7 +526,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <p>Récursion non-terminale</p>
 
 <h4 id="descending">Descending</h4>
-<p>Print les nombres à partir de <script type="math/tex">\large n</script> jusque <script type="math/tex">0</script></p>
+<p>Print les nombres à partir de  n $ jusque $ 0 $</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">descending</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
@@ -516,7 +537,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <p>Récursion terminale</p>
 
 <h4 id="ascending">Ascending</h4>
-<p>Même chose que le précédent mais de <script type="math/tex">0</script> à <script type="math/tex">n</script></p>
+<p>Même chose que le précédent mais de $ 0 $ à $ n $</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">ascending</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">ascending</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
@@ -527,7 +548,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <p>Récursion terminale. <em>Comparer avec le précédent</em></p>
 
 <h4 id="somme">Somme</h4>
-<p>Retourne la somme des nombres de <script type="math/tex">1</script> à <script type="math/tex">n</script></p>
+<p>Retourne la somme des nombres de $ 1 $ à $ n $</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">somme</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span> <span class="k">return</span> <span class="n">n</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">return</span> <span class="n">somme</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">n</span><span class="p">;</span>
@@ -557,7 +578,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <p>Récursion terminale</p>
 
 <h4 id="elever-à-la-puissance-nt">Elever à la puissance (NT)</h4>
-<p>Élève <script type="math/tex">a</script> à la puissance <script type="math/tex">n</script>ss</p>
+<p>Élève $a$ à la puissance $n$ss</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">puissance</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">return</span> <span class="n">puissanceNT</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="p">;</span>
@@ -567,7 +588,7 @@ La récursivité terminale revient à appliquer l’adage <em>Diviser pour régn
 <p>Récursion non-terminale</p>
 
 <h4 id="elever-à-la-puissance-t">Elever à la puissance (T)</h4>
-<p>Élève <script type="math/tex">a</script> à la puissance <script type="math/tex">n</script>ss</p>
+<p>Élève $a$ à la puissance $n$ss</p>
 <div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">puissanceT</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">t</span> <span class="o">*=</span> <span class="n">a</span><span class="p">;</span>  

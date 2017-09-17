@@ -7,6 +7,7 @@ author: Sol
 category: Cpp
 tags: cpp 
 finished: false
+mathjax: true
 ---
 
 ## Rappel: types d'initialisation:
@@ -25,23 +26,23 @@ public:
     }
 };
 ```
-### Initialisation **$$\large directe$$**
+### Initialisation **$directe$**
 * `int x(5);` initialisation directe d'un objet de type `int`
 * `Fraction f1(5,4);` initiasation directe d'un objet de type `Fraction`
-    * $$ \Rightarrow $$ appelle le cstr de `Fraction(int,int)`
+    * $ \Rightarrow $ appelle le cstr de `Fraction(int,int)`
 
-### Initialisation **$$\large uniforme$$**
+### Initialisation **$uniforme$**
 * `int y{5};` initialisation uniforme d'un objet de type `int`
 * `Fraction f2{5,3};`  initialisation uniforme d'un objet de type 'Fraction`
-    * $$ \Rightarrow $$ appelle le cstr de `Fraction(int,int)`
+    * $ \Rightarrow $ appelle le cstr de `Fraction(int,int)`
 
-### Initialisation par **$$\large copie$$**
+### Initialisation par **$copie$**
 * `int z = 6;` initialisation par copie d'un objet de type `int`
 * `Fraction f3 = Fraction(6);` initialisation par copie d'un objet de type `Fraction`
-    * $$\Rightarrow$$ appelle le constructeur `Fraction(6,1)` **ou** le cstr de copie. Ce dernier n'est généralement pas le premier choix du compilateur pour raison de performance.
+    * $\Rightarrow$ appelle le constructeur `Fraction(6,1)` **ou** le cstr de copie. Ce dernier n'est généralement pas le premier choix du compilateur pour raison de performance.
     * Cette façon de faire est évaluée de la même façon que le serait `Fractionf3(fraction(6));`
 * `Fraction f4 = 7;` initialisation par copie d'un objet de type `Fraction`.
-    * $$\Rightarrow$$ le compilateur va tenter de trouver une façon de convertir 7 en un objet de type `Fraction` ce qui va invoquer le cstr `Fraction(7,1)`
+    * $\Rightarrow$ le compilateur va tenter de trouver une façon de convertir 7 en un objet de type `Fraction` ce qui va invoquer le cstr `Fraction(7,1)`
 
 <br>
 

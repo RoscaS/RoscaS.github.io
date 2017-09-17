@@ -7,13 +7,14 @@ author: Sol
 category: Linux
 tags: Linux
 finished: false
+mathjax: true
 ---
 
-$$ Linux\; users \; have \; one \; thing \; that \; often \; sets $$
-$$them \; apart \; from \; their \; Windows \; and \; Mac $$
-$$using\; colleagues. \; They \; often \; spend \; a \; lot \; more$$ 
-$$time \; fixing \; things \; or \; finding \; out \; how \; to $$
-$$fix \; things. $$
+$ Linux\; users \; have \; one \; thing \; that \; often \; sets $
+$them \; apart \; from \; their \; Windows \; and \; Mac $
+$using\; colleagues. \; They \; often \; spend \; a \; lot \; more$ 
+$time \; fixing \; things \; or \; finding \; out \; how \; to $
+$fix \; things. $
 
 
 # Specifique au Dell xps 13 9343
@@ -59,28 +60,28 @@ Change
 
 # General
 
-* `sudo dpkg -i *.deb` $$ \Rightarrow $$ installer  
-* `apt-get install` _softName_ $$ \Rightarrow $$ dld et installe  
-* `apt-cache policy` _pkg-name_ $$ \Rightarrow $$ check if a package is installed  
-* `wget` _"url"_ $$ \Rightarrow $$ download  
-* `apt-get --purge remove` _softName_ $$ \Rightarrow $$ uninstall
-* `sudo apt-get autoremove` $$ \Rightarrow $$ remove unused dependencies
-* `sudo apt-get purge --auto-remove gimp` $$ \Rightarrow $$ combine previous 2
-* `sudo apt-get clean` $$ \Rightarrow $$ remove downloaded archives files
-* `sudo apt-get purge --auto-remove` _softName_ $$ \Rightarrow $$ COMPLETE REMOVE
+* `sudo dpkg -i *.deb` $ \Rightarrow $ installer  
+* `apt-get install` _softName_ $ \Rightarrow $ dld et installe  
+* `apt-cache policy` _pkg-name_ $ \Rightarrow $ check if a package is installed  
+* `wget` _"url"_ $ \Rightarrow $ download  
+* `apt-get --purge remove` _softName_ $ \Rightarrow $ uninstall
+* `sudo apt-get autoremove` $ \Rightarrow $ remove unused dependencies
+* `sudo apt-get purge --auto-remove gimp` $ \Rightarrow $ combine previous 2
+* `sudo apt-get clean` $ \Rightarrow $ remove downloaded archives files
+* `sudo apt-get purge --auto-remove` _softName_ $ \Rightarrow $ COMPLETE REMOVE
 
 > This command removes the aptitude cache in “/var/cache/apt/archives”. When you install a program, the package file is downloaded and stored in that directory. You don’t need to keep the files in that directory. However, the only drawback of deleting them, is that if you decide to install any of those programs again, the packages would have to be downloaded again.
 
 
 
-* `caja .` $$ \Rightarrow $$ open file browser here
-* `su` _username_ $$ \Rightarrow $$ switch user
-* `df` $$ \Rightarrow $$ HD space
-* `sleep` _seconds_ $$ \Rightarrow $$ pause terminal
-* `gcc -Wall file.c -o file` $$ \Rightarrow $$ compile
-* `whoami` $$ \Rightarrow $$ user
-* `ipcalc` `ip` `-s` SR1 SR2 SR3 $$ \Rightarrow $$ subnet calculatord
-* `which` _make_ $$ \Rightarrow $$ vérifie présence de make sur la machine
+* `caja .` $ \Rightarrow $ open file browser here
+* `su` _username_ $ \Rightarrow $ switch user
+* `df` $ \Rightarrow $ HD space
+* `sleep` _seconds_ $ \Rightarrow $ pause terminal
+* `gcc -Wall file.c -o file` $ \Rightarrow $ compile
+* `whoami` $ \Rightarrow $ user
+* `ipcalc` `ip` `-s` SR1 SR2 SR3 $ \Rightarrow $ subnet calculatord
+* `which` _make_ $ \Rightarrow $ vérifie présence de make sur la machine
 
 
 # find
@@ -206,15 +207,15 @@ cochon.txt  mouton.txt  poule  poule.txt  vache.txt
 
 ## tools
 
-* i-Nex $$ \Rightarrow $$ gui monitor
-* tlp $$ \Rightarrow $$ power management
-* powertop $$ \Rightarrow $$ stats
+* i-Nex $ \Rightarrow $ gui monitor
+* tlp $ \Rightarrow $ power management
+* powertop $ \Rightarrow $ stats
 
 ## usefull commands
-* `lcpu | grep MHz` $$ \Rightarrow $$ real time cores freq
-* `tlp-stat` $$ \Rightarrow $$ show various info on power consuption
-* `powertop` $$ \Rightarrow $$ various info on power consuption
-* `sudo powertop --time=60 --html=power_report.html` $$ \Rightarrow $$ stats
+* `lcpu | grep MHz` $ \Rightarrow $ real time cores freq
+* `tlp-stat` $ \Rightarrow $ show various info on power consuption
+* `powertop` $ \Rightarrow $ various info on power consuption
+* `sudo powertop --time=60 --html=power_report.html` $ \Rightarrow $ stats
 
 ## disable touche screen
 
@@ -236,7 +237,7 @@ cochon.txt  mouton.txt  poule  poule.txt  vache.txt
 2. boot into _Recovery mode_
 3. select _enter root session_
 
-* `mount -o rw,remount /` $$ \Rightarrow $$ gives the ability to modify files
+* `mount -o rw,remount /` $ \Rightarrow $ gives the ability to modify files
 
 # Foucs issue with conky
 
