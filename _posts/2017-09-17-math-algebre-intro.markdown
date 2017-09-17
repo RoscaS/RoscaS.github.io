@@ -18,11 +18,10 @@ mathjax: true
 
 Ceci est un test: $ 2^2 $
 
-$$
-\frac{2}{3} + 4x^2 = 0
-$$
+$$ \frac{2}{3} + 4x^2 = 0 $$
 
 
-test $ \Rightarrow $ poule
+```puml
+A -> B
+```
 
-$ (n-1) \cdot (n-1)^2 $

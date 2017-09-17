@@ -10,7 +10,7 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/perso/">
+  <link rel="canonical" href="http://localhost:4000/web/web-Website-Tools.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
@@ -44,27 +44,51 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Perso </title>
-  <meta name="description" content="Gist settings Vs-Code-Linux">
+  <title>Web: Webiste-Tools</title>
+  <meta name="description" content="Idees a implementer  plot.ly">
 </head>
 
 
         <div class="wrapper">
             <header class="post-header">
 	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
 
     <center>
-		<div class="post-title" itemprop="name headline">Perso </div>
+		<div class="post-title" itemprop="name headline">Web: Webiste-Tools</div>
 
-		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="03 Sep 2017" itemprop="datePublished">Sep 3 2017</time>
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="17 Sep 2017" itemprop="datePublished">Sep 17 2017</time>
 
-			
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
 			<br>
 			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
 		</div>
 
         	
         <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tools</a>
         	
 			
 		</div>
@@ -90,6 +114,8 @@
 <div class="post-content">
     <center>
 	
+	<p></p>
+	
     </center>
 	<h2>Directory</h2>
 </div>
@@ -97,24 +123,68 @@
 <div id="category"></div>
 
 <div class="post-content" itemprop="articleBody">
-    <h2 id="gist-settings-vs-code-linux">Gist settings Vs-Code-Linux</h2>
+    <h3 id="idees-a-implementer">Idees a implementer</h3>
+<ul>
+  <li><a href="https://plot.ly/">plot.ly</a></li>
+</ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>85934142a6f03cc9c993dba376527fa2bbc84112
+<h2 id="mathjax">Mathjax</h2>
+<p>Le site utilise <a href="https://github.com/mathjax/MathJax">MathJax</a> pour génénrer le rendu des expressions mathématiques.</p>
+
+<ul>
+  <li>Expression within <code class="highlighter-rouge">$...$</code> or <code class="highlighter-rouge">\(...\)</code> will be rendered inline.</li>
+  <li>Expression within <code class="highlighter-rouge">$$...$$</code> or <code class="highlighter-rouge">\[...\]</code> or will be rendered in block.</li>
+</ul>
+
+<p>In line: $f(x) = sin(x) + b^2$
+Bloc: <script type="math/tex">\frac{2}{3}+4x</script></p>
+
+<h2 id="mermaid">Mermaid</h2>
+<p>Le site utilise <a href="https://mermaidjs.github.io">mermaid</a> pour générer des diagrames (Flow, Sequence, Gantt, UML).</p>
+
+<h3 id="installation">Installation</h3>
+<ol>
+  <li>Download js code of mermaid: <a href="https://github.com/knsv/mermaid">mermaid</a>. ATM, the file is hosted <a href="https://unpkg.com/mermaid@7.1.0/dist/">here</a> but it might change after update. We want the file named <code class="highlighter-rouge">mermaid.min.js</code>.</li>
+  <li>Put this file into a folder named <code class="highlighter-rouge">js</code> in the root of the website.</li>
+  <li>Open <code class="highlighter-rouge">/_includes/head.html</code> and add this line:
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/js/mermaid.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Now we can make nice graphs like this one:</li>
+</ol>
+<div class="mermaid">
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+</div>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"mermaid"</span><span class="nt">&gt;</span>
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+<span class="nt">&lt;/div&gt;</span>
 </code></pre>
 </div>
 
-<h2 id="gist-settings-vs-code-windows">Gist settings Vs-Code-Windows</h2>
-<div class="highlighter-rouge"><pre class="highlight"><code>23f1e9a909e77fa8876b5cf65abc2187
-</code></pre>
-</div>
+<p>We just need to put the graph code inside <code class="highlighter-rouge">&lt;div class="mermaid"&gt;...&lt;/div&gt;</code> tags.</p>
 
-<h2 id="plotly-api-key">Plotly API key</h2>
-<div class="highlighter-rouge"><pre class="highlight"><code>tDGG5MhJ8VcIdWyp9hKR
-</code></pre>
-</div>
-<p>Username: Roscas</p>
+<ul>
+  <li><a href="https://github.com/knsv/mermaid">mermaid quick start</a></li>
+  <li><a href="https://mermaidjs.github.io">mermaid doc</a></li>
+</ul>
 
-<p>@import “/test.py” {code_block=true class=”line-numbers”}</p>
+<h2 id="code-chunk">Code chunk</h2>
+
+<p><code class="highlighter-rouge">python {cmd=true matplotlib=true}
+import matplotlib.pyplot as plt
+plt.plot([1,2,3, 4])
+plt.show() # show figure
+</code></p>
+
 
 </div>
 
@@ -126,21 +196,21 @@
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Perso @&amp;url=http://localhost:4000/perso/" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Web: Webiste-Tools@&amp;url=http://localhost:4000/web/web-Website-Tools.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/perso/" class="facebook-share">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/web/web-Website-Tools.html" class="facebook-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://plus.google.com/share?url=http://localhost:4000/perso/" class="googleplus-share">
+	<a href="https://plus.google.com/share?url=http://localhost:4000/web/web-Website-Tools.html" class="googleplus-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>

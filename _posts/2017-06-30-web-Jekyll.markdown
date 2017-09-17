@@ -65,6 +65,7 @@ Git comes with a tool called git config that lets you get and set configuration 
 * `gem install jekyll bundler` $ \Rightarrow $ usefull the first time
 * `jekyll new myblog` $ \Rightarrow $ Create a new blog in _myblog_
 
+
 ## Mermaid
 * [Embed charts in jekyll](http://kkpattern.github.io/2015/05/15/Embed-Chart-in-Jekyll.html)
 
