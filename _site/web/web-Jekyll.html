@@ -13,6 +13,9 @@
   <link rel="canonical" href="http://localhost:4000/web/web-Jekyll.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -169,6 +172,44 @@
   <li><code class="highlighter-rouge">jekyll new myblog</code> <script type="math/tex">\Rightarrow</script> Create a new blog in <em>myblog</em></li>
 </ul>
 
+<h2 id="mermaid">Mermaid</h2>
+<ul>
+  <li><a href="http://kkpattern.github.io/2015/05/15/Embed-Chart-in-Jekyll.html">Embed charts in jekyll</a></li>
+</ul>
+
+<ol>
+  <li>Download js code of mermaid: <a href="https://github.com/knsv/mermaid">mermaid</a>. ATM, the file is hosted <a href="https://unpkg.com/mermaid@7.1.0/dist/">here</a> but it might chnge after update. We want the file named <code class="highlighter-rouge">mermaid.min.js</code>.</li>
+  <li>Put this file into a file named <code class="highlighter-rouge">js</code> in the root of the website.</li>
+  <li>Open <code class="highlighter-rouge">/_includes/head.html</code> and add this line:
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/js/mermaid.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Now we can make nice graphs like this one:</li>
+</ol>
+<div class="mermaid">
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+</div>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"mermaid"</span><span class="nt">&gt;</span>
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<p>We just need to put the graph code inside <code class="highlighter-rouge">&lt;div class="mermaid"&gt;...&lt;/div&gt;</code> tags.</p>
+
+<ul>
+  <li><a href="https://github.com/knsv/mermaid">mermaid quick start</a></li>
+  <li><a href="https://mermaidjs.github.io">mermaid doc</a></li>
+</ul>
 
 </div>
 

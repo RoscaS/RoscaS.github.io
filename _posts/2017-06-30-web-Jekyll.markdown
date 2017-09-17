@@ -64,3 +64,34 @@ Git comes with a tool called git config that lets you get and set configuration 
 * `gem install jekyll bundler` $$ \Rightarrow $$ usefull the first time
 * `jekyll new myblog` $$ \Rightarrow $$ Create a new blog in _myblog_
 
+## Mermaid
+* [Embed charts in jekyll](http://kkpattern.github.io/2015/05/15/Embed-Chart-in-Jekyll.html)
+
+1. Download js code of mermaid: [mermaid](https://github.com/knsv/mermaid). ATM, the file is hosted [here](https://unpkg.com/mermaid@7.1.0/dist/) but it might chnge after update. We want the file named `mermaid.min.js`.
+2. Put this file into a file named `js` in the root of the website.
+3. Open `/_includes/head.html` and add this line: 
+```html
+<script src="/js/mermaid.min.js"></script>
+```
+4. Now we can make nice graphs like this one:
+<div class="mermaid">
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</div>
+```html
+<div class="mermaid">
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+</div>
+```
+
+We just need to put the graph code inside `<div class="mermaid">...</div>` tags.
+
+* [mermaid quick start](https://github.com/knsv/mermaid)
+* [mermaid doc](https://mermaidjs.github.io)
