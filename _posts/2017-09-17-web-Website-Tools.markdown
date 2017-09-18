@@ -71,3 +71,5 @@ plt.show() # show figure
     <script data-plotly="RoscaS:3" sharekey-plotly="cAzViMcS6tIpcD0ZqFCwJR" src="https://plot.ly/embed.js" async></script>
 </div>
 
+
+<iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 1px solid #ccc" frameborder=0></iframe>
