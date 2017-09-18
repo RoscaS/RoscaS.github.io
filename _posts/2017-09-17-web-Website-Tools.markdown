@@ -72,4 +72,6 @@ plt.show() # show figure
 </div>
 
 
-<iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 1px solid #ccc" frameborder=0></iframe>
+<div>
+    <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
