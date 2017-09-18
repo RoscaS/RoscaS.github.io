@@ -75,3 +75,27 @@ plt.show() # show figure
 <div>
     <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
 </div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/ed4ztrpu0q?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/ncpntrwxtz?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/u8dyqgqwvp?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/ed4ztrpu0q?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
