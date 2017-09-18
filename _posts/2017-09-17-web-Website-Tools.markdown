@@ -65,12 +65,6 @@ import matplotlib.pyplot as plt
 plt.plot([1,2,3, 4])
 plt.show() # show figure
 ```
-
-
-
-<iframe width="900" height="800" frameborder="0" scrolling="no" src="//plot.ly/~RoscaS/3.embed"></iframe>
-
-
 <div>
     <a href="https://plot.ly/~RoscaS/3/?share_key=cAzViMcS6tIpcD0ZqFCwJR" target="_blank" title="Plot 3" style="display: block; text-align: center;"><img src="https://plot.ly/~RoscaS/3.png?share_key=cAzViMcS6tIpcD0ZqFCwJR" alt="Plot 3" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
     <script data-plotly="RoscaS:3" sharekey-plotly="cAzViMcS6tIpcD0ZqFCwJR" src="https://plot.ly/embed.js" async></script>
