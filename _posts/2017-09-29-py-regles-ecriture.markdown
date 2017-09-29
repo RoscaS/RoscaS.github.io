@@ -165,4 +165,94 @@ for i, (name, age) in enumerate(zip(names, ages)):
 
 On retrouve dans cette construction l'unpacking abordé plus haut, qui peut donc s'utiliser aussi pour les boucles `for`.
 
-## Listes en intension
+## Listes en intension (comprehension)
+Outre la boucle `for`, le protocole d'itération est aussi représenté par les listes en intension, qui doivent être utilisées dès que possible, **tant qu'elles ne nuisent pas à la lisibilité du code**.
+
+Pour construire la liste des carrés des nombres de 0 à 9, on utilisera le code suivant, plutot qu'une boucle multi-lignes et un remplissage de liste manuel:
+
+```py
+squarres = [i**2 for i in range(10)]
+```
+
+On retrouve la même construction pour les dictionnaires en intension:
+
+```py
+squares_set = {i**2 for i in range(10)}
+squares_dict = {i: i**2 for i in range(10)}
+```
+
+## Générateurs
+Un autre mécanisme est celui des générateurs (et des générateurs en intension), à utiliser quand il n'est pas nécéssaire d'avoir une représentation complète d'un ensemble en mémoire. Si notre liste `squares` a simplement pour but de calculer la somme des éléments (`sum(squares)`), nous lui préférerons la version utilisant un générateur, évitant ainsi le stockage inutile de la liste:
+
+```py
+sum_squares = sum(x**2 for x in range(10))
+```
+
+## EXceptions
+La gestion d'erreurs est réalisée en Python à l'aide d'un mécanisme d'exceptions, mais les exceptions ne se limitent pas à cela. Le protocole d'itération décrit plus haut s'appuie par exemple sur une exception `StopIteration` levée en fin de boucle.
+
+Les traitements défectueux doivent toujours remonter une exception adaptée au problème, et décrivant au mieux sa raison. Les types d'exceptions sont généralement hiérarchisés de façon à représenter le problème à différents niveaux d'abstraction.
+
+Si on est pas exemple amennés à développer une bibliothèque, il est courant que toutes ses exceptions héritent d'une même base permettant facilement d'attraper toutes les erreurs de la bibliothèque. Dnas le cas d'un champ manquant lors de l'analyse du fichier de configuration d'un composant de la bibliothèque, `mylib`, on pourrait avoir une exception du type `mylib.FieldMissingError` héritant de `mylib.ParseError` et elle même de `mylob.Error`
+
+De l'autre coté, il est conseillé d'ttraper judicieusement les exceptions. Si on souhaite attraper l'exception `mylib.FieldMissingError` plutot que `mylib.Error` qui serait dans ce cas trop général.
+
+## Décorateurs
+Les décorateurs, utilisés à bon escient, sont aussi une particularité du langage. On reconnait un bon code idiomatique à l'utilisation des décorateurs de la bibliothèque standard (staticmethod, classmethod, property).
+
+```py
+class Circle(object):
+    def __init__(self, cx, cy, radius):
+    self.cx, self.cy = cx, cy
+    self.radius = radius
+
+    @classmethod
+    def from_diameter(cls, ax, ay, bx, by):
+        cx, cy = (ax + by) / 2, (ay + by) /2
+        diam = ((ax - bx)**2 + (ay - by)**2)**0.5
+    
+    @property
+    def area(self):
+        return math.pi * self.radius**2
+```
+
+**La définition de ses propres décorateurs ne doit en revanche avoir lieu que si elle permet un gain net en lisibilité par rapport aux autres solutions envisagées.
+
+## Gestionnaires de contextes
+
+L'ouverture de fichiers, doit toujours passer par l'utilisation d'un bloc `with`. Ce bloc permet en effet d'automatiser des opérations de libération des ressources, et ce en tous les cas (déroulement normal ou erreur).
+
+## Modules collection
+Ce module comporte d'autres structures de données essentielles au langage: `OrderedDict`, `nametuple`, `counter`, ou encore `defaultdict` qui sera préférable à une utilisation systématique de `setdefault`. Une réflexe classique est de vouloir recréer ces classes, alors qu'elles sont à portée de main.
+
+```py
+>>> from collections import Counter
+>>> names = ['Alice', 'Bob', 'Bob', 'Alice', 'Alex', 'Bob']
+>>> count = Counter(names)
+>>> count
+Counter({'Bob': 3, 'Alice': 2, 'Alex': 1})
+>>> count['Alice']
+2
+>>> count['Camille']
+0
+```
+
+# Les bons réflexes
+
+En premier lieu, il faut bien sur se relire en faisant attention aux divers principes et règles énoncés. Voire se faire relire par un tiers lorsque cela est possible.
+
+Un autre réflexe sera de s'imprégner de la bibliothèque standard, et de s'assurer pour chaque fonctionnalité que l'on s'apprête à implémenter que celle-ci n'y existe pas déjà.
+
+La fonction `help` permet aussi d'obtenir plus d'informations sur un module, un type, une fonction ou même un mécanisme du langage. Elle offre ainsi un accès rapide à la documentation directement depuis l'interpréteur interactif. Utilisée sns pramètres, `help` propose aussi une aide interactive.
+
+```py
+>>> import itertools
+>>> help(itertools)
+>>> help(str)
+>>> help(max)
+>>> help('for')
+>>> help()
+```
+
+Il conviendra aussi de connaitre les bibliothèques tierces, dans une moindre mesure afin de savoir trouver un bibliothèque répondant à un besoin précis. Il n'est pas nécessaire de toutes les connaitre sur le bout des doigts, ni de sortir une usine à gaz pour une petite fonctionnalité, mais simplement de **ne pas réinventer la roue**.
+
