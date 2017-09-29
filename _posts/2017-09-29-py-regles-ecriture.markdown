@@ -84,3 +84,23 @@ print(obj._internal)
 En parlant d'attributs, **on préférera toujorus en Python un accès direct aux attributs plutot que des méthodes** _getter/setter_. Quitte à passer par des propriétés s'il est nécessaire que la récupération ou la modification de l'attribut soit dynamique.
 
 ## Easier to ask forgiveness than permission (EAFP)
+Python fait partie des langages qui considèrent qu'il est plus simple d'essayer puis de gérer les erreurs que de demander la permission en amont.
+
+Pour gérer l'ouverture d'un fichier, par exemple, on préférera faire appel à `open`, et traiter les différentes exceptions qui pourraient se produire (fichier inexistant, droits insuffisants, etc...), plutot que de tester une à une ces différentes conditions.
+
+```py
+try:
+    with open('filemame', 'r') as f:
+        handle_file(f)
+
+except FileNotFoundError as e:
+    errlog('Fichier {!r} non trouvé', e.filename)
+except PermissionError as e:
+    errlog('Fichier {!r} non lisible', e.filename)
+```
+
+Cette manière de procéder a aussi l'avantage d'être plus sure en Python. En effet, dans le cas où l'on testerait d'abord l'existence du fichier, rien nenous grentit qu'il serait toujours présent au moment de l'ouverture proprement dite (il peut être supprimé par un utre progrmme entre temps).
+
+> Ce principe s'oppose au LBYL (Look before you leap) préconisé par d'autres langages comme le C.
+
+# Mécanismes du langage
