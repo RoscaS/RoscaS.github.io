@@ -104,3 +104,65 @@ Cette manière de procéder a aussi l'avantage d'être plus sure en Python. En e
 > Ce principe s'oppose au LBYL (Look before you leap) préconisé par d'autres langages comme le C.
 
 # Mécanismes du langage
+
+On reconnait généralement un bon code Python à l'utilisation des mécanismes qui lui sont propres.
+
+## Unpacking
+L'unpacking (ou déconstruction) est une technique qui permet l'assignation de plusieurs variables en une seule instruction. Par exemple pour échanger les valeurs de deux variables:
+
+```py
+>>> a = 5
+>>> b = 2
+>>> a, b = b, a
+>>> print(a, b)
+2 5
+```
+
+En interne, lors de la 3e ligne, Python crée un tuple `(b, a)`, qui est ensuite déconstruit et son contenu est stocké dans les variables `a` et `b`
+
+L'unpacking ne se limite pas à ça, il permet aussi de déconstruire des structures imbriquées (tuples, listes, strings, dictionnaires).
+
+```py
+>>> l = [0, (1, 2, {3: 'foo', 4: 'bar}), 5]
+>>> a, (b, c, (d, e)), f = l
+>>> print(a, b, c, d , e, f)
+0 1 2 3 4 5
+>>> x, y, z = 'bar'
+>>> print(x, y, z)
+b a r 
+```
+
+L'unpacking est une manière élégante de séparer les éléments d'une liste, il est donc courant de l'employer en Python.
+
+> constructions plus complexes avec l'opérateur _splat_ (`*`), voir article associé
+
+## Conditions
+Toute valeur en Python peut s'évaluer sous forme d'un booléen, il n'est donc pas nécéssaire de la convertir préalablement. Les valeurs `None`, `0` et les conteneurs vides (`''`, `()`, `[]`, `set()`, etc...) s'évaluent à `False`. Les autres nombres, les conteneurs non vides, et plus généralement toute valeur qui n'est pas explicitement fausse s'évaluent à `True`.
+
+**L'usage de ternaires** est a privilégier quand on souhaite évaluer des expressions conditionnelles courtes:
+
+```py
+name = user.name if user is not None else 'anonymous'
+```
+
+> On notera l'utilisation de l'opérateur `is` pour la comparaison avec `None`. Ce dernier étant une constante unique, `is` permet d'en assurer la singularité.
+
+## Boucle for
+En Python, la boucle `for` doit toujours être privilégiée pour itérer sur un ensemble d'éléments. Si on utilise une `while` **pour itérer**, c'est probablement qu'il y a un problème de conception. Cet ensemble d'éléments ne prend pas toujours la forme d'une liste, il peut s'agire d'un dictionnaire, d'un fichier, d'un intervalle de nombres (`range`).
+
+Ceci est valable pour toutes les variables qui devraient prendre des valeurs successives à chaque itération. Ainsi, on s'orientera vers `zip` pour itérer sur plusieurs éléments à la fois, vers `enumerate` pour itérer en gardant trace de l'index dans la liste, ou encore vers des constructions plus complexes du mondule `itertools`.
+
+```py
+names = ['Alex', 'Alice', 'Bob']
+ages = [45, 27, 74]
+
+for name, age in zip(names, ages):
+    print(name, age)
+
+for i, (name, age) in enumerate(zip(names, ages)):
+    print(i, name, age)
+```
+
+On retrouve dans cette construction l'unpacking abordé plus haut, qui peut donc s'utiliser aussi pour les boucles `for`.
+
+## Listes en intension
