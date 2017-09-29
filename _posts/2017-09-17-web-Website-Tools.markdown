@@ -66,6 +66,40 @@ plt.plot([1,2,3, 4])
 plt.show() # show figure
 ```
 
+<div>
+    <a href="https://plot.ly/~RoscaS/3/?share_key=cAzViMcS6tIpcD0ZqFCwJR" target="_blank" title="Plot 3" style="display: block; text-align: center;"><img src="https://plot.ly/~RoscaS/3.png?share_key=cAzViMcS6tIpcD0ZqFCwJR" alt="Plot 3" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="RoscaS:3" sharekey-plotly="cAzViMcS6tIpcD0ZqFCwJR" src="https://plot.ly/embed.js" async></script>
+</div>
 
 
+<div>
+    <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
 
+<div>
+    <iframe src="https://www.desmos.com/calculator/ed4ztrpu0q?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/ncpntrwxtz?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/u8dyqgqwvp?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<div>
+    <iframe src="https://www.desmos.com/calculator/ed4ztrpu0q?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+
+<<<<<<< HEAD
+
+=======
+<div>
+    <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
+</div>
+>>>>>>> 0b9178d780ad152e6021e57be0007a443558e4b2
