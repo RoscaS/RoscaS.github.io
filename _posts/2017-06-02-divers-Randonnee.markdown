@@ -7,6 +7,7 @@ author: Sol
 category: Divers
 tags: Divers randonnée
 finished: false
+mathjax: true
 ---
 
 ## 1. Overall
@@ -35,9 +36,9 @@ $$KmE = Longueur(Km) + \Delta montee(km) \cdot 10 + \Delta Descente (km) \cdot 3
 
 #### Données
 
-$$ Longueur = 85 Km $$  
-$$  \Delta montee = 4500m = 4.5Km $$  
-$$  \Delta descente = 4800m = 4.8Km $$  
+* $ Longueur = 85 Km $
+* $  \Delta montee = 4500m = 4.5Km $
+* $  \Delta descente = 4800m = 4.8Km $
 
 ### KmE de la randonnée
 
@@ -46,6 +47,7 @@ $$ KmE = 85 + 4.5 \cdot 10 + 4.8 \cdot 3,3 =  \bbox[5px,border:2px solid red] { 
 ## 3. moyenne KmE/jour
 
 $$ KmE_{tot} = 145.84 Km $$  
+
 $$ \Delta temps = 6 j  $$
 
 $$ \frac{145.84}{6} = 24.306 $$  
@@ -64,7 +66,7 @@ $$ \bbox[5px,border:2px solid red] {24.306 Km/jour} $$
 |intermédiaire condition physique moyenne|2,5 à 4,0 km/h|
 |expérimenté bonne condition physique|> 4,0 km/h|  
 
-En me **surestimant** disons que je suis en condition physique moyenne et débutant. Disons donc $$3km/h$$    
+En me **surestimant** disons que je suis en condition physique moyenne et débutant. Disons donc $3km/h$    
 $$ 24.306/3 = \bbox[5px,border:2px solid red] {8.10 h/j} $$ 
 
 
@@ -74,7 +76,7 @@ paramètres à ajouter hors dénivelé déjà prise en compte:
 * type de terrain: rocailleux
 * poids du sac à dos: 10Kg
 * condition physique (personne la moins entrainée du groupe (Sol): peu entraîné (pas entraîné)
-* altitude de la marche: [880, 2624]m $$\Rightarrow \approx 1700m$$ moyenne (2200 plus représentatif?)
+* altitude de la marche: [880, 2624]m $ \approx 1700m$ moyenne (2200 plus représentatif?)
 
 > Ne pas négliger la fatigue, vitesse différente après 1h et après 5h de marche.
 

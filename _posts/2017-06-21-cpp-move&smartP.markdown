@@ -7,6 +7,7 @@ author: Sol
 category: Cpp
 tags: Cpp
 finished: false
+mathjax: true
 ---
 
 ## Lecture utile avant de se lancer dans ce poste
@@ -143,7 +144,7 @@ int main() {
 
 <span style="color:red">À partir de ce moment la variable `res` **possède** (own) l'objet Ressource.</span>
 
-Comme `res` est déclaré en tant que variable locale, sa portée est le bloc où elle est créé. Il se retrouvera hors de portée et **sera détruit** à la fin du bloc $$ \large \Rightarrow $$ pas à se soucier de sa désallocation.
+Comme `res` est déclaré en tant que variable locale, sa portée est le bloc où elle est créé. Il se retrouvera hors de portée et **sera détruit** à la fin du bloc $ \large \Rightarrow $ pas à se soucier de sa désallocation.
 
 > Aussi longtemps que **Auto_ptr1** est définit localement (pas global...), la destruction des ressources qu'elle possède sont assurées de destruction (même en cas de fin de contexte prématurée).
 
@@ -248,7 +249,7 @@ int main() {
 
 * Une solution serait de `delete` le cstr de copies et la surcharge de l'operateur d'affectation. Cela aurait pour effet d'empécher les copies et donc de rêgler le problème des passages par valeur (ce qui d'un sens est une bonne chose, car il est évident qu'on ne passe pas ce genre de valeurs par valeur.)
 
-    * $$ \large \Rightarrow $$ on se retrouve avec un nouveau problème... 
+    * $ \large \Rightarrow $ on se retrouve avec un nouveau problème... 
 Sans le cstr de copie ou de surcharge de l'opérateur d'affectation, comment  retourner une valeur de type **Auto_ptr1** ?
 
 ```cpp
@@ -460,17 +461,17 @@ Ressource detruite
 ```
 ... beaucoup de ressources créées et détruites pour un si simple programme. Si nous décortiquons ce dernier, nous pouvons identifier 6 étapes clés (une par message printé).
 
-1. Dans la fonction `generationRessource()`, la variable locale `res` est créée et initialisée avec des ressources allouées dynamiquement $$\Rightarrow$$ premier message $$Ressource\;acquise$$
+1. Dans la fonction `generationRessource()`, la variable locale `res` est créée et initialisée avec des ressources allouées dynamiquement $\Rightarrow$ premier message $Ressource\;acquise$
 
-2. `res` est retourné dans le `main()` par copie de valeur. On retourne de cette façon car **res** est une variable locale à la fonction et une référence à cette dernière pointerait dans le vide une fois la fonction finie. `Res` est donc construit par copie dans un **objet temporaire**. Comme notre cstr de copie fait une **deep copie**, une nouvelle Ressource est allouée d'où le second message $$Ressource\;acquise$$.
+2. `res` est retourné dans le `main()` par copie de valeur. On retourne de cette façon car **res** est une variable locale à la fonction et une référence à cette dernière pointerait dans le vide une fois la fonction finie. `Res` est donc construit par copie dans un **objet temporaire**. Comme notre cstr de copie fait une **deep copie**, une nouvelle Ressource est allouée d'où le second message $Ressource\;acquise$.
 
-3. `res` sort de portée et donc la Ressource initiale est détruite ce qui cause le premièr message $$Ressource\;detruite$$.
+3. `res` sort de portée et donc la Ressource initiale est détruite ce qui cause le premièr message $Ressource\;detruite$.
 
-4. L'objet temporaire est assigné à la variable `mainRes` par **assignement par copie**. Comme notre cstr de copies gère la **deep copy**, une nouvelle ressource est allouée et causant le 3e message $$Ressource\;acquise$$.
+4. L'objet temporaire est assigné à la variable `mainRes` par **assignement par copie**. Comme notre cstr de copies gère la **deep copy**, une nouvelle ressource est allouée et causant le 3e message $Ressource\;acquise$.
 
-5. L'expression d'affectation finie, et l'**objet temporaire** se retrouve hors de portée et détruit d'où le second message $$Ressource\;detruite$$.
+5. L'expression d'affectation finie, et l'**objet temporaire** se retrouve hors de portée et détruit d'où le second message $Ressource\;detruite$.
 
-6. À la fin du `main()`, `mainRes` sors lui aussi de portée et génère notre dernier message $$Ressource\;detruite$$.
+6. À la fin du `main()`, `mainRes` sors lui aussi de portée et génère notre dernier message $Ressource\;detruite$.
 
 <span style="color:red"> bien comprendre les points 2 et 5 ! </span>
 
@@ -580,7 +581,7 @@ Beaucoup mieux !
 
 Le flow du programme reste le même que le précédent sauf qu'à la place d'appeler le constructeur de copie et l'opérateur d'affectation, ce programme appel les homologues dédiés au déplacement.
 
-1. Dans la fonction `generationRessource()`, la variable locale `res` est créée et initialisée avec des ressources allouées dynamiquement $$\Rightarrow$$ premier message $$Ressource\;acquise$$
+1. Dans la fonction `generationRessource()`, la variable locale `res` est créée et initialisée avec des ressources allouées dynamiquement $\Rightarrow$ premier message $Ressource\;acquise$
 
 2. `res` est retourné dans le `main()` par valeur: `res` via le cstr de déplacement est transféré dans un objet temporaire créé dynamiquement.
 
@@ -590,7 +591,7 @@ Le flow du programme reste le même que le précédent sauf qu'à la place d'app
 
 5. L'expression d'affectation finie, l'**objet temporaire** se retrouve hors de portée et est détruit mais comme cet objet temporaire à transféré son contenu, il ne possède plus de pointeur (il est maintenant dans `mainRes`) et lors de cette destruction, nous n'avons pas de print no plus.
 
-6. À la fin du `main()`, `mainRes` sors de portée et génère le message $$Ressource\;detruite$$.
+6. À la fin du `main()`, `mainRes` sors de portée et génère le message $Ressource\;detruite$.
 
 Résultat des courses, à la place de copier notre ressource deux fois, nous la transfèrons deux fois. <span style="color:red">Ce qui est plus efficace au niveau ressources.</span>
 
@@ -866,7 +867,8 @@ Sur la même machine l'output est:
 0.010002
 ```
 Si nous comparons le temps d'éxecution des deux programmes:  
-$$ \Large \frac{0.010002}{0.0200022} $$ $$ \approx 0.5 \Rightarrow 50\% $$ plus rapide !
+$$\frac{0.010002}{0.0200022} \approx 0.5$$ 
+$\Rightarrow 50\% $ plus rapide !
 
 # std::move
 

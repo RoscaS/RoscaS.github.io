@@ -7,6 +7,7 @@ author: Sol
 category: Divers
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 # Divers
@@ -23,6 +24,11 @@ En **logique**, une tautologie est une formule valide pour toutes les assignatio
 
 ### Non-free
 Contraire d'open-source. Pas forcément payant!
+
+### UTC time
+Universal Coordinated Time. "Temps global": Echelle de temps adoptée comme base du temps civil international par la majorité des pays du globe. UTC est une échelle de temps comprise entre le temps atomoique international (**TAI**) qui est stable mais déconnectée de la rotation de la terre et le temps universel (**UT**),  à la rotation de la Terre et donc lentement variable.
+
+Il y a un besoin prgmatique pour un temps global qui aide à éviter la confusion entre fuseaux horaires et heures d'été et d'hiver. UTC est le standard qui répond à ce besoin.
 
 ---------------------------------------------------------------------------
 
@@ -215,14 +221,10 @@ A répond  _Non_
 
 * Et ainsi de suite : 
 
- _Plus grand que 63?_ ($$ 63 = \large \frac{51+75}{2}$$)   
- _Oui_     
- _Plus grand que 69?_ ($$ 69 = \large \frac{63+75}{2}$$)     
- _Non_     
- _Plus grand que 66?_ ($$ 66 = \large \frac{69+63}{2}$$)     
- _Non_     
- _Plus grand que 65?_ ($$ 65 \large \approx \frac{63+66}{2}$$)      
- _Oui_     
+ _Plus grand que 63?_ ($ 63 =  \frac{51+75}{2}$) $ \Rightarrow $ _Oui_     
+ _Plus grand que 69?_ ($ 69 =  \frac{63+75}{2}$) $ \Rightarrow $ _Non_     
+ _Plus grand que 66?_ ($ 66 =  \frac{69+63}{2}$) $ \Rightarrow $ _Non_     
+ _Plus grand que 65?_ ($ 65  \approx \frac{63+66}{2}$) $ \Rightarrow $ _Oui_     
 
 * B sait maintenant que le nombre est entre 66 et 66, autrement dit qu'il s'agit de 66 : il a trouvé le nombre choisi par A en seulement 7 questions.
 

@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/cpp/cpp-STL.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Cpp: STL</div>
@@ -75,6 +99,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -117,9 +142,9 @@
 
 <p>Classes implémentant des flux:</p>
 <ul>
-  <li><code class="highlighter-rouge">iostream</code> <script type="math/tex">\Rightarrow</script> E/S standard (clavier/écran)</li>
-  <li><code class="highlighter-rouge">fstream</code> <script type="math/tex">\Rightarrow</script> E/S dans les fichiers</li>
-  <li><code class="highlighter-rouge">sstream</code> <script type="math/tex">\Rightarrow</script> E/S dans la mémoire (string)<br />
+  <li><code class="highlighter-rouge">iostream</code> $ \Rightarrow $ E/S standard (clavier/écran)</li>
+  <li><code class="highlighter-rouge">fstream</code> $ \Rightarrow $ E/S dans les fichiers</li>
+  <li><code class="highlighter-rouge">sstream</code> $ \Rightarrow $ E/S dans la mémoire (string)<br />
 <br />
 Toutes ces classes redéfinissent les opérateurs  <code class="highlighter-rouge">&lt;&lt;</code> et <code class="highlighter-rouge">&gt;&gt;</code></li>
 </ul>
@@ -143,9 +168,9 @@ Toutes ces classes redéfinissent les opérateurs  <code class="highlighter-roug
 </div>
 <p>Trois classes:</p>
 <ul>
-  <li><code class="highlighter-rouge">ifstream</code> <script type="math/tex">\Rightarrow</script> lecture</li>
-  <li><code class="highlighter-rouge">ofstream</code> <script type="math/tex">\Rightarrow</script> ecriture</li>
-  <li><code class="highlighter-rouge">fstream</code> <script type="math/tex">\Rightarrow</script> les deux</li>
+  <li><code class="highlighter-rouge">ifstream</code> $ \Rightarrow $ lecture</li>
+  <li><code class="highlighter-rouge">ofstream</code> $ \Rightarrow $ ecriture</li>
+  <li><code class="highlighter-rouge">fstream</code> $ \Rightarrow $ les deux</li>
 </ul>
 
 <h3 id="ouverture">Ouverture</h3>
@@ -179,12 +204,12 @@ Toutes ces classes redéfinissent les opérateurs  <code class="highlighter-roug
 <p>Le paramètre <strong>mode</strong> est un champ de bits. On le combine avec l’opérateur bit à bit <code class="highlighter-rouge">|</code>.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">ios::binary</code> <script type="math/tex">\Rightarrow</script> Mode binaire (mode texte par défaut)</li>
-  <li><code class="highlighter-rouge">ios::in</code> <script type="math/tex">\Rightarrow</script> Lecture (défaut pour <code class="highlighter-rouge">ifstream</code>)</li>
-  <li><code class="highlighter-rouge">ios::out</code> <script type="math/tex">\Rightarrow</script> Ecriture (défaut pour <code class="highlighter-rouge">ofstream</code>)</li>
-  <li><code class="highlighter-rouge">ios::app</code> <script type="math/tex">\Rightarrow</script> Ajout à la fin (append)</li>
-  <li><code class="highlighter-rouge">ios::trunc</code> <script type="math/tex">\Rightarrow</script> Écrase le contenu précédent (truncate)</li>
-  <li><code class="highlighter-rouge">ios::ate</code> <script type="math/tex">\Rightarrow</script> position à la fin dés l’ouverture</li>
+  <li><code class="highlighter-rouge">ios::binary</code> $ \Rightarrow $ Mode binaire (mode texte par défaut)</li>
+  <li><code class="highlighter-rouge">ios::in</code> $ \Rightarrow $ Lecture (défaut pour <code class="highlighter-rouge">ifstream</code>)</li>
+  <li><code class="highlighter-rouge">ios::out</code> $ \Rightarrow $ Ecriture (défaut pour <code class="highlighter-rouge">ofstream</code>)</li>
+  <li><code class="highlighter-rouge">ios::app</code> $ \Rightarrow $ Ajout à la fin (append)</li>
+  <li><code class="highlighter-rouge">ios::trunc</code> $ \Rightarrow $ Écrase le contenu précédent (truncate)</li>
+  <li><code class="highlighter-rouge">ios::ate</code> $ \Rightarrow $ position à la fin dés l’ouverture</li>
 </ul>
 
 <h4 id="exemple">exemple</h4>
@@ -437,11 +462,11 @@ je ne puis demeurer loin de toi plus longtemps
 <p>On peut <strong>tester et manipuler</strong> l’état du flux avec les méthodes</p>
 
 <ul>
-  <li>good() <script type="math/tex">\Rightarrow</script> Aucune erreur</li>
-  <li>bad() <script type="math/tex">\Rightarrow</script> Impossible d’extraire des données du flux</li>
-  <li>fail() <script type="math/tex">\Rightarrow</script> Echec de l’opération</li>
-  <li>eof() <script type="math/tex">\Rightarrow</script> Fin de fichier</li>
-  <li>clear() <script type="math/tex">\Rightarrow</script> Réinitialisation des bits d’état</li>
+  <li>good() $ \Rightarrow $ Aucune erreur</li>
+  <li>bad() $ \Rightarrow $ Impossible d’extraire des données du flux</li>
+  <li>fail() $ \Rightarrow $ Echec de l’opération</li>
+  <li>eof() $ \Rightarrow $ Fin de fichier</li>
+  <li>clear() $ \Rightarrow $ Réinitialisation des bits d’état</li>
 </ul>
 
 <h3 id="méthodes-de-lecture-distream">Méthodes de lecture d’istream</h3>
@@ -457,12 +482,12 @@ je ne puis demeurer loin de toi plus longtemps
 <h4 id="lecture-non-formatée">Lecture non formatée</h4>
 
 <ul>
-  <li>get()  <script type="math/tex">\Rightarrow</script> lecture d’un seul char</li>
-  <li>getline() <script type="math/tex">\Rightarrow</script> lecture d’une suite de char</li>
-  <li>ignore() <script type="math/tex">\Rightarrow</script> ?</li>
-  <li>peek() <script type="math/tex">\Rightarrow</script> donne le prochain char sans l’extraire</li>
-  <li>seekg() <script type="math/tex">\Rightarrow</script> positionnement sur un flux</li>
-  <li>read() <script type="math/tex">\Rightarrow</script> lecture de n char</li>
+  <li>get()  $ \Rightarrow $ lecture d’un seul char</li>
+  <li>getline() $ \Rightarrow $ lecture d’une suite de char</li>
+  <li>ignore() $ \Rightarrow $ ?</li>
+  <li>peek() $ \Rightarrow $ donne le prochain char sans l’extraire</li>
+  <li>seekg() $ \Rightarrow $ positionnement sur un flux</li>
+  <li>read() $ \Rightarrow $ lecture de n char</li>
 </ul>
 
 <h3 id="méthodes-décriture-dostream">Méthodes d’écriture d’ostream</h3>
@@ -478,11 +503,11 @@ je ne puis demeurer loin de toi plus longtemps
 <h4 id="Écriture-non-formatée">Écriture non formatée</h4>
 
 <ul>
-  <li>put() <script type="math/tex">\Rightarrow</script> écriture d’un seul char</li>
-  <li>wirte() <script type="math/tex">\Rightarrow</script> écriture du contenu d’un tampon</li>
-  <li>flush() <script type="math/tex">\Rightarrow</script> vidage de tampon</li>
-  <li>tellp() <script type="math/tex">\Rightarrow</script> positionnement courant sur le flux</li>
-  <li>seekp() <script type="math/tex">\Rightarrow</script> positionnement sur un flux</li>
+  <li>put() $ \Rightarrow $ écriture d’un seul char</li>
+  <li>wirte() $ \Rightarrow $ écriture du contenu d’un tampon</li>
+  <li>flush() $ \Rightarrow $ vidage de tampon</li>
+  <li>tellp() $ \Rightarrow $ positionnement courant sur le flux</li>
+  <li>seekp() $ \Rightarrow $ positionnement sur un flux</li>
 </ul>
 
 <h2 id="3-le-flux-string">3. Le flux string</h2>
@@ -493,12 +518,12 @@ je ne puis demeurer loin de toi plus longtemps
   <li>Intérêt: Conversion, transferts en mémoire (buffers)</li>
 </ul>
 
-<p><code class="highlighter-rouge">#include &lt;sstream&gt;</code> <script type="math/tex">\Rightarrow</script> 3 classes:</p>
+<p><code class="highlighter-rouge">#include &lt;sstream&gt;</code> $ \Rightarrow $ 3 classes:</p>
 
 <ul>
-  <li>istringstream <script type="math/tex">\Rightarrow</script> Entrée</li>
-  <li>ostringstream <script type="math/tex">\Rightarrow</script> Sortie</li>
-  <li>stringstream <script type="math/tex">\Rightarrow</script> Les deux</li>
+  <li>istringstream $ \Rightarrow $ Entrée</li>
+  <li>ostringstream $ \Rightarrow $ Sortie</li>
+  <li>stringstream $ \Rightarrow $ Les deux</li>
 </ul>
 
 <h3 id="la-classe-string">La classe string</h3>
@@ -533,12 +558,12 @@ je ne puis demeurer loin de toi plus longtemps
 <p>Méthodes:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">int size ()</code> <script type="math/tex">\Rightarrow</script> Renvoie le nombre de caractères</li>
-  <li><code class="highlighter-rouge">int lenght ()</code> <script type="math/tex">\Rightarrow</script> Renvoie le nombre de caractères</li>
-  <li><code class="highlighter-rouge">int capacity ()</code> <script type="math/tex">\Rightarrow</script> taille possible sans la réallocation</li>
-  <li><code class="highlighter-rouge">bool empty ()</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">true</code> si la string est vide <code class="highlighter-rouge">faux</code> sinon.</li>
-  <li><code class="highlighter-rouge">int find ()</code> <script type="math/tex">\Rightarrow</script> position de la string <code class="highlighter-rouge">s</code> dans la string courante à partir de <code class="highlighter-rouge">pos</code></li>
-  <li><code class="highlighter-rouge">string substr(int start, int lenght)</code> <script type="math/tex">\Rightarrow</script> Sous string de longueur <code class="highlighter-rouge">lenght</code> à partir de <code class="highlighter-rouge">start</code></li>
+  <li><code class="highlighter-rouge">int size ()</code> $ \Rightarrow $ Renvoie le nombre de caractères</li>
+  <li><code class="highlighter-rouge">int lenght ()</code> $ \Rightarrow $ Renvoie le nombre de caractères</li>
+  <li><code class="highlighter-rouge">int capacity ()</code> $ \Rightarrow $ taille possible sans la réallocation</li>
+  <li><code class="highlighter-rouge">bool empty ()</code> $ \Rightarrow $ <code class="highlighter-rouge">true</code> si la string est vide <code class="highlighter-rouge">faux</code> sinon.</li>
+  <li><code class="highlighter-rouge">int find ()</code> $ \Rightarrow $ position de la string <code class="highlighter-rouge">s</code> dans la string courante à partir de <code class="highlighter-rouge">pos</code></li>
+  <li><code class="highlighter-rouge">string substr(int start, int lenght)</code> $ \Rightarrow $ Sous string de longueur <code class="highlighter-rouge">lenght</code> à partir de <code class="highlighter-rouge">start</code></li>
 </ul>
 
 <blockquote>
@@ -675,27 +700,27 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 
 <h3 id="conteneurs-de-séquences">Conteneurs de séquences</h3>
 
-<p>*<code class="highlighter-rouge">&lt;vector&gt;</code> <script type="math/tex">\Rightarrow</script> tableau dynamique contigu
-*<code class="highlighter-rouge">&lt;array&gt;</code> <script type="math/tex">\Rightarrow</script> tableau statique contigu
-*<code class="highlighter-rouge">&lt;deque&gt;</code> <script type="math/tex">\Rightarrow</script> File à double entrée
-*<code class="highlighter-rouge">&lt;list&gt;</code> <script type="math/tex">\Rightarrow</script> Liste doublement chainée
-*<code class="highlighter-rouge">&lt;forward_list&gt;</code> <script type="math/tex">\Rightarrow</script> Liste simplement chainée
-*<code class="highlighter-rouge">&lt;queue&gt;</code> <script type="math/tex">\Rightarrow</script> File
-*<code class="highlighter-rouge">&lt;priority_queue&gt;</code> <script type="math/tex">\Rightarrow</script>  File
-*<code class="highlighter-rouge">&lt;stack&gt;</code> <script type="math/tex">\Rightarrow</script> Pile</p>
+<p>*<code class="highlighter-rouge">&lt;vector&gt;</code> $ \Rightarrow $ tableau dynamique contigu
+*<code class="highlighter-rouge">&lt;array&gt;</code> $ \Rightarrow $ tableau statique contigu
+*<code class="highlighter-rouge">&lt;deque&gt;</code> $ \Rightarrow $ File à double entrée
+*<code class="highlighter-rouge">&lt;list&gt;</code> $ \Rightarrow $ Liste doublement chainée
+*<code class="highlighter-rouge">&lt;forward_list&gt;</code> $ \Rightarrow $ Liste simplement chainée
+*<code class="highlighter-rouge">&lt;queue&gt;</code> $ \Rightarrow $ File
+*<code class="highlighter-rouge">&lt;priority_queue&gt;</code> $ \Rightarrow $  File
+*<code class="highlighter-rouge">&lt;stack&gt;</code> $ \Rightarrow $ Pile</p>
 
 <h3 id="méthodes-courantes-des-conteneurs">Méthodes courantes des conteneurs</h3>
 
 <ul>
-  <li><code class="highlighter-rouge">clear()</code> <script type="math/tex">\Rightarrow</script> Vide le conteneur</li>
-  <li><code class="highlighter-rouge">size()</code> <script type="math/tex">\Rightarrow</script> Retourne le nombre d’éléments</li>
-  <li><code class="highlighter-rouge">empty()</code> <script type="math/tex">\Rightarrow</script> Teste si le conteneur est vide</li>
-  <li><code class="highlighter-rouge">push_back()</code> <script type="math/tex">\Rightarrow</script> Ajoute un élément à la fin</li>
-  <li><code class="highlighter-rouge">push_front()</code> <script type="math/tex">\Rightarrow</script> Ajoute un élément au début</li>
-  <li><code class="highlighter-rouge">front()</code> <script type="math/tex">\Rightarrow</script> Renvoie le 1er élément</li>
-  <li><code class="highlighter-rouge">pop_front()</code> <script type="math/tex">\Rightarrow</script> Supprime le premier élément</li>
-  <li><code class="highlighter-rouge">insert()</code> <script type="math/tex">\Rightarrow</script> Insère un élément quelconque</li>
-  <li><code class="highlighter-rouge">erase()</code> <script type="math/tex">\Rightarrow</script> Supprime un élément</li>
+  <li><code class="highlighter-rouge">clear()</code> $ \Rightarrow $ Vide le conteneur</li>
+  <li><code class="highlighter-rouge">size()</code> $ \Rightarrow $ Retourne le nombre d’éléments</li>
+  <li><code class="highlighter-rouge">empty()</code> $ \Rightarrow $ Teste si le conteneur est vide</li>
+  <li><code class="highlighter-rouge">push_back()</code> $ \Rightarrow $ Ajoute un élément à la fin</li>
+  <li><code class="highlighter-rouge">push_front()</code> $ \Rightarrow $ Ajoute un élément au début</li>
+  <li><code class="highlighter-rouge">front()</code> $ \Rightarrow $ Renvoie le 1er élément</li>
+  <li><code class="highlighter-rouge">pop_front()</code> $ \Rightarrow $ Supprime le premier élément</li>
+  <li><code class="highlighter-rouge">insert()</code> $ \Rightarrow $ Insère un élément quelconque</li>
+  <li><code class="highlighter-rouge">erase()</code> $ \Rightarrow $ Supprime un élément</li>
 </ul>
 
 <h4 id="exemple-de-conteneur-séquentiel-vector">Exemple de conteneur séquentiel: vector</h4>
@@ -780,7 +805,7 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 <p>La lasse <code class="highlighter-rouge">array</code> a des méthodes:</p>
 <ul>
   <li>
-    <p><code class="highlighter-rouge">size()</code> <script type="math/tex">\Rightarrow</script> plus besoin de passer un paramètre de taille aux fonctions ou utiliser <code class="highlighter-rouge">sizeof(tab)</code>/<code class="highlighter-rouge">sizeof(int)</code> par exemple.</p>
+    <p><code class="highlighter-rouge">size()</code> $ \Rightarrow $ plus besoin de passer un paramètre de taille aux fonctions ou utiliser <code class="highlighter-rouge">sizeof(tab)</code>/<code class="highlighter-rouge">sizeof(int)</code> par exemple.</p>
   </li>
   <li>
     <p>Les accès par la méthode <code class="highlighter-rouge">at(indice)</code> sont sécurisés par des Exceptions.</p>
@@ -819,7 +844,7 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 </code></pre>
 </div>
 
-<p>Des objets <code class="highlighter-rouge">vector</code> imbriqué simulent des tableux multidimentionnels. On peut initialiser une matrice identité <script type="math/tex">m_{5 \time 5}</script> avec le code suivant:</p>
+<p>Des objets <code class="highlighter-rouge">vector</code> imbriqué simulent des tableux multidimentionnels. On peut initialiser une matrice identité $m_{5 \time 5}$ avec le code suivant:</p>
 
 <div class="language-cpp highlighter-rouge"><pre class="highlight"><code><span class="cp">#include&lt;iostream&gt;
 #include&lt;vector&gt;
@@ -852,8 +877,8 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
   <li>ils permettent de spécifier une position à l’intérieur d’un conteneur. Ils peuvent être <strong>incrémentés</strong> et <strong>déréférencés</strong> (avec <code class="highlighter-rouge">*</code>) et deux itérateurs peuvent être comparés.</li>
   <li>Tous les conteneurs disposent des méthodes:
     <ul>
-      <li><code class="highlighter-rouge">begin()</code> <script type="math/tex">\Rightarrow</script> Renvoie un itérateur pointant sur le premier élément.</li>
-      <li><code class="highlighter-rouge">end()</code> <script type="math/tex">\Rightarrow</script> renvoie un itérateur pointant <strong>arpès</strong> le dernier élément</li>
+      <li><code class="highlighter-rouge">begin()</code> $ \Rightarrow $ Renvoie un itérateur pointant sur le premier élément.</li>
+      <li><code class="highlighter-rouge">end()</code> $ \Rightarrow $ renvoie un itérateur pointant <strong>arpès</strong> le dernier élément</li>
     </ul>
   </li>
 </ul>
@@ -928,9 +953,9 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 <h2 id="7-conteneurs-associatifs">7. Conteneurs associatifs</h2>
 
 <ul>
-  <li>dictionnaire <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">map</code>, <code class="highlighter-rouge">multimap</code></li>
-  <li>ensembles (listes ordonnée) <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">set</code>, <code class="highlighter-rouge">multiset</code></li>
-  <li>tableau de  booléens (bitArray?) <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">bitset</code></li>
+  <li>dictionnaire $ \Rightarrow $ <code class="highlighter-rouge">map</code>, <code class="highlighter-rouge">multimap</code></li>
+  <li>ensembles (listes ordonnée) $ \Rightarrow $ <code class="highlighter-rouge">set</code>, <code class="highlighter-rouge">multiset</code></li>
+  <li>tableau de  booléens (bitArray?) $ \Rightarrow $ <code class="highlighter-rouge">bitset</code></li>
 </ul>
 
 <p>Les tables associatives sont une <strong>généralisation des tableux</strong>: Les <strong>indices</strong> peuvent être <strong>non-entier</strong>.</p>
@@ -982,8 +1007,8 @@ Voir cheatSheet sur la <a href="/reseau/reseau-Sockets-CheatSheet.html">programm
 </div>
 
 <ul>
-  <li><code class="highlighter-rouge">it.first</code> <script type="math/tex">\Rightarrow</script> Donne accès à la clé</li>
-  <li><code class="highlighter-rouge">it.second</code> <script type="math/tex">\Rightarrow</script> Donne accès à la valeur</li>
+  <li><code class="highlighter-rouge">it.first</code> $ \Rightarrow $ Donne accès à la clé</li>
+  <li><code class="highlighter-rouge">it.second</code> $ \Rightarrow $ Donne accès à la valeur</li>
 </ul>
 
 <p><img src="/00illustrations/flux/map.png" align="" height="auto" float="right" /></p>

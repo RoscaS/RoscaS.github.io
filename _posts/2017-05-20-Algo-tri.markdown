@@ -7,6 +7,7 @@ author: Sol
 category: Algo
 tags: algo tri fr
 finished: false
+mathjax: true
 ---
 
 ## Liens
@@ -72,7 +73,7 @@ de parcours du tableau a sa variable d'itération qui est égale au nombre de ca
 La boucle intérieur qui est responsable du nombre de comparaisons par parcours a sa variable d'itération
 que est également égale au nombre de cases du tableau `-1`.
 
-$$ (n-1) \cdot (n-1)^2 $$  comparaisons La complexité de cet version de l'algorithme 
+$ (n-1) \cdot (n-1)^2 $  comparaisons La complexité de cet version de l'algorithme 
 est de:
 
 $$ \bbox[20px,border:2px solid red]
@@ -110,7 +111,7 @@ Plusieurs éléments peuvent remonter lors d'un même parcours. Avant que l'él�
 
 ### Flag
 
-Le tableau est donc suceptible d'être trié avant les (N-1) parcours. Il serait donc profitable de cesser les parcours dés que le tableau est trié surtout dans le cas d'un tableau qui est totalement trié dés le début. C'est ce que nous permet la prochaine amélioration qui stop la fonction si un parcours entier a été fait sans aucun échange:
+Le tableau est donc suceptible d'être trié avant les $N-1$ parcours. Il serait donc profitable de cesser les parcours dés que le tableau est trié surtout dans le cas d'un tableau qui est totalement trié dés le début. C'est ce que nous permet la prochaine amélioration qui stop la fonction si un parcours entier a été fait sans aucun échange:
 
 [<img src="/00illustrations/triBulle_Flag.png" align="" height="300" float="right">](00illustrations/triBulle_Flag.png)
 
@@ -138,9 +139,7 @@ void triBulle(int *t, int g, int d)
 
 ### Complexité 
 
-Le nombre maximum d'échanges reste le même:   
-
-$$\frac{n(n-1)}{2}$$  
+Le nombre maximum d'échanges reste le même: $\frac{n(n-1)}{2}$  
 
 Mais la complexité de l'algorithme a augmenté, ainsi
 que sa durée d'execution.
@@ -273,7 +272,7 @@ Ce tri prend fin quand les deux variables `ptrDebut` et `ptrFin` sont égales.
 
 ### Conclusion sur les améliorations
 
-Toutes les améliorations n'ont pas modifié le nombre d'échanges à faire (_logique_) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération **plus couteuse** qu'une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du $$\color{red}{O(n^2)}$$.
+Toutes les améliorations n'ont pas modifié le nombre d'échanges à faire (_logique_) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération **plus couteuse** qu'une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du $\color{red}{O(n^2)}$.
 
 ## 3. Tri par extraction (Selection-sort)
 
@@ -371,9 +370,9 @@ void triExtract(int *t, int g, int d)
 > Lorsque les N-1 éléments ayant les clés les plus petites sont à leur place, le dernier élément qui a la plus grande clé l'est aussi.
 
 ### Complexité:
-L'algorithme `placerMinimumAGauche()` est exécuté $$n-1$$ fois pour un tableau de $$n$$ éléments et ceci indépendamment de l'ordre initial des clés. A chaque exécution, cet algorithme effectue $$Droite - Gauche$$ comparaisons.  
+L'algorithme `placerMinimumAGauche()` est exécuté $n-1$ fois pour un tableau de $n$ éléments et ceci indépendamment de l'ordre initial des clés. A chaque exécution, cet algorithme effectue $Droite - Gauche$ comparaisons.  
 
-$$ n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}$$  
+$ n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}$  
 
 
 Le tri par extraction est aussi lent que le tri bulle dans le cas d'un tableau à clés aléatoirement dispersées. Des différences en plus ou en moins peuvent apparaître dans des cas particuliers. Le tri par extraction est innefficace sur un tableau déjà ordonné puisqu'il n'est ps capable de s'en appercevoir.
@@ -420,7 +419,7 @@ Cet exemple montre que le tri par extraction n'est **pas stable**.
 
 Cette méthode de tri consiste à insérer un élément du tableau qui n'est pas encore à sa place dans une partie déjà ordonnée, puis à recommencer avec les éléments suivant. La première étape montre comment insérer un élément dans la partie déjà triée. 
 
-Dans le tableau _T_ suivant, les éléments d'indices $$Gauche$$ $$à$$ $$i-1$$ sont déjà dans l'ordre croissant. L'élément d'indice _i_ doit être inséré. 
+Dans le tableau _T_ suivant, les éléments d'indices $Gauche$ $à$ $i-1$ sont déjà dans l'ordre croissant. L'élément d'indice _i_ doit être inséré. 
 
 <img src="/00illustrations/algo-tri/insert1.png" align="" height="150" float="right">
 
@@ -448,7 +447,7 @@ void insertion(int *t, int g, int idx)
     t[j+1] = temp;
 }
 ```
-Pour trier complètement le tableau il suffit d'insérer successivement ses éléments en commençant par le deuxième élément (indice $$Gauche+1$$) et en terminant par le dernier élément du tableau (indice $$Droite$$). 
+Pour trier complètement le tableau il suffit d'insérer successivement ses éléments en commençant par le deuxième élément (indice $Gauche+1$) et en terminant par le dernier élément du tableau (indice $Droite$). 
 
 <img src="/00illustrations/algo-tri/insert3.png" align="" height="150" float="right">
 
@@ -464,11 +463,11 @@ void triInsert(int *t, int g, int d)
 ```
 
 ### Complexité
-La boucle `for` s'exécute au moins $$n-1$$ fois et le nombre d'executions de la boucle `while` dépend du tableau à trier:
+La boucle `for` s'exécute au moins $n-1$ fois et le nombre d'executions de la boucle `while` dépend du tableau à trier:
 
-1. Dans le meilleur cas, le tableau est déja trié `t[j] > temp` est toujours _faux_ et aucun échange de données n'est nécéssaire ce qui fait que la boucle `for` s'executera $$n-1$$ fois. La complexité sera donc de $$O(n)$$
+1. Dans le meilleur cas, le tableau est déja trié `t[j] > temp` est toujours _faux_ et aucun échange de données n'est nécéssaire ce qui fait que la boucle `for` s'executera $n-1$ fois. La complexité sera donc de $O(n)$
 
-2. Dans le pire cas, le tableau est trié à l'envers et `t[j] > temp` est toujours _vrai_, dans ce cas la boucle `while` s'executera à chaque fois. La complexité sera donc de $$ O(n \cdot n) = O(n^2) $$
+2. Dans le pire cas, le tableau est trié à l'envers et `t[j] > temp` est toujours _vrai_, dans ce cas la boucle `while` s'executera à chaque fois. La complexité sera donc de $ O(n \cdot n) = O(n^2) $
 
 $$ \bbox[20px,border:2px solid red]
 {
@@ -480,7 +479,7 @@ $$
 
 ### Stabilité
 
-Considérons deux éléments du tableau, ayant la même clef, et d'indices _i_ et _j_ avec $$ i < j $$.  Le parcours de la partie non triée du tableau s'effectuant de $$Gauche+1$$ vers $$Droite$$, l'élément d'indice _i_ sera inséré le premier dans la partie déjà triée du tableau, à l'indice _i'_. Lorsque l'élément d'indice _j_ devra être inséré, il le sera juste après le premier élément qui ne lui est pas strictement supérieur (car l'algorithme décrit ici effectue une comparaison stricte), c'est-à-dire à l'indice $$i'+1$$. Après le tri, l'élément qui avait pour indice _i_ se retrouve bien avant celui qui avait pour indice _j_ : **le tri par insertion est donc stable.**
+Considérons deux éléments du tableau, ayant la même clef, et d'indices _i_ et _j_ avec $ i < j $.  Le parcours de la partie non triée du tableau s'effectuant de $Gauche+1$ vers $Droite$, l'élément d'indice _i_ sera inséré le premier dans la partie déjà triée du tableau, à l'indice _i'_. Lorsque l'élément d'indice _j_ devra être inséré, il le sera juste après le premier élément qui ne lui est pas strictement supérieur (car l'algorithme décrit ici effectue une comparaison stricte), c'est-à-dire à l'indice $i'+1$. Après le tri, l'élément qui avait pour indice _i_ se retrouve bien avant celui qui avait pour indice _j_ : **le tri par insertion est donc stable.**
 
 
 
@@ -501,7 +500,7 @@ Le second parcours fera la même chose mais en classant les nombres par la valeu
 
 Dans les exemples qui suivent, je vais utiliser une classe `Queue` dont l'imlémentation est spécifiées [ici](/algo/Algo-Structures-de-donnees.html)
 
-Le tableau d'éléments à ordonner dans l'ordre croissant de cet exemple contient $$n$$ éléments et ses indices vont de $$Gauche$$ à $$Droite$$ ($$0$$ à $$n-1$$)
+Le tableau d'éléments à ordonner dans l'ordre croissant de cet exemple contient $n$ éléments et ses indices vont de $Gauche$ à $Droite$ ($0$ à $n-1$)
 
 L'algorithme de **tri par base** peut facilement être divisé en deux fonctions. Dans un soucis de clarté je vais le diviser en 4 parties qui correspondes aux grandes étapes de l'algorithme.
 
@@ -579,7 +578,7 @@ Il y a plusieurs façons de déterminer le nième chiffre d’un nombre. Parmi l
 
 * Convertir le nombre en chaine de caractère, puis extraire le caractère désiré 
 
-* Arithmétique : $$1984 = 1 \cdot 103 + 9 \cdot 102 + 8 \cdot 101 + 4 \cdot 100$$ on peut donc aisément retrouver la valeur de chaque chiffre grâce à des divisions par des puissances de 10 et l’opérateur modulo. 
+* Arithmétique : $1984 = 1 \cdot 103 + 9 \cdot 102 + 8 \cdot 101 + 4 \cdot 100$ on peut donc aisément retrouver la valeur de chaque chiffre grâce à des divisions par des puissances de 10 et l’opérateur modulo. 
  
 Pour compléter le tri il suffit de faire autant de passes que de nombre de chiffres dans la valeur maximale.
 
@@ -663,7 +662,7 @@ Pour trier un tableau de taille _n_ on doit effectuer _k_ passes, avec  _k_ le n
 
 Lors de chaque parcours, on va recopier les _n_ valeurs dans les files temporaires fileS[x] \(**_n_ affectations**), puis les recopier dans le tableau initial. On aura donc 2 x _n_ opérations élémentaires.
 
-Pour _k_ passes, la fonction de complexité sera donc: $$ f(n)=2kn$$
+Pour _k_ passes, la fonction de complexité sera donc: $ f(n)=2kn$
 Si _k_ est constant, notre algorithne est donc linéaire: 
 
 $$ \bbox[20px,border:2px solid red]
@@ -686,10 +685,10 @@ Cette méthode de tri est stable, les valeurs rentrent dans les filles dans un c
 
 | Algorithme | Complexité au pire | Stabilité | Famille* | Remarques
 | --- | --- | --- | --- | --- |
-| Bulles et améliorations | $$ O(n^2) $$  | oui | Echange | Sait détecter un tableau trié | 
-| Extraction | $$ O(n^2) $$ | non | Sélection | Inefficace sur un tableau déja trié (le pire) | 
-| Insertion | $$ O(n^2) $$ | oui | Insertion | Intéressant pour insérer des vleurs dans un tableau déjà trié*  | 
-| Base | $$ O(n) $$ | oui | Distribution | Intéressant pour les petites valeurs ("petit" nombre de chiffres) | 
+| Bulles et améliorations | $ O(n^2) $  | oui | Echange | Sait détecter un tableau trié | 
+| Extraction | $ O(n^2) $ | non | Sélection | Inefficace sur un tableau déja trié (le pire) | 
+| Insertion | $ O(n^2) $ | oui | Insertion | Intéressant pour insérer des vleurs dans un tableau déjà trié*  | 
+| Base | $ O(n) $ | oui | Distribution | Intéressant pour les petites valeurs ("petit" nombre de chiffres) | 
 
 <br>
 

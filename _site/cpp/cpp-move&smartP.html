@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/cpp/cpp-move&smartP.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Cpp: Sémantique de déplacement & intro smart_ptr</div>
@@ -75,6 +99,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -237,7 +262,7 @@
 
 <p><span style="color:red">À partir de ce moment la variable <code class="highlighter-rouge">res</code> <strong>possède</strong> (own) l’objet Ressource.</span></p>
 
-<p>Comme <code class="highlighter-rouge">res</code> est déclaré en tant que variable locale, sa portée est le bloc où elle est créé. Il se retrouvera hors de portée et <strong>sera détruit</strong> à la fin du bloc <script type="math/tex">\large \Rightarrow</script> pas à se soucier de sa désallocation.</p>
+<p>Comme <code class="highlighter-rouge">res</code> est déclaré en tant que variable locale, sa portée est le bloc où elle est créé. Il se retrouvera hors de portée et <strong>sera détruit</strong> à la fin du bloc $ \large \Rightarrow $ pas à se soucier de sa désallocation.</p>
 
 <blockquote>
   <p>Aussi longtemps que <strong>Auto_ptr1</strong> est définit localement (pas global…), la destruction des ressources qu’elle possède sont assurées de destruction (même en cas de fin de contexte prématurée).</p>
@@ -347,7 +372,7 @@ Ressource detruites
     <p>Une solution serait de <code class="highlighter-rouge">delete</code> le cstr de copies et la surcharge de l’operateur d’affectation. Cela aurait pour effet d’empécher les copies et donc de rêgler le problème des passages par valeur (ce qui d’un sens est une bonne chose, car il est évident qu’on ne passe pas ce genre de valeurs par valeur.)</p>
 
     <ul>
-      <li><script type="math/tex">\large \Rightarrow</script> on se retrouve avec un nouveau problème… 
+      <li>$ \large \Rightarrow $ on se retrouve avec un nouveau problème… 
 Sans le cstr de copie ou de surcharge de l’opérateur d’affectation, comment  retourner une valeur de type <strong>Auto_ptr1</strong> ?</li>
     </ul>
   </li>
@@ -578,22 +603,22 @@ Ressource detruite
 
 <ol>
   <li>
-    <p>Dans la fonction <code class="highlighter-rouge">generationRessource()</code>, la variable locale <code class="highlighter-rouge">res</code> est créée et initialisée avec des ressources allouées dynamiquement <script type="math/tex">\Rightarrow</script> premier message <script type="math/tex">Ressource\;acquise</script></p>
+    <p>Dans la fonction <code class="highlighter-rouge">generationRessource()</code>, la variable locale <code class="highlighter-rouge">res</code> est créée et initialisée avec des ressources allouées dynamiquement $\Rightarrow$ premier message $Ressource\;acquise$</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">res</code> est retourné dans le <code class="highlighter-rouge">main()</code> par copie de valeur. On retourne de cette façon car <strong>res</strong> est une variable locale à la fonction et une référence à cette dernière pointerait dans le vide une fois la fonction finie. <code class="highlighter-rouge">Res</code> est donc construit par copie dans un <strong>objet temporaire</strong>. Comme notre cstr de copie fait une <strong>deep copie</strong>, une nouvelle Ressource est allouée d’où le second message <script type="math/tex">Ressource\;acquise</script>.</p>
+    <p><code class="highlighter-rouge">res</code> est retourné dans le <code class="highlighter-rouge">main()</code> par copie de valeur. On retourne de cette façon car <strong>res</strong> est une variable locale à la fonction et une référence à cette dernière pointerait dans le vide une fois la fonction finie. <code class="highlighter-rouge">Res</code> est donc construit par copie dans un <strong>objet temporaire</strong>. Comme notre cstr de copie fait une <strong>deep copie</strong>, une nouvelle Ressource est allouée d’où le second message $Ressource\;acquise$.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">res</code> sort de portée et donc la Ressource initiale est détruite ce qui cause le premièr message <script type="math/tex">Ressource\;detruite</script>.</p>
+    <p><code class="highlighter-rouge">res</code> sort de portée et donc la Ressource initiale est détruite ce qui cause le premièr message $Ressource\;detruite$.</p>
   </li>
   <li>
-    <p>L’objet temporaire est assigné à la variable <code class="highlighter-rouge">mainRes</code> par <strong>assignement par copie</strong>. Comme notre cstr de copies gère la <strong>deep copy</strong>, une nouvelle ressource est allouée et causant le 3e message <script type="math/tex">Ressource\;acquise</script>.</p>
+    <p>L’objet temporaire est assigné à la variable <code class="highlighter-rouge">mainRes</code> par <strong>assignement par copie</strong>. Comme notre cstr de copies gère la <strong>deep copy</strong>, une nouvelle ressource est allouée et causant le 3e message $Ressource\;acquise$.</p>
   </li>
   <li>
-    <p>L’expression d’affectation finie, et l’<strong>objet temporaire</strong> se retrouve hors de portée et détruit d’où le second message <script type="math/tex">Ressource\;detruite</script>.</p>
+    <p>L’expression d’affectation finie, et l’<strong>objet temporaire</strong> se retrouve hors de portée et détruit d’où le second message $Ressource\;detruite$.</p>
   </li>
   <li>
-    <p>À la fin du <code class="highlighter-rouge">main()</code>, <code class="highlighter-rouge">mainRes</code> sors lui aussi de portée et génère notre dernier message <script type="math/tex">Ressource\;detruite</script>.</p>
+    <p>À la fin du <code class="highlighter-rouge">main()</code>, <code class="highlighter-rouge">mainRes</code> sors lui aussi de portée et génère notre dernier message $Ressource\;detruite$.</p>
   </li>
 </ol>
 
@@ -709,7 +734,7 @@ Ressource detruite
 
 <ol>
   <li>
-    <p>Dans la fonction <code class="highlighter-rouge">generationRessource()</code>, la variable locale <code class="highlighter-rouge">res</code> est créée et initialisée avec des ressources allouées dynamiquement <script type="math/tex">\Rightarrow</script> premier message <script type="math/tex">Ressource\;acquise</script></p>
+    <p>Dans la fonction <code class="highlighter-rouge">generationRessource()</code>, la variable locale <code class="highlighter-rouge">res</code> est créée et initialisée avec des ressources allouées dynamiquement $\Rightarrow$ premier message $Ressource\;acquise$</p>
   </li>
   <li>
     <p><code class="highlighter-rouge">res</code> est retourné dans le <code class="highlighter-rouge">main()</code> par valeur: <code class="highlighter-rouge">res</code> via le cstr de déplacement est transféré dans un objet temporaire créé dynamiquement.</p>
@@ -724,7 +749,7 @@ Ressource detruite
     <p>L’expression d’affectation finie, l’<strong>objet temporaire</strong> se retrouve hors de portée et est détruit mais comme cet objet temporaire à transféré son contenu, il ne possède plus de pointeur (il est maintenant dans <code class="highlighter-rouge">mainRes</code>) et lors de cette destruction, nous n’avons pas de print no plus.</p>
   </li>
   <li>
-    <p>À la fin du <code class="highlighter-rouge">main()</code>, <code class="highlighter-rouge">mainRes</code> sors de portée et génère le message <script type="math/tex">Ressource\;detruite</script>.</p>
+    <p>À la fin du <code class="highlighter-rouge">main()</code>, <code class="highlighter-rouge">mainRes</code> sors de portée et génère le message $Ressource\;detruite$.</p>
   </li>
 </ol>
 
@@ -998,7 +1023,8 @@ Nous allons allouer 1 million  d’int sur le heap et à l’aide d’une nouvel
 </code></pre>
 </div>
 <p>Si nous comparons le temps d’éxecution des deux programmes:<br />
-<script type="math/tex">\Large \frac{0.010002}{0.0200022}</script> <script type="math/tex">\approx 0.5 \Rightarrow 50\%</script> plus rapide !</p>
+<script type="math/tex">\frac{0.010002}{0.0200022} \approx 0.5</script> 
+$\Rightarrow 50\% $ plus rapide !</p>
 
 <h1 id="stdmove">std::move</h1>
 

@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/cpp/cpp-semantiqueCopie.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Cpp: Semantique de copie (rappel)</div>
@@ -75,6 +99,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -113,38 +138,38 @@
 <span class="p">};</span>
 </code></pre>
 </div>
-<h3 id="initialisation-large-directe">Initialisation <strong><script type="math/tex">\large directe</script></strong></h3>
+<h3 id="initialisation-directe">Initialisation <strong>$directe$</strong></h3>
 <ul>
   <li><code class="highlighter-rouge">int x(5);</code> initialisation directe d’un objet de type <code class="highlighter-rouge">int</code></li>
   <li><code class="highlighter-rouge">Fraction f1(5,4);</code> initiasation directe d’un objet de type <code class="highlighter-rouge">Fraction</code>
     <ul>
-      <li><script type="math/tex">\Rightarrow</script> appelle le cstr de <code class="highlighter-rouge">Fraction(int,int)</code></li>
+      <li>$ \Rightarrow $ appelle le cstr de <code class="highlighter-rouge">Fraction(int,int)</code></li>
     </ul>
   </li>
 </ul>
 
-<h3 id="initialisation-large-uniforme">Initialisation <strong><script type="math/tex">\large uniforme</script></strong></h3>
+<h3 id="initialisation-uniforme">Initialisation <strong>$uniforme$</strong></h3>
 <ul>
   <li><code class="highlighter-rouge">int y{5};</code> initialisation uniforme d’un objet de type <code class="highlighter-rouge">int</code></li>
   <li><code class="highlighter-rouge">Fraction f2{5,3};</code>  initialisation uniforme d’un objet de type ‘Fraction`
     <ul>
-      <li><script type="math/tex">\Rightarrow</script> appelle le cstr de <code class="highlighter-rouge">Fraction(int,int)</code></li>
+      <li>$ \Rightarrow $ appelle le cstr de <code class="highlighter-rouge">Fraction(int,int)</code></li>
     </ul>
   </li>
 </ul>
 
-<h3 id="initialisation-par-large-copie">Initialisation par <strong><script type="math/tex">\large copie</script></strong></h3>
+<h3 id="initialisation-par-copie">Initialisation par <strong>$copie$</strong></h3>
 <ul>
   <li><code class="highlighter-rouge">int z = 6;</code> initialisation par copie d’un objet de type <code class="highlighter-rouge">int</code></li>
   <li><code class="highlighter-rouge">Fraction f3 = Fraction(6);</code> initialisation par copie d’un objet de type <code class="highlighter-rouge">Fraction</code>
     <ul>
-      <li><script type="math/tex">\Rightarrow</script> appelle le constructeur <code class="highlighter-rouge">Fraction(6,1)</code> <strong>ou</strong> le cstr de copie. Ce dernier n’est généralement pas le premier choix du compilateur pour raison de performance.</li>
+      <li>$\Rightarrow$ appelle le constructeur <code class="highlighter-rouge">Fraction(6,1)</code> <strong>ou</strong> le cstr de copie. Ce dernier n’est généralement pas le premier choix du compilateur pour raison de performance.</li>
       <li>Cette façon de faire est évaluée de la même façon que le serait <code class="highlighter-rouge">Fractionf3(fraction(6));</code></li>
     </ul>
   </li>
   <li><code class="highlighter-rouge">Fraction f4 = 7;</code> initialisation par copie d’un objet de type <code class="highlighter-rouge">Fraction</code>.
     <ul>
-      <li><script type="math/tex">\Rightarrow</script> le compilateur va tenter de trouver une façon de convertir 7 en un objet de type <code class="highlighter-rouge">Fraction</code> ce qui va invoquer le cstr <code class="highlighter-rouge">Fraction(7,1)</code></li>
+      <li>$\Rightarrow$ le compilateur va tenter de trouver une façon de convertir 7 en un objet de type <code class="highlighter-rouge">Fraction</code> ce qui va invoquer le cstr <code class="highlighter-rouge">Fraction(7,1)</code></li>
     </ul>
   </li>
 </ul>

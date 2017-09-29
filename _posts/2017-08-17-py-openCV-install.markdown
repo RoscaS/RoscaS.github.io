@@ -7,6 +7,7 @@ author: Sol
 category: Py
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 ## links
@@ -117,19 +118,19 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND='green'
 * [install(linux)](http://bicofino.io/2015/02/10/install-virtualenv-and-virtualenvwrapper-on-ubuntu-14-dot-04-2/)
 * [virtualenv doc](https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/)
 
-* `mkvirtualenv` _name_ $$ \Rightarrow $$ new virtualenv
-* `workon` _name_ $$ \Rightarrow $$ switch to "name" virtualenv
-* `workon` $$ \Rightarrow $$ list virtualenvs
-* `lsvirtualenv` $$ \Rightarrow $$ same
-* `deactivate` $$ \Rightarrow $$ leave current virtualenv
-* `virtualenv --version` $$ \Rightarrow $$ check version
+* `mkvirtualenv` _name_ $ \Rightarrow $ new virtualenv
+* `workon` _name_ $ \Rightarrow $ switch to "name" virtualenv
+* `workon` $ \Rightarrow $ list virtualenvs
+* `lsvirtualenv` $ \Rightarrow $ same
+* `deactivate` $ \Rightarrow $ leave current virtualenv
+* `virtualenv --version` $ \Rightarrow $ check version
 
-* `mkproject` _name_ $$ \Rightarrow $$ creates a project **directory** 
-* `deactivate` $$ \Rightarrow $$ leave current project
+* `mkproject` _name_ $ \Rightarrow $ creates a project **directory** 
+* `deactivate` $ \Rightarrow $ leave current project
 
-* `rmvirtualenv` _name_ $$ \Rightarrow $$ delete project
-* `cdvirtualenv` $$ \Rightarrow $$ navigate into the directory of the currently activated venv.
-* `lssitepackages` $$ \Rightarrow $$ show content of `site-packages` directory
+* `rmvirtualenv` _name_ $ \Rightarrow $ delete project
+* `cdvirtualenv` $ \Rightarrow $ navigate into the directory of the currently activated venv.
+* `lssitepackages` $ \Rightarrow $ show content of `site-packages` directory
 
 ## 4 Download OpenCV & OpenCV_contrib
 
@@ -255,9 +256,9 @@ deactivate
 
 * `image` doit soit être dans le working directory, soit on utilise un full path
 * `flag` spécifie la façon dont `image` doit être lue:
-  * `1` $$ \Rightarrow $$ `cv2.IMREAD_COLOR` $$ \Rightarrow $$ img couleur, toute transarence est négligée (flag par défaut)
-  * `0` $$ \Rightarrow $$ cv2.IMREAD_GRAYSCALE $$ \Rightarrow $$ grayscale mode
-  * `-1` $$ \Rightarrow $$ cv2.IMREAD_UNCHANGED $$ \Rightarrow $$ image originale
+  * `1` $ \Rightarrow $ `cv2.IMREAD_COLOR` $ \Rightarrow $ img couleur, toute transarence est négligée (flag par défaut)
+  * `0` $ \Rightarrow $ cv2.IMREAD_GRAYSCALE $ \Rightarrow $ grayscale mode
+  * `-1` $ \Rightarrow $ cv2.IMREAD_UNCHANGED $ \Rightarrow $ image originale
 
 
 ```python
@@ -273,10 +274,10 @@ img = cv2.imread('messi.jpg', 0)
 ## Afficher une image:
 
 
-`cv2.imshow('window_name', image)` $$ \Rightarrow $$ affiche l'image dans une nouvelle fenêtre (fit to the image size).
+`cv2.imshow('window_name', image)` $ \Rightarrow $ affiche l'image dans une nouvelle fenêtre (fit to the image size).
 
-* `'window_name'` $$ \Rightarrow $$ une string avec le nom de la nouvelle fenêtre
-* `image` $$ \Rightarrow $$ image à afficher
+* `'window_name'` $ \Rightarrow $ une string avec le nom de la nouvelle fenêtre
+* `image` $ \Rightarrow $ image à afficher
 
 > Nous pouvons afficher autant d'images qu'on veut mais les fenêtres doivent porter des noms différents
 
@@ -294,13 +295,13 @@ cv2.destroyAllWindows()
 
 ![alt](http://opencv-python-tutroals.readthedocs.io/en/latest/_images/opencv_screenshot.jpg)
 
-* `cv2.waitKey()` $$ \Rightarrow $$ permet de binder une touche (plus de détails suivent)
-* `cv2.destroyAllWindows()` $$ \Rightarrow $$ détruit toutes les fenếtres créés
-* `cv2.destroyWindow()` $$ \Rightarrow $$ détruit une fenêtre spécifique passée en argument
+* `cv2.waitKey()` $ \Rightarrow $ permet de binder une touche (plus de détails suivent)
+* `cv2.destroyAllWindows()` $ \Rightarrow $ détruit toutes les fenếtres créés
+* `cv2.destroyWindow()` $ \Rightarrow $ détruit une fenêtre spécifique passée en argument
 
-* `cv2.namedWindow('image', flag)` $$ \Rightarrow $$ permet de set la taille de la fenêtre via l'argument `flag`:
-  * `cv2.WINDOW_AUTOSIZE` $$ \Rightarrow $$ valeur par défaut
-  * `cv2.WINDOW_NORMAL` $$ \Rightarrow $$ fenêtre redimensionnable
+* `cv2.namedWindow('image', flag)` $ \Rightarrow $ permet de set la taille de la fenêtre via l'argument `flag`:
+  * `cv2.WINDOW_AUTOSIZE` $ \Rightarrow $ valeur par défaut
+  * `cv2.WINDOW_NORMAL` $ \Rightarrow $ fenêtre redimensionnable
 
 > `q` pour quitter la lecture d'image
 

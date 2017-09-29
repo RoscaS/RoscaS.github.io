@@ -7,6 +7,7 @@ author: Sol
 category: Algo
 tags: algo recursivite fr
 finished: false
+mathjax: true
 ---
 
 # Récursivité
@@ -40,7 +41,7 @@ Quelques acronymes récursifs courants:
 
 En informatique, un programme est dit **récursif** s'il s'appelle lui même. Il s'agit donc **forcément d'une fonction**.
 
-_Exemple:_ $$ \large factorielle $$ $$ \large n! = 1 \cdot 2 \cdot \ldots \cdot n \Rightarrow n! = n \cdot (n-1)! $$
+_Exemple:_ $\large factorielle:\quad $ $ n! = 1 \cdot 2 \cdot \ldots \cdot n \Rightarrow n! = n \cdot (n-1)! $
 
 <img src="/00illustrations/algo-recur/facto1-def.png" height="250">
 
@@ -54,7 +55,7 @@ _Exemple:_ $$ \large factorielle $$ $$ \large n! = 1 \cdot 2 \cdot \ldots \cdot 
 
 - **On doit toujours tester en premier la condition d'arrêt**, et ensuite, si la condition n'est pas vérifiée, lancer un appel récursif.
 
-_Exemple de la factorielle:_ <span style="color:red"> $$ \large si $$ </span> $$ \large n \neq 1, \quad n \cdot (n-1)! $$ <span style="color:red"> $$ \large sinon$$</span>$$ \large, \quad n! =1 $$
+_Exemple de la factorielle:_ <span style="color:red"> $ si $ </span> $ n \neq 1, \quad n \cdot (n-1)! $ <span style="color:red"> $ sinon$</span>$, \quad n! =1 $
 
 <img src="/00illustrations/algo-recur/facto2-def.png" height="250">
 
@@ -99,7 +100,7 @@ Un algorithme récursif peut conduire à exécuter bien plus d'instructions que 
 
 _Exemple:_ la suite de Fibonacci 
 
-### Suite de Fibbonacci ($$ \large n = 45 $$)
+### Suite de Fibbonacci ($ n = 45 $)
 
 > Par définition, les deux premiers nombres de la suite de Fibonacci sont 1 et 1 [ou](https://fr.wikipedia.org/wiki/Suite_de_Fibonacci) 0 et 1. Nous devons en tenir compte pour l'implémentation. 
 
@@ -123,7 +124,7 @@ int fib1(int n) {
 // 10.859 seconds
 ```
 
-Temps d'execution: $$ \large \color{red}{10.859} \; secondes $$
+Temps d'execution: $ \color{red}{10.859} \; secondes $
 
 _version plus compacte:_
 
@@ -142,7 +143,7 @@ int fib2(int n)
 // 10.738 seconds
 ```
 
-Temps d'execution: $$ \large \color{red}{10.738} \; secondes $$
+Temps d'execution: $ \color{red}{10.738} \; secondes $
 
 _version très compacte:_
 
@@ -154,7 +155,7 @@ _version très compacte:_
 // 9.752 seconds
 ```
 
-Temps d'execution: $$ \large \color{red}{9.752} \; secondes $$
+Temps d'execution: $ \color{red}{9.752} \; secondes $
 
 #### itératif:
 
@@ -176,7 +177,7 @@ int fib_it(int n)
 // 0.389 seconds
 ```
 
-Temps d'execution: $$ \large \color{green}{0.389} \; secondes $$
+Temps d'execution: $ \color{green}{0.389} \; secondes $
 
 
 Les différences de temps d'éxecution parlent pour elles mêmes et cette animation nous aide à en comprendre la raison:
@@ -214,7 +215,7 @@ Un algorithme récursif est **non-terminal** lorsque des opérations suivent l'a
 
 ## Quand éviter d'utiliser un algorithme récursif ?
 
-* Lorsque la récurence est d'ordre plus grande que 1 (c'est à dire que l valeur au rang $$ \large n $$ ne dépend pas seulement du rang $$ \large n-1 $$, mais aussi de $$ \large n-2 $$, voir $$ \large n-3 $$,... ) 
+* Lorsque la récurence est d'ordre plus grande que 1 (c'est à dire que l valeur au rang $ n $ ne dépend pas seulement du rang $ n-1 $, mais aussi de $ n-2 $, voir $ n-3 $,... ) 
 
 * Une utilisation "aveugle" de la récursivité impliquera une redondance de calculs. Dans ce cas, il peut être utile de dérouler l'algorithme avant de l'implémenter pour s'assurer qu'il ne génère pas d'opeerations inutiles.
 
@@ -368,7 +369,7 @@ La fonction  itérative correspondante  doit  gérer  la  sauvegarde  des  conte
 
 
 #### Factorielle
-Retourne la factorielle d'un nombre ($$ \large !n $$)
+Retourne la factorielle d'un nombre ($ !n $)
 ```c++
 int facto(int n) {
     if (n == 1) { return 1;}
@@ -378,7 +379,7 @@ int facto(int n) {
 Récursion non-terminale
 
 #### Descending
-Print les nombres à partir de $$\large n $$ jusque $$ 0 $$ 
+Print les nombres à partir de  n $ jusque $ 0 $ 
 ```c++
 void descending(int n) {
     if (n < 0) { return; }
@@ -389,7 +390,7 @@ void descending(int n) {
 Récursion terminale
 
 #### Ascending
-Même chose que le précédent mais de $$ 0 $$ à $$ n $$
+Même chose que le précédent mais de $ 0 $ à $ n $
 ```c++
 void ascending(int n) {
     if (n < 0) { return; }
@@ -400,7 +401,7 @@ void ascending(int n) {
 Récursion terminale. _Comparer avec le précédent_
 
 #### Somme
-Retourne la somme des nombres de $$ 1 $$ à $$ n $$
+Retourne la somme des nombres de $ 1 $ à $ n $
 ```c++
 int somme(int n) {
     if (n == 0){ return n; }
@@ -430,7 +431,7 @@ bool multiple13(int n) {
 Récursion terminale
 
 #### Elever à la puissance (NT)
-Élève $$a$$ à la puissance $$n$$ss
+Élève $a$ à la puissance $n$ss
 ```c++
 int puissance(int a, int n) {
     if (n == 0) { return 1; }
@@ -440,7 +441,7 @@ int puissance(int a, int n) {
 Récursion non-terminale
 
 #### Elever à la puissance (T)
-Élève $$a$$ à la puissance $$n$$ss
+Élève $a$ à la puissance $n$ss
 ```c++
 int puissanceT(int a, int n, int t=1) {
     if (n == 0) { return t; }

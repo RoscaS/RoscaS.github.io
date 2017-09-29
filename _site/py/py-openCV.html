@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/py/py-openCV.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: openCV</div>
@@ -79,6 +103,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -120,9 +145,9 @@
   <li><code class="highlighter-rouge">image</code> doit soit être dans le working directory, soit on utilise un full path</li>
   <li><code class="highlighter-rouge">flag</code> spécifie la façon dont <code class="highlighter-rouge">image</code> doit être lue:
     <ul>
-      <li><code class="highlighter-rouge">1</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">cv2.IMREAD_COLOR</code> <script type="math/tex">\Rightarrow</script> img couleur, toute transarence est négligée (flag par défaut)</li>
-      <li><code class="highlighter-rouge">0</code> <script type="math/tex">\Rightarrow</script> cv2.IMREAD_GRAYSCALE <script type="math/tex">\Rightarrow</script> grayscale mode</li>
-      <li><code class="highlighter-rouge">-1</code> <script type="math/tex">\Rightarrow</script> cv2.IMREAD_UNCHANGED <script type="math/tex">\Rightarrow</script> image originale</li>
+      <li><code class="highlighter-rouge">1</code> $ \Rightarrow $ <code class="highlighter-rouge">cv2.IMREAD_COLOR</code> $ \Rightarrow $ img couleur, toute transarence est négligée (flag par défaut)</li>
+      <li><code class="highlighter-rouge">0</code> $ \Rightarrow $ cv2.IMREAD_GRAYSCALE $ \Rightarrow $ grayscale mode</li>
+      <li><code class="highlighter-rouge">-1</code> $ \Rightarrow $ cv2.IMREAD_UNCHANGED $ \Rightarrow $ image originale</li>
     </ul>
   </li>
 </ul>
@@ -139,11 +164,11 @@
 
 <h2 id="afficher-une-image">Afficher une image:</h2>
 
-<p><code class="highlighter-rouge">cv2.imshow('window_name', image)</code> <script type="math/tex">\Rightarrow</script> affiche l’image dans une nouvelle fenêtre (fit to the image size).</p>
+<p><code class="highlighter-rouge">cv2.imshow('window_name', image)</code> $ \Rightarrow $ affiche l’image dans une nouvelle fenêtre (fit to the image size).</p>
 
 <ul>
-  <li><code class="highlighter-rouge">'window_name'</code> <script type="math/tex">\Rightarrow</script> une string avec le nom de la nouvelle fenêtre</li>
-  <li><code class="highlighter-rouge">image</code> <script type="math/tex">\Rightarrow</script> image à afficher</li>
+  <li><code class="highlighter-rouge">'window_name'</code> $ \Rightarrow $ une string avec le nom de la nouvelle fenêtre</li>
+  <li><code class="highlighter-rouge">image</code> $ \Rightarrow $ image à afficher</li>
 </ul>
 
 <blockquote>
@@ -165,9 +190,9 @@
 <p><img src="http://opencv-python-tutroals.readthedocs.io/en/latest/_images/opencv_screenshot.jpg" alt="alt" /></p>
 
 <ul>
-  <li><code class="highlighter-rouge">cv2.waitKey()</code> <script type="math/tex">\Rightarrow</script> permet de binder une touche (plus de détails suivent).</li>
-  <li><code class="highlighter-rouge">cv2.destroyAllWindows()</code> <script type="math/tex">\Rightarrow</script> détruit toutes les fenếtres créés.</li>
-  <li><code class="highlighter-rouge">cv2.destroyWindow()</code> <script type="math/tex">\Rightarrow</script> détruit une fenêtre spécifique passée en argument.</li>
+  <li><code class="highlighter-rouge">cv2.waitKey()</code> $ \Rightarrow $ permet de binder une touche (plus de détails suivent).</li>
+  <li><code class="highlighter-rouge">cv2.destroyAllWindows()</code> $ \Rightarrow $ détruit toutes les fenếtres créés.</li>
+  <li><code class="highlighter-rouge">cv2.destroyWindow()</code> $ \Rightarrow $ détruit une fenêtre spécifique passée en argument.</li>
 </ul>
 
 <blockquote>
@@ -188,10 +213,10 @@
 </div>
 
 <ul>
-  <li><code class="highlighter-rouge">cv2.namedWindow('image', flag)</code> <script type="math/tex">\Rightarrow</script> permet de set la taille de la fenêtre via l’argument <code class="highlighter-rouge">flag</code>:
+  <li><code class="highlighter-rouge">cv2.namedWindow('image', flag)</code> $ \Rightarrow $ permet de set la taille de la fenêtre via l’argument <code class="highlighter-rouge">flag</code>:
     <ul>
-      <li><code class="highlighter-rouge">cv2.WINDOW_AUTOSIZE</code> <script type="math/tex">\Rightarrow</script> valeur par défaut.</li>
-      <li><code class="highlighter-rouge">cv2.WINDOW_NORMAL</code> <script type="math/tex">\Rightarrow</script> fenêtre redimensionnable.</li>
+      <li><code class="highlighter-rouge">cv2.WINDOW_AUTOSIZE</code> $ \Rightarrow $ valeur par défaut.</li>
+      <li><code class="highlighter-rouge">cv2.WINDOW_NORMAL</code> $ \Rightarrow $ fenêtre redimensionnable.</li>
     </ul>
   </li>
 </ul>
@@ -201,8 +226,8 @@
 <ul>
   <li>`cv2.imwrite(‘nom.extension’, img)
     <ul>
-      <li>`‘nom.extension’ <script type="math/tex">\Rightarrow</script> nom du nouveau fichier</li>
-      <li><code class="highlighter-rouge">img</code> <script type="math/tex">\Rightarrow</script> image</li>
+      <li>`‘nom.extension’ $ \Rightarrow $ nom du nouveau fichier</li>
+      <li><code class="highlighter-rouge">img</code> $ \Rightarrow $ image</li>
     </ul>
   </li>
 </ul>
@@ -299,7 +324,7 @@
 <ul>
   <li><code class="highlighter-rouge">cv2.VideoCapture('device index or video name')</code>
     <ul>
-      <li><code class="highlighter-rouge">device index</code> <script type="math/tex">\Rightarrow</script> int qui spécifie la caméra à utiliser <script type="math/tex">\Rightarrow</script>  <code class="highlighter-rouge">0</code> pour la webcam</li>
+      <li><code class="highlighter-rouge">device index</code> $ \Rightarrow $ int qui spécifie la caméra à utiliser $ \Rightarrow $  <code class="highlighter-rouge">0</code> pour la webcam</li>
     </ul>
   </li>
 </ul>
@@ -332,7 +357,7 @@
 <p><span style="color:red"> Ne pas oublier de release à la fin! </span></p>
 
 <ul>
-  <li><code class="highlighter-rouge">cap.read()</code> <script type="math/tex">\Rightarrow</script> Retourne un bool. <code class="highlighter-rouge">1</code> si la frame est lue correctement else <code class="highlighter-rouge">0</code></li>
+  <li><code class="highlighter-rouge">cap.read()</code> $ \Rightarrow $ Retourne un bool. <code class="highlighter-rouge">1</code> si la frame est lue correctement else <code class="highlighter-rouge">0</code></li>
   <li><code class="highlighter-rouge">cap</code> permet d’<a href="http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-get">autres choses</a></li>
 </ul>
 
@@ -370,8 +395,8 @@
 <p>Tout comme pour les signaux à une dimension, les images peuvent aussi ếtre filtrées avec différents types de filtres.</p>
 
 <ul>
-  <li>LPF <script type="math/tex">\Rightarrow</script> Low Pass Filter <script type="math/tex">\Rightarrow</script> aide à retirer le bruit ou flouter l’image</li>
-  <li>HPF <script type="math/tex">\Rightarrow</script> High Pass Filter <script type="math/tex">\Rightarrow</script> aide à trouver les bords dans une image</li>
+  <li>LPF $ \Rightarrow $ Low Pass Filter $ \Rightarrow $ aide à retirer le bruit ou flouter l’image</li>
+  <li>HPF $ \Rightarrow $ High Pass Filter $ \Rightarrow $ aide à trouver les bords dans une image</li>
 </ul>
 
 <p>La fonction <code class="highlighter-rouge">cv2.filter2D()</code> “convolve” un kernel avec une image.</p>
@@ -555,11 +580,11 @@ Plus d’infos <a href="http://opencv-python-tutroals.readthedocs.io/en/latest/p
 
 <p><code class="highlighter-rouge">cv2.Canny('img', minVal, maxVal, aperture_size, L2gradient)</code></p>
 <ul>
-  <li><code class="highlighter-rouge">minVal</code> et <code class="highlighter-rouge">maxVal</code> <script type="math/tex">\Rightarrow</script> Hysterisis Treshholding</li>
-  <li><code class="highlighter-rouge">aperture_size</code> <script type="math/tex">\Rightarrow</script> size of Sobel Kernel used for img gradients</li>
-  <li><code class="highlighter-rouge">L2gradient</code> <script type="math/tex">\Rightarrow</script> equation to use for finding gradient magnitude. By default <code class="highlighter-rouge">False</code>
+  <li><code class="highlighter-rouge">minVal</code> et <code class="highlighter-rouge">maxVal</code> $ \Rightarrow $ Hysterisis Treshholding</li>
+  <li><code class="highlighter-rouge">aperture_size</code> $ \Rightarrow $ size of Sobel Kernel used for img gradients</li>
+  <li><code class="highlighter-rouge">L2gradient</code> $ \Rightarrow $ equation to use for finding gradient magnitude. By default <code class="highlighter-rouge">False</code>
     <ul>
-      <li>if <code class="highlighter-rouge">True</code> <script type="math/tex">\Rightarrow</script> uses a more accurate equation.</li>
+      <li>if <code class="highlighter-rouge">True</code> $ \Rightarrow $ uses a more accurate equation.</li>
     </ul>
   </li>
 </ul>

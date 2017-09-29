@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/py/py-dictionnaires.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: Dictionnaires</div>
@@ -79,6 +103,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -106,53 +131,53 @@
     <h2 id="méthodes">Méthodes</h2>
 
 <ul>
-  <li><code class="highlighter-rouge">len(d)</code> <script type="math/tex">\Rightarrow</script> retourne le nombre d’objets dans le dico <code class="highlighter-rouge">d</code></li>
+  <li><code class="highlighter-rouge">len(d)</code> $ \Rightarrow $ retourne le nombre d’objets dans le dico <code class="highlighter-rouge">d</code></li>
 </ul>
 
 <h4 id="get-set-delete">Get, Set, Delete</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">d[k]</code> <script type="math/tex">\Rightarrow</script> retourne la valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, <em>else</em> <span style="color:red"> KeyError</span></li>
-  <li><code class="highlighter-rouge">d.get(k)</code> <script type="math/tex">\Rightarrow</script> <em>return</em> la valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, <em>else</em> return <code class="highlighter-rouge">None</code></li>
-  <li><code class="highlighter-rouge">d.get(k, v)</code> <script type="math/tex">\Rightarrow</script> <em>return</em> la valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, <em>else</em> return <script type="math/tex">v</script></li>
-  <li><code class="highlighter-rouge">d[k] = v</code> <script type="math/tex">\Rightarrow</script> <em>if</em> <script type="math/tex">k</script> existe, remplace la valeur à la <strong>clé</strong> <script type="math/tex">k</script> <em>else</em> crée nouvelle entré</li>
-  <li><code class="highlighter-rouge">del d[k]</code> <script type="math/tex">\Rightarrow</script> supprime la clé/valeur de la <strong>clé</strong> <script type="math/tex">k</script> <em>if</em> existe, else <span style="color:red"> KeyError </span></li>
+  <li><code class="highlighter-rouge">d[k]</code> $ \Rightarrow $ retourne la valeur de la <strong>clé</strong> $k$ <em>if</em> existe, <em>else</em> <span style="color:red"> KeyError</span></li>
+  <li><code class="highlighter-rouge">d.get(k)</code> $ \Rightarrow $ <em>return</em> la valeur de la <strong>clé</strong> $k$ <em>if</em> existe, <em>else</em> return <code class="highlighter-rouge">None</code></li>
+  <li><code class="highlighter-rouge">d.get(k, v)</code> $ \Rightarrow $ <em>return</em> la valeur de la <strong>clé</strong> $k$ <em>if</em> existe, <em>else</em> return $v$</li>
+  <li><code class="highlighter-rouge">d[k] = v</code> $ \Rightarrow $ <em>if</em> $k$ existe, remplace la valeur à la <strong>clé</strong> $k$ <em>else</em> crée nouvelle entré</li>
+  <li><code class="highlighter-rouge">del d[k]</code> $ \Rightarrow $ supprime la clé/valeur de la <strong>clé</strong> $k$ <em>if</em> existe, else <span style="color:red"> KeyError </span></li>
 </ul>
 
 <h4 id="check-existence">Check existence</h4>
 <ul>
-  <li><code class="highlighter-rouge">k in d</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">True</code> <em>if</em> <script type="math/tex">d</script> a une clé <script type="math/tex">k</script> <em>else</em> <code class="highlighter-rouge">False</code></li>
-  <li><code class="highlighter-rouge">k not in d</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">True</code> <em>if</em> <script type="math/tex">d</script> n’a pas une clé <script type="math/tex">k</script> <em>else</em> <code class="highlighter-rouge">False</code></li>
+  <li><code class="highlighter-rouge">k in d</code> $ \Rightarrow $ <code class="highlighter-rouge">True</code> <em>if</em> $d$ a une clé $k$ <em>else</em> <code class="highlighter-rouge">False</code></li>
+  <li><code class="highlighter-rouge">k not in d</code> $ \Rightarrow $ <code class="highlighter-rouge">True</code> <em>if</em> $d$ n’a pas une clé $k$ <em>else</em> <code class="highlighter-rouge">False</code></li>
 </ul>
 
 <h4 id="get-all-keys-values-keysvalues">Get all keys, values, keys/values</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">d.keys()</code> <script type="math/tex">\Rightarrow</script> repr de toutes les clés</li>
-  <li><code class="highlighter-rouge">d.values()</code> <script type="math/tex">\Rightarrow</script> repr de toutes les valeurs</li>
-  <li><code class="highlighter-rouge">d.items()</code> <script type="math/tex">\Rightarrow</script> repr (tuples) de toutes les clé/valeurs</li>
+  <li><code class="highlighter-rouge">d.keys()</code> $ \Rightarrow $ repr de toutes les clés</li>
+  <li><code class="highlighter-rouge">d.values()</code> $ \Rightarrow $ repr de toutes les valeurs</li>
+  <li><code class="highlighter-rouge">d.items()</code> $ \Rightarrow $ repr (tuples) de toutes les clé/valeurs</li>
 </ul>
 
 <h4 id="pop">Pop</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">d.pop(k)</code> <script type="math/tex">\Rightarrow</script> supprime et <em>return</em> la valeur <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> exist, <em>else</em> <span style="color:red">KeyError</span>.</li>
-  <li><code class="highlighter-rouge">d.pop(k,v)</code> <script type="math/tex">\Rightarrow</script> supprime et <em>return</em> la valeur <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> <em>else</em> <em>return</em> <script type="math/tex">v</script></li>
-  <li><code class="highlighter-rouge">d.popitem()</code> <script type="math/tex">\Rightarrow</script> supprime et <em>return</em> une random clé/valeur <em>if</em> <script type="math/tex">d</script> vide <span style="color:red"> KeyError </span></li>
+  <li><code class="highlighter-rouge">d.pop(k)</code> $ \Rightarrow $ supprime et <em>return</em> la valeur <em>if</em> <strong>clé</strong> $k$ exist, <em>else</em> <span style="color:red">KeyError</span>.</li>
+  <li><code class="highlighter-rouge">d.pop(k,v)</code> $ \Rightarrow $ supprime et <em>return</em> la valeur <em>if</em> <strong>clé</strong> $k$ <em>else</em> <em>return</em> $v$</li>
+  <li><code class="highlighter-rouge">d.popitem()</code> $ \Rightarrow $ supprime et <em>return</em> une random clé/valeur <em>if</em> $d$ vide <span style="color:red"> KeyError </span></li>
 </ul>
 
 <h4 id="set-value">Set value</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">d.setdefault(k)</code> <script type="math/tex">\Rightarrow</script> <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> existe <em>return</em> value <em>else</em> ajoute la clé <script type="math/tex">k</script> avec valeur <code class="highlighter-rouge">None</code></li>
-  <li><code class="highlighter-rouge">d.setdefault(k, v)</code> <script type="math/tex">\Rightarrow</script> <em>if</em> <strong>clé</strong> <script type="math/tex">k</script> existe <em>return</em> value <em>else</em> ajoute clé <script type="math/tex">k</script> avec valeur <script type="math/tex">v</script></li>
+  <li><code class="highlighter-rouge">d.setdefault(k)</code> $ \Rightarrow $ <em>if</em> <strong>clé</strong> $k$ existe <em>return</em> value <em>else</em> ajoute la clé $k$ avec valeur <code class="highlighter-rouge">None</code></li>
+  <li><code class="highlighter-rouge">d.setdefault(k, v)</code> $ \Rightarrow $ <em>if</em> <strong>clé</strong> $k$ existe <em>return</em> value <em>else</em> ajoute clé $k$ avec valeur $v$</li>
 </ul>
 
 <h4 id="clear-copy">Clear, copy</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">d.clear()</code> <script type="math/tex">\Rightarrow</script> supprime tout</li>
-  <li><code class="highlighter-rouge">d.copy()</code> <script type="math/tex">\Rightarrow</script> <em>return</em> shallow copy de <script type="math/tex">d</script></li>
+  <li><code class="highlighter-rouge">d.clear()</code> $ \Rightarrow $ supprime tout</li>
+  <li><code class="highlighter-rouge">d.copy()</code> $ \Rightarrow $ <em>return</em> shallow copy de $d$</li>
 </ul>
 
 <h2 id="introduction">Introduction</h2>

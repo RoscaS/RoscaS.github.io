@@ -6,9 +6,100 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 06 Sep 2017 14:41:23 +0200</pubDate>
-    <lastBuildDate>Wed, 06 Sep 2017 14:41:23 +0200</lastBuildDate>
+    <pubDate>Mon, 18 Sep 2017 03:11:21 +0200</pubDate>
+    <lastBuildDate>Mon, 18 Sep 2017 03:11:21 +0200</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
+    
+      <item>
+        <title>Web: Webiste-Tools</title>
+        <description>&lt;h3 id=&quot;idees-a-implementer&quot;&gt;Idees a implementer&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://plot.ly/&quot;&gt;plot.ly&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;mathjax&quot;&gt;Mathjax&lt;/h2&gt;
+&lt;p&gt;Le site utilise &lt;a href=&quot;https://github.com/mathjax/MathJax&quot;&gt;MathJax&lt;/a&gt; pour génénrer le rendu des expressions mathématiques.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Expression within &lt;code class=&quot;highlighter-rouge&quot;&gt;$...$&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;\(...\)&lt;/code&gt; will be rendered inline.&lt;/li&gt;
+  &lt;li&gt;Expression within &lt;code class=&quot;highlighter-rouge&quot;&gt;$$...$$&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;\[...\]&lt;/code&gt; or will be rendered in block.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In line: $f(x) = sin(x) + b^2$
+Bloc: &lt;script type=&quot;math/tex&quot;&gt;\frac{2}{3}+4x&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;mermaid&quot;&gt;Mermaid&lt;/h2&gt;
+&lt;p&gt;Le site utilise &lt;a href=&quot;https://mermaidjs.github.io&quot;&gt;mermaid&lt;/a&gt; pour générer des diagrames (Flow, Sequence, Gantt, UML).&lt;/p&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Download js code of mermaid: &lt;a href=&quot;https://github.com/knsv/mermaid&quot;&gt;mermaid&lt;/a&gt;. ATM, the file is hosted &lt;a href=&quot;https://unpkg.com/mermaid@7.1.0/dist/&quot;&gt;here&lt;/a&gt; but it might change after update. We want the file named &lt;code class=&quot;highlighter-rouge&quot;&gt;mermaid.min.js&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Put this file into a folder named &lt;code class=&quot;highlighter-rouge&quot;&gt;js&lt;/code&gt; in the root of the website.&lt;/li&gt;
+  &lt;li&gt;Open &lt;code class=&quot;highlighter-rouge&quot;&gt;/_includes/head.html&lt;/code&gt; and add this line:
+    &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/js/mermaid.min.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Now we can make nice graphs like this one:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;mermaid&quot;&gt;
+graph TD;
+    A--&amp;gt;B;
+    A--&amp;gt;C;
+    B--&amp;gt;D;
+    C--&amp;gt;D;
+&lt;/div&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mermaid&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+graph TD;
+    A--&amp;gt;B;
+    A--&amp;gt;C;
+    B--&amp;gt;D;
+    C--&amp;gt;D;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We just need to put the graph code inside &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;div class=&quot;mermaid&quot;&amp;gt;...&amp;lt;/div&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/knsv/mermaid&quot;&gt;mermaid quick start&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://mermaidjs.github.io&quot;&gt;mermaid doc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code-chunk&quot;&gt;Code chunk&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python {cmd=true matplotlib=true}
+import matplotlib.pyplot as plt
+plt.plot([1,2,3, 4])
+plt.show() # show figure
+&lt;/code&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 17 Sep 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/web/web-Website-Tools.html</link>
+        <guid isPermaLink="true">http://localhost:4000/web/web-Website-Tools.html</guid>
+        
+        <category>tools</category>
+        
+        
+        <category>Web</category>
+        
+      </item>
+    
+      <item>
+        <title>Py: PlotLy </title>
+        <description>
+</description>
+        <pubDate>Sun, 17 Sep 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/py/py-Plotly.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/py-Plotly.html</guid>
+        
+        <category>tools</category>
+        
+        
+        <category>Py</category>
+        
+      </item>
     
       <item>
         <title>Prog: projet p1, presentation septembre</title>
@@ -76,6 +167,13 @@
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;23f1e9a909e77fa8876b5cf65abc2187
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;h2 id=&quot;plotly-api-key&quot;&gt;Plotly API key&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tDGG5MhJ8VcIdWyp9hKR
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Username: Roscas&lt;/p&gt;
+
 </description>
         <pubDate>Sun, 03 Sep 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/perso/</link>
@@ -100,9 +198,9 @@
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\displaystyle{x_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}}&lt;/script&gt;
 
-&lt;p&gt;avec &lt;script type=&quot;math/tex&quot;&gt;\Delta = b^2 - 4ac&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;avec $ \Delta = b^2 - 4ac $&lt;/p&gt;
 
-&lt;p&gt;Et je ne sais pas si te souviens mais il y a trois cas de figure dans &lt;script type=&quot;math/tex&quot;&gt;\pmb{\mathbb{R}}&lt;/script&gt; qui en fonction de si &lt;script type=&quot;math/tex&quot;&gt;{\Delta}&lt;/script&gt; est positif, négatif ou &lt;script type=&quot;math/tex&quot;&gt;= 0&lt;/script&gt; donne 3 autres formules.&lt;/p&gt;
+&lt;p&gt;Et je ne sais pas si te souviens mais il y a trois cas de figure dans $\pmb{\mathbb{R}}$ qui en fonction de si $ {\Delta} $ est positif, négatif ou $ = 0 $ donne 3 autres formules.&lt;/p&gt;
 
 &lt;p&gt;Simple efficace mais au final sauf que tu comprends pas ce que tu fais. Et puis c’est quoi factoriser? Pourquoi on fait ça?&lt;/p&gt;
 
@@ -128,13 +226,13 @@
 
 &lt;p&gt;Pour te donner du courrage, dans deux semaines, j’ai une semaine off avant de reprendre les cours, je vais faire exactement la même chose. Cliquer sur &lt;a href=&quot;https://fr.khanacademy.org/math/early-math&quot;&gt;Bases en calcul&lt;/a&gt;, et commencer par là, défoncer tout ce qui est facile, et prendre note de ce qui me pose problème pour le renforcer.&lt;/p&gt;
 
-&lt;p&gt;Si tu trouve que c’est trop facile, pour te calmer, voilà ce que les profs de première année trouvent &lt;a href=&quot;/01documents/max/musculation.pdf&quot;&gt;trop facile&lt;/a&gt;. Si t’es alaise avec ce PDF, félicitation, tu vas être tranquille pour les premières semaines de cours et tu peux direct enchainer avec &lt;a href=&quot;/01/documents/max/ch1_bases_algebre.pdf&quot;&gt;ce pdf&lt;/a&gt;. C’est le premier chapitre de mon cours de math B. Si t’as un soucis avec un concept &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Khan Academy.&lt;/p&gt;
+&lt;p&gt;Si tu trouve que c’est trop facile, pour te calmer, voilà ce que les profs de première année trouvent &lt;a href=&quot;/01documents/max/musculation.pdf&quot;&gt;trop facile&lt;/a&gt;. Si t’es alaise avec ce PDF, félicitation, tu vas être tranquille pour les premières semaines de cours et tu peux direct enchainer avec &lt;a href=&quot;/01/documents/max/ch1_bases_algebre.pdf&quot;&gt;ce pdf&lt;/a&gt;. C’est le premier chapitre de mon cours de math B. Si t’as un soucis avec un concept $ \Rightarrow $ Khan Academy.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Gros conseil, faut absolument que tu gère à mort le concept de valeur absolue, c’est bcp plus tricky que &lt;script type=&quot;math/tex&quot;&gt;\lvert-1\rvert=1&lt;/script&gt;. C’est expliqué en détail dans le dernier pdf que je t’ai linké&lt;/p&gt;
+  &lt;p&gt;Gros conseil, faut absolument que tu gère à mort le concept de valeur absolue, c’est bcp plus tricky que $\lvert-1\rvert=1$. C’est expliqué en détail dans le dernier pdf que je t’ai linké&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Si d’ici la rentrée t’as le temps, plonge toi dans les fonctions aussi. Le contepte de base, faut absolument que tu sache ce qu’est une fonction sans la moindre hésitation. Si t’as le temps de comprendre les concepts &lt;em&gt;d’injectivité&lt;/em&gt;, &lt;em&gt;surjectivité&lt;/em&gt;, &lt;em&gt;bijectivité&lt;/em&gt; c’est vraiment tout bon car c’est pas super évident au début et t’as vite fait de te laisser noyer quand vous en arriverez là. Aussi si tu peux revois bien &lt;em&gt;domaine de définition&lt;/em&gt;, &lt;em&gt;ensemble de départ&lt;/em&gt;, &lt;em&gt;ensemble d’arrivée&lt;/em&gt;. &lt;a href=&quot;/01/documents/max/ch1_bases_algebre.pdf&quot;&gt;Ce pdf&lt;/a&gt; explique tout ça et si t’as du mal, encore une fois &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Khan Academy.&lt;/p&gt;
+&lt;p&gt;Si d’ici la rentrée t’as le temps, plonge toi dans les fonctions aussi. Le contepte de base, faut absolument que tu sache ce qu’est une fonction sans la moindre hésitation. Si t’as le temps de comprendre les concepts &lt;em&gt;d’injectivité&lt;/em&gt;, &lt;em&gt;surjectivité&lt;/em&gt;, &lt;em&gt;bijectivité&lt;/em&gt; c’est vraiment tout bon car c’est pas super évident au début et t’as vite fait de te laisser noyer quand vous en arriverez là. Aussi si tu peux revois bien &lt;em&gt;domaine de définition&lt;/em&gt;, &lt;em&gt;ensemble de départ&lt;/em&gt;, &lt;em&gt;ensemble d’arrivée&lt;/em&gt;. &lt;a href=&quot;/01/documents/max/ch1_bases_algebre.pdf&quot;&gt;Ce pdf&lt;/a&gt; explique tout ça et si t’as du mal, encore une fois $ \Rightarrow $ Khan Academy.&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 21 Aug 2017 00:00:00 +0200</pubDate>
@@ -156,15 +254,15 @@
         <title>Divers: github</title>
         <description>&lt;h2 id=&quot;downloads--install&quot;&gt;Downloads &amp;amp; Install&lt;/h2&gt;
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/&quot;&gt;github.com&lt;/a&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Nouveau compte si pas existant&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/&quot;&gt;github.com&lt;/a&gt; $ \Rightarrow $ Nouveau compte si pas existant&lt;/li&gt;
   &lt;li&gt;installer &lt;a href=&quot;https://git-for-windows.github.io/&quot;&gt;Git Bash&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;ssh&quot;&gt;SSH&lt;/h2&gt;
 &lt;ol&gt;
   &lt;li&gt;Ouvrir &lt;strong&gt;Git Bash&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ssh-keygen -t rsa -b 4096 -C &quot;adresse@email.com&quot;&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Crée une clé ssh&lt;/li&gt;
-  &lt;li&gt;Quand le texte suivant s’affiche &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ssh-keygen -t rsa -b 4096 -C &quot;adresse@email.com&quot;&lt;/code&gt; $ \Rightarrow $ Crée une clé ssh&lt;/li&gt;
+  &lt;li&gt;Quand le texte suivant s’affiche &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]&lt;/code&gt; $ \Rightarrow $ &lt;code class=&quot;highlighter-rouge&quot;&gt;Enter&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Entrez un mot de passe&lt;/li&gt;
   &lt;li&gt;Encore…&lt;/li&gt;
 &lt;/ol&gt;
@@ -172,7 +270,7 @@
 &lt;h2 id=&quot;ajouter-la-clé-ssh-à-lagent-ssh&quot;&gt;Ajouter la clé SSH à l’agent ssh&lt;/h2&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Vérifier si l’agent ssh tourne: &lt;code class=&quot;highlighter-rouge&quot;&gt;eval $(ssh-agent -s)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; devrait retourner un PID&lt;/li&gt;
+  &lt;li&gt;Vérifier si l’agent ssh tourne: &lt;code class=&quot;highlighter-rouge&quot;&gt;eval $(ssh-agent -s)&lt;/code&gt; $ \Rightarrow $ devrait retourner un PID&lt;/li&gt;
   &lt;li&gt;Ajouter la clé SSH: `ssh-add ~/.ssh/id_rsa&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -180,8 +278,8 @@
 
 &lt;ol&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;clip &amp;lt; ~/.ssh/id_rsa.pub&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Sur le site github, cliquez en haut à droite sur la photo de profil &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;strong&gt;Settings&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;strong&gt;New SSH key&lt;/strong&gt; ou &lt;strong&gt;Add SSH key&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;Dans le champ &lt;strong&gt;title&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; nom du pc (osef pas le nom officiel)&lt;/li&gt;
+  &lt;li&gt;Sur le site github, cliquez en haut à droite sur la photo de profil $ \Rightarrow $ &lt;strong&gt;Settings&lt;/strong&gt; $ \Rightarrow $ &lt;strong&gt;New SSH key&lt;/strong&gt; ou &lt;strong&gt;Add SSH key&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Dans le champ &lt;strong&gt;title&lt;/strong&gt; $ \Rightarrow $ nom du pc (osef pas le nom officiel)&lt;/li&gt;
   &lt;li&gt;Coller la clé dans le champ field&lt;/li&gt;
   &lt;li&gt;&lt;strong&gt;Add SSH key&lt;/strong&gt;&lt;/li&gt;
 &lt;/ol&gt;
@@ -241,9 +339,9 @@
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; doit soit être dans le working directory, soit on utilise un full path&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; spécifie la façon dont &lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; doit être lue:
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.IMREAD_COLOR&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; img couleur, toute transarence est négligée (flag par défaut)&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; cv2.IMREAD_GRAYSCALE &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; grayscale mode&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-1&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; cv2.IMREAD_UNCHANGED &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; image originale&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; $ \Rightarrow $ &lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.IMREAD_COLOR&lt;/code&gt; $ \Rightarrow $ img couleur, toute transarence est négligée (flag par défaut)&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; $ \Rightarrow $ cv2.IMREAD_GRAYSCALE $ \Rightarrow $ grayscale mode&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-1&lt;/code&gt; $ \Rightarrow $ cv2.IMREAD_UNCHANGED $ \Rightarrow $ image originale&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -260,11 +358,11 @@
 
 &lt;h2 id=&quot;afficher-une-image&quot;&gt;Afficher une image:&lt;/h2&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.imshow('window_name', image)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; affiche l’image dans une nouvelle fenêtre (fit to the image size).&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.imshow('window_name', image)&lt;/code&gt; $ \Rightarrow $ affiche l’image dans une nouvelle fenêtre (fit to the image size).&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;'window_name'&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; une string avec le nom de la nouvelle fenêtre&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; image à afficher&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;'window_name'&lt;/code&gt; $ \Rightarrow $ une string avec le nom de la nouvelle fenêtre&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; $ \Rightarrow $ image à afficher&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
@@ -286,9 +384,9 @@
 &lt;p&gt;&lt;img src=&quot;http://opencv-python-tutroals.readthedocs.io/en/latest/_images/opencv_screenshot.jpg&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.waitKey()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; permet de binder une touche (plus de détails suivent).&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyAllWindows()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; détruit toutes les fenếtres créés.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyWindow()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; détruit une fenêtre spécifique passée en argument.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.waitKey()&lt;/code&gt; $ \Rightarrow $ permet de binder une touche (plus de détails suivent).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyAllWindows()&lt;/code&gt; $ \Rightarrow $ détruit toutes les fenếtres créés.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyWindow()&lt;/code&gt; $ \Rightarrow $ détruit une fenêtre spécifique passée en argument.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
@@ -309,10 +407,10 @@
 &lt;/div&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.namedWindow('image', flag)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; permet de set la taille de la fenêtre via l’argument &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt;:
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.namedWindow('image', flag)&lt;/code&gt; $ \Rightarrow $ permet de set la taille de la fenêtre via l’argument &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt;:
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_AUTOSIZE&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; valeur par défaut.&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_NORMAL&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; fenêtre redimensionnable.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_AUTOSIZE&lt;/code&gt; $ \Rightarrow $ valeur par défaut.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_NORMAL&lt;/code&gt; $ \Rightarrow $ fenêtre redimensionnable.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -322,8 +420,8 @@
 &lt;ul&gt;
   &lt;li&gt;`cv2.imwrite(‘nom.extension’, img)
     &lt;ul&gt;
-      &lt;li&gt;`‘nom.extension’ &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; nom du nouveau fichier&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;img&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; image&lt;/li&gt;
+      &lt;li&gt;`‘nom.extension’ $ \Rightarrow $ nom du nouveau fichier&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;img&lt;/code&gt; $ \Rightarrow $ image&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -420,7 +518,7 @@
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.VideoCapture('device index or video name')&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;device index&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; int qui spécifie la caméra à utiliser &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; pour la webcam&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;device index&lt;/code&gt; $ \Rightarrow $ int qui spécifie la caméra à utiliser $ \Rightarrow $  &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; pour la webcam&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -453,7 +551,7 @@
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt; Ne pas oublier de release à la fin! &lt;/span&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cap.read()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Retourne un bool. &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; si la frame est lue correctement else &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cap.read()&lt;/code&gt; $ \Rightarrow $ Retourne un bool. &lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; si la frame est lue correctement else &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cap&lt;/code&gt; permet d’&lt;a href=&quot;http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture-get&quot;&gt;autres choses&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -491,8 +589,8 @@
 &lt;p&gt;Tout comme pour les signaux à une dimension, les images peuvent aussi ếtre filtrées avec différents types de filtres.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;LPF &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Low Pass Filter &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; aide à retirer le bruit ou flouter l’image&lt;/li&gt;
-  &lt;li&gt;HPF &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; High Pass Filter &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; aide à trouver les bords dans une image&lt;/li&gt;
+  &lt;li&gt;LPF $ \Rightarrow $ Low Pass Filter $ \Rightarrow $ aide à retirer le bruit ou flouter l’image&lt;/li&gt;
+  &lt;li&gt;HPF $ \Rightarrow $ High Pass Filter $ \Rightarrow $ aide à trouver les bords dans une image&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.filter2D()&lt;/code&gt; “convolve” un kernel avec une image.&lt;/p&gt;
@@ -676,11 +774,11 @@ Plus d’infos &lt;a href=&quot;http://opencv-python-tutroals.readthedocs.io/en/
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.Canny('img', minVal, maxVal, aperture_size, L2gradient)&lt;/code&gt;&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;minVal&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;maxVal&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; Hysterisis Treshholding&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;aperture_size&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; size of Sobel Kernel used for img gradients&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;L2gradient&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; equation to use for finding gradient magnitude. By default &lt;code class=&quot;highlighter-rouge&quot;&gt;False&lt;/code&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;minVal&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;maxVal&lt;/code&gt; $ \Rightarrow $ Hysterisis Treshholding&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;aperture_size&lt;/code&gt; $ \Rightarrow $ size of Sobel Kernel used for img gradients&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;L2gradient&lt;/code&gt; $ \Rightarrow $ equation to use for finding gradient magnitude. By default &lt;code class=&quot;highlighter-rouge&quot;&gt;False&lt;/code&gt;
     &lt;ul&gt;
-      &lt;li&gt;if &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; uses a more accurate equation.&lt;/li&gt;
+      &lt;li&gt;if &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt; $ \Rightarrow $ uses a more accurate equation.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -819,21 +917,21 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND='green'
   &lt;li&gt;
     &lt;p&gt;&lt;a href=&quot;https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/&quot;&gt;virtualenv doc&lt;/a&gt;&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mkvirtualenv&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; new virtualenv&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;workon&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; switch to “name” virtualenv&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;workon&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; list virtualenvs&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lsvirtualenv&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; same&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deactivate&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; leave current virtualenv&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mkvirtualenv&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; $ \Rightarrow $ new virtualenv&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;workon&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; $ \Rightarrow $ switch to “name” virtualenv&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;workon&lt;/code&gt; $ \Rightarrow $ list virtualenvs&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lsvirtualenv&lt;/code&gt; $ \Rightarrow $ same&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deactivate&lt;/code&gt; $ \Rightarrow $ leave current virtualenv&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;virtualenv --version&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; check version&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;virtualenv --version&lt;/code&gt; $ \Rightarrow $ check version&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mkproject&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; creates a project &lt;strong&gt;directory&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mkproject&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; $ \Rightarrow $ creates a project &lt;strong&gt;directory&lt;/strong&gt;&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deactivate&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; leave current project&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deactivate&lt;/code&gt; $ \Rightarrow $ leave current project&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rmvirtualenv&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; delete project&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cdvirtualenv&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; navigate into the directory of the currently activated venv.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lssitepackages&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; show content of &lt;code class=&quot;highlighter-rouge&quot;&gt;site-packages&lt;/code&gt; directory&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;rmvirtualenv&lt;/code&gt; &lt;em&gt;name&lt;/em&gt; $ \Rightarrow $ delete project&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cdvirtualenv&lt;/code&gt; $ \Rightarrow $ navigate into the directory of the currently activated venv.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;lssitepackages&lt;/code&gt; $ \Rightarrow $ show content of &lt;code class=&quot;highlighter-rouge&quot;&gt;site-packages&lt;/code&gt; directory&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;4-download-opencv--opencv_contrib&quot;&gt;4 Download OpenCV &amp;amp; OpenCV_contrib&lt;/h2&gt;
@@ -959,9 +1057,9 @@ deactivate
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; doit soit être dans le working directory, soit on utilise un full path&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; spécifie la façon dont &lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; doit être lue:
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.IMREAD_COLOR&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; img couleur, toute transarence est négligée (flag par défaut)&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; cv2.IMREAD_GRAYSCALE &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; grayscale mode&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-1&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; cv2.IMREAD_UNCHANGED &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; image originale&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;1&lt;/code&gt; $ \Rightarrow $ &lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.IMREAD_COLOR&lt;/code&gt; $ \Rightarrow $ img couleur, toute transarence est négligée (flag par défaut)&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt; $ \Rightarrow $ cv2.IMREAD_GRAYSCALE $ \Rightarrow $ grayscale mode&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;-1&lt;/code&gt; $ \Rightarrow $ cv2.IMREAD_UNCHANGED $ \Rightarrow $ image originale&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -978,11 +1076,11 @@ deactivate
 
 &lt;h2 id=&quot;afficher-une-image&quot;&gt;Afficher une image:&lt;/h2&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.imshow('window_name', image)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; affiche l’image dans une nouvelle fenêtre (fit to the image size).&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.imshow('window_name', image)&lt;/code&gt; $ \Rightarrow $ affiche l’image dans une nouvelle fenêtre (fit to the image size).&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;'window_name'&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; une string avec le nom de la nouvelle fenêtre&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; image à afficher&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;'window_name'&lt;/code&gt; $ \Rightarrow $ une string avec le nom de la nouvelle fenêtre&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;image&lt;/code&gt; $ \Rightarrow $ image à afficher&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
@@ -1004,15 +1102,15 @@ deactivate
 &lt;p&gt;&lt;img src=&quot;http://opencv-python-tutroals.readthedocs.io/en/latest/_images/opencv_screenshot.jpg&quot; alt=&quot;alt&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.waitKey()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; permet de binder une touche (plus de détails suivent)&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyAllWindows()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; détruit toutes les fenếtres créés&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.waitKey()&lt;/code&gt; $ \Rightarrow $ permet de binder une touche (plus de détails suivent)&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyAllWindows()&lt;/code&gt; $ \Rightarrow $ détruit toutes les fenếtres créés&lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyWindow()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; détruit une fenêtre spécifique passée en argument&lt;/p&gt;
+    &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.destroyWindow()&lt;/code&gt; $ \Rightarrow $ détruit une fenêtre spécifique passée en argument&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.namedWindow('image', flag)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; permet de set la taille de la fenêtre via l’argument &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt;:
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.namedWindow('image', flag)&lt;/code&gt; $ \Rightarrow $ permet de set la taille de la fenêtre via l’argument &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt;:
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_AUTOSIZE&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; valeur par défaut&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_NORMAL&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; fenêtre redimensionnable&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_AUTOSIZE&lt;/code&gt; $ \Rightarrow $ valeur par défaut&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cv2.WINDOW_NORMAL&lt;/code&gt; $ \Rightarrow $ fenêtre redimensionnable&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -1065,7 +1163,7 @@ deactivate
 
 &lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;Assignation de l’attribut &lt;code class=&quot;highlighter-rouge&quot;&gt;self.original&lt;/code&gt; qui contient l’image originale sous forme de liste &lt;strong&gt;numpy&lt;/strong&gt;. Chaque elément contient une liste contenant un &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; un &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; et une valeur référence de la couleur.&lt;/p&gt;
+    &lt;p&gt;Assignation de l’attribut &lt;code class=&quot;highlighter-rouge&quot;&gt;self.original&lt;/code&gt; qui contient l’image originale sous forme de liste &lt;strong&gt;numpy&lt;/strong&gt;. Chaque elément contient une liste contenant un $x$ un $y$ et une valeur référence de la couleur.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Les attributs &lt;code class=&quot;highlighter-rouge&quot;&gt;self.height&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;self.width&lt;/code&gt; contiennent repectivement la largeur et la longueur totale de l’image originiale calculés à partir de la methode &lt;code class=&quot;highlighter-rouge&quot;&gt;shape&lt;/code&gt; de l’objet &lt;code class=&quot;highlighter-rouge&quot;&gt;self.original&lt;/code&gt;&lt;/p&gt;
@@ -1298,22 +1396,22 @@ En gros, il nous faut &lt;strong&gt;Trouver une ligne qui connecte tous les poin
 &lt;h2 id=&quot;top-level-windows&quot;&gt;top-level windows&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_chooseColor&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  pops up a dialog box for the user to select a color.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_chooseDirectory&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  pops up a dialog box for the user to select a directory.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_dialog&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  creates a modal dialog and waits for a response.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_getOpenFile&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  pops up a dialog box for the user to select a file to open.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_getSaveFile&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  pops up a dialog box for the user to select a file to save.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_messageBox&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  pops up a message window and waits for a user response.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_popup&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  posts a popup menu.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toplevel&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  creates and manipulates toplevel widgets.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_chooseColor&lt;/code&gt; $ \Rightarrow $  pops up a dialog box for the user to select a color.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_chooseDirectory&lt;/code&gt; $ \Rightarrow $  pops up a dialog box for the user to select a directory.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_dialog&lt;/code&gt; $ \Rightarrow $  creates a modal dialog and waits for a response.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_getOpenFile&lt;/code&gt; $ \Rightarrow $  pops up a dialog box for the user to select a file to open.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_getSaveFile&lt;/code&gt; $ \Rightarrow $  pops up a dialog box for the user to select a file to save.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_messageBox&lt;/code&gt; $ \Rightarrow $  pops up a message window and waits for a user response.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;tk_popup&lt;/code&gt; $ \Rightarrow $  posts a popup menu.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toplevel&lt;/code&gt; $ \Rightarrow $  creates and manipulates toplevel widgets.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;geometry-managers&quot;&gt;geometry managers&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;place&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  which positions widgets at absolute locations&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;grid&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  which arranges widgets in a grid&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;pack&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  which packs widgets into a cavity&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;place&lt;/strong&gt; $ \Rightarrow $  which positions widgets at absolute locations&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;grid&lt;/strong&gt; $ \Rightarrow $  which arranges widgets in a grid&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;pack&lt;/strong&gt; $ \Rightarrow $  which packs widgets into a cavity&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;!-- ```python
@@ -1460,15 +1558,15 @@ a = tkinter.Button(master, option=value)
 
 &lt;h3 id=&quot;autre-éléments-graphiques&quot;&gt;Autre éléments graphiques&lt;/h3&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;create_arc()&lt;/code&gt;        &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   arc de cercle
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_bitmap()&lt;/code&gt;     &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   bitmap
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_image()&lt;/code&gt;      &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   image
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_line()&lt;/code&gt;       &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   ligne
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_oval()&lt;/code&gt;       &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   ovale
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_polygon()&lt;/code&gt;    &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   polygone
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_rectangle()&lt;/code&gt;  &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   rectangle 
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_text()&lt;/code&gt;       &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   texte
-&lt;code class=&quot;highlighter-rouge&quot;&gt;create_window()&lt;/code&gt;     &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;   fenetre&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;create_arc()&lt;/code&gt;        $ \Rightarrow $   arc de cercle
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_bitmap()&lt;/code&gt;     $ \Rightarrow $   bitmap
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_image()&lt;/code&gt;      $ \Rightarrow $   image
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_line()&lt;/code&gt;       $ \Rightarrow $   ligne
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_oval()&lt;/code&gt;       $ \Rightarrow $   ovale
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_polygon()&lt;/code&gt;    $ \Rightarrow $   polygone
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_rectangle()&lt;/code&gt;  $ \Rightarrow $   rectangle 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_text()&lt;/code&gt;       $ \Rightarrow $   texte
+&lt;code class=&quot;highlighter-rouge&quot;&gt;create_window()&lt;/code&gt;     $ \Rightarrow $   fenetre&lt;/p&gt;
 
 &lt;h3 id=&quot;changer-les-coordonnées-dun-élement-crée-dans-le-canvas&quot;&gt;Changer les coordonnées d’un élement crée dans le canvas&lt;/h3&gt;
 &lt;p&gt;Via la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;coords&lt;/code&gt;&lt;/p&gt;
@@ -1689,20 +1787,20 @@ tk.Label(l, text=&quot;A l'interieur de la frame&quot;).pack()
 &lt;p&gt;Si on indique une unité via un &lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt; l’unité par défaut est &lt;strong&gt;pixel&lt;/strong&gt;. Il existe d’autres unités:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; pouces&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; millimètres&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; centimètres&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;i&lt;/code&gt; $ \Rightarrow $ pouces&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; $ \Rightarrow $ millimètres&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;c&lt;/code&gt; $ \Rightarrow $ centimètres&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;options-de-dimension&quot;&gt;Options de dimension&lt;/h2&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;height&lt;/code&gt;             &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Hauteur du widget.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;width&lt;/code&gt;              &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Largeur du widget.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;padx&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;pady&lt;/code&gt;       &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;borderwidth&lt;/code&gt;        &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Taille de la bordure.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;highlightthickness&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Largeur du rectangle lorsque le widget a le focus.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;selectborderwidth&lt;/code&gt;  &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Largeur de la bordure tridimensionnel autour du widget sélectionné.
-&lt;code class=&quot;highlighter-rouge&quot;&gt;wraplength&lt;/code&gt;         &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Nombre de ligne maximum pour les widget en mode “word wrapping”.&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;height&lt;/code&gt;             $ \Rightarrow $  Hauteur du widget.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;width&lt;/code&gt;              $ \Rightarrow $  Largeur du widget.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;padx&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;pady&lt;/code&gt;       $ \Rightarrow $  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;borderwidth&lt;/code&gt;        $ \Rightarrow $  Taille de la bordure.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;highlightthickness&lt;/code&gt; $ \Rightarrow $  Largeur du rectangle lorsque le widget a le focus.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;selectborderwidth&lt;/code&gt;  $ \Rightarrow $  Largeur de la bordure tridimensionnel autour du widget sélectionné.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;wraplength&lt;/code&gt;         $ \Rightarrow $  Nombre de ligne maximum pour les widget en mode “word wrapping”.&lt;/p&gt;
 
 &lt;h2 id=&quot;options-de-couleurs&quot;&gt;Options de couleurs&lt;/h2&gt;
 &lt;p&gt;Il est possible d’indiquer une valeur de couleur par son nom en anglais:&lt;/p&gt;
@@ -1717,15 +1815,15 @@ tk.Label(l, text=&quot;A l'interieur de la frame&quot;).pack()
 &lt;p&gt;Ou par son code hexadécimal.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;background (ou bg)&lt;/code&gt;   &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de fond du widget.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;foreground (ou fg)&lt;/code&gt;   &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de premier plan du widget.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;activebackground&lt;/code&gt;     &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de fond du widget lorsque celui-ci est actif.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;activeForeground&lt;/code&gt;     &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de premier plan du widget lorsque le widget est actif.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;disabledForeground&lt;/code&gt;   &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de premier plan du widget lorsque le widget est désactivé.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;highlightbackground&lt;/code&gt;  &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Couleur de fond de la région de surbrillance lorsque le widget a le focus.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;highlightcolor&lt;/code&gt;       &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de premier plan de la région en surbrillance lorsque le widget a le focus.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;selectbackground&lt;/code&gt;     &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  Couleur de fond pour les éléments sélectionnés.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;selectforeground&lt;/code&gt;     &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt;  couleur de premier plan pour les éléments sélectionnés.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;background (ou bg)&lt;/code&gt;   $ \Rightarrow $  couleur de fond du widget.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;foreground (ou fg)&lt;/code&gt;   $ \Rightarrow $  couleur de premier plan du widget.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;activebackground&lt;/code&gt;     $ \Rightarrow $  couleur de fond du widget lorsque celui-ci est actif.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;activeForeground&lt;/code&gt;     $ \Rightarrow $  couleur de premier plan du widget lorsque le widget est actif.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;disabledForeground&lt;/code&gt;   $ \Rightarrow $  couleur de premier plan du widget lorsque le widget est désactivé.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;highlightbackground&lt;/code&gt;  $ \Rightarrow $  Couleur de fond de la région de surbrillance lorsque le widget a le focus.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;highlightcolor&lt;/code&gt;       $ \Rightarrow $  couleur de premier plan de la région en surbrillance lorsque le widget a le focus.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;selectbackground&lt;/code&gt;     $ \Rightarrow $  Couleur de fond pour les éléments sélectionnés.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;selectforeground&lt;/code&gt;     $ \Rightarrow $  couleur de premier plan pour les éléments sélectionnés.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;curseur&quot;&gt;Curseur&lt;/h2&gt;
@@ -1896,494 +1994,6 @@ b5 = Button(fenetre, text =”RIDGE”, relief=’ridge’).pack()&lt;/p&gt;
         <pubDate>Wed, 16 Aug 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/py/py-Tkinter.html</link>
         <guid isPermaLink="true">http://localhost:4000/py/py-Tkinter.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Py</category>
-        
-      </item>
-    
-      <item>
-        <title>Py: Projet Battle-Ships</title>
-        <description>&lt;h2 id=&quot;liens-utiles&quot;&gt;Liens utiles&lt;/h2&gt;
-
-&lt;p&gt;*&lt;a href=&quot;/prog/composition-aggregation.html&quot;&gt;interne: Composition d’objets&lt;/a&gt;
-*&lt;a href=&quot;https://www.thespruce.com/the-basic-rules-of-battleship-411069&quot;&gt;Battleship game: rules&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;rêgles&quot;&gt;Rêgles&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2 Joueurs&lt;/li&gt;
-  &lt;li&gt;2 Grilles par joueur
-    &lt;ul&gt;
-      &lt;li&gt;Une contient ses propres navires&lt;/li&gt;
-      &lt;li&gt;L’autre contient un historique des coups faits par le joueur&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Grille de 10x10&lt;/li&gt;
-  &lt;li&gt;5 navires par joueur
-    &lt;ul&gt;
-      &lt;li&gt;Carrier (5)&lt;/li&gt;
-      &lt;li&gt;Battleship (4)&lt;/li&gt;
-      &lt;li&gt;Cruiser (3)&lt;/li&gt;
-      &lt;li&gt;Submarine (3)&lt;/li&gt;
-      &lt;li&gt;Destroyer (2)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Placements des navires
-    &lt;ul&gt;
-      &lt;li&gt;Horizontal&lt;/li&gt;
-      &lt;li&gt;Vertical&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Les navires peuvent se toucher mais pas se chevaucher&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;advanced-gameplay-salvo-variation&quot;&gt;Advanced gameplay: Salvo variation&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;On the first round of the game, you call out five shots (guesses) and mark each shot with a white peg in your target grid.&lt;/li&gt;
-  &lt;li&gt;After you’ve called out all five shots (a salvo), your opponent announces which ones were hits and which ships they hit.&lt;/li&gt;
-  &lt;li&gt;For hits, change the white pegs on your target grid to red pegs. Your opponent places red pegs in the holes of any ships that you hit.&lt;/li&gt;
-  &lt;li&gt;Continue in this manner until one of your ships is sunk. At that point, you lose one shot from your salvo. If one of your ships sinks, your salvo is reduced to four shots. When two ships sink, the salvo is three shots, and so on.&lt;/li&gt;
-  &lt;li&gt;Continue game play until one player sinks all the opposing ships and wins the game.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;uml&quot;&gt;UML&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;/00illustrations/battleShips/battleShipsULM.png&quot; height=&quot;auto&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#font: operator mono light
-#fontSize: 14
-#spacing: 50
-#padding: 10
-
-
-[&amp;lt;abstract&amp;gt;Ship]+-..*[Part]
-[Cruiser]-:&amp;gt;[Ship]
-[Board]o-5[Ship]
-[Player]&amp;lt;-2[Board]
-[Player]--&amp;gt;[Board]
-[Computer]-:&amp;gt;[Player]
-[Computer]-&amp;gt;[AutoSet]
-
-[&amp;lt;abstract&amp;gt;ShipsSetup]&amp;lt;-[Player]
-[ShipsSetup]&amp;lt;-[Ship]
-[ShipsSetup]-&amp;gt;[Board]
-
-[AutoSet]-:&amp;gt;[ShipsSetup]
-[ManualSet]-:&amp;gt;[ShipsSetup]
-
-[Aim]&amp;lt;--[ManualSet]
-[Aim]&amp;lt;--[Player]
-
-
-[Cruiser|SIZE: int; TAG: str]
-
-[Part
-	|x: int; y: int; state: str
-	|get_repr(): str
-]
-
-[Ship
-	|parts: Part\[Part\]; orien: str; life: dict
-    |build_parts(); push(Board); set_base(Part)
-]
-
-[Board
-	|size: int; grid: dict
-    |grid_generator(): generator; 
-    	display(): str; display_data(): str
-]
-
-[Player
-	|name: str; ship_grid: Board;
-    	target_grid: Board; ships: {Ship*5}
-    |auto_set(); manual_set(); targetting()
-]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Thu, 03 Aug 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/py/py-Battle-Ship.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/py-Battle-Ship.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Py</category>
-        
-      </item>
-    
-      <item>
-        <title>Py: Dictionnaires</title>
-        <description>&lt;h2 id=&quot;méthodes&quot;&gt;Méthodes&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;len(d)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; retourne le nombre d’objets dans le dico &lt;code class=&quot;highlighter-rouge&quot;&gt;d&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;get-set-delete&quot;&gt;Get, Set, Delete&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d[k]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; retourne la valeur de la &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; existe, &lt;em&gt;else&lt;/em&gt; &lt;span style=&quot;color:red&quot;&gt; KeyError&lt;/span&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.get(k)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;em&gt;return&lt;/em&gt; la valeur de la &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; existe, &lt;em&gt;else&lt;/em&gt; return &lt;code class=&quot;highlighter-rouge&quot;&gt;None&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.get(k, v)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;em&gt;return&lt;/em&gt; la valeur de la &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; existe, &lt;em&gt;else&lt;/em&gt; return &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d[k] = v&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; existe, remplace la valeur à la &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;else&lt;/em&gt; crée nouvelle entré&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;del d[k]&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; supprime la clé/valeur de la &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; existe, else &lt;span style=&quot;color:red&quot;&gt; KeyError &lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;check-existence&quot;&gt;Check existence&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;k in d&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt; &lt;em&gt;if&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt; a une clé &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;else&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;False&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;k not in d&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt; &lt;em&gt;if&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt; n’a pas une clé &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;else&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;False&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;get-all-keys-values-keysvalues&quot;&gt;Get all keys, values, keys/values&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.keys()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; repr de toutes les clés&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.values()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; repr de toutes les valeurs&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.items()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; repr (tuples) de toutes les clé/valeurs&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;pop&quot;&gt;Pop&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.pop(k)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; supprime et &lt;em&gt;return&lt;/em&gt; la valeur &lt;em&gt;if&lt;/em&gt; &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; exist, &lt;em&gt;else&lt;/em&gt; &lt;span style=&quot;color:red&quot;&gt;KeyError&lt;/span&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.pop(k,v)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; supprime et &lt;em&gt;return&lt;/em&gt; la valeur &lt;em&gt;if&lt;/em&gt; &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; &lt;em&gt;else&lt;/em&gt; &lt;em&gt;return&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.popitem()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; supprime et &lt;em&gt;return&lt;/em&gt; une random clé/valeur &lt;em&gt;if&lt;/em&gt; &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt; vide &lt;span style=&quot;color:red&quot;&gt; KeyError &lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;set-value&quot;&gt;Set value&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.setdefault(k)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; existe &lt;em&gt;return&lt;/em&gt; value &lt;em&gt;else&lt;/em&gt; ajoute la clé &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; avec valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;None&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.setdefault(k, v)&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;em&gt;if&lt;/em&gt; &lt;strong&gt;clé&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; existe &lt;em&gt;return&lt;/em&gt; value &lt;em&gt;else&lt;/em&gt; ajoute clé &lt;script type=&quot;math/tex&quot;&gt;k&lt;/script&gt; avec valeur &lt;script type=&quot;math/tex&quot;&gt;v&lt;/script&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;clear-copy&quot;&gt;Clear, copy&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.clear()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; supprime tout&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;d.copy()&lt;/code&gt; &lt;script type=&quot;math/tex&quot;&gt;\Rightarrow&lt;/script&gt; &lt;em&gt;return&lt;/em&gt; shallow copy de &lt;script type=&quot;math/tex&quot;&gt;d&lt;/script&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;Les structures de données comme les listes sont indexées à l’aide d’un nombre, dans certains cas il peut être interessant d’accéder à une valeur par un indexe qui est une string par exemple. Les routes portent souvent des noms comme “n23” ou “e17”. Une structure de données qui donne des informations sur ces dernières devrait pouvoir nous retourner ces informations si on recherche le nom (clé) de ces routes.&lt;/p&gt;
-
-&lt;p&gt;Les Dictionnaires de Python sont une structure de donnée de type &lt;strong&gt;non-linéaire&lt;/strong&gt; à acces &lt;strong&gt;direct&lt;/strong&gt; qui est dite &lt;em&gt;associative&lt;/em&gt;. Elle stock des paires clé-valeur. Ce type de structure de données porte plusieurs noms: Keyed list, associative array, hash table. En Python cette structure de données s’appelle &lt;code class=&quot;highlighter-rouge&quot;&gt;dict&lt;/code&gt;. Cette structure de données est &lt;strong&gt;dynamique&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;La clé associée à une valeur est obligatoirement être &lt;strong&gt;immutable&lt;/strong&gt; (int, float, string, tuples).&lt;/li&gt;
-  &lt;li&gt;La valeur peut être de n’importe quel type.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'cochon'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;poule&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cochon
-[1, 2, 3]
-{1: 10, 2: 20, 3: 30}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Exemple simple de fonctionnement d’un dictionnaire:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Belgique'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Bruxelles'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'France'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Paris'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Russie'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Moscou'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Roumanie'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Bucarest'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;pays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Russie'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Suisse'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Belgique'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Hollande'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pays&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;# check si le pays est dans le dico&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;La capitale de la {} est {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capitales&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;La capitale de la&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;est inconnue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;output:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;La&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capitale&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Russie&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;est&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Moscou&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;La&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capitale&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Suisse&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;est&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inconnue&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;La&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capitale&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Belgique&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;est&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bruxelles&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;La&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capitale&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;de&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;la&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Hollande&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;est&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inconnue&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Chaque élément du dictionnaire est composé de deux objets, une &lt;strong&gt;clé&lt;/strong&gt; et une &lt;strong&gt;valeur&lt;/strong&gt; (key/value). Dans cet exemple la clé est le pays et la valeur la capitale.
-&lt;span style=&quot;color:red&quot;&gt;Les clés identifient les éléments d’un dictionnaire.&lt;/span&gt; On peut voir la clé comme l’indexe de la valeur associée à cette clé. Un même dictionnaire ne peut pas comporter deux clés identiques. De la même façon qu’un dictionnaire papier ou d’un annuaire téléphonique, qui identifie une valeur par un identifiant unique.&lt;/p&gt;
-
-&lt;h2 id=&quot;quand-utiliser-un-dictionnaire&quot;&gt;Quand utiliser un dictionnaire&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Pour compter des choses. Dans ce cas, il nous faut un dictionnaire où les clés sont des objets et les valeurs des quantités.&lt;/li&gt;
-  &lt;li&gt;Stocker une donnée &lt;strong&gt;associée&lt;/strong&gt; à un objet. Les clés sont des objets et la valeur est la donnée associée à ces objets.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Exemple d’utilisation d’une clé qui est un objet autre que les types primitifs:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
-        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;({},{})&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-
-&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-
-&lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rouge'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'vert'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'noir'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Position: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Couleur: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Status: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Position: (5,6)
-Couleur: noir
-Status: 0
-
-Position: (1,2)
-Couleur: rouge
-Status: 1
-
-Position: (3,4)
-Couleur: vert
-Status: 1
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;différente-façons-de-créer-un-dictionnaire&quot;&gt;Différente façons de créer un dictionnaire&lt;/h2&gt;
-
-&lt;p&gt;Utile uniquement dans le cas de petits dictionnaires:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Capitals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Russia'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Moscow'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Ukraine'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Kiev'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'USA'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Washington'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Pareil mais dans ce cas nous passons les clés sont passées comme des paramètres nominatifs de &lt;code class=&quot;highlighter-rouge&quot;&gt;dict&lt;/code&gt;. Dans ce cas, &lt;strong&gt;les clés ne peuvent être que des strings&lt;/strong&gt;!&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Capitals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Russia&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Moscow'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Ukraine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Kiev'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;USA&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Washington'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Ici nous passons une liste de tuples de deux éléments &lt;code class=&quot;highlighter-rouge&quot;&gt;(clé, valeur)&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Capitals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Russia&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Moscow&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Ukraine&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Kiev&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;USA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Washington&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Finalement, via la fonctoin zip qui prend en paramètres deux listes de taille identique: Une liste de clés et une liste de valeurs.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Capitals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Russia&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Ukraine&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;USA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Moscow&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Kiev&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Washington&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;supression-dun-élément&quot;&gt;Supression d’un élément&lt;/h2&gt;
-
-&lt;p&gt;Pour supprimer un élément, nous pouvons utiliser &lt;code class=&quot;highlighter-rouge&quot;&gt;del dico[clé]&lt;/code&gt;. &lt;span style=&quot;color:red&quot;&gt; Cette façon de faire lève une exception &lt;code class=&quot;highlighter-rouge&quot;&gt;KeyError&lt;/code&gt; si la clé n’existe pas.&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Une autre façon de faire est avec la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;pop&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;dico.pop(clé)&lt;/code&gt;. Cela retourne la valeur de l’élément retiré et &lt;span style=&quot;color:red&quot;&gt;si l’élément n’existe pas, une exception est également levée &lt;/span&gt;. Si nous fournissons un second paramètres, si l’élément à supprimer n’existe pas, à la place de lever une exception, la méthode retourne le second paramètre:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'z'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;itérer-sur-tous-les-éléments&quot;&gt;Itérer sur tous les éléments&lt;/h2&gt;
-
-&lt;p&gt;On peut simplement itérer sur tous les éléments de cette façon:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'abcdef'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;représentation-interne&quot;&gt;Représentation interne:&lt;/h2&gt;
-
-&lt;p&gt;Les méthodes &lt;code class=&quot;highlighter-rouge&quot;&gt;keys()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;values()&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;items()&lt;/code&gt; retourne la représentation (&lt;strong&gt;repr&lt;/strong&gt;) du dictionnaire. Ce sont des objets similaires au sets mais mutables (si on change une valeur associée à une clé, la valeur change).&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;keys()&lt;/code&gt; retourne la représentation de toutes les clés&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;value()&lt;/code&gt; retourn la représentation de toutes les valeurs&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;items()&lt;/code&gt; retourn la représentation de toutes les paires clé-valeur (des tuples).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'abcdef'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;output&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dict_keys(['e', 'b', 'd', 'c', 'f', 'a'])
-dict_values([4, 1, 3, 2, 5, 0])
-dict_items([('e', 4), ('b', 1), ('d', 3), ('c', 2), ('f', 5), ('a', 0)])
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;exemples-dutilisation&quot;&gt;Exemples d’utilisation&lt;/h2&gt;
-
-&lt;h3 id=&quot;création&quot;&gt;Création&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico = {'clé1': val1, 'clé2': val2, 'clé3': val3}&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'c'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'c'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;ajout&quot;&gt;Ajout&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico[nouvelle_clé] = nouvelle_valeur&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'d'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'e'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'d'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'c'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'e'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;valeur-dune-clé-spécifique&quot;&gt;Valeur d’une clé spécifique&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico[clé]&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico.get(clé)&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico.get(clé, value)&lt;/code&gt;
-Retourne &lt;code class=&quot;highlighter-rouge&quot;&gt;value&lt;/code&gt; si la clé n’existe pas. Utile pour retourner un code erreur par exemple.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'z'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;supprimer-une-entrée&quot;&gt;Supprimer une entrée&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;del dico[clé]&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'e'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'d'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'c'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;supprimer-safe&quot;&gt;Supprimer (safe)&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico.pop(clé)&lt;/code&gt;. Retourne la valeur de l’élément retiré ou lève une exception si l’élément n’existe pas.&lt;/p&gt;
-
-&lt;p&gt;Si nous fournissons un second paramètres, si l’élément à supprimer n’existe pas, à la place de lever une exception, la méthode retourne le second paramètre:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'z'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;retourner-toutes-les-clés&quot;&gt;Retourner toutes les clés&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico.keys()&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dict_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'d'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'c'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'e'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'b'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;dict_keys&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;retourner-toutes-les-valeurs&quot;&gt;Retourner toutes les valeurs&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dico.values()&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dict_values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;dict_values&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&amp;gt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;vérifier-si-une-clé-existe&quot;&gt;Vérifier si une clé existe:&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;clé in dico&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'z'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'a'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dico&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Tue, 01 Aug 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/py/py-dictionnaires.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/py-dictionnaires.html</guid>
         
         <category>divers,</category>
         

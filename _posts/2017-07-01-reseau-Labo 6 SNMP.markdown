@@ -7,6 +7,7 @@ author: Sol
 category: Reseau
 tags: reseau 
 finished: false
+mathjax: true
 ---
 
 ## todo
@@ -164,7 +165,7 @@ Voir mon [article](/reseau/reseau-SNMP.html/) sur le protocole snmp pour plus d'
 ### e. 
 Dans quels champs de la MIB HOST-RESOURCES est-ce que la commande `snmpdf` ci-dessus va chercher?
 
-`1.3.6.1.2.1.25.2.3.x` $$ \Rightarrow \; \large x \in  [1,38] $$
+`1.3.6.1.2.1.25.2.3.x` $ \Rightarrow \; \large x \in  [1,38] $
 
 ```
 sol@debian:~$ snmpwalk -v 1 -c public 157.26.77.13 1.3.6.1.2.1.25.2.3
@@ -407,8 +408,8 @@ Effectuer les opérations suivantes dans deux shells:
 * [tuto]( http://luca.ntop.org/Teaching/Appunti/asn1.html)
 * [x.690](https://en.wikipedia.org/wiki/X.690#Encoding_structure)
 
-* [type] + [len data] $$ \Rightarrow $$  1Byte
-* [data] $$ \Rightarrow $$ lenght of `len data`
+* [type] + [len data] $ \Rightarrow $  1Byte
+* [data] $ \Rightarrow $ lenght of `len data`
 <br>
 <br>
 
@@ -442,8 +443,8 @@ Effectuer les opérations suivantes dans deux shells:
 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00
 ```
 
-* **type**: 30 $$ \Rightarrow $$ type construit (Sequence aussi ? d'arès ce que je crois comprendre dans votre mail)
-* **len**: $$ 0x2d = 45_{10} (+2) $$ 
+* **type**: 30 $ \Rightarrow $ type construit (Sequence aussi ? d'arès ce que je crois comprendre dans votre mail)
+* **len**: $ 0x2d = 45_{10} (+2) $ 
 * **data**: tout le reste
 <br>
 
@@ -451,20 +452,20 @@ Effectuer les opérations suivantes dans deux shells:
 
 `02 01`
 
-* **type**: 02 $$ \Rightarrow $$ `int`
-* **len**: $$ 0x01 (+2) =  1_{10} (+2) $$
-* **data**: `00` $$ \Rightarrow 0_{10} $$
+* **type**: 02 $ \Rightarrow $ `int`
+* **len**: $ 0x01 (+2) =  1_{10} (+2) $
+* **data**: `00` $ \Rightarrow 0_{10} $
 <br>
 
 ------
 
 `04 06 70 75 62 6C 69 63`
 
-* **type**: 5 $$ \Rightarrow $$ `octet string`
-* **len**: $$ 0x06 (+2) = 6_{10} (+2) $$
-* **data**: `` $$ \Rightarrow $$ `70 75 62 6C 69 63`
+* **type**: 5 $ \Rightarrow $ `octet string`
+* **len**: $ 0x06 (+2) = 6_{10} (+2) $
+* **data**: `` $ \Rightarrow $ `70 75 62 6C 69 63`
 
-Conversion string $$ \Rightarrow $$  char:
+Conversion string $ \Rightarrow $  char:
 
 ```py
 s = "70 75 62 6C 69 63"
@@ -472,7 +473,7 @@ l = [int(x,16) for x in s.split()]
 
 for i in l:
     r = r'{10}'
-    print("$$ 0x{} = {}_{} = {} $$"\
+    print("$ 0x{} = {}_{} = {} $"\
         .format(i, int(i), r, chr(int(i))))
 
 [print(chr(x), end='') for x in l]
@@ -480,16 +481,16 @@ for i in l:
 
 <br>
 
-| 0x112 | $$112_{10}$$ | $$p$$ |
-| 0x117 | $$117_{10}$$ | $$u$$ |
-| 0x98 | $$98_{10}$$ | $$b$$ |
-| 0x108 | $$108_{10}$$ | $$l$$ |
-| 0x105 | $$105_{10}$$ | $$i$$ |
-| 0x99 | $$99_{10}$$ | $$c$$ |
+| 0x112 | $112_{10}$ | $p$ |
+| 0x117 | $117_{10}$ | $u$ |
+| 0x98 | $98_{10}$ | $b$ |
+| 0x108 | $108_{10}$ | $l$ |
+| 0x105 | $105_{10}$ | $i$ |
+| 0x99 | $99_{10}$ | $c$ |
 
 <br>
 
-$$ \Large \Rightarrow  public $$
+$ \Large \Rightarrow  public $
 
 
 
@@ -501,8 +502,8 @@ a1 20 02
 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01 05 00
 ```
 
-* **type**: $$ 0xA1 \Rightarrow $$ Sequence
-* **len**: $$ 0x20 = 32_{10} (+2) $$
+* **type**: $ 0xA1 \Rightarrow $ Sequence
+* **len**: $ 0x20 = 32_{10} (+2) $
 * **data**: tout le reste
 <br>
 
@@ -511,35 +512,35 @@ a1 20 02
 
 `02 04 22 2d 9d d6`
 
-* **type**:  $$0x02 \Rightarrow $$ `int`
-* **len**:  $$ 0x04 (+2) = 4 (+2)
-* **data**: $$ 0x222d9dd6  \Rightarrow  573414870_{10} $$
+* **type**:  $0x02 \Rightarrow $ `int`
+* **len**:  $ 0x04 (+2) = 4 (+2)
+* **data**: $ 0x222d9dd6  \Rightarrow  573414870_{10} $
 <br>
 
 ------
 
 `02 01 00`
 
-* **type**: $$ 0x02  \Rightarrow $$ `int`
-* **len**: $$0x01 (+2) = 1 (+2) $$
-* **data**: $$ 0x00 \Rightarrow 0_{10} $$
+* **type**: $ 0x02  \Rightarrow $ `int`
+* **len**: $0x01 (+2) = 1 (+2) $
+* **data**: $ 0x00 \Rightarrow 0_{10} $
 <br>
 
 ------
 
 `02 01 00`
 
-* **type**: $$ 0x02 \Rightarrow $$ `int`
-* **len**: $$0x01 (+2) = 1 (+2) $$
-* **data**: $$ 0x00 \Rightarrow 0_{10} $$
+* **type**: $ 0x02 \Rightarrow $ `int`
+* **len**: $0x01 (+2) = 1 (+2) $
+* **data**: $ 0x00 \Rightarrow 0_{10} $
 <br>
 
 ------
 
 `30 12`
 
-* **type**:  $$ 0x30 \Rightarrow $$ type construit
-* **len**:  $$ 0x12 (+2) = 18 (+2)
+* **type**:  $ 0x30 \Rightarrow $ type construit
+* **len**:  $ 0x12 (+2) = 18 (+2)
 * **data**: tout le reste
 <br>
 
@@ -547,8 +548,8 @@ a1 20 02
 
 `30 10`
 
-* **type**:  $$ 0x30 \Rightarrow $$ type construit
-* **len**:  $$ 0x10 (+2) = 16 (+2)
+* **type**:  $ 0x30 \Rightarrow $ type construit
+* **len**:  $ 0x10 (+2) = 16 (+2)
 * **data**: tout le reste
 <br>
 
@@ -556,8 +557,8 @@ a1 20 02
 
 `06 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01`
 
-* **type**:  $$ 0x06 \Rightarrow $$ objet
-* **len**:  $$ 0x0c (+2) = 12 (+2)
+* **type**:  $ 0x06 \Rightarrow $ objet
+* **len**:  $ 0x0c (+2) = 12 (+2)
 * **data**: `2b 06 01 02 01 2b 0e 01 01 06 01 01` 
 
 Après avoir regardé quelques trames des captures je reconnais `.6.1.2.1` (...DoD.Internet.management.MIB-2.) mais il manque le début `.1.3.` qui est remplacé par `2b`. Après vérification sur **Tkmib** `.43` n'existe pas mais cela ne veur rien dire, nous somme peut être dans une MIB qui possède ce `.43`. Sans certitude j'ai envie de dire que ce champ veut dire: `1.3.6.1.2.1.43.14.1.1.6.1.1`
@@ -567,8 +568,8 @@ Après avoir regardé quelques trames des captures je reconnais `.6.1.2.1` (...D
 
 `05 00`
 
-* **type**:  $$ 0x05 \Rightarrow $$ NULL
-* **len**:  $$ 0x00 (+2) = 0_{10} (+2) $$
+* **type**:  $ 0x05 \Rightarrow $ NULL
+* **len**:  $ 0x00 (+2) = 0_{10} (+2) $
 * **data**: NULL
 <br>
 
@@ -636,8 +637,8 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 Qu'est-ce qu'une communauté ? Comment protéger (un peu) votre agent SNMP?
 
 * Les **communautés**  (v1,2) permettent de filtrer l'accès aux informations d'une **MIB**
-    * `public` $$ \Rightarrow $$  lecture seule (default)
-    * `private` $$ \Rightarrow $$ donne accès à toute la configuration système en lecture/écriture
+    * `public` $ \Rightarrow $  lecture seule (default)
+    * `private` $ \Rightarrow $ donne accès à toute la configuration système en lecture/écriture
 
 > Généralement, lors d’un déploiement de SNMPv1 et SNMPv2, aucune technique de sécurisation de ces protocoles n’est réalisée car aucun mécanisme ne le permet réellement. Alors, la sécurisation en périphérie du protocole doit être réalisée (filtrage à différents niveaux, mécanisme anti-spoofing, …).
 
@@ -695,9 +696,9 @@ Une fois le serveur lancé il suffit d'ouvir `http://localhost:8000/graph` dans 
 
 ## dataGraph.py 
 
- * `getData()` $$ \Rightarrow $$ pull la donnée pointée par l'**OID** `1.3.6.1.2.1.25.1.6` de l'agent **SNMP** sur la machine `157.26.77.13`.
+ * `getData()` $ \Rightarrow $ pull la donnée pointée par l'**OID** `1.3.6.1.2.1.25.1.6` de l'agent **SNMP** sur la machine `157.26.77.13`.
 
-* `graphPlot()` $$ \Rightarrow $$ traite le fichier `data.txt` et retourne un plot dans un fichier `svg`
+* `graphPlot()` $ \Rightarrow $ traite le fichier `data.txt` et retourne un plot dans un fichier `svg`
 
 ```py
 from pysnmp.smi.view import MibViewController

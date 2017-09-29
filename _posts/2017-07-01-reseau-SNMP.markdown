@@ -7,6 +7,7 @@ author: Sol
 category: Reseau
 tags: reseau 
 finished: false
+mathjax: true
 ---
 
 ## Sources
@@ -30,7 +31,7 @@ finished: false
 SNMP se base sur l'idée qu'un système de supervision de réseau se compose de
 
 * Noeuds à administrer (**Managed Nodes**), contenant chacun un **agent**.
-    * **agent** $$ \Rightarrow $$ service qui dialogue avec les managers pour échanger des informations sur l'état du noeud.
+    * **agent** $ \Rightarrow $ service qui dialogue avec les managers pour échanger des informations sur l'état du noeud.
 * D'au moins une station d'administration, le manager (**Network Management Station**)
 * D'un protocole permettant d'échanger de l'information entre les agents et le **NMS** ce protocole est `SNMP`
 
@@ -71,12 +72,12 @@ Globlement ce protocole est très pratique, et est très répandu. Il  peu de co
 
 * La première version du protocole date de 1989: Elle n'offre **pas de sécurité** et utilise l'**MIB v1**  qui reste assez simple
 * La seconde version a été publiée en 1993
-    * $$ \Rightarrow $$ plus de sécurité tant au niveau de l'authentification que du chiffrement
-    * $$ \Rightarrow $$ permet l'administration distribuée
-    * $$ \Rightarrow $$ apporte une version plus riche de la **MIB** (MIB-2)
+    * $ \Rightarrow $ plus de sécurité tant au niveau de l'authentification que du chiffrement
+    * $ \Rightarrow $ permet l'administration distribuée
+    * $ \Rightarrow $ apporte une version plus riche de la **MIB** (MIB-2)
 * La version 3 a été publiée en 1998
-    * $$ \Rightarrow $$ apporte des transactions chiffrées via `SSH`
-    * $$ \Rightarrow $$ plus modulaire
+    * $ \Rightarrow $ apporte des transactions chiffrées via `SSH`
+    * $ \Rightarrow $ plus modulaire
 
 ### Dans les faits
 
@@ -135,7 +136,7 @@ C'est a dire que toute information que vous pourriez demander concernant la **MI
 * débits réseaux
 * load average
 * utilisation mémoire
-* contact du système $$ \Rightarrow $$ uptime
+* contact du système $ \Rightarrow $ uptime
 * utilisation de l'espace disque
 * tables de routage
 
@@ -263,13 +264,13 @@ Pour bien comprendre ce que permet ce protocole, nous allons exécuter les comma
 
 Requêtes proposées par le protocole pour permettre aux manager et agents de s'échanger de l'information:
 
-* `GET`$$ \Rightarrow $$ demande la valeur d'un **OID** par le manager à l'agent. L'agent retourne l'information via un message de type `RESPONSE`
-* `GETNEXT` $$ \Rightarrow $$ demande l'information suivante dans la **MIB**. Permet de parcourir une **MIB** sans connaître ce qu'elle contient
-* `SET` $$ \Rightarrow $$ modifie la valeur associée aa un **OID**
-* `GETBULK` $$ \Rightarrow $$ demande tout un ensemble d'infos au manager contenant l'information demandée
-* `RESPONSE` $$ \Rightarrow $$ message envoyé par l'agent au manager contenant l'information demandée
-* `TRAP`: $$ \Rightarrow $$  message envoyé par l'agent au manager pour signaler un problème 
-* `INFORM` $$ \Rightarrow $$ msg envoyé par le manager. Confirme réception du `TRAP`.
+* `GET`$ \Rightarrow $ demande la valeur d'un **OID** par le manager à l'agent. L'agent retourne l'information via un message de type `RESPONSE`
+* `GETNEXT` $ \Rightarrow $ demande l'information suivante dans la **MIB**. Permet de parcourir une **MIB** sans connaître ce qu'elle contient
+* `SET` $ \Rightarrow $ modifie la valeur associée aa un **OID**
+* `GETBULK` $ \Rightarrow $ demande tout un ensemble d'infos au manager contenant l'information demandée
+* `RESPONSE` $ \Rightarrow $ message envoyé par l'agent au manager contenant l'information demandée
+* `TRAP`: $ \Rightarrow $  message envoyé par l'agent au manager pour signaler un problème 
+* `INFORM` $ \Rightarrow $ msg envoyé par le manager. Confirme réception du `TRAP`.
 
 ### Prérequis
 
@@ -292,9 +293,9 @@ Pour trouver un agent, nous pouvons:
 
 Accepte plusieurs paramètres dont:
 
-* `-v` $$ \Rightarrow $$ version du protocole
-* `-c` $$ \Rightarrow $$ communauté
-* `-O` $$ \Rightarrow $$ format de sortie (a,f,n,s,...)
+* `-v` $ \Rightarrow $ version du protocole
+* `-c` $ \Rightarrow $ communauté
+* `-O` $ \Rightarrow $ format de sortie (a,f,n,s,...)
 
 **exemple**
 
@@ -309,7 +310,7 @@ SNMPv2-MIB::sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:
 
 La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version `2c` (`v2c`) et la communauté `public`. Nous demandons l'information `sysDescr`. Pour ce faire nous ajoutons le chemin `.0` qui désigne la valeur du noeud `sysDescr`.
 
-Les autres valeurs sous un noeuds (`.1.2`, etc...) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d'un `OID` numérique `1.3.6.1.2.1.1.1.0` (**ou textuel ou encore via le nom court**. $$ \Rightarrow $$ normalement unique).
+Les autres valeurs sous un noeuds (`.1.2`, etc...) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d'un `OID` numérique `1.3.6.1.2.1.1.1.0` (**ou textuel ou encore via le nom court**. $ \Rightarrow $ normalement unique).
 
 Même commande avec l'**OID**:
 
@@ -389,12 +390,12 @@ La commande `snmpset` permet de modifier la valeur d'un `OID`. Elle n'est dispon
 
 L'exemple suivant est fourni par le protocole v3. Les paramètres utilisés sont:
 
-* `-u` $$ \Rightarrow $$  utilisateur
-* `-l` $$ \Rightarrow $$  niveau de sécurité pour s'identifier
-* `-a` $$ \Rightarrow $$  protocole d'authentification (chiffrement mdp)
-* `-A` $$ \Rightarrow $$  mot de passe d'authentification
-* `-x` $$ \Rightarrow $$  algorithme de chiffrement pour la connexion
-* `-X` $$ \Rightarrow $$  mot de passe/salt pour le chiffrement de la connexion
+* `-u` $ \Rightarrow $  utilisateur
+* `-l` $ \Rightarrow $  niveau de sécurité pour s'identifier
+* `-a` $ \Rightarrow $  protocole d'authentification (chiffrement mdp)
+* `-A` $ \Rightarrow $  mot de passe d'authentification
+* `-x` $ \Rightarrow $  algorithme de chiffrement pour la connexion
+* `-X` $ \Rightarrow $  mot de passe/salt pour le chiffrement de la connexion
 
 C'est là qu'on découvre le côté **pénible du protocole v3** qui implémente lui-même les connexions `SSH` sans faire de `SNMP` over `SSH`: Il n'y a pas d'auto-négociation des algorithmes de chiffremen, il faut tout préciser par sois-même. <span style="color:red"> Vrmt chiant...</span>
 

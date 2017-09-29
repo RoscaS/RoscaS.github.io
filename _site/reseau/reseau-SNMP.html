@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/reseau/reseau-SNMP.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Reseau: SNMP</div>
@@ -75,6 +99,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -126,7 +151,7 @@
 <ul>
   <li>Noeuds à administrer (<strong>Managed Nodes</strong>), contenant chacun un <strong>agent</strong>.
     <ul>
-      <li><strong>agent</strong> <script type="math/tex">\Rightarrow</script> service qui dialogue avec les managers pour échanger des informations sur l’état du noeud.</li>
+      <li><strong>agent</strong> $ \Rightarrow $ service qui dialogue avec les managers pour échanger des informations sur l’état du noeud.</li>
     </ul>
   </li>
   <li>D’au moins une station d’administration, le manager (<strong>Network Management Station</strong>)</li>
@@ -186,15 +211,15 @@
   <li>La première version du protocole date de 1989: Elle n’offre <strong>pas de sécurité</strong> et utilise l’<strong>MIB v1</strong>  qui reste assez simple</li>
   <li>La seconde version a été publiée en 1993
     <ul>
-      <li><script type="math/tex">\Rightarrow</script> plus de sécurité tant au niveau de l’authentification que du chiffrement</li>
-      <li><script type="math/tex">\Rightarrow</script> permet l’administration distribuée</li>
-      <li><script type="math/tex">\Rightarrow</script> apporte une version plus riche de la <strong>MIB</strong> (MIB-2)</li>
+      <li>$ \Rightarrow $ plus de sécurité tant au niveau de l’authentification que du chiffrement</li>
+      <li>$ \Rightarrow $ permet l’administration distribuée</li>
+      <li>$ \Rightarrow $ apporte une version plus riche de la <strong>MIB</strong> (MIB-2)</li>
     </ul>
   </li>
   <li>La version 3 a été publiée en 1998
     <ul>
-      <li><script type="math/tex">\Rightarrow</script> apporte des transactions chiffrées via <code class="highlighter-rouge">SSH</code></li>
-      <li><script type="math/tex">\Rightarrow</script> plus modulaire</li>
+      <li>$ \Rightarrow $ apporte des transactions chiffrées via <code class="highlighter-rouge">SSH</code></li>
+      <li>$ \Rightarrow $ plus modulaire</li>
     </ul>
   </li>
 </ul>
@@ -274,7 +299,7 @@
   <li>débits réseaux</li>
   <li>load average</li>
   <li>utilisation mémoire</li>
-  <li>contact du système <script type="math/tex">\Rightarrow</script> uptime</li>
+  <li>contact du système $ \Rightarrow $ uptime</li>
   <li>utilisation de l’espace disque</li>
   <li>tables de routage</li>
 </ul>
@@ -420,13 +445,13 @@ Les réponses seront:</p>
 <p>Requêtes proposées par le protocole pour permettre aux manager et agents de s’échanger de l’information:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">GET</code><script type="math/tex">\Rightarrow</script> demande la valeur d’un <strong>OID</strong> par le manager à l’agent. L’agent retourne l’information via un message de type <code class="highlighter-rouge">RESPONSE</code></li>
-  <li><code class="highlighter-rouge">GETNEXT</code> <script type="math/tex">\Rightarrow</script> demande l’information suivante dans la <strong>MIB</strong>. Permet de parcourir une <strong>MIB</strong> sans connaître ce qu’elle contient</li>
-  <li><code class="highlighter-rouge">SET</code> <script type="math/tex">\Rightarrow</script> modifie la valeur associée aa un <strong>OID</strong></li>
-  <li><code class="highlighter-rouge">GETBULK</code> <script type="math/tex">\Rightarrow</script> demande tout un ensemble d’infos au manager contenant l’information demandée</li>
-  <li><code class="highlighter-rouge">RESPONSE</code> <script type="math/tex">\Rightarrow</script> message envoyé par l’agent au manager contenant l’information demandée</li>
-  <li><code class="highlighter-rouge">TRAP</code>: <script type="math/tex">\Rightarrow</script>  message envoyé par l’agent au manager pour signaler un problème</li>
-  <li><code class="highlighter-rouge">INFORM</code> <script type="math/tex">\Rightarrow</script> msg envoyé par le manager. Confirme réception du <code class="highlighter-rouge">TRAP</code>.</li>
+  <li><code class="highlighter-rouge">GET</code>$ \Rightarrow $ demande la valeur d’un <strong>OID</strong> par le manager à l’agent. L’agent retourne l’information via un message de type <code class="highlighter-rouge">RESPONSE</code></li>
+  <li><code class="highlighter-rouge">GETNEXT</code> $ \Rightarrow $ demande l’information suivante dans la <strong>MIB</strong>. Permet de parcourir une <strong>MIB</strong> sans connaître ce qu’elle contient</li>
+  <li><code class="highlighter-rouge">SET</code> $ \Rightarrow $ modifie la valeur associée aa un <strong>OID</strong></li>
+  <li><code class="highlighter-rouge">GETBULK</code> $ \Rightarrow $ demande tout un ensemble d’infos au manager contenant l’information demandée</li>
+  <li><code class="highlighter-rouge">RESPONSE</code> $ \Rightarrow $ message envoyé par l’agent au manager contenant l’information demandée</li>
+  <li><code class="highlighter-rouge">TRAP</code>: $ \Rightarrow $  message envoyé par l’agent au manager pour signaler un problème</li>
+  <li><code class="highlighter-rouge">INFORM</code> $ \Rightarrow $ msg envoyé par le manager. Confirme réception du <code class="highlighter-rouge">TRAP</code>.</li>
 </ul>
 
 <h3 id="prérequis">Prérequis</h3>
@@ -454,9 +479,9 @@ sudo apt-get install smitools libsmi
 <p>Accepte plusieurs paramètres dont:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">-v</code> <script type="math/tex">\Rightarrow</script> version du protocole</li>
-  <li><code class="highlighter-rouge">-c</code> <script type="math/tex">\Rightarrow</script> communauté</li>
-  <li><code class="highlighter-rouge">-O</code> <script type="math/tex">\Rightarrow</script> format de sortie (a,f,n,s,…)</li>
+  <li><code class="highlighter-rouge">-v</code> $ \Rightarrow $ version du protocole</li>
+  <li><code class="highlighter-rouge">-c</code> $ \Rightarrow $ communauté</li>
+  <li><code class="highlighter-rouge">-O</code> $ \Rightarrow $ format de sortie (a,f,n,s,…)</li>
 </ul>
 
 <p><strong>exemple</strong></p>
@@ -471,7 +496,7 @@ SNMPv2-MIB::sysDescr.0 = STRING: Linux zeus 4.8.6.5-smp #2 SMP Sun Nov 13 14:58:
 
 <p>La version du protocole à utiliser est obligatoire, dans la commande précédente, nous utilisons le protocole version <code class="highlighter-rouge">2c</code> (<code class="highlighter-rouge">v2c</code>) et la communauté <code class="highlighter-rouge">public</code>. Nous demandons l’information <code class="highlighter-rouge">sysDescr</code>. Pour ce faire nous ajoutons le chemin <code class="highlighter-rouge">.0</code> qui désigne la valeur du noeud <code class="highlighter-rouge">sysDescr</code>.</p>
 
-<p>Les autres valeurs sous un noeuds (<code class="highlighter-rouge">.1.2</code>, etc…) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d’un <code class="highlighter-rouge">OID</code> numérique <code class="highlighter-rouge">1.3.6.1.2.1.1.1.0</code> (<strong>ou textuel ou encore via le nom court</strong>. <script type="math/tex">\Rightarrow</script> normalement unique).</p>
+<p>Les autres valeurs sous un noeuds (<code class="highlighter-rouge">.1.2</code>, etc…) désignent les sous éléments de ce dernier. Les informations peuvent donc être demandées via le chemin complet comme sous la forme d’un <code class="highlighter-rouge">OID</code> numérique <code class="highlighter-rouge">1.3.6.1.2.1.1.1.0</code> (<strong>ou textuel ou encore via le nom court</strong>. $ \Rightarrow $ normalement unique).</p>
 
 <p>Même commande avec l’<strong>OID</strong>:</p>
 
@@ -552,12 +577,12 @@ SNMPv2-MIB::sysDescr.0
 <p>L’exemple suivant est fourni par le protocole v3. Les paramètres utilisés sont:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">-u</code> <script type="math/tex">\Rightarrow</script>  utilisateur</li>
-  <li><code class="highlighter-rouge">-l</code> <script type="math/tex">\Rightarrow</script>  niveau de sécurité pour s’identifier</li>
-  <li><code class="highlighter-rouge">-a</code> <script type="math/tex">\Rightarrow</script>  protocole d’authentification (chiffrement mdp)</li>
-  <li><code class="highlighter-rouge">-A</code> <script type="math/tex">\Rightarrow</script>  mot de passe d’authentification</li>
-  <li><code class="highlighter-rouge">-x</code> <script type="math/tex">\Rightarrow</script>  algorithme de chiffrement pour la connexion</li>
-  <li><code class="highlighter-rouge">-X</code> <script type="math/tex">\Rightarrow</script>  mot de passe/salt pour le chiffrement de la connexion</li>
+  <li><code class="highlighter-rouge">-u</code> $ \Rightarrow $  utilisateur</li>
+  <li><code class="highlighter-rouge">-l</code> $ \Rightarrow $  niveau de sécurité pour s’identifier</li>
+  <li><code class="highlighter-rouge">-a</code> $ \Rightarrow $  protocole d’authentification (chiffrement mdp)</li>
+  <li><code class="highlighter-rouge">-A</code> $ \Rightarrow $  mot de passe d’authentification</li>
+  <li><code class="highlighter-rouge">-x</code> $ \Rightarrow $  algorithme de chiffrement pour la connexion</li>
+  <li><code class="highlighter-rouge">-X</code> $ \Rightarrow $  mot de passe/salt pour le chiffrement de la connexion</li>
 </ul>
 
 <p>C’est là qu’on découvre le côté <strong>pénible du protocole v3</strong> qui implémente lui-même les connexions <code class="highlighter-rouge">SSH</code> sans faire de <code class="highlighter-rouge">SNMP</code> over <code class="highlighter-rouge">SSH</code>: Il n’y a pas d’auto-négociation des algorithmes de chiffremen, il faut tout préciser par sois-même. <span style="color:red"> Vrmt chiant…</span></p>

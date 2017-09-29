@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/py/py-divers.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: Divers</div>
@@ -79,6 +103,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -161,21 +186,21 @@
   <li>
     <p><a href="https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/">virtualenv-doc</a></p>
   </li>
-  <li><code class="highlighter-rouge">mkvirtualenv</code> <em>name</em> <script type="math/tex">\Rightarrow</script> new virtualenv</li>
-  <li><code class="highlighter-rouge">workon</code> <em>name</em> <script type="math/tex">\Rightarrow</script> switch to “name” virtualenv</li>
-  <li><code class="highlighter-rouge">workon</code> <script type="math/tex">\Rightarrow</script> list virtualenvs</li>
-  <li><code class="highlighter-rouge">lsvirtualenv</code> <script type="math/tex">\Rightarrow</script> same</li>
-  <li><code class="highlighter-rouge">deactivate</code> <script type="math/tex">\Rightarrow</script> leave current virtualenv</li>
+  <li><code class="highlighter-rouge">mkvirtualenv</code> <em>name</em> $ \Rightarrow $ new virtualenv</li>
+  <li><code class="highlighter-rouge">workon</code> <em>name</em> $ \Rightarrow $ switch to “name” virtualenv</li>
+  <li><code class="highlighter-rouge">workon</code> $ \Rightarrow $ list virtualenvs</li>
+  <li><code class="highlighter-rouge">lsvirtualenv</code> $ \Rightarrow $ same</li>
+  <li><code class="highlighter-rouge">deactivate</code> $ \Rightarrow $ leave current virtualenv</li>
   <li>
-    <p><code class="highlighter-rouge">virtualenv --version</code> <script type="math/tex">\Rightarrow</script> check version</p>
+    <p><code class="highlighter-rouge">virtualenv --version</code> $ \Rightarrow $ check version</p>
   </li>
-  <li><code class="highlighter-rouge">mkproject</code> <em>name</em> <script type="math/tex">\Rightarrow</script> creates a project <strong>directory</strong></li>
+  <li><code class="highlighter-rouge">mkproject</code> <em>name</em> $ \Rightarrow $ creates a project <strong>directory</strong></li>
   <li>
-    <p><code class="highlighter-rouge">deactivate</code> <script type="math/tex">\Rightarrow</script> leave current project</p>
+    <p><code class="highlighter-rouge">deactivate</code> $ \Rightarrow $ leave current project</p>
   </li>
-  <li><code class="highlighter-rouge">rmvirtualenv</code> <em>name</em> <script type="math/tex">\Rightarrow</script> delete project</li>
-  <li><code class="highlighter-rouge">cdvirtualenv</code> <script type="math/tex">\Rightarrow</script> navigate into the directory of the currently activated venv.</li>
-  <li><code class="highlighter-rouge">lssitepackages</code> <script type="math/tex">\Rightarrow</script> show content of <code class="highlighter-rouge">site-packages</code> directory</li>
+  <li><code class="highlighter-rouge">rmvirtualenv</code> <em>name</em> $ \Rightarrow $ delete project</li>
+  <li><code class="highlighter-rouge">cdvirtualenv</code> $ \Rightarrow $ navigate into the directory of the currently activated venv.</li>
+  <li><code class="highlighter-rouge">lssitepackages</code> $ \Rightarrow $ show content of <code class="highlighter-rouge">site-packages</code> directory</li>
 </ul>
 
 <h3 id="exemple-de-nouveau-venv-pour-opencv">Exemple de nouveau venv pour openCV</h3>

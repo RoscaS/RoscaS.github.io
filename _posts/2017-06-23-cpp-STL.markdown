@@ -7,6 +7,7 @@ author: Sol
 category: Cpp
 tags: cpp 
 finished: false
+mathjax: true
 ---
 
 ![alt](/00illustrations/flux/exam.png)
@@ -25,9 +26,9 @@ Slide du cours C++ He-arc: 1240.2.09 Bibliothèque Standard
 * Hiérarchie basée sur **ios**(in/out... <span style="color:red">a compléter</span>)
 
 Classes implémentant des flux:
-* `iostream` $$ \Rightarrow $$ E/S standard (clavier/écran)
-* `fstream` $$ \Rightarrow $$ E/S dans les fichiers
-* `sstream` $$ \Rightarrow $$ E/S dans la mémoire (string)  
+* `iostream` $ \Rightarrow $ E/S standard (clavier/écran)
+* `fstream` $ \Rightarrow $ E/S dans les fichiers
+* `sstream` $ \Rightarrow $ E/S dans la mémoire (string)  
 <br>
 Toutes ces classes redéfinissent les opérateurs  `<<` et `>>`
 
@@ -45,9 +46,9 @@ Deux modes d'accès:
 #include <fstream>
 ```
 Trois classes:
-* `ifstream` $$ \Rightarrow $$ lecture
-* `ofstream` $$ \Rightarrow $$ ecriture
-* `fstream` $$ \Rightarrow $$ les deux
+* `ifstream` $ \Rightarrow $ lecture
+* `ofstream` $ \Rightarrow $ ecriture
+* `fstream` $ \Rightarrow $ les deux
 
 ### Ouverture
 
@@ -73,12 +74,12 @@ Même signature, seules les valeurs par défaut changent.
 
 Le paramètre **mode** est un champ de bits. On le combine avec l'opérateur bit à bit `|`.
 
-* `ios::binary` $$ \Rightarrow $$ Mode binaire (mode texte par défaut)
-* `ios::in` $$ \Rightarrow $$ Lecture (défaut pour `ifstream`)
-* `ios::out` $$ \Rightarrow $$ Ecriture (défaut pour `ofstream`)
-* `ios::app` $$ \Rightarrow $$ Ajout à la fin (append)
-* `ios::trunc` $$ \Rightarrow $$ Écrase le contenu précédent (truncate)
-* `ios::ate` $$ \Rightarrow $$ position à la fin dés l'ouverture
+* `ios::binary` $ \Rightarrow $ Mode binaire (mode texte par défaut)
+* `ios::in` $ \Rightarrow $ Lecture (défaut pour `ifstream`)
+* `ios::out` $ \Rightarrow $ Ecriture (défaut pour `ofstream`)
+* `ios::app` $ \Rightarrow $ Ajout à la fin (append)
+* `ios::trunc` $ \Rightarrow $ Écrase le contenu précédent (truncate)
+* `ios::ate` $ \Rightarrow $ position à la fin dés l'ouverture
 
 #### exemple
 
@@ -326,11 +327,11 @@ Pour tous les flux (fichier, écran/clavier, mémoire), le traitement d'erreurs 
 
 On peut **tester et manipuler** l'état du flux avec les méthodes
 
-* good() $$ \Rightarrow $$ Aucune erreur
-* bad() $$ \Rightarrow $$ Impossible d'extraire des données du flux
-* fail() $$ \Rightarrow $$ Echec de l'opération
-* eof() $$ \Rightarrow $$ Fin de fichier
-* clear() $$ \Rightarrow $$ Réinitialisation des bits d'état
+* good() $ \Rightarrow $ Aucune erreur
+* bad() $ \Rightarrow $ Impossible d'extraire des données du flux
+* fail() $ \Rightarrow $ Echec de l'opération
+* eof() $ \Rightarrow $ Fin de fichier
+* clear() $ \Rightarrow $ Réinitialisation des bits d'état
 
 ### Méthodes de lecture d'istream
 
@@ -344,12 +345,12 @@ cin >> var >> var2;
 ```
 #### Lecture non formatée
 
-* get()  $$ \Rightarrow $$ lecture d'un seul char
-* getline() $$ \Rightarrow $$ lecture d'une suite de char
-* ignore() $$ \Rightarrow $$ ?
-* peek() $$ \Rightarrow $$ donne le prochain char sans l'extraire
-* seekg() $$ \Rightarrow $$ positionnement sur un flux
-* read() $$ \Rightarrow $$ lecture de n char
+* get()  $ \Rightarrow $ lecture d'un seul char
+* getline() $ \Rightarrow $ lecture d'une suite de char
+* ignore() $ \Rightarrow $ ?
+* peek() $ \Rightarrow $ donne le prochain char sans l'extraire
+* seekg() $ \Rightarrow $ positionnement sur un flux
+* read() $ \Rightarrow $ lecture de n char
 
 ### Méthodes d'écriture d'ostream
 
@@ -363,11 +364,11 @@ cout << "PI=" << 3.14;
 
 #### Écriture non formatée
 
-* put() $$ \Rightarrow $$ écriture d'un seul char
-* wirte() $$ \Rightarrow $$ écriture du contenu d'un tampon
-* flush() $$ \Rightarrow $$ vidage de tampon
-* tellp() $$ \Rightarrow $$ positionnement courant sur le flux
-* seekp() $$ \Rightarrow $$ positionnement sur un flux
+* put() $ \Rightarrow $ écriture d'un seul char
+* wirte() $ \Rightarrow $ écriture du contenu d'un tampon
+* flush() $ \Rightarrow $ vidage de tampon
+* tellp() $ \Rightarrow $ positionnement courant sur le flux
+* seekp() $ \Rightarrow $ positionnement sur un flux
 
 ## 3. Le flux string
 
@@ -375,11 +376,11 @@ cout << "PI=" << 3.14;
 * Point commun: les deux sont constitués d'octets
 * Intérêt: Conversion, transferts en mémoire (buffers)
 
-`#include <sstream>` $$ \Rightarrow $$ 3 classes:
+`#include <sstream>` $ \Rightarrow $ 3 classes:
 
-* istringstream $$ \Rightarrow $$ Entrée
-* ostringstream $$ \Rightarrow $$ Sortie
-* stringstream $$ \Rightarrow $$ Les deux
+* istringstream $ \Rightarrow $ Entrée
+* ostringstream $ \Rightarrow $ Sortie
+* stringstream $ \Rightarrow $ Les deux
 
 ### La classe string
 
@@ -408,12 +409,12 @@ Opérateurs:
 
 Méthodes:
 
-* `int size ()` $$ \Rightarrow $$ Renvoie le nombre de caractères
-* `int lenght ()` $$ \Rightarrow $$ Renvoie le nombre de caractères
-* `int capacity ()` $$ \Rightarrow $$ taille possible sans la réallocation
-* `bool empty ()` $$ \Rightarrow $$ `true` si la string est vide `faux` sinon.
-* `int find ()` $$ \Rightarrow $$ position de la string `s` dans la string courante à partir de `pos`
-* `string substr(int start, int lenght)` $$ \Rightarrow $$ Sous string de longueur `lenght` à partir de `start`
+* `int size ()` $ \Rightarrow $ Renvoie le nombre de caractères
+* `int lenght ()` $ \Rightarrow $ Renvoie le nombre de caractères
+* `int capacity ()` $ \Rightarrow $ taille possible sans la réallocation
+* `bool empty ()` $ \Rightarrow $ `true` si la string est vide `faux` sinon.
+* `int find ()` $ \Rightarrow $ position de la string `s` dans la string courante à partir de `pos`
+* `string substr(int start, int lenght)` $ \Rightarrow $ Sous string de longueur `lenght` à partir de `start`
 
 > Les comparaisons de strings sont faites dans l'odre lexicographique (comme un dictionnaire) et sont sensibles à la casse.
 
@@ -528,26 +529,26 @@ Ce sont des conteneurs dont les éléments sont identifiés par une **clé** et 
 
 ### Conteneurs de séquences
 
-*`<vector>` $$ \Rightarrow $$ tableau dynamique contigu
-*`<array>` $$ \Rightarrow $$ tableau statique contigu
-*`<deque>` $$ \Rightarrow $$ File à double entrée
-*`<list>` $$ \Rightarrow $$ Liste doublement chainée
-*`<forward_list>` $$ \Rightarrow $$ Liste simplement chainée
-*`<queue>` $$ \Rightarrow $$ File
-*`<priority_queue>` $$ \Rightarrow $$  File
-*`<stack>` $$ \Rightarrow $$ Pile
+*`<vector>` $ \Rightarrow $ tableau dynamique contigu
+*`<array>` $ \Rightarrow $ tableau statique contigu
+*`<deque>` $ \Rightarrow $ File à double entrée
+*`<list>` $ \Rightarrow $ Liste doublement chainée
+*`<forward_list>` $ \Rightarrow $ Liste simplement chainée
+*`<queue>` $ \Rightarrow $ File
+*`<priority_queue>` $ \Rightarrow $  File
+*`<stack>` $ \Rightarrow $ Pile
 
 ### Méthodes courantes des conteneurs
 
-* `clear()` $$ \Rightarrow $$ Vide le conteneur
-* `size()` $$ \Rightarrow $$ Retourne le nombre d'éléments
-* `empty()` $$ \Rightarrow $$ Teste si le conteneur est vide
-* `push_back()` $$ \Rightarrow $$ Ajoute un élément à la fin
-* `push_front()` $$ \Rightarrow $$ Ajoute un élément au début
-* `front()` $$ \Rightarrow $$ Renvoie le 1er élément
-* `pop_front()` $$ \Rightarrow $$ Supprime le premier élément
-* `insert()` $$ \Rightarrow $$ Insère un élément quelconque
-* `erase()` $$ \Rightarrow $$ Supprime un élément
+* `clear()` $ \Rightarrow $ Vide le conteneur
+* `size()` $ \Rightarrow $ Retourne le nombre d'éléments
+* `empty()` $ \Rightarrow $ Teste si le conteneur est vide
+* `push_back()` $ \Rightarrow $ Ajoute un élément à la fin
+* `push_front()` $ \Rightarrow $ Ajoute un élément au début
+* `front()` $ \Rightarrow $ Renvoie le 1er élément
+* `pop_front()` $ \Rightarrow $ Supprime le premier élément
+* `insert()` $ \Rightarrow $ Insère un élément quelconque
+* `erase()` $ \Rightarrow $ Supprime un élément
 
 #### Exemple de conteneur séquentiel: vector
 
@@ -629,7 +630,7 @@ int main() {
 }
 ```
 La lasse `array` a des méthodes:
-* `size()` $$ \Rightarrow $$ plus besoin de passer un paramètre de taille aux fonctions ou utiliser `sizeof(tab)`/`sizeof(int)` par exemple.
+* `size()` $ \Rightarrow $ plus besoin de passer un paramètre de taille aux fonctions ou utiliser `sizeof(tab)`/`sizeof(int)` par exemple.
 
 * Les accès par la méthode `at(indice)` sont sécurisés par des Exceptions.
 
@@ -658,7 +659,7 @@ typedef list<string> Couplet;
 vector<Couplet> maChanson;
 ```
 
-Des objets `vector` imbriqué simulent des tableux multidimentionnels. On peut initialiser une matrice identité $$m_{5 \time 5}$$ avec le code suivant:
+Des objets `vector` imbriqué simulent des tableux multidimentionnels. On peut initialiser une matrice identité $m_{5 \time 5}$ avec le code suivant:
 
 ```cpp
 #include<iostream>
@@ -689,8 +690,8 @@ int main() {
 * ils permettent d'utiliser de **façon uniforme** divers conteneurs
 * ils permettent de spécifier une position à l'intérieur d'un conteneur. Ils peuvent être **incrémentés** et **déréférencés** (avec `*`) et deux itérateurs peuvent être comparés.
 * Tous les conteneurs disposent des méthodes:
-    * `begin()` $$ \Rightarrow $$ Renvoie un itérateur pointant sur le premier élément.
-    * `end()` $$ \Rightarrow $$ renvoie un itérateur pointant **arpès** le dernier élément
+    * `begin()` $ \Rightarrow $ Renvoie un itérateur pointant sur le premier élément.
+    * `end()` $ \Rightarrow $ renvoie un itérateur pointant **arpès** le dernier élément
 
 > On ne peut pas déréférencecr l'itérateur renvoyé par la méthode `end()`
 
@@ -759,9 +760,9 @@ for (auto const &x: vec) {
 
 ## 7. Conteneurs associatifs
 
-* dictionnaire $$ \Rightarrow $$ `map`, `multimap`
-* ensembles (listes ordonnée) $$ \Rightarrow $$ `set`, `multiset`
-* tableau de  booléens (bitArray?) $$ \Rightarrow $$ `bitset`
+* dictionnaire $ \Rightarrow $ `map`, `multimap`
+* ensembles (listes ordonnée) $ \Rightarrow $ `set`, `multiset`
+* tableau de  booléens (bitArray?) $ \Rightarrow $ `bitset`
 
 Les tables associatives sont une **généralisation des tableux**: Les **indices** peuvent être **non-entier**.
 
@@ -810,8 +811,8 @@ int main() {
 
 ```
 
-* `it.first` $$ \Rightarrow $$ Donne accès à la clé  
-* `it.second` $$ \Rightarrow $$ Donne accès à la valeur
+* `it.first` $ \Rightarrow $ Donne accès à la clé  
+* `it.second` $ \Rightarrow $ Donne accès à la valeur
 
 <img src="/00illustrations/flux/map.png" align="" height="auto" float="right">
 

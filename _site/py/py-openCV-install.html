@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/py/py-openCV-install.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: openCV install(linux)</div>
@@ -79,6 +103,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -219,21 +244,21 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND='green'
   <li>
     <p><a href="https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/">virtualenv doc</a></p>
   </li>
-  <li><code class="highlighter-rouge">mkvirtualenv</code> <em>name</em> <script type="math/tex">\Rightarrow</script> new virtualenv</li>
-  <li><code class="highlighter-rouge">workon</code> <em>name</em> <script type="math/tex">\Rightarrow</script> switch to “name” virtualenv</li>
-  <li><code class="highlighter-rouge">workon</code> <script type="math/tex">\Rightarrow</script> list virtualenvs</li>
-  <li><code class="highlighter-rouge">lsvirtualenv</code> <script type="math/tex">\Rightarrow</script> same</li>
-  <li><code class="highlighter-rouge">deactivate</code> <script type="math/tex">\Rightarrow</script> leave current virtualenv</li>
+  <li><code class="highlighter-rouge">mkvirtualenv</code> <em>name</em> $ \Rightarrow $ new virtualenv</li>
+  <li><code class="highlighter-rouge">workon</code> <em>name</em> $ \Rightarrow $ switch to “name” virtualenv</li>
+  <li><code class="highlighter-rouge">workon</code> $ \Rightarrow $ list virtualenvs</li>
+  <li><code class="highlighter-rouge">lsvirtualenv</code> $ \Rightarrow $ same</li>
+  <li><code class="highlighter-rouge">deactivate</code> $ \Rightarrow $ leave current virtualenv</li>
   <li>
-    <p><code class="highlighter-rouge">virtualenv --version</code> <script type="math/tex">\Rightarrow</script> check version</p>
+    <p><code class="highlighter-rouge">virtualenv --version</code> $ \Rightarrow $ check version</p>
   </li>
-  <li><code class="highlighter-rouge">mkproject</code> <em>name</em> <script type="math/tex">\Rightarrow</script> creates a project <strong>directory</strong></li>
+  <li><code class="highlighter-rouge">mkproject</code> <em>name</em> $ \Rightarrow $ creates a project <strong>directory</strong></li>
   <li>
-    <p><code class="highlighter-rouge">deactivate</code> <script type="math/tex">\Rightarrow</script> leave current project</p>
+    <p><code class="highlighter-rouge">deactivate</code> $ \Rightarrow $ leave current project</p>
   </li>
-  <li><code class="highlighter-rouge">rmvirtualenv</code> <em>name</em> <script type="math/tex">\Rightarrow</script> delete project</li>
-  <li><code class="highlighter-rouge">cdvirtualenv</code> <script type="math/tex">\Rightarrow</script> navigate into the directory of the currently activated venv.</li>
-  <li><code class="highlighter-rouge">lssitepackages</code> <script type="math/tex">\Rightarrow</script> show content of <code class="highlighter-rouge">site-packages</code> directory</li>
+  <li><code class="highlighter-rouge">rmvirtualenv</code> <em>name</em> $ \Rightarrow $ delete project</li>
+  <li><code class="highlighter-rouge">cdvirtualenv</code> $ \Rightarrow $ navigate into the directory of the currently activated venv.</li>
+  <li><code class="highlighter-rouge">lssitepackages</code> $ \Rightarrow $ show content of <code class="highlighter-rouge">site-packages</code> directory</li>
 </ul>
 
 <h2 id="4-download-opencv--opencv_contrib">4 Download OpenCV &amp; OpenCV_contrib</h2>
@@ -359,9 +384,9 @@ deactivate
   <li><code class="highlighter-rouge">image</code> doit soit être dans le working directory, soit on utilise un full path</li>
   <li><code class="highlighter-rouge">flag</code> spécifie la façon dont <code class="highlighter-rouge">image</code> doit être lue:
     <ul>
-      <li><code class="highlighter-rouge">1</code> <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">cv2.IMREAD_COLOR</code> <script type="math/tex">\Rightarrow</script> img couleur, toute transarence est négligée (flag par défaut)</li>
-      <li><code class="highlighter-rouge">0</code> <script type="math/tex">\Rightarrow</script> cv2.IMREAD_GRAYSCALE <script type="math/tex">\Rightarrow</script> grayscale mode</li>
-      <li><code class="highlighter-rouge">-1</code> <script type="math/tex">\Rightarrow</script> cv2.IMREAD_UNCHANGED <script type="math/tex">\Rightarrow</script> image originale</li>
+      <li><code class="highlighter-rouge">1</code> $ \Rightarrow $ <code class="highlighter-rouge">cv2.IMREAD_COLOR</code> $ \Rightarrow $ img couleur, toute transarence est négligée (flag par défaut)</li>
+      <li><code class="highlighter-rouge">0</code> $ \Rightarrow $ cv2.IMREAD_GRAYSCALE $ \Rightarrow $ grayscale mode</li>
+      <li><code class="highlighter-rouge">-1</code> $ \Rightarrow $ cv2.IMREAD_UNCHANGED $ \Rightarrow $ image originale</li>
     </ul>
   </li>
 </ul>
@@ -378,11 +403,11 @@ deactivate
 
 <h2 id="afficher-une-image">Afficher une image:</h2>
 
-<p><code class="highlighter-rouge">cv2.imshow('window_name', image)</code> <script type="math/tex">\Rightarrow</script> affiche l’image dans une nouvelle fenêtre (fit to the image size).</p>
+<p><code class="highlighter-rouge">cv2.imshow('window_name', image)</code> $ \Rightarrow $ affiche l’image dans une nouvelle fenêtre (fit to the image size).</p>
 
 <ul>
-  <li><code class="highlighter-rouge">'window_name'</code> <script type="math/tex">\Rightarrow</script> une string avec le nom de la nouvelle fenêtre</li>
-  <li><code class="highlighter-rouge">image</code> <script type="math/tex">\Rightarrow</script> image à afficher</li>
+  <li><code class="highlighter-rouge">'window_name'</code> $ \Rightarrow $ une string avec le nom de la nouvelle fenêtre</li>
+  <li><code class="highlighter-rouge">image</code> $ \Rightarrow $ image à afficher</li>
 </ul>
 
 <blockquote>
@@ -404,15 +429,15 @@ deactivate
 <p><img src="http://opencv-python-tutroals.readthedocs.io/en/latest/_images/opencv_screenshot.jpg" alt="alt" /></p>
 
 <ul>
-  <li><code class="highlighter-rouge">cv2.waitKey()</code> <script type="math/tex">\Rightarrow</script> permet de binder une touche (plus de détails suivent)</li>
-  <li><code class="highlighter-rouge">cv2.destroyAllWindows()</code> <script type="math/tex">\Rightarrow</script> détruit toutes les fenếtres créés</li>
+  <li><code class="highlighter-rouge">cv2.waitKey()</code> $ \Rightarrow $ permet de binder une touche (plus de détails suivent)</li>
+  <li><code class="highlighter-rouge">cv2.destroyAllWindows()</code> $ \Rightarrow $ détruit toutes les fenếtres créés</li>
   <li>
-    <p><code class="highlighter-rouge">cv2.destroyWindow()</code> <script type="math/tex">\Rightarrow</script> détruit une fenêtre spécifique passée en argument</p>
+    <p><code class="highlighter-rouge">cv2.destroyWindow()</code> $ \Rightarrow $ détruit une fenêtre spécifique passée en argument</p>
   </li>
-  <li><code class="highlighter-rouge">cv2.namedWindow('image', flag)</code> <script type="math/tex">\Rightarrow</script> permet de set la taille de la fenêtre via l’argument <code class="highlighter-rouge">flag</code>:
+  <li><code class="highlighter-rouge">cv2.namedWindow('image', flag)</code> $ \Rightarrow $ permet de set la taille de la fenêtre via l’argument <code class="highlighter-rouge">flag</code>:
     <ul>
-      <li><code class="highlighter-rouge">cv2.WINDOW_AUTOSIZE</code> <script type="math/tex">\Rightarrow</script> valeur par défaut</li>
-      <li><code class="highlighter-rouge">cv2.WINDOW_NORMAL</code> <script type="math/tex">\Rightarrow</script> fenêtre redimensionnable</li>
+      <li><code class="highlighter-rouge">cv2.WINDOW_AUTOSIZE</code> $ \Rightarrow $ valeur par défaut</li>
+      <li><code class="highlighter-rouge">cv2.WINDOW_NORMAL</code> $ \Rightarrow $ fenêtre redimensionnable</li>
     </ul>
   </li>
 </ul>

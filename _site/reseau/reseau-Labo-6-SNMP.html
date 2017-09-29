@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/reseau/reseau-Labo-6-SNMP.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Reseau: Labo 6 SNMP & Docker</div>
@@ -75,6 +99,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -270,7 +295,7 @@ Swap space                      11862012     620592   11241420     5%
 <h3 id="e">e.</h3>
 <p>Dans quels champs de la MIB HOST-RESOURCES est-ce que la commande <code class="highlighter-rouge">snmpdf</code> ci-dessus va chercher?</p>
 
-<p><code class="highlighter-rouge">1.3.6.1.2.1.25.2.3.x</code> <script type="math/tex">\Rightarrow \; \large x \in  [1,38]</script></p>
+<p><code class="highlighter-rouge">1.3.6.1.2.1.25.2.3.x</code> $ \Rightarrow \; \large x \in  [1,38] $</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>sol@debian:~$ snmpwalk -v 1 -c public 157.26.77.13 1.3.6.1.2.1.25.2.3
 HOST-RESOURCES-MIB::hrStorageIndex.1 = INTEGER: 1
@@ -522,8 +547,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
   <li>
     <p><a href="https://en.wikipedia.org/wiki/X.690#Encoding_structure">x.690</a></p>
   </li>
-  <li>[type] + [len data] <script type="math/tex">\Rightarrow</script>  1Byte</li>
-  <li>[data] <script type="math/tex">\Rightarrow</script> lenght of <code class="highlighter-rouge">len data</code>
+  <li>[type] + [len data] $ \Rightarrow $  1Byte</li>
+  <li>[data] $ \Rightarrow $ lenght of <code class="highlighter-rouge">len data</code>
 <br />
 <br /></li>
 </ul>
@@ -627,8 +652,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 </div>
 
 <ul>
-  <li><strong>type</strong>: 30 <script type="math/tex">\Rightarrow</script> type construit (Sequence aussi ? d’arès ce que je crois comprendre dans votre mail)</li>
-  <li><strong>len</strong>: <script type="math/tex">0x2d = 45_{10} (+2)</script></li>
+  <li><strong>type</strong>: 30 $ \Rightarrow $ type construit (Sequence aussi ? d’arès ce que je crois comprendre dans votre mail)</li>
+  <li><strong>len</strong>: $ 0x2d = 45_{10} (+2) $</li>
   <li><strong>data</strong>: tout le reste
 <br /></li>
 </ul>
@@ -638,9 +663,9 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">02 01</code></p>
 
 <ul>
-  <li><strong>type</strong>: 02 <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">int</code></li>
-  <li><strong>len</strong>: <script type="math/tex">0x01 (+2) =  1_{10} (+2)</script></li>
-  <li><strong>data</strong>: <code class="highlighter-rouge">00</code> <script type="math/tex">\Rightarrow 0_{10}</script>
+  <li><strong>type</strong>: 02 $ \Rightarrow $ <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>: $ 0x01 (+2) =  1_{10} (+2) $</li>
+  <li><strong>data</strong>: <code class="highlighter-rouge">00</code> $ \Rightarrow 0_{10} $
 <br /></li>
 </ul>
 
@@ -649,19 +674,19 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">04 06 70 75 62 6C 69 63</code></p>
 
 <ul>
-  <li><strong>type</strong>: 5 <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">octet string</code></li>
-  <li><strong>len</strong>: <script type="math/tex">0x06 (+2) = 6_{10} (+2)</script></li>
-  <li><strong>data</strong>: `` <script type="math/tex">\Rightarrow</script> <code class="highlighter-rouge">70 75 62 6C 69 63</code></li>
+  <li><strong>type</strong>: 5 $ \Rightarrow $ <code class="highlighter-rouge">octet string</code></li>
+  <li><strong>len</strong>: $ 0x06 (+2) = 6_{10} (+2) $</li>
+  <li><strong>data</strong>: `` $ \Rightarrow $ <code class="highlighter-rouge">70 75 62 6C 69 63</code></li>
 </ul>
 
-<p>Conversion string <script type="math/tex">\Rightarrow</script>  char:</p>
+<p>Conversion string $ \Rightarrow $  char:</p>
 
 <div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="s">"70 75 62 6C 69 63"</span>
 <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
     <span class="n">r</span> <span class="o">=</span> <span class="s">r'{10}'</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"$$ 0x{} = {}_{} = {} $$"</span>\
+    <span class="k">print</span><span class="p">(</span><span class="s">"$ 0x{} = {}_{} = {} $"</span>\
         <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">r</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">))))</span>
 
 <span class="p">[</span><span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span>
@@ -674,40 +699,40 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
   <tbody>
     <tr>
       <td>0x112</td>
-      <td><script type="math/tex">112_{10}</script></td>
-      <td><script type="math/tex">p</script></td>
+      <td>$112_{10}$</td>
+      <td>$p$</td>
     </tr>
     <tr>
       <td>0x117</td>
-      <td><script type="math/tex">117_{10}</script></td>
-      <td><script type="math/tex">u</script></td>
+      <td>$117_{10}$</td>
+      <td>$u$</td>
     </tr>
     <tr>
       <td>0x98</td>
-      <td><script type="math/tex">98_{10}</script></td>
-      <td><script type="math/tex">b</script></td>
+      <td>$98_{10}$</td>
+      <td>$b$</td>
     </tr>
     <tr>
       <td>0x108</td>
-      <td><script type="math/tex">108_{10}</script></td>
-      <td><script type="math/tex">l</script></td>
+      <td>$108_{10}$</td>
+      <td>$l$</td>
     </tr>
     <tr>
       <td>0x105</td>
-      <td><script type="math/tex">105_{10}</script></td>
-      <td><script type="math/tex">i</script></td>
+      <td>$105_{10}$</td>
+      <td>$i$</td>
     </tr>
     <tr>
       <td>0x99</td>
-      <td><script type="math/tex">99_{10}</script></td>
-      <td><script type="math/tex">c</script></td>
+      <td>$99_{10}$</td>
+      <td>$c$</td>
     </tr>
   </tbody>
 </table>
 
 <p><br /></p>
 
-<script type="math/tex; mode=display">\Large \Rightarrow  public</script>
+<p>$ \Large \Rightarrow  public $</p>
 
 <hr />
 
@@ -718,8 +743,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 </div>
 
 <ul>
-  <li><strong>type</strong>: <script type="math/tex">0xA1 \Rightarrow</script> Sequence</li>
-  <li><strong>len</strong>: <script type="math/tex">0x20 = 32_{10} (+2)</script></li>
+  <li><strong>type</strong>: $ 0xA1 \Rightarrow $ Sequence</li>
+  <li><strong>len</strong>: $ 0x20 = 32_{10} (+2) $</li>
   <li><strong>data</strong>: tout le reste
 <br /></li>
 </ul>
@@ -729,9 +754,9 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">02 04 22 2d 9d d6</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">0x02 \Rightarrow</script> <code class="highlighter-rouge">int</code></li>
-  <li><strong>len</strong>:  $$ 0x04 (+2) = 4 (+2)</li>
-  <li><strong>data</strong>: <script type="math/tex">0x222d9dd6  \Rightarrow  573414870_{10}</script>
+  <li><strong>type</strong>:  $0x02 \Rightarrow $ <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>:  $ 0x04 (+2) = 4 (+2)</li>
+  <li><strong>data</strong>: $ 0x222d9dd6  \Rightarrow  573414870_{10} $
 <br /></li>
 </ul>
 
@@ -740,9 +765,9 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">02 01 00</code></p>
 
 <ul>
-  <li><strong>type</strong>: <script type="math/tex">0x02  \Rightarrow</script> <code class="highlighter-rouge">int</code></li>
-  <li><strong>len</strong>: <script type="math/tex">0x01 (+2) = 1 (+2)</script></li>
-  <li><strong>data</strong>: <script type="math/tex">0x00 \Rightarrow 0_{10}</script>
+  <li><strong>type</strong>: $ 0x02  \Rightarrow $ <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>: $0x01 (+2) = 1 (+2) $</li>
+  <li><strong>data</strong>: $ 0x00 \Rightarrow 0_{10} $
 <br /></li>
 </ul>
 
@@ -751,9 +776,9 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">02 01 00</code></p>
 
 <ul>
-  <li><strong>type</strong>: <script type="math/tex">0x02 \Rightarrow</script> <code class="highlighter-rouge">int</code></li>
-  <li><strong>len</strong>: <script type="math/tex">0x01 (+2) = 1 (+2)</script></li>
-  <li><strong>data</strong>: <script type="math/tex">0x00 \Rightarrow 0_{10}</script>
+  <li><strong>type</strong>: $ 0x02 \Rightarrow $ <code class="highlighter-rouge">int</code></li>
+  <li><strong>len</strong>: $0x01 (+2) = 1 (+2) $</li>
+  <li><strong>data</strong>: $ 0x00 \Rightarrow 0_{10} $
 <br /></li>
 </ul>
 
@@ -762,8 +787,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">30 12</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">0x30 \Rightarrow</script> type construit</li>
-  <li><strong>len</strong>:  $$ 0x12 (+2) = 18 (+2)</li>
+  <li><strong>type</strong>:  $ 0x30 \Rightarrow $ type construit</li>
+  <li><strong>len</strong>:  $ 0x12 (+2) = 18 (+2)</li>
   <li><strong>data</strong>: tout le reste
 <br /></li>
 </ul>
@@ -773,8 +798,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">30 10</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">0x30 \Rightarrow</script> type construit</li>
-  <li><strong>len</strong>:  $$ 0x10 (+2) = 16 (+2)</li>
+  <li><strong>type</strong>:  $ 0x30 \Rightarrow $ type construit</li>
+  <li><strong>len</strong>:  $ 0x10 (+2) = 16 (+2)</li>
   <li><strong>data</strong>: tout le reste
 <br /></li>
 </ul>
@@ -784,8 +809,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">06 0c 2b 06 01 02 01 2b 0e 01 01 06 01 01</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">0x06 \Rightarrow</script> objet</li>
-  <li><strong>len</strong>:  $$ 0x0c (+2) = 12 (+2)</li>
+  <li><strong>type</strong>:  $ 0x06 \Rightarrow $ objet</li>
+  <li><strong>len</strong>:  $ 0x0c (+2) = 12 (+2)</li>
   <li><strong>data</strong>: <code class="highlighter-rouge">2b 06 01 02 01 2b 0e 01 01 06 01 01</code></li>
 </ul>
 
@@ -797,8 +822,8 @@ snmpinform -v [2c|3] [COMMON OPTIONS] AGENT uptime trap-oid [OID TYPE VALUE]...
 <p><code class="highlighter-rouge">05 00</code></p>
 
 <ul>
-  <li><strong>type</strong>:  <script type="math/tex">0x05 \Rightarrow</script> NULL</li>
-  <li><strong>len</strong>:  <script type="math/tex">0x00 (+2) = 0_{10} (+2)</script></li>
+  <li><strong>type</strong>:  $ 0x05 \Rightarrow $ NULL</li>
+  <li><strong>len</strong>:  $ 0x00 (+2) = 0_{10} (+2) $</li>
   <li><strong>data</strong>: NULL
 <br /></li>
 </ul>
@@ -867,8 +892,8 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 <ul>
   <li>Les <strong>communautés</strong>  (v1,2) permettent de filtrer l’accès aux informations d’une <strong>MIB</strong>
     <ul>
-      <li><code class="highlighter-rouge">public</code> <script type="math/tex">\Rightarrow</script>  lecture seule (default)</li>
-      <li><code class="highlighter-rouge">private</code> <script type="math/tex">\Rightarrow</script> donne accès à toute la configuration système en lecture/écriture</li>
+      <li><code class="highlighter-rouge">public</code> $ \Rightarrow $  lecture seule (default)</li>
+      <li><code class="highlighter-rouge">private</code> $ \Rightarrow $ donne accès à toute la configuration système en lecture/écriture</li>
     </ul>
   </li>
 </ul>
@@ -934,10 +959,10 @@ SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-MIB::netSnmpAgentOIDs.10
 
 <ul>
   <li>
-    <p><code class="highlighter-rouge">getData()</code> <script type="math/tex">\Rightarrow</script> pull la donnée pointée par l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.25.1.6</code> de l’agent <strong>SNMP</strong> sur la machine <code class="highlighter-rouge">157.26.77.13</code>.</p>
+    <p><code class="highlighter-rouge">getData()</code> $ \Rightarrow $ pull la donnée pointée par l’<strong>OID</strong> <code class="highlighter-rouge">1.3.6.1.2.1.25.1.6</code> de l’agent <strong>SNMP</strong> sur la machine <code class="highlighter-rouge">157.26.77.13</code>.</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">graphPlot()</code> <script type="math/tex">\Rightarrow</script> traite le fichier <code class="highlighter-rouge">data.txt</code> et retourne un plot dans un fichier <code class="highlighter-rouge">svg</code></p>
+    <p><code class="highlighter-rouge">graphPlot()</code> $ \Rightarrow $ traite le fichier <code class="highlighter-rouge">data.txt</code> et retourne un plot dans un fichier <code class="highlighter-rouge">svg</code></p>
   </li>
 </ul>
 

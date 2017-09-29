@@ -7,6 +7,7 @@ author: Sol
 category: Prog
 tags: prog
 finished: false
+mathjax: true
 ---
 
 ### Outils
@@ -19,7 +20,7 @@ finished: false
 ## Résumé
 
 #### Composition
-**"partie/tout"**, ($$ \textstyle x \color{red}{\;a\;un\;} y $$), **unidirectionnel** (**partie** ne sait pas qu'elle fait partie de **tout**)
+**"partie/tout"**, ($ \textstyle x \color{red}{\;a\;un\;} y $), **unidirectionnel** (**partie** ne sait pas qu'elle fait partie de **tout**)
 
 * Les **parties** du **tout** sont des variables membres (attributs).
 * Une **partie** ne peut pas appartenir à plusieurs classes.
@@ -30,21 +31,21 @@ finished: false
 
 
 #### Aggregation
-**"partie/tout"**, ($$ \textstyle x \color{red}{\;a\;un\;} y $$), **unidirectionnel**
+**"partie/tout"**, ($ \textstyle x \color{red}{\;a\;un\;} y $), **unidirectionnel**
 
 * Les **parties** du **tout** sont des variables membres (attributs) qui sont des pointeurs ou des références sur des objets qui vivent en dehors du contexte du **tout**.
 * Une **partie** peut appartenir à plusieurs classes.
 * Le **tout** n'est pas responsable de la construction et de la destruction des **parties**.
 
 #### Association 
-**"pas reliés"**, ($$x \textstyle \color{red}{\;utilise\;un\;} y $$), **unidirectionnel** & **bidirectionnel**
+**"pas reliés"**, ($x \textstyle \color{red}{\;utilise\;un\;} y $), **unidirectionnel** & **bidirectionnel**
 
 * Un objet `B` est membre d'un objet `A` mais <span style="color:red">n'est pas une **partie**</span> de `A`.
 * L'objet `B` n'a pas son existance gérée par la classe `A`.
 * L'objet `B` peut être au courant de l'existance de l'objet `A` mais pas obligatoirement,
 
 #### Dépendance
-**"pas reliés"**, ($$x \textstyle \color{red}{\;dépend\;de\;} y $$), **unidirectionnel**
+**"pas reliés"**, ($x \textstyle \color{red}{\;dépend\;de\;} y $), **unidirectionnel**
 
 * Un objet `A` est dépendant **d'une classe** `B` quand l'objet `A` utilise une fonctionnalité de la classe `B` pour accomplir une certaine tache. 
 * Relation plus faible que les précédentes mais un changement dans la classe `B` peut entrainer un dysfonctionnement de l'objet `A`.
@@ -52,7 +53,7 @@ finished: false
 
 
 #### (Héritage)
-**"lien de parenté**, ($$x \textstyle \color{red}{\;est\;un\;} y $$), 
+**"lien de parenté**, ($x \textstyle \color{red}{\;est\;un\;} y $), 
 
 * Un objet `B` qui hérite d'un objet `A` est un objet `A` plus spécialisé.
 
@@ -79,12 +80,12 @@ $$ \bbox[20px,border:2px solid red]
 $$
 
 * Un ordinateur a un processeur
-    * objet (plus) **complexe** $$ \Rightarrow $$ ordinateur
-    * objet (plus) **simple** $$ \Rightarrow $$ processeur
+    * objet (plus) **complexe** $ \Rightarrow $ ordinateur
+    * objet (plus) **simple** $ \Rightarrow $ processeur
 
 * Une voiture a une transmission
-    * objet (plus) **complexe** $$ \Rightarrow $$ voiture
-    * objet (plus) **simple** $$ \Rightarrow $$ transmission
+    * objet (plus) **complexe** $ \Rightarrow $ voiture
+    * objet (plus) **simple** $ \Rightarrow $ transmission
 
 Il existe deux sous types de composition: 
 * **Composition**
@@ -134,8 +135,8 @@ public:
 
 Cette classe (**tout**) possède deux attributs (**partie**) membres:
 
-* `_num` $$ \Rightarrow $$  un numérateur 
-* `_den` $$ \Rightarrow $$  un dénominateur
+* `_num` $ \Rightarrow $  un numérateur 
+* `_den` $ \Rightarrow $  un dénominateur
 
 1. Les deux sont des **parties** du **tout** (classe) `Fraction` (Elles sont contenues dans...).
 2. Elle ne peuvent faire partie de plusieurs instances du **tout** (classe) `Fraction` à la fois.

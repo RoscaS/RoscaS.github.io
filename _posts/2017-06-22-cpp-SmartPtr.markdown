@@ -415,7 +415,7 @@ int main() {
 
 <span style="color:red">Il est plus performant d'utiliser make_shared que de créér un pointeur avec new et d'ensuite le passer a shared\_ptr.</span>
 
-### Conversion unique $$ \rightarrow $$ shared
+### Conversion unique $ \rightarrow $ shared
 
 Un des constructeurs de shared_ptr permet transformer un unique\_ptr en shared\_ptr. 
 

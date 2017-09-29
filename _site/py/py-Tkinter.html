@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/py/py-Tkinter.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Py: Tkinter</div>
@@ -79,6 +103,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -152,22 +177,22 @@
 <h2 id="top-level-windows">top-level windows</h2>
 
 <ul>
-  <li><code class="highlighter-rouge">tk_chooseColor</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a color.</li>
-  <li><code class="highlighter-rouge">tk_chooseDirectory</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a directory.</li>
-  <li><code class="highlighter-rouge">tk_dialog</code> <script type="math/tex">\Rightarrow</script>  creates a modal dialog and waits for a response.</li>
-  <li><code class="highlighter-rouge">tk_getOpenFile</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a file to open.</li>
-  <li><code class="highlighter-rouge">tk_getSaveFile</code> <script type="math/tex">\Rightarrow</script>  pops up a dialog box for the user to select a file to save.</li>
-  <li><code class="highlighter-rouge">tk_messageBox</code> <script type="math/tex">\Rightarrow</script>  pops up a message window and waits for a user response.</li>
-  <li><code class="highlighter-rouge">tk_popup</code> <script type="math/tex">\Rightarrow</script>  posts a popup menu.</li>
-  <li><code class="highlighter-rouge">toplevel</code> <script type="math/tex">\Rightarrow</script>  creates and manipulates toplevel widgets.</li>
+  <li><code class="highlighter-rouge">tk_chooseColor</code> $ \Rightarrow $  pops up a dialog box for the user to select a color.</li>
+  <li><code class="highlighter-rouge">tk_chooseDirectory</code> $ \Rightarrow $  pops up a dialog box for the user to select a directory.</li>
+  <li><code class="highlighter-rouge">tk_dialog</code> $ \Rightarrow $  creates a modal dialog and waits for a response.</li>
+  <li><code class="highlighter-rouge">tk_getOpenFile</code> $ \Rightarrow $  pops up a dialog box for the user to select a file to open.</li>
+  <li><code class="highlighter-rouge">tk_getSaveFile</code> $ \Rightarrow $  pops up a dialog box for the user to select a file to save.</li>
+  <li><code class="highlighter-rouge">tk_messageBox</code> $ \Rightarrow $  pops up a message window and waits for a user response.</li>
+  <li><code class="highlighter-rouge">tk_popup</code> $ \Rightarrow $  posts a popup menu.</li>
+  <li><code class="highlighter-rouge">toplevel</code> $ \Rightarrow $  creates and manipulates toplevel widgets.</li>
 </ul>
 
 <h2 id="geometry-managers">geometry managers</h2>
 
 <ul>
-  <li><strong>place</strong> <script type="math/tex">\Rightarrow</script>  which positions widgets at absolute locations</li>
-  <li><strong>grid</strong> <script type="math/tex">\Rightarrow</script>  which arranges widgets in a grid</li>
-  <li><strong>pack</strong> <script type="math/tex">\Rightarrow</script>  which packs widgets into a cavity</li>
+  <li><strong>place</strong> $ \Rightarrow $  which positions widgets at absolute locations</li>
+  <li><strong>grid</strong> $ \Rightarrow $  which arranges widgets in a grid</li>
+  <li><strong>pack</strong> $ \Rightarrow $  which packs widgets into a cavity</li>
 </ul>
 
 <!-- ```python
@@ -314,15 +339,15 @@ a = tkinter.Button(master, option=value)
 
 <h3 id="autre-éléments-graphiques">Autre éléments graphiques</h3>
 
-<p><code class="highlighter-rouge">create_arc()</code>        <script type="math/tex">\Rightarrow</script>   arc de cercle
-<code class="highlighter-rouge">create_bitmap()</code>     <script type="math/tex">\Rightarrow</script>   bitmap
-<code class="highlighter-rouge">create_image()</code>      <script type="math/tex">\Rightarrow</script>   image
-<code class="highlighter-rouge">create_line()</code>       <script type="math/tex">\Rightarrow</script>   ligne
-<code class="highlighter-rouge">create_oval()</code>       <script type="math/tex">\Rightarrow</script>   ovale
-<code class="highlighter-rouge">create_polygon()</code>    <script type="math/tex">\Rightarrow</script>   polygone
-<code class="highlighter-rouge">create_rectangle()</code>  <script type="math/tex">\Rightarrow</script>   rectangle 
-<code class="highlighter-rouge">create_text()</code>       <script type="math/tex">\Rightarrow</script>   texte
-<code class="highlighter-rouge">create_window()</code>     <script type="math/tex">\Rightarrow</script>   fenetre</p>
+<p><code class="highlighter-rouge">create_arc()</code>        $ \Rightarrow $   arc de cercle
+<code class="highlighter-rouge">create_bitmap()</code>     $ \Rightarrow $   bitmap
+<code class="highlighter-rouge">create_image()</code>      $ \Rightarrow $   image
+<code class="highlighter-rouge">create_line()</code>       $ \Rightarrow $   ligne
+<code class="highlighter-rouge">create_oval()</code>       $ \Rightarrow $   ovale
+<code class="highlighter-rouge">create_polygon()</code>    $ \Rightarrow $   polygone
+<code class="highlighter-rouge">create_rectangle()</code>  $ \Rightarrow $   rectangle 
+<code class="highlighter-rouge">create_text()</code>       $ \Rightarrow $   texte
+<code class="highlighter-rouge">create_window()</code>     $ \Rightarrow $   fenetre</p>
 
 <h3 id="changer-les-coordonnées-dun-élement-crée-dans-le-canvas">Changer les coordonnées d’un élement crée dans le canvas</h3>
 <p>Via la méthode <code class="highlighter-rouge">coords</code></p>
@@ -543,20 +568,20 @@ tk.Label(l, text="A l'interieur de la frame").pack()
 <p>Si on indique une unité via un <code class="highlighter-rouge">int</code> l’unité par défaut est <strong>pixel</strong>. Il existe d’autres unités:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">i</code> <script type="math/tex">\Rightarrow</script> pouces</li>
-  <li><code class="highlighter-rouge">m</code> <script type="math/tex">\Rightarrow</script> millimètres</li>
-  <li><code class="highlighter-rouge">c</code> <script type="math/tex">\Rightarrow</script> centimètres</li>
+  <li><code class="highlighter-rouge">i</code> $ \Rightarrow $ pouces</li>
+  <li><code class="highlighter-rouge">m</code> $ \Rightarrow $ millimètres</li>
+  <li><code class="highlighter-rouge">c</code> $ \Rightarrow $ centimètres</li>
 </ul>
 
 <h2 id="options-de-dimension">Options de dimension</h2>
 
-<p><code class="highlighter-rouge">height</code>             <script type="math/tex">\Rightarrow</script>  Hauteur du widget.
-<code class="highlighter-rouge">width</code>              <script type="math/tex">\Rightarrow</script>  Largeur du widget.
-<code class="highlighter-rouge">padx</code>, <code class="highlighter-rouge">pady</code>       <script type="math/tex">\Rightarrow</script>  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
-<code class="highlighter-rouge">borderwidth</code>        <script type="math/tex">\Rightarrow</script>  Taille de la bordure.
-<code class="highlighter-rouge">highlightthickness</code> <script type="math/tex">\Rightarrow</script>  Largeur du rectangle lorsque le widget a le focus.
-<code class="highlighter-rouge">selectborderwidth</code>  <script type="math/tex">\Rightarrow</script>  Largeur de la bordure tridimensionnel autour du widget sélectionné.
-<code class="highlighter-rouge">wraplength</code>         <script type="math/tex">\Rightarrow</script>  Nombre de ligne maximum pour les widget en mode “word wrapping”.</p>
+<p><code class="highlighter-rouge">height</code>             $ \Rightarrow $  Hauteur du widget.
+<code class="highlighter-rouge">width</code>              $ \Rightarrow $  Largeur du widget.
+<code class="highlighter-rouge">padx</code>, <code class="highlighter-rouge">pady</code>       $ \Rightarrow $  Espace supplémentaire autour du widget. X pour horizontal et V pour vertical.
+<code class="highlighter-rouge">borderwidth</code>        $ \Rightarrow $  Taille de la bordure.
+<code class="highlighter-rouge">highlightthickness</code> $ \Rightarrow $  Largeur du rectangle lorsque le widget a le focus.
+<code class="highlighter-rouge">selectborderwidth</code>  $ \Rightarrow $  Largeur de la bordure tridimensionnel autour du widget sélectionné.
+<code class="highlighter-rouge">wraplength</code>         $ \Rightarrow $  Nombre de ligne maximum pour les widget en mode “word wrapping”.</p>
 
 <h2 id="options-de-couleurs">Options de couleurs</h2>
 <p>Il est possible d’indiquer une valeur de couleur par son nom en anglais:</p>
@@ -571,15 +596,15 @@ tk.Label(l, text="A l'interieur de la frame").pack()
 <p>Ou par son code hexadécimal.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">background (ou bg)</code>   <script type="math/tex">\Rightarrow</script>  couleur de fond du widget.</li>
-  <li><code class="highlighter-rouge">foreground (ou fg)</code>   <script type="math/tex">\Rightarrow</script>  couleur de premier plan du widget.</li>
-  <li><code class="highlighter-rouge">activebackground</code>     <script type="math/tex">\Rightarrow</script>  couleur de fond du widget lorsque celui-ci est actif.</li>
-  <li><code class="highlighter-rouge">activeForeground</code>     <script type="math/tex">\Rightarrow</script>  couleur de premier plan du widget lorsque le widget est actif.</li>
-  <li><code class="highlighter-rouge">disabledForeground</code>   <script type="math/tex">\Rightarrow</script>  couleur de premier plan du widget lorsque le widget est désactivé.</li>
-  <li><code class="highlighter-rouge">highlightbackground</code>  <script type="math/tex">\Rightarrow</script>  Couleur de fond de la région de surbrillance lorsque le widget a le focus.</li>
-  <li><code class="highlighter-rouge">highlightcolor</code>       <script type="math/tex">\Rightarrow</script>  couleur de premier plan de la région en surbrillance lorsque le widget a le focus.</li>
-  <li><code class="highlighter-rouge">selectbackground</code>     <script type="math/tex">\Rightarrow</script>  Couleur de fond pour les éléments sélectionnés.</li>
-  <li><code class="highlighter-rouge">selectforeground</code>     <script type="math/tex">\Rightarrow</script>  couleur de premier plan pour les éléments sélectionnés.</li>
+  <li><code class="highlighter-rouge">background (ou bg)</code>   $ \Rightarrow $  couleur de fond du widget.</li>
+  <li><code class="highlighter-rouge">foreground (ou fg)</code>   $ \Rightarrow $  couleur de premier plan du widget.</li>
+  <li><code class="highlighter-rouge">activebackground</code>     $ \Rightarrow $  couleur de fond du widget lorsque celui-ci est actif.</li>
+  <li><code class="highlighter-rouge">activeForeground</code>     $ \Rightarrow $  couleur de premier plan du widget lorsque le widget est actif.</li>
+  <li><code class="highlighter-rouge">disabledForeground</code>   $ \Rightarrow $  couleur de premier plan du widget lorsque le widget est désactivé.</li>
+  <li><code class="highlighter-rouge">highlightbackground</code>  $ \Rightarrow $  Couleur de fond de la région de surbrillance lorsque le widget a le focus.</li>
+  <li><code class="highlighter-rouge">highlightcolor</code>       $ \Rightarrow $  couleur de premier plan de la région en surbrillance lorsque le widget a le focus.</li>
+  <li><code class="highlighter-rouge">selectbackground</code>     $ \Rightarrow $  Couleur de fond pour les éléments sélectionnés.</li>
+  <li><code class="highlighter-rouge">selectforeground</code>     $ \Rightarrow $  couleur de premier plan pour les éléments sélectionnés.</li>
 </ul>
 
 <h2 id="curseur">Curseur</h2>

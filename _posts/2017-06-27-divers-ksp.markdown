@@ -7,6 +7,7 @@ author: Sol
 category: Divers
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 # Préambule
@@ -53,12 +54,12 @@ La relation mathématique entre **position**, **vélocité** et **accélération
 
 ## Notions
 
-* Prograde $$ \Rightarrow $$ avant
-* Retrograde $$ \Rightarrow $$ arrière
-* Radial $$ \Rightarrow $$ vers le centre de la sphère
-* Anti-radial $$ \Rightarrow $$ vers l'extérieur de la sphère
-* Normal $$ \Rightarrow $$ monter (inclinaison positive)
-* Anti-normal $$ \Rightarrow $$ descendre (inclinaison négative)
+* Prograde $ \Rightarrow $ avant
+* Retrograde $ \Rightarrow $ arrière
+* Radial $ \Rightarrow $ vers le centre de la sphère
+* Anti-radial $ \Rightarrow $ vers l'extérieur de la sphère
+* Normal $ \Rightarrow $ monter (inclinaison positive)
+* Anti-normal $ \Rightarrow $ descendre (inclinaison négative)
 
 ### Gravity turn
 
@@ -71,10 +72,10 @@ Pour un gravity turn réussit, il faut faire en sorte de toujours garder l'indic
 
 ![alt](https://coeleveld.com/wp-content/uploads/2016/09/Kerbal_Navball_Gravity_Turn.png)
 
-* Marqueur jaune prograde $$ \Rightarrow $$ vecteur accélération
-* Le marqueur orange $$ \Rightarrow $$ vers où pointe la fusée
-* ..., 45, 90, 135, ... $$ \Rightarrow $$ compas
-* les autres traits $$ \Rightarrow $$ inclinaison
+* Marqueur jaune prograde $ \Rightarrow $ vecteur accélération
+* Le marqueur orange $ \Rightarrow $ vers où pointe la fusée
+* ..., 45, 90, 135, ... $ \Rightarrow $ compas
+* les autres traits $ \Rightarrow $ inclinaison
 
 ### Vitesse terminale
 
@@ -91,7 +92,7 @@ Dans le cas d'une fusée, à la place de la gravité c'est la poussée et elle v
 | 6000 | 180 |
 | 7000 | 200 |
 | 8000 | 220 |
-| 10 000 | 260 $$ \Rightarrow $$ gravity turn|
+| 10 000 | 260 $ \Rightarrow $ gravity turn|
 
 <span style="color:red"> Garder en tête que si on subit des turbulences où que les pièces s'échauffent **il faut baisser la poussée!** </span> 
 

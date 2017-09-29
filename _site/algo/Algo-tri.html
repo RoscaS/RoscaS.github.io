@@ -13,6 +13,10 @@
   <link rel="canonical" href="http://localhost:4000/algo/Algo-tri.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
 </head>
 
 
@@ -46,9 +50,29 @@
 
 
         <div class="wrapper">
-            <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
 
-<header class="post-header">
 
     <center>
 		<div class="post-title" itemprop="name headline">Algo: Tri (fr)</div>
@@ -79,6 +103,7 @@
     <center>      
 		<p>
 			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
 			<a class="link" href="/archive/">Archive</a> /
 			<a class="link" href="/category/">Category</a> / 
 			<a class="link" href="/tags/">Tags</a> / 
@@ -172,7 +197,7 @@ de parcours du tableau a sa variable d’itération qui est égale au nombre de 
 <p>La boucle intérieur qui est responsable du nombre de comparaisons par parcours a sa variable d’itération
 que est également égale au nombre de cases du tableau <code class="highlighter-rouge">-1</code>.</p>
 
-<p><script type="math/tex">(n-1) \cdot (n-1)^2</script>  comparaisons La complexité de cet version de l’algorithme 
+<p>$ (n-1) \cdot (n-1)^2 $  comparaisons La complexité de cet version de l’algorithme 
 est de:</p>
 
 <script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
@@ -207,7 +232,7 @@ est de:</p>
 
 <h3 id="flag">Flag</h3>
 
-<p>Le tableau est donc suceptible d’être trié avant les (N-1) parcours. Il serait donc profitable de cesser les parcours dés que le tableau est trié surtout dans le cas d’un tableau qui est totalement trié dés le début. C’est ce que nous permet la prochaine amélioration qui stop la fonction si un parcours entier a été fait sans aucun échange:</p>
+<p>Le tableau est donc suceptible d’être trié avant les $N-1$ parcours. Il serait donc profitable de cesser les parcours dés que le tableau est trié surtout dans le cas d’un tableau qui est totalement trié dés le début. C’est ce que nous permet la prochaine amélioration qui stop la fonction si un parcours entier a été fait sans aucun échange:</p>
 
 <p><a href="00illustrations/triBulle_Flag.png"><img src="/00illustrations/triBulle_Flag.png" align="" height="300" float="right" /></a></p>
 
@@ -234,9 +259,7 @@ est de:</p>
 
 <h3 id="complexité-1">Complexité</h3>
 
-<p>Le nombre maximum d’échanges reste le même:</p>
-
-<script type="math/tex; mode=display">\frac{n(n-1)}{2}</script>
+<p>Le nombre maximum d’échanges reste le même: $\frac{n(n-1)}{2}$</p>
 
 <p>Mais la complexité de l’algorithme a augmenté, ainsi
 que sa durée d’execution.
@@ -361,7 +384,7 @@ Ce tri prend fin quand les deux variables <code class="highlighter-rouge">ptrDeb
 
 <h3 id="conclusion-sur-les-améliorations">Conclusion sur les améliorations</h3>
 
-<p>Toutes les améliorations n’ont pas modifié le nombre d’échanges à faire (<em>logique</em>) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération <strong>plus couteuse</strong> qu’une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du <script type="math/tex">\color{red}{O(n^2)}</script>.</p>
+<p>Toutes les améliorations n’ont pas modifié le nombre d’échanges à faire (<em>logique</em>) et réduisent uniquement le nombre de comparaisons redondantes. Un échange (permutation) est généralement une opération <strong>plus couteuse</strong> qu’une comparaison de de clé. Ce qui fait que si on ne concidère que le pire des cas pour évaluer la complexité des différentes améliorations on se retrouve toujours avec du $\color{red}{O(n^2)}$.</p>
 
 <h2 id="3-tri-par-extraction-selection-sort">3. Tri par extraction (Selection-sort)</h2>
 
@@ -464,9 +487,9 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 </blockquote>
 
 <h3 id="complexité-2">Complexité:</h3>
-<p>L’algorithme <code class="highlighter-rouge">placerMinimumAGauche()</code> est exécuté <script type="math/tex">n-1</script> fois pour un tableau de <script type="math/tex">n</script> éléments et ceci indépendamment de l’ordre initial des clés. A chaque exécution, cet algorithme effectue <script type="math/tex">Droite - Gauche</script> comparaisons.</p>
+<p>L’algorithme <code class="highlighter-rouge">placerMinimumAGauche()</code> est exécuté $n-1$ fois pour un tableau de $n$ éléments et ceci indépendamment de l’ordre initial des clés. A chaque exécution, cet algorithme effectue $Droite - Gauche$ comparaisons.</p>
 
-<script type="math/tex; mode=display">n-1 + n-2 +  ...  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}</script>
+<p>$ n-1 + n-2 +  …  + 3 + 2 + 1 = \bbox[20px,border:2px solid red] {\frac{(n(n-1))}{2}}$</p>
 
 <p>Le tri par extraction est aussi lent que le tri bulle dans le cas d’un tableau à clés aléatoirement dispersées. Des différences en plus ou en moins peuvent apparaître dans des cas particuliers. Le tri par extraction est innefficace sur un tableau déjà ordonné puisqu’il n’est ps capable de s’en appercevoir.</p>
 
@@ -510,7 +533,7 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 
 <p>Cette méthode de tri consiste à insérer un élément du tableau qui n’est pas encore à sa place dans une partie déjà ordonnée, puis à recommencer avec les éléments suivant. La première étape montre comment insérer un élément dans la partie déjà triée.</p>
 
-<p>Dans le tableau <em>T</em> suivant, les éléments d’indices <script type="math/tex">Gauche</script> <script type="math/tex">à</script> <script type="math/tex">i-1</script> sont déjà dans l’ordre croissant. L’élément d’indice <em>i</em> doit être inséré.</p>
+<p>Dans le tableau <em>T</em> suivant, les éléments d’indices $Gauche$ $à$ $i-1$ sont déjà dans l’ordre croissant. L’élément d’indice <em>i</em> doit être inséré.</p>
 
 <p><img src="/00illustrations/algo-tri/insert1.png" align="" height="150" float="right" /></p>
 
@@ -537,7 +560,7 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 <span class="p">}</span>
 </code></pre>
 </div>
-<p>Pour trier complètement le tableau il suffit d’insérer successivement ses éléments en commençant par le deuxième élément (indice <script type="math/tex">Gauche+1</script>) et en terminant par le dernier élément du tableau (indice <script type="math/tex">Droite</script>).</p>
+<p>Pour trier complètement le tableau il suffit d’insérer successivement ses éléments en commençant par le deuxième élément (indice $Gauche+1$) et en terminant par le dernier élément du tableau (indice $Droite$).</p>
 
 <p><img src="/00illustrations/algo-tri/insert3.png" align="" height="150" float="right" /></p>
 
@@ -552,14 +575,14 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 </div>
 
 <h3 id="complexité-3">Complexité</h3>
-<p>La boucle <code class="highlighter-rouge">for</code> s’exécute au moins <script type="math/tex">n-1</script> fois et le nombre d’executions de la boucle <code class="highlighter-rouge">while</code> dépend du tableau à trier:</p>
+<p>La boucle <code class="highlighter-rouge">for</code> s’exécute au moins $n-1$ fois et le nombre d’executions de la boucle <code class="highlighter-rouge">while</code> dépend du tableau à trier:</p>
 
 <ol>
   <li>
-    <p>Dans le meilleur cas, le tableau est déja trié <code class="highlighter-rouge">t[j] &gt; temp</code> est toujours <em>faux</em> et aucun échange de données n’est nécéssaire ce qui fait que la boucle <code class="highlighter-rouge">for</code> s’executera <script type="math/tex">n-1</script> fois. La complexité sera donc de <script type="math/tex">O(n)</script></p>
+    <p>Dans le meilleur cas, le tableau est déja trié <code class="highlighter-rouge">t[j] &gt; temp</code> est toujours <em>faux</em> et aucun échange de données n’est nécéssaire ce qui fait que la boucle <code class="highlighter-rouge">for</code> s’executera $n-1$ fois. La complexité sera donc de $O(n)$</p>
   </li>
   <li>
-    <p>Dans le pire cas, le tableau est trié à l’envers et <code class="highlighter-rouge">t[j] &gt; temp</code> est toujours <em>vrai</em>, dans ce cas la boucle <code class="highlighter-rouge">while</code> s’executera à chaque fois. La complexité sera donc de <script type="math/tex">O(n \cdot n) = O(n^2)</script></p>
+    <p>Dans le pire cas, le tableau est trié à l’envers et <code class="highlighter-rouge">t[j] &gt; temp</code> est toujours <em>vrai</em>, dans ce cas la boucle <code class="highlighter-rouge">while</code> s’executera à chaque fois. La complexité sera donc de $ O(n \cdot n) = O(n^2) $</p>
   </li>
 </ol>
 
@@ -572,8 +595,7 @@ Gauche est incrémenté de 1 à chaque nouveau tour.</p>
 
 <h3 id="stabilité-1">Stabilité</h3>
 
-<p>Considérons deux éléments du tableau, ayant la même clef, et d’indices <em>i</em> et <em>j</em> avec <script type="math/tex">% <![CDATA[
-i < j %]]></script>.  Le parcours de la partie non triée du tableau s’effectuant de <script type="math/tex">Gauche+1</script> vers <script type="math/tex">Droite</script>, l’élément d’indice <em>i</em> sera inséré le premier dans la partie déjà triée du tableau, à l’indice <em>i’</em>. Lorsque l’élément d’indice <em>j</em> devra être inséré, il le sera juste après le premier élément qui ne lui est pas strictement supérieur (car l’algorithme décrit ici effectue une comparaison stricte), c’est-à-dire à l’indice <script type="math/tex">i'+1</script>. Après le tri, l’élément qui avait pour indice <em>i</em> se retrouve bien avant celui qui avait pour indice <em>j</em> : <strong>le tri par insertion est donc stable.</strong></p>
+<p>Considérons deux éléments du tableau, ayant la même clef, et d’indices <em>i</em> et <em>j</em> avec $ i &lt; j $.  Le parcours de la partie non triée du tableau s’effectuant de $Gauche+1$ vers $Droite$, l’élément d’indice <em>i</em> sera inséré le premier dans la partie déjà triée du tableau, à l’indice <em>i’</em>. Lorsque l’élément d’indice <em>j</em> devra être inséré, il le sera juste après le premier élément qui ne lui est pas strictement supérieur (car l’algorithme décrit ici effectue une comparaison stricte), c’est-à-dire à l’indice $i’+1$. Après le tri, l’élément qui avait pour indice <em>i</em> se retrouve bien avant celui qui avait pour indice <em>j</em> : <strong>le tri par insertion est donc stable.</strong></p>
 
 <h2 id="4-tri-par-base-radix-sort">4. Tri par base (radix-sort)</h2>
 
@@ -594,7 +616,7 @@ Comme le principe du <strong>fifo</strong> est requis, nous pouvons utiliser des
 
 <p>Dans les exemples qui suivent, je vais utiliser une classe <code class="highlighter-rouge">Queue</code> dont l’imlémentation est spécifiées <a href="/algo/Algo-Structures-de-donnees.html">ici</a></p>
 
-<p>Le tableau d’éléments à ordonner dans l’ordre croissant de cet exemple contient <script type="math/tex">n</script> éléments et ses indices vont de <script type="math/tex">Gauche</script> à <script type="math/tex">Droite</script> (<script type="math/tex">0</script> à <script type="math/tex">n-1</script>)</p>
+<p>Le tableau d’éléments à ordonner dans l’ordre croissant de cet exemple contient $n$ éléments et ses indices vont de $Gauche$ à $Droite$ ($0$ à $n-1$)</p>
 
 <p>L’algorithme de <strong>tri par base</strong> peut facilement être divisé en deux fonctions. Dans un soucis de clarté je vais le diviser en 4 parties qui correspondes aux grandes étapes de l’algorithme.</p>
 
@@ -672,7 +694,7 @@ double&gt;::__type {aka double}'</span> and <span class="s1">'int'</span> to bin
     <p>Convertir le nombre en chaine de caractère, puis extraire le caractère désiré</p>
   </li>
   <li>
-    <p>Arithmétique : <script type="math/tex">1984 = 1 \cdot 103 + 9 \cdot 102 + 8 \cdot 101 + 4 \cdot 100</script> on peut donc aisément retrouver la valeur de chaque chiffre grâce à des divisions par des puissances de 10 et l’opérateur modulo.</p>
+    <p>Arithmétique : $1984 = 1 \cdot 103 + 9 \cdot 102 + 8 \cdot 101 + 4 \cdot 100$ on peut donc aisément retrouver la valeur de chaque chiffre grâce à des divisions par des puissances de 10 et l’opérateur modulo.</p>
   </li>
 </ul>
 
@@ -757,7 +779,7 @@ double&gt;::__type {aka double}'</span> and <span class="s1">'int'</span> to bin
 
 <p>Lors de chaque parcours, on va recopier les <em>n</em> valeurs dans les files temporaires fileS[x] (<strong><em>n</em> affectations</strong>), puis les recopier dans le tableau initial. On aura donc 2 x <em>n</em> opérations élémentaires.</p>
 
-<p>Pour <em>k</em> passes, la fonction de complexité sera donc: <script type="math/tex">f(n)=2kn</script>
+<p>Pour <em>k</em> passes, la fonction de complexité sera donc: $ f(n)=2kn$
 Si <em>k</em> est constant, notre algorithne est donc linéaire:</p>
 
 <script type="math/tex; mode=display">\bbox[20px,border:2px solid red]
@@ -786,28 +808,28 @@ Si <em>k</em> est constant, notre algorithne est donc linéaire:</p>
   <tbody>
     <tr>
       <td>Bulles et améliorations</td>
-      <td><script type="math/tex">O(n^2)</script></td>
+      <td>$ O(n^2) $</td>
       <td>oui</td>
       <td>Echange</td>
       <td>Sait détecter un tableau trié</td>
     </tr>
     <tr>
       <td>Extraction</td>
-      <td><script type="math/tex">O(n^2)</script></td>
+      <td>$ O(n^2) $</td>
       <td>non</td>
       <td>Sélection</td>
       <td>Inefficace sur un tableau déja trié (le pire)</td>
     </tr>
     <tr>
       <td>Insertion</td>
-      <td><script type="math/tex">O(n^2)</script></td>
+      <td>$ O(n^2) $</td>
       <td>oui</td>
       <td>Insertion</td>
       <td>Intéressant pour insérer des vleurs dans un tableau déjà trié*</td>
     </tr>
     <tr>
       <td>Base</td>
-      <td><script type="math/tex">O(n)</script></td>
+      <td>$ O(n) $</td>
       <td>oui</td>
       <td>Distribution</td>
       <td>Intéressant pour les petites valeurs (“petit” nombre de chiffres)</td>

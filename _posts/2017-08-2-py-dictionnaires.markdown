@@ -7,46 +7,47 @@ author: Sol
 category: Py
 tags: divers, fr, en
 finished: false
+mathjax: true
 ---
 
 ## Méthodes
 
-* `len(d)` $$ \Rightarrow $$ retourne le nombre d'objets dans le dico `d`
+* `len(d)` $ \Rightarrow $ retourne le nombre d'objets dans le dico `d`
 
 #### Get, Set, Delete
 
-* `d[k]` $$ \Rightarrow $$ retourne la valeur de la **clé** $$k$$ _if_ existe, _else_ <span style="color:red"> KeyError</span>
-* `d.get(k)` $$ \Rightarrow $$ _return_ la valeur de la **clé** $$k$$ _if_ existe, _else_ return `None`
-* `d.get(k, v)` $$ \Rightarrow $$ _return_ la valeur de la **clé** $$k$$ _if_ existe, _else_ return $$v$$
-* `d[k] = v` $$ \Rightarrow $$ _if_ $$k$$ existe, remplace la valeur à la **clé** $$k$$ _else_ crée nouvelle entré
-* `del d[k]` $$ \Rightarrow $$ supprime la clé/valeur de la **clé** $$k$$ _if_ existe, else <span style="color:red"> KeyError </span> 
+* `d[k]` $ \Rightarrow $ retourne la valeur de la **clé** $k$ _if_ existe, _else_ <span style="color:red"> KeyError</span>
+* `d.get(k)` $ \Rightarrow $ _return_ la valeur de la **clé** $k$ _if_ existe, _else_ return `None`
+* `d.get(k, v)` $ \Rightarrow $ _return_ la valeur de la **clé** $k$ _if_ existe, _else_ return $v$
+* `d[k] = v` $ \Rightarrow $ _if_ $k$ existe, remplace la valeur à la **clé** $k$ _else_ crée nouvelle entré
+* `del d[k]` $ \Rightarrow $ supprime la clé/valeur de la **clé** $k$ _if_ existe, else <span style="color:red"> KeyError </span> 
 
 #### Check existence
-* `k in d` $$ \Rightarrow $$ `True` _if_ $$d$$ a une clé $$k$$ _else_ `False` 
-* `k not in d` $$ \Rightarrow $$ `True` _if_ $$d$$ n'a pas une clé $$k$$ _else_ `False` 
+* `k in d` $ \Rightarrow $ `True` _if_ $d$ a une clé $k$ _else_ `False` 
+* `k not in d` $ \Rightarrow $ `True` _if_ $d$ n'a pas une clé $k$ _else_ `False` 
 
 #### Get all keys, values, keys/values
 
-* `d.keys()` $$ \Rightarrow $$ repr de toutes les clés
-* `d.values()` $$ \Rightarrow $$ repr de toutes les valeurs
-* `d.items()` $$ \Rightarrow $$ repr (tuples) de toutes les clé/valeurs
+* `d.keys()` $ \Rightarrow $ repr de toutes les clés
+* `d.values()` $ \Rightarrow $ repr de toutes les valeurs
+* `d.items()` $ \Rightarrow $ repr (tuples) de toutes les clé/valeurs
 
 #### Pop
 
-* `d.pop(k)` $$ \Rightarrow $$ supprime et _return_ la valeur _if_ **clé** $$k$$ exist, _else_ <span style="color:red">KeyError</span>.
-* `d.pop(k,v)` $$ \Rightarrow $$ supprime et _return_ la valeur _if_ **clé** $$k$$ _else_ _return_ $$v$$
-* `d.popitem()` $$ \Rightarrow $$ supprime et _return_ une random clé/valeur _if_ $$d$$ vide <span style="color:red"> KeyError </span> 
+* `d.pop(k)` $ \Rightarrow $ supprime et _return_ la valeur _if_ **clé** $k$ exist, _else_ <span style="color:red">KeyError</span>.
+* `d.pop(k,v)` $ \Rightarrow $ supprime et _return_ la valeur _if_ **clé** $k$ _else_ _return_ $v$
+* `d.popitem()` $ \Rightarrow $ supprime et _return_ une random clé/valeur _if_ $d$ vide <span style="color:red"> KeyError </span> 
 
 
 #### Set value
 
-* `d.setdefault(k)` $$ \Rightarrow $$ _if_ **clé** $$k$$ existe _return_ value _else_ ajoute la clé $$k$$ avec valeur `None`
-* `d.setdefault(k, v)` $$ \Rightarrow $$ _if_ **clé** $$k$$ existe _return_ value _else_ ajoute clé $$k$$ avec valeur $$v$$
+* `d.setdefault(k)` $ \Rightarrow $ _if_ **clé** $k$ existe _return_ value _else_ ajoute la clé $k$ avec valeur `None`
+* `d.setdefault(k, v)` $ \Rightarrow $ _if_ **clé** $k$ existe _return_ value _else_ ajoute clé $k$ avec valeur $v$
 
 #### Clear, copy
 
-* `d.clear()` $$ \Rightarrow $$ supprime tout
-* `d.copy()` $$ \Rightarrow $$ _return_ shallow copy de $$d$$
+* `d.clear()` $ \Rightarrow $ supprime tout
+* `d.copy()` $ \Rightarrow $ _return_ shallow copy de $d$
 
 
 
