@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Web: Webiste-Tools"
-subtitle: ""
+subtitle: "none"
 date: 2017-09-17
 author: Sol
 category: Web
@@ -96,6 +96,10 @@ plt.show() # show figure
     <iframe src="https://www.desmos.com/calculator/ed4ztrpu0q?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
 </div>
 
+<<<<<<< HEAD
+
+=======
 <div>
     <iframe src="https://www.desmos.com/calculator/dpbapl2vvu?embed" width="500px" height="500px" style="border: 0px solid"></iframe>
 </div>
+>>>>>>> 0b9178d780ad152e6021e57be0007a443558e4b2
