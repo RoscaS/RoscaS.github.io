@@ -69,6 +69,7 @@ Peut faire les deux avec le même vaisseau
 * Put a new satellite in orbit of Duna
 * Put a new satellite in orbit of Duna
 * Put a new satellite in orbit of the Sun
+    * Pret à partir. En Orbite parking autour de Kerbin
 
 ##### Scan-Sat
 * High resolution scan of Duna (**pas encore acceptee**, 3 étoiles)
