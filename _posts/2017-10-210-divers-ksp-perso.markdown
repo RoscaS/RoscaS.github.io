@@ -103,9 +103,9 @@ Peut faire les deux avec le même vaisseau
     * 16 tourists
     * orbit Kerbin above 75 000m
     * 40 days
-    * crew: Pilot
-    * crew: Engineer
-    * crew: Scientist
+    * crew: Pilot (Jeb 2 starts)
+    * crew: Engineer (Bill)
+    * crew: Scientist (random)
     * At least one crew with 2 stars XP
     * **Recrute les meilleurs!**
 
