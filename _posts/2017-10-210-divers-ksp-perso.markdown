@@ -32,7 +32,20 @@ Midland Canyon   |     |       |
 Eastern Canyon   |     |       |              
 Western Canyon   |     |       |
 
+
 # Missions
+
+
+## Todo
+
+* Envoyer un bete prob qui peut faire l'aller retour Kerbin Duna avant la grosse mission sur Duna
+* Faire les mission `plant grow` sur Minimus et Kerbin <span style="color:red"> S'assurer de la bonne orbite (basse). </span> 
+* Manned land on the Mun (et revenir).
+* Lancer le prob en orbite solaire. <span style="color:orange"> en cours </span> 
+* Scan ressources de Minimus
+* Scan high res Minimus
+* Scan ressources de Mun 
+
 
 ## Duna & Ike
 
@@ -92,6 +105,7 @@ Peut faire les deux avec le même vaisseau
 
 
 
+
 ## Autres
 
 * Land on the Mun (Doit finir pour recuperer un slot 3 etoiles pour prendre quete "mopping up")
@@ -100,7 +114,7 @@ Peut faire les deux avec le même vaisseau
 * Return surface Sample from Minimus Midland to Minimus Space Station (Doit finir pour recuperer un slot 3 etoiles pour prendre quete "mopping up")
 
 
-* Hold a space camp
+* Hold a space camp <span style="color:green"> En cours </span> 
     * 16 tourists
     * orbit Kerbin above 75 000m
     * 40 days
