@@ -9,7 +9,14 @@ tags: divers, fr, en, ksp
 finished: false
 mathjax: true
 ---
-     
+
+# Interplantary tranfer
+
+* [En deux mots](http://ksp.olex.biz/)
+
+## Thumb rule
+
+<a href=http://i.imgur.com/f4JVKSL.png><img src="http://i.imgur.com/f4JVKSL.png" align="" height=""></a>
 
 # Biomes
 
@@ -39,13 +46,11 @@ Western Canyon   |     |       |
 ## Todo
 
 * Envoyer un bete prob qui peut faire l'aller retour Kerbin Duna avant la grosse mission sur Duna
-* Faire les mission `plant grow` sur Minimus et Kerbin <span style="color:red"> S'assurer de la bonne orbite (basse). </span> 
-* Manned land on the Mun (et revenir).
+* Faire les mission `plant grow` sur Kerbin <span style="color:red"> S'assurer de la bonne orbite (basse). </span> 
 * Lancer le prob en orbite solaire. <span style="color:orange"> en cours </span> 
-* Scan ressources de Minimus
 * Scan high res Minimus
-* Scan ressources de Mun 
 
+* Scan high res + ressources Duna & Ike
 
 ## Duna & Ike
 
@@ -54,10 +59,6 @@ Year 3 day 308 @ 1644m/s
 
 ### Logistique
 Lander presque vide de fuel. Atteris au parachute (Pilote ingé ou ingé à bord) recharge fuel + monoprop via Ore extraction.
-
-> Peut faire des tests sur Mun.
-> * Scan Minimus for resources (pas encore acceptée)
-> * Scan Mun for resources (pas encore acceptée)
 
 ### Missions
 
@@ -81,11 +82,13 @@ Peut faire les deux avec le même vaisseau
 
 * Put a new satellite in orbit of Duna
 * Put a new satellite in orbit of Duna
-* Put a new satellite in orbit of the Sun
-    * Pret à partir. En Orbite parking autour de Kerbin
+
 
 ##### Scan-Sat
 * High resolution scan of Duna (**pas encore acceptee**, 3 étoiles)
+    * 95% Scan of Duna (High res)
+
+* High resolution scan of Minimus (**pas encore acceptee**, 3 étoiles)
     * 95% Scan of Duna (High res)
 
 #### Exploration
