@@ -72,9 +72,49 @@ j'aime la viande rouge bien cuite
  Suivi par le char ' '     qui apparait 5 fois.
  ```
 
+## Trackback as a string
 
+When Python encounters an error, it produces an error message called *trackback*. The trackback includes the error message, the line number of the line that caused the error, and the sequence of the functions calls that led to the error. This sequence of calls is called the *call stack*.
 
+```py
+def spam():
+    bacon()
 
+def bacon():
+    raise Exception('This is the error message.')
+
+spam()
+```
+
+**return:**
+
+```
+Traceback (most recent call last):
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 7, in <module>
+    spam()
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 2, in spam
+    bacon()
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 5, in bacon
+    raise Exception('This is the error message.')
+Exception: This is the error message.
+```
+
+Here we can see that the error happened on line 5, in the `bacon()` function. This particular call to `bacon()` canme from line 2, in the `spam()` function, which in turn was called on line 7.
+
+The traceback is displayed by Python whenever a raised exception goes unhandled. But **we can also obtain it as a string** by calling the `traceback.format_exec()`. This function is useful if you want the information from an exception but also want an `except` statement to gracefully handle the exception. You will need to import Python's traceback module before calling this function. For example, instead of crashing your program right when an exception occurs, you can write the traceback information to a log file and keep your program tunning. You can look at the log file later, when you're ready to debug your program.
+
+```py
+>>> import traceback 
+>>> try:
+         raise Exception('This is the error message.') 
+except:
+        errorFile = open('errorInfo.txt', 'w')
+        errorFile.write(traceback.format_exc())         
+        errorFile.close()         
+        print('The traceback info was written to errorInfo.txt.')
+
+116 
+The traceback info was written to errorInfo.txt.
 
 
 ## Poids (bytes) d'une structure de données

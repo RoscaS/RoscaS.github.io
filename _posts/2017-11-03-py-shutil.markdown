@@ -1,0 +1,45 @@
+---
+layout: post
+title: "Py: Module Shutil"
+subtitle: "os et Shutil"
+date: 2017-11-03
+author: Sol
+category: py
+tags: tools
+finished: true
+mathjax: true
+---
+
+# Intro
+
+Propose des fonctionnalités pour copier, déplacer, renomer, suprimer des fichiers au sein de Python.
+
+# Copie, Déplacement
+
+```py
+>>> import shutil, os
+>>> os.chdir('c:\\')
+>>> shutil.copy('c:\\spam.txt', 'c:\\delicious')
+'c:\\delicious\\spam.txt'
+>>> shutil.copy('eggs.txt', 'c:\\delicious\\egs2.txt')
+'c:\\delicious\\eggs2.txt'
+```
+
+# Walk
+
+```py
+import os
+
+for folderName, subfolders, filename in os.walk('c:\\python3'):
+    print('the current folder is ' + folderName)
+
+for subfloder in subfolders:
+    print('SUBFOLDER OF ' + folderName + ': ' + subfolder)
+
+for filename in filenames:
+    print('FILE INSIDE ' + folderName + ': ' + filename)
+
+print('')
+```
+
+Ce bout de code nous fait traverser toute la ramification du dossier spécifié et print chaque dossier et fichier qu'il croise.
