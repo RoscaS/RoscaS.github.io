@@ -65,6 +65,38 @@ s’intéresse aux pensées subjectives de la perception. C’est dans ce  domai
 
 # IT
 
+## Langage à typage statique/dynamique
+
+[stackoverflow](https://stackoverflow.com/questions/1517582/what-is-the-difference-between-statically-typed-and-dynamically-typed-languages)
+
+### Typage statique
+Un langage est à **typage statique** si le type d'une variable est connu au moment de la compilation (compile-time par opposition a run-time). Dans la majorité des langages à typage statique, cela veut dire que le programmeur doit spécifier le type de chaque variable (C, C++ "classique", Java); d'autre langages à typage statique offre un certain niveau de reconnaissance de type (comme la fonction `auto` du C++ "moderne") qui permet au langage de déduire le type d'une variable (OCaml, Haskell, Scala, Kotlin, ...).
+
+Le principal avantage du typage statique est que de nombreuses vérifications peuvent être faites par le compilateur et permet de mettre en évidence des bugs "triviaux" très tot dans le processus de développement.
+
+### Typage dynamique
+Un lanage est à **typage dynamique** si le type est associé à des run-time values (et ce ne sont donc pas des variables?? voir poste de la source, **détail important**). Cela veut dire que le programmeur peut écrire plus rapidement car il ne doit pas spécifier les types (Perl, Ruby, Python, ...).
+
+### Hybride
+Un langage en cours de développement nommé [Rascal](http://www.rascal-mpl.org/) emprunte un approche hybride qui utilise un typage statique pour la signature d'une fonction mais qui permet un typage dynamique dans son corp.
+
+## Langage compilé dynamiquement/statiquement
+<span style="color:red"> A ne pas confondre avec le point précédent! </span>
+
+**Compilation** dynamique et **typage** dynamique n'ont pas grand chose à voir l'un avec l'autre. Le **typage** fait partie de la syntaxe du langage alors que la **statégie de compilation** fait partie de l'implémentation du langage.
+
+Un langage dynamiquement compilé veut dire que ce dernier est traduit (compilé) en langage machine pendant que le code est executé (**et non pas avant** l'execution). Ceci permet par exemple de faire du [JIT](https://en.wikipedia.org/wiki/Just-in-time_compilation) (just-in-time-optimization: optimisation du code pendant que l'application tourne).
+
+### Précision
+Le compilateur traduit le code source du C et C++ statiquement vers le langage machine.
+
+Java est compilé vers du "bytecode" par la machine virtuelle de Java (Java compiler _peut être une confusion ici_). A l'execution, un programme java utilise un compilateur [JIT](https://en.wikipedia.org/wiki/Just-in-time_compilation) pour traduire le bytecode Java vers le langage machine natif du CPU de la machine qui execute le code.
+
+**Compiler un programme vers le langage machine pendant que le programme tourne est appellé "compilation dynamique.**
+
+
+
+
 ## idiom
 
 [stackoverflow](https://stackoverflow.com/questions/302459/what-is-a-programming-idiom)  

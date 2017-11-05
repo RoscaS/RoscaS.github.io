@@ -1,0 +1,176 @@
+---
+layout: post
+title: "Py: Methode Super"
+subtitle: ""
+date: 2017-11-05
+author: Sol
+category: Py
+tags: tools
+finished: true
+mathjax: true
+---
+
+## Source
+
+* [Python 201: intermediat Python](https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/)
+
+## Super
+
+La fonction built-in `super` retourne un "proxy" objet qui va déléguer les appels de méthode à une classe parent. 
+
+Autrement dit, cette fonction nous permet d'accéder à des méthodes héritées tel qu'elle le sont dans la classe parent.
+
+```py
+class A():
+    def __init__(self):
+        pass
+    
+    def display(self):
+        print('A')
+
+
+class B(A):
+    def __init__(self):
+        pass
+
+    def display(self):
+        print('B')
+
+
+b = B()
+
+b.display()
+
+super(B, b).display()
+```
+La syntaxe est: `super(Classe, objet)[.méthode][.variable de classe]` et retourne dans le cas de notre exemple:
+
+```
+B
+A
+```
+
+Un second exemple plus complet:
+
+```py
+class A():
+    def __init__(self, arg1):
+        self.arg1 = str(arg1)
+    
+    def display(self):
+        return self.arg1
+
+
+class B(A):
+    def __init__(self, arg1, arg2):
+        super().__init__(arg1)
+        self.arg2 = str(arg2)
+
+    def display(self):
+        return super().display() + self.arg2
+
+
+class C(B):
+    def __init__(self, arg1, arg2, arg3):
+        super().__init__(arg1, arg2)
+        self.arg3 = str(arg3)
+
+    def display(self):
+        return super().display() + self.arg3
+
+
+a = A(1)
+b = B(1,2)
+c = C(1,2,3)
+
+
+print(a.display())
+print(b.display())
+print(c.display())
+```
+
+Qui retourne:
+
+```
+1
+12
+123
+```
+
+La méthode super à deux cas d'utilisation classiques:
+1. Héritage simple: `super` est utilisé pour faire référence à la classe parent sans la nommer explicitement. C'est une mécanique répandue dans les langages orienté objet.
+
+2. Le second cas est plus complexe car contrairement au premier il est unique à Python. Il permet, dans un environement d'execution dynamique le support d'héritage multiple coopératif. Cette mécanique ne peut pas se retrouver dans un langage qui ne supporte pas l'héritage multiple ou dans les langages compilés statiques.
+
+> C et C++ sont des langages compilés statiques
+
+
+
+
+
+
+La fonction `super` appelée en dehors d'une classe avec comme arguments une classe et un objet issu de cette classe retourn la méthode ou la variable spécifié tel qu'elle est 
+
+
+## MRO
+
+La méthode `__mro__` (Method Resolution Order) retourne un tuple contenant les classes dont l'objet appelant est dérivé. Si nous avons une clase qui hérite de deux autres classes, on pourrait penser que son MRO sera: La classe elle-même ainsi que les deux parents dont elle hérite mais li ne faut pas oublier qu'en Python, les classes parents sont elles-mêmes dérivées de la classe de base `Object`:
+
+> En Python 3 il n'est plus nécéssaire de dire à Python qu'une classe hérite de la classe de base `Object`. Python le fait implicitement si aucun héritage n'est spécifié.
+
+```py
+class X():
+    def __init__(self):
+        print('X')
+        super().__init__()
+
+class Y():
+    def __init__(self):
+        print('Y')
+        super().__init__()
+
+class Z(X, Y):
+    pass
+
+z = Z()
+print(Z.__mro__)
+```
+
+Ici nous créons 3 classes. Les deux premières ne font que printer leur nom et la dernière hérite des deux premières. Ensuite on instancie un objet de type `Z` et printons son MRO qui retourne:
+
+```
+X
+Y
+(<class '__main__.Z'>, <class '__main__.X'>, <class '__main__.Y'>, <class 'object'>)
+```
+
+Comme nous pouvons le voir, lors de l'instanciation de l'objet de type `Z`, les deux classes parents executent le code dans leur `__init__`, ensuite nous avons la méthode `__mro__` appelée par l'objet de type `Z` qui nous retourne une liste qui contient l'ordre de résolution que suit un objet de son type qui est `Z` ensuite `X` puis `Y` et finalement `Object`.
+
+Un autre exemple parlant est de regarder ce qui se passe quand on crée une variable de classe dans la classe de base et qu'on l'override plus tard:
+
+```py
+class Base:
+    var = 5
+    def __init__(self):
+        pass
+
+class X(Base):
+    def __init__(self):
+        print('X')
+        super().__init__()
+
+class Y(Base):
+    var = 10
+    def __init__(sefl):
+        print('Y')
+        super().__init__()
+
+class Z(X, Y):
+    pass
+
+
+z = Z()
+print(Z.__mro__)
+print(super(Z, z).var)
+```
+

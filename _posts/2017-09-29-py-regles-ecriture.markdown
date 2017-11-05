@@ -4,7 +4,7 @@ title: "Py: Regles d'écriture "
 subtitle: "Pour un code Pythonique"
 date: 2017-09-29
 author: Sol
-category: py
+category: Py
 tags: tools
 finished: true
 mathjax: true

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-debug.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: debugging</title>
+  <meta name="description" content="Trackback as a string">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: debugging</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="03 Nov 2017" itemprop="datePublished">Nov 3 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tools</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p></p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="trackback-as-a-string">Trackback as a string</h2>
+
+<p>When Python encounters an error, it produces an error message called <em>trackback</em>. The trackback includes the error message, the line number of the line that caused the error, and the sequence of the functions calls that led to the error. This sequence of calls is called the <em>call stack</em>.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">spam</span><span class="p">():</span>
+    <span class="n">bacon</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">bacon</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'This is the error message.'</span><span class="p">)</span>
+
+<span class="n">spam</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><strong>return:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Traceback (most recent call last):
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 7, in &lt;module&gt;
+    spam()
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 2, in spam
+    bacon()
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 5, in bacon
+    raise Exception('This is the error message.')
+Exception: This is the error message.
+</code></pre>
+</div>
+
+<p>Here we can see that the error happened on line 5, in the <code class="highlighter-rouge">bacon()</code> function. This particular call to <code class="highlighter-rouge">bacon()</code> canme from line 2, in the <code class="highlighter-rouge">spam()</code> function, which in turn was called on line 7.</p>
+
+<p>The traceback is displayed by Python whenever a raised exception goes unhandled. But <strong>we can also obtain it as a string</strong> by calling the <code class="highlighter-rouge">traceback.format_exec()</code>. This function is useful if you want the information from an exception but also want an <code class="highlighter-rouge">except</code> statement to gracefully handle the exception. You will need to import Python’s traceback module before calling this function. For example, instead of crashing your program right when an exception occurs, you can write the traceback information to a log file and keep your program tunning. You can look at the log file later, when you’re ready to debug your program.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">traceback</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="k">try</span><span class="p">:</span>
+         <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'This is the error message.'</span><span class="p">)</span> 
+<span class="k">except</span><span class="p">:</span>
+        <span class="n">errorFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'errorInfo.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+        <span class="n">errorFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>         
+        <span class="n">errorFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>         
+        <span class="k">print</span><span class="p">(</span><span class="s">'The traceback info was written to errorInfo.txt.'</span><span class="p">)</span>
+
+<span class="mi">116</span> 
+<span class="n">The</span> <span class="n">traceback</span> <span class="n">info</span> <span class="n">was</span> <span class="n">written</span> <span class="n">to</span> <span class="n">errorInfo</span><span class="o">.</span><span class="n">txt</span>
+</code></pre>
+</div>
+
+<h2 id="assert">Assert</h2>
+<p>Sanity check to make sure your code isn’t doing something obviously wrong. If the <code class="highlighter-rouge">assert</code> fails, then <code class="highlighter-rouge">assertionError</code> exception is raised.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">22</span><span class="p">,</span> <span class="s">'</span><span class="se">\'</span><span class="s">a</span><span class="se">\'</span><span class="s"> doit valoir 22'</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">22</span><span class="p">,</span> <span class="s">'</span><span class="se">\'</span><span class="s">a</span><span class="se">\'</span><span class="s"> doit valoir 22'</span>
+</code></pre>
+</div>
+
+<p><strong>return:</strong></p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"c:</span><span class="err">\</span><span class="s">Users</span><span class="err">\</span><span class="s">sol.rosca</span><span class="err">\</span><span class="s">Cloud</span><span class="err">\</span><span class="s">Cours</span><span class="err">\</span><span class="s">Programmation</span><span class="err">\</span><span class="s">Python</span><span class="err">\</span><span class="s">Python-Automate-the-boring-stuff</span><span class="se">\02</span><span class="s">Assert</span><span class="se">\00</span><span class="s">.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">5</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">22</span><span class="p">,</span> <span class="s">'</span><span class="se">\'</span><span class="s">a</span><span class="se">\'</span><span class="s"> doit valoir 22'</span>
+<span class="nb">AssertionError</span><span class="p">:</span> <span class="s">'a'</span> <span class="n">doit</span> <span class="n">valoir</span> <span class="mi">22</span>
+</code></pre>
+</div>
+
+<h2 id="logging--debugging">Logging &amp; debugging</h2>
+<p>Le module <code class="highlighter-rouge">logging</code> permet de debugger facilement et d’éviter l’utilisation intempestive de <code class="highlighter-rouge">print</code> pour vérifier des valeurs.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">' </span><span class="si">%(asctime)</span><span class="s">s - </span><span class="si">%(levelname)</span><span class="s">s - </span><span class="si">%(message)</span><span class="s">s'</span><span class="p">)</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Start of program'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'Start of factorial {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">*=</span> <span class="n">i</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'i is {}, total is {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">total</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'End of factorial({})'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">total</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">'End of program'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="dont-debug-with-print">Don’t debug with <code class="highlighter-rouge">print()</code></h3>
+<p>Taper <code class="highlighter-rouge">import logging</code> et <code class="highlighter-rouge">logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')</code> est peut-être vite fait chiant mais il permet de pas devoir “chasser” les <code class="highlighter-rouge">print()</code> de test une fois le programme débuggé. Aussi grace au call <code class="highlighter-rouge">logging.disable(logging.CRITICAL)</code> on peut désactiver les logs et avoir un affichage clair tout en gardant les point de check qui peuvent être utile plus tard.</p>
+
+<h3 id="logging-to-a-file">Logging to a file</h3>
+<p>A la place d’afficher toutes ces informations dans la console, on peut les envoyer directement dans un fichier txt (ou log) grace à un paramètre de la fonction <code class="highlighter-rouge">logging.basicConfig()</code></p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">'myProgramLog.txt'</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">' </span><span class="si">%(asctime)</span><span class="s">s - </span><span class="si">%(levelname)</span><span class="s">s - </span><span class="si">%(message)</span><span class="s">s'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+</div>
+
+<div>
+	
+	<div class="eof"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: debugging@&amp;url=http://localhost:4000/py/py-debug.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-debug.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-debug.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

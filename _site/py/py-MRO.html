@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-MRO.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Methode Super</title>
+  <meta name="description" content="Source">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Methode Super</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="05 Nov 2017" itemprop="datePublished">Nov 5 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tools</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p></p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="source">Source</h2>
+
+<ul>
+  <li><a href="https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/">Python 201: intermediat Python</a></li>
+</ul>
+
+<h2 id="super">Super</h2>
+
+<p>La fonction built-in <code class="highlighter-rouge">super</code> retourne un “proxy” objet qui va déléguer les appels de méthode à une classe parent.</p>
+
+<p>Autrement dit, cette fonction nous permet d’accéder à des méthodes héritées tel qu’elle le sont dans la classe parent.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'A'</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'B'</span><span class="p">)</span>
+
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+
+<span class="n">b</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+
+<span class="nb">super</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">display</span><span class="p">()</span>
+</code></pre>
+</div>
+<p>La syntaxe est: <code class="highlighter-rouge">super(Classe, objet)[.méthode][.variable de classe]</code> et retourne dans le cas de notre exemple:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>B
+A
+</code></pre>
+</div>
+
+<p>Un second exemple plus complet:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arg1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg1</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arg2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg2</span>
+
+
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">B</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arg3</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">display</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg3</span>
+
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">display</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p>Qui retourne:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+12
+123
+</code></pre>
+</div>
+
+<p>La méthode super à deux cas d’utilisation classiques:</p>
+<ol>
+  <li>
+    <p>Héritage simple: <code class="highlighter-rouge">super</code> est utilisé pour faire référence à la classe parent sans la nommer explicitement. C’est une mécanique répandue dans les langages orienté objet.</p>
+  </li>
+  <li>
+    <p>Le second cas est plus complexe car contrairement au premier il est unique à Python. Il permet, dans un environement d’execution dynamique le support d’héritage multiple coopératif. Cette mécanique ne peut pas se retrouver dans un langage qui ne supporte pas l’héritage multiple ou dans les langages compilés statiques.</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>C et C++ sont des langages compilés statiques</p>
+</blockquote>
+
+<p>La fonction <code class="highlighter-rouge">super</code> appelée en dehors d’une classe avec comme arguments une classe et un objet issu de cette classe retourn la méthode ou la variable spécifié tel qu’elle est</p>
+
+<h2 id="mro">MRO</h2>
+
+<p>La méthode <code class="highlighter-rouge">__mro__</code> (Method Resolution Order) retourne un tuple contenant les classes dont l’objet appelant est dérivé. Si nous avons une clase qui hérite de deux autres classes, on pourrait penser que son MRO sera: La classe elle-même ainsi que les deux parents dont elle hérite mais li ne faut pas oublier qu’en Python, les classes parents sont elles-mêmes dérivées de la classe de base <code class="highlighter-rouge">Object</code>:</p>
+
+<blockquote>
+  <p>En Python 3 il n’est plus nécéssaire de dire à Python qu’une classe hérite de la classe de base <code class="highlighter-rouge">Object</code>. Python le fait implicitement si aucun héritage n’est spécifié.</p>
+</blockquote>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">X</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'X'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Y</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Y'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">Z</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">__mro__</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Ici nous créons 3 classes. Les deux premières ne font que printer leur nom et la dernière hérite des deux premières. Ensuite on instancie un objet de type <code class="highlighter-rouge">Z</code> et printons son MRO qui retourne:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>X
+Y
+(&lt;class '__main__.Z'&gt;, &lt;class '__main__.X'&gt;, &lt;class '__main__.Y'&gt;, &lt;class 'object'&gt;)
+</code></pre>
+</div>
+
+<p>Comme nous pouvons le voir, lors de l’instanciation de l’objet de type <code class="highlighter-rouge">Z</code>, les deux classes parents executent le code dans leur <code class="highlighter-rouge">__init__</code>, ensuite nous avons la méthode <code class="highlighter-rouge">__mro__</code> appelée par l’objet de type <code class="highlighter-rouge">Z</code> qui nous retourne une liste qui contient l’ordre de résolution que suit un objet de son type qui est <code class="highlighter-rouge">Z</code> ensuite <code class="highlighter-rouge">X</code> puis <code class="highlighter-rouge">Y</code> et finalement <code class="highlighter-rouge">Object</code>.</p>
+
+<p>Un autre exemple parlant est de regarder ce qui se passe quand on crée une variable de classe dans la classe de base et qu’on l’override plus tard:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Base</span><span class="p">:</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">X</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'X'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Y</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">sefl</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Y'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">Z</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">__mro__</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+</code></pre>
+</div>
+
+
+</div>
+
+<div>
+	
+	<div class="eof"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Methode Super@&amp;url=http://localhost:4000/py/py-MRO.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-MRO.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-MRO.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

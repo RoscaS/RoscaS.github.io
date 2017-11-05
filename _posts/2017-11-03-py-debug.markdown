@@ -1,0 +1,110 @@
+---
+layout: post
+title: "Py: debugging"
+subtitle: ""
+date: 2017-11-03
+author: Sol
+category: Py
+tags: tools
+finished: true
+mathjax: true
+---
+
+## Trackback as a string
+
+When Python encounters an error, it produces an error message called *trackback*. The trackback includes the error message, the line number of the line that caused the error, and the sequence of the functions calls that led to the error. This sequence of calls is called the *call stack*.
+
+```py
+def spam():
+    bacon()
+
+def bacon():
+    raise Exception('This is the error message.')
+
+spam()
+```
+
+**return:**
+
+```
+Traceback (most recent call last):
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 7, in <module>
+    spam()
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 2, in spam
+    bacon()
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02.py", line 5, in bacon
+    raise Exception('This is the error message.')
+Exception: This is the error message.
+```
+
+Here we can see that the error happened on line 5, in the `bacon()` function. This particular call to `bacon()` canme from line 2, in the `spam()` function, which in turn was called on line 7.
+
+The traceback is displayed by Python whenever a raised exception goes unhandled. But **we can also obtain it as a string** by calling the `traceback.format_exec()`. This function is useful if you want the information from an exception but also want an `except` statement to gracefully handle the exception. You will need to import Python's traceback module before calling this function. For example, instead of crashing your program right when an exception occurs, you can write the traceback information to a log file and keep your program tunning. You can look at the log file later, when you're ready to debug your program.
+
+```py
+>>> import traceback 
+>>> try:
+         raise Exception('This is the error message.') 
+except:
+        errorFile = open('errorInfo.txt', 'w')
+        errorFile.write(traceback.format_exc())         
+        errorFile.close()         
+        print('The traceback info was written to errorInfo.txt.')
+
+116 
+The traceback info was written to errorInfo.txt
+```
+
+## Assert
+Sanity check to make sure your code isn't doing something obviously wrong. If the `assert` fails, then `assertionError` exception is raised.
+
+```py
+>>> a = 22
+>>> assert a == 22, '\'a\' doit valoir 22'
+>>>
+>>> a = 15
+>>> assert a == 22, '\'a\' doit valoir 22'
+```
+
+**return:**
+
+```py
+Traceback (most recent call last):
+  File "c:\Users\sol.rosca\Cloud\Cours\Programmation\Python\Python-Automate-the-boring-stuff\02Assert\00.py", line 5, in <module>
+    assert a == 22, '\'a\' doit valoir 22'
+AssertionError: 'a' doit valoir 22
+```
+
+
+## Logging & debugging
+Le module `logging` permet de debugger facilement et d'éviter l'utilisation intempestive de `print` pour vérifier des valeurs.
+
+```py
+import logging
+logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
+
+logging.debug('Start of program')
+
+def factorial(n):
+    logging.debug('Start of factorial {}'.format(n))
+    total = 1
+    for i in range(1, n+1):
+        total *= i
+        logging.debug('i is {}, total is {}'.format(i, total))
+    logging.debug('End of factorial({})'.format(n))
+    return total
+
+print(factorial(5))
+logging.debug('End of program')
+```
+
+### Don't debug with `print()`
+Taper `import logging` et `logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')` est peut-être vite fait chiant mais il permet de pas devoir "chasser" les `print()` de test une fois le programme débuggé. Aussi grace au call `logging.disable(logging.CRITICAL)` on peut désactiver les logs et avoir un affichage clair tout en gardant les point de check qui peuvent être utile plus tard.
+
+### Logging to a file
+A la place d'afficher toutes ces informations dans la console, on peut les envoyer directement dans un fichier txt (ou log) grace à un paramètre de la fonction `logging.basicConfig()`
+
+```py
+import logging
+logging.basicConfig(filename='myProgramLog.txt', level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
+```

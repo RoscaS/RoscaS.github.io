@@ -10,8 +10,8 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="https://roscas.github.io/py/py-divers.html">
-  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="https://roscas.github.io/feed.xml">
+  <link rel="canonical" href="http://localhost:4000/py/py-divers.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
   <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
@@ -88,11 +88,11 @@
         	
         <div class="post-tags">
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">divers,</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">divers,</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">fr,</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">fr,</a>
         	
-			<a class="post-tags-item" href="https://roscas.github.io/tags/">en</a>
+			<a class="post-tags-item" href="http://localhost:4000/tags/">en</a>
         	
 			
 		</div>
@@ -152,7 +152,59 @@
 
 <ul>
   <li><a href="http://python101.pythonlibrary.org/g">Python 101, livre complet en ligne</a></li>
+  <li><a href="https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/">Python 201</a></li>
 </ul>
+
+<h2 id="classe-object">Classe object</h2>
+<p>En python 3 il n’est plus nécéssaire d’explicitement dire à Python qu’une classe hérite de la classe de base <code class="highlighter-rouge">object</code>.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Parent</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</code></pre>
+</div>
+<p>Cette classe hérite implicitement de la classe <code class="highlighter-rouge">object</code></p>
+
+<h2 id="compter-des-occurences">Compter des occurences</h2>
+
+<h3 id="toutes-les-occurences-dans-une-liste">Toutes les occurences dans une liste:</h3>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">random</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="n">Counter</span><span class="p">({</span><span class="mi">5</span><span class="p">:</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">86</span><span class="p">})</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"j'aime la viande rouge bien cuite"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="n">Counter</span><span class="p">({</span><span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">' '</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'i'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'u'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'n'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'j'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'r'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="s">'m'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"'"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'l'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'v'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'g'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</code></pre>
+</div>
+
+<h3 id="sous-forme-de-tuples">Sous forme de tuples</h3>
+<p>Permet de pouvoir utiliser un indexe pour sortir directement une valeur:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="s">"j'aime la viande rouge bien cuite"</span>
+<span class="n">counted</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Le char '{}' apparait le plus dans la string:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n\
+</span><span class="s">    Nombre d'occurences: {}</span><span class="se">\n</span><span class="s"> Suivi par le char '{}' </span><span class="se">\
+</span><span class="s">    qui apparait {} fois."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">counted</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">,</span> <span class="n">counted</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">counted</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">counted</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+</code></pre>
+</div>
+
+<p><strong>return:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Le char e apparait le plus dans la string:
+j'aime la viande rouge bien cuite
+    Nombre d'occurences:5
+ Suivi par le char ' '     qui apparait 5 fois.
+</code></pre>
+</div>
 
 <h2 id="poids-bytes-dune-structure-de-données">Poids (bytes) d’une structure de données</h2>
 
@@ -532,21 +584,21 @@ En bref, c’est une interface.</p>
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Py: Divers@&amp;url=https://roscas.github.io/py/py-divers.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Py: Divers@&amp;url=http://localhost:4000/py/py-divers.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://www.facebook.com/sharer/sharer.php?u=https://roscas.github.io/py/py-divers.html" class="facebook-share">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-divers.html" class="facebook-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://plus.google.com/share?url=https://roscas.github.io/py/py-divers.html" class="googleplus-share">
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-divers.html" class="googleplus-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
