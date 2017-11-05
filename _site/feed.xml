@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Nov 2017 14:33:05 +0100</pubDate>
-    <lastBuildDate>Sun, 05 Nov 2017 14:33:05 +0100</lastBuildDate>
+    <pubDate>Sun, 05 Nov 2017 15:08:40 +0100</pubDate>
+    <lastBuildDate>Sun, 05 Nov 2017 15:08:40 +0100</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
     
       <item>
@@ -23,6 +23,10 @@
 &lt;p&gt;La fonction built-in &lt;code class=&quot;highlighter-rouge&quot;&gt;super&lt;/code&gt; retourne un “proxy” objet qui va déléguer les appels de méthode à une classe parent.&lt;/p&gt;
 
 &lt;p&gt;Autrement dit, cette fonction nous permet d’accéder à des méthodes héritées tel qu’elle le sont dans la classe parent.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;On note qu’en Python 3 il n’est plus nécéssaire de dire à Python qu’une classe hérite de la classe de base &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;. Python le fait implicitement si aucun héritage n’est spécifié.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -107,23 +111,13 @@ A
     &lt;p&gt;Héritage simple: &lt;code class=&quot;highlighter-rouge&quot;&gt;super&lt;/code&gt; est utilisé pour faire référence à la classe parent sans la nommer explicitement. C’est une mécanique répandue dans les langages orienté objet.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Le second cas est plus complexe car contrairement au premier il est unique à Python. Il permet, dans un environement d’execution dynamique le support d’héritage multiple coopératif. Cette mécanique ne peut pas se retrouver dans un langage qui ne supporte pas l’héritage multiple ou dans les langages compilés statiques.&lt;/p&gt;
+    &lt;p&gt;Le second cas est plus complexe car contrairement au premier il est unique à Python. Il permet, dans un environement d’execution dynamique le support d’héritage multiple coopératif. Cette mécanique ne peut pas se retrouver dans un langage qui ne supporte pas l’héritage multiple ou dans les langages compilés statiques (C++, …).&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;C et C++ sont des langages compilés statiques&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h2 id=&quot;mro-method-resolution-order&quot;&gt;MRO (Method Resolution Order)&lt;/h2&gt;
 
-&lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;super&lt;/code&gt; appelée en dehors d’une classe avec comme arguments une classe et un objet issu de cette classe retourn la méthode ou la variable spécifié tel qu’elle est&lt;/p&gt;
-
-&lt;h2 id=&quot;mro&quot;&gt;MRO&lt;/h2&gt;
-
-&lt;p&gt;La méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__mro__&lt;/code&gt; (Method Resolution Order) retourne un tuple contenant les classes dont l’objet appelant est dérivé. Si nous avons une clase qui hérite de deux autres classes, on pourrait penser que son MRO sera: La classe elle-même ainsi que les deux parents dont elle hérite mais li ne faut pas oublier qu’en Python, les classes parents sont elles-mêmes dérivées de la classe de base &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;En Python 3 il n’est plus nécéssaire de dire à Python qu’une classe hérite de la classe de base &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;. Python le fait implicitement si aucun héritage n’est spécifié.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;La méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__mro__&lt;/code&gt; retourne un tuple contenant les classes dont l’objet appelant est dérivé. Si nous avons une clase qui hérite de deux autres classes, on pourrait penser que son MRO sera: La classe elle-même ainsi que les deux parents dont elle hérite mais li ne faut pas oublier qu’en Python, les classes parents sont elles-mêmes dérivées de la classe de base &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;:&lt;/p&gt;
 
 &lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -151,7 +145,7 @@ Y
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Comme nous pouvons le voir, lors de l’instanciation de l’objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt;, les deux classes parents executent le code dans leur &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt;, ensuite nous avons la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__mro__&lt;/code&gt; appelée par l’objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt; qui nous retourne une liste qui contient l’ordre de résolution que suit un objet de son type qui est &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt; ensuite &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; puis &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; et finalement &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Comme nous pouvons le voir, lors de l’instanciation de l’objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt;, les deux classes parents executent le code dans leur &lt;code class=&quot;highlighter-rouge&quot;&gt;__init__&lt;/code&gt;, ensuite nous avons la méthode &lt;code class=&quot;highlighter-rouge&quot;&gt;__mro__&lt;/code&gt; appelée par l’objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt; qui nous retourne une liste qui contient l’ordre de résolution que suit un objet de son type qui est:  &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt; ensuite &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; puis &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; et finalement &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Un autre exemple parlant est de regarder ce qui se passe quand on crée une variable de classe dans la classe de base et qu’on l’override plus tard:&lt;/p&gt;
 
@@ -181,10 +175,97 @@ Y
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
+&lt;p&gt;Ici nous créons une classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Base&lt;/code&gt; avec un variable de classe qui vaut &lt;code class=&quot;highlighter-rouge&quot;&gt;5&lt;/code&gt;. Ensuite nous créons les sous-classes &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; qui héritent de &lt;code class=&quot;highlighter-rouge&quot;&gt;Base&lt;/code&gt;. La sous-classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; override la variable de class &lt;code class=&quot;highlighter-rouge&quot;&gt;var&lt;/code&gt; et lui affecte la valeur &lt;code class=&quot;highlighter-rouge&quot;&gt;10&lt;/code&gt;. Finallement nous créons la sous-classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt; qui hérite de &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; &lt;strong&gt;et&lt;/strong&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt;. Quand nous appellons la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;super&lt;/code&gt; sur la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt;, quelle variable de classe sera printée?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;X
+Y
+(&amp;lt;class '__main__.Z'&amp;gt;, &amp;lt;class '__main__.X'&amp;gt;, &amp;lt;class '__main__.Y'&amp;gt;, &amp;lt;class '_
+_main__.Base'&amp;gt;, &amp;lt;class 'object'&amp;gt;)
+10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;La classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt; hérite de &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt;, donc quand on lui demande que vaut &lt;code class=&quot;highlighter-rouge&quot;&gt;var&lt;/code&gt;, son MRO regarde en premier dans &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; pour voir si &lt;code class=&quot;highlighter-rouge&quot;&gt;var&lt;/code&gt; y est définie. Comme ce n’est pas le cas, le MRO regarde dans &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; et y trouve une assignation pour la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;var&lt;/code&gt; qui sera donc celle utilisée.&lt;/p&gt;
+
+&lt;p&gt;Si nous ajoutons une assignation pour la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;var&lt;/code&gt; dans le corp de la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; c’est celle qui sera utilisée car elle apparait en premier dans le MRO de la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Z&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+    
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'X'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sefl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Y'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__mro__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Et retournera donc:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;X
+Y
+(&amp;lt;class '__main__.Z'&amp;gt;, &amp;lt;class '__main__.X'&amp;gt;, &amp;lt;class '__main__.Y'&amp;gt;, &amp;lt;class '_
+_main__.Base'&amp;gt;, &amp;lt;class 'object'&amp;gt;)
+100
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Le MRO dépend de l’ordre d’écriture des classes dont hérite une nouvelle classe.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;super&lt;/code&gt; sait donc comment interpréter le MRO et stock ces informations dans les propriétés magiques &lt;code class=&quot;highlighter-rouge&quot;&gt;__thisclass__&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;__self_class__&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__thisclass__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__self_class__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SubClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SubClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Ici nous créons une classe &lt;code class=&quot;highlighter-rouge&quot;&gt;Base&lt;/code&gt; et lui assignons l’appel de la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;super&lt;/code&gt; à une variable &lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; pour que nous puissions voir ce que les propriétés &lt;code class=&quot;highlighter-rouge&quot;&gt;__thisclass__&lt;/code&gt; et &lt;code class=&quot;highlighter-rouge&quot;&gt;__self_class__&lt;/code&gt; contiennent. Ensuite nous les printons et faisons l’initialisation. Finallement, on instancie un objet de type &lt;code class=&quot;highlighter-rouge&quot;&gt;SubClass()&lt;/code&gt; qu’on assigne à la variable &lt;code class=&quot;highlighter-rouge&quot;&gt;sub&lt;/code&gt;. Output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;class '__main__.Base'&amp;gt;
+&amp;lt;class '__main__.SubClass'&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Tout ceci est bon à savoir mais est particulièrement utile lors de la définition de métaclasses ou quand on veut mélanger des classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Il y a un tas de façons interessantes d’utiliser la fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;surper&lt;/code&gt; qu’on peut trouver sur le net. La majorité sont à première vue assez “wtf” mais une fois qu’on a bien compris, leur fonctionnement cela peut généralement se révélé assez impressionnant et pratique.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Personally I haven’t had a need for super in most of my work, but it can be useful for forward compatibility. What this means is that you want your code to work in the future with as few changes as possible. So you might start off with single inheritance today, but a year or two down the road, you might add another base class. If you use super correctly, then this will be a lot easier to add. I have also seen arguments for using super for dependency injection, but I haven’t seen any good, concrete examples of this latter use case. It’s a good thing to keep in mind though.&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         <pubDate>Sun, 05 Nov 2017 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/py/py-MRO.html</link>
-        <guid isPermaLink="true">http://localhost:4000/py/py-MRO.html</guid>
+        <link>http://localhost:4000/py/py-Super-et-MRO.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/py-Super-et-MRO.html</guid>
         
         <category>tools</category>
         

@@ -10,7 +10,7 @@
 <!-- CSS -->
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://localhost:4000/py/py-MRO.html">
+  <link rel="canonical" href="http://localhost:4000/py/py-Super-et-MRO.html">
   <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
 
 <!-- JS -->
@@ -136,6 +136,10 @@
 
 <p>Autrement dit, cette fonction nous permet d’accéder à des méthodes héritées tel qu’elle le sont dans la classe parent.</p>
 
+<blockquote>
+  <p>On note qu’en Python 3 il n’est plus nécéssaire de dire à Python qu’une classe hérite de la classe de base <code class="highlighter-rouge">Object</code>. Python le fait implicitement si aucun héritage n’est spécifié.</p>
+</blockquote>
+
 <div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -219,23 +223,13 @@ A
     <p>Héritage simple: <code class="highlighter-rouge">super</code> est utilisé pour faire référence à la classe parent sans la nommer explicitement. C’est une mécanique répandue dans les langages orienté objet.</p>
   </li>
   <li>
-    <p>Le second cas est plus complexe car contrairement au premier il est unique à Python. Il permet, dans un environement d’execution dynamique le support d’héritage multiple coopératif. Cette mécanique ne peut pas se retrouver dans un langage qui ne supporte pas l’héritage multiple ou dans les langages compilés statiques.</p>
+    <p>Le second cas est plus complexe car contrairement au premier il est unique à Python. Il permet, dans un environement d’execution dynamique le support d’héritage multiple coopératif. Cette mécanique ne peut pas se retrouver dans un langage qui ne supporte pas l’héritage multiple ou dans les langages compilés statiques (C++, …).</p>
   </li>
 </ol>
 
-<blockquote>
-  <p>C et C++ sont des langages compilés statiques</p>
-</blockquote>
+<h2 id="mro-method-resolution-order">MRO (Method Resolution Order)</h2>
 
-<p>La fonction <code class="highlighter-rouge">super</code> appelée en dehors d’une classe avec comme arguments une classe et un objet issu de cette classe retourn la méthode ou la variable spécifié tel qu’elle est</p>
-
-<h2 id="mro">MRO</h2>
-
-<p>La méthode <code class="highlighter-rouge">__mro__</code> (Method Resolution Order) retourne un tuple contenant les classes dont l’objet appelant est dérivé. Si nous avons une clase qui hérite de deux autres classes, on pourrait penser que son MRO sera: La classe elle-même ainsi que les deux parents dont elle hérite mais li ne faut pas oublier qu’en Python, les classes parents sont elles-mêmes dérivées de la classe de base <code class="highlighter-rouge">Object</code>:</p>
-
-<blockquote>
-  <p>En Python 3 il n’est plus nécéssaire de dire à Python qu’une classe hérite de la classe de base <code class="highlighter-rouge">Object</code>. Python le fait implicitement si aucun héritage n’est spécifié.</p>
-</blockquote>
+<p>La méthode <code class="highlighter-rouge">__mro__</code> retourne un tuple contenant les classes dont l’objet appelant est dérivé. Si nous avons une clase qui hérite de deux autres classes, on pourrait penser que son MRO sera: La classe elle-même ainsi que les deux parents dont elle hérite mais li ne faut pas oublier qu’en Python, les classes parents sont elles-mêmes dérivées de la classe de base <code class="highlighter-rouge">Object</code>:</p>
 
 <div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">X</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -263,7 +257,7 @@ Y
 </code></pre>
 </div>
 
-<p>Comme nous pouvons le voir, lors de l’instanciation de l’objet de type <code class="highlighter-rouge">Z</code>, les deux classes parents executent le code dans leur <code class="highlighter-rouge">__init__</code>, ensuite nous avons la méthode <code class="highlighter-rouge">__mro__</code> appelée par l’objet de type <code class="highlighter-rouge">Z</code> qui nous retourne une liste qui contient l’ordre de résolution que suit un objet de son type qui est <code class="highlighter-rouge">Z</code> ensuite <code class="highlighter-rouge">X</code> puis <code class="highlighter-rouge">Y</code> et finalement <code class="highlighter-rouge">Object</code>.</p>
+<p>Comme nous pouvons le voir, lors de l’instanciation de l’objet de type <code class="highlighter-rouge">Z</code>, les deux classes parents executent le code dans leur <code class="highlighter-rouge">__init__</code>, ensuite nous avons la méthode <code class="highlighter-rouge">__mro__</code> appelée par l’objet de type <code class="highlighter-rouge">Z</code> qui nous retourne une liste qui contient l’ordre de résolution que suit un objet de son type qui est:  <code class="highlighter-rouge">Z</code> ensuite <code class="highlighter-rouge">X</code> puis <code class="highlighter-rouge">Y</code> et finalement <code class="highlighter-rouge">Object</code>.</p>
 
 <p>Un autre exemple parlant est de regarder ce qui se passe quand on crée une variable de classe dans la classe de base et qu’on l’override plus tard:</p>
 
@@ -293,6 +287,93 @@ Y
 </code></pre>
 </div>
 
+<p>Ici nous créons une classe <code class="highlighter-rouge">Base</code> avec un variable de classe qui vaut <code class="highlighter-rouge">5</code>. Ensuite nous créons les sous-classes <code class="highlighter-rouge">X</code> et <code class="highlighter-rouge">Y</code> qui héritent de <code class="highlighter-rouge">Base</code>. La sous-classe <code class="highlighter-rouge">Y</code> override la variable de class <code class="highlighter-rouge">var</code> et lui affecte la valeur <code class="highlighter-rouge">10</code>. Finallement nous créons la sous-classe <code class="highlighter-rouge">Z</code> qui hérite de <code class="highlighter-rouge">X</code> <strong>et</strong> <code class="highlighter-rouge">Y</code>. Quand nous appellons la fonction <code class="highlighter-rouge">super</code> sur la classe <code class="highlighter-rouge">Z</code>, quelle variable de classe sera printée?</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>X
+Y
+(&lt;class '__main__.Z'&gt;, &lt;class '__main__.X'&gt;, &lt;class '__main__.Y'&gt;, &lt;class '_
+_main__.Base'&gt;, &lt;class 'object'&gt;)
+10
+</code></pre>
+</div>
+
+<p>La classe <code class="highlighter-rouge">Z</code> hérite de <code class="highlighter-rouge">X</code> et <code class="highlighter-rouge">Y</code>, donc quand on lui demande que vaut <code class="highlighter-rouge">var</code>, son MRO regarde en premier dans <code class="highlighter-rouge">X</code> pour voir si <code class="highlighter-rouge">var</code> y est définie. Comme ce n’est pas le cas, le MRO regarde dans <code class="highlighter-rouge">Y</code> et y trouve une assignation pour la variable <code class="highlighter-rouge">var</code> qui sera donc celle utilisée.</p>
+
+<p>Si nous ajoutons une assignation pour la variable <code class="highlighter-rouge">var</code> dans le corp de la classe <code class="highlighter-rouge">X</code> c’est celle qui sera utilisée car elle apparait en premier dans le MRO de la classe <code class="highlighter-rouge">Z</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Base</span><span class="p">:</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+    
+<span class="k">class</span> <span class="nc">X</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'X'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Y</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">sefl</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Y'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Z</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">Z</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">__mro__</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Et retournera donc:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>X
+Y
+(&lt;class '__main__.Z'&gt;, &lt;class '__main__.X'&gt;, &lt;class '__main__.Y'&gt;, &lt;class '_
+_main__.Base'&gt;, &lt;class 'object'&gt;)
+100
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Le MRO dépend de l’ordre d’écriture des classes dont hérite une nouvelle classe.</p>
+</blockquote>
+
+<p>La fonction <code class="highlighter-rouge">super</code> sait donc comment interpréter le MRO et stock ces informations dans les propriétés magiques <code class="highlighter-rouge">__thisclass__</code> et <code class="highlighter-rouge">__self_class__</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Base</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">__thisclass__</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">__self_class__</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">SubClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">sub</span> <span class="o">=</span> <span class="n">SubClass</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>Ici nous créons une classe <code class="highlighter-rouge">Base</code> et lui assignons l’appel de la fonction <code class="highlighter-rouge">super</code> à une variable <code class="highlighter-rouge">s</code> pour que nous puissions voir ce que les propriétés <code class="highlighter-rouge">__thisclass__</code> et <code class="highlighter-rouge">__self_class__</code> contiennent. Ensuite nous les printons et faisons l’initialisation. Finallement, on instancie un objet de type <code class="highlighter-rouge">SubClass()</code> qu’on assigne à la variable <code class="highlighter-rouge">sub</code>. Output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;class '__main__.Base'&gt;
+&lt;class '__main__.SubClass'&gt;
+</code></pre>
+</div>
+
+<p>Tout ceci est bon à savoir mais est particulièrement utile lors de la définition de métaclasses ou quand on veut mélanger des classes.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Il y a un tas de façons interessantes d’utiliser la fonction <code class="highlighter-rouge">surper</code> qu’on peut trouver sur le net. La majorité sont à première vue assez “wtf” mais une fois qu’on a bien compris, leur fonctionnement cela peut généralement se révélé assez impressionnant et pratique.</p>
+
+<blockquote>
+  <p>Personally I haven’t had a need for super in most of my work, but it can be useful for forward compatibility. What this means is that you want your code to work in the future with as few changes as possible. So you might start off with single inheritance today, but a year or two down the road, you might add another base class. If you use super correctly, then this will be a lot easier to add. I have also seen arguments for using super for dependency injection, but I haven’t seen any good, concrete examples of this latter use case. It’s a good thing to keep in mind though.</p>
+</blockquote>
 
 </div>
 
@@ -304,21 +385,21 @@ Y
 
 <!--<div class="share">
     <p>Share this post with: </p>
-	<a href="https://twitter.com/intent/tweet?text=Py: Methode Super@&amp;url=http://localhost:4000/py/py-MRO.html" class="twitter-share">
+	<a href="https://twitter.com/intent/tweet?text=Py: Methode Super@&amp;url=http://localhost:4000/py/py-Super-et-MRO.html" class="twitter-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-MRO.html" class="facebook-share">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-Super-et-MRO.html" class="facebook-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 		</span>
 	</a>
     
-	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-MRO.html" class="googleplus-share">
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-Super-et-MRO.html" class="googleplus-share">
 		<span class="fa-stack fa-lg">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
