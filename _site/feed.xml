@@ -6,9 +6,107 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Nov 2017 15:09:01 +0100</pubDate>
-    <lastBuildDate>Sun, 05 Nov 2017 15:09:01 +0100</lastBuildDate>
+    <pubDate>Mon, 06 Nov 2017 08:01:18 +0100</pubDate>
+    <lastBuildDate>Mon, 06 Nov 2017 08:01:18 +0100</lastBuildDate>
     <generator>Jekyll v3.5.0</generator>
+    
+      <item>
+        <title>Py: built-ins</title>
+        <description>&lt;h2 id=&quot;source&quot;&gt;Source&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/&quot;&gt;Python 201: intermediat Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;any&quot;&gt;Any&lt;/h1&gt;
+&lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;any&lt;/code&gt; prend un &lt;strong&gt;itérable en entrée&lt;/strong&gt; et retourne un &lt;strong&gt;booléen&lt;/strong&gt; si au moins un élément de l’itérable est &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;You might be wondering when you would ever use this built-in. I did too at first. An example that croppedupinoneofmyjobsinvolvedaverycomplexuseriterfacewhereIhadtotestvariouspieces offunctionality.OneoftheitemsthatIneededtotestwasifacertainlistofwidgetshadbeenshown or enabled when they shouldn’t be. The any built-in was very useful for that. Here’s an example that kind of demonstrates what I’m talking about, although it’s not the actual code I used:&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widget_one&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widget_two&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widget_three&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'button'&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets_exist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widget_one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widget_two&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widget_three&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets_exist&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; 
+&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Basically I would query the user iterface and ask it if widgets one through three existed and put the responses into a list. If any of them returned True, then I’d raise an error. You might want to check out Python’s all built-in as it has similar functionality except that it will only return True if every single item in the iterable is True.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;eval&quot;&gt;Eval&lt;/h1&gt;
+&lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;eval&lt;/code&gt; est assez controversée dans la communauté Python. Elle prend une string en entrée et execute son contenu.&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'var * 2'&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Evaluate the given source in the context of globals and locals. The source may be a string representing a Python expression or a code object as returned by compile(). The globals must be a dictionary and locals can be any mapping, defaulting to the current globals and locals. If only globals is given, locals defaults to it&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;filter&quot;&gt;filter&lt;/h1&gt;
+
+&lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;filter&lt;/code&gt; prend un une fonction &lt;strong&gt;et&lt;/strong&gt; un itérable en argument et retourne un itérateur sur les éléments de l’itérable qui retournent &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'l: {}&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;p: {}'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Output:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;l: [5, 3, 13, 13, 10, 15, 13, 8, 6, 1, 20, 7, 13, 3, 1, 10, 7, 20, 4, 2]
+p: [5, 3, 8, 6, 1, 7, 3, 1, 7, 4, 2]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;map&quot;&gt;map&lt;/h1&gt;
+&lt;p&gt;La fonction &lt;code class=&quot;highlighter-rouge&quot;&gt;map&lt;/code&gt; prend également une fonctoin &lt;strong&gt;et&lt;/strong&gt; un itérable mais retourne un itérateur qui pplique la fonction (map la fonction) sur chacun des éléments dans l’itérable:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;', '&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Output:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2, 4, 6, 8, 10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sun, 05 Nov 2017 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/py/py-Built-in.html</link>
+        <guid isPermaLink="true">http://localhost:4000/py/py-Built-in.html</guid>
+        
+        <category>tools</category>
+        
+        
+        <category>Py</category>
+        
+      </item>
     
       <item>
         <title>Py: Methode Super</title>
@@ -1154,74 +1252,6 @@ plt.show() # show figure
         <link>http://localhost:4000/perso/</link>
         <guid isPermaLink="true">http://localhost:4000/perso/</guid>
         
-        
-      </item>
-    
-      <item>
-        <title>Divers: Max</title>
-        <description>&lt;h2 id=&quot;préambule&quot;&gt;Préambule&lt;/h2&gt;
-
-&lt;p&gt;En gros ton premier semestre va se baser à mort sur les fondements de l’algebre (ensembles, equations, inéquations du premier et second degré) et sur les fonctions.&lt;/p&gt;
-
-&lt;p&gt;Même si beaucoup de choses de sembles connues, il faut qu’elles soient profondément maitrisées, que tu sache exactement ce que tu fais et pourquoi tu le fais pour que tu puisse par la suite pouvoir utiliser toutes ces choses comme étant dans outils qui te permettent de comprendre des choses qui sont d’un autre niveau.&lt;/p&gt;
-
-&lt;p&gt;Là où au cess il était possible de passer un test ou un exam sans comprendre le sujet mais en retenant par coeur les formules pour résoudre, c’est maintenant plus possible, si tu fais comme ça, tu vas te faire baiser un peu plus tard car tu n’arrive pas a raisoner. Par exemple, au cess, pour factoriser un polynome du second degré:&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;ax^2 + bx + c&lt;/script&gt;
-
-&lt;p&gt;On le fait avec la technique de &lt;em&gt;Viète&lt;/em&gt;&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;\displaystyle{x_{1,2} = \frac{-b \pm \sqrt{\Delta}}{2a}}&lt;/script&gt;
-
-&lt;p&gt;avec $ \Delta = b^2 - 4ac $&lt;/p&gt;
-
-&lt;p&gt;Et je ne sais pas si te souviens mais il y a trois cas de figure dans $\pmb{\mathbb{R}}$ qui en fonction de si $ {\Delta} $ est positif, négatif ou $ = 0 $ donne 3 autres formules.&lt;/p&gt;
-
-&lt;p&gt;Simple efficace mais au final sauf que tu comprends pas ce que tu fais. Et puis c’est quoi factoriser? Pourquoi on fait ça?&lt;/p&gt;
-
-&lt;p&gt;Bah maintenant ça passera plus, il faut que tu prennes l’habitude de comprendre tout ce que tu fais et pourquoi. J’insiste là dessus car c’est qqch qui peut te pieger, et te faire négliger des points qui sont éliminatoires par la suite.&lt;/p&gt;
-
-&lt;p&gt;Pour info, &lt;a href=&quot;http://edugemath.ch/1re/ch7/ma1-ch7-docs-cours/Ma1_Ch7-degre2Viete.pdf&quot;&gt;voilà ce qui se passe derrière&lt;/a&gt; &lt;em&gt;Viète&lt;/em&gt; et sa belle formule toute faite.&lt;/p&gt;
-
-&lt;p&gt;J’ai choisis cet exemple car, c’est quand j’en suis arrivé là, au bout de genre 3 semaines de cours que j’ai compris ce que je t’explique dans ce premier point.&lt;/p&gt;
-
-&lt;h2 id=&quot;mise-à-niveau&quot;&gt;Mise à niveau&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;/01documents/max/musculation.pdf&quot;&gt;Ce pdf&lt;/a&gt; fait un joli recap de tes 3,4 premières semaines de cours. C’est des révisions. C’est sensé être maitrisé depuis le Cess. Même si t’as du mal,faut que tu t’acharne pour jongler avec ces notions.&lt;/p&gt;
-
-&lt;p&gt;Si vraiment t’as du mal c’est que t’as des soucis avec l’arithmétique. Quand t’as du mal avec des concepts “simples” en math c’est que t’as des lacunes en amont. Et faut revoir ce qu’il y a avant.&lt;/p&gt;
-
-&lt;p&gt;Si ce premier pdf passe difficilement: C’est le moment d’aller sur &lt;a href=&quot;https://fr.khanacademy.org/&quot;&gt;Khan Academy&lt;/a&gt; qui sera ton meilleur pote pour toute ta première année. Inscris toi et va dans&lt;/p&gt;
-
-&lt;p&gt;Je te présente &lt;a href=&quot;https://fr.khanacademy.org/&quot;&gt;ton nouveau meilleur pote&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;La meilleur façon de faire c’est de commencer du début pour mettre le doigt sur ce qui va pas. Ce qui est facile va aller très vite, mais je peux t’assurer que tu vas vite fait tomber sur des trucs qui te pose problème même dans les trucs vraiment ultra facile (arithmétique). Quand tu trouve qqch qui te pose problème maintenant, c’est vraiment une aubaine, tu dois pas avoir honte et baisser les bras même si ça te semble “honteux” d’avoir du mal (avec les fractions par exemple, ou les divisions écrites), c’est un bonnus que de faire des études en 2017 et avoir ce genre de site qui te permet de te retrouver face à toi même.&lt;/p&gt;
-
-&lt;p&gt;Une chose après l’autre, le site va te suggérer sur quoi enchainer en fonction de tes faiblesses, si tu pige pas un truc t’as des vidéo explicatives. Perso je suis pas fan de la version francophone mais j’ai un pote qui la préfère à la version anglophone, donc c’est vraiment une question de gouts.&lt;/p&gt;
-
-&lt;p&gt;Pour te donner du courrage, dans deux semaines, j’ai une semaine off avant de reprendre les cours, je vais faire exactement la même chose. Cliquer sur &lt;a href=&quot;https://fr.khanacademy.org/math/early-math&quot;&gt;Bases en calcul&lt;/a&gt;, et commencer par là, défoncer tout ce qui est facile, et prendre note de ce qui me pose problème pour le renforcer.&lt;/p&gt;
-
-&lt;p&gt;Si tu trouve que c’est trop facile, pour te calmer, voilà ce que les profs de première année trouvent &lt;a href=&quot;/01documents/max/musculation.pdf&quot;&gt;trop facile&lt;/a&gt;. Si t’es alaise avec ce PDF, félicitation, tu vas être tranquille pour les premières semaines de cours et tu peux direct enchainer avec &lt;a href=&quot;/01/documents/max/ch1_bases_algebre.pdf&quot;&gt;ce pdf&lt;/a&gt;. C’est le premier chapitre de mon cours de math B. Si t’as un soucis avec un concept $ \Rightarrow $ Khan Academy.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Gros conseil, faut absolument que tu gère à mort le concept de valeur absolue, c’est bcp plus tricky que $\lvert-1\rvert=1$. C’est expliqué en détail dans le dernier pdf que je t’ai linké&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Si d’ici la rentrée t’as le temps, plonge toi dans les fonctions aussi. Le contepte de base, faut absolument que tu sache ce qu’est une fonction sans la moindre hésitation. Si t’as le temps de comprendre les concepts &lt;em&gt;d’injectivité&lt;/em&gt;, &lt;em&gt;surjectivité&lt;/em&gt;, &lt;em&gt;bijectivité&lt;/em&gt; c’est vraiment tout bon car c’est pas super évident au début et t’as vite fait de te laisser noyer quand vous en arriverez là. Aussi si tu peux revois bien &lt;em&gt;domaine de définition&lt;/em&gt;, &lt;em&gt;ensemble de départ&lt;/em&gt;, &lt;em&gt;ensemble d’arrivée&lt;/em&gt;. &lt;a href=&quot;/01/documents/max/ch1_bases_algebre.pdf&quot;&gt;Ce pdf&lt;/a&gt; explique tout ça et si t’as du mal, encore une fois $ \Rightarrow $ Khan Academy.&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 21 Aug 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/divers/divers-Max.html</link>
-        <guid isPermaLink="true">http://localhost:4000/divers/divers-Max.html</guid>
-        
-        <category>divers,</category>
-        
-        <category>fr,</category>
-        
-        <category>en</category>
-        
-        
-        <category>Divers</category>
         
       </item>
     

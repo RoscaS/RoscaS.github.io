@@ -36,4 +36,53 @@ True
 > Basically I would query the user iterface and ask it if widgets one through three existed and put the responses into a list. If any of them returned True, then I’d raise an error. You might want to check out Python’s all built-in as it has similar functionality except that it will only return True if every single item in the iterable is True.
 
 # Eval
-La fonction `eval` est assez controversée dans la communauté Python. Elle prend une string en entrée et retourne son contenu executé...
+La fonction `eval` est assez controversée dans la communauté Python. Elle prend une string en entrée et execute son contenu.
+
+```py
+>>> var = 10
+>>> source = 'var * 2'
+>>> eval(source)
+20
+```
+>Evaluate the given source in the context of globals and locals. The source may be a string representing a Python expression or a code object as returned by compile(). The globals must be a dictionary and locals can be any mapping, defaulting to the current globals and locals. If only globals is given, locals defaults to it
+
+# filter
+
+La fonction `filter` prend un une fonction **et** un itérable en argument et retourne un itérateur sur les éléments de l'itérable qui retournent `True`:
+
+```py
+import random
+
+a = lambda i: i < 10
+
+l = [random.randint(1,20) for i in range(20)]
+
+p = [i for i in filter(a, l)]
+
+print('l: {}\np: {}'.format(l, p))
+```
+
+**Output:**
+
+```
+l: [5, 3, 13, 13, 10, 15, 13, 8, 6, 1, 20, 7, 13, 3, 1, 10, 7, 20, 4, 2]
+p: [5, 3, 8, 6, 1, 7, 3, 1, 7, 4, 2]
+```
+
+# map
+La fonction `map` prend également une fonctoin **et** un itérable mais retourne un itérateur qui pplique la fonction (map la fonction) sur chacun des éléments dans l'itérable:
+
+```py
+a = lambda n: n*2
+
+l = [1, 2, 3, 4, 5]
+
+p = [i for i in map(a,l)]
+
+print(', '.join([str(i) for i in p]))
+```
+**Output:**
+
+```
+2, 4, 6, 8, 10
+```
