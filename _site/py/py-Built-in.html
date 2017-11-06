@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-Built-in.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: built-ins</title>
+  <meta name="description" content="Source">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: built-ins</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="05 Nov 2017" itemprop="datePublished">Nov 5 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">tools</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Built-ins moins connues de Python</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="source">Source</h2>
+
+<ul>
+  <li><a href="https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/">Python 201: intermediat Python</a></li>
+</ul>
+
+<h1 id="any">Any</h1>
+<p>La fonction <code class="highlighter-rouge">any</code> prend un <strong>itérable en entrée</strong> et retourne un <strong>booléen</strong> si au moins un élément de l’itérable est <code class="highlighter-rouge">True</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">any</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="bp">True</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>You might be wondering when you would ever use this built-in. I did too at first. An example that croppedupinoneofmyjobsinvolvedaverycomplexuseriterfacewhereIhadtotestvariouspieces offunctionality.OneoftheitemsthatIneededtotestwasifacertainlistofwidgetshadbeenshown or enabled when they shouldn’t be. The any built-in was very useful for that. Here’s an example that kind of demonstrates what I’m talking about, although it’s not the actual code I used:</p>
+</blockquote>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">widget_one</span> <span class="o">=</span> <span class="s">''</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">widget_two</span> <span class="o">=</span> <span class="s">''</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">widget_three</span> <span class="o">=</span> <span class="s">'button'</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">widgets_exist</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">widget_one</span><span class="p">,</span> <span class="n">widget_two</span><span class="p">,</span> <span class="n">widget_three</span><span class="p">])</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="n">widgets_exist</span> <span class="mi">6</span> 
+<span class="bp">True</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Basically I would query the user iterface and ask it if widgets one through three existed and put the responses into a list. If any of them returned True, then I’d raise an error. You might want to check out Python’s all built-in as it has similar functionality except that it will only return True if every single item in the iterable is True.</p>
+</blockquote>
+
+<h1 id="eval">Eval</h1>
+<p>La fonction <code class="highlighter-rouge">eval</code> est assez controversée dans la communauté Python. Elle prend une string en entrée et execute son contenu.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">var</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">source</span> <span class="o">=</span> <span class="s">'var * 2'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">eval</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="mi">20</span>
+</code></pre>
+</div>
+<blockquote>
+  <p>Evaluate the given source in the context of globals and locals. The source may be a string representing a Python expression or a code object as returned by compile(). The globals must be a dictionary and locals can be any mapping, defaulting to the current globals and locals. If only globals is given, locals defaults to it</p>
+</blockquote>
+
+<h1 id="filter">filter</h1>
+
+<p>La fonction <code class="highlighter-rouge">filter</code> prend un une fonction <strong>et</strong> un itérable en argument et retourne un itérateur sur les éléments de l’itérable qui retournent <code class="highlighter-rouge">True</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)]</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">)]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'l: {}</span><span class="se">\n</span><span class="s">p: {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p><strong>Output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>l: [5, 3, 13, 13, 10, 15, 13, 8, 6, 1, 20, 7, 13, 3, 1, 10, 7, 20, 4, 2]
+p: [5, 3, 8, 6, 1, 7, 3, 1, 7, 4, 2]
+</code></pre>
+</div>
+
+<h1 id="map">map</h1>
+<p>La fonction <code class="highlighter-rouge">map</code> prend également une fonction <strong>et</strong> un itérable mais retourne un itérateur qui applique la fonction (map la fonction) sur chacun des éléments dans l’itérable:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">l</span><span class="p">)))</span>
+</code></pre>
+</div>
+<p><strong>Output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[2, 4, 6, 8, 10]
+</code></pre>
+</div>
+
+<blockquote>
+  <p><code class="highlighter-rouge">type(map(f,l))</code> retourne un objet de type <code class="highlighter-rouge">map</code>; c’est notre itérateur.</p>
+</blockquote>
+
+<p>Les fonction filter et map dupliquent les fonctionnalités des générateurs d’expression en Python 3 et celle des list comprehension en Python 2.</p>
+
+<p>Les façons de faire suivantes sont tout à fait équivalentes au précédent et le choix de la méthode est une question de style.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">l</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">])</span>
+<span class="k">print</span><span class="p">([</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<h1 id="zip">Zip</h1>
+<p>La fonction <code class="highlighter-rouge">zip</code> prend en argument une série d’itérables et crée un agrégat des éléments de chaque itérable.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">,</span> <span class="s">'z'</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)))</span>
+</code></pre>
+</div>
+
+<p><strong>Output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;zip object at 0x000001B02EC57A08&gt;
+[('x', 5), ('y', 6), ('z', 7)]
+{'z': 7, 'x': 5, 'y': 6}
+</code></pre>
+</div>
+
+<p>Si les deux listes sont de taille différente, le zip se fait quand même mais les éléments supplémentaires dans la liste la plus longue ne seront pas traités.
+L’usage le plus populaire de la fonction <code class="highlighter-rouge">zip</code> est sa capacité de créer un dictionnaire entre deux listes.</p>
+
+<h1 id="dir">dir</h1>
+
+<p>Cette fonction appelée sans paramètres retourne les noms de l’espace nom courant:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">'string'</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p><strong>Output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'a', 'b']
+</code></pre>
+</div>
+
+<p>Au sein d’une fonction:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">'string'</span>
+
+<span class="k">def</span> <span class="nf">fonction</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">())</span>
+
+<span class="n">fonction</span><span class="p">()</span>
+
+</code></pre>
+</div>
+
+<p><strong>Output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+
+</div>
+
+<div>
+	
+	<div class="eof"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: built-ins@&amp;url=http://localhost:4000/py/py-Built-in.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-Built-in.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-Built-in.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>
