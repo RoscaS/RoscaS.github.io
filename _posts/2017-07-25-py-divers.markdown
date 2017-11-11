@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Py: Divers"
-subtitle: "En vrac..."
+subtitle: ""
 date: 2017-07-25
 author: Sol
 category: Py
@@ -13,7 +13,7 @@ mathjax: true
 * [how to make an immutable object in python](https://stackoverflow.com/questions/4828080/how-to-make-an-immutable-object-in-python)
 * [Gestion de fichier (module os)](http://apprendre-python.com/page-gestion-fichiers-dossiers-python)
 
-## Liens
+# Liens
 
 * [apprendre-Python](http://apprendre-python.com/)
 * [sam&max](http://sametmax.com/cours-et-tutos/)
@@ -25,127 +25,15 @@ mathjax: true
 * [Dictionnaires](http://xahlee.info/python/python_dictionary_methods.html)
 * [Deep into Python and CS](https://www.cs.hmc.edu/csforall/index.html#)
 * [gross collection d'exercices](http://snakify.org/)
+* [Fonctions dangereuses](https://www.kevinlondon.com/2015/07/26/dangerous-python-functions.html)
+* [OpenCV install guide (linux)](https://www.learnopencv.com/install-opencv3-on-ubuntu/)
 
-## Livres
+# Livres
 
 * [Python 101, livre complet en ligne](http://python101.pythonlibrary.org/g)
 * [Python 201](https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/)
 
-## Classe de base: Object
-En python 3 il n'est plus nécéssaire d'explicitement dire à Python qu'une classe hérite de la classe de base `object`.
-
-```py
-class Parent():
-    def __init__(self):
-        pass
-```
-Cette classe hérite implicitement de la classe `object`
-
-## Fonctions dangereuses
-[Kevin London's blog](https://www.kevinlondon.com/2015/07/26/dangerous-python-functions.html)
-
-
-## Compter des occurences
-
-### Toutes les occurences dans une liste:
-
-```python
->>> import random
->>> from collections import Counter
->>>
->>> l = [random.randint(1,10) for i in range(1000)]
->>>> print(Counter(l))
-Counter({5: 115, 8: 111, 7: 104, 2: 102, 1: 101, 3: 100, 6: 97, 4: 94, 10: 90, 9: 86})
-```
-
-```python
->>> s = "j'aime la viande rouge bien cuite"
->>> print(Counter(s))
-Counter({'e': 5, ' ': 5, 'i': 4, 'a': 3, 'u': 2, 'n': 2, 'j': 1, 'r': 1, 'b': 1, 'd': 1,
-'m': 1, 't': 1, "'": 1, 'l': 1, 'v': 1, 'c': 1, 'g': 1, 'o': 1})
-```
-
-### Sous forme de tuples
-Permet de pouvoir utiliser un indexe pour sortir directement une valeur:
-
-```python
-s = "j'aime la viande rouge bien cuite"
-counted = Counter(s).most_common()
-print("Le char '{}' apparait le plus dans la string:\n{}\n\
-    Nombre d'occurences: {}\n Suivi par le char '{}' \
-    qui apparait {} fois.".format(
-        counted[0][0], s, counted[0][1], counted[1][0], counted[1][1]))
-```
-
-**return:**
-
-```
-Le char e apparait le plus dans la string:
-j'aime la viande rouge bien cuite
-    Nombre d'occurences:5
- Suivi par le char ' '     qui apparait 5 fois.
- ```
-
-
-
-## Poids (bytes) d'une structure de données
-
-```python
->>> a = [1,2,3,4]
->>> print(sys.getsizeof(a))
-96
-```
-
-## np.array vs lists
-
-* [stckoverflow](https://stackoverflow.com/questions/993984/why-numpy-instead-of-python-lists)
-
->NumPy's arrays are more compact than Python lists -- a list of lists as you describe, in Python, would take at least 20 MB or so, while a NumPy 3D array with single-precision floats in the cells would fit in 4 MB. Access in reading and writing items is also faster with NumPy.
-
->Maybe you don't care that much for just a million cells, but you definitely would for a billion cells -- neither approach would fit in a 32-bit architecture, but with 64-bit builds NumPy would get away with 4 GB or so, Python alone would need at least about 12 GB (lots of pointers which double in size) -- a much costlier piece of hardware!
-
->The difference is mostly due to "indirectness" -- a Python list is an array of pointers to Python objects, at least 4 bytes per pointer plus 16 bytes for even the smallest Python object (4 for type pointer, 4 for reference count, 4 for value -- and the memory allocators rounds up to 16). A NumPy array is an array of uniform values -- single-precision numbers takes 4 bytes each, double-precision ones, 8 bytes. Less flexible, but you pay substantially for the flexibility of standard Python lists!
-
-
-
-## Virtualenv + zsh
-* [install on unbuntu](http://bicofino.io/2015/02/10/install-virtualenv-and-virtualenvwrapper-on-ubuntu-14-dot-04-2/)
-* [virtualenv-doc](https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/)
-
-* `mkvirtualenv` _name_ $ \Rightarrow $ new virtualenv
-* `workon` _name_ $ \Rightarrow $ switch to "name" virtualenv
-* `workon` $ \Rightarrow $ list virtualenvs
-* `lsvirtualenv` $ \Rightarrow $ same
-* `deactivate` $ \Rightarrow $ leave current virtualenv
-* `virtualenv --version` $ \Rightarrow $ check version
-
-* `mkproject` _name_ $ \Rightarrow $ creates a project **directory** 
-* `deactivate` $ \Rightarrow $ leave current project
-
-* `rmvirtualenv` _name_ $ \Rightarrow $ delete project
-* `cdvirtualenv` $ \Rightarrow $ navigate into the directory of the currently activated venv.
-* `lssitepackages` $ \Rightarrow $ show content of `site-packages` directory
-
-
-### Exemple de nouveau venv pour openCV
-
-```py
-# create venv
-$ mkvirtualenv openCV -p python3
-$ workon openCV
-
-# install usefull libs within this venv
-$ pip install numpy scipy matplotlib scikit-image scikit-learn ipython
-
-# quit venv
-$ deactivate
-```
-
-## openCV install (linux)
-* [install guide](https://www.learnopencv.com/install-opencv3-on-ubuntu/)
-
-
-
+-------------
 
 
 ## Color trackBack
@@ -180,20 +68,35 @@ sudo pip3 install colored-traceback
 
 
 
+## Classe de base: Object
+En python 3 il n'est plus nécéssaire d'explicitement dire à Python qu'une classe hérite de la classe de base `object`.
 
-## Divers
+```py
+class Parent():
+    def __init__(self):
+        pass
+```
+Cette classe hérite implicitement de la classe `object`
 
-* Toute valeur en Python est un objet
-* En Python toutes les variables sont des références vers des objets
-* Il n'y a pas de **vrai** constantes en Python! </span> On parle de constante quand une variable est écrite toute en majuscules (**convention**) et qu'elle est sensé ne jamais changer.
 
-## Duck typing
 
-**Un objet en Python est défini par sa structure (les attributs qu'il contient et les méthodes qu'il lui sont applicables) plutôt que par son type.**
+## Poids (bytes) d'une structure de données
 
-Python est entièrement construit autour de cette idée appelée _**duck-typing**_: 
+```python
+>>> a = [1,2,3,4]
+>>> print(sys.getsizeof(a))
+96
+```
 
-> "Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j'appelle cet oiseau un cannard" (James Whitcomb Riley)
+## np.array vs lists
+
+* [stckoverflow](https://stackoverflow.com/questions/993984/why-numpy-instead-of-python-lists)
+
+>NumPy's arrays are more compact than Python lists -- a list of lists as you describe, in Python, would take at least 20 MB or so, while a NumPy 3D array with single-precision floats in the cells would fit in 4 MB. Access in reading and writing items is also faster with NumPy.
+
+>Maybe you don't care that much for just a million cells, but you definitely would for a billion cells -- neither approach would fit in a 32-bit architecture, but with 64-bit builds NumPy would get away with 4 GB or so, Python alone would need at least about 12 GB (lots of pointers which double in size) -- a much costlier piece of hardware!
+
+>The difference is mostly due to "indirectness" -- a Python list is an array of pointers to Python objects, at least 4 bytes per pointer plus 16 bytes for even the smallest Python object (4 for type pointer, 4 for reference count, 4 for value -- and the memory allocators rounds up to 16). A NumPy array is an array of uniform values -- single-precision numbers takes 4 bytes each, double-precision ones, 8 bytes. Less flexible, but you pay substantially for the flexibility of standard Python lists!
 
 
 
