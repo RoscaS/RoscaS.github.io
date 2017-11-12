@@ -59,6 +59,20 @@ j'aime la viande rouge bien cuite
 [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 ```
 
+Pareil avec des strings.
+
+## Reversed
+Cette fonction renvoie un itérateur qui itère à l'envers sur une séquence:
+
+```py
+>>> for i in reversed([1,2,3]):
+...     print(i)
+...
+3
+2
+1
+```
+
 ## Multi list iteration
 ```py
 >>> names = ['a', 'b', 'c']
@@ -121,4 +135,117 @@ La fonction `sorted` prend **une séquence** et retourne une liste des élément
 [2, 3, 4, 7, 10]
 ```
 
+## Strip
+Cette méthode retourne une copie de la string passée en argument et avec les éventuels espace avant et après supprimés. On peut égallement lui passer une string en argument ce qui fait qu'à la place de retirer les éventuels espaces, la méthode retirera les éventuels cha de la string passée en argument:
 
+```py
+>>> print(':abcd.efg!'.strip('.?!;:'))
+abcd.efg
+```
+
+# files
+
+`text.txt`:
+```
+Integer tortor leo, faucibus id turpis non, gravida egestas
+tortor. Curabitur blandit eget ipsum in malesuada. Aenean
+elit elit, aliquam convallis tellus sit amet, elementum
+semper nisl. 
+```
+
+```py
+def linecount(file):
+    return len(open(file).readlines())
+
+def wordcount(file):
+    return len(open(file).read().split())
+
+def charcount(file):
+    return len(open(file).read())
+
+
+F = 'text.txt'
+
+print(charcount(F))
+print(wordcount(F))
+print(linecount(F))
+```
+
+**output:**
+```
+187
+27
+4
+```
+
+La méthode `read()` retourne une string avec le nombre char spécifié en argument (tout le fichier si aucun argument n'est spécifié).
+
+La méthode `readlines()` retourne une liste de string des lignes du fichier.
+
+la méthode `readline()` retourne les lignes du fichier dans une string une à la fois. Si il n'y a plus rien à lire, la méthode retourne des string vides.
+
+
+```py
+>>> f = open('text.txt', 'w')
+>>> f.writelines(['a\n', 'b\n', 'c\n'])
+>>> f.close()
+>>> print(open('text.txt').read())
+a
+b
+c
+
+```
+
+La méthode `writelines` est pratique quand les données se trouvent dans une liste composée de strings.
+
+Exemple:
+
+`text.txt`
+```
+Integer tortor leo, faucibus id turpis non, gravida egestas
+tortor. Curabitur blandit eget ipsum in malesuada. Aenean
+elit elit, aliquam convallis tellus sit amet, elementum
+semper nisl. 
+```
+
+```py
+def reverse_text(file):
+    for i in reversed(file):
+        print(i)
+
+F = 'text.txt'
+
+f = open(F)
+l = []
+for c, i in enumerate(f):
+    l.append('{}) {}'.format(c+1, i))
+
+f.close()
+
+f = open(F, 'w')
+f.writelines(l)
+
+f.close()
+
+reverse_text(F)
+```
+
+**output:**
+
+```
+4) semper nisl.
+3) elit elit, aliquam convallis tellus sit amet, elementum
+2) tortor. Curabitur blandit eget ipsum in malesuada. Aenean
+1) Integer tortor leo, faucibus id turpis non, gravida egestas
+```
+
+Dans cet exemple, la fonction `reversed()` renvoie un itérateur qui itère à l'envers sur la liste.
+
+# List comprehension
+
+Triplets de Pythagore:
+
+```py
+>>> print([(x, y, z) for x in range(1, n) for y in range(x, n) for z in range(y, n) if x*x + y*y == z*z])
+[(3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (9, 12, 15), (12, 16, 20)]
+```
