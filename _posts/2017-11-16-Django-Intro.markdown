@@ -12,6 +12,7 @@ mathjax: true
 
 ## Sources:
 
+* [DjangoGirl](https://tutorial.djangogirls.org/en/django_installation/)
 * [Django official](https://docs.djangoproject.com/en/1.11/howto/windows/)
 * [Bases](https://docs.djangoproject.com/en/1.11/intro/tutorial01/)
 
@@ -32,6 +33,9 @@ Création d'env pour un projet
 ```
 mkvirtualenv myproject
 ```
+ou
+```
+mkvirtualenv path\myproject
 
 Pour travailler dans un venv, une fois dans le dossier du projet (cmd):
 
