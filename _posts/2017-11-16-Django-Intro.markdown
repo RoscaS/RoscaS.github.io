@@ -13,6 +13,7 @@ mathjax: true
 ## Sources:
 
 * [Django official](https://docs.djangoproject.com/en/1.11/howto/windows/)
+* [Bases](https://docs.djangoproject.com/en/1.11/intro/tutorial01/)
 
 ## Virtualenv & virtualenvwrapper
 
@@ -51,3 +52,5 @@ Pour tester l'installation:
 ```
 django-admin --version
 ```
+
+
