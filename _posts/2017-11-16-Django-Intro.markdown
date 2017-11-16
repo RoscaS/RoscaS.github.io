@@ -10,6 +10,10 @@ finished: false
 mathjax: true
 ---
 
+## Sources:
+
+* [Django official](https://docs.djangoproject.com/en/1.11/howto/windows/)
+
 ## Virtualenv & virtualenvwrapper
 
 virtualenv and virtualenvwrapper provide a dedicated environment for each Django project you create. While not mandatory, this is considered a best practice and will save you time in the future when you’re ready to deploy your project. Simply type:
