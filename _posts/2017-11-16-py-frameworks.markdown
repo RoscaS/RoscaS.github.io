@@ -241,3 +241,395 @@ def contact():
 > La commande `dump(objet)` intégrée au debuggeur (remplacer `objet` par le nom de l'objet à étudier), un tableau s'affiche, contenant tous les attributs et méthodes de l'objet étudié.
 
 Si le debuggeur n'était pas activé, on aurait eu droit à une erreur 500 (erreur du serveur).
+
+## Requêtes, Routes et Réponses
+
+### Requêtes
+
+Dans le code suivant noter l'import de `request`. Cet objet représente la requête HTTP envoyée par le client et reçue par le serveur. Tout ce qui est contenu dans la requête HTTP se retrouve dans cet objet: 
+
+* **chemin** de la page demandée 
+* **type** de la requête
+* **informations** supplémentaires à propos du client
+* **données** transmises
+
+```py
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.route('/coucou')
+def dire_coucou():
+    return 'Coucou !'
+
+if __name__ == '__main__':
+    app.run()
+```
+
+#### Chemin de la page demandée
+
+Il est accessible via l'attribut path de l'objet `request`:
+
+```py
+@app.route('/')
+def racine():
+    return "Le chemin de 'racine' est : " + request.path
+
+@app.route('/la')
+def ici():
+    return "Le chemin de 'ici' est : " + request.path
+```
+
+#### Filtrage des méthodes HTTP
+
+Le **type** est plus connu sous le nom de "**méthode HTTP**". Les méthodes HTTP les plus répandues sont GET et POST (pas forcément vrais depuis HTML 5!)
+
+> La méthode POST est géneralement employée lorsque le visiteur valide un formulaire (et envoie donc ses données au serveur dans la requête). Le reste du temps, la méthode GET est employée.
+
+Si nous voulons une page accessible au chemin `'/contact'` et que cette dernière affiche un formulaire de contact, que le visiteur remplit le formulaire, le valide, et qu'un remerciement lui soit affiché à la suite de cela le tout dans une seul et même page `'/contact'`, nous pouvons regarder la méthode HTTP utilisée:
+
+Si le visiteur vient d'arriver sur la page (en cliquant sur un lien ou en tapant directement l'url dans son navigateur), la méthode employée sera GET. En revanche, si il vient de valider le formulaire, ça sera POST qui sera employé:
+
+```py
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'GET':
+        # afficher le formulaire
+    else:
+        # traiter les données reçues
+        # afficher : "Merci de m'avoir laissé un message !"
+```
+
+Deux nouveautés dans ce code:
+* la méthode employée est accessible via l'attribut `method` de l'objet `request`. 
+* on a précisé les méthodesautorisées dans le décorateur. **Sans cela, la seul méthode autorisée est GET**.
+
+on aurait pu écrire ce code différament, en faisant une vue pour la méthode GET et une autre pour la méthode POST:
+
+```py
+@app.route('/contact', methods=['GET'])
+def contact_formulaire():
+    # afficher le formulaire
+
+@app.route('/contact', methods=['POST'])
+def contact_traiter_donnees():
+    # traiter les données reçues
+    # afficher : "Merci de m'avoir laissé un message !"
+```
+
+<span style="color:red"> Toujours bien faire attention à ne pas avoir deux routes identiques ou deux vues portant le même nom! </span> Ici, nos routes sont différentes malgré les apparences comme elles ne sont pas accessibles par les mêmes méthodes HTTP.
+
+
+## Les routes
+
+Les routes (chemin de la page demandée) est accessible dans `request.path`. En pratique, ce n'est pas utile car Flask gère lui même pour exécuter la bonne vue selon l'url demandée grace à `@app.route` qui permet de spécifier une URL d'accès à une vue en filtrant les méthodes HTTP autorisées.
+
+### Une vue plusieurs routes
+
+On peut décorer plusieurs fois une vue avec `@app.route` afin de rendre accessible cette pages par plusieurs adresses:
+
+```py
+@app.route('/f_python')
+@app.route('/forum/python')
+@app.route('/poule')
+def forum_python():
+    return 'contenu forum python'
+```
+
+Cela dit, ce n'est pas une très bonne chose d'utiliser cette possibilité de cette façon car les moteurs de recherche qui veulent indexer notre site web pour le référencer vont croire qu'il s'agit de 3 pages différentes, et on risque de retrouver ces 3 résultats en cherchant cette page dans Google par exemple.
+
+Cette possibilité est utile quand elle est combinée aux **routes personnalisées.**
+
+### Routes personnalisées
+
+<span style="color:red"> Fonctionnalité très utile pour le développement de sites web. </span> 
+
+Disons que nous souhaitons mettre en place une page de discussion sur notre site où les utilisateurs peuvent poster des messages et lire ceux des autres. Les messages seraient triés dans l'ordre décroissant afin de voir les plus récents en premier. Le soucis c'est qu'au bout de quelque temps, on se retrouvera avec trop de messages à afficher et il faudra limiter le nombre de messages par page et ajouter des boutons pour naviguer entre les pages.
+
+Voici ce que nous voulons obtenir:
+
+* La page `'/discussion'` affiche les 50 messages les plus récents
+* La page `'/discussion/page/3'` affiche la 3e page de messages (de 101 à 150)
+* La page `'/discussion/page/1'` affiche la même chose que la page `'/discussion'`
+
+Les routes personnalisées sont un moyen d'obtenir de telles url. Nous aurions quelque chose de ce genre là:
+
+```py
+@app.route('/discussion/page/<num_page>')
+def mon_chat(num_page):
+    num_page    = int(num_page)
+    premier_msg = 1 + 50*(num_page - 1)
+    dernier_msg = premier_msg + 50
+    return 'affichage des messages {} à {}'.format( premier_msg, dernier_msg)
+```
+Et qui se comporterait de cette façon:
+
+<div class="image">
+    <img src="/00illustrations/py-Frameworks/pages.gif">
+</div>
+
+Ce qu'on a fait ici, c'est de rajouter un paramètre obligatoire dans la route: un numéro de page à préciser pour pouvoir calculer les messages à afficher. Pour cela, il y a deux choses à faire:
+
+* Placer dans la route un nom de variable écrit entre `<` et `>`
+* Ajouter en paramètre à la vue décorée une variable possédant ce même nom.
+
+En procédant ainsi, on obtient alors un variable `num_page` qui correspond à ce qui a été mis à cet endroit dans l'url. Cette variable est une string or nous voudrions un int, c'est pour cela que nous effectuons une conversion dans le corp de la fonction. Malgré ça, cela va créer une erreur si l'utilisateur entre autre chose qu'un nombre. Pour compenser Flask nous propose une meilleur alternative:
+
+```py
+@app.route('/discussion/page/<int:num_page>')
+def mon_chat(num_page):
+    premier_msg = 1 + 50 * (num_page - 1)
+    dernier_msg = premier_msg + 50
+    return 'affichage des messages {} à {}'.format( premier_msg, dernier_msg)
+```
+
+En ajoutant ce `int:` avant le nom de la variable, les seules valeurs acceptées seront des entiers (sinon erreur 404), et la variable sera automatiquement convertie (plus d'erreur 500)!
+
+> Il existe aussi `float:` pour les nombres à virgule et `path:` pour les strings contenant le symbole `/` (slash)
+
+Il nous reste un dernier problème: pouvoir accéder aux 50 messages les plus récents en nous rendant à l'adress `'/discussion'`. Si on tente de bêtement rajouter une route:
+
+```py
+@app.route('/discussion')
+```
+On obtient une erreur comme il manque une valeur pour `num_page`... La solution est d'utiliser une vleur par défaut pour le premier paramètre `num_page` de notre vue `mon_chat`:
+
+```py
+@app.route('/discussion/page/<int:num_page>')
+def mon_chat(num_page=1):
+    premier_msg = 1 + 50 * (num_page - 1)
+    dernier_msg = premier_msg + 50
+    return 'affichage des messages {} à {}'.format( premier_msg, dernier_msg) 
+```
+
+Il est bien entendu possible de mettre plusieurs variables dans nos routes, et nous ne sommes pas obligés de les séparés par un slash. Par exemple voici une page qui affiche le prénom et le nom passé dans l'adresse:
+
+```py
+@app.route('/afficher')
+@app.route('/afficher/mon_nom_est_<nom>_et_mon_prenom_<prenom>')
+def afficher(nom=None, prenom=None):
+    if nom is None or prenom is None:
+        return "Entrez votre nom et prénom dans l'url"
+    return "Vous vous appelez {} {}!".format(prenom, nom)
+```
+
+Si on entre comme url http://localhost:5000//afficher/mon_nom_est_moran_et_mon_prenom_bob
+La page affichera bien "vous vous appelez bob moran!
+
+Ce n'est qu'un exemple, et il n'est pas une bonne pratique! Les routes personnalisées nous permettent d'avoir de belles url, pas de transmettre des données. Pour cela, il y a les formulaires !
+
+## Les réponses
+Jusque ici, nos pages se contentaient de renvoyer une string. Flask transformait tout seul cette string en une réponse HTTP, et lui attribuait le mimetype `"text/html"` (ce qui signifie que le contenu de la page est du HTML) et le code d'erreur 200 (tout est ok). Voyons maintenant comment modifier ce comportement.
+
+### Changer le mimetype
+
+Essayons de concevoir une page qui génère une image et qui la renvoie telle quelle. Pour ce faire nous allons utiliser le module PIL (Python Image Library) à installer via pip.
+
+```py
+from flask import Flask, request
+from PIL import Image
+from io import StringIO
+
+app = Flask(__name__)
+
+@app.route('/image')
+def genere_image():
+    mon_image = StringIO()
+    Image.new("RGB", (300, 300), "#92C41D").save(mon_image, 'BMP')
+    return mon_image.getvalue()
+
+if __name__ == '__main__':
+    app.run()
+```
+
+En ligne 9, on crée l'objet qui va contenir l'image (un `StringIO` est un fichier socké dans la RAM et non sur le DD), la ligne suivante nous générons l'image de dimensions 300 sur 300 et de couleur verte, au format BMP, et que nous stockons dans l'objet `mon_image`.
+Sur la ligne suivante, nous renvoyons le contenu de l'objet `mon_image`... donc l'image elle même.
+
+En se rendant à l'adresse `'/image` on s'attend donc à voir apparaitre notre carré.
+
+Sauf que non. Le problème est que Flask nous renvoie bien l'image mais en oubliant de préciser qu'il s'agit d'une image, justement, et au format BMP. Flask fait croire à notre navigateur qu'il s'agit d'une page HTML comme une autre et le navigateur tente de l'afficher sous forme de texte.
+
+La solution est de simplement dire à Flask que le **mimetype** de cette réponse HTTP n'est pas `'text/html'` comme d'habitude, mais `'image/bmp'`.
+
+Nous allons créer la réponse à partir de l'image puis on va changer son mimetype en manipulant l'objet réponse. Pour ce faire nous avons besoin d'un `import`:
+
+```py
+from flask import make_response
+```
+
+Ensuite nous pouvons créer un objet réponse HTTP à partir de l'image, changer son mimetype (qui est simplement un attribut de la réponse), et renvoyer la réponse:
+
+```py
+@app.route('/image')
+def genere_image():
+    mon_image = StringIO()
+    Image.new("RGB", (300,300), "#92C41D").save(mon_image, 'BMP')
+    reponse = make_response(mon_image.getvalue())
+    reponse.mimetype = "image/bmp"  # à la place de "text/html"
+    return reponse
+```
+
+>En principe on ne fait pas appel à `make_response()` car Flask le fait pour nous: Lorsqu'on `return` qulque chose, Flask applique `make_response()` dessus. C'est dans des cas comme celui ci qu'on est amenés à le faire nous même.
+
+### Changer le code d'erreur HTTP
+
+Dans le même registre, on peut éventuellement avoir besoin de changer le code d'erreur HTTp d'une page. Imaginons la page suivante (totalement inutile, mais c'est pour l'exemple):
+
+```py
+@app.route('404')
+def page_non_trouvee():
+    return 'Cette page devrait vous avoir envoyé une err 404'
+```
+
+Si on consulte cette page, le texte s'ffiche bien... Donc nous n'avons pas reçu de code d'erreur 404. Nous avons bien obtenu le code 200 (tout est ok). Pour forcer un code d'erreur différent, il faut créer un objet réponse et modifier son attribut `status_code`:
+
+```py
+@app.route('/404')
+def page_non_trouvee():
+    reponse = make_response('Cette page devrait vous avoir renvoyé une err 404')
+    reponse.status_code = 404
+    return reponse
+```
+
+Et de fait l'output dans la console montre:
+
+```
+127.0.0.1 - - [17/Nov/2017 21:58:23] "GET /404 HTTP/1.1" 404 -
+```
+
+Dans le cas particulier du code d'erreur, on peut le spécidier directement à l'intérier du `make_response()`:
+
+```py
+@app.route('/404')
+def page_non_trouvee():
+    reponse = make_response('Cette page devrait vous avoir renvoyé une err 404', 404)
+    return reponse
+```
+
+Et même mieux: Comme dit plus haut, Flask applique tout seul `make_response()` à nos return quand on ne l'a pas fait. On peut donc écrire tout simplement ceci:
+
+```py
+@app.route('/404')
+def page_non_trouvee():
+    return 'Cette page devrait vous avoir renvoyé une err 404', 404 
+```
+
+On envoie en réalité un tuple dont la seconde valeur est le code d'erreur HTTP. Plus besoin de `make_response()`!
+
+
+### Personnaliser ses pages d'erreur
+
+Ce que nous venons de faire est en quelque sorte de créer une page d'erreur perso, mais cela ne présente pas beaucoup d'intérêt, car dans le cas général, le visiteur entre une adresse inconnue, et Flask lui renvoie une page d'erreur 404 assez austère. Ce qui serait intéressant serait justement de modifier cette page 404 affichée par défaut.
+
+Flask nous permet de mettre cela en place facilement pour n'importe quel code d'erreu, grace au décorateur `@app.errorhandler`.
+
+Ce décorateur est comparable à `@app. route` à la différence que `@app.route` ssocie une vue à la route présente dans la requête, tandis que `@app.errorhandler` associe une vue à une erreur survenue sur le serveur:
+
+```py
+@app.errorhandler(404)
+def ma_page_404(error):
+    return "Ma jolie page 404", 404
+```
+Donc que nous allions à la page `.../404` ou sur une page qui n'existe pas nous allons maintenant tomber sur la même page. 
+
+>Noter que nous renvoyons un tuple dont la seconde valeur est le code d'erreur comme vu plus tot. Sans ça notre page d'erreur 404 aurait renvoyé le code 200...
+
+Nous ne nous sommes pas servi du paramètre error de notre vue, car celui-ci contient des informations sur le type d'erreur survenue, or, **dans ce cas là**, il s'agit forcément de l'erreur 404. Mais ce paramètre est utile si on fait une seul vue pour plusieurs codes d'erreur:
+
+```py
+@app.errorhandler(401)
+@app.errorhandler(404)
+@app.errorhandler(500)
+def ma_page_erreur(error):
+    return "Ma jolie page {}".format(error.code), error.code
+```
+
+### Émettre soi-même des erreurs HTTP
+
+Nous avons vu comment modifier le code d'erreur pour une réponse donnée, mais imaginons que nous voulions carrément qu'une page (qui existe bien) se comporte comme si elle n'existait pas? Il faudrait en quelques sortes "rediriger" vers la page 404. Ce comportement est exactement celui permis par la fonction `abort`.
+
+Prenons un exemple concret: Si l'utilisteur n'est pas identifié, la page `'/profil'` affiche une page d'erreur 401 (accès non autorisé):
+
+```py
+from flask import abort
+
+@app.route('/profil')
+def profil():
+    if utilisateur_non_identifie:
+        abort(401)
+    return "Vous êtes bien identifié, voici la page demandée: ..."
+```
+
+Ce petit système de redirection spécifique aux erreurs est bien pratique... Et il existe le même système de redirection pour les pages normale...
+
+### Les redirections
+
+Nous préférerions que la page `'/profil'` redirige vers la page `/'login'` si l'utilisateur n'est pas identifié. Voyons comment faire.
+
+> Commençons par un petit détail technique: lorsqu'on veut rediriger le visiteur vers une autre page, on lui envoie un code d'erreur HTTP 302 accompagné de l'adresse de la page où il doit se rendre. Le navigateur charge alors cette page automatiquement, c'est pour ça qu'on ne voir jamais la page d'erreur 302 apparaitre, tout s'enchaine rapidement.
+
+#### La fonction `redirect`
+
+Elle s'utilise un peu à la façon d'`abort`, sauf qu'au lieu de prendre en paramètre un code d'erreur, elle prend une route. De plus, il faut retourner ce que renvoie `redirect`:
+
+```py
+from flask import redirect
+
+@app.route('/google')
+def redirection_google():
+    return redirect('http://www.google.com')
+```
+
+Et si nous revenons à notre problème initial, nous pouvons maintenant le résoudre en faisant ainsi:
+
+```py
+from flask import redirect
+
+@app.route('/profil')
+def profil():
+    if utilisateur_non_identifie:
+        return redirect('/login')
+    return "Vous êtes bien identifié, voici la page demandée: ..."
+
+@app.route('/login')
+def page_de_login():
+    # ...
+```
+
+... sauf qu'il ne faut **surtout pas** procéder ainsi. On vient de faire quelquechose de vraiment mal: On a indiqué une route en paramètre de `redirect()`. Les routes sont faites pour être écrites une seule fois, dans le `@app.route`. De ctte façon, si on veut changer les routes, cela se fera à un seul endroit, tandis que si on écrit également les routes dans les `redirect()`, il faudra les changer partout!
+
+La bonne méthode est d'utiliser non pas la route, qui peut changer, mais le **nom** de la vue ciblée, qui restera inchangé, même si on modifie sa ou ses routes d'accès. En l'occurence, le nom de la vue est `page_de_login`.
+
+Le problème est que si l'on passe le nom de cette vue à `redirect`, celui ci ne va pas savoir quoi en faire, car il ne peut recevoir qu'une adresse. Il faut donc utiliser une autre fonction, très pratique appelée `url_for()`. Elle va transformer le nom de vue que vous lui passerez (sous forme de **string**) en une adresse, exploitable par `redirect`.
+
+#### la fonction `url_for`
+
+```py
+from flask import redirect, url_for
+
+@app.route('/profil')
+def profil():
+    if user_non_identifie:
+        return redirect(url_for('page_de_login'))
+    return "Vous êtes bien identifié, voici la page demandée: ..."
+
+@app.route('/login')
+def page_de_login():
+    # ...
+```
+
+Un dernier détail cependant: `url_for` peut aussi générer des routes personnalisées, il suffit de lui passer en paramètre les variables nécessaires dans la route.
+
+Par exemple, si notre page `'/profil'` est en réalité accessible uniquement avec un pseudo de la façon suivante:
+
+```py
+@app.route('/profil/<pseudo>')
+def afficher_profil(pseudo):
+    # ...
+```
+
+Alors pour générer l'adresse vers le profil du membre "Luc1664", on utilisera `url_for` de la façon suivante:
+
+```py
+url_for('afficher_profil', pseudo="luc1664")
+```
+
