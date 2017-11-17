@@ -43,6 +43,12 @@ Pour travailler dans un venv, une fois dans le dossier du projet (cmd):
 workon myproject
 ```
 
+Si le venv est créé à la sauce djangogirls"
+
+```
+myvenv\Scripts\activate
+```
+
 ## Install Django
 
 Django s'installe via pip une fois dans le venv du nouveau projet (s'assurer qu'il est actif via `wokon myproject`:
@@ -57,4 +63,8 @@ Pour tester l'installation:
 django-admin --version
 ```
 
+Lancer serveur local:
 
+```
+python manage.py runserver
+```
