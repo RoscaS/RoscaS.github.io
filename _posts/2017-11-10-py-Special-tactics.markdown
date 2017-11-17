@@ -9,7 +9,12 @@ tags:
 finished: true
 mathjax: true
 ---
-# Conteneurs
+## format et join
+
+```py
+mots = ['poule', 'vache', 'poney']
+print(', '.join('{}'.format(m) for m in mots))
+```
 
 ## Compter des occurences
 
