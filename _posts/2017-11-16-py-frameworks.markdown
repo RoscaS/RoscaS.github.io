@@ -693,7 +693,7 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-`acceuil.html`
+`accueil.html`
 ```html
 <!DOCTYPE html>
 <html>
@@ -775,4 +775,327 @@ Les template sont des fichiers HTML dans lesquels on place des sectios de code J
 Pour faire afficher ce template par notre vue `acceuil()` Flask nous met à disposition la fonction render_template(), à laquelle on va passer le nom du fichier template (par exemple, pour être cohérent, `acceuil.html` en l'occurence). Les fichiers templates doivent être placés dans le dossier nommé `templates`
 
 
+```py
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def acceuil():
+    return render_template('accueil.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
 ```
+
+> La fonction `rendender_template()` renvoie le contenue de la page web qui va être envoyée au client. Ce contenu n'est rien d'autre qu'une simple string. Tout ce qui a été vu précédament sur les réponses HTTP est donc valable en utilisant les templates.
+
+Si on veut passer au template des variables à afficher, cela se fait également dans la fonction `render_template()`. Il suffit de lui passer ces variable en tant qu'argument optionnels. Par exemple, si on désire afficher la date actuelle dans la page web, on fera ainsi:
+
+
+```py
+from datetime import date
+
+@app.route('/date')
+def _date():
+    d = date.today().isoformat()
+    return render_template('accueil.html', la_date=d)
+```
+
+On passe au template une variable qui s'appellera `la_date`. Cette variable sera une simple string qu'on affichera de la façon suivante:
+
+
+`accueil.html`
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Date</title>
+    </head>
+
+    <body>
+        <h1>La date d'aujourd'hui est : {{ la_date }}</h1>
+    </body>
+</html>
+```
+
+Pour afficher quelque chose dans un template, il suffit de mettre ce quelque chose entre `{{` et `}}`
+
+Il existe deux autres façons de faire en sorte de passer des variables depuis le code Python vers le template:
+
+#### @app.context_processor
+
+Si on se rend compte que dans chque vue, on passe une variable qui est utilisée dans chaque template, il existe une façon desupprimer cette répétition. Par exemple, si on utilise la variable `titre` dans chaque template, voilà comment faire pour la passer à un seul endroit:
+
+```py
+@app.context_processor
+def passer_titre():
+    return dict(titre="Bienvenue!")
+```
+
+Il suffit de créer une autre fonction décorée par `@app.context_processor`. Cette fonction **doit renvoyer un dictionnaire où chaque clé sera une variable accessible dans les templates Jinja**
+
+#### Sans rien faire
+
+Certaines variables sont accessibles par défaut dans les templates. C'est le cas des variables 
+
+* `request` : Déja vu plus haut, nous sert entre autres à afficher la valeur de son attribut method (`{{ request.method }}`)
+* `config` : Représente la configuration de Flask. Dans le paramètre `debug=True`, `debug` est un item du dictionnaire `config`
+* `session` : Représente la session de l'utilisateur
+* `g` : Objet fourre-tout où on peut placer ce un peu ce qu'on veut en ajoutant des attributs (ex. `g.titre = "Bienvenue !")
+
+### Afficher le contenu des variables
+Il faut se servir de `{{ obj['attr'] }}`, cela v d'abord chercher si un item `attr` est contenu dans `obj`, puis, si il n'y en a pas, si `obj` possède un attribut nommé `attr`.
+
+Ce fonctionnement est le même pour les objets, les listes et les dictionnaires!
+
+> Si il n'y a ni item ni attribut, cela renverra la valeur spéciale `undefined` et ça n'affiche rien.
+
+## Créer des varibles dans les templates
+
+On n'est pas obligé de se contenter des variables passées depuis l'extérieur dans nos templates. On peut très bien créernos propres variables. Les int, floats, strings, listes, tuples et dictionnaires sont disponibles. Les opérations mathématiques de base également (+,-,*,/,%,**). La syntaxe pour créer une variables est la même qu'en Python mais précédée du mot clé `set`:
+
+```html
+{% set menu = ['accueil', 'news', 'contact'] %}
+```
+
+**<span style="color:red"> Attention: </span>**, On a pas utilisé `{{ }}` mais `{% %}`.
+* `{{ }}` ne fait qu'**afficher** le contenu d'une vriable
+* `{% %}` sert à tout le reste
+
+> Le code HTML du templatate est en dehors de ces sections.
+
+En faisant cela, on crée une variable appelée menu, qui est une liste. Cette variable sera accessible dans tout le reste du template. Si l'on désire que cette variale soit accessible seule,ent dans une certaine zone du template, alors on doit la créer dans un **tag**`with`:
+
+```py
+{$ with menu = ['accueil', 'news', 'contact'] $}
+    {{ menu[0] }}
+    {{ menu[1] }}
+    {{ menu[2] }}
+{% endwith %}
+```
+
+De cette façon, menu est inacessible en dehors des **with**/**endwith**.
+
+## Commentaire en jinja
+```py
+{# commentaire blah blah #}
+```
+
+## Les filtres
+
+Jinja introduit une syntaxe particulièrement élégante pour appliquer une fonction sur une variable: les filtres. De nombreux filtres sont déjà prédéfinis. Les filtres s'utilisent de la façon suivante: (dans cet exemple, on applique un filtre à une variable appelée x):
+
+```py
+{{ x|filtre }}
+```
+Si le filtre dispose de paramètres:
+```py
+{{ x|filtre('parametre') }}
+```
+En fin de compte, l'application de filtres utilise la même syntaxe que l'appel d'une méthode, sauf que l'on remplace le symbole `.` par `|` sauf que les filtres ne sont pas des méthodes propres à une classe, ce sont simplement des fonctions.
+
+Il existe beaucoup de filtres disponibles dans Jinja, certains sont là uniquement pour la mise en forme, d'autres non. La liste de tous ces filtres est disponible dans la [doc de Jinja](http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-filters) . Voici quelques exemples:
+
+* `capitalize`: met en majuscule la première lettre d'une string et en minuscule la suite. Pas de paramètres. (ex. `{{ titre|capitalize }}`)
+* `join`: concatène les valeurs d'une liste en les séparant par le délimiteur passé en paramètre (qui vaut par défaut `''`). Cela fonctionne comme la méthode `join` de `str` (ex. `{{ ["Une", "Petite", "Poule"] | join(', ') }}`)
+
+## Les conditions
+
+Elles se font de la même façon qu'en Python. `if`, `elif`, `else`. Et comme il ne s'agit pas d'un affichge, on utilise les balises `{% %}` et non `{{ }}`. Cependant, Pyhton se base sur l'indendation, alors que Jinja non (on peut placer nos balises comme on le souhaite). Par conséquent, il faut préciser la fin du bloc `if\elif\else` avec le mot clé `endif`:
+
+```py
+<p>
+    {% if age < 18 %}
+            Accès non autorisé aux mineurs.
+    {% elif age < 90 %}
+            Accès autorisé.
+    {% else %}
+            Doucement !
+    {% endif %}
+</p>
+```
+ Maintenant voici un exemple qui reprend ce qu'on a découvert juste avant (déclaration de variables et utilisation de filtres):
+
+ ```py
+{% set age = "20" %}
+{% if age|int == 20 %}
+        <p>Vous avez 20 ans, vous bénéficiez d'une remise!</p>
+{% endif %}
+ ```
+Ici, on utilise le filtre `int` qui convertit une valeur en entier.
+
+Dans les conditions, on peut utiliser les opérateurs habituels:
+
+```py
+==, !=, <, >, <=, >=, is, and, or, not, in
+```
+
+## Tests intégrés à Jinja2
+
+Les tests sont des fonctions disponibles dans Jinja et qui s'utilisent dans les conditions grace au mot clé `is`. Tout comme les filtres, il existe des tests qui ne prennent pas de paramètres, et d'autres qui en nécessitent. La liste de tous ce tests est disponible dans la [documentation de jinja](http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-tests).
+
+Voici deux exemples avec les tests `defined` et `divisibleby`:
+
+```py
+{% if truc is defined %}
+        <p>La variable truc n'est pas undefined</p>
+{% endif %}
+```
+
+```py
+{% set age = 20 %}
+{% if age is divisibleby(10) %}
+        <p>Votre age est un multiple de 10.</p>
+{% endif %}
+```
+
+## Les boucles
+
+Les `for` aussi fonctionnent comme en Python à la différence qu'on ajoute `{% endfor %}` à la fin. Cependant, il n'y a pas de boucles `while` dans Jinja.
+
+```py
+{% set mots = ["bonjour", "à", "toi,", "visiteur."] %}
+
+<ul>
+    {% for mot in mots %}
+        <li>{{ mot }}</li>
+    {% endfor %}
+</ul>
+```
+
+On peut inverser l'affichage en appliquant un filtre `reverse` sur la liste `mots`:
+
+```py
+<ul>
+    {% for mot in mots|reverse %}
+        <li>{{ mot }}</li>
+    {% endfor %}
+</ul>
+```
+
+Si on ne désire afficher que les 10 premiers mots:
+
+```py
+{% if mots|lenght > 10 %}
+    <ul>
+    {% for i in range(10) %}
+        <li>{{ mots[i] }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Vous devez entrer dix mots au minimum.</p>
+{% endif %}
+```
+
+> Cet exemple inutile était destiné à vous présenter le filtre `lenght` ainsi que la fonction `range()`, disponible dans Jinja. Voir la [documentation de jinja](http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-tests) pour d'autres fonctions !
+
+## Include
+
+Nos templates commencent à être bien pratiques, mais il reste un problème essentiel: le code se répète entre nos templates, ce qui induit des risques d'erreur lors des modifications, et ce qui alourdit la quantité totale de code inutilement. C'est sur ce problème que vont intervenir l'héritage de template (un peu plus loin dans cet article), ainsi qu'include, que l'on va voir tout de suite.
+
+Include permet, comme son nom l'indique, d'aller inclure le contenu d'un autre fichier template, comme si on effectuait un copier-coller du contenu. Cela peut se revéler particulièrement utile, si, par exemple, tous nos templates commencent ainsi:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ titre }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css" />
+    </head>
+</html>
+```
+Dans un cas comme celui là, il suffit de placer ce code dans un template nommé par exemple `header.html`, puis, dans les templates qui voudront inclure ce code, il suffira de placer, à l'endroit désiré:
+
+```py
+{{ include 'header.html' }}
+```
+
+Par conséquent, il faudra veiller à ce que les templates qui incluront `header.html` connaissent tous une variable nommée `titre`.
+
+>En réalité, on n'utilisera pas include pour ce genre de choses, on préfèrera utiliser l'héritage de templates. Include sera plutot utile, si, par exemple, certaines pages de notre site affichent un gros formulaire: Il suffira d'écrire une seule fois ce formulaire dans un template séparé et de l'inclure. Le code en sera ainsi mieux découpé.
+
+## L'héritage
+
+L'idée de base est que, au fond, la plupart des pages de notre site sont composées du même squelette, seul le contenu change un peu. On a vu qu'on pouvait utiliser include pour simplifier cela, mais l'héritage de templates est plus puissant. Son principe est de structurer une page en une série de "blocks". Les blocks du template parent qu'on ne veut pas changer dans les templates enfants n'ont pas à être reprécisés. Par contre, ceux que l'on veut modifier n'ont qu'à être réécrits en remplaçnt leur contenu par ce qu l'on veut.
+
+Pour cet exemple, on va se contenter de deux templates:
+* Un template qui ne contiendra que le squelette du site
+* Un autre qui sera utilisé par la page contact du site
+
+Voyons tout d'abord le template `squelette.html`. C'est une page HTML classique dans laquelle on précise des blocks:
+
+`squelette.html`
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+    {% block header %}
+        <meta charset="utf-8" />
+        <title>{% block titre %}Titre par défaut{% endblock %}</title>
+    {% endblock %}
+    </head>
+
+    <body>
+        {% block corps %}{% endblock %}
+        {% block footer %}{% endblock %}
+    </body>
+</html>
+```
+
+Comme on le voit, un block se crée en faisant:
+```py
+{% block nom_du_block %}{% endblock %}
+```
+
+Un block peut être initialement vide (il pourra être rempli dans les templates fils), ou il peut contenir déjà du code (qui sera donc présent dans les templates fils, par défaut). Comme on le voit dans cet exemple, un block peut contenir d'autres blocks, ça n'est pas un problème. Voyons maintenant comment réaliser le template de la page contact:
+
+`contact.html`
+```html
+{% extends "squelette.html" %}
+
+{% block titre %}Page de contact{% endblock %}
+
+{% block corps %}
+<h1>Page de contact</h1>
+<form action="" method="post">
+    <input type="text" name="nom" value="votre nom" />
+    <textarea name="message">Votre message ici.</textarea>
+    <input type="submit" value="Envoyer" />
+</form>
+{% endblock %}
+
+
+{% block footer %}
+<footer>Copyright monsite.com 2015-1017</footer>
+{% endblock %}
+```
+On note plusieurs choses:
+* Pour préciser qu'on souhaite hériter du template `squelette.html`, on utilise le tag **extends** en lui précisant simplement le nom du template.
+* On peut changer le contenu d'un block en le réecrivant (ici on change le titre de la page de cette façon)
+* On peut mettre du contenu dans les blocks qui étaient vides (les blocks corps et footer)
+
+L'avantage est qu'on a pas besoin de repréciser le squelette HTML de la page, on se contente simplement de remplir les blocks. On raurait même pu créer de nouveaux blocks, à l'intérieur du formulaire par exemple, et ensuite remplir ces blocks dans un template fils, et ainsi de suite.
+
+Il reste un détail génant: On écrit deux fois le titre de la page (une fois dans le block titre, qui va remplir la balise `<title>`, et une seconde fois dans la balise `<h1>`) alors que le titre est le même. Pour éviter cela, on peut afficher le contenu du block titre dans la balise `<h1>`:
+
+```html
+<h1>{{ self.titre() }}</h1>
+```
+
+`self.nom_du_block()` renvoie le contenu `nom_du_block` (`self` représente le template actuel).
+
+Il existe une autre astuce très pratique quand on veut garder le contenu du block du parent mais y **rajouter** quelque chose en plus. Par exemple, on pourrait imaginer vouloir garder le contenu du block header, mais y ajouter un `<link>` CSS. Pour cela, on peut utiliser `super()`, qui renvoie le contenu du même block dans le parent:
+
+```html
+{% block header %}
+    {{ self.supper() }} {# renvoie le contenu du block header 
+        (celui où on se situe du template parent (squelette.html)) #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_contact.css') }}" type="text/css" />
+{% endblock %}
+```
+
+L'héritage de templates simplifie vraiment le contenu des templates en nous évitant de nous répéter. **<span style="color:red"> Tout comme avec include il ne faut pas oublier, dans nos vues, de donner des valeurs aux variables utilisées dans les templates parents! </span>**
