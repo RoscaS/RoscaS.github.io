@@ -854,7 +854,7 @@ Ce fonctionnement est le même pour les objets, les listes et les dictionnaires!
 > Si il n'y a ni item ni attribut, cela renverra la valeur spéciale `undefined` et ça n'affiche rien.
 
 {% raw %}
-## Créer des varibles dans les templates 
+### Créer des varibles dans les templates 
 
 On n'est pas obligé de se contenter des variables passées depuis l'extérieur dans nos templates. On peut très bien créernos propres variables. Les int, floats, strings, listes, tuples et dictionnaires sont disponibles. Les opérations mathématiques de base également (+,-,*,/,%,**). La syntaxe pour créer une variables est la même qu'en Python mais précédée du mot clé `set`:
 
@@ -880,12 +880,12 @@ En faisant cela, on crée une variable appelée menu, qui est une liste. Cette v
 
 De cette façon, menu est inacessible en dehors des **with**/**endwith**.
 
-## Commentaire en jinja
+### Commentaire en jinja
 ```py
 {# commentaire blah blah #}
 ```
 
-## Les filtres
+### Les filtres
 
 Jinja introduit une syntaxe particulièrement élégante pour appliquer une fonction sur une variable: les filtres. De nombreux filtres sont déjà prédéfinis. Les filtres s'utilisent de la façon suivante: (dans cet exemple, on applique un filtre à une variable appelée x):
 
@@ -903,7 +903,7 @@ Il existe beaucoup de filtres disponibles dans Jinja, certains sont là uniqueme
 * `capitalize`: met en majuscule la première lettre d'une string et en minuscule la suite. Pas de paramètres. (ex. `{{ titre|capitalize }}`)
 * `join`: concatène les valeurs d'une liste en les séparant par le délimiteur passé en paramètre (qui vaut par défaut `''`). Cela fonctionne comme la méthode `join` de `str` (ex. `{{ ["Une", "Petite", "Poule"] | join(', ') }}`)
 
-## Les conditions
+### Les conditions
 
 Elles se font de la même façon qu'en Python. `if`, `elif`, `else`. Et comme il ne s'agit pas d'un affichge, on utilise les balises `{% %}` et non `{{ }}`. Cependant, Pyhton se base sur l'indendation, alors que Jinja non (on peut placer nos balises comme on le souhaite). Par conséquent, il faut préciser la fin du bloc `if\elif\else` avec le mot clé `endif`:
 
@@ -934,7 +934,7 @@ Dans les conditions, on peut utiliser les opérateurs habituels:
 ==, !=, <, >, <=, >=, is, and, or, not, in
 ```
 
-## Tests intégrés à Jinja2
+### Tests intégrés à Jinja2
 
 Les tests sont des fonctions disponibles dans Jinja et qui s'utilisent dans les conditions grace au mot clé `is`. Tout comme les filtres, il existe des tests qui ne prennent pas de paramètres, et d'autres qui en nécessitent. La liste de tous ce tests est disponible dans la [documentation de jinja](http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-tests).
 
@@ -953,7 +953,7 @@ Voici deux exemples avec les tests `defined` et `divisibleby`:
 {% endif %}
 ```
 
-## Les boucles
+### Les boucles
 
 Les `for` aussi fonctionnent comme en Python à la différence qu'on ajoute `{% endfor %}` à la fin. Cependant, il n'y a pas de boucles `while` dans Jinja.
 
@@ -993,7 +993,7 @@ Si on ne désire afficher que les 10 premiers mots:
 
 > Cet exemple inutile était destiné à vous présenter le filtre `lenght` ainsi que la fonction `range()`, disponible dans Jinja. Voir la [documentation de jinja](http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-tests) pour d'autres fonctions !
 
-## Include
+### Include
 
 Nos templates commencent à être bien pratiques, mais il reste un problème essentiel: le code se répète entre nos templates, ce qui induit des risques d'erreur lors des modifications, et ce qui alourdit la quantité totale de code inutilement. C'est sur ce problème que vont intervenir l'héritage de template (un peu plus loin dans cet article), ainsi qu'include, que l'on va voir tout de suite.
 
@@ -1019,7 +1019,7 @@ Par conséquent, il faudra veiller à ce que les templates qui incluront `header
 
 >En réalité, on n'utilisera pas include pour ce genre de choses, on préfèrera utiliser l'héritage de templates. Include sera plutot utile, si, par exemple, certaines pages de notre site affichent un gros formulaire: Il suffira d'écrire une seule fois ce formulaire dans un template séparé et de l'inclure. Le code en sera ainsi mieux découpé.
 
-## L'héritage
+### L'héritage
 
 L'idée de base est que, au fond, la plupart des pages de notre site sont composées du même squelette, seul le contenu change un peu. On a vu qu'on pouvait utiliser include pour simplifier cela, mais l'héritage de templates est plus puissant. Son principe est de structurer une page en une série de "blocks". Les blocks du template parent qu'on ne veut pas changer dans les templates enfants n'ont pas à être reprécisés. Par contre, ceux que l'on veut modifier n'ont qu'à être réécrits en remplaçnt leur contenu par ce qu l'on veut.
 
@@ -1100,5 +1100,168 @@ Il existe une autre astuce très pratique quand on veut garder le contenu du blo
 ```
 
 L'héritage de templates simplifie vraiment le contenu des templates en nous évitant de nous répéter. **<span style="color:red"> Tout comme avec include il ne faut pas oublier, dans nos vues, de donner des valeurs aux variables utilisées dans les templates parents! </span>**
+
+
+## Templates cotés programmeur
+
+Découvrons comment étendre les possibilités des templates. C'est relativement simple car les filtres et les tests ne sont en fait que de simples fonctions, à écrire dans le code Python.
+
+### Rendre ses fonctions utilisable dans les templates
+
+Pour paser les fonctions aux templates, cela se fait de l'une des façons qu'on a vues pour passer les variables avec `@app.context_processor`:
+
+```py
+@app.context_processor
+def passer_aux_templates():
+    def formater_distance(dist):
+        unite = 'm'
+        if dist > 1000:
+            dist /= 1000.0
+            unite = 'km'
+        return u'{0:.2f}{1}'.format(dist, unite)
+    return dict(format_dist=formater_distance)
+```
+
+De cette façon, la fonction `formater_distance` sera disponible dans les templates sous le nom `format_dist`. Cela dit, on préfère généralement utiliser les filtres pour cela, et écrire `distance|format_dist` plutot que `format_dist(distance). Voyons donc comment créer ses propres filtres.
+
+### Filtres perso
+Flask nous met à disposition un autre décorateur appelé: `@app.template\_filter('nom\_du\_filtre\_dans\_le\_template') pour créer ses propres filtres.
+
+```py
+@app.template_filter('format_dist')
+def formater_distance(dist):
+    unite = 'm'
+    if dist > 1000:
+        dist /= 1000.0
+        unite = 'km'
+    return u'{0:.2f}{1}'.format(dist, unite)
+```
+>Le code de la fonction n'a ps changé
+
+En faisant comme ça, on peut utiliser `distance|format_dist`!
+Si l'on veut créer un filtre prenant des paramètres, il suffit de rajouter des paramètres à cette fonction. <span style="color:red">Le premier paramètre (en l'occurence, dist) représente toujours l'objet auquel on applique le filtre dans le template.</span>
+
+### Tests perso
+
+C'est la même chose: Il suffit d'écrire une fonction dans le code Python puis de la passer aux templates en précisant qu'il s'agit d'un test. Dans cet exemple, on va créer un test pour savoir si un nombre est impair, que l'on utilisera ainsi dans les templates:
+
+```py
+{% if nombre is impaire %}
+    {{ nombre }} est impaire.
+{% else %}
+    {{ nombre }} est pair.
+{% endif %}
+```
+
+Commençons par créer la fonction. **Tout comme pour les filtres, le premier paramètre de cette fonction sera l'objet auqel on l'applique dans le template** (c'est à dire l'objet avant le `is`).
+
+```py
+def est_impaire(n):
+    if n % 2 == 1:
+        return True
+    return False
+```
+
+Puise rendons accessible cette fonction en tant que test Jinja portant le nom `impair`:
+
+```py
+app.jinja_env.test['impaire'] = est_impair
+```
+Il n'existe malheureusement pas de décorateur pour faire ça.
+
+> De la même manière, on peut passer un filtre à Jinja en faisant `app.jinja\_env.filters['format\_dist'] = formater_distance`, et on peut passer une fonction (ou même une classe) en faisant `app.jinja\_env.global['fonction'] = ma\_fonction`
+
+### Créer des macros Jinja
+
+Une dernière façon d'augmenter les possibilités de Jinja est la créationde macros. À la différnece de la création de fonctions, de filtres ou de tests, cela ne se passe pas dans le code Pyhton, mais uniquement dans les templates. Les macros ne sont ni plus ni moins que des fonctions, leur seul intérêt est de facilement afficher de l'HTML étant donné qu'elle bénéficient de la puissance des temlpates.
+
+Par exemple, si on est lassés d'écrire des balises `<link>` à rallonge, parce qu'on utilise de nombreux fichiers CSS différents selon les templates, on peut se simplifier la vie avec une macro:
+
+```py
+{% macro link(nom_fichiers, extension='css') %}
+    {% for fichier in nom_fichiers %}
+        <link href="{{ url_for('static', filname=fichier + '.' +extension) }}" rel="stylesheet" type="text/css" />
+    {% endfor %}
+{% endmacro %}
+```
+
+Grace à cette macro, on peut remplacer les interminables:
+
+```html
+<link href="{{ url_for('static', filename="4.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename="8.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename="15.css") }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename="16.css") }}" rel="stylesheet" type="text/css" />
+```
+
+par un simple:
+
+```py
+{{ link ['4', '8', '15', '16']}}
+```
+
+### utiliser les macros définies dans un autre template
+
+Ce cas est très courant: En pratique, on a même souvent tendance à mettre toutes ses macros dans un seul template, et à les importer dans les templates où on en a besoin. L'import se fait de la même façon qu'on Python:
+
+```py
+{% from 'mes_macros.html' import link %}
+```
+
+ou bien:
+
+```py
+{% import 'mes_macros.html' as macros %}
+```
+
+ou encore:
+
+```py
+{% from 'mes_macros.html' import link as generer_css %}
+```
+
+> Même si ça semble faire beaucoup de nouveautés, la syntaxe de Jinja reprend celle de Python sur de nombreux points, on ne devrait donc normalement pas se perdre.
+
+## Flash
+
+**<span style="color:red"> A REFAIRE !!! </span>**
+
+Cette fonctionnalité est très pratique pour notifier le visiteur de différents messages. 
+
+Exemple typique: quand le visiteur nous écrit un long message sur notre page de contact et valide le formualire, il est bien plus agréable de voir apparaitre un message "Votre mail a bien été envoyé!", plutot que simplement faire réafficher la page. Il en est de même pour toutes les autres actions que peut effectuer un visiteur: Il est important qu'il sache toujours où il en est, si ce qu'il vient d'effectuer a fonctionné, ou sinon, pourquoi ça a échoué.
+
+Flask propose donc deux fonctions pour faciliter la mise en place d'un tel système: `flash()` et `get\_flashed\_message()`
+
+**<span style="color:red"> Pour de mystérieuses raisons, `app.secret_key` doit être définie pour que flash fonctionne </span>**
+
+```py
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        flash(u'Votre message a bien été envoyé!')
+        traiter_donnees()
+    else:
+        flash(u'Erreur dans les données envoyées.')
+    return render_template('contact.html')
+```
+
+`Flash` prend simlement une chaine en paramètre. Il s'agit du message qui sera affiché au visiteur. A chaque nouveau flash, un message est ajouté à la liste des messages flashés.
+
+Ensuite, dans le template, il suffit de récupérer les messages flashés et de les afficher. Flask nous fournit pour cela la fonction `get_flashed_message()`.
+
+### `get_flashed_message()`
+
+Cette fonction renvoie simplement les messages flashés sous la forme d'une liste. Il suffit donc de le parcourir. Dans cet exemple, l'affichages des messages flashés sera réalisé dans le template `squelette.html`, dont le template `contact.html` héritera. En effet, généralement, on désire que les messages flashés s'affichent quelle que soit la page du site web, il est donc avantageux de placer cette partie dans le template parent.
+
+
+
+
+
+
+
+
+
+
+
 
 {% endraw %}
