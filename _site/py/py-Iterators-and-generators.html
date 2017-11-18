@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-Iterators-and-generators.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Iterateurs et générateurs (bis)</title>
+  <meta name="description" content="Itérateurs">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Iterateurs et générateurs (bis)</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="10 Nov 2017" itemprop="datePublished">Nov 10 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Iterateurs et générateurs</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="itérateurs">Itérateurs</h1>
+
+<p>On utilise des boucles <code class="highlighter-rouge">for</code> pour itérer sur une liste:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+<span class="o">...</span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+</code></pre>
+</div>
+
+<p>Si on l’utilise sur une string, on itère sur les char:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s">"poule"</span><span class="p">:</span>
+<span class="o">...</span>    <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">p</span>
+<span class="n">o</span>
+<span class="n">u</span>
+<span class="n">l</span>
+<span class="n">e</span>
+</code></pre>
+</div>
+
+<p>Si on l’utilise sur un dictionnaire, on itère sur les clés:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">{</span><span class="s">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}:</span>
+<span class="o">...</span>    <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">y</span>
+<span class="n">x</span>
+</code></pre>
+</div>
+
+<p><strong>Si on l’utilise sur un fichier, on itère sur les lignes</strong>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s">"a.txt"</span><span class="p">):</span>
+<span class="o">...</span>    <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">ligne</span> <span class="mi">1</span>
+<span class="n">ligne</span> <span class="mi">2</span>
+</code></pre>
+</div>
+
+<p>Il y a donc de nombreux types d’objets qui peuvent être utilisés avec une boucle for. Ces objets sont dit <em>objets <strong>itérables</strong></em> et il y a de nombreuses fonctions qui utilisent ces itérables.</p>
+
+<h1 id="protocole-ditération">Protocole d’itération</h1>
+<p>La fonction built-in <code class="highlighter-rouge">iter</code> prend un itérable et retourne un itérateur:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span>
+<span class="o">&lt;</span><span class="n">list_iterator</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x000002284B8F6D68</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>  
+    <span class="n">x</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="nb">StopIteration</span>
+</code></pre>
+</div>
+
+<p>À Chaque fois qu’on appel la méthode <code class="highlighter-rouge">__next__</code> sur itérateur, elle retourne l’élément suivant. Si il n’y a plus d’élément suivant, elle soulève une exception <code class="highlighter-rouge">StopIteration</code>.</p>
+
+<p>Les itateurs sont implémentés sous forme de classe. Voici un itérateur qui fonctionne de la même façon que la fonction built-in <code class="highlighter-rouge">range</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Yrange</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">StopIteration</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>La méthode <code class="highlighter-rouge">__iter__</code> <strong>rend les objets issus de la classe iterables</strong> et sa valeur de retour est un itérateur.</p>
+
+<blockquote>
+  <p>En background, la fonction <code class="highlighter-rouge">iter</code> appelle la méthode <code class="highlighter-rouge">__iter__</code> de l’objet passé en argument.</p>
+</blockquote>
+
+<p>Pour bien faire, il faut définit une méthode <code class="highlighter-rouge">__next__</code> qui soulève l’exception <code class="highlighter-rouge">StopIteration</code> une fois qu’il n’y a plus d’éléments.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span> <span class="n">Yrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"00.py"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">27</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">())</span>
+<span class="n">Iterators</span><span class="o">&amp;</span><span class="n">generators</span>\<span class="mo">01</span><span class="n">Range</span><span class="o">-</span><span class="n">imlpem</span><span class="o">.</span><span class="n">py</span><span class="s">", line 20, in __next__</span><span class="err">
+</span><span class="s">    raise StopIteration()</span><span class="err">
+</span><span class="s">StopIteration</span><span class="err">
+</span></code></pre>
+</div>
+
+<p>De nombreuses built-in aceptent les itérateurs comme arguments:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">Yrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Yrange</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="mi">10</span>
+</code></pre>
+</div>
+
+<h1 id="générateurs-et-mot-clé-yield">Générateurs et mot clé Yield</h1>
+<p>Un générateur simplifie la création d’itérateurs. Un générateur est une fonction qui <strong>produit une séquence de résultats à la place d’une valeur unique.</strong></p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">yrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre>
+</div>
+
+<p>À chaque fois que le mot clé <code class="highlighter-rouge">yield</code> est executé, la fonction génère une nouvelle valeur:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">=</span> <span class="n">yrange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">yrange</span> <span class="n">at</span> <span class="mh">0x000001A07846A3B8</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">__next__</span><span class="p">())</span>
+<span class="nb">StopIteration</span>
+</code></pre>
+</div>
+
+<p>Donc, un générateur est lui aussi un itérateur mais sa création est plus légère et on a pas à se soucier du protocole d’itération.</p>
+
+<blockquote>
+  <p>Le mot “générateur” est a tord communément utilisé à la fois pour la fonction qui génère et ce qui est généré. Dans cet article, quand le mot “générateur” sera utilisé, il désignera l’objet généré. Pour désigner la fonction qui génère l’objet, on parlera de “fonction génératrice”.</p>
+</blockquote>
+
+<h2 id="fonctionnement">Fonctionnement</h2>
+<p><span style="color:red"> Le fonctionnement d’une <strong>fonction génératrice</strong> est sensiblement différent de celui d’une <strong>fonction classique</strong>!  </span></p>
+
+<ul>
+  <li>
+    <p>Quand une fonction génératrice est appelée, un objet générateur est <strong>directement retourné</strong>, avant même de commencer à exécuter la première ligne du corp de la fonction.</p>
+  </li>
+  <li>
+    <p>Une fois la méthode <code class="highlighter-rouge">__next__</code> appelée pour la première fois, la fonction s’exécute jusqu’à atteindre le mot clé <code class="highlighter-rouge">yield</code> (on peut le voir comme un “petit return”) et la valeur “yieldée” est retournée.</p>
+  </li>
+</ul>
+
+<p>Le snipet suivant démontre l’interaction entre <code class="highlighter-rouge">yield</code> et les appels de <code class="highlighter-rouge">__next__</code> sur l’objet générateur.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="s">"begin"</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="o">...</span>             <span class="k">print</span><span class="p">(</span><span class="s">"before yield"</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="o">...</span>             <span class="k">yield</span> <span class="n">i</span>
+<span class="o">...</span>             <span class="k">print</span><span class="p">(</span><span class="s">"after yield"</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="s">"end"</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">begin</span>
+<span class="n">before</span> <span class="k">yield</span> <span class="mi">0</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">after</span> <span class="k">yield</span> <span class="mi">0</span>
+<span class="n">before</span> <span class="k">yield</span> <span class="mi">1</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">after</span> <span class="k">yield</span> <span class="mi">1</span>
+<span class="n">before</span> <span class="k">yield</span> <span class="mi">2</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">__next__</span><span class="p">()</span>
+<span class="n">after</span> <span class="k">yield</span> <span class="mi">2</span>
+<span class="n">end</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s">"&lt;stdin&gt;"</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nb">StopIteration</span>
+</code></pre>
+</div>
+
+<p>On voit clairement ici, qu’après le premier call de la méthode <code class="highlighter-rouge">__next__</code> la “tête de lecture” lit toutes les instructions entre le début de la fonction et le premier <code class="highlighter-rouge">yield</code> qui se trouve dans la boucle <code class="highlighter-rouge">for</code>, et renvoie renvoie la valeur de <code class="highlighter-rouge">i</code>. La “tête de lecture” reste sur la ligne du <code class="highlighter-rouge">yield</code> et une fois qu’on appelle une seconde fois la méthode <code class="highlighter-rouge">__next__</code>, la lectue du code reprend exactement où elle s’était arrété.</p>
+
+<p>Voici un autre exemple:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">integers</span><span class="p">():</span>
+    <span class="s">'''Infinite sequence of integers.'''</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">squares</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">integers</span><span class="p">():</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">*</span> <span class="n">i</span>
+
+<span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="s">'''Returns first n values from the given sequence'''</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">__next__</span><span class="p">())</span>
+    <span class="k">except</span> <span class="nb">StopIteration</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">squares</span><span class="p">()))</span>
+</code></pre>
+</div>
+
+<h1 id="generator-expressioncomprehension">Generator Expression/comprehension</h1>
+
+<p>Les générateur en comprehension sont la version “générateur” de la liste comprehension. Elles ressemblent à ces dernières mais retournent un générateur à la place d’une liste.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="o">&lt;</span><span class="n">genexpr</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x00000299D83CA3B8</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="mi">285</span>
+</code></pre>
+</div>
+
+<p>Et elles sont bien pratiques comme arguments de diverses fonctions qui prennent des itérateurs:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nb">sum</span><span class="p">((</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+<span class="mi">285</span>
+</code></pre>
+</div>
+
+<h2 id="triplets-de-pythagore">Triplets de Pythagore</h2>
+
+<p>Disons que nous voulons trouver les 10 premiers (ou $n$ premiers) triplets de Pythagor. Un triplet <code class="highlighter-rouge">(x, y, z)</code> est dit de Pythagore si $x^2 + y^2 = z^2$.</p>
+
+<p>Le problème est trivial à résoudre si nous savons jusque quelle valeur de $n$ tester. Mais nous, nous voulons trouver les $n$ premiers.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">integers</span><span class="p">():</span>
+    <span class="s">'''Infinite sequence of integers.'''</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seq</span><span class="p">):</span>
+    <span class="s">'''Returns first n values from the given sequence'''</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="o">.</span><span class="n">__next__</span><span class="p">())</span>
+    <span class="k">except</span> <span class="nb">StopIteration</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="n">pyt</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">integers</span><span class="p">()</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="o">==</span><span class="n">z</span><span class="o">*</span><span class="n">z</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">take</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">pyt</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p><strong>Output</strong>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[(3, 4, 5), (6, 8, 10), (5, 12, 13), (9, 12, 15), (8, 15, 17), (12, 16, 20), (15, 20, 25), (7, 24, 25), (10, 24, 26), (20, 21,
+ 29)]
+</code></pre>
+</div>
+
+<h2 id="lecture-de-fichiers-multiples">Lecture de fichiers multiples</h2>
+
+<p>Nous voulons un programme qui prendra une liste de fichiers en argument et print le contenu de ces derniers. Un peu à la façon de <code class="highlighter-rouge">cat</code> sur Linux.</p>
+
+<p>La façon traditionnelle d’implémenter ce programme serait:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">cat</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Maintenant, disons que nous ne voulons printer que les lignes qui contiennent une sous-string en particulier, comme la fonction <code class="highlighter-rouge">grep</code> sur Linux.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">grep</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Ces deux fonctions ont beaucoup en commun mais il est difficile de déplacer la partie commune dans une autre fonction. Les générateurs peuvent ici, nous aider:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">readfiles</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">line</span>
+
+<span class="k">def</span> <span class="nf">grep</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">printlines</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filenames</span><span class="p">):</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">readfiles</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">grep</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span>
+    <span class="n">printlines</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>La complexité générale est bien moindre avec chaque fonction s’occupant d’une tache unique. Nous pouvons maintenant déplacer ces fonctions dans des modules séparés et les réutiliser dans d’autres programmes.</p>
+
+</div>
+
+<div>
+	
+	<div class="eof"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Iterateurs et générateurs (bis)@&amp;url=http://localhost:4000/py/py-Iterators-and-generators.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-Iterators-and-generators.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-Iterators-and-generators.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

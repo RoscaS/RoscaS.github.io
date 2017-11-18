@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-Special-tactics.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Special tactics</title>
+  <meta name="description" content="format et join">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Special tactics</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="10 Nov 2017" itemprop="datePublished">Nov 10 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Pyhton Ninja</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="format-et-join">format et join</h2>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">mots</span> <span class="o">=</span> <span class="p">[</span><span class="s">'poule'</span><span class="p">,</span> <span class="s">'vache'</span><span class="p">,</span> <span class="s">'poney'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">'{}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mots</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<h2 id="compter-des-occurences">Compter des occurences</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">random</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="o">&gt;&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="n">Counter</span><span class="p">({</span><span class="mi">5</span><span class="p">:</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">86</span><span class="p">})</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"j'aime la viande rouge bien cuite"</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="n">Counter</span><span class="p">({</span><span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">' '</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'i'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'u'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'n'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'j'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'r'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="s">'m'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"'"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'l'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'v'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'g'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</code></pre>
+</div>
+
+<h3 id="sous-forme-de-tuples">Sous forme de tuples</h3>
+<p>Permet de pouvoir utiliser un indexe pour sortir directement une valeur:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="s">"j'aime la viande rouge bien cuite"</span>
+<span class="n">counted</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Le char '{}' apparait le plus dans la string:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n\
+</span><span class="s">    Nombre d'occurences: {}</span><span class="se">\n</span><span class="s"> Suivi par le char '{}' </span><span class="se">\
+</span><span class="s">    qui apparait {} fois."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">counted</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">,</span> <span class="n">counted</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">counted</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">counted</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+</code></pre>
+</div>
+
+<p><strong>return:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Le char e apparait le plus dans la string:
+j'aime la viande rouge bien cuite
+    Nombre d'occurences:5
+ Suivi par le char ' '     qui apparait 5 fois.
+</code></pre>
+</div>
+
+<h2 id="list-reverse">List reverse</h2>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Pareil avec des strings.</p>
+
+<h2 id="reversed">Reversed</h2>
+<p>Cette fonction renvoie un itérateur qui itère à l’envers sur une séquence:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]):</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="mi">3</span>
+<span class="mi">2</span>
+<span class="mi">1</span>
+</code></pre>
+</div>
+
+<h2 id="multi-list-iteration">Multi list iteration</h2>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">a</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="mi">2</span>
+<span class="n">c</span> <span class="mi">3</span>
+</code></pre>
+</div>
+
+<h2 id="méthode-sort-et-sorted-built-in">Méthode sort et sorted built-in</h2>
+
+<p>La méthode <code class="highlighter-rouge">sort</code> trie <strong>une liste</strong>. Le tri est stable (voir algo: tri).</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Il est possible de spécifier une fonction comme argument de tri.
+Ici nous trions en fonction du second élément des sous-listes:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Noter qu’un print de <code class="highlighter-rouge">a.sort()</code> retournera <code class="highlighter-rouge">none</code>.</p>
+</blockquote>
+
+<p>Et là, en fonction de la taille des éléments:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">'python'</span><span class="p">,</span> <span class="s">'perl'</span><span class="p">,</span> <span class="s">'java'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'haskell'</span><span class="p">,</span> <span class="s">'ruby'</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span>
+<span class="p">[</span><span class="s">'c'</span><span class="p">,</span> <span class="s">'perl'</span><span class="p">,</span> <span class="s">'java'</span><span class="p">,</span> <span class="s">'ruby'</span><span class="p">,</span> <span class="s">'python'</span><span class="p">,</span> <span class="s">'haskell'</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>La fonction <code class="highlighter-rouge">sorted</code> prend <strong>une séquence</strong> et retourne une liste des éléments triée (ne modifie pas la source).</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="c"># list</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="p">[</span><span class="mi">2</span> <span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c"># tuple</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<h2 id="strip">Strip</h2>
+<p>Cette méthode retourne une copie de la string passée en argument et avec les éventuels espace avant et après supprimés. On peut égallement lui passer une string en argument ce qui fait qu’à la place de retirer les éventuels espaces, la méthode retirera les éventuels cha de la string passée en argument:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">':abcd.efg!'</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">'.?!;:'</span><span class="p">))</span>
+<span class="n">abcd</span><span class="o">.</span><span class="n">efg</span>
+</code></pre>
+</div>
+
+<h1 id="files">files</h1>
+
+<p><code class="highlighter-rouge">text.txt</code>:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Integer tortor leo, faucibus id turpis non, gravida egestas
+tortor. Curabitur blandit eget ipsum in malesuada. Aenean
+elit elit, aliquam convallis tellus sit amet, elementum
+semper nisl. 
+</code></pre>
+</div>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">linecount</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">wordcount</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">charcount</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+
+<span class="n">F</span> <span class="o">=</span> <span class="s">'text.txt'</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">charcount</span><span class="p">(</span><span class="n">F</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">wordcount</span><span class="p">(</span><span class="n">F</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">linecount</span><span class="p">(</span><span class="n">F</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>187
+27
+4
+</code></pre>
+</div>
+
+<p>La méthode <code class="highlighter-rouge">read()</code> retourne une string avec le nombre char spécifié en argument (tout le fichier si aucun argument n’est spécifié).</p>
+
+<p>La méthode <code class="highlighter-rouge">readlines()</code> retourne une liste de string des lignes du fichier.</p>
+
+<p>la méthode <code class="highlighter-rouge">readline()</code> retourne les lignes du fichier dans une string une à la fois. Si il n’y a plus rien à lire, la méthode retourne des string vides.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'text.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">([</span><span class="s">'a</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="s">'b</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="s">'c</span><span class="se">\n</span><span class="s">'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'text.txt'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">a</span>
+<span class="n">b</span>
+<span class="n">c</span>
+
+</code></pre>
+</div>
+
+<p>La méthode <code class="highlighter-rouge">writelines</code> est pratique quand les données se trouvent dans une liste composée de strings.</p>
+
+<p>Exemple:</p>
+
+<p><code class="highlighter-rouge">text.txt</code></p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Integer tortor leo, faucibus id turpis non, gravida egestas
+tortor. Curabitur blandit eget ipsum in malesuada. Aenean
+elit elit, aliquam convallis tellus sit amet, elementum
+semper nisl. 
+</code></pre>
+</div>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">reverse_text</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">F</span> <span class="o">=</span> <span class="s">'text.txt'</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'{}) {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">reverse_text</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><strong>output:</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>4) semper nisl.
+3) elit elit, aliquam convallis tellus sit amet, elementum
+2) tortor. Curabitur blandit eget ipsum in malesuada. Aenean
+1) Integer tortor leo, faucibus id turpis non, gravida egestas
+</code></pre>
+</div>
+
+<p>Dans cet exemple, la fonction <code class="highlighter-rouge">reversed()</code> renvoie un itérateur qui itère à l’envers sur la liste.</p>
+
+<h1 id="list-comprehension">List comprehension</h1>
+
+<p>Triplets de Pythagore:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">([(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="o">*</span><span class="n">z</span><span class="p">])</span>
+<span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span>
+</code></pre>
+</div>
+
+</div>
+
+<div>
+	
+	<div class="eof"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Special tactics@&amp;url=http://localhost:4000/py/py-Special-tactics.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-Special-tactics.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-Special-tactics.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

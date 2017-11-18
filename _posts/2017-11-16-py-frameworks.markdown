@@ -853,7 +853,8 @@ Ce fonctionnement est le même pour les objets, les listes et les dictionnaires!
 
 > Si il n'y a ni item ni attribut, cela renverra la valeur spéciale `undefined` et ça n'affiche rien.
 
-## Créer des varibles dans les templates
+{% raw %}
+## Créer des varibles dans les templates 
 
 On n'est pas obligé de se contenter des variables passées depuis l'extérieur dans nos templates. On peut très bien créernos propres variables. Les int, floats, strings, listes, tuples et dictionnaires sont disponibles. Les opérations mathématiques de base également (+,-,*,/,%,**). La syntaxe pour créer une variables est la même qu'en Python mais précédée du mot clé `set`:
 
@@ -1099,3 +1100,5 @@ Il existe une autre astuce très pratique quand on veut garder le contenu du blo
 ```
 
 L'héritage de templates simplifie vraiment le contenu des templates en nous évitant de nous répéter. **<span style="color:red"> Tout comme avec include il ne faut pas oublier, dans nos vues, de donner des valeurs aux variables utilisées dans les templates parents! </span>**
+
+{% endraw %}

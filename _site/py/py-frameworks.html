@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-frameworks.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Frameworks</title>
+  <meta name="description" content="Sources">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Frameworks</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="16 Nov 2017" itemprop="datePublished">Nov 16 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Flask et Django</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="sources">Sources</h1>
+
+<h2 id="django">Django</h2>
+<ul>
+  <li><a href="HTTPs://tutorial.djangogirls.org/en/django_installation/">DjangoGirl</a></li>
+  <li><a href="HTTPs://docs.djangoproject.com/en/1.11/howto/windows/">Django official</a></li>
+  <li><a href="HTTPs://docs.djangoproject.com/en/1.11/intro/tutorial01/">Bases</a></li>
+</ul>
+
+<h2 id="flask">Flask</h2>
+<ul>
+  <li><a href="HTTPs://www.fullstackpython.com">fullstack</a></li>
+  <li><a href="HTTPs://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">Flask mega tutorial</a></li>
+  <li><a href="HTTPs://openclassrooms.com/courses/creez-vos-applications-web-avec-flask">Open class rooms</a></li>
+</ul>
+
+<hr />
+
+<h1 id="préliminaires-et-rappels">Préliminaires et rappels</h1>
+
+<h2 id="lexique">Lexique</h2>
+
+<ul>
+  <li><strong>Framework web</strong>: ensemble de modules qui facilite la programmation de sites web <strong>dynamiques</strong>.</li>
+</ul>
+
+<h2 id="http">HTTP</h2>
+<p>Protocole qui permet la communication client/serveur.</p>
+
+<ul>
+  <li><strong>Requête HTTP</strong> (le client “demande” une page web) contient:
+    <ul>
+      <li>chemin (route) vers la page web</li>
+      <li>type
+        <ul>
+          <li><strong>POST</strong>: utilisé pour les validations de formualire</li>
+          <li><strong>GET</strong>: utilisé pour le reste</li>
+        </ul>
+      </li>
+      <li>informations diverses (type de navigateur…)</li>
+      <li>données (optionnel) ex. Si le client valide un formulaire, il envoie des données remplies dans la requête POST. <em>Des données peuvent êtres transmises avec des requête GET</em>.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<ul>
+  <li><strong>Réponse</strong> (du serveur) contient:
+    <ul>
+      <li>page demandée</li>
+      <li>type de la page demandée (<strong>mimtype</strong>)</li>
+      <li>code erreur:
+        <ul>
+          <li>400: Page demandée introuvable</li>
+          <li>500: Erreur serveur</li>
+          <li>401: Accès à cette page non-autorisée</li>
+          <li>400: Requête mal formée (absence de données p.ex)</li>
+          <li><strong>200</strong>: Tout est ok
+<br /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="HTTPs://user.oc-static.com/files/387001_388000/387755.png" alt="alt" /></p>
+
+<h2 id="wsgi-web-server-geteway-interface">WSGI (Web Server Geteway Interface)</h2>
+<blockquote>
+  <p>La Web Server Geteway Interface est une spécification qui définit une interface entre les serveurs et des applications web pour Python.</p>
+</blockquote>
+
+<p>Un serveur HTTP ne sait pas interpréter du Python (ou Java ou PHP) directement, il le fait via l’usage d’un module spécifique.</p>
+
+<p>WSGI est une norme qui que Django et Flask respectent et qui permet au serveur HTTP de desservir des sites web en Python.</p>
+
+<p>Dans le snipet suivant, le paramètre <code class="highlighter-rouge">environ</code> est un dictionnaire qui contient les variables d’environment <a href="HTTPs://fr.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="s">'200 OK'</span><span class="p">,</span> 
+        <span class="p">[(</span><span class="s">'Content-Type'</span><span class="p">,</span> <span class="s">'text/plain'</span><span class="p">)])</span>
+    <span class="k">yield</span> <span class="s">'Hello World</span><span class="se">\n</span><span class="s">'</span>
+</code></pre>
+</div>
+
+<h2 id="chemin-route">Chemin (route)</h2>
+
+<p>HTTP://www.site.com/forum-81-407-langage-python.html</p>
+
+<p>Si nous décomposons cette url nous avons:</p>
+
+<ul>
+  <li><strong>HTTP://</strong> : protocole HTTP</li>
+  <li><strong>www$.$site$.$com</strong>: domaine</li>
+  <li><strong>forum-81-407-langage-python.html</strong>: chemin de la page demandée, aussi appelé <strong>route</strong>. C’est le même chemin que celui demandé dans les requêtes HTTP.</li>
+</ul>
+
+<h1 id="virtualenv--virtualenvwrapper">Virtualenv &amp; virtualenvwrapper</h1>
+
+<p>virtualenv and virtualenvwrapper provide a dedicated environment for each Django project you create. While not mandatory, this is considered a best practice and will save you time in the future when you’re ready to deploy your project. Simply type:</p>
+
+<h3 id="windows">Windows</h3>
+
+<p>Installation:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pip install virtualenvwrapper-win
+</code></pre>
+</div>
+
+<p>Création d’env pour un projet</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mkvirtualenv myproject
+</code></pre>
+</div>
+
+<p>ou</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mkvirtualenv path\myproject
+</code></pre>
+</div>
+
+<p>Pour travailler dans un venv, une fois dans le dossier du projet (cmd):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>workon myproject
+</code></pre>
+</div>
+
+<p>Si le venv est créé à la sauce djangogirls”</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>myvenv\Scripts\activate
+</code></pre>
+</div>
+
+<h1 id="django-1">Django</h1>
+
+<h2 id="installer-django">Installer Django</h2>
+
+<p>Django s’installe via pip une fois dans le venv du nouveau projet (s’assurer qu’il est actif via <code class="highlighter-rouge">wokon myproject</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pip install django
+</code></pre>
+</div>
+
+<p>Tester l’installation:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>django-admin --version
+</code></pre>
+</div>
+
+<p>Lancer un serveur local:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python manage.py runserver
+</code></pre>
+</div>
+
+<h1 id="flask-1">Flask</h1>
+<p>C’est un micro-framwork web: il ne fait nativement pas tout mais il est possible d’étendre les possibilités via des extensions.</p>
+
+<h2 id="installer-flask">Installer flask</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pip install flask
+</code></pre>
+</div>
+
+<h2 id="premiers-pas">Premiers pas</h2>
+<p>L’organisation des fichiers dans le projet est importante. Il est conseillé de ségréguer les différentes applications web dans des dossier différents.</p>
+
+<p><code class="highlighter-rouge">hello.py</code>:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"Hello !"</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Cette application est un sie web basique. Si nous nous rendons à l’adresse http://localhost:5000 nous avons une page qui affiche “hello”.</p>
+
+<p>La première ligne importe la classe Flask depuis le module flask. Nous nous en servons à la ligne suivante pour instancier l’objet <code class="highlighter-rouge">app</code>.</p>
+
+<p>Cet objet est fondamental, il s’agit de notre application, une application WSGI.</p>
+
+<p><code class="highlighter-rouge">__name__</code> le paramètre fournit à l’instanciation de <code class="highlighter-rouge">app</code> (qui vaut <code class="highlighter-rouge">'__main'</code> dans ce cas) est utile lorsqu’on a plusieurs applications WSGI.</p>
+
+<p>À la fin du code, nous lançons l’application en mode debug. Cela permet non seulement d’aider à détecter les bugs, mais aussi à auto refresh le serveur local après chaque sauvegarde. C’est très pratique mais a ne surtout pas laisser qund le site sera disponible sur le net.</p>
+
+<blockquote>
+  <p>Une autre façon de lancer le mode debug est d’écrire après l’instanciation de l’objet Flask <code class="highlighter-rouge">app.debug = True</code>.</p>
+</blockquote>
+
+<p>La méthode <code class="highlighter-rouge">run()</code> de <code class="highlighter-rouge">app</code> lance le serveur HTTP+WSGI.</p>
+
+<p>La fonction <code class="highlighter-rouge">index</code> est précédée du décorateur <code class="highlighter-rouge">@app.route</code> qui prend en paramètre une route. Cette route est celle par laquelle notre fonction sera accessible.</p>
+
+<p>La route <code class="highlighter-rouge">'/'</code> est spéciale car elle représente la racine du site web. Il n’est donc pas nécéssaire de la préciser dans <strong>l’adresse du navigateur</strong>.</p>
+
+<p><strong><span style="color:red">Attention: </span></strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Adresse</th>
+      <th>Route</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>site.com</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>site.com/</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>site.com/forum/</td>
+      <td>/forum/</td>
+    </tr>
+    <tr>
+      <td>site.com/forum/python</td>
+      <td>/forum/python</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>La fonction est appelé “index” mais ce n’est pas important. “poule” est un très bon nom aussi.</p>
+</blockquote>
+
+<p><span style="color:red"> Dans le jargon, pour désigner une fonction qui renvoie une page web, on utilise le mot <strong>vue</strong>. Donc en Flask, toutes les fonctions décorées par <code class="highlighter-rouge">@app.route</code> sont des <strong>vue</strong>.</span></p>
+
+<p>Si nous ajoutons la vue suivant à la suite de la vue <code class="highlighter-rouge">index</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/contact'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">contact</span><span class="p">():</span>
+    <span class="n">mail</span> <span class="o">=</span> <span class="s">"poule@cochon.com"</span>
+    <span class="n">tel</span>  <span class="o">=</span> <span class="s">"0498 41 22 18"</span>
+    <span class="k">return</span> <span class="s">"Mail: {} --- Tel: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span> <span class="n">tel</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>nous pouvons l’atteindre à la page http://localhost:5000/contact par contre, si nous tapons http://localhost:5000/contact/ (<strong>noter le slash à la fin</strong>), nous serons gratifiés d’une erreur 404. Ce qui est tout à fait normal vu le paramètre du décorateur qui définit la route de cette page.</p>
+
+<p>Si nous changons le paramètre du décorateur par <code class="highlighter-rouge">'/contact/'</code> non seulement nous n’avons plus d’erreur 404 si on tape http://localhost:5000/contact/ mais si nous oublions de l’ajouter, il sera ajouté automatiquement! Donc plus d’erreur 404 !</p>
+
+<blockquote>
+  <p>Cette information est importante pour éviter de retomber sur des erreurs 404: Flask peut rajouter un slash manquant, mais pas enlever un slash en trop.</p>
+</blockquote>
+
+<h2 id="debug">debug</h2>
+
+<p>Si nous introduisons une erreur dans le code:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/contact/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">contact</span><span class="p">():</span>
+    <span class="c"># mail = "poule@cochon.com"</span>
+    <span class="n">tel</span>  <span class="o">=</span> <span class="s">"0498 41 22 18"</span>
+    <span class="k">return</span> <span class="s">"Mail: {} --- Tel: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mail</span><span class="p">,</span> <span class="n">tel</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>À la suite d’appel de la page http://localhost:5000/contact/ la page suivante est généré par le debbuggeur intégré de Flask (activé grace à <code class="highlighter-rouge">debug=True</code>). Les 3 marques rouges sont importantes:
+<br /></p>
+
+<p><img src="https://user.oc-static.com/files/387001_388000/387798.png" alt="alt" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>En haut à gauche: Description de l’erreur</li>
+  <li>En bas à droite: Une icone pour activer le terminal</li>
+  <li>En bas à gauche: Une fois le terminal activé, on peut saisir les commandes python qui seront exécutées à l’endroit du code choisi.</li>
+</ul>
+
+<blockquote>
+  <p>La commande <code class="highlighter-rouge">dump(objet)</code> intégrée au debuggeur (remplacer <code class="highlighter-rouge">objet</code> par le nom de l’objet à étudier), un tableau s’affiche, contenant tous les attributs et méthodes de l’objet étudié.</p>
+</blockquote>
+
+<p>Si le debuggeur n’était pas activé, on aurait eu droit à une erreur 500 (erreur du serveur).</p>
+
+<h2 id="requêtes-routes-et-réponses">Requêtes, Routes et Réponses</h2>
+
+<h3 id="requêtes">Requêtes</h3>
+
+<p>Dans le code suivant noter l’import de <code class="highlighter-rouge">request</code>. Cet objet représente la requête HTTP envoyée par le client et reçue par le serveur. Tout ce qui est contenu dans la requête HTTP se retrouve dans cet objet:</p>
+
+<ul>
+  <li><strong>chemin</strong> de la page demandée</li>
+  <li><strong>type</strong> de la requête</li>
+  <li><strong>informations</strong> supplémentaires à propos du client</li>
+  <li><strong>données</strong> transmises</li>
+</ul>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/coucou'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dire_coucou</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'Coucou !'</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h4 id="chemin-de-la-page-demandée">Chemin de la page demandée</h4>
+
+<p>Il est accessible via l’attribut path de l’objet <code class="highlighter-rouge">request</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">racine</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"Le chemin de 'racine' est : "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/la'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ici</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"Le chemin de 'ici' est : "</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="n">path</span>
+</code></pre>
+</div>
+
+<h4 id="filtrage-des-méthodes-http">Filtrage des méthodes HTTP</h4>
+
+<p>Le <strong>type</strong> est plus connu sous le nom de “<strong>méthode HTTP</strong>”. Les méthodes HTTP les plus répandues sont GET et POST (pas forcément vrais depuis HTML 5!)</p>
+
+<blockquote>
+  <p>La méthode POST est géneralement employée lorsque le visiteur valide un formulaire (et envoie donc ses données au serveur dans la requête). Le reste du temps, la méthode GET est employée.</p>
+</blockquote>
+
+<p>Si nous voulons une page accessible au chemin <code class="highlighter-rouge">'/contact'</code> et que cette dernière affiche un formulaire de contact, que le visiteur remplit le formulaire, le valide, et qu’un remerciement lui soit affiché à la suite de cela le tout dans une seul et même page <code class="highlighter-rouge">'/contact'</code>, nous pouvons regarder la méthode HTTP utilisée:</p>
+
+<p>Si le visiteur vient d’arriver sur la page (en cliquant sur un lien ou en tapant directement l’url dans son navigateur), la méthode employée sera GET. En revanche, si il vient de valider le formulaire, ça sera POST qui sera employé:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/contact'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">,</span> <span class="s">'POST'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">contact</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'GET'</span><span class="p">:</span>
+        <span class="c"># afficher le formulaire</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># traiter les données reçues</span>
+        <span class="c"># afficher : "Merci de m'avoir laissé un message !"</span>
+</code></pre>
+</div>
+
+<p>Deux nouveautés dans ce code:</p>
+<ul>
+  <li>la méthode employée est accessible via l’attribut <code class="highlighter-rouge">method</code> de l’objet <code class="highlighter-rouge">request</code>.</li>
+  <li>on a précisé les méthodesautorisées dans le décorateur. <strong>Sans cela, la seul méthode autorisée est GET</strong>.</li>
+</ul>
+
+<p>on aurait pu écrire ce code différament, en faisant une vue pour la méthode GET et une autre pour la méthode POST:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/contact'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">contact_formulaire</span><span class="p">():</span>
+    <span class="c"># afficher le formulaire</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/contact'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'POST'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">contact_traiter_donnees</span><span class="p">():</span>
+    <span class="c"># traiter les données reçues</span>
+    <span class="c"># afficher : "Merci de m'avoir laissé un message !"</span>
+</code></pre>
+</div>
+
+<p><span style="color:red"> Toujours bien faire attention à ne pas avoir deux routes identiques ou deux vues portant le même nom! </span> Ici, nos routes sont différentes malgré les apparences comme elles ne sont pas accessibles par les mêmes méthodes HTTP.</p>
+
+<h2 id="les-routes">Les routes</h2>
+
+<p>Les routes (chemin de la page demandée) est accessible dans <code class="highlighter-rouge">request.path</code>. En pratique, ce n’est pas utile car Flask gère lui même pour exécuter la bonne vue selon l’url demandée grace à <code class="highlighter-rouge">@app.route</code> qui permet de spécifier une URL d’accès à une vue en filtrant les méthodes HTTP autorisées.</p>
+
+<h3 id="une-vue-plusieurs-routes">Une vue plusieurs routes</h3>
+
+<p>On peut décorer plusieurs fois une vue avec <code class="highlighter-rouge">@app.route</code> afin de rendre accessible cette pages par plusieurs adresses:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/f_python'</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/forum/python'</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/poule'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">forum_python</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'contenu forum python'</span>
+</code></pre>
+</div>
+
+<p>Cela dit, ce n’est pas une très bonne chose d’utiliser cette possibilité de cette façon car les moteurs de recherche qui veulent indexer notre site web pour le référencer vont croire qu’il s’agit de 3 pages différentes, et on risque de retrouver ces 3 résultats en cherchant cette page dans Google par exemple.</p>
+
+<p>Cette possibilité est utile quand elle est combinée aux <strong>routes personnalisées.</strong></p>
+
+<h3 id="routes-personnalisées">Routes personnalisées</h3>
+
+<p><span style="color:red"> Fonctionnalité très utile pour le développement de sites web. </span></p>
+
+<p>Disons que nous souhaitons mettre en place une page de discussion sur notre site où les utilisateurs peuvent poster des messages et lire ceux des autres. Les messages seraient triés dans l’ordre décroissant afin de voir les plus récents en premier. Le soucis c’est qu’au bout de quelque temps, on se retrouvera avec trop de messages à afficher et il faudra limiter le nombre de messages par page et ajouter des boutons pour naviguer entre les pages.</p>
+
+<p>Voici ce que nous voulons obtenir:</p>
+
+<ul>
+  <li>La page <code class="highlighter-rouge">'/discussion'</code> affiche les 50 messages les plus récents</li>
+  <li>La page <code class="highlighter-rouge">'/discussion/page/3'</code> affiche la 3e page de messages (de 101 à 150)</li>
+  <li>La page <code class="highlighter-rouge">'/discussion/page/1'</code> affiche la même chose que la page <code class="highlighter-rouge">'/discussion'</code></li>
+</ul>
+
+<p>Les routes personnalisées sont un moyen d’obtenir de telles url. Nous aurions quelque chose de ce genre là:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/discussion/page/&lt;num_page&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">mon_chat</span><span class="p">(</span><span class="n">num_page</span><span class="p">):</span>
+    <span class="n">num_page</span>    <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_page</span><span class="p">)</span>
+    <span class="n">premier_msg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">50</span><span class="o">*</span><span class="p">(</span><span class="n">num_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">dernier_msg</span> <span class="o">=</span> <span class="n">premier_msg</span> <span class="o">+</span> <span class="mi">50</span>
+    <span class="k">return</span> <span class="s">'affichage des messages {} à {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">premier_msg</span><span class="p">,</span> <span class="n">dernier_msg</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>Et qui se comporterait de cette façon:</p>
+
+<div class="image">
+    <img src="/00illustrations/py-Frameworks/pages.gif" />
+</div>
+
+<p>Ce qu’on a fait ici, c’est de rajouter un paramètre obligatoire dans la route: un numéro de page à préciser pour pouvoir calculer les messages à afficher. Pour cela, il y a deux choses à faire:</p>
+
+<ul>
+  <li>Placer dans la route un nom de variable écrit entre <code class="highlighter-rouge">&lt;</code> et <code class="highlighter-rouge">&gt;</code></li>
+  <li>Ajouter en paramètre à la vue décorée une variable possédant ce même nom.</li>
+</ul>
+
+<p>En procédant ainsi, on obtient alors un variable <code class="highlighter-rouge">num_page</code> qui correspond à ce qui a été mis à cet endroit dans l’url. Cette variable est une string or nous voudrions un int, c’est pour cela que nous effectuons une conversion dans le corp de la fonction. Malgré ça, cela va créer une erreur si l’utilisateur entre autre chose qu’un nombre. Pour compenser Flask nous propose une meilleur alternative:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/discussion/page/&lt;int:num_page&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">mon_chat</span><span class="p">(</span><span class="n">num_page</span><span class="p">):</span>
+    <span class="n">premier_msg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">50</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">dernier_msg</span> <span class="o">=</span> <span class="n">premier_msg</span> <span class="o">+</span> <span class="mi">50</span>
+    <span class="k">return</span> <span class="s">'affichage des messages {} à {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">premier_msg</span><span class="p">,</span> <span class="n">dernier_msg</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>En ajoutant ce <code class="highlighter-rouge">int:</code> avant le nom de la variable, les seules valeurs acceptées seront des entiers (sinon erreur 404), et la variable sera automatiquement convertie (plus d’erreur 500)!</p>
+
+<blockquote>
+  <p>Il existe aussi <code class="highlighter-rouge">float:</code> pour les nombres à virgule et <code class="highlighter-rouge">path:</code> pour les strings contenant le symbole <code class="highlighter-rouge">/</code> (slash)</p>
+</blockquote>
+
+<p>Il nous reste un dernier problème: pouvoir accéder aux 50 messages les plus récents en nous rendant à l’adress <code class="highlighter-rouge">'/discussion'</code>. Si on tente de bêtement rajouter une route:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/discussion'</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>On obtient une erreur comme il manque une valeur pour <code class="highlighter-rouge">num_page</code>… La solution est d’utiliser une vleur par défaut pour le premier paramètre <code class="highlighter-rouge">num_page</code> de notre vue <code class="highlighter-rouge">mon_chat</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/discussion/page/&lt;int:num_page&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">mon_chat</span><span class="p">(</span><span class="n">num_page</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">premier_msg</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">50</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">dernier_msg</span> <span class="o">=</span> <span class="n">premier_msg</span> <span class="o">+</span> <span class="mi">50</span>
+    <span class="k">return</span> <span class="s">'affichage des messages {} à {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">premier_msg</span><span class="p">,</span> <span class="n">dernier_msg</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<p>Il est bien entendu possible de mettre plusieurs variables dans nos routes, et nous ne sommes pas obligés de les séparés par un slash. Par exemple voici une page qui affiche le prénom et le nom passé dans l’adresse:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/afficher'</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/afficher/mon_nom_est_&lt;nom&gt;_et_mon_prenom_&lt;prenom&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">afficher</span><span class="p">(</span><span class="n">nom</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">prenom</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">nom</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">prenom</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Entrez votre nom et prénom dans l'url"</span>
+    <span class="k">return</span> <span class="s">"Vous vous appelez {} {}!"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prenom</span><span class="p">,</span> <span class="n">nom</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Si on entre comme url http://localhost:5000//afficher/mon_nom_est_moran_et_mon_prenom_bob
+La page affichera bien “vous vous appelez bob moran!</p>
+
+<p>Ce n’est qu’un exemple, et il n’est pas une bonne pratique! Les routes personnalisées nous permettent d’avoir de belles url, pas de transmettre des données. Pour cela, il y a les formulaires !</p>
+
+<h2 id="les-réponses">Les réponses</h2>
+<p>Jusque ici, nos pages se contentaient de renvoyer une string. Flask transformait tout seul cette string en une réponse HTTP, et lui attribuait le mimetype <code class="highlighter-rouge">"text/html"</code> (ce qui signifie que le contenu de la page est du HTML) et le code d’erreur 200 (tout est ok). Voyons maintenant comment modifier ce comportement.</p>
+
+<h3 id="changer-le-mimetype">Changer le mimetype</h3>
+
+<p>Essayons de concevoir une page qui génère une image et qui la renvoie telle quelle. Pour ce faire nous allons utiliser le module PIL (Python Image Library) à installer via pip.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/image'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">genere_image</span><span class="p">():</span>
+    <span class="n">mon_image</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">"RGB"</span><span class="p">,</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="s">"#92C41D"</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">mon_image</span><span class="p">,</span> <span class="s">'BMP'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mon_image</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>En ligne 9, on crée l’objet qui va contenir l’image (un <code class="highlighter-rouge">StringIO</code> est un fichier socké dans la RAM et non sur le DD), la ligne suivante nous générons l’image de dimensions 300 sur 300 et de couleur verte, au format BMP, et que nous stockons dans l’objet <code class="highlighter-rouge">mon_image</code>.
+Sur la ligne suivante, nous renvoyons le contenu de l’objet <code class="highlighter-rouge">mon_image</code>… donc l’image elle même.</p>
+
+<p>En se rendant à l’adresse <code class="highlighter-rouge">'/image</code> on s’attend donc à voir apparaitre notre carré.</p>
+
+<p>Sauf que non. Le problème est que Flask nous renvoie bien l’image mais en oubliant de préciser qu’il s’agit d’une image, justement, et au format BMP. Flask fait croire à notre navigateur qu’il s’agit d’une page HTML comme une autre et le navigateur tente de l’afficher sous forme de texte.</p>
+
+<p>La solution est de simplement dire à Flask que le <strong>mimetype</strong> de cette réponse HTTP n’est pas <code class="highlighter-rouge">'text/html'</code> comme d’habitude, mais <code class="highlighter-rouge">'image/bmp'</code>.</p>
+
+<p>Nous allons créer la réponse à partir de l’image puis on va changer son mimetype en manipulant l’objet réponse. Pour ce faire nous avons besoin d’un <code class="highlighter-rouge">import</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">make_response</span>
+</code></pre>
+</div>
+
+<p>Ensuite nous pouvons créer un objet réponse HTTP à partir de l’image, changer son mimetype (qui est simplement un attribut de la réponse), et renvoyer la réponse:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/image'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">genere_image</span><span class="p">():</span>
+    <span class="n">mon_image</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">"RGB"</span><span class="p">,</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">),</span> <span class="s">"#92C41D"</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">mon_image</span><span class="p">,</span> <span class="s">'BMP'</span><span class="p">)</span>
+    <span class="n">reponse</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">mon_image</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+    <span class="n">reponse</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="s">"image/bmp"</span>  <span class="c"># à la place de "text/html"</span>
+    <span class="k">return</span> <span class="n">reponse</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>En principe on ne fait pas appel à <code class="highlighter-rouge">make_response()</code> car Flask le fait pour nous: Lorsqu’on <code class="highlighter-rouge">return</code> qulque chose, Flask applique <code class="highlighter-rouge">make_response()</code> dessus. C’est dans des cas comme celui ci qu’on est amenés à le faire nous même.</p>
+</blockquote>
+
+<h3 id="changer-le-code-derreur-http">Changer le code d’erreur HTTP</h3>
+
+<p>Dans le même registre, on peut éventuellement avoir besoin de changer le code d’erreur HTTp d’une page. Imaginons la page suivante (totalement inutile, mais c’est pour l’exemple):</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'404'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">page_non_trouvee</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'Cette page devrait vous avoir envoyé une err 404'</span>
+</code></pre>
+</div>
+
+<p>Si on consulte cette page, le texte s’ffiche bien… Donc nous n’avons pas reçu de code d’erreur 404. Nous avons bien obtenu le code 200 (tout est ok). Pour forcer un code d’erreur différent, il faut créer un objet réponse et modifier son attribut <code class="highlighter-rouge">status_code</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/404'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">page_non_trouvee</span><span class="p">():</span>
+    <span class="n">reponse</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s">'Cette page devrait vous avoir renvoyé une err 404'</span><span class="p">)</span>
+    <span class="n">reponse</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="k">return</span> <span class="n">reponse</span>
+</code></pre>
+</div>
+
+<p>Et de fait l’output dans la console montre:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>127.0.0.1 - - [17/Nov/2017 21:58:23] "GET /404 HTTP/1.1" 404 -
+</code></pre>
+</div>
+
+<p>Dans le cas particulier du code d’erreur, on peut le spécidier directement à l’intérier du <code class="highlighter-rouge">make_response()</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/404'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">page_non_trouvee</span><span class="p">():</span>
+    <span class="n">reponse</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="s">'Cette page devrait vous avoir renvoyé une err 404'</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">reponse</span>
+</code></pre>
+</div>
+
+<p>Et même mieux: Comme dit plus haut, Flask applique tout seul <code class="highlighter-rouge">make_response()</code> à nos return quand on ne l’a pas fait. On peut donc écrire tout simplement ceci:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/404'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">page_non_trouvee</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'Cette page devrait vous avoir renvoyé une err 404'</span><span class="p">,</span> <span class="mi">404</span> 
+</code></pre>
+</div>
+
+<p>On envoie en réalité un tuple dont la seconde valeur est le code d’erreur HTTP. Plus besoin de <code class="highlighter-rouge">make_response()</code>!</p>
+
+<h3 id="personnaliser-ses-pages-derreur">Personnaliser ses pages d’erreur</h3>
+
+<p>Ce que nous venons de faire est en quelque sorte de créer une page d’erreur perso, mais cela ne présente pas beaucoup d’intérêt, car dans le cas général, le visiteur entre une adresse inconnue, et Flask lui renvoie une page d’erreur 404 assez austère. Ce qui serait intéressant serait justement de modifier cette page 404 affichée par défaut.</p>
+
+<p>Flask nous permet de mettre cela en place facilement pour n’importe quel code d’erreu, grace au décorateur <code class="highlighter-rouge">@app.errorhandler</code>.</p>
+
+<p>Ce décorateur est comparable à <code class="highlighter-rouge">@app. route</code> à la différence que <code class="highlighter-rouge">@app.route</code> ssocie une vue à la route présente dans la requête, tandis que <code class="highlighter-rouge">@app.errorhandler</code> associe une vue à une erreur survenue sur le serveur:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ma_page_404</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">"Ma jolie page 404"</span><span class="p">,</span> <span class="mi">404</span>
+</code></pre>
+</div>
+<p>Donc que nous allions à la page <code class="highlighter-rouge">.../404</code> ou sur une page qui n’existe pas nous allons maintenant tomber sur la même page.</p>
+
+<blockquote>
+  <p>Noter que nous renvoyons un tuple dont la seconde valeur est le code d’erreur comme vu plus tot. Sans ça notre page d’erreur 404 aurait renvoyé le code 200…</p>
+</blockquote>
+
+<p>Nous ne nous sommes pas servi du paramètre error de notre vue, car celui-ci contient des informations sur le type d’erreur survenue, or, <strong>dans ce cas là</strong>, il s’agit forcément de l’erreur 404. Mais ce paramètre est utile si on fait une seul vue pour plusieurs codes d’erreur:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
+<span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ma_page_erreur</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">"Ma jolie page {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">code</span><span class="p">),</span> <span class="n">error</span><span class="o">.</span><span class="n">code</span>
+</code></pre>
+</div>
+
+<h3 id="Émettre-soi-même-des-erreurs-http">Émettre soi-même des erreurs HTTP</h3>
+
+<p>Nous avons vu comment modifier le code d’erreur pour une réponse donnée, mais imaginons que nous voulions carrément qu’une page (qui existe bien) se comporte comme si elle n’existait pas? Il faudrait en quelques sortes “rediriger” vers la page 404. Ce comportement est exactement celui permis par la fonction <code class="highlighter-rouge">abort</code>.</p>
+
+<p>Prenons un exemple concret: Si l’utilisteur n’est pas identifié, la page <code class="highlighter-rouge">'/profil'</code> affiche une page d’erreur 401 (accès non autorisé):</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">abort</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/profil'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">profil</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">utilisateur_non_identifie</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"Vous êtes bien identifié, voici la page demandée: ..."</span>
+</code></pre>
+</div>
+
+<p>Ce petit système de redirection spécifique aux erreurs est bien pratique… Et il existe le même système de redirection pour les pages normale…</p>
+
+<h3 id="les-redirections">Les redirections</h3>
+
+<p>Nous préférerions que la page <code class="highlighter-rouge">'/profil'</code> redirige vers la page <code class="highlighter-rouge">/'login'</code> si l’utilisateur n’est pas identifié. Voyons comment faire.</p>
+
+<blockquote>
+  <p>Commençons par un petit détail technique: lorsqu’on veut rediriger le visiteur vers une autre page, on lui envoie un code d’erreur HTTP 302 accompagné de l’adresse de la page où il doit se rendre. Le navigateur charge alors cette page automatiquement, c’est pour ça qu’on ne voir jamais la page d’erreur 302 apparaitre, tout s’enchaine rapidement.</p>
+</blockquote>
+
+<h4 id="la-fonction-redirect">La fonction <code class="highlighter-rouge">redirect</code></h4>
+
+<p>Elle s’utilise un peu à la façon d’<code class="highlighter-rouge">abort</code>, sauf qu’au lieu de prendre en paramètre un code d’erreur, elle prend une route. De plus, il faut retourner ce que renvoie <code class="highlighter-rouge">redirect</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/google'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">redirection_google</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'http://www.google.com'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Et si nous revenons à notre problème initial, nous pouvons maintenant le résoudre en faisant ainsi:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/profil'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">profil</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">utilisateur_non_identifie</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'/login'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"Vous êtes bien identifié, voici la page demandée: ..."</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/login'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">page_de_login</span><span class="p">():</span>
+    <span class="c"># ...</span>
+</code></pre>
+</div>
+
+<p>… sauf qu’il ne faut <strong>surtout pas</strong> procéder ainsi. On vient de faire quelquechose de vraiment mal: On a indiqué une route en paramètre de <code class="highlighter-rouge">redirect()</code>. Les routes sont faites pour être écrites une seule fois, dans le <code class="highlighter-rouge">@app.route</code>. De ctte façon, si on veut changer les routes, cela se fera à un seul endroit, tandis que si on écrit également les routes dans les <code class="highlighter-rouge">redirect()</code>, il faudra les changer partout!</p>
+
+<p>La bonne méthode est d’utiliser non pas la route, qui peut changer, mais le <strong>nom</strong> de la vue ciblée, qui restera inchangé, même si on modifie sa ou ses routes d’accès. En l’occurence, le nom de la vue est <code class="highlighter-rouge">page_de_login</code>.</p>
+
+<p>Le problème est que si l’on passe le nom de cette vue à <code class="highlighter-rouge">redirect</code>, celui ci ne va pas savoir quoi en faire, car il ne peut recevoir qu’une adresse. Il faut donc utiliser une autre fonction, très pratique appelée <code class="highlighter-rouge">url_for()</code>. Elle va transformer le nom de vue que vous lui passerez (sous forme de <strong>string</strong>) en une adresse, exploitable par <code class="highlighter-rouge">redirect</code>.</p>
+
+<h4 id="la-fonction-url_for">la fonction <code class="highlighter-rouge">url_for</code></h4>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/profil'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">profil</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">user_non_identifie</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">'page_de_login'</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s">"Vous êtes bien identifié, voici la page demandée: ..."</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/login'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">page_de_login</span><span class="p">():</span>
+    <span class="c"># ...</span>
+</code></pre>
+</div>
+
+<p>Un dernier détail cependant: <code class="highlighter-rouge">url_for</code> peut aussi générer des routes personnalisées, il suffit de lui passer en paramètre les variables nécessaires dans la route.</p>
+
+<p>Par exemple, si notre page <code class="highlighter-rouge">'/profil'</code> est en réalité accessible uniquement avec un pseudo de la façon suivante:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/profil/&lt;pseudo&gt;'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">afficher_profil</span><span class="p">(</span><span class="n">pseudo</span><span class="p">):</span>
+    <span class="c"># ...</span>
+</code></pre>
+</div>
+
+<p>Alors pour générer l’adresse vers le profil du membre “Luc1664”, on utilisera <code class="highlighter-rouge">url_for</code> de la façon suivante:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">url_for</span><span class="p">(</span><span class="s">'afficher_profil'</span><span class="p">,</span> <span class="n">pseudo</span><span class="o">=</span><span class="s">"luc1664"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="moteur-de-templates">Moteur de templates</h2>
+
+<p>Pour intégrer du HTML5/CSS3, flask intègre ce qu’on appelle un moteur de templates/</p>
+
+<h3 id="comparaison">Comparaison</h3>
+
+<p>Nous pouvons si nous les souhaitons (movaise idée), insérer du HTML dans les strings renvoyé par nos pages:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">acceuil</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"&lt;h1&gt;Bienvenue !&lt;/h1&gt;"</span>
+</code></pre>
+</div>
+
+<p>Cette façon de faire est suffisante pour un exemple aussi minimal, mais dans le cas d’une page web un peu plus compliquée, cela devient lourd:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">accueil</span><span class="p">():</span>
+    <span class="n">mots</span> <span class="o">=</span> <span class="p">[</span><span class="s">"bonjour"</span><span class="p">,</span> <span class="s">"à"</span><span class="p">,</span> <span class="s">"toi,"</span><span class="p">,</span> <span class="s">"visiteur."</span><span class="p">]</span>
+    <span class="n">puces</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">"&lt;li&gt;{}&lt;/li&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mots</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"""&lt;!DOCTYPE html&gt;
+        &lt;html&gt;
+            &lt;head&gt;
+                &lt;meta charset="utf-8" /&gt;
+                &lt;title&gt;{titre}&lt;/title&gt;
+            &lt;/head&gt;
+        
+            &lt;body&gt;
+                &lt;h1&gt;{titre}&lt;/h1&gt;
+                &lt;ul&gt;
+                    {puces}
+                &lt;/ul&gt;
+            &lt;/body&gt;
+        &lt;/html&gt;"""</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">titre</span><span class="o">=</span><span class="s">"Bienvenue !"</span><span class="p">,</span> <span class="n">puces</span><span class="o">=</span><span class="n">puces</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>C’est vraiment moche et la page est encore très basique. Il est donc évident que ce n’est pas une bonne façon de faire, sans parler de la difficulté que serait la maintenance de ce site.</p>
+
+<p>Toute la puissance des moteurs de templates est qu’ils nous permettent de coder quelque chose qui évite toute cette répétition, qui permet d’insérer intelligemment et élégamment le contenu de nos variables dans des pages HTML.</p>
+
+<p>Voici à quoi ressemblerait le code précédent en l’adaptant au moteur de template intégré à Flask. Nous aurions deux fichiers:</p>
+<ul>
+  <li>Le fichier python <code class="highlighter-rouge">hello.py</code> qui contient notre vue <code class="highlighter-rouge">acceuil()</code></li>
+  <li>Le fichier template, que nous appellerons par exemple <code class="highlighter-rouge">acceuil.html</code></li>
+</ul>
+
+<p><code class="highlighter-rouge">hello.py</code></p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">accueil</span><span class="p">():</span>
+    <span class="n">mots</span> <span class="o">=</span> <span class="p">[</span><span class="s">"bonjour"</span><span class="p">,</span> <span class="s">"à"</span><span class="p">,</span> <span class="s">"toi,"</span><span class="p">,</span> <span class="s">"visiteur."</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'accueil.html'</span><span class="p">,</span> <span class="n">titre</span><span class="o">=</span><span class="s">"Bienvenue !"</span><span class="p">,</span> <span class="n">mots</span><span class="o">=</span><span class="n">mots</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">accueil.html</code></p>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;&lt;/h1&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+        
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<h3 id="intégrer-les-fichiers-css-et-javascript">Intégrer les fichiers CSS et Javascript</h3>
+
+<p>Question piège: quel chemin écrire dans l’attribut <code class="highlighter-rouge">href</code> de l’élément HTML <code class="highlighter-rouge">&lt;link&gt;</code>?</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"chemin/vers/mon_style.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
+</code></pre>
+</div>
+
+<p>On n’écrit pas les chemins en dur ! On utilise <code class="highlighter-rouge">url_for()</code> Cette fonction est utilisable à l’intérieur des templates. Maintenant l’autre questione est de savoir où placer notre fichier <code class="highlighter-rouge">mon_style.css</code> et comment faire comprendre à <code class="highlighter-rouge">url_for()</code> qu’on veut l’adresse de ce fichier et pas d’une vue comme auparavant?</p>
+
+<p>C’est tout simple, les fichiers CSS, JS, tout comme les images, c’est à dire les fichiers <strong>statiques</strong>, vont être placés dans un dossier appelé <code class="highlighter-rouge">static</code> justement. Puis on utilisera <code class="highlighter-rouge">url_for()</code> de la façon suivante:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>url_for('static', filename='mon_style.css')
+</code></pre>
+</div>
+
+<p>Notre balise <code class="highlighter-rouge">&lt;link&gt;</code> ressemblera donc à ça au final:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">""</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
+</code></pre>
+</div>
+
+<h3 id="organisation-des-fichiers">Organisation des fichiers</h3>
+
+<p>Nous avons typiquement l’arborescence suivante dans un projet Flask:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>projet/
+    application.py
+    static/
+        mon_style.css
+        images/
+            ma_banniere.png
+    templates/
+        accueil.html
+        login.html
+</code></pre>
+</div>
+
+<h2 id="templates-coté-utilisateur">Templates coté utilisateur</h2>
+
+<h3 id="passer-du-contenu-au-template">Passer du contenu au template</h3>
+
+<p>Les template sont des fichiers HTML dans lesquels on place des sectios de code Jinja2 (qui ressemble fort à du Python). L’exemple le plus simple qu’on puisse imaginer serait un template ne contenant que du HTML:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Accueil<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Ceci est la page d'accueil.<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>Pour faire afficher ce template par notre vue <code class="highlighter-rouge">acceuil()</code> Flask nous met à disposition la fonction render_template(), à laquelle on va passer le nom du fichier template (par exemple, pour être cohérent, <code class="highlighter-rouge">acceuil.html</code> en l’occurence). Les fichiers templates doivent être placés dans le dossier nommé <code class="highlighter-rouge">templates</code></p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">acceuil</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'accueil.html'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>La fonction <code class="highlighter-rouge">rendender_template()</code> renvoie le contenue de la page web qui va être envoyée au client. Ce contenu n’est rien d’autre qu’une simple string. Tout ce qui a été vu précédament sur les réponses HTTP est donc valable en utilisant les templates.</p>
+</blockquote>
+
+<p>Si on veut passer au template des variables à afficher, cela se fait également dans la fonction <code class="highlighter-rouge">render_template()</code>. Il suffit de lui passer ces variable en tant qu’argument optionnels. Par exemple, si on désire afficher la date actuelle dans la page web, on fera ainsi:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">'/date'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_date</span><span class="p">():</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'accueil.html'</span><span class="p">,</span> <span class="n">la_date</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>On passe au template une variable qui s’appellera <code class="highlighter-rouge">la_date</code>. Cette variable sera une simple string qu’on affichera de la façon suivante:</p>
+
+<p><code class="highlighter-rouge">accueil.html</code></p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Date<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>La date d'aujourd'hui est : <span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>Pour afficher quelque chose dans un template, il suffit de mettre ce quelque chose entre ``</p>
+
+<p>Il existe deux autres façons de faire en sorte de passer des variables depuis le code Python vers le template:</p>
+
+<h4 id="appcontext_processor">@app.context_processor</h4>
+
+<p>Si on se rend compte que dans chque vue, on passe une variable qui est utilisée dans chaque template, il existe une façon desupprimer cette répétition. Par exemple, si on utilise la variable <code class="highlighter-rouge">titre</code> dans chaque template, voilà comment faire pour la passer à un seul endroit:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="nd">@app.context_processor</span>
+<span class="k">def</span> <span class="nf">passer_titre</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">titre</span><span class="o">=</span><span class="s">"Bienvenue!"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Il suffit de créer une autre fonction décorée par <code class="highlighter-rouge">@app.context_processor</code>. Cette fonction <strong>doit renvoyer un dictionnaire où chaque clé sera une variable accessible dans les templates Jinja</strong></p>
+
+<h4 id="sans-rien-faire">Sans rien faire</h4>
+
+<p>Certaines variables sont accessibles par défaut dans les templates. C’est le cas des variables</p>
+
+<ul>
+  <li><code class="highlighter-rouge">request</code> : Déja vu plus haut, nous sert entre autres à afficher la valeur de son attribut method (``)</li>
+  <li><code class="highlighter-rouge">config</code> : Représente la configuration de Flask. Dans le paramètre <code class="highlighter-rouge">debug=True</code>, <code class="highlighter-rouge">debug</code> est un item du dictionnaire <code class="highlighter-rouge">config</code></li>
+  <li><code class="highlighter-rouge">session</code> : Représente la session de l’utilisateur</li>
+  <li><code class="highlighter-rouge">g</code> : Objet fourre-tout où on peut placer ce un peu ce qu’on veut en ajoutant des attributs (ex. `g.titre = “Bienvenue !”)</li>
+</ul>
+
+<h3 id="afficher-le-contenu-des-variables">Afficher le contenu des variables</h3>
+<p>Il faut se servir de ``, cela v d’abord chercher si un item <code class="highlighter-rouge">attr</code> est contenu dans <code class="highlighter-rouge">obj</code>, puis, si il n’y en a pas, si <code class="highlighter-rouge">obj</code> possède un attribut nommé <code class="highlighter-rouge">attr</code>.</p>
+
+<p>Ce fonctionnement est le même pour les objets, les listes et les dictionnaires!</p>
+
+<blockquote>
+  <p>Si il n’y a ni item ni attribut, cela renverra la valeur spéciale <code class="highlighter-rouge">undefined</code> et ça n’affiche rien.</p>
+</blockquote>
+
+<h2 id="créer-des-varibles-dans-les-templates">Créer des varibles dans les templates</h2>
+
+<p>On n’est pas obligé de se contenter des variables passées depuis l’extérieur dans nos templates. On peut très bien créernos propres variables. Les int, floats, strings, listes, tuples et dictionnaires sont disponibles. Les opérations mathématiques de base également (+,-,*,/,%,**). La syntaxe pour créer une variables est la même qu’en Python mais précédée du mot clé <code class="highlighter-rouge">set</code>:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>{% set menu = ['accueil', 'news', 'contact'] %}
+</code></pre>
+</div>
+
+<p><strong><span style="color:red"> Attention: </span></strong>, On a pas utilisé <code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code> mais <code class="highlighter-rouge"><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">%</span><span class="p">}</span></code>.</p>
+<ul>
+  <li><code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code> ne fait qu’<strong>afficher</strong> le contenu d’une vriable</li>
+  <li><code class="highlighter-rouge"><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">%</span><span class="p">}</span></code> sert à tout le reste</li>
+</ul>
+
+<blockquote>
+  <p>Le code HTML du templatate est en dehors de ces sections.</p>
+</blockquote>
+
+<p>En faisant cela, on crée une variable appelée menu, qui est une liste. Cette variable sera accessible dans tout le reste du template. Si l’on désire que cette variale soit accessible seule,ent dans une certaine zone du template, alors on doit la créer dans un <strong>tag</strong><code class="highlighter-rouge">with</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">$</span> <span class="k">with</span> <span class="n">menu</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accueil'</span><span class="p">,</span> <span class="s">'news'</span><span class="p">,</span> <span class="s">'contact'</span><span class="p">]</span> <span class="err">$</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">menu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">}}</span>
+    <span class="p">{{</span> <span class="n">menu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">}}</span>
+    <span class="p">{{</span> <span class="n">menu</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">}}</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endwith</span> <span class="o">%</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>De cette façon, menu est inacessible en dehors des <strong>with</strong>/<strong>endwith</strong>.</p>
+
+<h2 id="commentaire-en-jinja">Commentaire en jinja</h2>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="c"># commentaire blah blah #}</span>
+</code></pre>
+</div>
+
+<h2 id="les-filtres">Les filtres</h2>
+
+<p>Jinja introduit une syntaxe particulièrement élégante pour appliquer une fonction sur une variable: les filtres. De nombreux filtres sont déjà prédéfinis. Les filtres s’utilisent de la façon suivante: (dans cet exemple, on applique un filtre à une variable appelée x):</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{{</span> <span class="n">x</span><span class="o">|</span><span class="n">filtre</span> <span class="p">}}</span>
+</code></pre>
+</div>
+<p>Si le filtre dispose de paramètres:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{{</span> <span class="n">x</span><span class="o">|</span><span class="n">filtre</span><span class="p">(</span><span class="s">'parametre'</span><span class="p">)</span> <span class="p">}}</span>
+</code></pre>
+</div>
+<p>En fin de compte, l’application de filtres utilise la même syntaxe que l’appel d’une méthode, sauf que l’on remplace le symbole <code class="highlighter-rouge">.</code> par <code class="highlighter-rouge">|</code> sauf que les filtres ne sont pas des méthodes propres à une classe, ce sont simplement des fonctions.</p>
+
+<p>Il existe beaucoup de filtres disponibles dans Jinja, certains sont là uniquement pour la mise en forme, d’autres non. La liste de tous ces filtres est disponible dans la <a href="http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-filters">doc de Jinja</a> . Voici quelques exemples:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">capitalize</code>: met en majuscule la première lettre d’une string et en minuscule la suite. Pas de paramètres. (ex. <code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="err">titre|capitalize</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>)</li>
+  <li><code class="highlighter-rouge">join</code>: concatène les valeurs d’une liste en les séparant par le délimiteur passé en paramètre (qui vaut par défaut <code class="highlighter-rouge">''</code>). Cela fonctionne comme la méthode <code class="highlighter-rouge">join</code> de <code class="highlighter-rouge">str</code> (ex. <code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="err">[</span><span class="nt">"Une"</span><span class="err">,</span><span class="w"> </span><span class="nt">"Petite"</span><span class="err">,</span><span class="w"> </span><span class="nt">"Poule"</span><span class="err">]</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">join(',</span><span class="w"> </span><span class="err">')</span><span class="w"> </span><span class="err">}}</span></code>)</li>
+</ul>
+
+<h2 id="les-conditions">Les conditions</h2>
+
+<p>Elles se font de la même façon qu’en Python. <code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">elif</code>, <code class="highlighter-rouge">else</code>. Et comme il ne s’agit pas d’un affichge, on utilise les balises <code class="highlighter-rouge"><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">%</span><span class="p">}</span></code> et non <code class="highlighter-rouge"><span class="p">{</span><span class="err">{</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>. Cependant, Pyhton se base sur l’indendation, alors que Jinja non (on peut placer nos balises comme on le souhaite). Par conséquent, il faut préciser la fin du bloc <code class="highlighter-rouge">if\elif\else</code> avec le mot clé <code class="highlighter-rouge">endif</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">18</span> <span class="o">%</span><span class="p">}</span>
+            <span class="n">Acc</span><span class="err">è</span><span class="n">s</span> <span class="n">non</span> <span class="n">autoris</span><span class="err">é</span> <span class="n">aux</span> <span class="n">mineurs</span><span class="o">.</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">elif</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">90</span> <span class="o">%</span><span class="p">}</span>
+            <span class="n">Acc</span><span class="err">è</span><span class="n">s</span> <span class="n">autoris</span><span class="err">é</span><span class="o">.</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+            <span class="n">Doucement</span> <span class="err">!</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+<p>Maintenant voici un exemple qui reprend ce qu’on a découvert juste avant (déclaration de variables et utilisation de filtres):</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="nb">set</span> <span class="n">age</span> <span class="o">=</span> <span class="s">"20"</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">age</span><span class="o">|</span><span class="nb">int</span> <span class="o">==</span> <span class="mi">20</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Vous</span> <span class="n">avez</span> <span class="mi">20</span> <span class="n">ans</span><span class="p">,</span> <span class="n">vous</span> <span class="n">b</span><span class="err">é</span><span class="n">n</span><span class="err">é</span><span class="n">ficiez</span> <span class="n">d</span><span class="s">'une remise!&lt;/p&gt;</span><span class="err">
+</span><span class="s">{</span><span class="si">% </span><span class="s">endif </span><span class="si">%</span><span class="s">}</span><span class="err">
+</span></code></pre>
+</div>
+<p>Ici, on utilise le filtre <code class="highlighter-rouge">int</code> qui convertit une valeur en entier.</p>
+
+<p>Dans les conditions, on peut utiliser les opérateurs habituels:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">==</span><span class="p">,</span> <span class="o">!=</span><span class="p">,</span> <span class="o">&lt;</span><span class="p">,</span> <span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;=</span><span class="p">,</span> <span class="o">&gt;=</span><span class="p">,</span> <span class="ow">is</span><span class="p">,</span> <span class="ow">and</span><span class="p">,</span> <span class="ow">or</span><span class="p">,</span> <span class="ow">not</span><span class="p">,</span> <span class="ow">in</span>
+</code></pre>
+</div>
+
+<h2 id="tests-intégrés-à-jinja2">Tests intégrés à Jinja2</h2>
+
+<p>Les tests sont des fonctions disponibles dans Jinja et qui s’utilisent dans les conditions grace au mot clé <code class="highlighter-rouge">is</code>. Tout comme les filtres, il existe des tests qui ne prennent pas de paramètres, et d’autres qui en nécessitent. La liste de tous ce tests est disponible dans la <a href="http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-tests">documentation de jinja</a>.</p>
+
+<p>Voici deux exemples avec les tests <code class="highlighter-rouge">defined</code> et <code class="highlighter-rouge">divisibleby</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">truc</span> <span class="ow">is</span> <span class="n">defined</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">La</span> <span class="n">variable</span> <span class="n">truc</span> <span class="n">n</span><span class="s">'est pas undefined&lt;/p&gt;</span><span class="err">
+</span><span class="s">{</span><span class="si">% </span><span class="s">endif </span><span class="si">%</span><span class="s">}</span><span class="err">
+</span></code></pre>
+</div>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="nb">set</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">%</span><span class="p">}</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">age</span> <span class="ow">is</span> <span class="n">divisibleby</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Votre</span> <span class="n">age</span> <span class="n">est</span> <span class="n">un</span> <span class="n">multiple</span> <span class="n">de</span> <span class="mf">10.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="les-boucles">Les boucles</h2>
+
+<p>Les <code class="highlighter-rouge">for</code> aussi fonctionnent comme en Python à la différence qu’on ajoute <code class="highlighter-rouge"><span class="p">{</span><span class="err">%</span><span class="w"> </span><span class="err">endfor</span><span class="w"> </span><span class="err">%</span><span class="p">}</span></code> à la fin. Cependant, il n’y a pas de boucles <code class="highlighter-rouge">while</code> dans Jinja.</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="nb">set</span> <span class="n">mots</span> <span class="o">=</span> <span class="p">[</span><span class="s">"bonjour"</span><span class="p">,</span> <span class="s">"à"</span><span class="p">,</span> <span class="s">"toi,"</span><span class="p">,</span> <span class="s">"visiteur."</span><span class="p">]</span> <span class="o">%</span><span class="p">}</span>
+
+<span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">mot</span> <span class="ow">in</span> <span class="n">mots</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">mot</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+<p>On peut inverser l’affichage en appliquant un filtre <code class="highlighter-rouge">reverse</code> sur la liste <code class="highlighter-rouge">mots</code>:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">mot</span> <span class="ow">in</span> <span class="n">mots</span><span class="o">|</span><span class="n">reverse</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">mot</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</code></pre>
+</div>
+
+<p>Si on ne désire afficher que les 10 premiers mots:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="k">if</span> <span class="n">mots</span><span class="o">|</span><span class="n">lenght</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">%</span><span class="p">}</span>
+        <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">mots</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="k">else</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Vous</span> <span class="n">devez</span> <span class="n">entrer</span> <span class="n">dix</span> <span class="n">mots</span> <span class="n">au</span> <span class="n">minimum</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">endif</span> <span class="o">%</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>Cet exemple inutile était destiné à vous présenter le filtre <code class="highlighter-rouge">lenght</code> ainsi que la fonction <code class="highlighter-rouge">range()</code>, disponible dans Jinja. Voir la <a href="http://jinja.pocoo.org/docs/2.10/templates/#list-of-builtin-tests">documentation de jinja</a> pour d’autres fonctions !</p>
+</blockquote>
+
+<h2 id="include">Include</h2>
+
+<p>Nos templates commencent à être bien pratiques, mais il reste un problème essentiel: le code se répète entre nos templates, ce qui induit des risques d’erreur lors des modifications, et ce qui alourdit la quantité totale de code inutilement. C’est sur ce problème que vont intervenir l’héritage de template (un peu plus loin dans cet article), ainsi qu’include, que l’on va voir tout de suite.</p>
+
+<p>Include permet, comme son nom l’indique, d’aller inclure le contenu d’un autre fichier template, comme si on effectuait un copier-coller du contenu. Cela peut se revéler particulièrement utile, si, par exemple, tous nos templates commencent ainsi:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>{{ titre }}<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"{{ url_for('static', filename='style.css') }}"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+<p>Dans un cas comme celui là, il suffit de placer ce code dans un template nommé par exemple <code class="highlighter-rouge">header.html</code>, puis, dans les templates qui voudront inclure ce code, il suffira de placer, à l’endroit désiré:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{{</span> <span class="n">include</span> <span class="s">'header.html'</span> <span class="p">}}</span>
+</code></pre>
+</div>
+
+<p>Par conséquent, il faudra veiller à ce que les templates qui incluront <code class="highlighter-rouge">header.html</code> connaissent tous une variable nommée <code class="highlighter-rouge">titre</code>.</p>
+
+<blockquote>
+  <p>En réalité, on n’utilisera pas include pour ce genre de choses, on préfèrera utiliser l’héritage de templates. Include sera plutot utile, si, par exemple, certaines pages de notre site affichent un gros formulaire: Il suffira d’écrire une seule fois ce formulaire dans un template séparé et de l’inclure. Le code en sera ainsi mieux découpé.</p>
+</blockquote>
+
+<h2 id="lhéritage">L’héritage</h2>
+
+<p>L’idée de base est que, au fond, la plupart des pages de notre site sont composées du même squelette, seul le contenu change un peu. On a vu qu’on pouvait utiliser include pour simplifier cela, mais l’héritage de templates est plus puissant. Son principe est de structurer une page en une série de “blocks”. Les blocks du template parent qu’on ne veut pas changer dans les templates enfants n’ont pas à être reprécisés. Par contre, ceux que l’on veut modifier n’ont qu’à être réécrits en remplaçnt leur contenu par ce qu l’on veut.</p>
+
+<p>Pour cet exemple, on va se contenter de deux templates:</p>
+<ul>
+  <li>Un template qui ne contiendra que le squelette du site</li>
+  <li>Un autre qui sera utilisé par la page contact du site</li>
+</ul>
+
+<p>Voyons tout d’abord le template <code class="highlighter-rouge">squelette.html</code>. C’est une page HTML classique dans laquelle on précise des blocks:</p>
+
+<p><code class="highlighter-rouge">squelette.html</code></p>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+    {% block header %}
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>{% block titre %}Titre par défaut{% endblock %}<span class="nt">&lt;/title&gt;</span>
+    {% endblock %}
+    <span class="nt">&lt;/head&gt;</span>
+
+    <span class="nt">&lt;body&gt;</span>
+        {% block corps %}{% endblock %}
+        {% block footer %}{% endblock %}
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>Comme on le voit, un block se crée en faisant:</p>
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">block</span> <span class="n">nom_du_block</span> <span class="o">%</span><span class="p">}{</span><span class="o">%</span> <span class="n">endblock</span> <span class="o">%</span><span class="p">}</span>
+</code></pre>
+</div>
+
+<p>Un block peut être initialement vide (il pourra être rempli dans les templates fils), ou il peut contenir déjà du code (qui sera donc présent dans les templates fils, par défaut). Comme on le voit dans cet exemple, un block peut contenir d’autres blocks, ça n’est pas un problème. Voyons maintenant comment réaliser le template de la page contact:</p>
+
+<p><code class="highlighter-rouge">contact.html</code></p>
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>{% extends "squelette.html" %}
+
+{% block titre %}Page de contact{% endblock %}
+
+{% block corps %}
+<span class="nt">&lt;h1&gt;</span>Page de contact<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"nom"</span> <span class="na">value=</span><span class="s">"votre nom"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">"message"</span><span class="nt">&gt;</span>Votre message ici.<span class="nt">&lt;/textarea&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Envoyer"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+{% endblock %}
+
+
+{% block footer %}
+<span class="nt">&lt;footer&gt;</span>Copyright monsite.com 2015-1017<span class="nt">&lt;/footer&gt;</span>
+{% endblock %}
+</code></pre>
+</div>
+<p>On note plusieurs choses:</p>
+<ul>
+  <li>Pour préciser qu’on souhaite hériter du template <code class="highlighter-rouge">squelette.html</code>, on utilise le tag <strong>extends</strong> en lui précisant simplement le nom du template.</li>
+  <li>On peut changer le contenu d’un block en le réecrivant (ici on change le titre de la page de cette façon)</li>
+  <li>On peut mettre du contenu dans les blocks qui étaient vides (les blocks corps et footer)</li>
+</ul>
+
+<p>L’avantage est qu’on a pas besoin de repréciser le squelette HTML de la page, on se contente simplement de remplir les blocks. On raurait même pu créer de nouveaux blocks, à l’intérieur du formulaire par exemple, et ensuite remplir ces blocks dans un template fils, et ainsi de suite.</p>
+
+<p>Il reste un détail génant: On écrit deux fois le titre de la page (une fois dans le block titre, qui va remplir la balise <code class="highlighter-rouge">&lt;title&gt;</code>, et une seconde fois dans la balise <code class="highlighter-rouge">&lt;h1&gt;</code>) alors que le titre est le même. Pour éviter cela, on peut afficher le contenu du block titre dans la balise <code class="highlighter-rouge">&lt;h1&gt;</code>:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>{{ self.titre() }}<span class="nt">&lt;/h1&gt;</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">self.nom_du_block()</code> renvoie le contenu <code class="highlighter-rouge">nom_du_block</code> (<code class="highlighter-rouge">self</code> représente le template actuel).</p>
+
+<p>Il existe une autre astuce très pratique quand on veut garder le contenu du block du parent mais y <strong>rajouter</strong> quelque chose en plus. Par exemple, on pourrait imaginer vouloir garder le contenu du block header, mais y ajouter un <code class="highlighter-rouge">&lt;link&gt;</code> CSS. Pour cela, on peut utiliser <code class="highlighter-rouge">super()</code>, qui renvoie le contenu du même block dans le parent:</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code>{% block header %}
+    {{ self.supper() }} {# renvoie le contenu du block header 
+        (celui où on se situe du template parent (squelette.html)) #}
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"{{ url_for('static', filename='style_contact.css') }}"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
+{% endblock %}
+</code></pre>
+</div>
+
+<p>L’héritage de templates simplifie vraiment le contenu des templates en nous évitant de nous répéter. <strong><span style="color:red"> Tout comme avec include il ne faut pas oublier, dans nos vues, de donner des valeurs aux variables utilisées dans les templates parents! </span></strong></p>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Frameworks@&amp;url=http://localhost:4000/py/py-frameworks.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-frameworks.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-frameworks.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

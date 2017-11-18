@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-Impl%C3%A9mentation-du-langage.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: Détails d&#39;implémentations du langage</title>
+  <meta name="description" content="En vrac">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: Détails d'implémentations du langage</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="11 Nov 2017" itemprop="datePublished">Nov 11 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p>Under the hood</p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="en-vrac">En vrac</h1>
+
+<ul>
+  <li>Toute valeur en Python est un objet</li>
+  <li>En Python toutes les variables sont des références vers des objets</li>
+  <li>Il n’y a pas de <strong>vrai</strong> constantes en Python! On parle de constante quand une variable est écrite toute en majuscules (<strong>convention</strong>) et qu’elle est <strong>sensé</strong> ne jamais changer.</li>
+</ul>
+
+<h1 id="duck-typing">Duck typing</h1>
+
+<p><strong>Un objet en Python est défini par sa structure (les attributs qu’il contient et les méthodes qu’il lui sont applicables) plutôt que par son type.</strong></p>
+
+<p>Python est entièrement construit autour de cette idée appelée <em><strong>duck-typing</strong></em>:</p>
+
+<blockquote>
+  <p>“Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j’appelle cet oiseau un cannard” (James Whitcomb Riley)</p>
+</blockquote>
+
+<h1 id="python--cpython-jython-">Python / CPython, Jython …</h1>
+
+<p>Python est <strong>un langage</strong>, un série de regles qui servent à écrire un programme et il existe plusieurs <strong>implémentation de ce langage</strong>.</p>
+
+<p>Peu importe le choix de l’implémentation qu’on utilise, elles font toutes à peu près la même chose, c’est à dire interpréter le texte qui forme le code de notre programme et l’interprete en executant les instructions.</p>
+
+<blockquote>
+  <p>ATTENTION A LA CONFUSION ! Aucunne implémentation ne compile le code en C ou dans aucun autre langage !</p>
+</blockquote>
+
+<p>CPython est le nom de l’implémentation originale de Python <strong>qui est écrite</strong> en C (d’où la confusion). Le “C” dans CPython fait référence au langage utilisé pour écrire l’interpeteur Python.</p>
+
+<ul>
+  <li><strong>CPython</strong>: interpreteur original, écrit en C</li>
+  <li><strong>Jython</strong>: est le <strong>même langage</strong> mais implémenté (interpeteur écrit en…) en utilisant Java.</li>
+  <li><strong>IronPython</strong>: est le <strong>même langage</strong> mais implémenté en utilisant C#.</li>
+</ul>
+
+<p>Pour ajouter une couche, et boucler la boucle, <strong>PyPy</strong> est un interpreteur Python écrit en… Python.</p>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/17130975/python-vs-cpython">Plus d’info, entre autres sur le byte-code</a></li>
+</ul>
+
+<h1 id="data-model">Data-model</h1>
+
+<p><em>Traduction de la <a href="https://docs.python.org/fr/3/reference/datamodel.html">doc officielle</a></em></p>
+
+<h2 id="objets-identité-type-et-valeur">Objets: Identité, type et valeur</h2>
+
+<p>Les <em>objets</em> sont l’abstraction de Python des données. Toute donnée dans un programme Python est représentée par des objets ou par des relations entre des objets.</p>
+
+<p>Chaque objet a une <strong>identitée</strong>, <strong>un type</strong> et une <strong>valeur</strong>.</p>
+
+<p>L’<strong>identitée</strong> d’un objet ne change jamais après sa création. On peut voir l’identité comme l’adresse en mémoire de l’objet. L’opérateur <code class="highlighter-rouge">is</code> compare les identitées de deux objets et la fonction <code class="highlighter-rouge">id()</code> retourne une représentation entière (un int) de l’identité d’un objet.</p>
+
+<blockquote>
+  <p>En CPython, <code class="highlighter-rouge">id()</code> retourne l’adresse mémoire (sous forme entière et non pas hexadécimale).</p>
+</blockquote>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">objet</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">objet</span><span class="p">))</span>
+<span class="mi">1783169616</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">objet</span><span class="p">)))</span>
+<span class="mh">0x6a490250</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p><code class="highlighter-rouge">0x6a490250</code> est l’adresse en mémoire et <code class="highlighter-rouge">1783169616</code> est la même adresse sous forme entière.</p>
+</blockquote>
+
+<p>Le <strong>type</strong> d’un objet détermine les opérations qu’un objet supporte (ex. “est-ce-qu’il a une longueur?”) et définit également les valeurs possibles pour les objets de ce type. La fonction <code class="highlighter-rouge">type()</code> retourne le type d’un objet (qui est lui même un objet (le type retourné est un objet)). De la même façon que l’identité d’un objet, le type d’un objet ne change jamais.</p>
+
+<p>La <strong>valeur</strong> de certains objets peut changer. Un objet dont la valeur peut changer est dit <span style="color:green"> <strong>mutable</strong> </span> par opposition à un objet dont la valeur ne peut plus changer après sa création qui lui est dit <span style="color:green"> <strong>immutable</strong> </span>.</p>
+
+<p>Certains objets contiennent des références vers d’autres objets. Ces objets sont appelés des <strong>conteneurs</strong> (tuples, lists, dictionnaires,…).</p>
+
+<blockquote>
+  <p>La valeur d’un objet conteneur <strong>immutable</strong> qui contient une référence sur un objet <strong>mutables</strong> peut changer si la valeur de l’objet dont il contient la référence change. Pourtant, le conteneur est quand même concidéré immutable car la collection d’objet qu’il contient ne peut être changée. Donc <strong>l’immutabilité n’est pas strictement la même chose que le fait d’avoir une valeur inchangeable</strong>, c’est plus subtile que ça d’où la nuance dans le choix du terme.</p>
+</blockquote>
+
+<p>La mutabilité d’un objet est déterminée par son type; par exemple, les <em>int</em>, les <em>strings</em> et les <em>tuples</em> sont immutable, alors que les <em>dictionnaires</em> et les <em>listes</em> sont mutable.</p>
+
+<p>Le type d’un objet affecte presque tous les aspects du comportement d’un objet, même l’importance de son identité (adresse en mémoire). Pour les types immutables, les opérations qui calculent de nouvelles valeurs <strong>peuvent</strong> retourner une référence sur un objet du même type et de même valeur (ce n’est pas permis pour les objet mutables). Par exemple après:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">a</code> et <code class="highlighter-rouge">b</code> peuvent (ou pas) référencer le même objet de valeur <code class="highlighter-rouge">1</code> (dépend de l’implémentation) alors qu’après:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">c</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre>
+</div>
+
+<p>il est garantit que <code class="highlighter-rouge">c</code> et <code class="highlighter-rouge">d</code> référenceront deux différentes, uniques  listes nouvellement créées.</p>
+
+<blockquote>
+  <p>Noter que <code class="highlighter-rouge">c = d = []</code> assigne le même objet à <code class="highlighter-rouge">c</code> et <code class="highlighter-rouge">d</code>.</p>
+</blockquote>
+
+<h2 id="destruction">Destruction</h2>
+
+<p>Les objets ne sont jamais explicitement détruits. Une fois qu’il n’y a plus aucune référence sur eux et sont donc inatteignables, ils <strong>peuvent</strong> être <em>garbage-collected</em>. La gestion du garbage collector est laissé à l’implémentation utilisée et n’est pas gérée par le langage lui même. L’implémentation a le droit de retarder la garbage collectin ou même de l’omettre complètement.</p>
+
+<blockquote>
+  <p>CPython utilise <span style="color:red"> pour le moment </span> un système de garbage collection à base de comptage des références avec (optionnellement) une détection retardée les liens cycliques (<em>références circulaires?</em>) qui collecte <strong>la majorité</strong> des objets aussi tot qu’ils deviennent inatteignables, mais ne garantit pas la collecte des garbages contenant des références circulaires.</p>
+</blockquote>
+
+<p>Certains objets contiennent des références à des ressources externes comme des fichiers ou des fenetres. Il est entendu que ces ressources sont libérées quand l’objet est garbage-collected, mais comme cette dernière n’est pas garentie à 100%, les objets qui peuvent contenir ce genre de références externes fournissent une méthode pour explicitement libérer ces ressources, généralement une méthode <code class="highlighter-rouge">close()</code></p>
+
+<blockquote>
+  <p>Il est fortement recommandé d’utiliser ces methodes ! Les déclaration tel que <code class="highlighter-rouge">try..finally</code> et <code class="highlighter-rouge">with</code> peuvent ici être très utiles.</p>
+</blockquote>
+
+<h2 id="temporaire-en-attendant-la-suite-de-la-traduction">TEMPORAIRE EN ATTENDANT LA SUITE DE LA TRADUCTION</h2>
+
+<p>Un <strong>itérable</strong> est un objet sur lequel on peut itérer. En gros n’import quel objet sur lequel on peut appeler la construction <code class="highlighter-rouge">for i in objet</code>.</p>
+
+<p>Les objets itérables ont trois sous-types:</p>
+<ul>
+  <li>
+    <p><strong>Sequence</strong> (listes, tuples, str): c’est un objet itérable à accès direct. On peut à l’aide des <code class="highlighter-rouge">[]</code> appeler un élément situé à un indexe précis, ou slicer une partie de cette séquence <code class="highlighter-rouge">seq[de:à]</code>.</p>
+  </li>
+  <li>
+    <p><strong>maps</strong> (dictionnaires): Si l’accès se fait via une clé à la place d’un indexe c’est un <strong>mapping</strong>. Une clé unique qui référence un élement.</p>
+  </li>
+  <li>
+    <p><strong>Générateurs</strong>: Le plus basique des 3. Il ne supporte pas de d’accès direct et donc pas de slicing non plus. Les générateurs créent les éléments qu’ils “contiennent” au fur et à mesure qu’on itère dessus,d’où leur nom. Généralement créés à partir d’une generator comprehension (de la même façon qu’une list compregension mais avec des <code class="highlighter-rouge">()</code> à la place des <code class="highlighter-rouge">[]</code>) ou si une fonction contient le mot clé <code class="highlighter-rouge">yield</code> dans son corp, elle retournera un générateur.</p>
+  </li>
+</ul>
+
+<p>Le dénominateur commun de tous les itérables est l’<code class="highlighter-rouge">iterator</code>. Les <strong>itérateurs</strong> ont la même interface que le type le plus basique qu’ils supportent (le générateur). Il sont créés explicitement par l’appel de la méthode <code class="highlighter-rouge">__iter__()</code> sur un iterable…</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">__iter__</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">list_iterator</span><span class="s">'&gt;</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; print(it)</span><span class="err">
+</span><span class="s">&lt;list_iterator object at 0x00000219BC473320&gt;</span><span class="err">
+</span><span class="s">&gt;&gt;&gt; print(it.__next__())</span><span class="err">
+</span><span class="s">2</span><span class="err">
+</span></code></pre>
+</div>
+
+<p>… et sont créés implicitement dans toutes les boucles.</p>
+
+</div>
+
+<div>
+	
+	<div class="eof"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: Détails d'implémentations du langage@&amp;url=http://localhost:4000/py/py-Impl%C3%A9mentation-du-langage.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-Impl%C3%A9mentation-du-langage.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-Impl%C3%A9mentation-du-langage.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

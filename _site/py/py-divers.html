@@ -119,7 +119,7 @@
 <div class="post-content">
     <center>
 	
-	<p>En vrac...</p>
+	<p></p>
 	
     </center>
 	<h2>Directory</h2>
@@ -133,7 +133,7 @@
   <li><a href="http://apprendre-python.com/page-gestion-fichiers-dossiers-python">Gestion de fichier (module os)</a></li>
 </ul>
 
-<h2 id="liens">Liens</h2>
+<h1 id="liens">Liens</h1>
 
 <ul>
   <li><a href="http://apprendre-python.com/">apprendre-Python</a></li>
@@ -146,14 +146,50 @@
   <li><a href="http://xahlee.info/python/python_dictionary_methods.html">Dictionnaires</a></li>
   <li><a href="https://www.cs.hmc.edu/csforall/index.html#">Deep into Python and CS</a></li>
   <li><a href="http://snakify.org/">gross collection d’exercices</a></li>
+  <li><a href="https://www.kevinlondon.com/2015/07/26/dangerous-python-functions.html">Fonctions dangereuses</a></li>
+  <li><a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/">OpenCV install guide (linux)</a></li>
 </ul>
 
-<h2 id="livres">Livres</h2>
+<h1 id="livres">Livres</h1>
 
 <ul>
   <li><a href="http://python101.pythonlibrary.org/g">Python 101, livre complet en ligne</a></li>
   <li><a href="https://www.blog.pythonlibrary.org/2017/03/08/python-201-is-now-an-online-course/">Python 201</a></li>
 </ul>
+
+<hr />
+
+<h2 id="color-trackback">Color trackBack</h2>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/37081116/how-to-get-pythons-terminal-error-to-be-in-color">ultratb.ColorTB() (IPython)</a></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">IPython.core.ultratb</span>
+<span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
+    <span class="c"># No IPython. Use default exception printing.</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">ultratb</span><span class="o">.</span><span class="n">ColorTB</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>ou</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">IPython.core.ultratb</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">ultratb</span><span class="o">.</span><span class="n">ColorTB</span><span class="p">(</span><span class="n">color_scheme</span><span class="o">=</span><span class="s">'LightBG'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><a href="https://pypi.python.org/pypi/colored-traceback/0.3.0">colored-traceback</a></li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo pip3 install colored-traceback
+</code></pre>
+</div>
 
 <h2 id="classe-de-base-object">Classe de base: Object</h2>
 <p>En python 3 il n’est plus nécéssaire d’explicitement dire à Python qu’une classe hérite de la classe de base <code class="highlighter-rouge">object</code>.</p>
@@ -164,50 +200,6 @@
 </code></pre>
 </div>
 <p>Cette classe hérite implicitement de la classe <code class="highlighter-rouge">object</code></p>
-
-<h2 id="fonctions-dangereuses">Fonctions dangereuses</h2>
-<p><a href="https://www.kevinlondon.com/2015/07/26/dangerous-python-functions.html">Kevin London’s blog</a></p>
-
-<h2 id="compter-des-occurences">Compter des occurences</h2>
-
-<h3 id="toutes-les-occurences-dans-une-liste">Toutes les occurences dans une liste:</h3>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">random</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
-<span class="o">&gt;&gt;&gt;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
-<span class="o">&gt;&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
-<span class="n">Counter</span><span class="p">({</span><span class="mi">5</span><span class="p">:</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">86</span><span class="p">})</span>
-</code></pre>
-</div>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"j'aime la viande rouge bien cuite"</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-<span class="n">Counter</span><span class="p">({</span><span class="s">'e'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">' '</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">'i'</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'a'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'u'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'n'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'j'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'r'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'d'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-<span class="s">'m'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'t'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"'"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'l'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'v'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'c'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'g'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'o'</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-</code></pre>
-</div>
-
-<h3 id="sous-forme-de-tuples">Sous forme de tuples</h3>
-<p>Permet de pouvoir utiliser un indexe pour sortir directement une valeur:</p>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="s">"j'aime la viande rouge bien cuite"</span>
-<span class="n">counted</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Le char '{}' apparait le plus dans la string:</span><span class="se">\n</span><span class="s">{}</span><span class="se">\n\
-</span><span class="s">    Nombre d'occurences: {}</span><span class="se">\n</span><span class="s"> Suivi par le char '{}' </span><span class="se">\
-</span><span class="s">    qui apparait {} fois."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">counted</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">,</span> <span class="n">counted</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">counted</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">counted</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
-</code></pre>
-</div>
-
-<p><strong>return:</strong></p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Le char e apparait le plus dans la string:
-j'aime la viande rouge bien cuite
-    Nombre d'occurences:5
- Suivi par le char ' '     qui apparait 5 fois.
-</code></pre>
-</div>
 
 <h2 id="poids-bytes-dune-structure-de-données">Poids (bytes) d’une structure de données</h2>
 
@@ -233,91 +225,6 @@ j'aime la viande rouge bien cuite
 
 <blockquote>
   <p>The difference is mostly due to “indirectness” – a Python list is an array of pointers to Python objects, at least 4 bytes per pointer plus 16 bytes for even the smallest Python object (4 for type pointer, 4 for reference count, 4 for value – and the memory allocators rounds up to 16). A NumPy array is an array of uniform values – single-precision numbers takes 4 bytes each, double-precision ones, 8 bytes. Less flexible, but you pay substantially for the flexibility of standard Python lists!</p>
-</blockquote>
-
-<h2 id="virtualenv--zsh">Virtualenv + zsh</h2>
-<ul>
-  <li><a href="http://bicofino.io/2015/02/10/install-virtualenv-and-virtualenvwrapper-on-ubuntu-14-dot-04-2/">install on unbuntu</a></li>
-  <li>
-    <p><a href="https://python-guide.readthedocs.io/en/latest/dev/virtualenvs/">virtualenv-doc</a></p>
-  </li>
-  <li><code class="highlighter-rouge">mkvirtualenv</code> <em>name</em> $ \Rightarrow $ new virtualenv</li>
-  <li><code class="highlighter-rouge">workon</code> <em>name</em> $ \Rightarrow $ switch to “name” virtualenv</li>
-  <li><code class="highlighter-rouge">workon</code> $ \Rightarrow $ list virtualenvs</li>
-  <li><code class="highlighter-rouge">lsvirtualenv</code> $ \Rightarrow $ same</li>
-  <li><code class="highlighter-rouge">deactivate</code> $ \Rightarrow $ leave current virtualenv</li>
-  <li>
-    <p><code class="highlighter-rouge">virtualenv --version</code> $ \Rightarrow $ check version</p>
-  </li>
-  <li><code class="highlighter-rouge">mkproject</code> <em>name</em> $ \Rightarrow $ creates a project <strong>directory</strong></li>
-  <li>
-    <p><code class="highlighter-rouge">deactivate</code> $ \Rightarrow $ leave current project</p>
-  </li>
-  <li><code class="highlighter-rouge">rmvirtualenv</code> <em>name</em> $ \Rightarrow $ delete project</li>
-  <li><code class="highlighter-rouge">cdvirtualenv</code> $ \Rightarrow $ navigate into the directory of the currently activated venv.</li>
-  <li><code class="highlighter-rouge">lssitepackages</code> $ \Rightarrow $ show content of <code class="highlighter-rouge">site-packages</code> directory</li>
-</ul>
-
-<h3 id="exemple-de-nouveau-venv-pour-opencv">Exemple de nouveau venv pour openCV</h3>
-
-<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="c"># create venv</span>
-<span class="err">$</span> <span class="n">mkvirtualenv</span> <span class="n">openCV</span> <span class="o">-</span><span class="n">p</span> <span class="n">python3</span>
-<span class="err">$</span> <span class="n">workon</span> <span class="n">openCV</span>
-
-<span class="c"># install usefull libs within this venv</span>
-<span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">numpy</span> <span class="n">scipy</span> <span class="n">matplotlib</span> <span class="n">scikit</span><span class="o">-</span><span class="n">image</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span> <span class="n">ipython</span>
-
-<span class="c"># quit venv</span>
-<span class="err">$</span> <span class="n">deactivate</span>
-</code></pre>
-</div>
-
-<h2 id="opencv-install-linux">openCV install (linux)</h2>
-<ul>
-  <li><a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/">install guide</a></li>
-</ul>
-
-<h2 id="color-trackback">Color trackBack</h2>
-
-<ul>
-  <li><a href="https://stackoverflow.com/questions/37081116/how-to-get-pythons-terminal-error-to-be-in-color">ultratb.ColorTB() (IPython)</a></li>
-</ul>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">IPython.core.ultratb</span>
-<span class="k">except</span> <span class="nb">ImportError</span><span class="p">:</span>
-    <span class="c"># No IPython. Use default exception printing.</span>
-    <span class="k">pass</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">ultratb</span><span class="o">.</span><span class="n">ColorTB</span><span class="p">()</span>
-</code></pre>
-</div>
-
-<ul>
-  <li><a href="https://pypi.python.org/pypi/colored-traceback/0.3.0">colored-traceback</a></li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo pip3 install colored-traceback
-</code></pre>
-</div>
-
-<h2 id="divers">Divers</h2>
-
-<ul>
-  <li>Toute valeur en Python est un objet</li>
-  <li>En Python toutes les variables sont des références vers des objets</li>
-  <li>Il n’y a pas de <strong>vrai</strong> constantes en Python! &lt;/span&gt; On parle de constante quand une variable est écrite toute en majuscules (<strong>convention</strong>) et qu’elle est sensé ne jamais changer.</li>
-</ul>
-
-<h2 id="duck-typing">Duck typing</h2>
-
-<p><strong>Un objet en Python est défini par sa structure (les attributs qu’il contient et les méthodes qu’il lui sont applicables) plutôt que par son type.</strong></p>
-
-<p>Python est entièrement construit autour de cette idée appelée <em><strong>duck-typing</strong></em>:</p>
-
-<blockquote>
-  <p>“Si je vois un animal qui vole comme un canard, cancane comme un canard, et nage comme un canard, alors j’appelle cet oiseau un cannard” (James Whitcomb Riley)</p>
 </blockquote>
 
 <h2 id="shallow-and-deep-copy">Shallow and deep copy</h2>
