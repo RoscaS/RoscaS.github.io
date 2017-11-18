@@ -633,3 +633,146 @@ Alors pour générer l'adresse vers le profil du membre "Luc1664", on utilisera 
 url_for('afficher_profil', pseudo="luc1664")
 ```
 
+## Moteur de templates
+
+Pour intégrer du HTML5/CSS3, flask intègre ce qu'on appelle un moteur de templates/
+
+### Comparaison
+
+Nous pouvons si nous les souhaitons (movaise idée), insérer du HTML dans les strings renvoyé par nos pages:
+
+```py
+@app.route('/')
+def acceuil():
+    return "<h1>Bienvenue !</h1>"
+```
+
+Cette façon de faire est suffisante pour un exemple aussi minimal, mais dans le cas d'une page web un peu plus compliquée, cela devient lourd:
+
+```py
+@app.route('/')
+def accueil():
+    mots = ["bonjour", "à", "toi,", "visiteur."]
+    puces = ''.join("<li>{}</li>".format(m) for m in mots)
+    return """<!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8" />
+                <title>{titre}</title>
+            </head>
+        
+            <body>
+                <h1>{titre}</h1>
+                <ul>
+                    {puces}
+                </ul>
+            </body>
+        </html>""".format(titre="Bienvenue !", puces=puces)
+```
+
+C'est vraiment moche et la page est encore très basique. Il est donc évident que ce n'est pas une bonne façon de faire, sans parler de la difficulté que serait la maintenance de ce site.
+
+Toute la puissance des moteurs de templates est qu'ils nous permettent de coder quelque chose qui évite toute cette répétition, qui permet d'insérer intelligemment et élégamment le contenu de nos variables dans des pages HTML.
+
+Voici à quoi ressemblerait le code précédent en l'adaptant au moteur de template intégré à Flask. Nous aurions deux fichiers:
+* Le fichier python `hello.py` qui contient notre vue `acceuil()`
+* Le fichier template, que nous appellerons par exemple `acceuil.html`
+
+`hello.py`
+
+```py
+from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/')
+def accueil():
+    mots = ["bonjour", "à", "toi,", "visiteur."]
+    return render_template('accueil.html', titre="Bienvenue !", mots=mots)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+`acceuil.html`
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{{ titre }}</title>
+    </head>
+
+    <body>
+        <h1>{{ titre }}</h1>
+        <ul>
+        {% for mot in mots %}
+            <li>{{ mot }}</li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>
+```
+
+### Intégrer les fichiers CSS et Javascript
+
+Question piège: quel chemin écrire dans l'attribut `href` de l'élément HTML `<link>`?
+
+```html
+<link href="chemin/vers/mon_style.css" rel="stylesheet" type="text/css" />
+```
+
+On n'écrit pas les chemins en dur ! On utilise `url_for()` Cette fonction est utilisable à l'intérieur des templates. Maintenant l'autre questione est de savoir où placer notre fichier `mon_style.css` et comment faire comprendre à `url_for()` qu'on veut l'adresse de ce fichier et pas d'une vue comme auparavant?
+
+C'est tout simple, les fichiers CSS, JS, tout comme les images, c'est à dire les fichiers **statiques**, vont être placés dans un dossier appelé `static` justement. Puis on utilisera `url_for()` de la façon suivante:
+
+```html
+url_for('static', filename='mon_style.css')
+```
+
+Notre balise `<link>` ressemblera donc à ça au final:
+
+```html
+<link href="{{ url_for('static', filename='mon_style.css') }}" rel="stylesheet" type="text/css" />
+```
+
+
+### Organisation des fichiers
+
+Nous avons typiquement l'arborescence suivante dans un projet Flask:
+
+```
+projet/
+    application.py
+    static/
+        mon_style.css
+        images/
+            ma_banniere.png
+    templates/
+        accueil.html
+        login.html
+```
+
+## Templates coté utilisateur
+
+### Passer du contenu au template
+
+Les template sont des fichiers HTML dans lesquels on place des sectios de code Jinja2 (qui ressemble fort à du Python). L'exemple le plus simple qu'on puisse imaginer serait un template ne contenant que du HTML:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Accueil</title>
+    </head>
+
+    <body>
+        <h1>Ceci est la page d'accueil.</h1>
+    </body>
+</html>
+```
+
+Pour faire afficher ce template par notre vue `acceuil()` Flask nous met à disposition la fonction render_template(), à laquelle on va passer le nom du fichier template (par exemple, pour être cohérent, `acceuil.html` en l'occurence). Les fichiers templates doivent être placés dans le dossier nommé `templates`
+
+
+```
