@@ -96,7 +96,9 @@ Installation:
 pip install virtualenvwrapper-win
 ```
 
-Création d'env pour un projet
+## Création d'env pour un projet
+
+### : façon 1
 
 ```
 mkvirtualenv myproject
@@ -114,33 +116,26 @@ Pour travailler dans un venv, une fois dans le dossier du projet (cmd):
 workon myproject
 ```
 
-Si le venv est créé à la sauce djangogirls"
+### Façon 2
+
+Une façon commune de nommer l'environement virtuel est `venv`
 
 ```
-myvenv\Scripts\activate
+virtualenv venv
 ```
 
-# Django
-
-## Installer Django
-
-Django s'installe via pip une fois dans le venv du nouveau projet (s'assurer qu'il est actif via `wokon myproject`:
+Pour l'activer:
 
 ```
-pip install django
+venv\Scripts\activate
 ```
 
-Tester l'installation:
+Pour le stopper:
 
 ```
-django-admin --version
+deactivate
 ```
 
-Lancer un serveur local:
-
-```
-python manage.py runserver
-```
 
 # Flask
 C'est un micro-framwork web: il ne fait nativement pas tout mais il est possible d'étendre les possibilités via des extensions.
