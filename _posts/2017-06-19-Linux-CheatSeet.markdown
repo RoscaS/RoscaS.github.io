@@ -25,6 +25,13 @@ Telecharger le driver via le gestionnaire de package synaptic.
  Network controller: Broadcom Limited BCM4352 802.11ac
 ```
 
+## Scroll speed
+
+```
+synclient VertScrollDelta=-50
+synclient HorizScrollDelta=-100
+
+
 ## Carte son
 Si le driver saute lors de switchs entre OSs:
 ```
