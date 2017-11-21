@@ -98,25 +98,8 @@ pip install virtualenvwrapper-win
 
 ## Création d'env pour un projet
 
-### : façon 1
 
-```
-mkvirtualenv myproject
-```
-
-ou
-
-```
-mkvirtualenv path\myproject
-```
-
-Pour travailler dans un venv, une fois dans le dossier du projet (cmd):
-
-```
-workon myproject
-```
-
-### Façon 2
+### Windows
 
 Une façon commune de nommer l'environement virtuel est `venv`
 
@@ -131,6 +114,24 @@ venv\Scripts\activate
 ```
 
 Pour le stopper:
+
+```
+deactivate
+```
+
+### Linux
+
+Création:
+```
+virtualenv venv
+```
+
+Activer:
+```
+source venv/bin/activate
+```
+
+Desactiver:
 
 ```
 deactivate
