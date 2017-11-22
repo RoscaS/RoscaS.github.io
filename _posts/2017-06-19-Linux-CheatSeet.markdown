@@ -30,7 +30,7 @@ Telecharger le driver via le gestionnaire de package synaptic.
 ```
 synclient VertScrollDelta=-50
 synclient HorizScrollDelta=-100
-
+```
 
 ## Carte son
 Si le driver saute lors de switchs entre OSs:
