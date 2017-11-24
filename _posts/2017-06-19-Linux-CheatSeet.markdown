@@ -90,6 +90,9 @@ Change
 * `ipcalc` `ip` `-s` SR1 SR2 SR3 $ \Rightarrow $ subnet calculatord
 * `which` _make_ $ \Rightarrow $ vérifie présence de make sur la machine
 
+# DPI
+
+* dConf Editor
 
 # find
 
