@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Py: Théorie"
+title: "Web: Théorie"
 subtitle: "Overview"
 date: 2017-11-25
 author: Sol
-category: Py
+category: Web
 tags: 
 finished: false
 mathjax: true
