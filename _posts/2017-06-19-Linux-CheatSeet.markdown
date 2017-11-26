@@ -83,6 +83,13 @@ To go back to zsh:
 chsh -s /bin/zsh
 ```
 
+# FishShell
+ * `fish_config`: customize
+
+ ## Oh-my-fish (OMF)
+ 
+
+
 
 # General
 
