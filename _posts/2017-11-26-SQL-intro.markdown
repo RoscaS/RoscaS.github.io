@@ -14,7 +14,10 @@ mathjax: true
 
 * Base de données: Contient de l'information (des données)
 * Querying: Lire de l'information dans une DB
+* CRUD: (Create, Read, Update, Delete)
 * SQL (Structured Query Language): **Langage** qui permet de communiquer avec les BD
+* DML (Data Manipulation Language): Sous ensemble du langage SQL qui gère les oppérations CRUD
+* ORM: Abstraction des opérations CRUD qui permet d'utiliser ces dernières dans un autre language qu'SQL
 
 # SQL
 
@@ -29,9 +32,11 @@ De nombreux **types** de BD utilisent utilisent le langage SQL:
 
 Ces BD peuvent donc être lues (Query) en via le langage SQL.
 
-# Cheat-Sheet
+# CRUD SQL Syntax
 
-## Retourner toutes les colones et lignes `*`
+## 1.Read (Query)
+
+### Retourner toutes les colones et lignes `*`
 ```
 SELECT * FROM <table name>;
 ```
@@ -46,9 +51,9 @@ SELECT * FROM users;
 SELECT * FROM countries;
 ```
 
-## Retourner des colones spécifiques
+### Retourner des colones spécifiques
 
-### Une colone
+#### Une colone
 ```
 SELECT <column name> FROM <table name>;
 ```
@@ -60,7 +65,7 @@ SELECT name FROM products;
 SELECT zip_code FROM addresses;
 ```
 
-### Plusieurs colones
+#### Plusieurs colones
 
 ```
 SELECT <column name 1>, <column name 2>, ... FROM <table name>;
@@ -73,7 +78,7 @@ SELECT title, author, isbn, year_released FROM books;
 SELECT name, species, legs FROM pets;
 ```
 
-## Aliasing 
+### Aliasing 
 
 ```
 SELECT <column name> AS <alias> FROM <table name>;
@@ -90,13 +95,13 @@ SELECT name Name, description Description, price "Current Price" FROM products;
 Les `""` sont spécifiques à certaines bases de données. Dans certains cas on peut avoir des `''` ou des `[]` ...
 De plus, il ne sont nécéssaires que si notre alias est composé de plusieurs mots.
 
-## Comparaisons
+### Comparaisons
 
 ```
 SELECT <columns> FROM <table> WHERE <condition>;
 ```
 
-### Egalité `=`
+#### Egalité `=`
 
 ```
 SELECT <columns> FROM <table> WHERE <column name> = <value>;
@@ -109,7 +114,7 @@ SELECT name AS "Product Name" FROM products WHERE stock_count = 0;
 SELECT title "Book Title" FROM books WHERE year_published = 1999;
 ```
 
-### Inégalité `!=` ou `<>`
+#### Inégalité `!=` ou `<>`
 
 Note: l'opérateur `<>` n'est pas commun.
 
@@ -125,7 +130,7 @@ SELECT name AS "Product Name" FROM products WHERE stock_count != 0;
 SELECT title "Book Title" FROM books WHERE year_published != 2015;
 ```
 
-### Opérateurs relationnels `<`, `<=`, `>`, `>=`
+#### Opérateurs relationnels `<`, `<=`, `>`, `>=`
 
 Principalement utilisés pour comparer des dates/heures ou des valeurs numériques
 
@@ -143,7 +148,7 @@ SELECT name, description FROM products WHERE price > 9.99;
 SELECT title FROM movies WHERE release_year >= 2000;
 ```
 
-## Plusieurs conditions
+### Plusieurs conditions
 
 ```
 SELECT <columns> FROM <table> WHERE <condition 1> AND <condition 2> ...;
@@ -157,7 +162,7 @@ SELECT * FROM movies WHERE title = "The Matrix" OR title = "The Matrix Reloaded"
 SELECT country FROM countries WHERE population < 1000000 OR population > 100000000;
 ```
 
-## Recherche dans un set de valeurs `IN` et `NOT IN`
+### Recherche dans un set de valeurs `IN` et `NOT IN`
 
 ```
 SELECT <columns> FROM <table> WHERE <column> IN (<value1>, <value2>, ...);
@@ -175,7 +180,7 @@ SELECT * FROM products WHERE category NOT IN ("Electronics");
 SELECT title FROM courses WHERE topic NOT IN ("SQL", "NoSQL");
 ```
 
-## Recherche dans une plage de valeurs `BETWEEN`
+### Recherche dans une plage de valeurs `BETWEEN`
 
 ```
 SELECT <columns> FROM <table> WHERE <column> BETWEEN <lesser value> AND <greater value>;
@@ -187,7 +192,7 @@ SELECT name, description FROM products WHERE price BETWEEN 9.99 AND 19.99;
 SELECT name, appointment_date FROM appointments WHERE appointment_date BETWEEN "2015-01-01" AND "2015-01-07";
 ```
 
-## Pattern Matching `%` - `LIKE`
+### Pattern Matching `%` - `LIKE`
 Dans une string précédée de `LIKE`, si on utilise le symbole `%`, il substitue un nombre indéfini de caractères (incluant 0).
 
 ```
@@ -201,7 +206,7 @@ SELECT * FROM contacts WHERE first_name LIKE "%drew";
 SELECT * FROM books WHERE title LIKE "%Brief History";
 ```
 
-## Valeurs absentes `IS NULL`
+### Valeurs absentes `IS NULL`
 
 ```
 SELECT * FROM <table> WHERE <column> IS NULL;
@@ -224,7 +229,7 @@ SELECT * FROM people WHERE email IS NOT NULL;
 SELECT * FROM addresses WHERE zip_code IS NOT NULL;
 ```
 
-## Join tables
+### Join tables
 
 Query deux tables à la fois et retourner des valeurs des deux: 
 
@@ -237,3 +242,128 @@ SELECT * FROM <table 1>, <table 2>
 SELECT * FROM loans, books
     WHERE loans.book_id = books.id;
 ```
+---
+
+## 2. Create (Création de ligne(s))
+
+### Ajouter des Lignes à une table
+
+Table `users`: colones: `id`, `first_name`, `last_name`, `username`
+
+#### Ajouter **une** Ligne à une table
+
+```
+INSERT INTO <table> VALUE (<value1>, <value2>, ...);
+```
+Cela va ajouter les valeurs dans l'ordre des colonnes de la table. 
+
+```sql
+INSERT INTO users VALUES (1, "Rosca", "Sol", "Roscas");
+```
+
+#### Ajouter **une** Ligne avec les valeurs dans n'importe quel ordre dans une table
+
+```
+INSERT INTO <table> (<column 1>, <column 2>) VALUES (<value 1>, <value2>);
+INSERT INTO <table> (<column 2>, <column 1>) VALUES (<value 2>, <value 1>);
+```
+
+```sql
+INSERT INTO users (username, first_name, last_name) VALUES ("Roscas", "Rosca", "Sol");
+```
+
+#### Ajouter **plusieurs** Lignes à une table
+
+```
+INSERT INTO <table> (<column 1>, <column 2>, ...)
+    VALUES
+                    (<value 1>, <value 2>, ...),
+                    (<value 1>, <value 2>, ...),
+                    (<value 1>, <value 2>, ...);
+```
+
+```sql
+INSERT INTO users (username, first_name, last_name)
+    VALUES
+                    ("LeTerrible", "Redoute", "Maxime"),
+                    ("Shtefouille", "Furrer", "Stephanie");
+```
+
+## 3. Update
+### MAJ de toute une colonne
+
+Toutes les valeurs pour une certaine colone se voient attribuées une valeur spécifique.
+
+```
+UPDATE <table> SET <column> = <value>;
+```
+
+**Ici, le signe `=` est une assignation**
+
+```sql
+UPDATE books SET eta = "missing";
+UPDATE products SET price = 2.99;
+```
+
+### MAJ d'une colone de certaines Lignes
+
+```
+UPDATE <table> SET <column> = <value> WHERE <condition>;
+```
+
+```sql
+UPDATE users SET username = "Predat0r" WHERE id = 3;
+UPDATE books set title = "3mm4" where title = "Emma";
+```
+
+### MAJ de plusieurs colones de certaines lignes
+
+```
+UPDATE <table> SET <column 1> = <value 1>, <column 2> = <value 2> WHERE <condition>;
+```
+
+```sql
+UPDATE users SET city = "Nivelles", num = 51 WHERE id = 329;
+UPDATE products SET eta = "SOLD OUT", availability = "In 1 Week" WHERE stock = 0; 
+```
+
+## 4. Delete
+
+### Supression toutes les données
+
+```
+DELETE FROM <table>;
+```
+
+```sql
+DELETE FROM users;
+```
+
+### Supression de lignes spécifiques
+
+```
+DELETE FROM <table> WHERE <condition>;
+```
+
+```sql
+DELETE FROM users WHERE email = "sol.rosca@poule.com";
+DELETE FROM products WHERE sotck = 0;
+```
+
+## 5. Transactions
+
+### Définitions
+ 
+* autocommit: Chaque déclaration est appliquée sur les données
+* Seeding: Population d'une base base de donnée pour la première fois
+* Script: Par opposition à entrer des commandes les unes après les autres dans un terminal
+
+### Commandes
+
+* `BEGIN TRANSACTION;`: Switch autocommit off and begin transaction
+* `BEGIN;`: Equivalent au précédent
+* `COMMIT;`: Appliquer les déclarations de la transaction aux données et switch autocommit on
+* `ROLLBACK;`: Reset la base de données à son état précédant la transaction
+
+
+
