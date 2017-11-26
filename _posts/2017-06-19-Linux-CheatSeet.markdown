@@ -64,6 +64,25 @@ sudo nano /etc/default/tlp
 Change
 `TLP_ENABLE=1` to `TLP_ENABLE=0`
 
+# Defaulting different shell
+
+First find the path to the fish shell:
+```
+$ which fish
+/usr/bin/fish
+```
+
+Next, we can change the shell by typing:
+```
+$ chsh -s /usr/bin/fish
+```
+We will be asked for our password to confirm. Once this is complete, every time we login, we'll have a fish prompt.
+
+To go back to zsh:
+```
+chsh -s /bin/zsh
+```
+
 
 # General
 
