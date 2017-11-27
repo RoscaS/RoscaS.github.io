@@ -242,6 +242,29 @@ SELECT * FROM <table 1>, <table 2>
 SELECT * FROM loans, books
     WHERE loans.book_id = books.id;
 ```
+
+### Fonctions
+
+Fonction | Retoune 
+---------|----------
+ `AVG()` | moyenne d'une colonne | 
+ `COUNT()` | nombre d'enregistrements d'une colonne | 
+ `MAX()` | valeur la plus haute d'une colonne | 
+ `MIN()` | valeur la plus petite d'une colonne | 
+ `SUM()` | somme des valeurs d'une colonne | 
+
+```
+SELECT <function>(<column>) FROM <table>;
+```
+
+```sql
+SELECT avg(age) FROM population;
+SELECT max(age) FROM population;
+SELECT min(age) FROM population;
+SELECT sum(age) FROM population;
+SELECT count(city) FROM population;
+```
+
 ---
 
 ## 2. Create (Création de ligne(s))
