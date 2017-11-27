@@ -82,10 +82,30 @@ Il existe 3 types de relations entre tables d'une BDD:
 2. One to many
 3. Many to many
 
-One to many est la relation la plus courante. Ce type de relation veut dire qu'un enregistrement dans une table peut référencer de nombreuses autres dans la seconde table (mais pas le contraire!).
+## One to many
+C'est la relation la plus courante. Ce type de relation veut dire qu'un enregistrement dans une table peut référencer de nombreuses autres dans la seconde table (mais pas le contraire!).
 * **one** est contenu dans la table qui contient la **PK** de la relation
 * **many** sont contenu dans la table qui contient la **FK** de la relation
 
 <img src="/00illustrations/RDB/oneToMany01.png" align="" height="size">
 
-> Dans cette illustration, la table **Product** une collonne `ProductID` qui a une contrainte **PK**
+> Dans cette illustration, la table **Product** a une collonne `ProductID` a qui est appliqué une contrainte **PK**. Les champs de cette collonne sont chacuns référencés par plusieurs enregistrements dans la table **Sales** via les champs de la collonne `ProductID`.
+
+## One to One
+Bien moins courante, cette relation est principalement utilisée pour étendre une table qui n'est pas éditable pour une raison ou pour une autre:
+
+<img src="/00illustrations/RDB/oneOne01.png" align="" height="size">
+
+> Dans cette illustration, nous constatons que les champs des deux colonnes `ID` n'apparaissent qu'une fois dans chaque table. Si nous appliquons une contrainte PK à la colonne `ID` de **Customer_Extension** et que nous la lions via une contrainte FK à la colonne `ID` de la table **Customer**, ces deux tables se comporteront comme une unique table qui est la fusion des deux.
+
+## Many to Many
+
+N'existe pas en tant que tel, c'est 2 relations One to many qui via une 3e table dite "de jonction" relie 2 autres tables.
+
+<img src="/00illustrations/RDB/manyMany01.png" align="" height="size">
+
+> La table `Order` est composée de plusieurs enregistrements de la table `Part` et un enregistrement de la table `Part` peut être dans plusieurs enregistrements de la table `Order`. Il est difficile de lier ces deux tables du a la difficulté de choisir quelle table contiendra la FK sans créer de doublons.
+
+<img src="/00illustrations/RDB/manyMany02.png" align="" height="size">
+
+> La création d'une table de jonction qui contient les `PartID` de chaque table nous permet de résoudre ce problème en créant deux relations One to one. On note que ce cas est une illustration d'un PK multi-colonnes.
