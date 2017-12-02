@@ -16,6 +16,11 @@ $using\; colleagues. \; They \; often \; spend \; a \; lot \; more$
 $time \; fixing \; things \; or \; finding \; out \; how \; to $
 $fix \; things. $
 
+# Fish shell
+
+* `fish_update_completions`: scan les habitudes d'écriture
+* omf init.fish file: `/home/XXX/.local/share/omf`
+
 
 # Specifique au Dell xps 13 9343
 
