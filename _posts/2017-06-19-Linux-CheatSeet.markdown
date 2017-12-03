@@ -82,9 +82,9 @@ To go back to zsh:
 chsh -s /bin/zsh
 ```
 
-# FishShell
-
 # Fish shell
+
+* [Tutorial](https://fishshell.com/docs/current/tutorial.html)
 
 * `fish_update_completions`: scan les habitudes d'écriture
 * omf init.fish file: `/home/XXX/.local/share/omf`
