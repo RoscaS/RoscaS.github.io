@@ -91,7 +91,32 @@ chsh -s /bin/zsh
 # FishShell
  * `fish_config`: customize
 
- ## Oh-my-fish (OMF)
+## Oh-my-fish (OMF)
+
+* Install:
+```
+curl -L https://get.oh-my.fish | fish
+```
+
+* Theme bobthefish:
+```
+omf install bobthefish
+```
+
+* In settings: `/home/uname/.config/fish/functions/fish_prompt.fish`
+
+```
+set -g theme_newline_cursor yes
+set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+set -g theme_display_user yes
+set -g theme_color_scheme solarized
+set -g fish_prompt_pwd_dir_length 3
+
+function fish_right_prompt
+
+end
+```
+
  
 
 
