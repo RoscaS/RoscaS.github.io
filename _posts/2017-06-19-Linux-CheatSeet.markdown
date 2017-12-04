@@ -24,6 +24,10 @@ Telecharger le driver via le gestionnaire de package synaptic.
  Network controller: Broadcom Limited BCM4352 802.11ac
 ```
 
+## Hibernate on lid close
+*[systemctl](http://tipsonubuntu.com/2017/04/13/shutdown-hibernate-ubuntu-17-04-lid-closed/)
+
+
 ## Scroll speed
 
 ```
