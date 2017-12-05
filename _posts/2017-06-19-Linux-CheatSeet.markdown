@@ -24,6 +24,20 @@ Telecharger le driver via le gestionnaire de package synaptic.
  Network controller: Broadcom Limited BCM4352 802.11ac
 ```
 
+#### Connexion drop fix
+
+In `/etc/NetworkManager/NetworkManager.conf`
+
+add:
+```
+[device]
+wifi.scan-rand-mac=address=no
+```
+
+and then `sudo service network-manager restart`
+
+If the issue start again, we can comment both lines in NetworkManager.conf, restart the NetworkManager and then add them again...
+
 ## Hibernate on lid close
 *[systemctl](http://tipsonubuntu.com/2017/04/13/shutdown-hibernate-ubuntu-17-04-lid-closed/)
 
