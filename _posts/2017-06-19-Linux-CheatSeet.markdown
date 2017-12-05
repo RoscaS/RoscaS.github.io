@@ -28,6 +28,11 @@ Telecharger le driver via le gestionnaire de package synaptic.
 *[systemctl](http://tipsonubuntu.com/2017/04/13/shutdown-hibernate-ubuntu-17-04-lid-closed/)
 
 
+## External screen flickering
+
+*[This!](https://aboutsimon.com/blog/2016/07/20/Ubuntu-16.04-external-monitor-flickering-and-turning-off-on-intel-i915.html)
+
+
 ## Scroll speed
 
 ```
