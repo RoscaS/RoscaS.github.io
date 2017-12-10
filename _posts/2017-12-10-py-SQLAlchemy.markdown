@@ -9,6 +9,36 @@ tags: SQL, db, database
 finished: false
 mathjax: true
 ---
+## Database migration with Flask-Migrate
+
+Flask migrate permet de traquer les changements faits aux bases de données. Entre autres il est particulièrement utile pour ajouter des colones à une table. Le workflow est le suivant:
+
+* Création d'une base de donnée
+* Initialisation du fichier qui contient les scripts de migration
+* Commit initial de la base de données et début du tracking des modifications
+* Modification des tables
+* Mise à jour de la base de données
+    * Création des nouvelles tables
+    * Import des données contenues dans les anciennes tables 
+
+Créer le fichier qui contient les scripts de migration:
+
+```
+python manage.py db init
+```
+
+Une fois des changements faits dans les classes qui représentent les tables:
+
+```
+python manage.py db migrate -m"explication"
+```
+
+Pour appliquer les changements à la current DB:
+
+```
+pyhton manage.py db upgrade
+```
+
 
 ## Advanced Database Relationship
 
