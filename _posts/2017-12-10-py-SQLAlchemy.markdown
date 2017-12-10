@@ -38,9 +38,6 @@ direction to obtain all the classes associated with the registrations retrieved 
 dent. Likewise, to find all the students in a class, you start from the class and get a list
 of registrations, then get the students linked to those registrations.
 
-<br>
-<br>
-
 Traversing two relationships to obtain query results sounds difficult, but for a simple
 relationship like the one in the previous example, SQLAlchemy does most of the work.
 Following is the code that represents the many-to-many relationship in
