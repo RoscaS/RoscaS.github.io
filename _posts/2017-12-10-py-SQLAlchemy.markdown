@@ -173,7 +173,7 @@ id | author_id | body
  3 | 3         | Blog post by david
  4 | 1         | Second blog post by john
 
- La table suivante montre qui follow qui. On peut y voir que _john_ follow _david_, _susan_ follow _john_ et _david_ de follow personne:
+ La table suivante montre qui follow qui. On peut y voir que _john_ follow _david_, _susan_ follow _john_ et david. _david_  ne follow personne:
 
  `follows table`
 
@@ -181,6 +181,39 @@ id | author_id | body
 ---|--------
  1 | 3
  2 | 1
- 3 | 3
+ 2 | 3
 
- Pour obtenir la liste de posts 
+ Pour obtenir la liste de posts follwed par l'utilisateur _susan_, les tables `posts` et `follows` douvent être combinées.
+
+ Premièrement, la table `follows` est filtrée pour n'en garder que les lignes qui ont _susan_ comme follower, qui dans cet exemple sont les deux dernières lignes. Ensuite une table temporaire est créée pour toutes les combinaisons possibles de lignes dans `posts` et la version filtrée de `follows` en ne gardant que les posts qui apparaissent dans la liste d'users que _susan_ follow. La table suivante montre le résulat de l'opération `join`. Les colones utilisées pour effectuer le `join` sont marquées avec un `*`
+
+
+ id | author\_id* | body | follower\_id | followed_id*
+---|-------------|------|----------------|-------
+ 2 | 1           | Blog post by susan |  2     | 1
+ 3 | 3           | Blog post by david |  2     | 3
+ 4 | 1           | Second blog post by john | 2 | 1
+
+ Cette table contient donc uniquement les posts écrits (**authored**) par les users que _susan_ suit. Le query Flask-SQLAlchemy qui execute ce join mot à mot tel que décrit précédament est relativement complexe:
+
+ ```py
+return db.session.query(Post).select_from(Follow). \
+    filter_by(followers_id=self.if). \
+    join(Post, Follow.followed_id == Post.author_id)
+ ```
+
+ Contrairement aux requètes simples habituelles qui commencent par query l'atribut du model qui est query, le format que nous utilisons ici ne s'y prète pas. Ce query a besoin de retourner les lignes de `posts` mais la première opération qui doit être faite est l'application d'un filtre à la table `follows`.
+
+ * `db.session.query(Post)` spécifie qu'il s'agit d'un query qui retournera des objets de type `Post`
+ * `select_from(Follows)` dit que ce query commence dans `Follow`
+ * `filter_by(follower_id=self.id)` effectue le filtrage de la table `follows` par l'utilisateur qui `follow`.
+ * `join(Post, Follow.followed_id == Post.author_id)` join les résultats de `filter_by()` avec les objets `Post`
+
+ Le query peut être simplifié en échangeant filtre avec join:
+
+ ```py
+return Post.query.join(Follow, Follow.followed_id == Post.author_id) \
+.filter(Follow.follower_id == self.id)
+ ```
+
+ En débutant avec l'opération join, le query peut commencer à `Post.query` et donc maintenant les deux filtres qu'il reste à appliquer sont `join()` et `filtre()`. Cette opération est équivalente à la précédente.
