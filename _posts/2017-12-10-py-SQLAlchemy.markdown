@@ -42,7 +42,8 @@ pyhton manage.py db upgrade
 
 ## Advanced Database Relationship
 
-### Many to many (with association table) with SQLAlchemy
+### Many to many (with association table)
+
 Consider the classical example of a many-to-many relationship: a database of students
 and the classes they are taking. Clearly, you can’t add a foreign key to a class in the
 students table, because a student takes many classes—one foreign key is not enough.
@@ -125,7 +126,39 @@ If student s later decides to drop class c , you can update the database as foll
 >>> s.classes.remove(c)
 ```
 
-### Self-Referential Many-to_Many Relationship
+### Database representation of Comments
+
+<br>
+<img src="/00illustrations/SQLAlchemy/comments.png" align="" height="160">
+<br>
+
+Un commentaire est lié à un poste spécifique et correspond à la relation "One-to-many" à partir de la table `posts`. Un poste a (peut avoir) de nombreux commentaires. Cette relation peut être utilisée pour obtenir la liste des commentaires associés à un poste en particulier.
+
+La table `comments` a également une relation "One-to-many" avec la table `users`. Cette relation donne acces à tous les commentaires faits par un utilisateur et indirectement au nombre de commentaires faits par un utilisateur, une information interessante à montrer dans le profile utilisateur. Le snipet suivant montre l'implémentation de la table comments avec SQLAlchemy:
+
+```py
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id        = db.Column(db.Integer, primary_key=True)
+    body      = db.Column(db.Text)
+    body_html = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    disabled  = db.Column(db.Boolean)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id   = db.Column(db.Integer, db.ForeignKey('posts.id'))
+
+    @staticmethod
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 
+                        'code', 'em', 'i', 'strong']
+        target.body_html = beach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+db.event.listen(Comment.body, 'set', Comment.on_changed_body)
+```
+
+### Self-Referential Many-to-Many Relationship
 A many-to-many relationship can be used to model users following other users, but
 there is a problem. In the example of students and classes, there were two very clearly
 defined entities linked together by the association table. However, to represent users
@@ -202,7 +235,7 @@ return db.session.query(Post).select_from(Follow). \
     join(Post, Follow.followed_id == Post.author_id)
  ```
 
- Contrairement aux requètes simples habituelles qui commencent par query l'atribut du model qui est query, le format que nous utilisons ici ne s'y prète pas. Ce query a besoin de retourner les lignes de `posts` mais la première opération qui doit être faite est l'application d'un filtre à la table `follows`.
+ Contrairement aux requètes habituelles qui commencent par query l'atribut du model qui est query, le format que nous utilisons ici ne s'y prète pas. Ce query a besoin de retourner les lignes de `posts` mais la première opération qui doit être faite est l'application d'un filtre à la table `follows`.
 
  * `db.session.query(Post)` spécifie qu'il s'agit d'un query qui retournera des objets de type `Post`
  * `select_from(Follows)` dit que ce query commence dans `Follow`
@@ -217,3 +250,5 @@ return Post.query.join(Follow, Follow.followed_id == Post.author_id) \
  ```
 
  En débutant avec l'opération join, le query peut commencer à `Post.query` et donc maintenant les deux filtres qu'il reste à appliquer sont `join()` et `filtre()`. Cette opération est équivalente à la précédente.
+
+ 

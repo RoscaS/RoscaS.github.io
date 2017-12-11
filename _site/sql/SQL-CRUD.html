@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/sql/SQL-CRUD.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SQL: 1 CRUD Cheat-Sheet</title>
+  <meta name="description" content="Jargon">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">SQL: 1 CRUD Cheat-Sheet</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="26 Nov 2017" itemprop="datePublished">Nov 26 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p></p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="jargon">Jargon</h1>
+
+<ul>
+  <li>Base de données: Contient de l’information (des données)</li>
+  <li>Querying: Lire de l’information dans une DB</li>
+  <li>CRUD: (Create, Read, Update, Delete)</li>
+  <li>SQL (Structured Query Language): <strong>Langage</strong> qui permet de communiquer avec les BD</li>
+  <li>DML (Data Manipulation Language): Sous ensemble du langage SQL qui gère les oppérations CRUD</li>
+  <li>ORM: Abstraction des opérations CRUD qui permet d’utiliser ces dernières dans un autre language qu’SQL</li>
+</ul>
+
+<h1 id="sql">SQL</h1>
+
+<blockquote>
+  <p>Peut se pronnoncer SQL ou “Cquel”</p>
+</blockquote>
+
+<p>De nombreux <strong>types</strong> de BD utilisent utilisent le langage SQL:</p>
+<ul>
+  <li>MySQL</li>
+  <li>PostgreSQL</li>
+  <li>Microsoft SQL ($\neq$ MS Acces)</li>
+  <li>Oracle</li>
+  <li>SQLite</li>
+</ul>
+
+<p>Ces BD peuvent donc être lues (Query) en via le langage SQL.</p>
+
+<h1 id="crud-sql-syntax">CRUD SQL Syntax</h1>
+
+<h2 id="1read-query">1.Read (Query)</h2>
+
+<h3 id="retourner-toutes-les-colones-et-lignes-">Retourner toutes les colones et lignes <code class="highlighter-rouge">*</code></h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * FROM &lt;table name&gt;;
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">*</code> veut dire <strong>toutes les colones</strong></li>
+  <li><code class="highlighter-rouge">;</code> termine une déclaration</li>
+</ul>
+
+<pre><code class="language-SQL">SELECT * FROM books;
+SELECT * FROM products;
+SELECT * FROM users;
+SELECT * FROM countries;
+</code></pre>
+
+<h3 id="retourner-des-colones-spécifiques">Retourner des colones spécifiques</h3>
+
+<h4 id="une-colone">Une colone</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;column name&gt; FROM &lt;table name&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">first_name</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">zip_code</span> <span class="k">FROM</span> <span class="n">addresses</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h4 id="plusieurs-colones">Plusieurs colones</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;column name 1&gt;, &lt;column name 2&gt;, ... FROM &lt;table name&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span> <span class="k">FROM</span> <span class="n">customers</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">price</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">isbn</span><span class="p">,</span> <span class="n">year_released</span> <span class="k">FROM</span> <span class="n">books</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">legs</span> <span class="k">FROM</span> <span class="n">pets</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="aliasing">Aliasing</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;column name&gt; AS &lt;alias&gt; FROM &lt;table name&gt;;
+SELECT &lt;column name&gt; &lt;alias&gt; FROM &lt;table name&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">username</span> <span class="k">AS</span> <span class="n">Username</span><span class="p">,</span> <span class="n">first_name</span> <span class="k">AS</span> <span class="nv">"First Name"</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="k">AS</span> <span class="n">Title</span><span class="p">,</span> <span class="k">year</span> <span class="k">AS</span> <span class="nv">"Year Released"</span> <span class="k">FROM</span> <span class="n">movies</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">AS</span> <span class="n">Name</span><span class="p">,</span> <span class="n">description</span> <span class="k">AS</span> <span class="n">Description</span><span class="p">,</span> <span class="n">price</span> <span class="k">AS</span> <span class="nv">"Current Price"</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="n">Name</span><span class="p">,</span> <span class="n">description</span> <span class="n">Description</span><span class="p">,</span> <span class="n">price</span> <span class="nv">"Current Price"</span> <span class="k">FROM</span> <span class="n">products</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>Les <code class="highlighter-rouge">""</code> sont spécifiques à certaines bases de données. Dans certains cas on peut avoir des <code class="highlighter-rouge">''</code> ou des <code class="highlighter-rouge">[]</code> …
+De plus, il ne sont nécéssaires que si notre alias est composé de plusieurs mots.</p>
+
+<h3 id="comparaisons">Comparaisons</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;condition&gt;;
+</code></pre>
+</div>
+
+<h4 id="egalité-">Egalité <code class="highlighter-rouge">=</code></h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; = &lt;value&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">contacts</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">=</span> <span class="nv">"Andrew"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="nv">"Chalkley"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">AS</span> <span class="nv">"Product Name"</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">stock_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="nv">"Book Title"</span> <span class="k">FROM</span> <span class="n">books</span> <span class="k">WHERE</span> <span class="n">year_published</span> <span class="o">=</span> <span class="mi">1999</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h4 id="inégalité--ou-">Inégalité <code class="highlighter-rouge">!=</code> ou <code class="highlighter-rouge">&lt;&gt;</code></h4>
+
+<p>Note: l’opérateur <code class="highlighter-rouge">&lt;&gt;</code> n’est pas commun.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; != &lt;value&gt;;
+SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; &lt;&gt; &lt;value&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">contacts</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="o">!=</span> <span class="nv">"Kenneth"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">&lt;&gt;</span> <span class="nv">"Smith"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span> <span class="k">AS</span> <span class="nv">"Product Name"</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">stock_count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="nv">"Book Title"</span> <span class="k">FROM</span> <span class="n">books</span> <span class="k">WHERE</span> <span class="n">year_published</span> <span class="o">!=</span> <span class="mi">2015</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h4 id="opérateurs-relationnels----">Opérateurs relationnels <code class="highlighter-rouge">&lt;</code>, <code class="highlighter-rouge">&lt;=</code>, <code class="highlighter-rouge">&gt;</code>, <code class="highlighter-rouge">&gt;=</code></h4>
+
+<p>Principalement utilisés pour comparer des dates/heures ou des valeurs numériques</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; &lt; &lt;value&gt;;
+SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; &lt;= &lt;value&gt;;
+SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; &gt; &lt;value&gt;;
+SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column name&gt; &gt;= &lt;value&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">date_of_birth</span> <span class="o">&lt;</span> <span class="s1">'1998-12-01'</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="k">AS</span> <span class="nv">"Book Title"</span><span class="p">,</span> <span class="n">author</span> <span class="k">AS</span> <span class="n">Author</span> <span class="k">FROM</span> <span class="n">books</span> <span class="k">WHERE</span> <span class="n">year_released</span> <span class="o">&lt;=</span> <span class="mi">2015</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">price</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">.</span><span class="mi">99</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">movies</span> <span class="k">WHERE</span> <span class="n">release_year</span> <span class="o">&gt;=</span> <span class="mi">2000</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="plusieurs-conditions">Plusieurs conditions</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;condition 1&gt; AND &lt;condition 2&gt; ...;
+SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;condition 1&gt; OR &lt;condition 2&gt; ...;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">username</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="nv">"Chalkley"</span> <span class="k">AND</span> <span class="n">first_name</span> <span class="o">=</span> <span class="nv">"Andrew"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">category</span> <span class="o">=</span> <span class="nv">"Games Consoles"</span> <span class="k">AND</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="mi">400</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">movies</span> <span class="k">WHERE</span> <span class="n">title</span> <span class="o">=</span> <span class="nv">"The Matrix"</span> <span class="k">OR</span> <span class="n">title</span> <span class="o">=</span> <span class="nv">"The Matrix Reloaded"</span> <span class="k">OR</span> <span class="n">title</span> <span class="o">=</span> <span class="nv">"The Matrix Revolutions"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">country</span> <span class="k">FROM</span> <span class="n">countries</span> <span class="k">WHERE</span> <span class="n">population</span> <span class="o">&lt;</span> <span class="mi">1000000</span> <span class="k">OR</span> <span class="n">population</span> <span class="o">&gt;</span> <span class="mi">100000000</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="recherche-dans-un-set-de-valeurs-in-et-not-in">Recherche dans un set de valeurs <code class="highlighter-rouge">IN</code> et <code class="highlighter-rouge">NOT IN</code></h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column&gt; IN (&lt;value1&gt;, &lt;value2&gt;, ...);
+SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column&gt;  NOT IN (&lt;value 1&gt;, &lt;value 2&gt;, ...);
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">islands</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">category</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"eBooks"</span><span class="p">,</span> <span class="nv">"Books"</span><span class="p">,</span> <span class="nv">"Comics"</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">courses</span> <span class="k">WHERE</span> <span class="n">topic</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"JavaScript"</span><span class="p">,</span> <span class="nv">"Databases"</span><span class="p">,</span> <span class="nv">"CSS"</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">campaigns</span> <span class="k">WHERE</span> <span class="n">medium</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"email"</span><span class="p">,</span> <span class="nv">"blog"</span><span class="p">,</span> <span class="nv">"ppc"</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">answer</span> <span class="k">FROM</span> <span class="n">answers</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">category</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"Electronics"</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">courses</span> <span class="k">WHERE</span> <span class="n">topic</span> <span class="k">NOT</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"SQL"</span><span class="p">,</span> <span class="nv">"NoSQL"</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h3 id="recherche-dans-une-plage-de-valeurs-between">Recherche dans une plage de valeurs <code class="highlighter-rouge">BETWEEN</code></h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column&gt; BETWEEN &lt;lesser value&gt; AND &lt;greater value&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">movies</span> <span class="k">WHERE</span> <span class="n">release_year</span> <span class="k">BETWEEN</span> <span class="mi">2000</span> <span class="k">AND</span> <span class="mi">2010</span>
+<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">price</span> <span class="k">BETWEEN</span> <span class="mi">9</span><span class="p">.</span><span class="mi">99</span> <span class="k">AND</span> <span class="mi">19</span><span class="p">.</span><span class="mi">99</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">appointment_date</span> <span class="k">FROM</span> <span class="n">appointments</span> <span class="k">WHERE</span> <span class="n">appointment_date</span> <span class="k">BETWEEN</span> <span class="nv">"2015-01-01"</span> <span class="k">AND</span> <span class="nv">"2015-01-07"</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="pattern-matching----like">Pattern Matching <code class="highlighter-rouge">%</code> - <code class="highlighter-rouge">LIKE</code></h3>
+<p>Dans une string précédée de <code class="highlighter-rouge">LIKE</code>, si on utilise le symbole <code class="highlighter-rouge">%</code>, il substitue un nombre indéfini de caractères (incluant 0).</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;columns&gt; FROM &lt;table&gt; WHERE &lt;column&gt; LIKE &lt;pattern&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">books</span> <span class="k">WHERE</span> <span class="n">title</span> <span class="k">LIKE</span> <span class="nv">"Alien%"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">title</span> <span class="k">FROM</span> <span class="n">movies</span> <span class="k">WHERE</span> <span class="n">title</span> <span class="k">LIKE</span> <span class="nv">"Harry Potter%Fire"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">contacts</span> <span class="k">WHERE</span> <span class="n">first_name</span> <span class="k">LIKE</span> <span class="nv">"%drew"</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">books</span> <span class="k">WHERE</span> <span class="n">title</span> <span class="k">LIKE</span> <span class="nv">"%Brief History"</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="valeurs-absentes-is-null">Valeurs absentes <code class="highlighter-rouge">IS NULL</code></h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * FROM &lt;table&gt; WHERE &lt;column&gt; IS NULL;
+</code></pre>
+</div>
+
+<pre><code class="language-SQL">SELECT * FROM people WHERE last_name IS NULL;
+SELECT * FROM dvd_rentals WHERE returned_on IS NULL;
+SELECT * FROM car_rentals WHERE returned_on IS NULL and location = "Nivelles";
+</code></pre>
+
+<p>Pour filtrer les valeurs absentes on utilise <code class="highlighter-rouge">IS NOT NULL</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * FROM &lt;table&gt; WHERE &lt;column&gt; IS NOT NULL;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">people</span> <span class="k">WHERE</span> <span class="n">email</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">addresses</span> <span class="k">WHERE</span> <span class="n">zip_code</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="join-tables">Join tables</h3>
+
+<p>Query deux tables à la fois et retourner des valeurs des deux:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT * FROM &lt;table 1&gt;, &lt;table 2&gt;
+    WHERE &lt;table 1&gt;.&lt;table 1 column&gt; = &lt;table 2&gt;.&lt;table 2 column&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">loans</span><span class="p">,</span> <span class="n">books</span>
+    <span class="k">WHERE</span> <span class="n">loans</span><span class="p">.</span><span class="n">book_id</span> <span class="o">=</span> <span class="n">books</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="fonctions">Fonctions</h3>
+
+<blockquote>
+  <p><span style="color:red"> Specific to SQLite? </span></p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fonction</th>
+      <th>Retoune</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">AVG()</code></td>
+      <td>moyenne d’une colonne</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">COUNT()</code></td>
+      <td>nombre d’enregistrements d’une colonne</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">MAX()</code></td>
+      <td>valeur la plus haute d’une colonne</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">MIN()</code></td>
+      <td>valeur la plus petite d’une colonne</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">SUM()</code></td>
+      <td>somme des valeurs d’une colonne</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SELECT &lt;function&gt;(&lt;column&gt;) FROM &lt;table&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">population</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">population</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">min</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">population</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">population</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="n">city</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">population</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="2-create-création-de-lignes">2. Create (Création de ligne(s))</h2>
+
+<h3 id="ajouter-des-lignes-à-une-table">Ajouter des Lignes à une table</h3>
+
+<p>Table <code class="highlighter-rouge">users</code>: colones: <code class="highlighter-rouge">id</code>, <code class="highlighter-rouge">first_name</code>, <code class="highlighter-rouge">last_name</code>, <code class="highlighter-rouge">username</code></p>
+
+<h4 id="ajouter-une-ligne-à-une-table">Ajouter <strong>une</strong> Ligne à une table</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>INSERT INTO &lt;table&gt; VALUE (&lt;value1&gt;, &lt;value2&gt;, ...);
+</code></pre>
+</div>
+<p>Cela va ajouter les valeurs dans l’ordre des colonnes de la table.</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">"Rosca"</span><span class="p">,</span> <span class="nv">"Sol"</span><span class="p">,</span> <span class="nv">"Roscas"</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h4 id="ajouter-une-ligne-avec-les-valeurs-dans-nimporte-quel-ordre-dans-une-table">Ajouter <strong>une</strong> Ligne avec les valeurs dans n’importe quel ordre dans une table</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>INSERT INTO &lt;table&gt; (&lt;column 1&gt;, &lt;column 2&gt;) VALUES (&lt;value 1&gt;, &lt;value2&gt;);
+INSERT INTO &lt;table&gt; (&lt;column 2&gt;, &lt;column 1&gt;) VALUES (&lt;value 2&gt;, &lt;value 1&gt;);
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="nv">"Roscas"</span><span class="p">,</span> <span class="nv">"Rosca"</span><span class="p">,</span> <span class="nv">"Sol"</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<h4 id="ajouter-plusieurs-lignes-à-une-table">Ajouter <strong>plusieurs</strong> Lignes à une table</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>INSERT INTO &lt;table&gt; (&lt;column 1&gt;, &lt;column 2&gt;, ...)
+    VALUES
+                    (&lt;value 1&gt;, &lt;value 2&gt;, ...),
+                    (&lt;value 1&gt;, &lt;value 2&gt;, ...),
+                    (&lt;value 1&gt;, &lt;value 2&gt;, ...);
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">)</span>
+    <span class="k">VALUES</span>
+                    <span class="p">(</span><span class="nv">"LeTerrible"</span><span class="p">,</span> <span class="nv">"Redoute"</span><span class="p">,</span> <span class="nv">"Maxime"</span><span class="p">),</span>
+                    <span class="p">(</span><span class="nv">"Shtefouille"</span><span class="p">,</span> <span class="nv">"Furrer"</span><span class="p">,</span> <span class="nv">"Stephanie"</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="3-update">3. Update</h2>
+<h3 id="maj-de-toute-une-colonne">MAJ de toute une colonne</h3>
+
+<p>Toutes les valeurs pour une certaine colone se voient attribuées une valeur spécifique.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>UPDATE &lt;table&gt; SET &lt;column&gt; = &lt;value&gt;;
+</code></pre>
+</div>
+
+<p><strong>Ici, le signe <code class="highlighter-rouge">=</code> est une assignation</strong></p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">books</span> <span class="k">SET</span> <span class="n">eta</span> <span class="o">=</span> <span class="nv">"missing"</span><span class="p">;</span>
+<span class="k">UPDATE</span> <span class="n">products</span> <span class="k">SET</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">2</span><span class="p">.</span><span class="mi">99</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="maj-dune-colone-de-certaines-lignes">MAJ d’une colone de certaines Lignes</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>UPDATE &lt;table&gt; SET &lt;column&gt; = &lt;value&gt; WHERE &lt;condition&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">username</span> <span class="o">=</span> <span class="nv">"Predat0r"</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">UPDATE</span> <span class="n">books</span> <span class="k">set</span> <span class="n">title</span> <span class="o">=</span> <span class="nv">"3mm4"</span> <span class="k">where</span> <span class="n">title</span> <span class="o">=</span> <span class="nv">"Emma"</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="maj-de-plusieurs-colones-de-certaines-lignes">MAJ de plusieurs colones de certaines lignes</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>UPDATE &lt;table&gt; SET &lt;column 1&gt; = &lt;value 1&gt;, &lt;column 2&gt; = &lt;value 2&gt; WHERE &lt;condition&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">city</span> <span class="o">=</span> <span class="nv">"Nivelles"</span><span class="p">,</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">51</span> <span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">329</span><span class="p">;</span>
+<span class="k">UPDATE</span> <span class="n">products</span> <span class="k">SET</span> <span class="n">eta</span> <span class="o">=</span> <span class="nv">"SOLD OUT"</span><span class="p">,</span> <span class="n">availability</span> <span class="o">=</span> <span class="nv">"In 1 Week"</span> <span class="k">WHERE</span> <span class="n">stock</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="4-delete">4. Delete</h2>
+
+<h3 id="supression-toutes-les-données-dune-table">Supression toutes les données d’une table</h3>
+<p>Supprime tous les enregistrements d’une table (La table ainsi que les headers existent toujours)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DELETE FROM &lt;table&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="supression-de-lignes-spécifiques">Supression de lignes spécifiques</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DELETE FROM &lt;table&gt; WHERE &lt;condition&gt;;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">email</span> <span class="o">=</span> <span class="nv">"sol.rosca@poule.com"</span><span class="p">;</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">products</span> <span class="k">WHERE</span> <span class="n">sotck</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<h3 id="supression-dune-table">Supression d’une table</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DROP TABLE &lt;table&gt;
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">orders</span>
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="5-transactions">5. Transactions</h2>
+
+<h3 id="définitions">Définitions</h3>
+
+<ul>
+  <li>autocommit: Chaque déclaration est appliquée sur les données</li>
+  <li>Seeding: Population d’une base base de donnée pour la première fois</li>
+  <li>Script: Par opposition à entrer des commandes les unes après les autres dans un terminal</li>
+</ul>
+
+<h3 id="commandes">Commandes</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">BEGIN TRANSACTION;</code>: Switch autocommit off and begin transaction</li>
+  <li><code class="highlighter-rouge">BEGIN;</code>: Equivalent au précédent</li>
+  <li><code class="highlighter-rouge">COMMIT;</code>: Appliquer les déclarations de la transaction aux données et switch autocommit on</li>
+  <li><code class="highlighter-rouge">ROLLBACK;</code>: Reset la base de données à son état précédant la transaction</li>
+</ul>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=SQL: 1 CRUD Cheat-Sheet@&amp;url=http://localhost:4000/sql/SQL-CRUD.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/sql/SQL-CRUD.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/sql/SQL-CRUD.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

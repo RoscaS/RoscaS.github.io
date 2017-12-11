@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/py/py-SQLAlchemy.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Py: SQLAlchemy </title>
+  <meta name="description" content="Database migration with Flask-Migrate">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">Py: SQLAlchemy </div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="10 Dec 2017" itemprop="datePublished">Dec 10 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">SQL,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">db,</a>
+        	
+			<a class="post-tags-item" href="http://localhost:4000/tags/">database</a>
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p></p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h2 id="database-migration-with-flask-migrate">Database migration with Flask-Migrate</h2>
+
+<p>Flask migrate permet de traquer les changements faits aux bases de données. Entre autres il est particulièrement utile pour ajouter des colones à une table. Le workflow est le suivant:</p>
+
+<ul>
+  <li>Création d’une base de donnée</li>
+  <li>Initialisation du fichier qui contient les scripts de migration</li>
+  <li>Commit initial de la base de données et début du tracking des modifications</li>
+  <li>Modification des tables</li>
+  <li>Mise à jour de la base de données
+    <ul>
+      <li>Création des nouvelles tables</li>
+      <li>Import des données contenues dans les anciennes tables</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Créer le fichier qui contient les scripts de migration:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python manage.py db init
+</code></pre>
+</div>
+
+<p>Une fois des changements faits dans les classes qui représentent les tables:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>python manage.py db migrate -m"explication"
+</code></pre>
+</div>
+
+<p>Pour appliquer les changements à la current DB:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pyhton manage.py db upgrade
+</code></pre>
+</div>
+
+<h2 id="advanced-database-relationship">Advanced Database Relationship</h2>
+
+<h3 id="many-to-many-with-association-table-with-sqlalchemy">Many to many (with association table) with SQLAlchemy</h3>
+<p>Consider the classical example of a many-to-many relationship: a database of students
+and the classes they are taking. Clearly, you can’t add a foreign key to a class in the
+students table, because a student takes many classes—one foreign key is not enough.
+Likewise, you cannot add a foreign key to the student in the classes table, because classes
+have more than one student. Both sides need a list of foreign keys.</p>
+
+<p>The solution is to add a third table to the database, called an association table. Now the
+many-to-many relationship can be decomposed into two one-to-many relationships
+from each of the two original tables to the association table. Next picture shows how the
+many-to-many relationship between students and classes is represented.</p>
+
+<p><br />
+<img src="/00illustrations/SQLAlchemy/manytomany.png" align="" height="100" />
+<br />
+The association table in this example is called registrations . Each row in this table
+represents an individual registration of a student in a class.
+Querying a many-to-many relationship is a two-step process. To obtain the list of classes
+a student is taking, you start from the one-to-many relationship between students and
+registrations and get the list of registrations for the desired student. Then the one-to-
+many relationship between classes and registrations is traversed in the many-to-one
+direction to obtain all the classes associated with the registrations retrieved for the stu‐
+dent. Likewise, to find all the students in a class, you start from the class and get a list
+of registrations, then get the students linked to those registrations.</p>
+
+<p>Traversing two relationships to obtain query results sounds difficult, but for a simple
+relationship like the one in the previous example, SQLAlchemy does most of the work.
+Following is the code that represents the many-to-many relationship:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="n">registrations</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span><span class="s">'registrations'</span><span class="p">,</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s">'student_id'</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">'students.id'</span><span class="p">)),</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s">'class_id'</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s">'classes.id'</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">relationship</span><span class="p">(</span><span class="s">'Class'</span><span class="p">,</span>
+                              <span class="n">secondary</span><span class="o">=</span><span class="n">registrations</span><span class="p">,</span>
+                              <span class="n">backref</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">backref</span><span class="p">(</span><span class="s">'students'</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s">'dynamic'</span><span class="p">),</span>
+                              <span class="n">lazy</span><span class="o">=</span><span class="s">'dynamic'</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Class</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>The relationship is defined with the same db.relationship() construct that is used for
+one-to-many relationships, but in the case of a many-to-many relationship the addi‐
+tional secondary argument must to be set to the association table. The relationship can
+be defined in either one of the two classes, with the backref argument taking care of
+exposing the relationship from the other side as well. The association table is defined
+as a simple table, not as a model, since SQLAlchemy manages this table internally.</p>
+
+<p>The classes relationship uses list semantics, which makes working with a many-to-
+many relationships configured in this way extremely easy. Given a student s and a class
+c , the code that registers the student for the class is:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>The queries that list the classes student s is registered for and the list of students regis‐
+tered for class c are also very simple:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">students</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>The students relationship available in the Class model is the one defined in the
+db.backref() argument. Note that in this relationship the backref argument was ex‐
+panded to also have a lazy = ‘dynamic’ attribute, so both sides return a query that can
+accept additional filters.</p>
+
+<p>If student s later decides to drop class c , you can update the database as follows:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="self-referential-many-to_many-relationship">Self-Referential Many-to_Many Relationship</h3>
+<p>A many-to-many relationship can be used to model users following other users, but
+there is a problem. In the example of students and classes, there were two very clearly
+defined entities linked together by the association table. However, to represent users
+following other users, it is just users—there is no second entity.</p>
+
+<p>A relationship in which both sides belong to the same table is said to be self-
+referential. In this case the entities on the left side of the relationship are users, which
+can be called the “followers.” The entities on the right side are also users, but these are
+the “followed” users. Conceptually, self-referential relationships are no different than
+regular relationships, but they are harder to think about. Next picture shows a database
+diagram for a self-referential relationship that represents users following other users.</p>
+
+<p><br />
+<img src="/00illustrations/SQLAlchemy/selfRef.png" align="" height="250" />
+<br /></p>
+
+<p>The association table in this case is called follows . Each row in this table represents a
+user following another user. The one-to-many relationship pictured on the left side
+associates users with the list of “follows” rows in which they are the followers. The one-
+to-many relationship pictured on the right side associates users with the list of “follows”
+rows in which they are the followed user.</p>
+
+<h2 id="query-using-database-join">Query using database Join</h2>
+
+<p>Une opération <code class="highlighter-rouge">Join</code> prend au moins deux tables et trouve toutes les combinaisons de lignes qui satisfont une condition donnée. Le résultat qui est une combinaison de lignes est inséré dans <strong>une table temporaire</strong>.</p>
+
+<p>L’exemple suivant montre ce méchanisme dans le contexte de l’implémentation d’une fonctionnalité <em>follow</em>: Un user ne veut afficher que les postes des gens qu’il follow.</p>
+
+<p><code class="highlighter-rouge">users table</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>john</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>susan</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>david</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="highlighter-rouge">posts table</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>author_id</th>
+      <th>body</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>Blog post by susan</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>Blog post by john</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>Blog post by david</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>Second blog post by john</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>La table suivante montre qui follow qui. On peut y voir que <em>john</em> follow <em>david</em>, <em>susan</em> follow <em>john</em> et david. <em>david</em>  ne follow personne:</p>
+
+<p><code class="highlighter-rouge">follows table</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>follower_id</th>
+      <th>followed_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Pour obtenir la liste de posts follwed par l’utilisateur <em>susan</em>, les tables <code class="highlighter-rouge">posts</code> et <code class="highlighter-rouge">follows</code> douvent être combinées.</p>
+
+<p>Premièrement, la table <code class="highlighter-rouge">follows</code> est filtrée pour n’en garder que les lignes qui ont <em>susan</em> comme follower, qui dans cet exemple sont les deux dernières lignes. Ensuite une table temporaire est créée pour toutes les combinaisons possibles de lignes dans <code class="highlighter-rouge">posts</code> et la version filtrée de <code class="highlighter-rouge">follows</code> en ne gardant que les posts qui apparaissent dans la liste d’users que <em>susan</em> follow. La table suivante montre le résulat de l’opération <code class="highlighter-rouge">join</code>. Les colones utilisées pour effectuer le <code class="highlighter-rouge">join</code> sont marquées avec un <code class="highlighter-rouge">*</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>author_id*</th>
+      <th>body</th>
+      <th>follower_id</th>
+      <th>followed_id*</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>Blog post by susan</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>Blog post by david</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>Second blog post by john</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Cette table contient donc uniquement les posts écrits (<strong>authored</strong>) par les users que <em>susan</em> suit. Le query Flask-SQLAlchemy qui execute ce join mot à mot tel que décrit précédament est relativement complexe:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Post</span><span class="p">)</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">Follow</span><span class="p">)</span><span class="o">.</span> \
+    <span class="n">filter_by</span><span class="p">(</span><span class="n">followers_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="k">if</span><span class="p">)</span><span class="o">.</span> \
+    <span class="n">join</span><span class="p">(</span><span class="n">Post</span><span class="p">,</span> <span class="n">Follow</span><span class="o">.</span><span class="n">followed_id</span> <span class="o">==</span> <span class="n">Post</span><span class="o">.</span><span class="n">author_id</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Contrairement aux requètes habituelles qui commencent par query l’atribut du model qui est query, le format que nous utilisons ici ne s’y prète pas. Ce query a besoin de retourner les lignes de <code class="highlighter-rouge">posts</code> mais la première opération qui doit être faite est l’application d’un filtre à la table <code class="highlighter-rouge">follows</code>.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">db.session.query(Post)</code> spécifie qu’il s’agit d’un query qui retournera des objets de type <code class="highlighter-rouge">Post</code></li>
+  <li><code class="highlighter-rouge">select_from(Follows)</code> dit que ce query commence dans <code class="highlighter-rouge">Follow</code></li>
+  <li><code class="highlighter-rouge">filter_by(follower_id=self.id)</code> effectue le filtrage de la table <code class="highlighter-rouge">follows</code> par l’utilisateur qui <code class="highlighter-rouge">follow</code>.</li>
+  <li><code class="highlighter-rouge">join(Post, Follow.followed_id == Post.author_id)</code> join les résultats de <code class="highlighter-rouge">filter_by()</code> avec les objets <code class="highlighter-rouge">Post</code></li>
+</ul>
+
+<p>Le query peut être simplifié en échangeant filtre avec join:</p>
+
+<div class="language-py highlighter-rouge"><pre class="highlight"><code><span class="k">return</span> <span class="n">Post</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Follow</span><span class="p">,</span> <span class="n">Follow</span><span class="o">.</span><span class="n">followed_id</span> <span class="o">==</span> <span class="n">Post</span><span class="o">.</span><span class="n">author_id</span><span class="p">)</span> \
+<span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">Follow</span><span class="o">.</span><span class="n">follower_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="nb">id</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>En débutant avec l’opération join, le query peut commencer à <code class="highlighter-rouge">Post.query</code> et donc maintenant les deux filtres qu’il reste à appliquer sont <code class="highlighter-rouge">join()</code> et <code class="highlighter-rouge">filtre()</code>. Cette opération est équivalente à la précédente.</p>
+
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=Py: SQLAlchemy @&amp;url=http://localhost:4000/py/py-SQLAlchemy.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/py/py-SQLAlchemy.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/py/py-SQLAlchemy.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

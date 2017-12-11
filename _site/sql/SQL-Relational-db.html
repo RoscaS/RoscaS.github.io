@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://localhost:4000/sql/SQL-Relational-db.html">
+  <link rel="alternate" type="application/rss+xml" title="RoscaS" href="http://localhost:4000/feed.xml">
+
+<!-- JS -->
+  <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+  <script src="/js/mermaid.min.js"></script>
+
+</head>
+
+
+        
+          <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+  ga('create', 'UA-99742998-1', 'auto');
+  ga('send', 'pageview');
+    
+	</script>
+
+
+        
+
+        
+    </head>
+
+    <body>
+        <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SQL: 2 Base de données relationnelle</title>
+  <meta name="description" content="Base de données relationnelle">
+</head>
+
+
+        <div class="wrapper">
+            <header class="post-header">
+	
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+    <center>
+		<div class="post-title" itemprop="name headline">SQL: 2 Base de données relationnelle</div>
+
+		<div class="post-meta"><i class="fa fa-calendar-o"></i> <time datetime="26 Nov 2017" itemprop="datePublished">Nov 26 2017</time>
+
+			&nbsp;&nbsp;•&nbsp;&nbsp;<i class="fa fa-user-secret"></i> <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Sol</span>
+        	
+			<br>
+			<i class="fa fa-eye"></i> <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-pulse"></i></span>clicks</span>
+		</div>
+
+        	
+        <div class="post-tags">
+        	
+			
+		</div>
+    </center>
+
+<div class="wrapper">
+
+    <center>      
+		<p>
+			<a class="link" href="/">Home</a> /
+			<a class="link" href="/math/">Math & Physique</a> /
+			<a class="link" href="/archive/">Archive</a> /
+			<a class="link" href="/category/">Category</a> / 
+			<a class="link" href="/tags/">Tags</a> / 
+			<a class="link" href="/about/">About</a> /
+			<a class="link" href="/contact/">Contact</a>
+    	</p>
+    </center>
+</div>
+    
+</header>
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="post-content">
+    <center>
+	
+	<p></p>
+	
+    </center>
+	<h2>Directory</h2>
+</div>
+
+<div id="category"></div>
+
+<div class="post-content" itemprop="articleBody">
+    <h1 id="base-de-données-relationnelle">Base de données relationnelle</h1>
+
+<p>Façon d’optimiser l’organisation d’une base de donnée pour:</p>
+<ul>
+  <li>Maximiser l’espace disponible</li>
+  <li>Réduire la redondance des données</li>
+  <li>Empeche les anomalies de MAJ</li>
+  <li>Booster la performance des query</li>
+</ul>
+
+<h1 id="normalisation-de-base-de-donnée">Normalisation de base de donnée</h1>
+
+<p>C’est l’action d’organiser une base de données de façon relationnelle.</p>
+
+<p>L’organisation d’une base de données en <strong>tables</strong> et <strong>colonnes</strong> s’appelle <strong>normalisation</strong>. L’idée principale est qu’une table ne contient que des données concernant un sujet unique. La normlisation tente aussi de mettre en commun les données appartenant à plusieurs tables.</p>
+
+<h1 id="définitions">Définitions</h1>
+
+<ul>
+  <li><strong>Constraints</strong> (Contraintes): rêgle que la base de donnée doit suivre. Typiquement les Keys sont des contraintes appliquées sur des colonnes. Les 3 Key qui suivent sont des contraintes.</li>
+</ul>
+
+<h2 id="primary-key">Primary Key</h2>
+<p>Utilisée pour identifier un enregistrement (ligne) dans une table. Cette clé sert aussi à référencer son enregistrement dans d’autres tables ou dans le logiciel qui utilise la base de données.</p>
+
+<ul>
+  <li>Doit être unique</li>
+  <li>Ne peut pas valoir 0 (les BDD concidèrent que $0\neq0$ )</li>
+  <li>Une table ne peut en comporter qu’une seule</li>
+  <li>Toutes les tables <strong>devraient</strong> en avoir une</li>
+</ul>
+
+<h2 id="unique-key">Unique Key</h2>
+
+<p>Assure que des données ne sont pas dupliquées dans deux enregistrements distincts d’une même table. Autrement dit, les champs (colonne) qui ont une contrainte d’Unique key, doivent contenir des valeurs différentes. <strong>Une Primary key est donc par définition Unique key aussi</strong>. Mais comme il ne peut y avoir qu’une Primary key, si on veut assurer que tous les champs d’une colonne en particulier sont tous différentes, on peut appliquer plusieurs contrainte Unique Key dans la même table.</p>
+
+<blockquote>
+  <p>Il est bon de garder en tête que par défaut, de nombreuses BDD indexent et ordonnent physiquement les tables sur le disque en utilisant les valeurs de la Primary Key. Cela veut dire que query la colonne qui possède la contrainte Primary key est plus performant que de query une autre colonne.</p>
+</blockquote>
+
+<h2 id="différences-entre-pk-et-uk">Différences entre PK et UK</h2>
+
+<ul>
+  <li>
+    <p><strong>Comportement</strong>: PK est utilisée pour identifier un enregistrement (ligne) dans une table alors qu’une UK sert a empécher les doublons dans les champs d’une colonne.</p>
+  </li>
+  <li>
+    <p><strong>Valeur Null</strong>: Les PK ne peuvent pas être nulles alors que les UK peuvent.</p>
+  </li>
+  <li>
+    <p><strong>Existance</strong>: Une table peut au maximum avoir une PK mais peut avoir plusieurs UK.</p>
+  </li>
+  <li>
+    <p><strong>Modifiable</strong>: On ne peut changer ou delete la valeur d’une PK contrairement aux valeurs d’une UK.</p>
+  </li>
+</ul>
+
+<h2 id="foreign-key">Foreign Key</h2>
+
+<p>On peut voir la FK comme un pointeur ou une référence d’une table vers une autre table. C’est cette contrainte qui définit la relation entre deux tables et fait la particularité des BDD Relationnelles.</p>
+
+<p><img src="/00illustrations/RDB/fk1.png" align="" height="size" /></p>
+
+<blockquote>
+  <p>Dans cette illustration, les valeurs de la collonne <code class="highlighter-rouge">ProductID</code> dans la table <strong>Sale</strong> référencent des enregistrements dans la colonne <code class="highlighter-rouge">ProductID</code> dans la table <strong>Products</strong>.</p>
+</blockquote>
+
+<p><img src="/00illustrations/RDB/fk2.png" align="" height="size" /></p>
+
+<blockquote>
+  <p>Tous les enregistrement dont la valeur de la colonne <code class="highlighter-rouge">ProductID</code> vaut <code class="highlighter-rouge">1</code> dans <strong>Sale</strong> référencent le même enregistrement dans la table <strong>Products</strong></p>
+</blockquote>
+
+<p><strong>La colonne <code class="highlighter-rouge">ProductID</code> dans la table Sale est une Foreign Key</strong>
+<strong>La colonne <code class="highlighter-rouge">ProductID</code> dans la table Products est une Primary Key</strong></p>
+
+<h2 id="referential-integrity-aspect-primordial-des-bddr">Referential integrity (Aspect primordial des BDDR):</h2>
+
+<p>Cela veut dire que La Foreign Keys doit exister en tant que Primary Key dans la table que la Foreign key référence. Cela veut dire que sans FK Constraints, notre BDD manque d’intégrité.</p>
+
+<h1 id="relations-entre-tables">Relations entre tables.</h1>
+
+<p>Il existe 3 types de relations entre tables d’une BDD:</p>
+
+<ol>
+  <li>One to one</li>
+  <li>One to many</li>
+  <li>Many to many</li>
+</ol>
+
+<h2 id="one-to-many">One to many</h2>
+<p>C’est la relation la plus courante. Ce type de relation veut dire qu’un enregistrement dans une table peut référencer de nombreuses autres dans la seconde table (mais pas le contraire!).</p>
+<ul>
+  <li><strong>one</strong> est contenu dans la table qui contient la <strong>PK</strong> de la relation</li>
+  <li><strong>many</strong> sont contenu dans la table qui contient la <strong>FK</strong> de la relation</li>
+</ul>
+
+<p><img src="/00illustrations/RDB/oneToMany01.png" align="" height="size" /></p>
+
+<blockquote>
+  <p>Dans cette illustration, la table <strong>Product</strong> a une collonne <code class="highlighter-rouge">ProductID</code> a qui est appliqué une contrainte <strong>PK</strong>. Les champs de cette collonne sont chacuns référencés par plusieurs enregistrements dans la table <strong>Sales</strong> via les champs de la collonne <code class="highlighter-rouge">ProductID</code>.</p>
+</blockquote>
+
+<h2 id="one-to-one">One to One</h2>
+<p>Bien moins courante, cette relation est principalement utilisée pour étendre une table qui n’est pas éditable pour une raison ou pour une autre:</p>
+
+<p><img src="/00illustrations/RDB/oneOne01.png" align="" height="size" /></p>
+
+<blockquote>
+  <p>Dans cette illustration, nous constatons que les champs des deux colonnes <code class="highlighter-rouge">ID</code> n’apparaissent qu’une fois dans chaque table. Si nous appliquons une contrainte PK à la colonne <code class="highlighter-rouge">ID</code> de <strong>Customer_Extension</strong> et que nous la lions via une contrainte FK à la colonne <code class="highlighter-rouge">ID</code> de la table <strong>Customer</strong>, ces deux tables se comporteront comme une unique table qui est la fusion des deux.</p>
+</blockquote>
+
+<h2 id="many-to-many">Many to Many</h2>
+
+<p>N’existe pas en tant que tel, c’est 2 relations One to many qui via une 3e table dite “de jonction” relie 2 autres tables.</p>
+
+<p><img src="/00illustrations/RDB/manyMany01.png" align="" height="size" /></p>
+
+<blockquote>
+  <p>La table <code class="highlighter-rouge">Order</code> est composée de plusieurs enregistrements de la table <code class="highlighter-rouge">Part</code> et un enregistrement de la table <code class="highlighter-rouge">Part</code> peut être dans plusieurs enregistrements de la table <code class="highlighter-rouge">Order</code>. Il est difficile de lier ces deux tables du a la difficulté de choisir quelle table contiendra la FK sans créer de doublons.</p>
+</blockquote>
+
+<p><img src="/00illustrations/RDB/manyMany02.png" align="" height="size" /></p>
+
+<blockquote>
+  <p>La création d’une table de jonction qui contient les <code class="highlighter-rouge">PartID</code> de chaque table nous permet de résoudre ce problème en créant deux relations One to one. On note que ce cas est une illustration d’un PK multi-colonnes.</p>
+</blockquote>
+
+</div>
+
+<div>
+	
+	<div class="tbc"></div>
+	
+</div>
+
+<!--<div class="share">
+    <p>Share this post with: </p>
+	<a href="https://twitter.com/intent/tweet?text=SQL: 2 Base de données relationnelle@&amp;url=http://localhost:4000/sql/SQL-Relational-db.html" class="twitter-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/sql/SQL-Relational-db.html" class="facebook-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+    
+	<a href="https://plus.google.com/share?url=http://localhost:4000/sql/SQL-Relational-db.html" class="googleplus-share">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+		</span>
+	</a>
+</div>
+-->
+
+<div id="disqus_thread"></div>
+
+
+ 
+</div>
+
+
+</article>
+
+        </div>
+
+    </body>
+
+<footer class="site-footer">
+    <div class="wrapper">
+        <center>
+            <p>
+                <a class="link" href="/%20/">Home</a> /
+                <a class="link" href="/archive/">Archive</a> /
+                <a class="link" href="/category/">Category</a> /
+                <a class="link" href="/tags/">Tags</a> /
+                <a class="link" href="/about/">About</a> /
+                <a class="link" href="/contact/">Contact</a>
+            </p>
+            <span><script>document.write(new Date().getFullYear());</script></span>
+            <span>&copy;</span>
+
+            <a href="mailto:sol.rosca@gmail.com?subject=Hello&nbsp;RoscaS"> RoscaS</a>
+            <br>
+        </center>
+    </div>
+</footer>
+
+<foot>
+    <foot>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Derictory -->
+
+  <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+  <script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+
+<!-- Hit analytics -->
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- Directory -->
+
+<script src="/js/main.js"></script>
+
+</foot>
+
+</foot>
+
+</html>

@@ -138,6 +138,34 @@ $fix \; things. $</p>
 </code></pre>
 </div>
 
+<h4 id="connexion-drop-fix">Connexion drop fix</h4>
+
+<p>In <code class="highlighter-rouge">/etc/NetworkManager/NetworkManager.conf</code></p>
+
+<p>add:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[device]
+wifi.scan-rand-mac=address=no
+</code></pre>
+</div>
+
+<p>and then <code class="highlighter-rouge">sudo service network-manager restart</code></p>
+
+<p>If the issue start again, we can comment both lines in NetworkManager.conf, restart the NetworkManager and then add them again…</p>
+
+<h2 id="hibernate-on-lid-close">Hibernate on lid close</h2>
+<p>*<a href="http://tipsonubuntu.com/2017/04/13/shutdown-hibernate-ubuntu-17-04-lid-closed/">systemctl</a></p>
+
+<h2 id="external-screen-flickering">External screen flickering</h2>
+
+<p>*<a href="https://aboutsimon.com/blog/2016/07/20/Ubuntu-16.04-external-monitor-flickering-and-turning-off-on-intel-i915.html">This!</a></p>
+
+<h2 id="scroll-speed">Scroll speed</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>synclient VertScrollDelta=-50
+synclient HorizScrollDelta=-100
+</code></pre>
+</div>
+
 <h2 id="carte-son">Carte son</h2>
 <p>Si le driver saute lors de switchs entre OSs:</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>pulseaudio -k &amp;&amp; sudo alsa force-reload
@@ -172,6 +200,63 @@ In <strong>Window Decoration</strong>, in <strong>Decoration Windows</strong> ad
 <p>Change
 <code class="highlighter-rouge">TLP_ENABLE=1</code> to <code class="highlighter-rouge">TLP_ENABLE=0</code></p>
 
+<h1 id="defaulting-different-shell">Defaulting different shell</h1>
+
+<p>First find the path to the fish shell:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ which fish
+/usr/bin/fish
+</code></pre>
+</div>
+
+<p>Next, we can change the shell by typing:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ chsh -s /usr/bin/fish
+</code></pre>
+</div>
+<p>We will be asked for our password to confirm. Once this is complete, every time we login, we’ll have a fish prompt.</p>
+
+<p>To go back to zsh:</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>chsh -s /bin/zsh
+</code></pre>
+</div>
+
+<h1 id="fish-shell">Fish shell</h1>
+
+<ul>
+  <li>
+    <p><a href="https://fishshell.com/docs/current/tutorial.html">Tutorial</a></p>
+  </li>
+  <li><code class="highlighter-rouge">fish_update_completions</code>: scan les habitudes d’écriture</li>
+  <li>omf init.fish file: <code class="highlighter-rouge">/home/XXX/.local/share/omf</code></li>
+</ul>
+
+<h2 id="oh-my-fish-omf">Oh-my-fish (OMF)</h2>
+
+<ul>
+  <li>Install:
+    <div class="highlighter-rouge"><pre class="highlight"><code>curl -L https://get.oh-my.fish | fish
+</code></pre>
+    </div>
+  </li>
+  <li>Theme bobthefish:
+    <div class="highlighter-rouge"><pre class="highlight"><code>omf install bobthefish
+</code></pre>
+    </div>
+  </li>
+  <li>In settings: <code class="highlighter-rouge">/home/uname/.config/fish/functions/fish_prompt.fish</code></li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>set -g theme_newline_cursor yes
+set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+set -g theme_display_user yes
+set -g theme_color_scheme solarized
+set -g fish_prompt_pwd_dir_length 3
+
+function fish_right_prompt
+
+end
+</code></pre>
+</div>
+
 <h1 id="general">General</h1>
 
 <ul>
@@ -199,6 +284,12 @@ In <strong>Window Decoration</strong>, in <strong>Decoration Windows</strong> ad
   <li><code class="highlighter-rouge">whoami</code> $ \Rightarrow $ user</li>
   <li><code class="highlighter-rouge">ipcalc</code> <code class="highlighter-rouge">ip</code> <code class="highlighter-rouge">-s</code> SR1 SR2 SR3 $ \Rightarrow $ subnet calculatord</li>
   <li><code class="highlighter-rouge">which</code> <em>make</em> $ \Rightarrow $ vérifie présence de make sur la machine</li>
+</ul>
+
+<h1 id="dpi">DPI</h1>
+
+<ul>
+  <li>dConf Editor</li>
 </ul>
 
 <h1 id="find">find</h1>
