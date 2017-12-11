@@ -19,7 +19,7 @@ Flask migrate permet de traquer les changements faits aux bases de données. Ent
 * Modification des tables
 * Mise à jour de la base de données
     * Création des nouvelles tables
-    * Import des données contenues dans les anciennes tables 
+    * Import des données contenues dans les anciennes tables
 
 Créer le fichier qui contient les scripts de migration:
 
@@ -148,4 +148,39 @@ associates users with the list of “follows” rows in which they are the follo
 to-many relationship pictured on the right side associates users with the list of “follows”
 rows in which they are the followed user.
 
+## Query using database Join
 
+Une opération `Join` prend au moins deux tables et trouve toutes les combinaisons de lignes qui satisfont une condition donnée. Le résultat qui est une combinaison de lignes est inséré dans **une table temporaire**.
+
+L'exemple suivant montre ce méchanisme dans le contexte de l'implémentation d'une fonctionnalité _follow_: Un user ne veut afficher que les postes des gens qu'il follow.
+
+
+`users table`
+
+id | username 
+---|--------
+ 1 | john
+ 2 | susan
+ 3 | david
+
+
+`posts table`
+
+id | author_id | body
+---|-----------|-----
+ 1 | 2         | Blog post by susan
+ 2 | 1         | Blog post by john
+ 3 | 3         | Blog post by david
+ 4 | 1         | Second blog post by john
+
+ La table suivante montre qui follow qui. On peut y voir que _john_ follow _david_, _susan_ follow _john_ et _david_ de follow personne:
+
+ `follows table`
+
+ follower\_id | followed\_id
+---|--------
+ 1 | 3
+ 2 | 1
+ 3 | 3
+
+ Pour obtenir la liste de posts 
