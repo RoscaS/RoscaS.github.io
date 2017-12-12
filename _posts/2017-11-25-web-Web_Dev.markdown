@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Web: Théorie (large)"
+title: "Web: MVC (Model View Control)"
 subtitle: "Overview"
 date: 2017-11-25
 author: Sol
