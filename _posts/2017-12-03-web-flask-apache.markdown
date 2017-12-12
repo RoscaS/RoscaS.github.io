@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "web: flask app sur serveur apache2"
+title: "Web: flask app sur serveur apache2"
 subtitle: ""
 date: 2017-12-03
 author: Sol
-category: web
+category: Web
 tags: 
 finished: false
 mathjax: true

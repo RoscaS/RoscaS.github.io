@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Web: Théorie"
+title: "Web: Théorie (large)"
 subtitle: "Overview"
 date: 2017-11-25
 author: Sol
