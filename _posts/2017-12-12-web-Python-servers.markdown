@@ -13,11 +13,8 @@ mathjax: true
 # Cultutre G
 
 * [Python & servers](https://www.airpair.com/python/posts/python-servers)
-
 * [Apache vs Nginx](https://www.digitalocean.com/community/tutorials/apache-vs-nginx-practical-considerations)
-
 * [History of WSGI + imp details](https://www.digitalocean.com/community/tutorials/a-comparison-of-web-servers-for-python-based-web-applications)
-
 * [Gunicorn](http://gunicorn-docs.readthedocs.io/en/latest/)
 * [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)
 
@@ -25,11 +22,8 @@ mathjax: true
 ## Tutos
 
 * [CGI implementation Tutoral](http://www.jmarshall.com/easy/cgi/)
-
 * [WSGI implementation tutorial](http://lucumr.pocoo.org/2007/5/21/getting-started-with-wsgi/)
-
 * [Configuring Gunicorn with Nginx](https://www.digitalocean.com/community/tutorials/how-to-deploy-python-wsgi-apps-using-gunicorn-http-server-behind-nginx)
-
 * [Configuring uWSGI with Nginx](https://www.digitalocean.com/community/tutorials/how-to-deploy-python-wsgi-applications-using-uwsgi-web-server-with-nginx)
 
 ## URL && URN = URI
