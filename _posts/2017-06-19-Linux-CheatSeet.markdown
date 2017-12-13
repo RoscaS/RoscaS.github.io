@@ -65,6 +65,20 @@ pulseaudio -k && sudo alsa force-reload
 * [unicode char list](https://en.wikipedia.org/wiki/List_of_Unicode_characters)
 
 
+# Launch command on startup
+```
+sudo nano /etc/rc.local
+```
+
+```
+#!/bin/bash
+
+add command here
+```
+
+then `sudo chmod 755 /etc/rc.local`
+
+
 
 # CCSM (CompizConfig)
 
