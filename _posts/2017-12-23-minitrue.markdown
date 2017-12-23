@@ -1,0 +1,107 @@
+---
+layout: post
+permalink: /minitrue/
+date: 2017-12-23
+finished: false
+mathjax: true
+---
+
+# Minitrue
+
+## Links
+
+* [doc original](https://docs.google.com/document/d/1AcVB2a68YHTU2iRsqCZD25fYDofjoib9ijSqoMVE-Do/edit?usp=sharing)
+
+## Abstract
+
+Minitrue est un réseau social privé regroupant des artistes, des penseurs, des philosophes et journalistes. Les membres publient, votent et échangent sur les créations entre eux en interne. Une selection des oeuvres les plus populaires peuple la partie publique du site. Un jeu d'esprit implémenté au sein même du réseau social apporte une dynamique qui favorise les échanges et la création.
+
+## En vrac
+
+* Réseau social
+* Privé
+* Portfolio
+* Blog
+* Votes
+* Likes/upvotes
+* Follow
+* Feedback (request d'un user à un autre pour avoir du feed back sur une ouevre)
+* Notifications
+* Messagerie interne 
+
+> "Est-ce qu'une solution polyvalente te va. C'est à dire que les utilisateurs enregistrés, ont la possibilité d'ouvir une "page" (appelons là une page pour le moment) qui leur donne la possibilité d'afficher leur créations (text, image, audio, video) sous la forme d'un blog, (des articles les uns à la suite des autres) mais avec la possibilité de sélectionner un certain nombre de leurs créations pour les mettre en avant."
+
+
+## Questions
+
+### **Système de upvotes des commentires ("comme Reddit")**
+
+Les points clé d'un système à la reddit ou stack exchange c'est qu'il met en avant non pas le dernier poste écrit, mais les postes les plus pertinents.
+
+Un des gros points forts c'est que ce système est dit "auto modéré". Les postes les moins pertinents ne font pas surface. 
+
+Excellent pour stackExchange qui n'a pas vocation à être une board de discussion mais plus une encyclopédie. <span style="color:green"> Est-ce que c'est ce que tu veux ici?</span>
+
+* [plus d'info sur ce système](https://en.wikipedia.org/wiki/Stack_Overflow)
+
+# Applications
+
+## Vitrine publique
+
+Site semi statique qui contient une sélection des créations internes mise en avant. Renouvellement du contenu régulier mais globalement peu d'accès à la DB de cette partie.
+
+## Reseau social privé
+
+### Vue haut niveau
+
+Hybride board / réseau social
+
+### Features
+
+**Fonctionnalités communautaires classiques:**
+* Votes 
+* likes/upvotes
+* Follow
+* Notifications
+* Messagerie interne 
+* Feeds filtrables
+
+**Fonctionnalités originales:**
+* Feedback (request d'un user à un autre pour avoir du feed back sur une oeuvre)
+* TrueGame
+
+
+
+### Contraintes d'implémentation
+
+#### Divers
+* <span style="color:red"> Non possibilité de linker du site de l'extérieur </span>
+
+#### Architecture
+
+Architecture de type board, avec des catégories non-dynamiques (fixées à l'avance). L'utilisateur n'a pas la possibilité de créer un groupe de discussion.
+
+<span style="color:red"> Clash avec le concepte de reseau social qui (voir doc initial) est la main app: </span> 
+$\Rightarrow$ Chaque élément de contenu créé par un utilisateur est un potentiel sujet de discussion. Opposition avec le souhait de limiter les catégories de discussions.
+
+<span style="color:red"> Il faut faire un choix d'orientation. C'est soit Facebook soit Reddit, pas les deux </span> 
+
+> En attente de précision
+
+
+
+## TrueGame
+
+### Vue haut niveau
+Au coeur de la dynamique de la partie privée du réseau, ce jeu permet à un utilisateur de proposer une partie à un autre utilisateur (<span style="color:green">temps réel?</span>). Le premier joueur envoie une _vérité_ (déclaration ou question) formulée entre un minimum de $a$ mots et un maximum de $b$ mots. Le second joueur y répond avec les mêmes contraintes. Le jeux se termine au bout de $n$ échanges.
+
+### Contraintes d'implémentation
+
+* L'objet `Partie` doit être partageable sur tout le réseau réseau 
+* `Partie` est une aggrégation de `Message` qui est un objet partageable sur le réseau indépendament de sa partie mais qui garde une référence cette dernière.
+
+
+
+## Détails d'implémentation
+
+`tbc`
