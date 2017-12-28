@@ -19,12 +19,66 @@ $fix \; things. $
 # Specifique au Dell xps 13 9343
 
 ## Carte reseau
-Telecharger le driver via le gestionnaire de package synaptic.
 ```
- Network controller: Broadcom Limited BCM4352 802.11ac
+Network controller: Broadcom Limited BCM4352 802.11ac
 ```
 
-#### Connexion drop fix
+```
+$ sudo apt-get purge bcmwl-kernel-source
+$ sudo apt-get install bcmwl-kernel-source
+
+# relaunch wifi card
+$ sudo modprobe -r b43 ssb wl
+$ sudo modprobe wl 
+```
+
+## Touchpad issues
+
+Libinput doesn't allow for inertia in the scroll so...
+
+```
+$ sudo apt purge xserver-xorg-input-synaptics
+$ sudo apt install xserver-xorg-input-synaptics
+```
+
+after a reboot:
+
+```
+$ cp /usr/share/X11/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d/
+```
+
+If needed: `mkdir xorg.conf.d`
+Then, replace the first section of the file with:
+
+```
+Section "InputClass"
+        Identifier "touchpad catchall"
+        Driver "synaptics"
+        MatchIsTouchpad "on"
+
+        Option "TapButton1" "1"
+        Option "TapButton2" "3"
+        Option "TapButton3" "2"
+
+        Option "EmulateTwoFingerMinZ" "40"
+        Option "EmulateTwoFingerMinW" "8"
+
+		Option "CoastingSpeed" "20"
+
+
+    	Option "VertScrollDelta" "-35"
+    	Option "HorizScrollDelta" "-35"
+
+        Option "VertEdgeScroll" "on"
+        Option "VertTwoFingerScroll" "on"
+        Option "HorizTwoFingerScroll" "on"
+EndSection
+```
+
+* [full reference](https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Using_syndaemon)
+
+
+## Connexion drop fix
 
 
 In `/etc/NetworkManager/NetworkManager.conf`
@@ -42,18 +96,6 @@ If the issue start again, we can comment both lines in NetworkManager.conf, rest
 ## Hibernate on lid close
 *[systemctl](http://tipsonubuntu.com/2017/04/13/shutdown-hibernate-ubuntu-17-04-lid-closed/)
 
-
-## External screen flickering
-
-*[This!](https://aboutsimon.com/blog/2016/07/20/Ubuntu-16.04-external-monitor-flickering-and-turning-off-on-intel-i915.html)
-
-
-## Scroll speed
-
-```
-synclient VertScrollDelta=-50
-synclient HorizScrollDelta=-100
-```
 
 ## Carte son
 Si le driver saute lors de switchs entre OSs:
