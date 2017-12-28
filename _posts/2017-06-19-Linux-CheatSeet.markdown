@@ -26,6 +26,7 @@ Telecharger le driver via le gestionnaire de package synaptic.
 
 #### Connexion drop fix
 
+
 In `/etc/NetworkManager/NetworkManager.conf`
 
 add:
