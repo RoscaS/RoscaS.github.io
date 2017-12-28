@@ -216,6 +216,7 @@ end
 
 
 
+
 * `caja .` $ \Rightarrow $ open file browser here
 * `su` _username_ $ \Rightarrow $ switch user
 * `df` $ \Rightarrow $ HD space
