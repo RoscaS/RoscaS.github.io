@@ -151,6 +151,7 @@ $ which fish
 /usr/bin/fish
 ```
 
+
 Next, we can change the shell by typing:
 ```
 $ chsh -s /usr/bin/fish
