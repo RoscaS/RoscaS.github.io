@@ -16,6 +16,17 @@ $using\; colleagues. \; They \; often \; spend \; a \; lot \; more$
 $time \; fixing \; things \; or \; finding \; out \; how \; to $
 $fix \; things. $
 
+## a classer
+
+* `ps -a`: all process
+* `ps -a | grep processName : check for `processName`
+
+
+* `sudo fuser -vki /path/`
+
+
+
+
 # Specifique au Dell xps 13 9343
 
 ## Carte reseau
