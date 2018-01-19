@@ -4,7 +4,7 @@ title: "py: Closure (+JS)"
 subtitle: ""
 date: 2018-01-19
 author: Sol
-category: py
+category: Py
 tags: js py
 finished: true
 mathjax: false
