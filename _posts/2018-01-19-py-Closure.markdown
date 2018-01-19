@@ -9,6 +9,12 @@ tags: js py
 finished: true
 mathjax: false
 ---
+
+## Code associé
+
+* [Repo](https://github.com/RoscaS/js_tutos)
+
+
 ## Closure
 
 Une closure est un espace mémoire créé quand une fonction B est définie dans une fonction A, et que B accède à des variables définies dans A.
