@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "py: Closure (+JS)"
+title: "Py: Closure (+JS)"
 subtitle: ""
 date: 2018-01-19
 author: Sol
