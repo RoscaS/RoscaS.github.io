@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "web: Css tricks"
+title: "Web: Css tricks"
 subtitle: ""
 date: 2018-02-11
 author: Sol

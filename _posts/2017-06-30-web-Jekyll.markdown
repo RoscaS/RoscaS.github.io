@@ -5,7 +5,7 @@ subtitle: ""
 date: 2017-06-30
 author: Sol
 category: Web
-tags: web jekyll static generator
+tags: Web jekyll static generator
 finished: false
 mathjax: true
 ---
