@@ -43,76 +43,8 @@ $ sudo modprobe -r b43 ssb wl
 $ sudo modprobe wl 
 ```
 
-## Touchpad issues
-
-Libinput doesn't allow for inertia in the scroll so...
-
-```
-$ sudo apt purge xserver-xorg-input-synaptics
-$ sudo apt install xserver-xorg-input-synaptics
-```
-
-after a reboot:
-
-```
-$ cp /usr/share/X11/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d/
-```
-
-If needed: `mkdir xorg.conf.d`
-Then, replace the first section of the file with:
-
-```
-Section "InputClass"
-        Identifier "touchpad catchall"
-        Driver "synaptics"
-        MatchIsTouchpad "on"
-
-        Option "TapButton1" "1"
-        Option "TapButton2" "3"
-        Option "TapButton3" "2"
-
-        Option "EmulateTwoFingerMinZ" "40"
-        Option "EmulateTwoFingerMinW" "8"
-
-		Option "CoastingSpeed" "20"
-
-
-    	Option "VertScrollDelta" "-35"
-    	Option "HorizScrollDelta" "-35"
-
-        Option "VertEdgeScroll" "on"
-        Option "VertTwoFingerScroll" "on"
-        Option "HorizTwoFingerScroll" "on"
-EndSection
-```
-
-* [full reference](https://wiki.archlinux.org/index.php/Touchpad_Synaptics#Using_syndaemon)
-
-
-## Connexion drop fix
-
-
-In `/etc/NetworkManager/NetworkManager.conf`
-
-add:
-```
-[device]
-wifi.scan-rand-mac=address=no
-```
-
-and then `sudo service network-manager restart`
-
-If the issue start again, we can comment both lines in NetworkManager.conf, restart the NetworkManager and then add them again...
-
-## Hibernate on lid close
-*[systemctl](http://tipsonubuntu.com/2017/04/13/shutdown-hibernate-ubuntu-17-04-lid-closed/)
-
-
-## Carte son
-Si le driver saute lors de switchs entre OSs:
-```
-pulseaudio -k && sudo alsa force-reload
-```
+## Libinput gestures
+* [Tuto](http://www.lorenzobettini.it/2017/02/touchpad-gestures-in-linux-kde-with-libinput-gestures/)
 
 ## Edit keyboard layout
 * [people.uleth.ca](http://people.uleth.ca/~daniel.odonnell/Blog/custom-keyboard-in-linuxx11#e)
