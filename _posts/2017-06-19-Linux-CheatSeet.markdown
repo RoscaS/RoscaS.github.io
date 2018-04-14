@@ -25,24 +25,6 @@ $fix \; things. $
 * `sudo fuser -vki /path/`
 
 
-
-
-# Specifique au Dell xps 13 9343
-
-## Carte reseau
-```
-Network controller: Broadcom Limited BCM4352 802.11ac
-```
-
-```
-$ sudo apt-get purge bcmwl-kernel-source
-$ sudo apt-get install bcmwl-kernel-source
-
-# relaunch wifi card
-$ sudo modprobe -r b43 ssb wl
-$ sudo modprobe wl 
-```
-
 ## Libinput gestures
 * [Tuto](http://www.lorenzobettini.it/2017/02/touchpad-gestures-in-linux-kde-with-libinput-gestures/)
 
